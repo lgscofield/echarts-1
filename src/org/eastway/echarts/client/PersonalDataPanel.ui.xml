@@ -1,0 +1,32 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder">
+	<div>
+		<b>Personal:</b>
+		<table cellpadding="2" cellspacing="0" border="1">
+			<tr>
+				<td>PATID</td>
+				<td>
+					<span ui:field="PATID" />
+				</td>
+			</tr>
+			<tr>
+				<td>Name</td>
+				<td>
+					<span ui:field="Name" />
+				</td>
+			</tr>
+			<tr>
+				<td>Date of Birth</td>
+				<td>
+					<span ui:field="DOB" />
+				</td>
+			</tr>
+			<tr>
+				<td>Social Security #</td>
+				<td>
+					<span ui:field="SSN" />
+				</td>
+			</tr>
+		</table>
+	</div>
+</ui:UiBinder>

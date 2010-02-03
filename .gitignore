@@ -1,0 +1,12 @@
+# These two directories house the output from gwtc
+war/echarts
+war/WEB-INF/classes
+
+# Don't track patch files
+*.patch
+
+# Preference files are user specific
+*.prefs
+
+# Gwt servlet is automatically copied here, so ignore it for tracking
+war/WEB-INF/lib/gwt-servlet.jar

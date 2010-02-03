@@ -1,0 +1,528 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		table.inner {
+			font-size: 13px;
+			border: 1px solid black;
+		}
+
+		table.hidden {
+			font-size: 13px;
+			border: 0px solid black;
+		}
+	</ui:style>
+	<g:ScrollPanel height='100%'>
+		<g:HTMLPanel>
+			<div>
+				<font size="4">
+					<u>Individualized Service Plan</u>
+				</font>
+
+				<div id="master">
+
+					<table class="{style.inner}" width="850px" cellspacing="0px"
+						cellpadding="0px">
+						<tr>
+							<td width="475" height="30">
+								<b>Client Name</b>
+								(Last, First MI)
+							</td>
+							<td width="225" height="30">
+								<b>Client No.</b>
+								<span ui:field='patientId' />
+							</td>
+							<td width="150">
+								<b>Ticket#: New Note</b>
+							</td>
+						</tr>
+					</table>
+					<br />
+
+					<table class="{style.inner}" width="850px" cellspacing="0px"
+						cellpadding="0px">
+						<tr>
+							<td width="120" height="30" valign="top">
+								<b>Goal No.</b>
+								<font size="5">
+									<b>A</b>
+								</font>
+								<input type="hidden" name="GAName" value="Goal" />
+								<input type="hidden" name="GAGoalNo" value="A" />
+							</td>
+							<td colspan="3" width="720" height="30">
+								<b>
+									Linked to Treatment Recommendation No.
+									<g:TextBox ui:field="GATreatRecommendNo" />
+									from form
+								</b>
+								<input type="hidden" name="GAServicePlanType" value="DA" />
+								<b>dated</b>
+								<b>
+									<g:TextBox ui:field="GADated" />
+								</b>
+							</td>
+						</tr>
+						<td width="120" height="40">
+							<b>Start Date</b>
+							<br />
+							<g:TextBox ui:field="GAStartDate" />
+						</td>
+						<td width="160" height="40">
+							<b>Target Completion Date</b>
+							<br />
+							<center>
+								<g:TextBox ui:field="GATargetCompletionDate" />
+							</center>
+						</td>
+						<td width="150" height="40">
+							<b>Adjusted Target Date</b>
+							<br />
+							<center>
+								<g:TextBox ui:field="GAAdjustedTargetDate" />
+							</center>
+						</td>
+						<td width="420" height="40">
+							<b>Reason for Adjustment</b>
+							<br />
+							<g:TextBox ui:field="GAReasonforAdjustment" />
+						</td>
+						<tr>
+							<td width="850" height="60" colspan="4">
+								<b>Ohio Outcome Scores were used in developing this ISP as
+									evidenced by</b>
+								<br />
+
+								<g:TextArea ui:field="GAOutcomes" />
+							</td>
+						</tr>
+						<tr>
+							<td width="100%" height="60" colspan="4">
+								<b>State Goal Below in Collaboration with Client</b>
+								<br />
+
+								<g:TextArea ui:field="GAGoalCollaboration" />
+							</td>
+						</tr>
+						<tr>
+							<td width="100%" height="65" colspan="4">
+								<b>Desired Results in Client's Words</b>
+								Client has reviewed?
+									<g:RadioButton ui:field="GAClientReviewedYes" name="GAClientReviewed">Yes</g:RadioButton>
+									<g:RadioButton ui:field="GAClientReviewedNo" name="GAClientReviewed">No</g:RadioButton>
+									&nbsp;
+								Client agrees?
+									<g:RadioButton ui:field="GAClientAgreesYes" name="GAClientAgrees">Yes</g:RadioButton>
+									<g:RadioButton ui:field="GAClientAgreesNo" name="GAClientAgrees">No</g:RadioButton>
+								<br />
+								<g:TextArea ui:field="GADesiredResults" characterWidth="100" visibleLines="5" />
+								<div>
+									Client Initials
+									<br />
+									<g:TextBox ui:field="GAClientInitials" />
+								</div>
+							</td>
+						</tr>
+					</table>
+					<br />
+
+					<table class="{style.inner}" width="850px" cellspacing="0px"
+						cellpadding="0px">
+						<tr>
+							<td width="100%" height="60">
+								<b>Strengths and How They Will be Used to Meet this Goal</b>
+								<br />
+
+								<g:TextArea ui:field="GAStrengthsUsedtoMeetGoal" />
+							</td>
+						</tr>
+						<tr>
+							<td width="100%" height="60">
+								<b>Skills/Knowledge Needed</b>
+								<br />
+
+								<g:TextArea ui:field="GASkillsKnowledgeNeeded" />
+							</td>
+						</tr>
+						<tr>
+							<td width="100%" height="60">
+								<b>Natural/Community Supports Needed</b>
+								<br />
+
+								<g:TextArea ui:field="GANaturalCommunitySupports" />
+							</td>
+						</tr>
+					</table>
+					<br />
+
+					<div id="items1">
+						<table class="{style.inner}" width="850px" cellspacing="0px"
+							cellpadding="0px">
+							<tr>
+								<td width="730" height="40" colspan="3">
+									<input type="hidden" name="GAO1Name" value="Objective" />
+									<input type="hidden" name="GAO1GoalLetter" value="A" />
+									<input type="hidden" name="GAO1ObjectiveNo" value="1" />
+									<table class="{style.hidden}" width="100%" cellspacing="0px"
+										cellpadding="0px">
+										<tr>
+											<td height="40">
+												<b>Objective No.</b>
+												<font size="5">
+													<b>A1</b>
+												</font>
+											</td>
+											<td height="40">
+												<g:TextArea ui:field="GAO1Desc" />
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td width="120" height="40">
+									Start
+									Date
+									<br />
+									<g:TextBox ui:field="GAO1StartDate" />
+								</td>
+							</tr>
+
+							<tr>
+								<td width="730" height="40" colspan="3">
+									<table class="{style.hidden}" cellspacing="0px"
+										cellpadding="0px">
+										<tr>
+											<td height="40">
+												<b>Client Will</b>
+												<br />
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td height="40">
+									<g:TextArea ui:field="GAO1ClientWill" />
+								</td>
+							</tr>
+							<td width="120" height="40">
+								Duration
+								<br />
+								<g:TextBox ui:field="GAO1Duration" />
+							</td>
+							<tr>
+								<td width="850" height="40" colspan="4">
+									<table class="{style.hidden}" cellspacing="0px"
+										cellpadding="0px">
+										<tr>
+											<td width="260" height="40">
+												<b>Parent/Guardian/Community/Other will</b>
+												<br />
+												<g:CheckBox ui:field="GAO1NotClinIndicated" />
+												Not
+												Clinically Indicated
+											</td>
+											<td width="590" height="40">
+												<g:TextArea ui:field="GAO1OtherWill" />
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+
+							<tr>
+								<td>
+									<center>Therapeutic Intervention</center>
+								</td>
+								<td>
+									<center>Service Description</center>
+								</td>
+								<td>
+									<center>Frequency</center>
+								</td>
+								<td>
+									<center>Provider Type</center>
+								</td>
+							</tr>
+
+							<tr>
+								<td height="40">
+									<g:TextArea ui:field="GAO1TherInt1" />
+								</td>
+								<td height="40">
+									<center>
+										<g:ListBox ui:field="GAO1ServDesc1">
+											<!--
+												Service descriptions, populated from the server, will go
+												here
+											-->
+										</g:ListBox>
+									</center>
+									<td height="40">
+										<g:TextArea ui:field="GAO1Freq1" />
+									</td>
+									<td height="40">
+										<g:TextArea ui:field="GAO1ProvType1" />
+									</td>
+								</td>
+							</tr>
+
+							<tr>
+								<td height="40">
+									<g:TextArea ui:field="GAO1TherInt2" />
+								</td>
+								<td height="40">
+									<center>
+										<g:ListBox ui:field="GAO1ServDesc2">
+											<!--
+												Service descriptions, populated from the server, will go
+												here
+											-->
+										</g:ListBox>
+									</center>
+									<td height="40">
+										<g:TextArea ui:field="GAO1Freq2" />
+									</td>
+									<td height="40">
+										<g:TextArea ui:field="GAO1ProvType2" />
+									</td>
+								</td>
+							</tr>
+
+							<tr>
+								<td height="40">
+									<g:TextArea ui:field="GAO1TherInt3" />
+								</td>
+								<td height="40">
+									<center>
+										<g:ListBox ui:field="GAO1ServDesc3">
+											<!--
+												Service descriptions, populated from the server, will go
+												here
+											-->
+										</g:ListBox>
+									</center>
+									<td height="40">
+										<g:TextArea ui:field="GAO1Freq3" />
+									</td>
+									<td height="40">
+										<g:TextArea ui:field="GAO1ProvType3" />
+									</td>
+								</td>
+							</tr>
+						</table>
+					</div>
+
+					<g:Button ui:field="G1add">Add Objective</g:Button>
+				</div>
+				<g:Button ui:field="add">Add Goal</g:Button>
+
+				<table class="{style.inner}" width="850px" cellspacing="0px"
+					cellpadding="0px">
+					<tr>
+						<td width="100%" height="30" colspan="3">
+							<input type="hidden" name="OtherName" value="OtherAgencies" />
+							<center>
+								<b>Other Agencies Involved</b>
+							</center>
+						</td>
+					</tr>
+					<tr>
+						<td width="33%">
+							<center>Agency Name</center>
+						</td>
+						<td width="33%">
+							<center>Contact and Title</center>
+						</td>
+						<td width="33%">
+							<center>Services Provided</center>
+						</td>
+					</tr>
+					<tr>
+						<td width="33%" height="40">
+							<g:TextArea ui:field="AgencyName1" />
+						</td>
+						<td width="33%" height="40">
+							<g:TextArea ui:field="ContactAndTitle1" />
+						</td>
+						<td width="33%" height="40">
+							<g:TextArea ui:field="ServicesProvided1" />
+						</td>
+					</tr>
+					<tr>
+						<td width="33%" height="40">
+							<g:TextArea ui:field="AgencyName2" />
+						</td>
+						<td width="33%" height="40">
+							<g:TextArea ui:field="ContactAndTitle2" />
+						</td>
+						<td width="33%" height="40">
+							<g:TextArea ui:field="ServicesProvided2" />
+						</td>
+					</tr>
+					<tr>
+						<td width="33%" height="40">
+							<g:TextArea ui:field="AgencyName3" />
+						</td>
+						<td width="33%" height="40">
+							<g:TextArea ui:field="ContactAndTitle3" />
+						</td>
+						<td width="33%" height="40">
+							<g:TextArea ui:field="ServicesProvided3" />
+						</td>
+					</tr>
+					<tr>
+						<td width="33%" height="40">
+							<g:TextArea ui:field="AgencyName4" />
+						</td>
+						<td width="33%" height="40">
+							<g:TextArea ui:field="ContactAndTitle4" />
+						</td>
+						<td width="33%" height="40">
+							<g:TextArea ui:field="ServicesProvided4" />
+						</td>
+					</tr>
+					<tr>
+						<td width="33%" height="40">
+							<g:TextArea ui:field="AgencyName5" />
+						</td>
+						<td width="33%" height="40">
+							<g:TextArea ui:field="ContactAndTitle5" />
+						</td>
+						<td width="33%" height="40">
+							<g:TextArea ui:field="ServicesProvided5" />
+						</td>
+					</tr>
+				</table>
+
+				<table class="{style.hidden}" cellspacing="0px" cellpadding="0px">
+					<tr>
+						<td width="100%" colspan="3">
+							<b>AoD ONLY Adult Level of Care</b>
+							<g:CheckBox ui:field="AoDAdultLevelofCareNA" />
+							Not Applicable
+						</td>
+					</tr>
+					<tr>
+						<td width="240">
+							<g:RadioButton ui:field="LevelIA" name="AoDAdultLevelofCare" />
+							Level I-A: Non-Intensive OP Tx
+						</td>
+						<td width="325">
+							<g:RadioButton ui:field="LevelIIA" name="AoDAdultLevelofCare" />
+							Level II-A: Non-Medical Community Residential
+						</td>
+						<td width="285">
+							<g:RadioButton ui:field="LevelIIIB" name="AoDAdultLevelofCare" />
+							Level III-B: 23 Hour Observation Bed
+						</td>
+					</tr>
+					<tr>
+						<td width="240">
+							<g:RadioButton ui:field="LevelIB" name="AoDAdultLevelofCare" />
+							Level I-B: IOP Tx
+						</td>
+						<td width="325">
+							<g:RadioButton ui:field="LevelIIB" name="AoDAdultLevelofCare" />
+							Level II-B: Medical Community Residential
+						</td>
+						<td width="285">
+							<g:RadioButton ui:field="LevelIIIC" name="AoDAdultLevelofCare" />
+							Level III-C: Sub-Acute Care
+						</td>
+					</tr>
+					<tr>
+						<td width="240">
+							<g:RadioButton ui:field="LevelIC" name="AoDAdultLevelofCare" />
+							Level I-C: Day Tx
+						</td>
+						<td width="325">
+							<g:RadioButton ui:field="LevelIIIA" name="AoDAdultLevelofCare" />
+							Level III-A: Ambulatory Detox
+						</td>
+						<td width="285">
+							<g:RadioButton ui:field="LevelIV" name="AoDAdultLevelofCare" />
+							Level IV: Acute Hospital Detoxification
+						</td>
+					</tr>
+				</table>
+
+				<table class="{style.hidden}" cellspacing="0px" cellpadding="0px">
+					<tr>
+						<td width="100%" colspan="3">
+							<b>AoD ONLY Youth Level of Care</b>
+							<g:CheckBox ui:field="AoDYouthLevelofCareNA" />
+							Not Applicable
+						</td>
+					</tr>
+					<tr>
+						<td width="240">
+							<g:RadioButton ui:field="LevelIA2" name="AoDYouthLevelofCare" />
+							Level I-A: Non-Intensive OP Tx
+						</td>
+						<td width="325">
+							<g:RadioButton ui:field="LevelII" name="AoDYouthLevelofCare" />
+							Level II: Residential
+						</td>
+						<td width="285"></td>
+					</tr>
+					<tr>
+						<td width="240">
+							<g:RadioButton ui:field="LevelIB2" name="AoDYouthLevelofCare" />
+							Level I-B: IOP Tx
+						</td>
+						<td width="325">
+							<g:RadioButton ui:field="LevelIII" name="AoDYouthLevelofCare" />
+							Level III: Acute Hospital Detoxification
+						</td>
+						<td width="285"></td>
+					</tr>
+					<tr>
+						<td width="240">
+							<g:RadioButton ui:field="LevelIC2" name="AoDYouthLevelofCare" />
+							Level I-C: Day Tx
+						</td>
+						<td width="325"></td>
+						<td width="285"></td>
+					</tr>
+				</table>
+
+				<table class="{style.inner}" width="850px" cellspacing="0px"
+					cellpadding="0px">
+					<tr>
+						<td width="850" height="30">
+							<center>
+								<b>Transition/Level of Care Change/Discharge Plan</b>
+							</center>
+						</td>
+					</tr>
+					<tr>
+						<td width="850" height="110">
+							<table class="{style.hidden}" cellspacing="0px"
+								cellpadding="0px">
+								<tr>
+									<td width="600">
+										<b>Level of Care/Transition/Discharge Criteria</b>
+									</td>
+									<td width="250">
+										Anticipated
+										Date
+										<g:TextBox ui:field="AnticipatedDate" />
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<g:TextArea ui:field="LevelofCare" />
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+
+				<input type="hidden" name="goal" id="goal" value="0" />
+				<input type="hidden" name="objective" id="objective" value="1" />
+				<input type="button" name="spellcheck" value="Spell Check"
+					onclick="spellCheck()" />
+				<input type="submit" name="submit" value="SUBMIT" />
+			</div>
+		</g:HTMLPanel>
+	</g:ScrollPanel>
+</ui:UiBinder>
