@@ -75,7 +75,7 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 
 	private void storeSessionId(String sessionId, String username) throws DbException {
 		Date t = new Date();
-		long expire = t.getTime() + 20000; // twenty seconds
+		long expire = t.getTime() + 3600000; // 60 minutes
 		String sql = "UPDATE [User] SET SessionId='" + sessionId + "', SessionIdExpire=" + expire + " WHERE Username='" + username + "'";
 		Connection con = null;
 		Statement stmt = null;
