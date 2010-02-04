@@ -9,10 +9,14 @@ import org.eastway.echarts.client.view.TopPanelView;
 import org.eastway.echarts.client.events.OpenPatientEvent;
 import org.eastway.echarts.client.events.OpenPatientEventHandler;
 
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 public class DashboardPresenter extends EchartsPresenter<DashboardPresenter.Display> {
 	private PatientServicesAsync patientSvc;
@@ -28,7 +32,9 @@ public class DashboardPresenter extends EchartsPresenter<DashboardPresenter.Disp
 
 		void setTopPanel(TopPanelPresenter topPanelPresenter);
 
-		void setPatientTab(String patientId, PatientTabPresenter patientTab);
+		void setPatientTab(String patientId, Widget patientTab);
+
+		HasClickHandlers getCloseTabLabel();
 	}
 
 	public DashboardPresenter(Display display, HandlerManager eventBus, PatientServicesAsync patientSvc) {
@@ -82,7 +88,20 @@ public class DashboardPresenter extends EchartsPresenter<DashboardPresenter.Disp
 	public void openPatient(String patientId) {
 		// History.newItem("t" + display.getTabPanel().getWidgetCount()
 		// + patientId, false);
-		PatientTabPresenter patientTab = new PatientTabPresenter(new PatientTabView(), eventBus, patientSvc, patientId);
-		display.setPatientTab(patientId, patientTab);
+		final PatientTabPresenter patientTab = new PatientTabPresenter(
+			new PatientTabView(), eventBus, patientSvc, patientId);
+		display.setPatientTab(patientId,
+					patientTab.getDisplay().asWidget());
+		display.getCloseTabLabel().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				Integer idx = display.getTabPanel()
+						.getWidgetIndex(
+						    patientTab.getDisplay().asWidget());
+				if (display.getTabPanel().remove(idx))
+					display.getTabPanel()
+						.selectTab(idx - 1);
+			}
+		});
 	}
 }

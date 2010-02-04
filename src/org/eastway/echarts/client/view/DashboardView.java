@@ -4,15 +4,17 @@ import org.eastway.echarts.client.ProductivityChart;
 import org.eastway.echarts.client.presenter.AlertsPresenter;
 import org.eastway.echarts.client.presenter.DashboardPresenter;
 import org.eastway.echarts.client.presenter.PatientListPresenter;
-import org.eastway.echarts.client.presenter.PatientTabPresenter;
 import org.eastway.echarts.client.presenter.TopPanelPresenter;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -23,6 +25,7 @@ public class DashboardView extends Composite implements DashboardPresenter.Displ
 	interface DashboardViewUiBinder extends UiBinder<Widget, DashboardView> {}
 
 	private ProductivityChart gchart = new ProductivityChart();
+	private Label closeTab;
 
 	@UiField
 	DockLayoutPanel dockLayoutPanel;
@@ -74,7 +77,19 @@ public class DashboardView extends Composite implements DashboardPresenter.Displ
 	}
 
 	@Override
-	public void setPatientTab(String patientId, PatientTabPresenter patientTabPresenter) {
-		tabLayoutPanel.add(patientTabPresenter.getDisplay().asWidget(), patientId);
+	public HasClickHandlers getCloseTabLabel() {
+		return closeTab;
+	}
+
+	@Override
+	public void setPatientTab(String patientId, Widget patientTab) {
+		closeTab = new Label();
+		closeTab.setTitle("Close");
+		Label patientIdLabel = new Label(patientId);
+		HorizontalPanel tabHeader = new HorizontalPanel();
+		tabHeader.add(patientIdLabel);
+		tabHeader.add(closeTab);
+		closeTab.addStyleName("close-Tab");
+		tabLayoutPanel.add(patientTab, tabHeader);
 	}
 }
