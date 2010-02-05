@@ -195,9 +195,10 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 	@Override
 	public Vector<String> getAlerts(String sessionId) throws SessionExpiredException, DbException {
 		checkSessionExpire(sessionId);
-		Vector<String> alerts = new Vector<String>();
 
-		String sql = "SELECT VTicklerList.PATID, Demographics.Name, VTicklerList.ItemName, VTicklerList.[Date] FROM VTicklerList INNER JOIN Demographics ON VTicklerList.PATID = Demographics.PATID WHERE [Date] IS NOT NULL AND VTicklerList.PATID IN (SELECT PATID FROM Assignments WHERE Staff = 5597 AND Disposition = 1) ORDER BY 4 ASC";
+		Vector<String> alerts = new Vector<String>();
+		String sql = null;
+		String staffId = null;
 		Connection con = null;
 		Statement stmt = null;
 		ResultSet srs = null;
@@ -208,6 +209,9 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 		String warningMessage;
 
 		try {
+			staffId = getStaffId(sessionId);
+			sql = "SELECT VTicklerList.PATID, Demographics.Name, VTicklerList.ItemName, VTicklerList.[Date] FROM VTicklerList INNER JOIN Demographics ON VTicklerList.PATID = Demographics.PATID WHERE [Date] IS NOT NULL AND VTicklerList.PATID IN (SELECT PATID FROM Assignments WHERE Staff = '"
+				+ staffId + "' AND Disposition = 1) ORDER BY 4 ASC";
 			DbConnection dbc = new DbConnection(jndiRes);
 			con = dbc.getConnection();
 			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
