@@ -12,42 +12,7 @@ import java.sql.Timestamp;
 @SuppressWarnings("serial")
 public class Message implements Serializable {
 
-	public Integer ID;
-	public String PATID;
-	public String MessageType;
-	public Timestamp MessageDate;
-	public String Message;
-	public Integer ParentId;
-	public Timestamp LastEdit;
-	public String LastEditBy;
-
-	public Message() {}
-
-	/**
-	 * This add method is used by the client to send a patient message to
-	 * the server.
-	 * 
-	 * @param PATID
-	 *                The patient's ID
-	 * @param MessageType
-	 *                The message type
-	 * @param Message
-	 *                The body of the message
-	 * @param LastEditBy
-	 *                The ID of the last user to edit the message
-	 */
-	public void add(String PATID, String MessageType, String Message,
-			String LastEditBy) {
-		this.PATID = PATID;
-		this.MessageType = MessageType;
-		this.Message = Message;
-		this.LastEditBy = LastEditBy;
-	}
-
-	/**
-	 * This add method is used by the server to send patient messages
-	 * encapsulated in Messages to the client.
-	 * 
+	/** 
 	 * @param ID
 	 *                The unique ID of this message in the database
 	 * @param PATID
@@ -65,6 +30,31 @@ public class Message implements Serializable {
 	 *                The date this message was last edited
 	 * @param LastEditBy
 	 *                The ID of the last user to edit the message
+	 */
+	public Integer ID;
+	public String PATID;
+	public String MessageType;
+	public Timestamp MessageDate;
+	public String Message;
+	public Integer ParentId;
+	public Timestamp LastEdit;
+	public String LastEditBy;
+
+	public Message() {}
+
+	/**
+	 * This add method is used by the client to send a patient message to
+	 * the server.
+	 */
+	public void add(String PATID, String MessageType, String Message) {
+		this.PATID = PATID;
+		this.MessageType = MessageType;
+		this.Message = Message;
+	}
+
+	/**
+	 * This add method is used by the server to send patient messages
+	 * encapsulated in Messages to the client.
 	 */
 	public void add(Integer ID, String PATID, String MessageType,
 			Timestamp MessageDate, String Message, int ParentId, String LastEditBy) {

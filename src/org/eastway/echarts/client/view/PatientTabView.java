@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
 
 import org.eastway.echarts.client.IspPanel;
+import org.eastway.echarts.client.MessagePanel;
 
 public class PatientTabView extends Composite implements PatientTabPresenter.Display {
 	private static PatientTabViewUiBinder uiBinder = GWT.create(PatientTabViewUiBinder.class);
@@ -31,6 +32,7 @@ public class PatientTabView extends Composite implements PatientTabPresenter.Dis
 			addMessage, treatmentPlan, serviceHistory;
 
 	private IspPanel ispPanel;
+	private MessagePanel messagePanel;
 
 	public PatientTabView() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -69,6 +71,8 @@ public class PatientTabView extends Composite implements PatientTabPresenter.Dis
 		} else if (selectedItem == demographics) {
 		} else if (selectedItem == progressNote) {
 		} else if (selectedItem == messages) {
+			displayArea.clear();
+			displayArea.add(messagePanel);
 		} else if (selectedItem == addMessage) {
 		} else if (selectedItem == treatmentPlan) {
 			displayArea.clear();
@@ -83,5 +87,10 @@ public class PatientTabView extends Composite implements PatientTabPresenter.Dis
 	@Override
 	public void initDisplayArea() {
 		this.ispPanel = new IspPanel(patientId);
+	}
+
+	@Override
+	public void setMessages(MessagePanel messagePanel) {
+		this.messagePanel = messagePanel;
 	}
 }

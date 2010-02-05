@@ -73,7 +73,7 @@ public class MessagePanel extends VerticalPanel implements ClickHandler {
 	public void add(final String patientId, String Message, String MessageType,
 			final DialogBox db) {
 		Message msg = new Message();
-		msg.add(patientId, MessageType, Message, "5597");
+		msg.add(patientId, MessageType, Message);
 		final MessagePanel messagePanel = this;
 		AsyncCallback<Void> callback = new AsyncCallback<Void>() {
 

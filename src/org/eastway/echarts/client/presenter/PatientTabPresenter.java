@@ -9,6 +9,8 @@ import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.TreeItem;
 
+import org.eastway.echarts.client.MessagePanel;
+
 public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Display> {
 	public interface Display extends EchartsDisplay {
 		void setPatientId(String patientId);
@@ -20,12 +22,15 @@ public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Di
 		void setDisplay(HasText selectedItem);
 
 		void initDisplayArea();
+
+		void setMessages(MessagePanel messagePanel);
 	}
 
 	public PatientTabPresenter(Display display, HandlerManager eventBus, PatientServicesAsync patientSvc, String patientId) {
 		super(display, eventBus);
 		display.setPatientId(patientId);
 		display.initDisplayArea();
+		display.setMessages(new MessagePanel(patientId, patientSvc));
 		bind();
 	}
 

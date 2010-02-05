@@ -287,16 +287,17 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 			throws SessionExpiredException, DbException {
 		checkSessionExpire(sessionId);
 
+		String staffId = null;
 		int messageType;
-		try {
-			messageType = getMessageType(msg.MessageType);
-		} catch (DbException e) {
-			throw e;
-		} catch (SQLException e) {
-			throw new DbException(e);
-		}
+		Connection con = null;
+		Statement stmt = null;
+		String sql = null;
 
-		String sql = "INSERT INTO Messages(PATID, MessageType, Message, LastEditBy)"
+		try {
+			staffId = getStaffId(sessionId);
+			messageType = getMessageType(msg.MessageType);
+
+			sql = "INSERT INTO Messages(PATID, MessageType, Message, LastEditBy)"
 				+ "Values ('"
 				+ msg.PATID
 				+ "',"
@@ -304,11 +305,8 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 				+ ",'"
 				+ msg.Message
 				+ "','"
-				+ msg.LastEditBy + "')";
-		Connection con = null;
-		Statement stmt = null;
+				+ staffId + "')";
 
-		try {
 			DbConnection dbc = new DbConnection(jndiRes);
 			con = dbc.getConnection();
 			stmt = con.createStatement();
@@ -322,6 +320,37 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 				con.close();
 			} catch (SQLException e) {
 				throw new DbException();
+			}
+		}
+	}
+
+	private String getStaffId(String sessionId) throws SQLException, NamingException {
+		String sql = "SELECT Staff FROM [User] WHERE SessionId = '"
+					+ sessionId + "'";
+		String staffId = null;
+
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+
+		try {
+			DbConnection dbc = new DbConnection(jndiRes);
+			con = dbc.getConnection();
+			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			rs = stmt.executeQuery(sql);
+			while(rs.next())
+				staffId = rs.getString("Staff");
+			return staffId;
+		} catch (SQLException e) {
+			throw e;
+		} catch (NamingException e) {
+			throw e;
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				throw e;
 			}
 		}
 	}
