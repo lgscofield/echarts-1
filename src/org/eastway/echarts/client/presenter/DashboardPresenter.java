@@ -1,7 +1,6 @@
 package org.eastway.echarts.client.presenter;
 
 import org.eastway.echarts.client.PatientServicesAsync;
-import org.eastway.echarts.client.ProductivityChart;
 import org.eastway.echarts.client.view.AlertsView;
 import org.eastway.echarts.client.view.PatientListView;
 import org.eastway.echarts.client.view.PatientTabView;
@@ -12,19 +11,19 @@ import org.eastway.echarts.client.events.OpenPatientEventHandler;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.event.logical.shared.HasSelectionHandlers;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class DashboardPresenter extends EchartsPresenter<DashboardPresenter.Display> {
 	private PatientServicesAsync patientSvc;
 
 	public interface Display extends EchartsDisplay {
-		TabLayoutPanel getTabPanel();
+		HasSelectionHandlers<Integer> getPanel();
 
-		ProductivityChart getChart();
+		void setChartVisibility(boolean v);
 
 		void setAlerts(AlertsPresenter alerts);
 
@@ -32,9 +31,13 @@ public class DashboardPresenter extends EchartsPresenter<DashboardPresenter.Disp
 
 		void setTopPanel(TopPanelPresenter topPanelPresenter);
 
-		void setPatientTab(String patientId, Widget patientTab);
+		HasClickHandlers setPatientTab(String patientId, Widget patientTab);
 
-		HasClickHandlers getCloseTabLabel();
+		int getIndex(Widget tab);
+
+		void setSelectedTab(Integer i);
+
+		boolean removeTab(Integer i);
 	}
 
 	public DashboardPresenter(Display display, HandlerManager eventBus, PatientServicesAsync patientSvc) {
@@ -45,13 +48,13 @@ public class DashboardPresenter extends EchartsPresenter<DashboardPresenter.Disp
 	}
 
 	private void bind() {
-		display.getTabPanel().addSelectionHandler(new SelectionHandler<Integer>() {
+		display.getPanel().addSelectionHandler(new SelectionHandler<Integer>() {
 			@Override
 			public void onSelection(SelectionEvent<Integer> event) {
 				if (event.getSelectedItem() == 0) {
-					display.getChart().setVisible(true);
+					display.setChartVisibility(true);
 				} else {
-					display.getChart().setVisible(false);
+					display.setChartVisibility(false);
 				}
 			}
 		});
@@ -86,21 +89,18 @@ public class DashboardPresenter extends EchartsPresenter<DashboardPresenter.Disp
 	}
 
 	public void openPatient(String patientId) {
-		// History.newItem("t" + display.getTabPanel().getWidgetCount()
-		// + patientId, false);
 		final PatientTabPresenter patientTab = new PatientTabPresenter(
 			new PatientTabView(), eventBus, patientSvc, patientId);
 		display.setPatientTab(patientId,
-					patientTab.getDisplay().asWidget());
-		display.getCloseTabLabel().addClickHandler(new ClickHandler() {
+					patientTab.getDisplay().asWidget())
+						.addClickHandler(
+							new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				Integer idx = display.getTabPanel()
-						.getWidgetIndex(
-						    patientTab.getDisplay().asWidget());
-				if (display.getTabPanel().remove(idx))
-					display.getTabPanel()
-						.selectTab(idx - 1);
+				Integer idx = display.getIndex(
+					patientTab.getDisplay().asWidget());
+				if (display.removeTab(idx))
+					display.setSelectedTab(idx - 1);
 			}
 		});
 	}

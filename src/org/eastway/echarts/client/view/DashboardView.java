@@ -8,6 +8,7 @@ import org.eastway.echarts.client.presenter.TopPanelPresenter;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.event.logical.shared.HasSelectionHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -25,7 +26,6 @@ public class DashboardView extends Composite implements DashboardPresenter.Displ
 	interface DashboardViewUiBinder extends UiBinder<Widget, DashboardView> {}
 
 	private ProductivityChart gchart = new ProductivityChart();
-	private Label closeTab;
 
 	@UiField
 	DockLayoutPanel dockLayoutPanel;
@@ -57,13 +57,8 @@ public class DashboardView extends Composite implements DashboardPresenter.Displ
 	}
 
 	@Override
-	public TabLayoutPanel getTabPanel() {
+	public HasSelectionHandlers<Integer> getPanel() {
 		return tabLayoutPanel;
-	}
-
-	@Override
-	public ProductivityChart getChart() {
-		return gchart;
 	}
 
 	@Override
@@ -77,13 +72,8 @@ public class DashboardView extends Composite implements DashboardPresenter.Displ
 	}
 
 	@Override
-	public HasClickHandlers getCloseTabLabel() {
-		return closeTab;
-	}
-
-	@Override
-	public void setPatientTab(String patientId, Widget patientTab) {
-		closeTab = new Label();
+	public HasClickHandlers setPatientTab(String patientId, Widget patientTab) {
+		Label closeTab = new Label();
 		closeTab.setTitle("Close");
 		Label patientIdLabel = new Label(patientId);
 		HorizontalPanel tabHeader = new HorizontalPanel();
@@ -91,5 +81,29 @@ public class DashboardView extends Composite implements DashboardPresenter.Displ
 		tabHeader.add(closeTab);
 		closeTab.addStyleName("close-Tab");
 		tabLayoutPanel.add(patientTab, tabHeader);
+		return closeTab;
+	}
+
+	@Override
+	public int getIndex(Widget tab) {
+		return tabLayoutPanel.getWidgetIndex(tab);
+	}
+
+	@Override
+	public void setSelectedTab(Integer i) {
+		tabLayoutPanel.selectTab(i);
+	}
+
+	@Override
+	public boolean removeTab(Integer i) {
+		if (tabLayoutPanel.remove(i))
+			return true;
+		else
+			return false;
+	}
+
+	@Override
+	public void setChartVisibility(boolean v) {
+		gchart.setVisible(v);
 	}
 }
