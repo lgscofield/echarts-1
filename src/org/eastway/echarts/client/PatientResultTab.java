@@ -2,6 +2,9 @@ package org.eastway.echarts.client;
 
 import java.util.HashMap;
 
+import org.eastway.echarts.client.view.IspPanelView;
+import org.eastway.echarts.client.view.ServiceHistoryView;
+
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -40,8 +43,8 @@ public class PatientResultTab implements SelectionHandler<TreeItem> {
 	private PersonalDataPanel personalDataPanel;
 	private ProgressNotePanel progressNote;
 	private MessagePanel messagePanel;
-	private ServiceHistory serviceHistoryPanel;
-	private IspPanel ispPanel;
+	private ServiceHistoryView serviceHistoryPanel;
+	private IspPanelView ispPanel;
 
 	public PatientResultTab(String patientId, TabLayoutPanel tp, PatientServicesAsync patientSvc) {
 		this.patientId = patientId;
@@ -55,8 +58,8 @@ public class PatientResultTab implements SelectionHandler<TreeItem> {
 		personalDataPanel = new PersonalDataPanel(patientId, patientSvc);
 		progressNote = new ProgressNotePanel(patientId, patientSvc);
 		messagePanel = new MessagePanel(patientId, patientSvc);
-		serviceHistoryPanel = new ServiceHistory(patientId);
-		ispPanel = new IspPanel(patientId);
+		serviceHistoryPanel = new ServiceHistoryView(patientId);
+		ispPanel = new IspPanelView(patientId);
 	}
 
 	private void getPatientResultTab() {

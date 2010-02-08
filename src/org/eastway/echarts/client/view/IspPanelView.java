@@ -1,4 +1,4 @@
-package org.eastway.echarts.client;
+package org.eastway.echarts.client.view;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SpanElement;
@@ -13,11 +13,11 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class IspPanel extends Composite {
+public class IspPanelView extends Composite {
 
 	private static IspPanelUiBinder uiBinder = GWT.create(IspPanelUiBinder.class);
 
-	interface IspPanelUiBinder extends UiBinder<Widget, IspPanel> {}
+	interface IspPanelUiBinder extends UiBinder<Widget, IspPanelView> {}
 
 	@UiField
 	SpanElement patientId;
@@ -64,7 +64,7 @@ public class IspPanel extends Composite {
 	@UiField
 	Button G1add, add;
 
-	public IspPanel(String patientId) {
+	public IspPanelView(String patientId) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.patientId.setInnerText(patientId);
 	}

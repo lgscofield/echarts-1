@@ -14,7 +14,6 @@ import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
 
-import org.eastway.echarts.client.IspPanel;
 import org.eastway.echarts.client.MessagePanel;
 
 public class PatientTabView extends Composite implements PatientTabPresenter.Display {
@@ -31,7 +30,7 @@ public class PatientTabView extends Composite implements PatientTabPresenter.Dis
 	private TreeItem personal, demographics, progressNote, messages,
 			addMessage, treatmentPlan, serviceHistory;
 
-	private IspPanel ispPanel;
+	private IspPanelView ispPanel;
 	private MessagePanel messagePanel;
 
 	public PatientTabView() {
@@ -86,7 +85,7 @@ public class PatientTabView extends Composite implements PatientTabPresenter.Dis
 
 	@Override
 	public void initDisplayArea() {
-		this.ispPanel = new IspPanel(patientId);
+		this.ispPanel = new IspPanelView(patientId);
 	}
 
 	@Override
