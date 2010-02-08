@@ -21,15 +21,15 @@ public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Di
 
 		void setDisplay(HasText selectedItem);
 
-		void initDisplayArea();
-
 		void setMessages(MessagePanel messagePanel);
+
+		void initDisplayWidgets();
 	}
 
 	public PatientTabPresenter(Display display, HandlerManager eventBus, PatientServicesAsync patientSvc, String patientId) {
 		super(display, eventBus);
 		display.setPatientId(patientId);
-		display.initDisplayArea();
+		display.initDisplayWidgets();
 		display.setMessages(new MessagePanel(patientId, patientSvc));
 		bind();
 	}

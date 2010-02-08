@@ -32,6 +32,7 @@ public class PatientTabView extends Composite implements PatientTabPresenter.Dis
 
 	private IspPanelView ispPanel;
 	private MessagePanel messagePanel;
+	private ServiceHistoryView serviceHistoryPanel;
 
 	public PatientTabView() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -73,10 +74,15 @@ public class PatientTabView extends Composite implements PatientTabPresenter.Dis
 			displayArea.clear();
 			displayArea.add(messagePanel);
 		} else if (selectedItem == addMessage) {
+			displayArea.clear();
+			displayArea.add(messagePanel);
+			messagePanel.showAddMessage();
 		} else if (selectedItem == treatmentPlan) {
 			displayArea.clear();
 			displayArea.add(ispPanel);
 		} else if (selectedItem == serviceHistory) {
+			displayArea.clear();
+			displayArea.add(serviceHistoryPanel);
 		} else {
 			displayArea.clear();
 			displayArea.add(new HTML("This menu item not yet available"));
@@ -84,8 +90,9 @@ public class PatientTabView extends Composite implements PatientTabPresenter.Dis
 	}
 
 	@Override
-	public void initDisplayArea() {
+	public void initDisplayWidgets() {
 		this.ispPanel = new IspPanelView(patientId);
+		this.serviceHistoryPanel = new ServiceHistoryView(patientId);
 	}
 
 	@Override
