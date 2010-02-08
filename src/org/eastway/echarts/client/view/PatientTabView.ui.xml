@@ -6,7 +6,7 @@
 			<g:Tree ui:field='patientMenu' animationEnabled="true" />
 		</g:west>
 		<g:center>
-			<g:FlowPanel ui:field='displayArea'/>
+			<g:FlowPanel height="100%" ui:field='displayArea'/>
 		</g:center>
 	</g:DockLayoutPanel>
 </ui:UiBinder>
