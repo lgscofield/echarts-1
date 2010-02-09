@@ -8,7 +8,7 @@ import com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException;
 import com.google.gwt.user.client.rpc.InvocationException;
 
 public class HandleRpcException {
-	public static boolean sessionExpiredState = false;
+	private static boolean sessionExpiredState = false;
 
 	public HandleRpcException(Throwable caught) {
 		try {
@@ -21,11 +21,15 @@ public class HandleRpcException {
 			Window.alert(e.getMessage());
 		} catch (SessionExpiredException e) {
 			if (!sessionExpiredState) {
-				sessionExpiredState = true;
+				setSessionExpiredState(true);
 				Window.alert(e.getMessage());
 			}
 		} catch (Throwable e) {
 			Window.alert(e.getMessage());
 		}
+	}
+
+	public static void setSessionExpiredState(boolean state) {
+		sessionExpiredState = state;
 	}
 }

@@ -39,7 +39,7 @@ public class EchartsController implements ValueChangeHandler<String> {
 
 	protected void doLogout() {
 		Cookies.removeCookie("sessionId", "/");
-		HandleRpcException.sessionExpiredState = false;
+		HandleRpcException.setSessionExpiredState(false);
 		EchartsPresenter<LoginPresenter.Display> presenter = new LoginPresenter(new LoginView(), eventBus, patientSvc);
 		container.clear();
 		container.add(presenter.getDisplay().asWidget());
