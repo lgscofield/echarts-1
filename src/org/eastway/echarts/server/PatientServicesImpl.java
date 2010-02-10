@@ -299,15 +299,15 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 
 		try {
 			staffId = getStaffId(sessionId);
-			messageType = getMessageType(msg.MessageType);
+			messageType = getMessageType(msg.getMessageType());
 
 			sql = "INSERT INTO Messages(PATID, MessageType, Message, LastEditBy)"
 				+ "Values ('"
-				+ msg.PATID
+				+ msg.getPatId()
 				+ "',"
 				+ messageType
 				+ ",'"
-				+ msg.Message
+				+ msg.getMessage()
 				+ "','"
 				+ staffId + "')";
 

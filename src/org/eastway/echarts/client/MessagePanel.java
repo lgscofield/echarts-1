@@ -54,12 +54,12 @@ public class MessagePanel extends VerticalPanel implements ClickHandler {
 					msgTable.setWidget(0, 0, addLbl);
 					for (int i = 0; (m = result.get(i)) != null; i++) {
 						dateOut = DateTimeFormat.getShortDateTimeFormat()
-								.format(m.MessageDate);
+								.format(m.getMessageDate());
 						msgTable.setHTML(i, 0, "<strong>" + dateOut
-								+ "</strong> &mdash; " + m.MessageType
-								+ " &mdash; " + m.LastEditBy
+								+ "</strong> &mdash; " + m.getMessageType()
+								+ " &mdash; " + m.getLastEditBy()
 								+ "<div class='home-PatientMessage'>"
-								+ m.Message + "</div>");
+								+ m.getMessage() + "</div>");
 					}
 				}
 				messagePanel.add(addLbl);

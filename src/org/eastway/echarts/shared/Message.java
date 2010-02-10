@@ -4,41 +4,21 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
- * A structure for passing patient messages between client and server.
+ * A model for patient messages
  * 
  * @author ihilt
  * 
  */
 @SuppressWarnings("serial")
 public class Message implements Serializable {
-
-	/** 
-	 * @param ID
-	 *                The unique ID of this message in the database
-	 * @param PATID
-	 *                PATID The patient's ID
-	 * @param MessageType
-	 *                MessageType The message type
-	 * @param MessageDate
-	 *                The date this message was created
-	 * @param Message
-	 *                The body of the message
-	 * @param ParentId
-	 *                If this message is a response, the ParentId is the
-	 *                message ID this message responded to
-	 * @param LastEdit
-	 *                The date this message was last edited
-	 * @param LastEditBy
-	 *                The ID of the last user to edit the message
-	 */
-	public Integer ID;
-	public String PATID;
-	public String MessageType;
-	public Timestamp MessageDate;
-	public String Message;
-	public Integer ParentId;
-	public Timestamp LastEdit;
-	public String LastEditBy;
+	private Integer id;
+	private String patId;
+	private String messageType;
+	private Timestamp messageDate;
+	private String message;
+	private Integer parentId;
+	private Timestamp lastEdit;
+	private String lastEditBy;
 
 	public Message() {}
 
@@ -46,24 +26,82 @@ public class Message implements Serializable {
 	 * This add method is used by the client to send a patient message to
 	 * the server.
 	 */
-	public void add(String PATID, String MessageType, String Message) {
-		this.PATID = PATID;
-		this.MessageType = MessageType;
-		this.Message = Message;
+	public void add(String patId, String messageType, String message) {
+		this.patId = patId;
+		this.messageType = messageType;
+		this.message = message;
 	}
 
 	/**
 	 * This add method is used by the server to send patient messages
 	 * encapsulated in Messages to the client.
 	 */
-	public void add(Integer ID, String PATID, String MessageType,
-			Timestamp MessageDate, String Message, int ParentId, String LastEditBy) {
-		this.ID = ID;
-		this.PATID = PATID;
-		this.MessageType = MessageType;
-		this.MessageDate = MessageDate;
-		this.Message = Message;
-		this.ParentId = ParentId;
-		this.LastEditBy = LastEditBy;
+	public void add(Integer id, String patId, String messageType,
+			Timestamp messageDate, String message,
+			Integer parentId, String lastEditBy) {
+		this.id = id;
+		this.patId = patId;
+		this.messageType = messageType;
+		this.messageDate = messageDate;
+		this.message = message;
+		this.parentId = parentId;
+		this.lastEditBy = lastEditBy;
+	}
+
+	/**
+	 * Returns the unique ID of this message in the database
+	 */
+	public Integer getId() {
+		return id;
+	}
+
+	/**
+	 * Returns the patient's id
+	 */
+	public String getPatId() {
+		return patId;
+	}
+
+	/**
+	 * Returns the message type
+	 */
+	public String getMessageType() {
+		return messageType;
+	}
+
+	/**
+	 * Returns the date this message was created
+	 */
+	public Timestamp getMessageDate() {
+		return messageDate;
+	}
+
+	/**
+	 * Returns the body of the message
+	 */
+	public String getMessage() {
+		return message;
+	}
+
+	/**
+	 * If this message is a response, the parentId is the message id this
+	 * message responded to
+	 */
+	public Integer getParentId() {
+		return parentId;
+	}
+
+	/**
+	 * Returns the date this message was last edited
+	 */
+	public Timestamp getLastEdit() {
+		return lastEdit;
+	}
+
+	/**
+	 * Returns the last staff id used to edit this message
+	 */
+	public String getLastEditBy() {
+		return lastEditBy;
 	}
 }
