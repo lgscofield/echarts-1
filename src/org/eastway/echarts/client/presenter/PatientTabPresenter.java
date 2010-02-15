@@ -1,6 +1,8 @@
 package org.eastway.echarts.client.presenter;
 
 import org.eastway.echarts.client.PatientServicesAsync;
+import org.eastway.echarts.client.presenter.ServiceHistoryPresenter;
+import org.eastway.echarts.client.view.ServiceHistoryView;
 
 import com.google.gwt.event.logical.shared.HasSelectionHandlers;
 import com.google.gwt.event.logical.shared.SelectionEvent;
@@ -8,38 +10,49 @@ import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.TreeItem;
-
-import org.eastway.echarts.client.MessagePanel;
+import com.google.gwt.user.client.ui.Widget;
 
 public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Display> {
 	public interface Display extends EchartsDisplay {
-		void setPatientId(String patientId);
+		HasSelectionHandlers<TreeItem> getMenu();
 
-		String getPatientId();
-
-		HasSelectionHandlers<TreeItem> getPatientMenu();
-
-		void setDisplay(HasText selectedItem);
-
-		void setMessages(MessagePanel messagePanel);
-
-		void initDisplayWidgets();
+		void setDisplay(Widget selectedItem);
 	}
 
-	public PatientTabPresenter(Display display, HandlerManager eventBus, PatientServicesAsync patientSvc, String patientId) {
+	private HandlerManager eventBus;
+	private PatientServicesAsync patientSvc;
+	private String patientId;
+
+	private ServiceHistoryPresenter serviceHistory;
+
+	public PatientTabPresenter(Display display, HandlerManager eventBus,
+					PatientServicesAsync patientSvc,
+							String patientId) {
 		super(display, eventBus);
-		display.setPatientId(patientId);
-		display.initDisplayWidgets();
-		display.setMessages(new MessagePanel(patientId, patientSvc));
+		this.eventBus = eventBus;
+		this.patientSvc = patientSvc;
+		this.patientId = patientId;
 		bind();
 	}
 
 	private void bind() {
-		display.getPatientMenu().addSelectionHandler(new SelectionHandler<TreeItem>() {
+		display.getMenu().addSelectionHandler(new SelectionHandler<TreeItem>() {
 			@Override
 			public void onSelection(SelectionEvent<TreeItem> event) {
-				display.setDisplay(event.getSelectedItem());
+				setDisplay(event.getSelectedItem());
 			}
 		});
+	}
+
+	private void setDisplay(TreeItem selectedItem) {
+		Widget menuItemUserObject = (Widget)selectedItem.getUserObject();
+		if (menuItemUserObject.getClass() == ServiceHistoryView.class) {
+			if (serviceHistory == null)
+				serviceHistory = new ServiceHistoryPresenter(
+					(ServiceHistoryView)menuItemUserObject,
+					 eventBus,
+					patientSvc, patientId);
+		}
+		display.setDisplay(menuItemUserObject);
 	}
 }

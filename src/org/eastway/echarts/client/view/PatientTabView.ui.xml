@@ -3,7 +3,7 @@
 		xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<g:DockLayoutPanel unit='PX'>
 		<g:west size='150'>
-			<g:Tree ui:field='patientMenu' animationEnabled="true" />
+			<g:Tree ui:field='menu' animationEnabled="true" />
 		</g:west>
 		<g:center>
 			<g:FlowPanel height="100%" ui:field='displayArea'/>
