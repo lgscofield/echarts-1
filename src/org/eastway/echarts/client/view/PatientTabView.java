@@ -1,6 +1,7 @@
 package org.eastway.echarts.client.view;
 
 import org.eastway.echarts.client.presenter.PatientTabPresenter;
+import org.eastway.echarts.client.view.MessagesView;
 import org.eastway.echarts.client.view.ServiceHistoryView;
 
 import com.google.gwt.event.logical.shared.HasSelectionHandlers;
@@ -44,9 +45,9 @@ public class PatientTabView extends Composite implements PatientTabPresenter.Dis
 	}
 
 	@Override
-	public void setDisplay(Widget menuItemUserObject) {
+	public void setDisplay(Object view) {
 		displayArea.clear();
-		displayArea.add(menuItemUserObject);
+		displayArea.add((Widget)view);
 	}
 
 	private void buildMenu() {
@@ -57,6 +58,7 @@ public class PatientTabView extends Composite implements PatientTabPresenter.Dis
 		progressNote = menu.addItem("Progress Note");
 
 		messages = menu.addItem("Messages");
+		messages.setUserObject(new MessagesView());
 
 		addMessage = messages.addItem("Add");
 
@@ -64,5 +66,10 @@ public class PatientTabView extends Composite implements PatientTabPresenter.Dis
 
 		serviceHistory = menu.addItem("Service History");
 		serviceHistory.setUserObject(new ServiceHistoryView());
+	}
+
+	@Override
+	public Object getView(TreeItem selectedItem) {
+		return selectedItem.getUserObject();
 	}
 }
