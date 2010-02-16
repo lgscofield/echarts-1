@@ -2,11 +2,13 @@ package org.eastway.echarts.client.presenter;
 
 import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.presenter.AddMessagePresenter;
+import org.eastway.echarts.client.presenter.IspPresenter;
 import org.eastway.echarts.client.presenter.MessagesPresenter;
 import org.eastway.echarts.client.presenter.PersonalPresenter;
 import org.eastway.echarts.client.presenter.ProgressNotePresenter;
 import org.eastway.echarts.client.presenter.ServiceHistoryPresenter;
 import org.eastway.echarts.client.view.AddMessageView;
+import org.eastway.echarts.client.view.IspView;
 import org.eastway.echarts.client.view.MessagesView;
 import org.eastway.echarts.client.view.PersonalView;
 import org.eastway.echarts.client.view.ProgressNoteView;
@@ -35,6 +37,7 @@ public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Di
 	private MessagesPresenter messages;
 	private ProgressNotePresenter progressNote;
 	private PersonalPresenter personal;
+	private IspPresenter isp;
 
 	public PatientTabPresenter(Display display, HandlerManager eventBus,
 					PatientServicesAsync patientSvc,
@@ -80,6 +83,11 @@ public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Di
 			if (personal == null)
 				personal = new PersonalPresenter(
 					(PersonalView)view, eventBus,
+					patientSvc, patientId);
+		} else if (view.getClass() == IspView.class) {
+			if (isp == null)
+				isp = new IspPresenter(
+					(IspView)view, eventBus,
 					patientSvc, patientId);
 		}
 		display.setDisplay(view);

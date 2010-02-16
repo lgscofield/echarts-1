@@ -64,6 +64,7 @@ public class PatientTabView extends Composite implements PatientTabPresenter.Dis
 		addMessage.setUserObject(new AddMessageView());
 
 		treatmentPlan = menu.addItem("Treatment Plan");
+		treatmentPlan.setUserObject(new IspView());
 
 		serviceHistory = menu.addItem("Service History");
 		serviceHistory.setUserObject(new ServiceHistoryView());

@@ -1,5 +1,7 @@
 package org.eastway.echarts.client.view;
 
+import org.eastway.echarts.client.presenter.IspPresenter;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -13,24 +15,21 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class IspView extends Composite {
+public class IspView extends Composite implements IspPresenter.Display {
 
 	private static IspViewUiBinder uiBinder = GWT.create(IspViewUiBinder.class);
 
 	interface IspViewUiBinder extends UiBinder<Widget, IspView> {}
 
-	@UiField
-	SpanElement patientId;
+	@UiField SpanElement patientId;
 
-	@UiField
-	TextBox GATreatRecommendNo, GADated, GAStartDate,
+	@UiField TextBox GATreatRecommendNo, GADated, GAStartDate,
 			GATargetCompletionDate, GAAdjustedTargetDate,
 			GAReasonforAdjustment,
 			GAClientInitials, GAO1Duration, GAO1StartDate,
 			AnticipatedDate;
 
-	@UiField
-	TextArea GAOutcomes, GAGoalCollaboration, GADesiredResults,
+	@UiField TextArea GAOutcomes, GAGoalCollaboration, GADesiredResults,
 			GAStrengthsUsedtoMeetGoal, GASkillsKnowledgeNeeded,
 			GANaturalCommunitySupports,
 			GAO1Desc, GAO1ClientWill, GAO1OtherWill, GAO1TherInt1,
@@ -46,26 +45,31 @@ public class IspView extends Composite {
 			ContactAndTitle5,
 			ServicesProvided5, LevelofCare;
 
-	@UiField
-	RadioButton GAClientReviewedYes, GAClientReviewedNo,
+	@UiField RadioButton GAClientReviewedYes, GAClientReviewedNo,
 			GAClientAgreesYes, GAClientAgreesNo, LevelIA, LevelIIA,
 			LevelIIIB,
 			LevelIB, LevelIIB, LevelIIIC, LevelIC, LevelIIIA,
 			LevelIV, LevelIA2,
 			LevelII, LevelIB2, LevelIII, LevelIC2;
 
-	@UiField
-	CheckBox GAO1NotClinIndicated, AoDAdultLevelofCareNA,
+	@UiField CheckBox GAO1NotClinIndicated, AoDAdultLevelofCareNA,
 			AoDYouthLevelofCareNA;
 
-	@UiField
-	ListBox GAO1ServDesc1, GAO1ServDesc2, GAO1ServDesc3;
+	@UiField ListBox GAO1ServDesc1, GAO1ServDesc2, GAO1ServDesc3;
 
-	@UiField
-	Button G1add, add;
+	@UiField Button G1add, add;
 
-	public IspView(String patientId) {
+	public IspView() {
 		initWidget(uiBinder.createAndBindUi(this));
+	}
+
+	@Override
+	public Widget asWidget() {
+		return this;
+	}
+
+	@Override
+	public void setPatientId(String patientId) {
 		this.patientId.setInnerText(patientId);
 	}
 }
