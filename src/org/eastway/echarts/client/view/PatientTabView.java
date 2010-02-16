@@ -54,6 +54,7 @@ public class PatientTabView extends Composite implements PatientTabPresenter.Dis
 		demographics = menu.addItem("Demographics");
 
 		progressNote = menu.addItem("Progress Note");
+		progressNote.setUserObject(new ProgressNoteView());
 
 		messages = menu.addItem("Messages");
 		messages.setUserObject(new MessagesView());

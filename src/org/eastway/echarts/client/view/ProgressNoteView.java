@@ -1,93 +1,70 @@
-package org.eastway.echarts.client;
+package org.eastway.echarts.client.view;
 
+import org.eastway.echarts.client.presenter.ProgressNotePresenter;
 import org.eastway.echarts.shared.ServiceCode;
 import org.eastway.echarts.shared.ServiceCodes;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.HasChangeHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProgressNoteView extends Composite {
-	private final PatientServicesAsync patientSvc;
-	private static ProgressNoteViewUiBinder uiBinder = GWT.create(ProgressNoteViewUiBinder.class);
+public class ProgressNoteView extends Composite implements ProgressNotePresenter.Display {
+	private static ProgressNoteViewUiBinder uiBinder = GWT
+			.create(ProgressNoteViewUiBinder.class);
 
-	interface ProgressNoteViewUiBinder extends UiBinder<Widget, ProgressNoteView> {}
+	interface ProgressNoteViewUiBinder extends
+				UiBinder<Widget, ProgressNoteView> {}
 
-	@UiField
-	SpanElement nameSpan;
+	@UiField SpanElement patientId;
 
-	@UiField
-	ListBox serviceCodesListBox;
+	@UiField ListBox serviceCodesListBox;
 
-	@UiField
-	HTML progressNoteBody;
+	@UiField HTML progressNoteBody;
 
-	public ProgressNoteView(String firstName, PatientServicesAsync patientSvc) {
-		this.patientSvc = patientSvc;
+	public ProgressNoteView() {
 		initWidget(uiBinder.createAndBindUi(this));
-		nameSpan.setInnerText(firstName);
-		AsyncCallback<ServiceCodes> serviceCodesCallback = new AsyncCallback<ServiceCodes>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				new HandleRpcException(caught);
-			}
-
-			@Override
-			public void onSuccess(ServiceCodes result) {
-				// Make the first item empty so the change event
-				// works
-				// for the rest of the service codes
-				serviceCodesListBox.addItem("");
-				int i = 0;
-				while (result.get(i) != null) {
-					ServiceCode serviceCode = result.get(i++);
-					serviceCodesListBox.addItem(serviceCode.getService()
-							.toString()
-							+ " " + serviceCode.getDescription(), serviceCode
-							.getTemplateId());
-				}
-			}
-		};
-		patientSvc.getServiceCodes(Cookies.getCookie("sessionId"), serviceCodesCallback);
 	}
 
-	private void getNote(String service) {
-		AsyncCallback<String> callback = new AsyncCallback<String>() {
-			@Override
-			public void onFailure(Throwable caught) {
-				new HandleRpcException(caught);
-			}
-
-			@Override
-			public void onSuccess(String result) {
-				progressNoteBody.setHTML(result);
-			}
-		};
-		patientSvc.getProgressNoteBody(service, Cookies.getCookie("sessionId"), callback);
-		return;
+	@Override
+	public Widget asWidget() {
+		return this;
 	}
 
-	@UiHandler("serviceCodesListBox")
-	void handleChange(ChangeEvent event) {
-		String service = null;
-		ListBox sender = (ListBox) event.getSource();
-		int i = sender.getSelectedIndex();
-		service = sender.getValue(i);
-		// IE interprets a null string as a string equal to "null"
-		if (service.isEmpty() || service.matches("null")) {
-			Window.alert("There is no template associated with this service.");
-		} else
-			getNote(service);
+	@Override
+	public HasChangeHandlers getServiceCodesList() {
+		return serviceCodesListBox;
+	}
+
+	@Override
+	public void setData(ServiceCodes data) {
+		// make the first item empty so the change event works for the
+		// reset of the service codes
+		serviceCodesListBox.addItem("");
+		for (int i = 0; data.get(i) != null; i++) {
+			ServiceCode serviceCode = data.get(i);
+			serviceCodesListBox.addItem(serviceCode.getService()
+					.toString()
+					+ " " + serviceCode.getDescription(),
+					serviceCode.getTemplateId());
+		}
+	}
+
+	@Override
+	public String getSelectedServiceCode(ChangeEvent event) {
+		ListBox selectedItem = (ListBox)event.getSource();
+		int i = selectedItem.getSelectedIndex();
+		return selectedItem.getValue(i);
+	}
+
+	@Override
+	public void setNoteBody(String body) {
+		progressNoteBody.setHTML(body);
 	}
 }

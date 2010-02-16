@@ -3,9 +3,11 @@ package org.eastway.echarts.client.presenter;
 import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.presenter.AddMessagePresenter;
 import org.eastway.echarts.client.presenter.MessagesPresenter;
+import org.eastway.echarts.client.presenter.ProgressNotePresenter;
 import org.eastway.echarts.client.presenter.ServiceHistoryPresenter;
 import org.eastway.echarts.client.view.AddMessageView;
 import org.eastway.echarts.client.view.MessagesView;
+import org.eastway.echarts.client.view.ProgressNoteView;
 import org.eastway.echarts.client.view.ServiceHistoryView;
 
 import com.google.gwt.event.logical.shared.HasSelectionHandlers;
@@ -29,6 +31,7 @@ public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Di
 
 	private ServiceHistoryPresenter serviceHistory;
 	private MessagesPresenter messages;
+	private ProgressNotePresenter progressNote;
 
 	public PatientTabPresenter(Display display, HandlerManager eventBus,
 					PatientServicesAsync patientSvc,
@@ -65,6 +68,11 @@ public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Di
 				(AddMessageView)view, eventBus, patientSvc,
 					patientId);
 			return;
+		} else if (view.getClass() == ProgressNoteView.class) {
+			if (progressNote == null)
+				progressNote = new ProgressNotePresenter(
+					(ProgressNoteView)view, eventBus,
+					patientSvc, patientId);
 		}
 		display.setDisplay(view);
 	}
