@@ -50,6 +50,7 @@ public class PatientTabView extends Composite implements PatientTabPresenter.Dis
 
 	private void buildMenu() {
 		personal = menu.addItem("Personal");
+		personal.setUserObject(new PersonalView());
 
 		demographics = menu.addItem("Demographics");
 
