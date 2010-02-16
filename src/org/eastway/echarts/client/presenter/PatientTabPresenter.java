@@ -12,7 +12,6 @@ import com.google.gwt.event.logical.shared.HasSelectionHandlers;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.TreeItem;
 
 public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Display> {
@@ -30,7 +29,6 @@ public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Di
 
 	private ServiceHistoryPresenter serviceHistory;
 	private MessagesPresenter messages;
-	private AddMessagePresenter addMessage;
 
 	public PatientTabPresenter(Display display, HandlerManager eventBus,
 					PatientServicesAsync patientSvc,
@@ -63,7 +61,7 @@ public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Di
 					(MessagesView)view, eventBus,
 					patientSvc, patientId);
 		} else if (view.getClass() == AddMessageView.class) {
-			addMessage = new AddMessagePresenter(
+			new AddMessagePresenter(
 				(AddMessageView)view, eventBus, patientSvc,
 					patientId);
 			return;

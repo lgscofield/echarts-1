@@ -3,8 +3,6 @@ package org.eastway.echarts.client.view;
 import java.util.ArrayList;
 
 import org.eastway.echarts.client.presenter.AddMessagePresenter;
-import org.eastway.echarts.shared.Message;
-import org.eastway.echarts.shared.Message;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;

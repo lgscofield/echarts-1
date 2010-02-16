@@ -59,8 +59,7 @@ public class MessagesPresenter extends EchartsPresenter<MessagesPresenter.Displa
 	}
 
 	private void showAddMessage() {
-		AddMessagePresenter addMessage =
-			new AddMessagePresenter(new AddMessageView(),
+		new AddMessagePresenter(new AddMessageView(),
 				eventBus, patientSvc, patientId);
 	}
 }
