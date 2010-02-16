@@ -126,6 +126,11 @@ html * {
 	border-bottom-width: 0 !important;
 }
 
+.gwt-TabLayoutPanel .gwt-TabLayoutPanelContent {
+	border: 0 none transparent;
+	padding: 0;
+}
+
 .home-PatientMessage {
 	margin-left: 2em;
 }
