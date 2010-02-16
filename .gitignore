@@ -10,3 +10,6 @@ war/WEB-INF/classes
 
 # Gwt servlet is automatically copied here, so ignore it for tracking
 war/WEB-INF/lib/gwt-servlet.jar
+
+# We don't want to track war files either
+*.war
