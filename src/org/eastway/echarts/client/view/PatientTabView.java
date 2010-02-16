@@ -1,6 +1,7 @@
 package org.eastway.echarts.client.view;
 
 import org.eastway.echarts.client.presenter.PatientTabPresenter;
+import org.eastway.echarts.client.view.AddMessageView;
 import org.eastway.echarts.client.view.MessagesView;
 import org.eastway.echarts.client.view.ServiceHistoryView;
 
@@ -61,6 +62,7 @@ public class PatientTabView extends Composite implements PatientTabPresenter.Dis
 		messages.setUserObject(new MessagesView());
 
 		addMessage = messages.addItem("Add");
+		addMessage.setUserObject(new AddMessageView());
 
 		treatmentPlan = menu.addItem("Treatment Plan");
 

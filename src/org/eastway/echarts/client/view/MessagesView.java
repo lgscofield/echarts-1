@@ -7,10 +7,12 @@ import org.eastway.echarts.shared.Message;
 import org.eastway.echarts.shared.Messages;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -23,6 +25,7 @@ public class MessagesView extends Composite implements MessagesPresenter.Display
 			UiBinder<Widget, MessagesView> {}
 
 	@UiField FlowPanel messages;
+	@UiField Button add;
 
 	public MessagesView() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -54,5 +57,10 @@ public class MessagesView extends Composite implements MessagesPresenter.Display
 			+ m.getLastEditBy()
 			+ "<div class='home-PatientMessage'>"
 			+ m.getMessage() + "</div>");
+	}
+
+	@Override
+	public HasClickHandlers getAddButton() {
+		return add;
 	}
 }
