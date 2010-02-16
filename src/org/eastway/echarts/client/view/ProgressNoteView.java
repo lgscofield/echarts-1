@@ -17,11 +17,11 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProgressNotePanel extends Composite {
+public class ProgressNoteView extends Composite {
 	private final PatientServicesAsync patientSvc;
-	private static ProgressNotePanelUiBinder uiBinder = GWT.create(ProgressNotePanelUiBinder.class);
+	private static ProgressNoteViewUiBinder uiBinder = GWT.create(ProgressNoteViewUiBinder.class);
 
-	interface ProgressNotePanelUiBinder extends UiBinder<Widget, ProgressNotePanel> {}
+	interface ProgressNoteViewUiBinder extends UiBinder<Widget, ProgressNoteView> {}
 
 	@UiField
 	SpanElement nameSpan;
@@ -32,7 +32,7 @@ public class ProgressNotePanel extends Composite {
 	@UiField
 	HTML progressNoteBody;
 
-	public ProgressNotePanel(String firstName, PatientServicesAsync patientSvc) {
+	public ProgressNoteView(String firstName, PatientServicesAsync patientSvc) {
 		this.patientSvc = patientSvc;
 		initWidget(uiBinder.createAndBindUi(this));
 		nameSpan.setInnerText(firstName);
