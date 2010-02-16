@@ -1,6 +1,9 @@
-package org.eastway.echarts.client;
+package org.eastway.echarts.client.view;
 
 import java.util.HashMap;
+
+import org.eastway.echarts.client.HandleRpcException;
+import org.eastway.echarts.client.PatientServicesAsync;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -11,17 +14,17 @@ import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Widget;
 
-public class PersonalDataPanel extends Widget {
+public class PersonalView extends Widget {
 	private final PatientServicesAsync patientSvc;
-	private static PersonalDataPanelUiBinder uiBinder = GWT.create(PersonalDataPanelUiBinder.class);
+	private static PersonalViewUiBinder uiBinder = GWT.create(PersonalViewUiBinder.class);
 	private String firstName;
 
-	interface PersonalDataPanelUiBinder extends UiBinder<Element, PersonalDataPanel> {}
+	interface PersonalViewUiBinder extends UiBinder<Element, PersonalView> {}
 
 	@UiField
 	SpanElement PATID, Name, DOB, SSN;
 
-	public PersonalDataPanel(String firstName, PatientServicesAsync patientSvc) {
+	public PersonalView(String firstName, PatientServicesAsync patientSvc) {
 		this.patientSvc = patientSvc;
 		this.firstName = firstName;
 		setElement(uiBinder.createAndBindUi(this));
