@@ -13,11 +13,11 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class IspPanelView extends Composite {
+public class IspView extends Composite {
 
-	private static IspPanelUiBinder uiBinder = GWT.create(IspPanelUiBinder.class);
+	private static IspViewUiBinder uiBinder = GWT.create(IspViewUiBinder.class);
 
-	interface IspPanelUiBinder extends UiBinder<Widget, IspPanelView> {}
+	interface IspViewUiBinder extends UiBinder<Widget, IspView> {}
 
 	@UiField
 	SpanElement patientId;
@@ -64,7 +64,7 @@ public class IspPanelView extends Composite {
 	@UiField
 	Button G1add, add;
 
-	public IspPanelView(String patientId) {
+	public IspView(String patientId) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.patientId.setInnerText(patientId);
 	}
