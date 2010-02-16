@@ -1,103 +1,101 @@
+<?xml version="1.0"?>
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+  <ui:style type="org.eastway.echarts.client.view.LoginView.LoginStyle">
+	@if user.agent ie6 {
+		.banner {
+			background-image: url('css/images/echarts-logo.gif');
+			background-repeat: no-repeat;
+			background-position: top center;
+			height: 64px;
+			margin-top: 30px;
+		}
+	} @else {
+		@sprite .banner {
+			gwt-image: 'logo';
+			margin-left: 175px;
+			margin-top: 30px;
+		}
+	}
 
-	<ui:style type='org.eastway.echarts.client.view.LoginView.LoginStyle'>
-		@if user.agent ie6 {
-			.banner {
-				background-image: url('css/images/echarts-logo.gif');
-				background-repeat: no-repeat;
-				background-position: top center;
-				height: 64px;
-				margin-top: 30px;
-			}
-		} @else {
-			@sprite .banner {
-				gwt-image: 'logo';
-				margin-left: 175px;
-				margin-top: 30px;
-			}
+	@if user.agent ie6 {
+		.center {
+			text-align: center;
 		}
 
-		@if user.agent ie6 {
-			.center {
-				text-align: center;
-			}
-
-			.main-panel {
-				width: 600px;
-				text-align: left;
-			}
-		} @else {
-			.center {
-				width: 600px;
-				margin: 0px auto;
-			}
-
-			.main-panel {}
+		.main-panel {
+			width: 600px;
+			text-align: left;
+		}
+	} @else {
+		.center {
+			width: 600px;
+			margin: 0px auto;
 		}
 
-		.header {
-			font-weight: 700;
-			font-size: 18px;
-			line-height: 1.2em;
-			border-bottom: 1px dotted #6b9ef1;
-			color: #5f95ef;
-			margin-bottom: 1em;
-			padding-top: 1em;
-		}
+		.main-panel {}
+	}
 
-		.label {
-			font-size: 13px;
-			display: block;
-			color: #797979;
-			font-weight: 700;
-			line-height: 1.4em;
-		}
+	.header {
+		font-weight: 700;
+		font-size: 18px;
+		line-height: 1.2em;
+		border-bottom: 1px dotted #6b9ef1;
+		color: #5f95ef;
+		margin-bottom: 1em;
+		padding-top: 1em;
+	}
 
-		.inputbox {
-			width: 220px;
-			padding: 6px;
-			border: 1px solid #cecece;
-			margin-bottom: 5px;
-		}
+	.label {
+		font-size: 13px;
+		display: block;
+		color: #797979;
+		font-weight: 700;
+		line-height: 1.4em;
+	}
 
-		.inputerror {
-			background: #f8dbdb;
-			border-color: #e77776;
-		}
+	.inputbox {
+		width: 220px;
+		padding: 6px;
+		border: 1px solid #cecece;
+		margin-bottom: 5px;
+	}
 
-		.error {
-			font-size: 12px;
-			margin-top: 7px;
-			margin-left: 10px;
-			font-style: italic;
-			color: #e46c6e;
-		}
-	</ui:style>
+	.inputerror {
+		background: #f8dbdb;
+		border-color: #e77776;
+	}
 
-	<ui:image field='logo' src='../echarts-logo.gif' />
-
-	<g:DockLayoutPanel unit='EM'>
-		<g:center>
-			<g:HTMLPanel styleName='{style.center}'>
-				<g:FlowPanel styleName='{style.main-panel}'>
-					<g:HTMLPanel><div class='{style.banner}'/></g:HTMLPanel>
-					<g:Label styleName='{style.header}'>Login to ECharts</g:Label>
-					<g:Label styleName='{style.label}'>Username</g:Label>
-					<g:HorizontalPanel>
-						<g:TextBox styleName='{style.inputbox}' ui:field='usernameTxtBox' />
-						<g:Label styleName='{style.error}' ui:field='username_err' />
-					</g:HorizontalPanel>
-					<g:Label styleName='{style.label}'>Password</g:Label>
-					<g:HorizontalPanel>
-						<g:PasswordTextBox styleName='{style.inputbox}'
-							ui:field='passwordTxtBox' />
-						<g:Label styleName='{style.error}' ui:field='password_err' />
-					</g:HorizontalPanel>
-					<g:Button ui:field='loginBtn'>Login</g:Button>
-				</g:FlowPanel>
-			</g:HTMLPanel>
-		</g:center>
-	</g:DockLayoutPanel>
+	.error {
+		font-size: 12px;
+		margin-top: 7px;
+		margin-left: 10px;
+		font-style: italic;
+		color: #e46c6e;
+	}
+  </ui:style>
+  <ui:image field="logo" src="../echarts-logo.gif"/>
+  <g:DockLayoutPanel unit="EM">
+    <g:center>
+      <g:HTMLPanel styleName="{style.center}">
+        <g:FlowPanel styleName="{style.main-panel}">
+          <g:HTMLPanel>
+            <div class="{style.banner}"/>
+          </g:HTMLPanel>
+          <g:Label styleName="{style.header}">Login to ECharts</g:Label>
+          <g:Label styleName="{style.label}">Username</g:Label>
+          <g:HorizontalPanel>
+            <g:TextBox styleName="{style.inputbox}" ui:field="usernameTxtBox"/>
+            <g:Label styleName="{style.error}" ui:field="username_err"/>
+          </g:HorizontalPanel>
+          <g:Label styleName="{style.label}">Password</g:Label>
+          <g:HorizontalPanel>
+            <g:PasswordTextBox styleName="{style.inputbox}" ui:field="passwordTxtBox"/>
+            <g:Label styleName="{style.error}" ui:field="password_err"/>
+          </g:HorizontalPanel>
+          <g:Button ui:field="loginBtn">Login</g:Button>
+        </g:FlowPanel>
+      </g:HTMLPanel>
+    </g:center>
+  </g:DockLayoutPanel>
 </ui:UiBinder>

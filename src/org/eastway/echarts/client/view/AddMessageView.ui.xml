@@ -1,22 +1,22 @@
+<?xml version="1.0"?>
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
   <ui:style>
 	.h {
 		float: right;
 	}
   </ui:style>
   <g:FlowPanel>
-    <g:DialogBox ui:field='db' modal='false'>
+    <g:DialogBox ui:field="db" modal="false">
       <g:FlowPanel>
-        <g:TextArea ui:field='message' width='400px' height='400px'/>
+        <g:TextArea ui:field="message" width="400px" height="400px"/>
         <g:FlowPanel>
-          <g:FlowPanel addStyleNames='{style.h}'>
-            <g:ListBox ui:field='messageTypes'/>
-            <g:Button ui:field='saveButton'>Save</g:Button>
-            <g:Button ui:field='closeButton'>Close</g:Button>
+          <g:FlowPanel addStyleNames="{style.h}">
+            <g:ListBox ui:field="messageTypes"/>
+            <g:Button ui:field="saveButton">Save</g:Button>
+            <g:Button ui:field="closeButton">Close</g:Button>
           </g:FlowPanel>
-         </g:FlowPanel>
+        </g:FlowPanel>
       </g:FlowPanel>
     </g:DialogBox>
   </g:FlowPanel>

@@ -1,25 +1,26 @@
+<?xml version="1.0"?>
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder">
-	<ui:style>
-		.serviceTable {
-			border: 1px solid black;
-		}
-		
-		.important {
-			font-weight: bold;
-		}
-	</ui:style>
-	<div>
-		<table width="900" border="1" class="{style.serviceTable}">
-			<tr>
-				<th>Ticket#</th>
-				<th>Date</th>
-				<th>Service</th>
-				<th>BeginTime</th>
-				<th>EndTime</th>
-				<th>Minutes</th>
-			</tr>
-		</table>
-		<span class="{style.important}" ui:field="nameSpan" />
-	</div>
+  <ui:style>
+	.serviceTable {
+		border: 1px solid black;
+	}
+
+	.important {
+		font-weight: bold;
+	}
+  </ui:style>
+  <div>
+    <table width="900" border="1" class="{style.serviceTable}">
+      <tr>
+        <th>Ticket#</th>
+        <th>Date</th>
+        <th>Service</th>
+        <th>BeginTime</th>
+        <th>EndTime</th>
+        <th>Minutes</th>
+      </tr>
+    </table>
+    <span class="{style.important}" ui:field="nameSpan"/>
+  </div>
 </ui:UiBinder>
