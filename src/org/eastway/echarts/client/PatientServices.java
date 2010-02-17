@@ -1,12 +1,12 @@
 package org.eastway.echarts.client;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Vector;
 
 import org.eastway.echarts.shared.DbException;
 import org.eastway.echarts.shared.Message;
 import org.eastway.echarts.shared.Messages;
+import org.eastway.echarts.shared.Patient;
 import org.eastway.echarts.shared.ServiceCodes;
 import org.eastway.echarts.shared.SessionExpiredException;
 
@@ -15,7 +15,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 @RemoteServiceRelativePath("patientServices")
 public interface PatientServices extends RemoteService {
-	public HashMap<String, String> getPatientDemo(String cid, String sessionId) throws SessionExpiredException, DbException;
+	public Patient getPatient(String cid, String sessionId) throws SessionExpiredException, DbException;
 
 	public Vector<String> getPatientList(String sessionId) throws SessionExpiredException, DbException;
 

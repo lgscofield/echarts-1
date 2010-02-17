@@ -1,8 +1,7 @@
 package org.eastway.echarts.client.view;
 
-import java.util.HashMap;
-
 import org.eastway.echarts.client.presenter.PersonalPresenter;
+import org.eastway.echarts.shared.Patient;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -28,10 +27,10 @@ public class PersonalView extends Widget implements PersonalPresenter.Display {
 	}
 
 	@Override
-	public void setData(HashMap<String, String> data) {
-		Name.setInnerText(data.get("Name"));
-		DOB.setInnerText(data.get("DOB"));
-		SSN.setInnerText(data.get("SSN"));
-		PATID.setInnerText(data.get("PATID"));
+	public void setData(Patient data) {
+		Name.setInnerText(data.getName());
+		DOB.setInnerText(data.getDob().toString());
+		SSN.setInnerText(data.getSsn());
+		PATID.setInnerText(data.getPatientId());
 	}
 }

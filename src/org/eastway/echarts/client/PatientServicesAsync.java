@@ -1,17 +1,17 @@
 package org.eastway.echarts.client;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Vector;
 
 import org.eastway.echarts.shared.Message;
 import org.eastway.echarts.shared.Messages;
+import org.eastway.echarts.shared.Patient;
 import org.eastway.echarts.shared.ServiceCodes;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface PatientServicesAsync {
-	public void getPatientDemo(String u, String sessionId, AsyncCallback<HashMap<String, String>> callback);
+	public void getPatient(String u, String sessionId, AsyncCallback<Patient> callback);
 
 	public void getPatientList(String sessionId, AsyncCallback<Vector<String>> callback);
 

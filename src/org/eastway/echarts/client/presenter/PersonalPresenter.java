@@ -1,9 +1,8 @@
 package org.eastway.echarts.client.presenter;
 
-import java.util.HashMap;
-
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.PatientServicesAsync;
+import org.eastway.echarts.shared.Patient;
 
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.Cookies;
@@ -12,7 +11,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public class PersonalPresenter extends EchartsPresenter<PersonalPresenter.Display> {
 
 	public interface Display extends EchartsDisplay {
-		void setData(HashMap<String, String> data);
+		void setData(Patient data);
 	}
 
 	private String patientId;
@@ -27,19 +26,19 @@ public class PersonalPresenter extends EchartsPresenter<PersonalPresenter.Displa
 	}
 
 	private void setData() {
-		AsyncCallback<HashMap<String, String>> callback =
-				new AsyncCallback<HashMap<String, String>>() {
+		AsyncCallback<Patient> callback =
+				new AsyncCallback<Patient>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				new HandleRpcException(caught);
 			}
 
 			@Override
-			public void onSuccess(HashMap<String, String> data) {
+			public void onSuccess(Patient data) {
 				display.setData(data);
 			};
 		};
-		patientSvc.getPatientDemo(patientId, Cookies.getCookie("sessionId"),
+		patientSvc.getPatient(patientId, Cookies.getCookie("sessionId"),
 				callback);
 	}
 }
