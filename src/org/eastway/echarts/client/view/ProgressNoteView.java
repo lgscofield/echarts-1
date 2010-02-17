@@ -67,4 +67,9 @@ public class ProgressNoteView extends Composite implements ProgressNotePresenter
 	public void setNoteBody(String body) {
 		progressNoteBody.setHTML(body);
 	}
+
+	@Override
+	public void setPatientId(String patientId) {
+		this.patientId.setInnerText(patientId);
+	}
 }

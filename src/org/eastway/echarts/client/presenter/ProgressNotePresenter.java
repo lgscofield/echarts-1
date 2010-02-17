@@ -22,6 +22,8 @@ public class ProgressNotePresenter extends EchartsPresenter<ProgressNotePresente
 		String getSelectedServiceCode(ChangeEvent event);
 
 		void setNoteBody(String body);
+
+		void setPatientId(String patientId);
 	}
 
 	private String patientId;
@@ -59,6 +61,8 @@ public class ProgressNotePresenter extends EchartsPresenter<ProgressNotePresente
 		};
 		patientSvc.getServiceCodes(Cookies.getCookie("sessionId"),
 				callback);
+
+		display.setPatientId(patientId);
 	}
 
 	private void getService(ChangeEvent event) {
