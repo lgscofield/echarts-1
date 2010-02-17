@@ -1,5 +1,7 @@
 package org.eastway.echarts.client.presenter;
 
+import org.eastway.echarts.client.events.SavedPatientMessageEvent;
+import org.eastway.echarts.client.events.SavedPatientMessageEventHandler;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.presenter.AddMessagePresenter;
@@ -40,6 +42,13 @@ public class MessagesPresenter extends EchartsPresenter<MessagesPresenter.Displa
 				showAddMessage();
 			}
 		});
+
+		eventBus.addHandler(SavedPatientMessageEvent.TYPE,
+				new SavedPatientMessageEventHandler() {
+			public void onSavedPatientMessage(SavedPatientMessageEvent event) {
+				refresh();
+			}
+		});
 	}
 
 	private void setData() {
@@ -61,5 +70,9 @@ public class MessagesPresenter extends EchartsPresenter<MessagesPresenter.Displa
 	private void showAddMessage() {
 		new AddMessagePresenter(new AddMessageView(),
 				eventBus, patientSvc, patientId);
+	}
+
+	private void refresh() {
+		setData();
 	}
 }

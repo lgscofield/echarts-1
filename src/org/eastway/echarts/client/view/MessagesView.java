@@ -37,6 +37,7 @@ public class MessagesView extends Composite implements MessagesPresenter.Display
 
 	@Override
 	public void setData(Messages data) {
+		messages.clear();
 		Message m;
 		if (data.get(0) == null)
 			messages.add(new HTML("No Messages"));
