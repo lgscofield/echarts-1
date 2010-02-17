@@ -35,6 +35,7 @@ public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Di
 
 	private ServiceHistoryPresenter serviceHistory;
 	private MessagesPresenter messages;
+	private AddMessagePresenter addMessage;
 	private ProgressNotePresenter progressNote;
 	private PersonalPresenter personal;
 	private IspPresenter isp;
@@ -70,9 +71,12 @@ public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Di
 					(MessagesView)view, eventBus,
 					patientSvc, patientId);
 		} else if (view.getClass() == AddMessageView.class) {
-			new AddMessagePresenter(
-				(AddMessageView)view, eventBus, patientSvc,
-					patientId);
+			if (addMessage == null)
+				addMessage = new AddMessagePresenter(
+					(AddMessageView)view, eventBus, patientSvc,
+						patientId);
+			else
+				addMessage.display.show();
 			return;
 		} else if (view.getClass() == ProgressNoteView.class) {
 			if (progressNote == null)

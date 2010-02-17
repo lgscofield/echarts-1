@@ -77,9 +77,7 @@ public class AddMessageView extends Composite implements AddMessagePresenter.Dis
 
 	@Override
 	public void close() {
-		db.clear();
 		db.hide();
-		db = null;
 	}
 
 	@Override
