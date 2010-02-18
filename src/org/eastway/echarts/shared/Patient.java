@@ -24,6 +24,70 @@ public class Patient implements Serializable {
 
 	public Patient() { }
 
+	public Patient(String alias, String allergies, String caseStatus,
+			Date dob, String educationLevel, String educationType,
+			String employment, String firstName, String gender,
+			String incomeSource1, String incomeSource2,
+			String incomeSource3, Date lastEdit, String lastEditBy,
+			String lastName, String livingArrangement,
+			String maritalStatus, String name, String patientId,
+			String race, boolean sp_alcoholdrug, boolean sp_blind,
+			boolean sp_childalcdrug, boolean sp_dd, boolean sp_deaf,
+			boolean sp_domesticviolence, boolean sp_duidwi,
+			boolean sp_forensic, boolean sp_generalpopulation,
+			boolean sp_hearingimpaired, boolean sp_hivaids,
+			boolean sp_mimr, boolean sp_phydisabled,
+			boolean sp_physicalabuse, boolean sp_probationparole,
+			boolean sp_schooldropout, boolean sp_sexualabuse,
+			boolean sp_smd, boolean sp_speechimpaired,
+			boolean sp_suicidal, boolean sp_visuallyimpaired,
+			String ssn, String suffix, boolean veteran) {
+		this.alias = alias;
+		this.allergies = allergies;
+		this.caseStatus = caseStatus;
+		this.dob = dob;
+		this.educationLevel = educationLevel;
+		this.educationType = educationType;
+		this.employment = employment;
+		this.firstName = firstName;
+		this.gender = gender;
+		this.incomeSource1 = incomeSource1;
+		this.incomeSource2 = incomeSource2;
+		this.incomeSource3 = incomeSource3;
+		this.lastEdit = lastEdit;
+		this.lastEditBy = lastEditBy;
+		this.lastName = lastName;
+		this.livingArrangement = livingArrangement;
+		this.maritalStatus = maritalStatus;
+		this.name = name;
+		this.patientId = patientId;
+		this.race = race;
+		this.sp_alcoholdrug = sp_alcoholdrug;
+		this.sp_blind = sp_blind;
+		this.sp_childalcdrug = sp_childalcdrug;
+		this.sp_dd = sp_dd;
+		this.sp_deaf = sp_deaf;
+		this.sp_domesticviolence = sp_domesticviolence;
+		this.sp_duidwi = sp_duidwi;
+		this.sp_forensic = sp_forensic;
+		this.sp_generalpopulation = sp_generalpopulation;
+		this.sp_hearingimpaired = sp_hearingimpaired;
+		this.sp_hivaids = sp_hivaids;
+		this.sp_mimr = sp_mimr;
+		this.sp_phydisabled = sp_phydisabled;
+		this.sp_physicalabuse = sp_physicalabuse;
+		this.sp_probationparole = sp_probationparole;
+		this.sp_schooldropout = sp_schooldropout;
+		this.sp_sexualabuse = sp_sexualabuse;
+		this.sp_smd = sp_smd;
+		this.sp_speechimpaired = sp_speechimpaired;
+		this.sp_suicidal = sp_suicidal;
+		this.sp_visuallyimpaired = sp_visuallyimpaired;
+		this.ssn = ssn;
+		this.suffix = suffix;
+		this.veteran = veteran;
+	}
+
 	public void setPatientId(String patientId) {
 		this.patientId = patientId;
 	}

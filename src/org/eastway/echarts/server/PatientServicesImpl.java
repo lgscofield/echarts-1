@@ -127,7 +127,6 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 		checkSessionExpire(sessionId);
 		String sql = "SELECT * FROM VDisplayDemographics WHERE PATID = "
 			+ patientId;
-		Patient p = new Patient();
 		Connection con = null;
 		Statement stmt = null;
 		ResultSet srs = null;
@@ -139,52 +138,53 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 					ResultSet.CONCUR_READ_ONLY);
 			srs = stmt.executeQuery(sql);
 			if (srs.next()) {
-				p.setAlias(srs.getString("Alias"));
-				p.setAllergies(srs.getString("Allergies"));
-				p.setCaseStatus(srs.getString("CaseStatus"));
-				p.setDob(srs.getDate("DOB"));
-				p.setEducationLevel(srs.getString("EducationLevel"));
-				p.setEducationType(srs.getString("EducationType"));
-				p.setEmployment(srs.getString("Employment"));
-				p.setFirstName(srs.getString("FirstName"));
-				p.setGender(srs.getString("Gender"));
-				p.setIncomeSource1(srs.getString("IncomeSource1"));
-				p.setIncomeSource2(srs.getString("IncomeSource2"));
-				p.setIncomeSource3(srs.getString("IncomeSource3"));
-				p.setLastEdit(srs.getDate("LastEdit"));
-				p.setLastEditBy(srs.getString("LastEditBy"));
-				p.setLastName(srs.getString("LastName"));
-				p.setLivingArrangement(srs.getString("LivingArrangement"));
-				p.setMaritalStatus(srs.getString("MaritalStatus"));
-				p.setName(srs.getString("Name"));
-				p.setPatientId(srs.getString("PATID"));
-				p.setRace(srs.getString("Race"));
-				p.setSp_alcoholdrug(srs.getBoolean("SP_AlcoholDrug"));
-				p.setSp_blind(srs.getBoolean("SP_Blind"));
-				p.setSp_childalcdrug(srs.getBoolean("SP_ChildAlcDrug"));
-				p.setSp_dd(srs.getBoolean("SP_DD"));
-				p.setSp_deaf(srs.getBoolean("SP_Deaf"));
-				p.setSp_domesticviolence(srs.getBoolean("SP_DomesticViolence"));
-				p.setSp_duidwi(srs.getBoolean("SP_DUIDWI"));
-				p.setSp_forensic(srs.getBoolean("SP_Forensic"));
-				p.setSp_generalpopulation(srs.getBoolean("SP_GeneralPopulation"));
-				p.setSp_hearingimpaired(srs.getBoolean("SP_HearingImpaired"));
-				p.setSp_hivaids(srs.getBoolean("SP_HIVAIDS"));
-				p.setSp_mimr(srs.getBoolean("SP_MIMR"));
-				p.setSp_phydisabled(srs.getBoolean("SP_PhyDisabled"));
-				p.setSp_physicalabuse(srs.getBoolean("SP_PhysicalAbuse"));
-				p.setSp_probationparole(srs.getBoolean("SP_ProbationParole"));
-				p.setSp_schooldropout(srs.getBoolean("SP_SchoolDropout"));
-				p.setSp_sexualabuse(srs.getBoolean("SP_SexualAbuse"));
-				p.setSp_smd(srs.getBoolean("SP_SMD"));
-				p.setSp_speechimpaired(srs.getBoolean("SP_SpeechImpaired"));
-				p.setSp_suicidal(srs.getBoolean("SP_Suicidal"));
-				p.setSp_visuallyimpaired(srs.getBoolean("SP_VisuallyImpaired"));
-				p.setSsn(srs.getString("SSN"));
-				p.setSuffix(srs.getString("Suffix"));
-				p.setVeteran(srs.getBoolean("Veteran"));
+				Patient p = new Patient(srs.getString("Alias"),
+					srs.getString("Allergies"),
+					srs.getString("CaseStatus"),
+					srs.getDate("DOB"),
+					srs.getString("EducationLevel"),
+					srs.getString("EducationType"),
+					srs.getString("Employment"),
+					srs.getString("FirstName"),
+					srs.getString("Gender"),
+					srs.getString("IncomeSource1"),
+					srs.getString("IncomeSource2"),
+					srs.getString("IncomeSource3"),
+					srs.getDate("LastEdit"),
+					srs.getString("LastEditBy"),
+					srs.getString("LastName"),
+					srs.getString("LivingArrangement"),
+					srs.getString("MaritalStatus"),
+					srs.getString("Name"),
+					srs.getString("PATID"),
+					srs.getString("Race"),
+					srs.getBoolean("SP_AlcoholDrug"),
+					srs.getBoolean("SP_Blind"),
+					srs.getBoolean("SP_ChildAlcDrug"),
+					srs.getBoolean("SP_DD"),
+					srs.getBoolean("SP_Deaf"),
+					srs.getBoolean("SP_DomesticViolence"),
+					srs.getBoolean("SP_DUIDWI"),
+					srs.getBoolean("SP_Forensic"),
+					srs.getBoolean("SP_GeneralPopulation"),
+					srs.getBoolean("SP_HearingImpaired"),
+					srs.getBoolean("SP_HIVAIDS"),
+					srs.getBoolean("SP_MIMR"),
+					srs.getBoolean("SP_PhyDisabled"),
+					srs.getBoolean("SP_PhysicalAbuse"),
+					srs.getBoolean("SP_ProbationParole"),
+					srs.getBoolean("SP_SchoolDropout"),
+					srs.getBoolean("SP_SexualAbuse"),
+					srs.getBoolean("SP_SMD"),
+					srs.getBoolean("SP_SpeechImpaired"),
+					srs.getBoolean("SP_Suicidal"),
+					srs.getBoolean("SP_VisuallyImpaired"),
+					srs.getString("SSN"),
+					srs.getString("Suffix"),
+					srs.getBoolean("Veteran"));
+				return p;
 			}
-			return p;
+			return null;
 		} catch (SQLException e) {
 			throw new DbException(e);
 		} catch (NamingException e) {
