@@ -2,6 +2,7 @@ package org.eastway.echarts.client.presenter;
 
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.PatientServicesAsync;
+import org.eastway.echarts.shared.Patient;
 import org.eastway.echarts.shared.ServiceCodes;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -26,13 +27,13 @@ public class ProgressNotePresenter extends EchartsPresenter<ProgressNotePresente
 		void setPatientId(String patientId);
 	}
 
-	private String patientId;
+	private Patient patient;
 	private PatientServicesAsync patientSvc;
 
 	public ProgressNotePresenter(Display display, HandlerManager eventBus,
-			PatientServicesAsync patientSvc, String patientId) {
+			PatientServicesAsync patientSvc, Patient patient) {
 		super(display, eventBus);
-		this.patientId = patientId;
+		this.patient = patient;
 		this.patientSvc = patientSvc;
 		bind();
 		setData();
@@ -62,7 +63,7 @@ public class ProgressNotePresenter extends EchartsPresenter<ProgressNotePresente
 		patientSvc.getServiceCodes(Cookies.getCookie("sessionId"),
 				callback);
 
-		display.setPatientId(patientId);
+		display.setPatientId(patient.getPatientId());
 	}
 
 	private void getService(ChangeEvent event) {

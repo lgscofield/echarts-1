@@ -7,6 +7,7 @@ import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.presenter.AddMessagePresenter;
 import org.eastway.echarts.client.view.AddMessageView;
 import org.eastway.echarts.shared.Messages;
+import org.eastway.echarts.shared.Patient;
 
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -23,13 +24,13 @@ public class MessagesPresenter extends EchartsPresenter<MessagesPresenter.Displa
 		HasClickHandlers getAddButton();
 	}
 
-	private String patientId;
+	private Patient patient;
 	private PatientServicesAsync patientSvc;
 
 	public MessagesPresenter(Display display, HandlerManager eventBus,
-			PatientServicesAsync patientSvc, String patientId) {
+			PatientServicesAsync patientSvc, Patient patient) {
 		super(display, eventBus);
-		this.patientId = patientId;
+		this.patient = patient;
 		this.patientSvc = patientSvc;
 		bind();
 		setData();
@@ -63,13 +64,13 @@ public class MessagesPresenter extends EchartsPresenter<MessagesPresenter.Displa
 				display.setData(data);
 			}
 		};
-		patientSvc.getMessages(patientId, Cookies.getCookie("sessionId"),
+		patientSvc.getMessages(patient.getPatientId(), Cookies.getCookie("sessionId"),
 				callback);
 	}
 
 	private void showAddMessage() {
 		new AddMessagePresenter(new AddMessageView(),
-				eventBus, patientSvc, patientId);
+				eventBus, patientSvc, patient);
 	}
 
 	private void refresh() {

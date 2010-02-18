@@ -3,6 +3,7 @@ package org.eastway.echarts.client.presenter;
 import com.google.gwt.event.shared.HandlerManager;
 
 import org.eastway.echarts.client.PatientServicesAsync;
+import org.eastway.echarts.shared.Patient;
 
 public class ServiceHistoryPresenter extends EchartsPresenter<ServiceHistoryPresenter.Display> {
 
@@ -12,8 +13,8 @@ public class ServiceHistoryPresenter extends EchartsPresenter<ServiceHistoryPres
 
 	public ServiceHistoryPresenter(Display display, HandlerManager eventBus,
 				PatientServicesAsync patientSvc,
-				String patientId) {
+				Patient patient) {
 		super(display, eventBus);
-		display.setName(patientId);
+		display.setName(patient.getPatientId());
 	}
 }

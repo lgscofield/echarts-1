@@ -6,6 +6,7 @@ import org.eastway.echarts.client.events.SavedPatientMessageEvent;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.shared.Message;
+import org.eastway.echarts.shared.Patient;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -36,15 +37,15 @@ public class AddMessagePresenter extends EchartsPresenter<AddMessagePresenter.Di
 		void setMessageTypes(ArrayList<String> types);
 	}
 
-	private String patientId;
+	private Patient patient;
 	private PatientServicesAsync patientSvc;
 
 	public AddMessagePresenter(Display display, HandlerManager eventBus,
-			PatientServicesAsync patientSvc, String patientId) {
+			PatientServicesAsync patientSvc, Patient patient) {
 		super(display, eventBus);
-		this.patientId = patientId;
+		this.patient = patient;
 		this.patientSvc = patientSvc;
-		display.setText(patientId);
+		display.setText(patient.getPatientId());
 		bind();
 		loadMessageType();
 		display.show();
@@ -67,7 +68,7 @@ public class AddMessagePresenter extends EchartsPresenter<AddMessagePresenter.Di
 
 	private void save(String message, String messageType) {
 		Message m = new Message();
-		m.add(patientId, messageType, message);
+		m.add(patient.getPatientId(), messageType, message);
 
 		AsyncCallback<Void> callback = new AsyncCallback<Void>() {
 			@Override
