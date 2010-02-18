@@ -66,17 +66,17 @@ public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Di
 	}
 
 	private void setDisplay(Object view) {
-		if (view.getClass() == ServiceHistoryView.class) {
+		if (view instanceof ServiceHistoryView) {
 			if (serviceHistory == null)
 				serviceHistory = new ServiceHistoryPresenter(
 					(ServiceHistoryView)view, eventBus,
 					patientSvc, patient);
-		} else if (view.getClass() == MessagesView.class) {
+		} else if (view instanceof MessagesView) {
 			if (messages == null)
 				messages = new MessagesPresenter(
 					(MessagesView)view, eventBus,
 					patientSvc, patient);
-		} else if (view.getClass() == AddMessageView.class) {
+		} else if (view instanceof AddMessageView) {
 			if (addMessage == null)
 				addMessage = new AddMessagePresenter(
 					(AddMessageView)view, eventBus, patientSvc,
@@ -84,17 +84,17 @@ public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Di
 			else
 				addMessage.display.show();
 			return;
-		} else if (view.getClass() == ProgressNoteView.class) {
+		} else if (view instanceof ProgressNoteView) {
 			if (progressNote == null)
 				progressNote = new ProgressNotePresenter(
 					(ProgressNoteView)view, eventBus,
 					patientSvc, patient);
-		} else if (view.getClass() == PersonalView.class) {
+		} else if (view instanceof PersonalView) {
 			if (personal == null)
 				personal = new PersonalPresenter(
 					(PersonalView)view, eventBus,
 					patientSvc, patient);
-		} else if (view.getClass() == IspView.class) {
+		} else if (view instanceof IspView) {
 			if (isp == null)
 				isp = new IspPresenter(
 					(IspView)view, eventBus,
