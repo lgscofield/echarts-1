@@ -9,7 +9,6 @@ import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Widget;
 
 public class AlertsPresenter extends EchartsPresenter<AlertsPresenter.Display> {
 
@@ -17,8 +16,6 @@ public class AlertsPresenter extends EchartsPresenter<AlertsPresenter.Display> {
 		HasClickHandlers getAlerts();
 
 		void setData(Vector<String> data);
-
-		Widget asWidget();
 	}
 
 	private final PatientServicesAsync patientSvc;
