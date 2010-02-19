@@ -47,8 +47,7 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 		String sessionId = null;
 
 		try {
-			DbConnection dbc = new DbConnection(jndiRes);
-			con = dbc.getConnection();
+			con = DbConnection.getConnection();
 			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			srs = stmt.executeQuery(sql);
@@ -63,12 +62,6 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException("Naming exception");
-		} finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				throw new DbException();
-			}
 		}
 	}
 
@@ -80,8 +73,7 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 		Statement stmt = null;
 
 		try {
-			DbConnection dbc = new DbConnection(jndiRes);
-			con = dbc.getConnection();
+			con = DbConnection.getConnection();
 			stmt = con.createStatement();
 			stmt.executeUpdate(sql);
 		} catch (NamingException e) {
@@ -132,8 +124,7 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 		ResultSet srs = null;
 
 		try {
-			DbConnection dbc = new DbConnection(jndiRes);
-			con = dbc.getConnection();
+			con = DbConnection.getConnection();
 			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			srs = stmt.executeQuery(sql);
@@ -189,12 +180,6 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException("Naming exception");
-		} finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				throw new DbException();
-			}
 		}
 	}
 
@@ -208,8 +193,7 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 		ResultSet srs = null;
 
 		try {
-			DbConnection dbc = new DbConnection(jndiRes);
-			con = dbc.getConnection();
+			con = DbConnection.getConnection();
 			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			srs = stmt.executeQuery(sql);
@@ -220,12 +204,6 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 			throw new DbException();
 		} catch (NamingException e) {
 			throw new DbException("Naming exception");
-		} finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				throw new DbException();
-			}
 		}
 
 	}
@@ -250,8 +228,7 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 			staffId = getStaffId(sessionId);
 			sql = "SELECT VTicklerList.PATID, Demographics.Name, VTicklerList.ItemName, VTicklerList.[Date] FROM VTicklerList INNER JOIN Demographics ON VTicklerList.PATID = Demographics.PATID WHERE [Date] IS NOT NULL AND VTicklerList.PATID IN (SELECT PATID FROM Assignments WHERE Staff = '"
 				+ staffId + "' AND Disposition = 1) ORDER BY 4 ASC";
-			DbConnection dbc = new DbConnection(jndiRes);
-			con = dbc.getConnection();
+			con = DbConnection.getConnection();
 			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			srs = stmt.executeQuery(sql);
@@ -276,12 +253,6 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 			throw new DbException();
 		} catch (NamingException e) {
 			throw new DbException("Naming exception");
-		} finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				throw new DbException();
-			}
 		}
 	}
 
@@ -298,8 +269,7 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 		ResultSet srs = null;
 
 		try {
-			DbConnection dbc = new DbConnection(jndiRes);
-			con = dbc.getConnection();
+			con = DbConnection.getConnection();
 			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			srs = stmt.executeQuery(sql);
@@ -315,12 +285,6 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 			throw new DbException();
 		} catch (NamingException e) {
 			throw new DbException("Naming exception");
-		} finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				throw new DbException();
-			}
 		}
 	}
 
@@ -349,20 +313,13 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 				+ "','"
 				+ staffId + "')";
 
-			DbConnection dbc = new DbConnection(jndiRes);
-			con = dbc.getConnection();
+			con = DbConnection.getConnection();
 			stmt = con.createStatement();
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
 			throw new DbException("Error adding message", e);
 		} catch (NamingException e) {
 			throw new DbException("Naming exception");
-		} finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				throw new DbException();
-			}
 		}
 	}
 
@@ -376,8 +333,7 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 		ResultSet rs = null;
 
 		try {
-			DbConnection dbc = new DbConnection(jndiRes);
-			con = dbc.getConnection();
+			con = DbConnection.getConnection();
 			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			rs = stmt.executeQuery(sql);
@@ -388,12 +344,6 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 			throw e;
 		} catch (NamingException e) {
 			throw e;
-		} finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				throw e;
-			}
 		}
 	}
 
@@ -408,8 +358,7 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 		ResultSet srs = null;
 
 		try {
-			DbConnection dbc = new DbConnection(jndiRes);
-			con = dbc.getConnection();
+			con = DbConnection.getConnection();
 			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			srs = stmt.executeQuery(sql);
@@ -421,12 +370,6 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException("Naming exceptions");
-		} finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				throw new DbException();
-			}
 		}
 	}
 
@@ -438,8 +381,7 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 		ResultSet srs = null;
 
 		try {
-			DbConnection dbc = new DbConnection(jndiRes);
-			con = dbc.getConnection();
+			con = DbConnection.getConnection();
 			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			srs = stmt.executeQuery(sql);
@@ -451,12 +393,6 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 			throw e;
 		} catch (NamingException e) {
 			throw new DbException("Naming exception");
-		} finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				throw e;
-			}
 		}
 	}
 
@@ -470,8 +406,7 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 		ResultSet srs = null;
 
 		try {
-			DbConnection dbc = new DbConnection(jndiRes);
-			con = dbc.getConnection();
+			con = DbConnection.getConnection();
 			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			srs = stmt.executeQuery(sql);
@@ -486,12 +421,6 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException("Naming exception");
-		} finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				throw new DbException();
-			}
 		}
 
 	}
@@ -507,8 +436,7 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 		String ticketString = null;
 
 		try {
-			DbConnection dbc = new DbConnection(jndiRes);
-			con = dbc.getConnection();
+			con = DbConnection.getConnection();
 			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			srs = stmt.executeQuery(sql);
@@ -520,12 +448,6 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException("Naming exception");
-		} finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				throw new DbException();
-			}
 		}
 	}
 
@@ -541,8 +463,7 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 		String progressNoteBody = null;
 
 		try {
-			DbConnection dbc = new DbConnection(jndiRes);
-			con = dbc.getConnection();
+			con = DbConnection.getConnection();
 			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			srs = stmt.executeQuery(sql);
@@ -554,12 +475,6 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 			throw new DbException();
 		} catch (NamingException e) {
 			throw new DbException("Naming exception");
-		} finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				throw new DbException();
-			}
 		}
 	}
 
@@ -572,8 +487,7 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 		ResultSet srs = null;
 
 		try {
-			DbConnection dbc = new DbConnection(jndiRes);
-			con = dbc.getConnection();
+			con = DbConnection.getConnection();
 			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			srs = stmt.executeQuery(sql);
 			if (srs.first()) {
@@ -583,12 +497,6 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 			throw new DbException();
 		} catch (NamingException e) {
 			throw new DbException("Naming exception");
-		} finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				throw new DbException();
-			}
 		}
 
 		if (t.getTime() > expire) {

@@ -9,25 +9,26 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 public class DbConnection {
-	private String name;
+	private static Connection con;
 
-	public DbConnection(String name) {
-		this.name = name;
-	}
-
-	public Connection getConnection() throws SQLException, NamingException {
+	private DbConnection() throws NamingException, SQLException {
 		Context initCtx = null;
-		Connection con = null;
 		try {
 			initCtx = new InitialContext();
 			DataSource ds = (DataSource) initCtx
-					.lookup(name);
+					.lookup(DbConstants.jndiRes);
 			con = ds.getConnection();
-			return con;
 		} catch (NamingException e) {
 			throw e;
 		} catch (SQLException e) {
 			throw e;
 		}
+	}
+
+	public static Connection getConnection() throws NamingException, SQLException {
+		if (con == null) {
+			new DbConnection();
+		}
+		return con;
 	}
 }
