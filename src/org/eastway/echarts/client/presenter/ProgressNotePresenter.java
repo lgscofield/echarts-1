@@ -2,6 +2,7 @@ package org.eastway.echarts.client.presenter;
 
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.PatientServicesAsync;
+import org.eastway.echarts.client.UserImpl;
 import org.eastway.echarts.shared.Patient;
 import org.eastway.echarts.shared.ServiceCodes;
 
@@ -9,7 +10,6 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.HasChangeHandlers;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -60,7 +60,7 @@ public class ProgressNotePresenter extends EchartsPresenter<ProgressNotePresente
 				display.setData(data);
 			}
 		};
-		patientSvc.getServiceCodes(Cookies.getCookie("sessionId"),
+		patientSvc.getServiceCodes(UserImpl.getSessionId(),
 				callback);
 
 		display.setPatientId(patient.getPatientId());
@@ -87,6 +87,6 @@ public class ProgressNotePresenter extends EchartsPresenter<ProgressNotePresente
 				display.setNoteBody(data);
 			}
 		};
-		patientSvc.getProgressNoteBody(service, Cookies.getCookie("sessionId"), callback);
+		patientSvc.getProgressNoteBody(service, UserImpl.getSessionId(), callback);
 	}
 }

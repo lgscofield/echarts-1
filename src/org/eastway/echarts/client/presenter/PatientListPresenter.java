@@ -4,13 +4,13 @@ import java.util.Vector;
 
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.PatientServicesAsync;
+import org.eastway.echarts.client.UserImpl;
 import org.eastway.echarts.client.events.OpenPatientEvent;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class PatientListPresenter extends EchartsPresenter<PatientListPresenter.Display> {
@@ -60,7 +60,7 @@ public class PatientListPresenter extends EchartsPresenter<PatientListPresenter.
 				setData(data);
 			}
 		};
-		patientSvc.getPatientList(Cookies.getCookie("sessionId"), callback);
+		patientSvc.getPatientList(UserImpl.getSessionId(), callback);
 	}
 
 	private void setData(Vector<String> data) {

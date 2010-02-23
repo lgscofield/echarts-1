@@ -2,6 +2,7 @@ package org.eastway.echarts.client.presenter;
 
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.PatientServicesAsync;
+import org.eastway.echarts.client.UserImpl;
 import org.eastway.echarts.client.presenter.AddMessagePresenter;
 import org.eastway.echarts.client.presenter.IspPresenter;
 import org.eastway.echarts.client.presenter.MessagesPresenter;
@@ -20,7 +21,6 @@ import com.google.gwt.event.logical.shared.HasSelectionHandlers;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.TreeItem;
 
@@ -115,7 +115,7 @@ public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Di
 				setPatient(patient);
 			}
 		};
-		patientSvc.getPatient(patientId, Cookies.getCookie("sessionId"),
+		patientSvc.getPatient(patientId, UserImpl.getSessionId(),
 				callback);
 	}
 

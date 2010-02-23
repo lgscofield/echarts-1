@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.eastway.echarts.client.events.SavedPatientMessageEvent;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.PatientServicesAsync;
+import org.eastway.echarts.client.UserImpl;
 import org.eastway.echarts.shared.Message;
 import org.eastway.echarts.shared.Patient;
 
@@ -12,7 +13,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class AddMessagePresenter extends EchartsPresenter<AddMessagePresenter.Display> {
@@ -82,7 +82,7 @@ public class AddMessagePresenter extends EchartsPresenter<AddMessagePresenter.Di
 				eventBus.fireEvent(new SavedPatientMessageEvent());
 			}
 		};
-		patientSvc.addMessage(m, Cookies.getCookie("sessionId"),
+		patientSvc.addMessage(m, UserImpl.getSessionId(),
 				callback);
 	}
 
@@ -98,7 +98,7 @@ public class AddMessagePresenter extends EchartsPresenter<AddMessagePresenter.Di
 				display.setMessageTypes(types);
 			}
 		};
-		patientSvc.getMessageTypes(Cookies.getCookie("sessionId"),
+		patientSvc.getMessageTypes(UserImpl.getSessionId(),
 				callback);
 	}
 }

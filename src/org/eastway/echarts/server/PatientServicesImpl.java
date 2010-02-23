@@ -28,6 +28,7 @@ import org.eastway.echarts.shared.Patient;
 import org.eastway.echarts.shared.ServiceCode;
 import org.eastway.echarts.shared.ServiceCodes;
 import org.eastway.echarts.shared.SessionExpiredException;
+import org.eastway.echarts.shared.UserData;
 
 import com.google.gwt.user.server.Base64Utils;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -504,5 +505,50 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 		} else {
 			return true;
 		}
+	}
+
+	@Override
+	public UserData getUserData(String sessionId) throws DbException, SessionExpiredException {
+		checkSessionExpire(sessionId);
+		String sql = "SELECT [Staff]" +
+						",[Username]" +
+						",[JobClassID]" +
+						",[extperm]" +
+						",[StaffName]" +
+						",[Program]" +
+						",[HireDate]" +
+						",[Status]" +
+						",[TermDate]" +
+						",[Office]" +
+						",[OfficePhone]" +
+						",[OfficeExt]" +
+						",[StaffDescription]" +
+						",[StaffNPI]" +
+						",[SessionId]" +
+						",[SessionIdExpire]" + " " +
+					"FROM [EW-EHR].[dbo].[User]" + " " +
+					"WHERE SessionId = '" + sessionId + "'";
+
+		try {
+			Connection con = DbConnection.getConnection();
+			Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			ResultSet srs = stmt.executeQuery(sql);
+			if (srs.next()) {
+				UserData userData = new UserData(srs.getString("Staff"),
+						srs.getString("Username"), srs.getString("StaffName"),
+						srs.getString("Program"), srs.getString("Status"),
+						srs.getString("Office"), srs.getString("OfficePhone"),
+						srs.getString("OfficeExt"), srs.getString("StaffDescription"),
+						srs.getString("StaffNPI"), srs.getString("SessionId"),
+						srs.getInt("JobClassId"), srs.getInt("extperm"),
+						srs.getDate("HireDate"), srs.getDate("TermDate"));
+				return userData;
+			}
+		} catch (SQLException e) {
+			throw new DbException(e);
+		} catch (NamingException e) {
+			throw new DbException("Naming exception");
+		}
+		return null;
 	}
 }

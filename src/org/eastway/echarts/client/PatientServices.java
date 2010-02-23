@@ -9,6 +9,7 @@ import org.eastway.echarts.shared.Messages;
 import org.eastway.echarts.shared.Patient;
 import org.eastway.echarts.shared.ServiceCodes;
 import org.eastway.echarts.shared.SessionExpiredException;
+import org.eastway.echarts.shared.UserData;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -34,4 +35,6 @@ public interface PatientServices extends RemoteService {
 	public String getProgressNoteBody(String service, String sessionId) throws SessionExpiredException, DbException;
 
 	public String validateUser(String username, String password) throws DbException;
+
+	public UserData getUserData(String sessionId) throws DbException, SessionExpiredException;
 }

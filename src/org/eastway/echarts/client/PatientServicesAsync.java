@@ -7,6 +7,7 @@ import org.eastway.echarts.shared.Message;
 import org.eastway.echarts.shared.Messages;
 import org.eastway.echarts.shared.Patient;
 import org.eastway.echarts.shared.ServiceCodes;
+import org.eastway.echarts.shared.UserData;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -30,4 +31,6 @@ public interface PatientServicesAsync {
 	public void getProgressNoteBody(String service, String sessionId, AsyncCallback<String> callback);
 
 	public void validateUser(String username, String password, AsyncCallback<String> callback);
+
+	public void getUserData(String cookie, AsyncCallback<UserData> callback);
 }

@@ -4,10 +4,10 @@ import java.util.Vector;
 
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.PatientServicesAsync;
+import org.eastway.echarts.client.UserImpl;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class AlertsPresenter extends EchartsPresenter<AlertsPresenter.Display> {
@@ -39,6 +39,6 @@ public class AlertsPresenter extends EchartsPresenter<AlertsPresenter.Display> {
 				display.setData(data);
 			}
 		};
-		patientSvc.getAlerts(Cookies.getCookie("sessionId"), callback);
+		patientSvc.getAlerts(UserImpl.getSessionId(), callback);
 	}
 }
