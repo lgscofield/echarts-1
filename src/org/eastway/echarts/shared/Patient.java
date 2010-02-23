@@ -22,6 +22,14 @@ public class Patient implements Serializable {
 
 	private Date dob, lastEdit;
 
+	// TODO insuranceType, preferredLanguage, and ethnicity are not present
+	// in the datebase
+	private String insuranceType;
+
+	private String preferredLanguage;
+
+	private String ethnicity;
+
 	public Patient() { }
 
 	public Patient(String alias, String allergies, String caseStatus,
@@ -438,5 +446,28 @@ public class Patient implements Serializable {
 
 	public String getEducationType() {
 		return educationType;
+	}
+
+	public void setPreferredLanguage(String preferredLanguage) {
+		this.preferredLanguage = preferredLanguage;
+	}
+
+	public String getPreferredLanguage() {
+		return preferredLanguage;
+	}
+
+	public void setInsuranceType(String insuranceType) {
+		this.insuranceType = insuranceType;
+	}
+	public String getInsuranceType() {
+		return insuranceType;
+	}
+
+	public void setEthnicity(String ethnicity) {
+		this.ethnicity = ethnicity;
+	}
+
+	public String getEthncity() {
+		return ethnicity;
 	}
 }
