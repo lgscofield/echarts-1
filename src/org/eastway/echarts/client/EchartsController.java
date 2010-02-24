@@ -65,6 +65,7 @@ public class EchartsController implements ValueChangeHandler<String> {
 			@Override
 			public void onFailure(Throwable caught) {
 				new HandleRpcException(caught);
+				doLogout();
 			}
 
 			@Override
