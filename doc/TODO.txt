@@ -29,6 +29,10 @@ Historical diagnosis information for patient as a menu item
     - would list each diagnosis, starting with current, for each
       diagnosis as a StackLayoutPanel
 
+    - retrieve data for current; only load data for other diagnosis
+      information when user clicks on that date
+
+
 MACSIS behavioral module
 
 If a service is over two hours then the supervisor needs to sign off on
