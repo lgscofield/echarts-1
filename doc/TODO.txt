@@ -1,0 +1,41 @@
+Patient Search
+
+    - Advanced search/Custom Search
+
+Browser History
+
+    - Refresh
+
+    - Tabs
+
+    - Forms data
+
+        + Save
+
+        + Local/Remote
+
+    - Menu
+
+Ability for clinical administrators to assign patients to case managers
+and therapists.
+
+Case managers should not be able to see other case managers'
+productivity.
+
+Define rules.
+
+Historical diagnosis information for patient as a menu item
+
+    - would list each diagnosis, starting with current, for each
+      diagnosis as a StackLayoutPanel
+
+MACSIS behavioral module
+
+If a service is over two hours then the supervisor needs to sign off on
+the service.
+
+Spend down is not applied to the non-medicaid contract if the cost of
+the service is over the spend down amount. It is applied to the medicaid
+contract.
+
+Create Service business model and rename BillingStrip table to Services.
