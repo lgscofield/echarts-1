@@ -1,0 +1,49 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+  xmlns:g="urn:import:com.google.gwt.user.client.ui">
+  <ui:style>
+    
+  </ui:style>
+  <g:HTMLPanel>
+    <h2>Type of Service:</h2>
+    <g:HTMLPanel ui:field="typeOfService" />
+    <h2>Present at Session</h2>
+    <g:HTMLPanel ui:field="presentAtSession" />
+    <font style="font:9px Tahoma;">If others present, please list name(s) and
+      relationship(s) to client:</font>
+    <g:ListBox ui:field="othersPresent" />
+    <h2>Observed/Reported Changes in Medical Condition and Actions Taken
+  </h2>
+    <g:TextArea ui:field="observed" />
+    <h2>Stressors/Extraordinary Events</h2>
+    <g:TextArea ui:field="stressors" />
+    <h2>New Issue(s) Presented Today</h2>
+    <g:TextArea ui:field="newIssues" />
+    <h2>Relative Changes in Client's Condition</h2>
+    (for face to face visit) Mood/Affect
+    <g:TextArea ui:field="mood" />
+    Thought Processes/Orientation
+    <g:TextArea ui:field="thoughtProcess" />
+    Behavior/Functioning
+    <g:TextArea ui:field="behavior" />
+    <h2>Danger to</h2>
+    <g:CheckBox ui:field="dangerTo" />
+    Other:&nbsp;
+    <g:TextBox ui:field="dangerToNotListed" />
+    <h2>Goal(s)/Objective(s) Addressed from ISP</h2>
+    <h2>Therapeutic Intervention Provided</h2>
+    <g:CheckBox ui:field="therapeuticInterventionProvided" />
+    <h2>Response to Interventions/Progress Toward Goals and Objectives:
+  </h2>
+    <g:TextArea ui:field="clientResponse" />
+    <h2>Additional Information/Plan:</h2>
+    &nbsp;(if
+    applicable)
+    <g:TextArea ui:field="additionalInfo" />
+    <h2>Date of Next Appointment:</h2>
+    <g:TextBox ui:field="nextAppt" />
+    <h2>Client's Rating of Their Progress</h2>
+    Have you made progress toward your goals today?
+    <g:HTMLPanel ui:field="clientProgressRating" />
+  </g:HTMLPanel>
+</ui:UiBinder> 

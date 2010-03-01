@@ -1,0 +1,45 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+  xmlns:g="urn:import:com.google.gwt.user.client.ui">
+  <ui:style>
+    
+  </ui:style>
+  <g:HTMLPanel>
+    <p>Activity(s) Offered:</p>
+    <g:HTMLPanel ui:field="activitiesOffered"/>
+
+    <p>Present at Session:</p>
+    <g:CheckBox ui:field="clientPresentAtSession">Client Only</g:CheckBox>
+
+    Others Present:
+    <g:ListBox ui:field="othersPresent"/>
+    <g:TextBox ui:field="othersPresentNotListed" />
+    <p>Functioning:</p>
+    <div style="font:9px Tahoma;">(Observed or reported; May include mood,
+      affect, behavior, cognitive functioning, etc.)</div>
+    <g:TextArea ui:field="functioningComments"></g:TextArea>
+    <p>Goal(s)/Objective(s) Addressed from ISP:</p>
+    <p>
+      Goal #:
+      <g:ListBox ui:field="goals" />
+    </p>
+    <p>
+      Objective #:
+      <g:ListBox ui:field="objectives" />
+    </p>
+    <p>
+      <g:TextArea ui:field="goalsComments"></g:TextArea>
+    </p>
+    <p>For IDDT only - Stage of Treatment:</p>
+    <g:ListBox ui:field="stageTreatMentalIll" />
+    <g:ListBox ui:field="stageTreatAOD" />
+    <p>Therapeutic Interventions Provided:</p>
+    <g:ScrollPanel ui:field="therapeuticInterventionsProvided" />
+    <p>Non-billable:</p>
+    <g:ListBox ui:field="nonBillable"/>
+    <h2>Other:</h2>
+    <g:TextArea ui:field="otherTherapy" />
+    <h2>Response to Intervention/Progress Toward Goals:</h2>
+    <g:TextArea ui:field="clientResponse" />
+  </g:HTMLPanel>
+</ui:UiBinder> 

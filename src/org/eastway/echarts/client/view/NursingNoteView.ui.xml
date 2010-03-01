@@ -1,0 +1,325 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+  xmlns:g="urn:import:com.google.gwt.user.client.ui">
+  <ui:style>
+    
+  </ui:style>
+  <g:HTMLPanel>
+    <table class="form" width="900px" cellspacing="0" cellpadding="4">
+      <tr>
+        <td colspan="6">
+          <h2>Present at Session:</h2>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <g:ListBox ui:field="presentAtSession" />
+          <g:TextBox ui:field="othersPresent" />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <h2>Client/Symptom Update:</h2>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <g:TextBox ui:field="noSymptomChange" />
+          <g:TextArea ui:field="symptomUpdate" />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <h2>New Issue(s) Presented Today:</h2>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <g:RadioButton>None Reported</g:RadioButton>
+          <g:RadioButton>DA Update Required</g:RadioButton>
+          <g:TextArea ui:field="newIssues" />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <h2>Relative Changes in Client's Condition:</h2>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align:center; width=150px;">Side Effects</td>
+        <td style="text-align:center; width=150px;">Mood</td>
+        <td style="text-align:center; width=150px;">Affect</td>
+        <td style="text-align:center; width=150px;">Thought Content</td>
+        <td style="text-align:center; width=150px;">Thought Process</td>
+        <td style="text-align:center; width=150px;">Hallucination</td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <g:HTMLPanel ui:field="sideEffects" />
+        </td>
+        <td valign="top">
+          <g:HTMLPanel ui:field="mood" />
+        </td>
+        <td valign="top">
+          <g:HTMLPanel ui:field="affect" />
+        </td>
+        <td valign="top">
+          <g:HTMLPanel ui:field="thoughtContent" />
+        </td>
+        <td valign="top">
+          <g:HTMLPanel ui:field="thoughtProcess" />
+        </td>
+        <td valign="top">
+          <g:HTMLPanel ui:field="hallucination" />
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align:center;">Orientation</td>
+        <td style="text-align:center;">Appetite</td>
+        <td style="text-align:center;">Hygiene</td>
+        <td style="text-align:center;">Sleep</td>
+        <td style="text-align:center;">Elimination</td>
+        <td style="text-align:center;">Allergies</td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <g:HTMLPanel ui:field="orientation" />
+        </td>
+        <td valign="top">
+          <g:HTMLPanel ui:field="appetite" />
+        </td>
+        <td valign="top">
+          <g:HTMLPanel ui:field="hygiene" />
+        </td>
+        <td valign="top">
+          <g:HTMLPanel ui:field="sleep" />
+        </td>
+        <td valign="top">
+          <g:HTMLPanel ui:field="elimination" />
+        </td>
+        <td valign="top">
+          <g:TextArea ui:field="allergies" />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <h2>Measurements:</h2>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <g:TextBox ui:field="weight" />
+          : WT
+          <g:TextBox ui:field="bloodPressure" />
+          : BP
+          <g:TextBox ui:field="pulse" />
+          : Pulse
+          <g:TextBox ui:field="temperature" />
+          : Temp
+          <g:TextBox ui:field="respiration" />
+          Resp
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          AIMS:
+          <g:RadioButton name="AIMS">No Update Needed</g:RadioButton>
+          <g:RadioButton name="AIMS">Updated Today</g:RadioButton>
+          <g:RadioButton name="AIMS">Not Applicable</g:RadioButton>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <h2>
+            Goal(s)/Objective(s) Addressed from ISP:
+      </h2>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <b>Therapeutic Interventions Provided:</b>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" valign="top">
+          <input name="Therapeutic" type="checkbox" value="1" />
+          med education
+          <br />
+          <input name="Therapeutic" type="checkbox" value="2" />
+          crisis intervention
+          <br />
+          <input name="Therapeutic" type="checkbox" value="3" />
+          supportive treatment
+          <br />
+          <input name="Therapeutic" type="checkbox" value="4" />
+          skill training
+          <br />
+          <input name="Therapeutic" type="checkbox" value="5" />
+          health education
+          <br />
+          <input name="Therapeutic" type="checkbox" value="6" />
+          problem solving
+          <br />
+          <input name="Therapeutic" type="checkbox" value="7" />
+          accu check
+        </td>
+        <td colspan="2" valign="top">
+          <input name="Therapeutic" type="checkbox" value="8" />
+          Injection
+          <br />
+          <input name="Therapeutic" type="checkbox" value="9" />
+          AIMS
+          <br />
+          <input name="Therapeutic" type="checkbox" value="10" />
+          lab work
+          <br />
+          <input name="Therapeutic" type="checkbox" value="11" />
+          medication box
+          <br />
+          <input name="Therapeutic" type="checkbox" value="12" />
+          medication consent
+          <br />
+          <input name="Therapeutic" type="checkbox" value="13" />
+          pharmacy contact
+          <br />
+          <input name="Therapeutic" type="checkbox" value="14" />
+          refer to supportive empl
+        </td>
+        <td colspan="2" valign="top">
+          Haldol dec
+          <input name="Haldol" type="textbox" value="" maxlength="4"
+            size="2" />
+          mg
+          <br />
+          Prolixin dec
+          <input name="Prolixin" type="textbox" value=""
+            maxlength="4" size="2" />
+          mg
+          <br />
+          Consta
+          <input name="Consta" type="textbox" value="" maxlength="4"
+            size="2" />
+          mg
+          <br />
+          Other:
+          <input type="textbox" name="Other" size="15" maxlength="15" />
+          <br />
+          <input name="Therapeutic" type="checkbox" value="15" />
+          Central Pharmacy
+          <br />
+          <input name="Therapeutic" type="checkbox" value="16" />
+          Patient Assistance
+          <br />
+          <input name="Therapeutic" type="checkbox" value="17" />
+          Samples
+          <br />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          Site:
+          <g:RadioButton name="Site">R UOQ</g:RadioButton>
+          <g:RadioButton name="Site">L UOQ</g:RadioButton>
+          <input name="Site" type="radio" value="3" />
+          R deltoid
+          <input name="Site" type="radio" value="4" />
+          L deltoid
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          Return
+          in
+          <g:TextBox name="ReturninXweeks" />
+          weeks
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          Medication:
+          <g:RadioButton name="Medication">Adherence</g:RadioButton>
+          <g:RadioButton name="Medication">Nonadherence</g:RadioButton>
+          <br />
+        </td>
+        <td colspan="3">
+          AOD:
+          <g:RadioButton name="AOD">Drugs</g:RadioButton>
+          <g:RadioButton name="AOD">Alcohol</g:RadioButton>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <h2>Response to Intervention/Progress Toward Goals and
+            Objectives:
+      </h2>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <g:TextArea ui:field="response" />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <h2>Issues Referred to Physician/APRN for Consideration:</h2>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <input name="IssuesReferred" type="radio" value="1" />
+          None
+          <br />
+          <input name="IssuesReferred" type="radio" value="2" />
+          Medication Issues
+          <br />
+          <input name="IssuesReferred" type="radio" value="3" />
+          Symptoms
+          <br />
+          <input name="IssuesReferred" type="radio" value="4" />
+          Lab results
+          <br />
+          <input name="IssuesReferred" type="radio" value="5" />
+          Adherence
+          <br />
+          <input name="IssuesReferred" type="radio" value="6" />
+          AIMS
+          <br />
+          <input name="IssuesReferred" type="radio" value="7" />
+          Other:
+          <input type="textbox" name="OtherIssues" size="15"
+            maxlength="15" value="" />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <h2>Medications Ordered:</h2>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <g:TextArea ui:field="medications" />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          Next Appointment:
+          <g:TextBox ui:field="nextAppt" />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <h2>Comments</h2>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <g:TextArea ui:field="comments" />
+        </td>
+      </tr>
+    </table>
+  </g:HTMLPanel>
+</ui:UiBinder> 
