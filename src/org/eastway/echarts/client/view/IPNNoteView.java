@@ -5,15 +5,15 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
-public class IPNNote extends Composite {
+public class IPNNoteView extends Composite {
 
 	private static IPNNoteUiBinder uiBinder = GWT
 			.create(IPNNoteUiBinder.class);
 
-	interface IPNNoteUiBinder extends UiBinder<Widget, IPNNote> {
+	interface IPNNoteUiBinder extends UiBinder<Widget, IPNNoteView> {
 	}
 
-	public IPNNote() {
+	public IPNNoteView() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
