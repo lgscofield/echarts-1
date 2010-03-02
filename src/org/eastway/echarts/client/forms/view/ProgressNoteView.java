@@ -1,6 +1,10 @@
-package org.eastway.echarts.client.view.forms;
+package org.eastway.echarts.client.forms.view;
 
-import org.eastway.echarts.client.presenter.forms.ProgressNotePresenter;
+import org.eastway.echarts.client.forms.presenter.CPSTNotePresenter;
+import org.eastway.echarts.client.forms.presenter.IPNNotePresenter;
+import org.eastway.echarts.client.forms.presenter.NursingNotePresenter;
+import org.eastway.echarts.client.forms.presenter.ProgressNotePresenter;
+import org.eastway.echarts.client.presenter.EchartsPresenter;
 import org.eastway.echarts.shared.ServiceCode;
 import org.eastway.echarts.shared.ServiceCodes;
 
@@ -11,6 +15,7 @@ import com.google.gwt.event.dom.client.HasChangeHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -26,7 +31,7 @@ public class ProgressNoteView extends Composite implements ProgressNotePresenter
 
 	@UiField ListBox serviceCodesListBox;
 
-	@UiField HTML progressNoteBody;
+	@UiField FlowPanel progressNoteBody;
 
 	public ProgressNoteView() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -64,8 +69,19 @@ public class ProgressNoteView extends Composite implements ProgressNotePresenter
 	}
 
 	@Override
-	public void setNoteBody(String body) {
-		progressNoteBody.setHTML(body);
+	public void setNoteBody(EchartsPresenter<?> presenter) {
+		if (presenter instanceof CPSTNotePresenter) {
+			progressNoteBody.clear();
+			progressNoteBody.add((CPSTNoteView)presenter.getDisplay().asWidget());
+		} else if (presenter instanceof IPNNotePresenter) {
+			progressNoteBody.clear();
+			progressNoteBody.add((IPNNoteView)presenter.getDisplay().asWidget());
+		} else if (presenter instanceof NursingNotePresenter) {
+			progressNoteBody.clear();
+			progressNoteBody.add((NursingNoteView)presenter.getDisplay().asWidget());
+		} else {
+			com.google.gwt.user.client.Window.alert("");
+		}
 	}
 
 	@Override

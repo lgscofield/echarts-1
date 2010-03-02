@@ -65,6 +65,6 @@
         </div>
       </div>
     </g:HTMLPanel>
-    <g:HTML ui:field="progressNoteBody"/>
+    <g:FlowPanel ui:field="progressNoteBody"/>
   </g:VerticalPanel>
 </ui:UiBinder>

@@ -35,8 +35,8 @@
       </tr>
       <tr>
         <td colspan="6">
-          <g:RadioButton>None Reported</g:RadioButton>
-          <g:RadioButton>DA Update Required</g:RadioButton>
+          <g:RadioButton name="issuesPresented">None Reported</g:RadioButton>
+          <g:RadioButton name="issuesPresented">DA Update Required</g:RadioButton>
           <g:TextArea ui:field="newIssues" />
         </td>
       </tr>

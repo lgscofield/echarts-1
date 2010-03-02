@@ -1,8 +1,11 @@
-package org.eastway.echarts.client.presenter.forms;
+package org.eastway.echarts.client.forms.presenter;
 
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.UserImpl;
+import org.eastway.echarts.client.forms.view.CPSTNoteView;
+import org.eastway.echarts.client.forms.view.IPNNoteView;
+import org.eastway.echarts.client.forms.view.NursingNoteView;
 import org.eastway.echarts.client.presenter.EchartsDisplay;
 import org.eastway.echarts.client.presenter.EchartsPresenter;
 import org.eastway.echarts.shared.Patient;
@@ -24,7 +27,7 @@ public class ProgressNotePresenter extends EchartsPresenter<ProgressNotePresente
 
 		String getSelectedServiceCode(ChangeEvent event);
 
-		void setNoteBody(String body);
+		void setNoteBody(EchartsPresenter<?> presenter);
 
 		void setPatientId(String patientId);
 	}
@@ -78,17 +81,12 @@ public class ProgressNotePresenter extends EchartsPresenter<ProgressNotePresente
 	}
 
 	private void getNote(String service) {
-		AsyncCallback<String> callback = new AsyncCallback<String>() {
-			@Override
-			public void onFailure(Throwable caught) {
-				new HandleRpcException(caught);
-			}
-
-			@Override
-			public void onSuccess(String data) {
-				display.setNoteBody(data);
-			}
-		};
-		patientSvc.getProgressNoteBody(service, UserImpl.getSessionId(), callback);
+		if (service.equals("101")) {
+			display.setNoteBody(new CPSTNotePresenter(new CPSTNoteView(), eventBus));
+		} else if (service.equals("102")) {
+			display.setNoteBody(new IPNNotePresenter(new IPNNoteView(), eventBus));
+		} else if (service.equals("103")) {
+			display.setNoteBody(new NursingNotePresenter(new NursingNoteView(), eventBus));
+		}
 	}
 }

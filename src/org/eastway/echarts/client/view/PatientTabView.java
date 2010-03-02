@@ -1,11 +1,11 @@
 package org.eastway.echarts.client.view;
 
+import org.eastway.echarts.client.forms.view.IspView;
+import org.eastway.echarts.client.forms.view.ProgressNoteView;
 import org.eastway.echarts.client.presenter.PatientTabPresenter;
 import org.eastway.echarts.client.view.AddMessageView;
 import org.eastway.echarts.client.view.MessagesView;
 import org.eastway.echarts.client.view.ServiceHistoryView;
-import org.eastway.echarts.client.view.forms.IspView;
-import org.eastway.echarts.client.view.forms.ProgressNoteView;
 
 import com.google.gwt.event.logical.shared.HasSelectionHandlers;
 import com.google.gwt.core.client.GWT;

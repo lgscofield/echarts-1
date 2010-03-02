@@ -1,4 +1,4 @@
-package org.eastway.echarts.client.presenter.forms;
+package org.eastway.echarts.client.forms.presenter;
 
 import org.eastway.echarts.client.presenter.EchartsDisplay;
 import org.eastway.echarts.client.presenter.EchartsPresenter;

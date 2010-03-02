@@ -1,6 +1,6 @@
-package org.eastway.echarts.client.view.forms;
+package org.eastway.echarts.client.forms.view;
 
-import org.eastway.echarts.client.presenter.forms.CPSTNotePresenter;
+import org.eastway.echarts.client.forms.presenter.CPSTNotePresenter;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;

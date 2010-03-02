@@ -1,6 +1,6 @@
-package org.eastway.echarts.client.view.forms;
+package org.eastway.echarts.client.forms.view;
 
-import org.eastway.echarts.client.presenter.forms.IspPresenter;
+import org.eastway.echarts.client.forms.presenter.IspPresenter;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SpanElement;
