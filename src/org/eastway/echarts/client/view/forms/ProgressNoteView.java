@@ -1,6 +1,6 @@
-package org.eastway.echarts.client.view;
+package org.eastway.echarts.client.view.forms;
 
-import org.eastway.echarts.client.presenter.ProgressNotePresenter;
+import org.eastway.echarts.client.presenter.forms.ProgressNotePresenter;
 import org.eastway.echarts.shared.ServiceCode;
 import org.eastway.echarts.shared.ServiceCodes;
 

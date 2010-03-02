@@ -1,8 +1,10 @@
-package org.eastway.echarts.client.presenter;
+package org.eastway.echarts.client.presenter.forms;
 
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.UserImpl;
+import org.eastway.echarts.client.presenter.EchartsDisplay;
+import org.eastway.echarts.client.presenter.EchartsPresenter;
 import org.eastway.echarts.shared.Patient;
 import org.eastway.echarts.shared.ServiceCodes;
 

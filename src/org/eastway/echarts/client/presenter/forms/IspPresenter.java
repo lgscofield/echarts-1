@@ -1,6 +1,8 @@
-package org.eastway.echarts.client.presenter;
+package org.eastway.echarts.client.presenter.forms;
 
 import org.eastway.echarts.client.PatientServicesAsync;
+import org.eastway.echarts.client.presenter.EchartsDisplay;
+import org.eastway.echarts.client.presenter.EchartsPresenter;
 import org.eastway.echarts.shared.Patient;
 
 import com.google.gwt.event.shared.HandlerManager;

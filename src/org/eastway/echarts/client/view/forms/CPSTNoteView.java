@@ -1,6 +1,6 @@
-package org.eastway.echarts.client.view;
+package org.eastway.echarts.client.view.forms;
 
-import org.eastway.echarts.client.presenter.CPSTNotePresenter;
+import org.eastway.echarts.client.presenter.forms.CPSTNotePresenter;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -14,7 +14,7 @@ public class CPSTNoteView extends Composite implements CPSTNotePresenter.Display
 	private static CPSTNoteUiBinder uiBinder = GWT
 			.create(CPSTNoteUiBinder.class);
 
-	interface CPSTNoteUiBinder extends UiBinder<Widget, CPSTNoteView> {	}
+	interface CPSTNoteUiBinder extends UiBinder<Widget, CPSTNoteView> { }
 
 	@UiField ListBox nonBillable;
 

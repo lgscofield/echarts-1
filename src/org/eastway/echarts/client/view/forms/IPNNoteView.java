@@ -1,4 +1,4 @@
-package org.eastway.echarts.client.view;
+package org.eastway.echarts.client.view.forms;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
