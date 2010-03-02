@@ -1,3 +1,5 @@
+By September 1st, have a fully integrated electronic chart for one patient.
+
 Patient Search
 
     - Advanced search/Custom Search
