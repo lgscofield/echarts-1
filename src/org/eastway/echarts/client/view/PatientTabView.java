@@ -12,7 +12,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
@@ -24,7 +24,7 @@ public class PatientTabView extends Composite implements PatientTabPresenter.Dis
 			UiBinder<Widget, PatientTabView> {}
 
 	@UiField Tree menu;
-	@UiField FlowPanel displayArea;
+	@UiField DockLayoutPanel displayArea;
 
 	private TreeItem personal, demographics, progressNote, messages,
 			addMessage, treatmentPlan, serviceHistory;

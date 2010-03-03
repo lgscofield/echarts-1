@@ -12,12 +12,14 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.HasChangeHandlers;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ProgressNoteView extends Composite implements ProgressNotePresenter.Display {
@@ -32,6 +34,10 @@ public class ProgressNoteView extends Composite implements ProgressNotePresenter
 	@UiField ListBox serviceCodesListBox;
 
 	@UiField FlowPanel progressNoteBody;
+
+	@UiField Button next, previous, finish;
+
+	@UiField TabLayoutPanel tabPanel;
 
 	public ProgressNoteView() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -87,5 +93,35 @@ public class ProgressNoteView extends Composite implements ProgressNotePresenter
 	@Override
 	public void setPatientId(String patientId) {
 		this.patientId.setInnerText(patientId);
+	}
+
+	@Override
+	public HasClickHandlers getNext() {
+		return next;
+	}
+
+	@Override
+	public HasClickHandlers getPrevious() {
+		return previous;
+	}
+
+	@Override
+	public HasClickHandlers getFinish() {
+		return finish;
+	}
+
+	@Override
+	public void doFinish() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void doNext() {
+		tabPanel.selectTab(tabPanel.getSelectedIndex() + 1);
+	}
+
+	@Override
+	public void doPrevious() {
+		tabPanel.selectTab(tabPanel.getSelectedIndex() - 1);
 	}
 }

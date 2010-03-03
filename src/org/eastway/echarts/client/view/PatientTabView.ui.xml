@@ -6,9 +6,7 @@
       <g:Tree ui:field="menu" animationEnabled="true"/>
     </g:west>
     <g:center>
-      <g:ScrollPanel height="100%">
-        <g:FlowPanel ui:field="displayArea"/>
-      </g:ScrollPanel>
+        <g:DockLayoutPanel ui:field="displayArea" unit='EM' />
     </g:center>
   </g:DockLayoutPanel>
 </ui:UiBinder>

@@ -13,7 +13,10 @@ import org.eastway.echarts.shared.ServiceCodes;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasChangeHandlers;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -30,6 +33,18 @@ public class ProgressNotePresenter extends EchartsPresenter<ProgressNotePresente
 		void setNoteBody(EchartsPresenter<?> presenter);
 
 		void setPatientId(String patientId);
+
+		HasClickHandlers getNext();
+
+		HasClickHandlers getFinish();
+
+		void doNext();
+
+		void doFinish();
+
+		HasClickHandlers getPrevious();
+
+		void doPrevious();
 	}
 
 	private Patient patient;
@@ -51,6 +66,36 @@ public class ProgressNotePresenter extends EchartsPresenter<ProgressNotePresente
 				getService(event);
 			}
 		});
+		display.getNext().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				doNext();
+			}
+		});
+		display.getFinish().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				doFinish();
+			}
+		});
+		display.getPrevious().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				doPrevious();
+			}
+		});
+	}
+
+	private void doPrevious() {
+		display.doPrevious();
+	}
+
+	private void doFinish() {
+		display.doFinish();
+	}
+
+	private void doNext() {
+		display.doNext();
 	}
 
 	private void setData() {
