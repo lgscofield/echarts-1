@@ -1,12 +1,13 @@
 package org.eastway.echarts.client.forms.view;
 
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+
 import org.eastway.echarts.client.forms.presenter.CPSTNotePresenter;
 import org.eastway.echarts.client.forms.presenter.IPNNotePresenter;
 import org.eastway.echarts.client.forms.presenter.NursingNotePresenter;
 import org.eastway.echarts.client.forms.presenter.ProgressNotePresenter;
 import org.eastway.echarts.client.presenter.EchartsPresenter;
-import org.eastway.echarts.shared.ServiceCode;
-import org.eastway.echarts.shared.ServiceCodes;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SpanElement;
@@ -29,9 +30,9 @@ public class ProgressNoteView extends Composite implements ProgressNotePresenter
 	interface ProgressNoteViewUiBinder extends
 				UiBinder<Widget, ProgressNoteView> {}
 
-	@UiField SpanElement patientId;
+	@UiField SpanElement patientId, noteName;
 
-	@UiField ListBox serviceCodesListBox;
+	@UiField ListBox serviceCodes, location1, location2, program, modifier1, modifier2;
 
 	@UiField FlowPanel progressNoteBody;
 
@@ -50,21 +51,42 @@ public class ProgressNoteView extends Composite implements ProgressNotePresenter
 
 	@Override
 	public HasChangeHandlers getServiceCodesList() {
-		return serviceCodesListBox;
+		return serviceCodes;
 	}
 
 	@Override
-	public void setData(ServiceCodes data) {
-		// make the first item empty so the change event works for the
-		// reset of the service codes
-		serviceCodesListBox.addItem("");
-		for (int i = 0; data.get(i) != null; i++) {
-			ServiceCode serviceCode = data.get(i);
-			serviceCodesListBox.addItem(serviceCode.getService()
-					.toString()
-					+ " " + serviceCode.getDescription(),
-					serviceCode.getTemplateId());
-		}
+	public void setData(HashMap<String, LinkedHashSet<HashMap<String, ?>>> data) {
+		LinkedHashSet<HashMap<String, ?>> d;
+
+		serviceCodes.addItem("");
+		d = data.get("ServiceCodes");
+		for (HashMap<String, ?> hm : d)
+			serviceCodes.addItem(hm.get("code") + " - " + hm.get("description"), (String) hm.get("templateId"));
+
+		location1.addItem("");
+		d = data.get("EastwayLocation");
+		for (HashMap<String, ?> hm : d)
+			location1.addItem(hm.get("code") + " - " + hm.get("description"), (String) hm.get("code"));
+
+		location2.addItem("");
+		d = data.get("MACBMLocation");
+		for (HashMap<String, ?> hm : d)
+			location2.addItem(hm.get("code") + " - " + hm.get("description"), (String) hm.get("code"));
+
+		program.addItem("");
+		d = data.get("EastwayPrograms");
+		for (HashMap<String, ?> hm : d)
+			program.addItem(hm.get("code") + " - " + hm.get("description"), (String) hm.get("code"));
+
+		modifier1.addItem("");
+		d = data.get("MACSISModifier1");
+		for (HashMap<String, ?> hm : d)
+			modifier1.addItem(hm.get("modifier") + " - " + hm.get("description"), (String) hm.get("modifier"));
+
+		modifier2.addItem("");
+		d = data.get("MACSISModifier2");
+		for (HashMap<String, ?> hm : d)
+			modifier2.addItem(hm.get("modifier") + " - " + hm.get("description"), (String) hm.get("modifier"));
 	}
 
 	@Override
@@ -79,12 +101,15 @@ public class ProgressNoteView extends Composite implements ProgressNotePresenter
 		if (presenter instanceof CPSTNotePresenter) {
 			progressNoteBody.clear();
 			progressNoteBody.add((CPSTNoteView)presenter.getDisplay().asWidget());
+			noteName.setInnerHTML("CPST Note");
 		} else if (presenter instanceof IPNNotePresenter) {
 			progressNoteBody.clear();
 			progressNoteBody.add((IPNNoteView)presenter.getDisplay().asWidget());
+			noteName.setInnerHTML("IPN Note");
 		} else if (presenter instanceof NursingNotePresenter) {
 			progressNoteBody.clear();
 			progressNoteBody.add((NursingNoteView)presenter.getDisplay().asWidget());
+			noteName.setInnerHTML("Nursing Note");
 		} else {
 			com.google.gwt.user.client.Window.alert("");
 		}

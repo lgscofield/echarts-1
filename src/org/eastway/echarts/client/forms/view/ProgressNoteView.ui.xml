@@ -3,14 +3,19 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style>
-		h1 {
-			font-size: 110%;
+		.header1 {
+			font-size: 115%;
+		}
+
+		.header2 {
+			font-size: 105%;
+			margin: 0;
 		}
 
 		.margin {
-			margin-top: 10px;
+			margin-top: 15px;
 			margin-right: 10px;
-			margin-bottom: 10px;
+			margin-bottom: 15px;
 		}
 
 		.label {
@@ -21,18 +26,34 @@
 		.box {
 			border: 1px solid LightGray;
 		}
+
+		.button {
+			padding: 4px;
+			margin-top: 5px;
+			margin-right: 5px;
+			margin-bottom: 5px;
+			border: 1px solid LightGray;
+			color: Gray;
+			width: 90px;
+		}
+
+		.button:hover {
+			color: black;
+		}
+
+		.tabpanel { }
 	</ui:style>
 	<g:TabLayoutPanel ui:field='tabPanel' barUnit='PX'
 		barHeight='0'>
 		<g:tab>
 			<g:header>Step 1</g:header>
-			<g:HTMLPanel>
+			<g:ScrollPanel height='100%'>
 				<g:HTMLPanel>
-					<h1>Progress
+					<h1 class='{style.header1}'>Progress
 						Notes &mdash;
 						<span ui:field="patientId" />
 					</h1>
-					Billing Information
+					<h2 class='{style.header2}'>Billing Information</h2>
 					<br />
 					<hr />
 					<g:HorizontalPanel addStyleNames='{style.margin}'>
@@ -41,7 +62,7 @@
 					</g:HorizontalPanel>
 					<g:HorizontalPanel addStyleNames='{style.margin}'>
 						<g:Label addStyleNames='{style.label}'>Service Code</g:Label>
-						<g:ListBox addStyleNames='{style.box}' ui:field="serviceCodesListBox" />
+						<g:ListBox addStyleNames='{style.box}' ui:field="serviceCodes" />
 					</g:HorizontalPanel>
 					<g:HorizontalPanel addStyleNames='{style.margin}'>
 						<g:HTMLPanel>
@@ -55,98 +76,41 @@
 							</g:HorizontalPanel>
 						</g:HTMLPanel>
 					</g:HorizontalPanel>
-					<g:HorizontalPanel>
-						<g:HTMLPanel>
-							Location
-							<select name="Location1">
-								<option value="" />
-								<option value="ARS">ARS</option>
-								<option value="ECO">ECO</option>
-								<option value="EES">EES</option>
-								<option value="EJC">EJC</option>
-								<option value="ESM">ESM</option>
-								<option value="FCO">FCO</option>
-								<option value="HEN">HEN</option>
-								<option value="LOD">LOD</option>
-								<option value="MAR">MAR</option>
-								<option value="NOR">NOR</option>
-								<option value="WSA">WSA</option>
-							</select>
-							<Select name="Location2">
-								<Option value="" />
-								<Option value="11">11</Option>
-								<Option value="12">12</Option>
-								<Option value="21">21</Option>
-								<Option value="22">22</Option>
-								<Option value="23">23</Option>
-								<Option value="24">24</Option>
-								<Option value="31">31</Option>
-								<Option value="32">32</Option>
-								<Option value="33">33</Option>
-								<Option value="34">34</Option>
-								<Option value="51">51</Option>
-								<Option value="53">53</Option>
-								<Option value="54">54</Option>
-								<Option value="55">55</Option>
-								<Option value="56">56</Option>
-								<Option value="61">61</Option>
-								<Option value="62">62</Option>
-								<Option value="71">71</Option>
-							</Select>
-							Cost Center:
-							<select name="Program">
-								<option value="" />
-								<option value="071">ARA</option>
-								<option value="072">ARB</option>
-								<option value="073">ARC</option>
-								<option value="074">ARD</option>
-								<option value="078">ARG</option>
-								<option value="079">ARL</option>
-								<option value="075">ART</option>
-								<option value="076">ACT</option>
-								<option value="077">ACC</option>
-								<option value="095">EES</option>
-								<option value="064">RCR</option>
-								<option value="063">RRC</option>
-								<option value="061">RSH</option>
-								<option value="062">RTH</option>
-								<option value="021">YRO</option>
-								<option value="075">ART</option>
-								<option value="076">ACT</option>
-								<option value="077">ACC</option>
-								<option value="095">EES</option>
-								<option value="064">RCR</option>
-								<option value="063">RRC</option>
-								<option value="061">RSH</option>
-								<option value="062">RTH</option>
-								<option value="021">YRO</option>
-								<option value="030">YRR</option>
-							</select>
-							HIPAA:
-							<select name="Mod1">
-								<option value="" />
-								<option value="HE">HE</option>
-								<option value="GT">GT</option>
-							</select>
-							HIPAA2:
-							<select name="Mod2">
-								<option value="" />
-								<option value="">Blank</option>
-								<option value="UK">UK</option>
-							</select>
-						</g:HTMLPanel>
+					<g:HorizontalPanel addStyleNames='{style.margin}'>
+						<g:Label addStyleNames='{style.label}'>Location 1</g:Label>
+						<g:ListBox ui:field='location1'/>
 					</g:HorizontalPanel>
+					<g:HorizontalPanel>
+						<g:Label addStyleNames='{style.label}'>Location 2</g:Label>
+						<g:ListBox ui:field='location2'/>
+					</g:HorizontalPanel>
+					<g:HorizontalPanel addStyleNames='{style.margin}'>
+						<g:Label addStyleNames='{style.label}'>Cost Center</g:Label>
+						<g:ListBox ui:field='program'/>
+					</g:HorizontalPanel>
+					<g:HorizontalPanel addStyleNames='{style.margin}'>
+							<g:Label addStyleNames='{style.label}'>Modifier 1</g:Label>
+							<g:ListBox ui:field='modifier1'/>
+					</g:HorizontalPanel>
+					<g:HorizontalPanel>
+							<g:Label addStyleNames='{style.label}'>Modifier 2</g:Label>
+							<g:ListBox ui:field='modifier2'/>
+					</g:HorizontalPanel>
+					<g:Button ui:field='next' addStyleNames='{style.button}'>Next</g:Button>
 				</g:HTMLPanel>
-				<g:Button ui:field='next'>Next</g:Button>
-			</g:HTMLPanel>
+			</g:ScrollPanel>
 		</g:tab>
 		<g:tab>
 			<g:header>Step 2</g:header>
 			<g:ScrollPanel height='100%'>
 				<g:FlowPanel>
+					<g:HTMLPanel>
+						<h1 class='{style.header1}'><span ui:field='noteName'></span></h1>
+						<hr />
+					</g:HTMLPanel>
 					<g:FlowPanel ui:field="progressNoteBody" />
-					<g:Button ui:field='previous'>Previous</g:Button>
-					<g:Button ui:field='finish'>Finish</g:Button>
+					<g:Button ui:field='previous' addStyleNames='{style.button}'>Previous</g:Button>
+					<g:Button ui:field='finish' addStyleNames='{style.button}'>Finish</g:Button>
 				</g:FlowPanel>
 			</g:ScrollPanel>
 		</g:tab>

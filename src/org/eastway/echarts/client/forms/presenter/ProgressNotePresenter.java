@@ -1,5 +1,8 @@
 package org.eastway.echarts.client.forms.presenter;
 
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.UserImpl;
@@ -9,7 +12,6 @@ import org.eastway.echarts.client.forms.view.NursingNoteView;
 import org.eastway.echarts.client.presenter.EchartsDisplay;
 import org.eastway.echarts.client.presenter.EchartsPresenter;
 import org.eastway.echarts.shared.Patient;
-import org.eastway.echarts.shared.ServiceCodes;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -24,7 +26,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public class ProgressNotePresenter extends EchartsPresenter<ProgressNotePresenter.Display> {
 
 	public interface Display extends EchartsDisplay {
-		void setData(ServiceCodes data);
+		void setData(HashMap<String, LinkedHashSet<HashMap<String, ?>>> data);
 
 		HasChangeHandlers getServiceCodesList();
 
@@ -99,18 +101,19 @@ public class ProgressNotePresenter extends EchartsPresenter<ProgressNotePresente
 	}
 
 	private void setData() {
-		AsyncCallback<ServiceCodes> callback = new AsyncCallback<ServiceCodes>() {
+		AsyncCallback<HashMap<String, LinkedHashSet<HashMap<String, ?>>>>
+				callback = new AsyncCallback<HashMap<String, LinkedHashSet<HashMap<String, ?>>>>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				new HandleRpcException(caught);
 			}
 
 			@Override
-			public void onSuccess(ServiceCodes data) {
+			public void onSuccess(HashMap<String, LinkedHashSet<HashMap<String, ?>>> data) {
 				display.setData(data);
 			}
 		};
-		patientSvc.getServiceCodes(UserImpl.getSessionId(),
+		patientSvc.getBillingStripData(UserImpl.getSessionId(),
 				callback);
 
 		display.setPatientId(patient.getPatientId());

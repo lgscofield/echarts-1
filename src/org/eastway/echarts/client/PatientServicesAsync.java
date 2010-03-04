@@ -1,6 +1,8 @@
 package org.eastway.echarts.client;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Vector;
 
 import org.eastway.echarts.shared.Message;
@@ -24,13 +26,11 @@ public interface PatientServicesAsync {
 
 	public void addMessage(Message msg, String sessionId, AsyncCallback<Void> callback);
 
-	public void getTicket(Integer ticketnum, String sessionId, AsyncCallback<String> callback);
-
 	public void getServiceCodes(String sessionId, AsyncCallback<ServiceCodes> callback);
-
-	public void getProgressNoteBody(String service, String sessionId, AsyncCallback<String> callback);
 
 	public void validateUser(String username, String password, AsyncCallback<String> callback);
 
 	public void getUserData(String cookie, AsyncCallback<UserData> callback);
+
+	public void getBillingStripData(String cookie, AsyncCallback<HashMap<String, LinkedHashSet<HashMap<String, ?>>>> callback);
 }

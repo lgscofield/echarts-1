@@ -15,6 +15,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.Vector;
 
@@ -427,54 +429,96 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public String getTicket(Integer ticketNumber, String sessionId)
-			throws SessionExpiredException, DbException {
+	public HashMap<String, LinkedHashSet<HashMap<String, ?>>>
+			getBillingStripData(String sessionId) throws SessionExpiredException, DbException {
 		checkSessionExpire(sessionId);
-		String sql = "SELECT TemplateString FROM ServiceCodes INNER JOIN TicketTemplate ON ServiceCodes.TemplateID = TicketTemplate.TemplateID WHERE [Service] = '390'";
-		Connection con = null;
-		Statement stmt = null;
-		ResultSet srs = null;
-		String ticketString = null;
+
+		String eastwayLocationSql = "SELECT * FROM [EW-EHR].[eastway].[Location]";
+		String macbmLocationSql = "SELECT * FROM [EW-EHR].[mac_bm].[Location]";
+		String eastwayProgramsSql = "SELECT * FROM [EW-EHR].[eastway].[Programs]";
+		String serviceCodesSql = "SELECT * FROM [EW-EHR].[eastway].[ServiceCodes]";
+		String macsisModifier1Sql = "SELECT * FROM [EW-EHR].[macsis].[Modifier_one]";
+		String macsisModifier2Sql = "SELECT * FROM [EW-EHR].[macsis].[Modifier_two]";
+
+		HashMap<String, LinkedHashSet<HashMap<String, ?>>> billingStripData =
+				new HashMap<String, LinkedHashSet<HashMap<String, ?>>>();
+
+		LinkedHashSet<HashMap<String, ?>> eastwayLocation = new LinkedHashSet<HashMap<String, ?>>();
+		LinkedHashSet<HashMap<String, ?>> macbmLocation = new LinkedHashSet<HashMap<String, ?>>();
+		LinkedHashSet<HashMap<String, ?>> eastwayPrograms = new LinkedHashSet<HashMap<String, ?>>();
+		LinkedHashSet<HashMap<String, ?>> serviceCodes = new LinkedHashSet<HashMap<String, ?>>();
+		LinkedHashSet<HashMap<String, ?>> macsisModifier1 = new LinkedHashSet<HashMap<String, ?>>();
+		LinkedHashSet<HashMap<String, ?>> macsisModifier2 = new LinkedHashSet<HashMap<String, ?>>();
+
+		billingStripData.put("EastwayLocation", eastwayLocation);
+		billingStripData.put("MACBMLocation", macbmLocation);
+		billingStripData.put("EastwayPrograms", eastwayPrograms);
+		billingStripData.put("ServiceCodes", serviceCodes);
+		billingStripData.put("MACSISModifier1", macsisModifier1);
+		billingStripData.put("MACSISModifier2", macsisModifier2);
+
+		Connection con;
+		ResultSet rs;
+		Statement stmt;
 
 		try {
 			con = DbConnection.getConnection();
 			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
-			srs = stmt.executeQuery(sql);
-			while (srs.next()) {
-				ticketString = srs.getString(1);
+
+			rs = stmt.executeQuery(eastwayLocationSql);
+			while(rs.next()) {
+				HashMap<String, String> hm = new HashMap<String, String>();
+				hm.put("description", rs.getString(1));
+				hm.put("code", rs.getString(2));
+				eastwayLocation.add(hm);
 			}
-			return ticketString;
-		} catch (SQLException e) {
+
+			rs = stmt.executeQuery(macbmLocationSql);
+			while(rs.next()) {
+				HashMap<String, String> hm = new HashMap<String, String>();
+				hm.put("code", rs.getString(1));
+				hm.put("description", rs.getString(2));
+
+				macbmLocation.add(hm);
+			}
+
+			rs = stmt.executeQuery(eastwayProgramsSql);
+			while(rs.next()) {
+				HashMap<String, String> hm = new HashMap<String, String>();
+				hm.put("description", rs.getString(1));
+				hm.put("code", rs.getString(2));
+				eastwayPrograms.add(hm);
+			}
+
+			rs = stmt.executeQuery(serviceCodesSql);
+			while(rs.next()) {
+				HashMap<String, String> hm = new HashMap<String, String>();
+				hm.put("code", rs.getString(1));
+				hm.put("description", rs.getString(2));
+				hm.put("templateId", rs.getString(3));
+				serviceCodes.add(hm);
+			}
+
+			rs = stmt.executeQuery(macsisModifier1Sql);
+			while(rs.next()) {
+				HashMap<String, String> hm = new HashMap<String, String>();
+				hm.put("description", rs.getString(2));
+				hm.put("modifier", rs.getString(3));
+				macsisModifier1.add(hm);
+			}
+
+			rs = stmt.executeQuery(macsisModifier2Sql);
+			while(rs.next()) {
+				HashMap<String, String> hm = new HashMap<String, String>();
+				hm.put("description", rs.getString(2));
+				hm.put("modifier", rs.getString(3));
+				macsisModifier2.add(hm);
+			}
+			return billingStripData;
+		} catch(SQLException e) {
 			throw new DbException(e);
-		} catch (NamingException e) {
-			throw new DbException("Naming exception");
-		}
-	}
-
-	@Override
-	public String getProgressNoteBody(String service, String sessionId)
-			throws SessionExpiredException, DbException {
-		checkSessionExpire(sessionId);
-		String sql = "SELECT TemplateString FROM TicketTemplate WHERE TemplateID = "
-				+ service;
-		Connection con = null;
-		Statement stmt = null;
-		ResultSet srs = null;
-		String progressNoteBody = null;
-
-		try {
-			con = DbConnection.getConnection();
-			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
-			srs = stmt.executeQuery(sql);
-			while (srs.next()) {
-				progressNoteBody = srs.getString("TemplateString");
-			}
-			return progressNoteBody;
-		} catch (SQLException e) {
-			throw new DbException();
-		} catch (NamingException e) {
+		} catch(NamingException e) {
 			throw new DbException("Naming exception");
 		}
 	}

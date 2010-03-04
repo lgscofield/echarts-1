@@ -1,6 +1,8 @@
 package org.eastway.echarts.client;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Vector;
 
 import org.eastway.echarts.shared.DbException;
@@ -28,13 +30,11 @@ public interface PatientServices extends RemoteService {
 
 	public void addMessage(Message msg, String sessionId) throws SessionExpiredException, DbException;
 
-	public String getTicket(Integer ticketnum, String sessionId) throws SessionExpiredException, DbException;
-
 	public ServiceCodes getServiceCodes(String sessionId) throws SessionExpiredException, DbException;
-
-	public String getProgressNoteBody(String service, String sessionId) throws SessionExpiredException, DbException;
 
 	public String validateUser(String username, String password) throws DbException;
 
 	public UserData getUserData(String sessionId) throws DbException, SessionExpiredException;
+
+	HashMap<String, LinkedHashSet<HashMap<String, ?>>> getBillingStripData(String sessionId) throws SessionExpiredException, DbException;
 }

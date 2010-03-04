@@ -7,8 +7,8 @@ public class Service {
 	private Date startTime;
 	private Integer duration;
 	private Integer service;
-	private String hipaaModifier1;
-	private String hipaaModifier2;
+	private String modifier1;
+	private String modifier2;
 	private String staffId;
 	private String location1;
 	private String location2;
@@ -45,20 +45,20 @@ public class Service {
 		return service;
 	}
 
-	public void setHipaaModifier1(String hipaaModifier1) {
-		this.hipaaModifier1 = hipaaModifier1;
+	public void setModifier1(String modifier1) {
+		this.modifier1 = modifier1;
 	}
 
-	public String getHipaaModifier1() {
-		return hipaaModifier1;
+	public String getModifier1() {
+		return modifier1;
 	}
 
-	public void setHipaaModifier2(String hipaaModifier2) {
-		this.hipaaModifier2 = hipaaModifier2;
+	public void setModifier2(String modifier2) {
+		this.modifier2 = modifier2;
 	}
 
-	public String getHipaaModifier2() {
-		return hipaaModifier2;
+	public String getModifier2() {
+		return modifier2;
 	}
 
 	public void setStaffId(String staffId) {
