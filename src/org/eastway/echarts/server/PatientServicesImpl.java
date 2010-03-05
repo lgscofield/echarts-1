@@ -595,4 +595,78 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 		}
 		return null;
 	}
+
+	@Override
+	public HashMap<String, LinkedHashSet<HashMap<String, String>>> getCPSTNoteData(String sessionId) throws SessionExpiredException, DbException {
+		checkSessionExpire(sessionId);
+
+		String activitiesOfferedSql = "SELECT description FROM [EW-EHR].[soqic_form_data].[Activities_offered]";
+		String othersPresentSql = "SELECT description FROM [EW-EHR].[soqic_form_data].[Relation_to_client]";
+		String stageOfTreatmentMISql = "SELECT description FROM [EW-EHR].[soqic_form_data].[MI_stage_of_treatment]";
+		String stageOfTreatmentAODSql = "SELECT description FROM [EW-EHR].[soqic_form_data].[AOD_stage_of_treatment]";
+		String therapeuticInterventionsProvidedSql = "SELECT description FROM [EW-EHR].[soqic_form_data].[CaseManager_therapeutic_interventions_provided]";
+
+		HashMap<String, LinkedHashSet<HashMap<String, String>>> cpstNoteData = new HashMap<String, LinkedHashSet<HashMap<String, String>>>();
+
+		LinkedHashSet<HashMap<String, String>> activitiesOffered = new LinkedHashSet<HashMap<String, String>>();
+		LinkedHashSet<HashMap<String, String>> othersPresent = new LinkedHashSet<HashMap<String, String>>();
+		LinkedHashSet<HashMap<String, String>> stageOfTreatmentMI = new LinkedHashSet<HashMap<String, String>>();
+		LinkedHashSet<HashMap<String, String>> stageOfTreatmentAOD = new LinkedHashSet<HashMap<String, String>>();
+		LinkedHashSet<HashMap<String, String>> therapeuticInterventionsProvided = new LinkedHashSet<HashMap<String, String>>();
+
+		cpstNoteData.put("ActivitiesOffered", activitiesOffered);
+		cpstNoteData.put("OthersPresent", othersPresent);
+		cpstNoteData.put("StageOfTreatmentMI", stageOfTreatmentMI);
+		cpstNoteData.put("StageOfTreatmentAOD", stageOfTreatmentAOD);
+		cpstNoteData.put("TherapeuticInterventionsProvided", therapeuticInterventionsProvided);
+
+		Connection con;
+		ResultSet rs;
+		Statement stmt;
+
+		try {
+			con = DbConnection.getConnection();
+			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			rs = stmt.executeQuery(activitiesOfferedSql);
+			while(rs.next()) {
+				HashMap<String, String> hm = new HashMap<String, String>();
+				hm.put("description", rs.getString(1));
+				activitiesOffered.add(hm);
+			}
+
+			rs = stmt.executeQuery(othersPresentSql);
+			while(rs.next()) {
+				HashMap<String, String> hm = new HashMap<String, String>();
+				hm.put("description", rs.getString(1));
+				othersPresent.add(hm);
+			}
+
+			rs = stmt.executeQuery(stageOfTreatmentMISql);
+			while(rs.next()) {
+				HashMap<String, String> hm = new HashMap<String, String>();
+				hm.put("description", rs.getString(1));
+				stageOfTreatmentMI.add(hm);
+			}
+
+			rs = stmt.executeQuery(stageOfTreatmentAODSql);
+			while(rs.next()) {
+				HashMap<String, String> hm = new HashMap<String, String>();
+				hm.put("description", rs.getString(1));
+				stageOfTreatmentAOD.add(hm);
+			}
+
+			rs = stmt.executeQuery(therapeuticInterventionsProvidedSql);
+			while(rs.next()) {
+				HashMap<String, String> hm = new HashMap<String, String>();
+				hm.put("description", rs.getString(1));
+				therapeuticInterventionsProvided.add(hm);
+			}
+			return cpstNoteData;
+		} catch (SQLException e) {
+			throw new DbException(e);
+		} catch (NamingException e) {
+			throw new DbException("Naming exception");
+		}
+	}
 }

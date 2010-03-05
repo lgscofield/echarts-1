@@ -36,5 +36,7 @@ public interface PatientServices extends RemoteService {
 
 	public UserData getUserData(String sessionId) throws DbException, SessionExpiredException;
 
-	HashMap<String, LinkedHashSet<HashMap<String, ?>>> getBillingStripData(String sessionId) throws SessionExpiredException, DbException;
+	public HashMap<String, LinkedHashSet<HashMap<String, ?>>> getBillingStripData(String sessionId) throws SessionExpiredException, DbException;
+
+	public HashMap<String, LinkedHashSet<HashMap<String, String>>> getCPSTNoteData(String sessionId) throws SessionExpiredException, DbException;
 }

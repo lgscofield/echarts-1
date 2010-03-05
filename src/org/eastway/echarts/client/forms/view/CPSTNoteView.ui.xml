@@ -2,17 +2,17 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
   xmlns:g="urn:import:com.google.gwt.user.client.ui">
   <ui:style>
-    
+
   </ui:style>
   <g:HTMLPanel>
     <p>Activity(s) Offered:</p>
-    <g:HTMLPanel ui:field="activitiesOffered"/>
+    <g:VerticalPanel ui:field="activitiesOffered" />
 
     <p>Present at Session:</p>
     <g:CheckBox ui:field="clientPresentAtSession">Client Only</g:CheckBox>
 
     Others Present:
-    <g:ListBox ui:field="othersPresent"/>
+    <g:ListBox ui:field="othersPresent" />
     <g:TextBox ui:field="othersPresentNotListed" />
     <p>Functioning:</p>
     <div style="font:9px Tahoma;">(Observed or reported; May include mood,
@@ -34,12 +34,14 @@
     <g:ListBox ui:field="stageTreatMentalIll" />
     <g:ListBox ui:field="stageTreatAOD" />
     <p>Therapeutic Interventions Provided:</p>
-    <g:ScrollPanel ui:field="therapeuticInterventionsProvided" />
+    <g:ScrollPanel height='200px'>
+      <g:VerticalPanel ui:field="therapeuticInterventionsProvided" />
+    </g:ScrollPanel>
     <p>Non-billable:</p>
-    <g:ListBox ui:field="nonBillable"/>
+    <g:ListBox ui:field="nonBillable" />
     <h2>Other:</h2>
     <g:TextArea ui:field="otherTherapy" />
     <h2>Response to Intervention/Progress Toward Goals:</h2>
     <g:TextArea ui:field="clientResponse" />
   </g:HTMLPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

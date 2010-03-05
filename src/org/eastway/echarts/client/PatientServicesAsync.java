@@ -33,4 +33,6 @@ public interface PatientServicesAsync {
 	public void getUserData(String cookie, AsyncCallback<UserData> callback);
 
 	public void getBillingStripData(String cookie, AsyncCallback<HashMap<String, LinkedHashSet<HashMap<String, ?>>>> callback);
+
+	public void getCPSTNoteData(String cookie, AsyncCallback<HashMap<String, LinkedHashSet<HashMap<String, String>>>> callback);
 }
