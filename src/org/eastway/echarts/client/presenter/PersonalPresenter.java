@@ -1,6 +1,5 @@
 package org.eastway.echarts.client.presenter;
 
-import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.shared.Patient;
 
 import com.google.gwt.event.shared.HandlerManager;
@@ -14,7 +13,7 @@ public class PersonalPresenter extends EchartsPresenter<PersonalPresenter.Displa
 	private Patient patient;
 
 	public PersonalPresenter(Display display, HandlerManager eventBus,
-			PatientServicesAsync patientSvc, Patient patient) {
+			Patient patient) {
 		super(display, eventBus);
 		this.patient = patient;
 		setData();

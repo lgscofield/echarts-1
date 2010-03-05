@@ -2,8 +2,8 @@ package org.eastway.echarts.client.presenter;
 
 import org.eastway.echarts.client.events.SavedPatientMessageEvent;
 import org.eastway.echarts.client.events.SavedPatientMessageEventHandler;
+import org.eastway.echarts.client.EchartsRpc;
 import org.eastway.echarts.client.HandleRpcException;
-import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.UserImpl;
 import org.eastway.echarts.client.presenter.AddMessagePresenter;
 import org.eastway.echarts.client.view.AddMessageView;
@@ -25,13 +25,11 @@ public class MessagesPresenter extends EchartsPresenter<MessagesPresenter.Displa
 	}
 
 	private Patient patient;
-	private PatientServicesAsync patientSvc;
 
 	public MessagesPresenter(Display display, HandlerManager eventBus,
-			PatientServicesAsync patientSvc, Patient patient) {
+			Patient patient) {
 		super(display, eventBus);
 		this.patient = patient;
-		this.patientSvc = patientSvc;
 		bind();
 		setData();
 	}
@@ -64,13 +62,13 @@ public class MessagesPresenter extends EchartsPresenter<MessagesPresenter.Displa
 				display.setData(data);
 			}
 		};
-		patientSvc.getMessages(patient.getPatientId(), UserImpl.getSessionId(),
+		EchartsRpc.getRpc().getMessages(patient.getPatientId(), UserImpl.getSessionId(),
 				callback);
 	}
 
 	private void showAddMessage() {
 		new AddMessagePresenter(new AddMessageView(),
-				eventBus, patientSvc, patient);
+				eventBus, patient);
 	}
 
 	private void refresh() {

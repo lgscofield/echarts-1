@@ -10,10 +10,9 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 
 public class Echarts implements EntryPoint {
-	private PatientServicesAsync patientSvc = GWT.create(PatientServices.class);
 	private RootLayoutPanel root = RootLayoutPanel.get();
 	private HandlerManager eventBus = new HandlerManager(null);
-	private EchartsController echartsController = new EchartsController(patientSvc, eventBus);
+	private EchartsController echartsController = new EchartsController(eventBus);
 
 	interface GlobalResources extends ClientBundle {
 		@NotStrict

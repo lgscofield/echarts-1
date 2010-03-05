@@ -3,8 +3,8 @@ package org.eastway.echarts.client.forms.presenter;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 
+import org.eastway.echarts.client.EchartsRpc;
 import org.eastway.echarts.client.HandleRpcException;
-import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.UserImpl;
 import org.eastway.echarts.client.forms.view.CPSTNoteView;
 import org.eastway.echarts.client.forms.view.IPNNoteView;
@@ -50,13 +50,11 @@ public class ProgressNotePresenter extends EchartsPresenter<ProgressNotePresente
 	}
 
 	private Patient patient;
-	private PatientServicesAsync patientSvc;
 
 	public ProgressNotePresenter(Display display, HandlerManager eventBus,
-			PatientServicesAsync patientSvc, Patient patient) {
+			Patient patient) {
 		super(display, eventBus);
 		this.patient = patient;
-		this.patientSvc = patientSvc;
 		bind();
 		setData();
 	}
@@ -113,7 +111,7 @@ public class ProgressNotePresenter extends EchartsPresenter<ProgressNotePresente
 				display.setData(data);
 			}
 		};
-		patientSvc.getBillingStripData(UserImpl.getSessionId(),
+		EchartsRpc.getRpc().getBillingStripData(UserImpl.getSessionId(),
 				callback);
 
 		display.setPatientId(patient.getPatientId());

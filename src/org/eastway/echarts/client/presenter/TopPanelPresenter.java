@@ -2,8 +2,8 @@ package org.eastway.echarts.client.presenter;
 
 import java.util.Vector;
 
+import org.eastway.echarts.client.EchartsRpc;
 import org.eastway.echarts.client.HandleRpcException;
-import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.UserImpl;
 import org.eastway.echarts.client.events.LogoutEvent;
 import org.eastway.echarts.client.events.OpenPatientEvent;
@@ -26,11 +26,8 @@ public class TopPanelPresenter extends EchartsPresenter<TopPanelPresenter.Displa
 		HasClickHandlers getLogoutButton();
 	}
 
-	private PatientServicesAsync patientSvc;
-
-	public TopPanelPresenter(Display display, HandlerManager eventBus, PatientServicesAsync patientSvc) {
+	public TopPanelPresenter(Display display, HandlerManager eventBus) {
 		super(display, eventBus);
-		this.patientSvc = patientSvc;
 		fetchData();
 		bind();
 	}
@@ -64,6 +61,6 @@ public class TopPanelPresenter extends EchartsPresenter<TopPanelPresenter.Displa
 				display.setData(data);
 			}
 		};
-		patientSvc.getPatientList(UserImpl.getSessionId(), callback);
+		EchartsRpc.getRpc().getPatientList(UserImpl.getSessionId(), callback);
 	}
 }

@@ -2,8 +2,8 @@ package org.eastway.echarts.client.presenter;
 
 import java.util.Vector;
 
+import org.eastway.echarts.client.EchartsRpc;
 import org.eastway.echarts.client.HandleRpcException;
-import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.UserImpl;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -18,11 +18,8 @@ public class AlertsPresenter extends EchartsPresenter<AlertsPresenter.Display> {
 		void setData(Vector<String> data);
 	}
 
-	private final PatientServicesAsync patientSvc;
-
-	public AlertsPresenter(Display display, HandlerManager eventBus, PatientServicesAsync patientSvc) {
+	public AlertsPresenter(Display display, HandlerManager eventBus) {
 		super(display, eventBus);
-		this.patientSvc = patientSvc;
 		fetchAlerts();
 	}
 
@@ -39,6 +36,6 @@ public class AlertsPresenter extends EchartsPresenter<AlertsPresenter.Display> {
 				display.setData(data);
 			}
 		};
-		patientSvc.getAlerts(UserImpl.getSessionId(), callback);
+		EchartsRpc.getRpc().getAlerts(UserImpl.getSessionId(), callback);
 	}
 }

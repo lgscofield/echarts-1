@@ -2,7 +2,6 @@ package org.eastway.echarts.client.presenter;
 
 import java.sql.Date;
 
-import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.shared.Patient;
 
 import com.google.gwt.event.shared.HandlerManager;
@@ -24,8 +23,7 @@ public class DemographicsPresenter extends EchartsPresenter<DemographicsPresente
 	}
 
 	public DemographicsPresenter(Display display,
-			HandlerManager eventBus,
-			PatientServicesAsync patientSvc, Patient patient) {
+			HandlerManager eventBus, Patient patient) {
 		super(display, eventBus);
 		setData(patient);
 	}

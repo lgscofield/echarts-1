@@ -1,6 +1,5 @@
 package org.eastway.echarts.client.forms.presenter;
 
-import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.presenter.EchartsDisplay;
 import org.eastway.echarts.client.presenter.EchartsPresenter;
 import org.eastway.echarts.shared.Patient;
@@ -14,13 +13,11 @@ public class IspPresenter extends EchartsPresenter<IspPresenter.Display> {
 	}
 
 	private Patient patient;
-	private PatientServicesAsync patientSvc;
 
 	public IspPresenter(Display display, HandlerManager eventBus,
-			PatientServicesAsync patientSvc, Patient patient) {
+			Patient patient) {
 		super(display, eventBus);
 		this.patient = patient;
-		this.patientSvc = patientSvc;
 		setData();
 	}
 

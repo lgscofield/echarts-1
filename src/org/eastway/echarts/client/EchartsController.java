@@ -19,11 +19,9 @@ import com.google.gwt.user.client.ui.HasWidgets;
 
 public class EchartsController implements ValueChangeHandler<String> {
 	private final HandlerManager eventBus;
-	private final PatientServicesAsync patientSvc;
 	private HasWidgets container;
 
-	public EchartsController(PatientServicesAsync patientSvc, HandlerManager eventBus) {
-		this.patientSvc = patientSvc;
+	public EchartsController(HandlerManager eventBus) {
 		this.eventBus = eventBus;
 		bind();
 	}
@@ -43,7 +41,7 @@ public class EchartsController implements ValueChangeHandler<String> {
 		Cookies.removeCookie("sessionId", "/");
 		UserImpl.setSessionId(null);
 		HandleRpcException.setSessionExpiredState(false);
-		EchartsPresenter<LoginPresenter.Display> presenter = new LoginPresenter(new LoginView(), eventBus, patientSvc);
+		EchartsPresenter<LoginPresenter.Display> presenter = new LoginPresenter(new LoginView(), eventBus);
 		container.clear();
 		container.add(presenter.getDisplay().asWidget());
 	}
@@ -52,7 +50,7 @@ public class EchartsController implements ValueChangeHandler<String> {
 		String sessionId = Cookies.getCookie("sessionId");
 		this.container = container;
 		if (sessionId == null || sessionId == "null") {
-			EchartsPresenter<LoginPresenter.Display> presenter = new LoginPresenter(new LoginView(), eventBus, patientSvc);
+			EchartsPresenter<LoginPresenter.Display> presenter = new LoginPresenter(new LoginView(), eventBus);
 			container.clear();
 			container.add(presenter.getDisplay().asWidget());
 		} else {
@@ -78,7 +76,7 @@ public class EchartsController implements ValueChangeHandler<String> {
 				}
 			}
 		};
-		patientSvc.getUserData(sessionId, callback);
+		EchartsRpc.getRpc().getUserData(sessionId, callback);
 	}
 
 	@Override
@@ -86,7 +84,7 @@ public class EchartsController implements ValueChangeHandler<String> {
 		String token = event.getValue();
 		if (token != null) {
 			if (token.equals("dashboard")) {
-				EchartsPresenter<DashboardPresenter.Display> presenter = new DashboardPresenter(new DashboardView(), eventBus, patientSvc);
+				EchartsPresenter<DashboardPresenter.Display> presenter = new DashboardPresenter(new DashboardView(), eventBus);
 				container.clear();
 				container.add(presenter.getDisplay().asWidget());
 			}

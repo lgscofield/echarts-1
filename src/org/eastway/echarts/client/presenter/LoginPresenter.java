@@ -1,7 +1,7 @@
 package org.eastway.echarts.client.presenter;
 
+import org.eastway.echarts.client.EchartsRpc;
 import org.eastway.echarts.client.HandleRpcException;
-import org.eastway.echarts.client.PatientServicesAsync;
 
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -36,11 +36,8 @@ public class LoginPresenter extends EchartsPresenter<LoginPresenter.Display> {
 		boolean validatePassword();
 	}
 
-	private PatientServicesAsync patientSvc;
-
-	public LoginPresenter(Display display, HandlerManager eventBus, PatientServicesAsync patientSvc) {
+	public LoginPresenter(Display display, HandlerManager eventBus) {
 		super(display, eventBus);
-		this.patientSvc = patientSvc;
 		bind();
 	}
 
@@ -118,7 +115,7 @@ public class LoginPresenter extends EchartsPresenter<LoginPresenter.Display> {
 							Window.Location.reload();
 						}
 					};
-					patientSvc.validateUser(display.getUsernameTextBox().getText(), display.getPasswordTextBox().getText(), callback);
+					EchartsRpc.getRpc().validateUser(display.getUsernameTextBox().getText(), display.getPasswordTextBox().getText(), callback);
 				}
 			}
 		});

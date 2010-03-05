@@ -1,7 +1,7 @@
 package org.eastway.echarts.client.presenter;
 
+import org.eastway.echarts.client.EchartsRpc;
 import org.eastway.echarts.client.HandleRpcException;
-import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.UserImpl;
 import org.eastway.echarts.client.forms.presenter.IspPresenter;
 import org.eastway.echarts.client.forms.presenter.ProgressNotePresenter;
@@ -35,7 +35,6 @@ public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Di
 	}
 
 	private HandlerManager eventBus;
-	private PatientServicesAsync patientSvc;
 	private String patientId;
 	private Patient patient;
 
@@ -48,11 +47,9 @@ public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Di
 	private DemographicsPresenter demographics;
 
 	public PatientTabPresenter(Display display, HandlerManager eventBus,
-					PatientServicesAsync patientSvc,
 							String patientId) {
 		super(display, eventBus);
 		this.eventBus = eventBus;
-		this.patientSvc = patientSvc;
 		this.patientId = patientId;
 		bind();
 		fetchPatient();
@@ -72,16 +69,16 @@ public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Di
 			if (serviceHistory == null)
 				serviceHistory = new ServiceHistoryPresenter(
 					(ServiceHistoryView)view, eventBus,
-					patientSvc, patient);
+					patient);
 		} else if (view instanceof MessagesView) {
 			if (messages == null)
 				messages = new MessagesPresenter(
 					(MessagesView)view, eventBus,
-					patientSvc, patient);
+					patient);
 		} else if (view instanceof AddMessageView) {
 			if (addMessage == null)
 				addMessage = new AddMessagePresenter(
-					(AddMessageView)view, eventBus, patientSvc,
+					(AddMessageView)view, eventBus,
 					patient);
 			else
 				addMessage.display.show();
@@ -90,22 +87,22 @@ public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Di
 			if (progressNote == null)
 				progressNote = new ProgressNotePresenter(
 					(ProgressNoteView)view, eventBus,
-					patientSvc, patient);
+					patient);
 		} else if (view instanceof PersonalView) {
 			if (personal == null)
 				personal = new PersonalPresenter(
 					(PersonalView)view, eventBus,
-					patientSvc, patient);
+					patient);
 		} else if (view instanceof IspView) {
 			if (isp == null)
 				isp = new IspPresenter(
 					(IspView)view, eventBus,
-					patientSvc, patient);
+					patient);
 		} else if (view instanceof DemographicsView) {
 			if (demographics == null)
 				demographics = new DemographicsPresenter(
 						(DemographicsView)view, eventBus,
-						patientSvc, patient);
+						patient);
 		}
 		display.setDisplay(view);
 	}
@@ -122,7 +119,7 @@ public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Di
 				setPatient(patient);
 			}
 		};
-		patientSvc.getPatient(patientId, UserImpl.getSessionId(),
+		EchartsRpc.getRpc().getPatient(patientId, UserImpl.getSessionId(),
 				callback);
 	}
 

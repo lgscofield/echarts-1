@@ -1,6 +1,5 @@
 package org.eastway.echarts.client.presenter;
 
-import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.view.AlertsView;
 import org.eastway.echarts.client.view.PatientListView;
 import org.eastway.echarts.client.view.PatientTabView;
@@ -18,7 +17,6 @@ import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.Widget;
 
 public class DashboardPresenter extends EchartsPresenter<DashboardPresenter.Display> {
-	private PatientServicesAsync patientSvc;
 
 	public interface Display extends EchartsDisplay {
 		HasSelectionHandlers<Integer> getPanel();
@@ -40,9 +38,8 @@ public class DashboardPresenter extends EchartsPresenter<DashboardPresenter.Disp
 		boolean removeTab(Integer i);
 	}
 
-	public DashboardPresenter(Display display, HandlerManager eventBus, PatientServicesAsync patientSvc) {
+	public DashboardPresenter(Display display, HandlerManager eventBus) {
 		super(display, eventBus);
-		this.patientSvc = patientSvc;
 		bind();
 		fetchWidgets();
 	}
@@ -74,23 +71,23 @@ public class DashboardPresenter extends EchartsPresenter<DashboardPresenter.Disp
 	}
 
 	private void fetchTopPanel() {
-		TopPanelPresenter topPanel = new TopPanelPresenter(new TopPanelView(), eventBus, patientSvc);
+		TopPanelPresenter topPanel = new TopPanelPresenter(new TopPanelView(), eventBus);
 		display.setTopPanel(topPanel);
 	}
 
 	private void fetchAlerts() {
-		AlertsPresenter alerts = new AlertsPresenter(new AlertsView(), eventBus, patientSvc);
+		AlertsPresenter alerts = new AlertsPresenter(new AlertsView(), eventBus);
 		display.setAlerts(alerts);
 	}
 
 	public void fetchPatientList() {
-		PatientListPresenter patientList = new PatientListPresenter(new PatientListView(), eventBus, patientSvc);
+		PatientListPresenter patientList = new PatientListPresenter(new PatientListView(), eventBus);
 		display.setPatientList(patientList);
 	}
 
 	public void openPatient(String patientId) {
 		final PatientTabPresenter patientTab = new PatientTabPresenter(
-			new PatientTabView(), eventBus, patientSvc, patientId);
+			new PatientTabView(), eventBus, patientId);
 		display.setPatientTab(patientId,
 					patientTab.getDisplay().asWidget())
 						.addClickHandler(
