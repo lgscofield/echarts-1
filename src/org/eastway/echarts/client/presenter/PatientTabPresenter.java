@@ -3,11 +3,9 @@ package org.eastway.echarts.client.presenter;
 import org.eastway.echarts.client.EchartsRpc;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.UserImpl;
-import org.eastway.echarts.client.presenter.AddMessagePresenter;
 import org.eastway.echarts.client.presenter.MessagesPresenter;
 import org.eastway.echarts.client.presenter.PersonalPresenter;
 import org.eastway.echarts.client.presenter.ServiceHistoryPresenter;
-import org.eastway.echarts.client.view.AddMessageView;
 import org.eastway.echarts.client.view.DemographicsView;
 import org.eastway.echarts.client.view.MessagesView;
 import org.eastway.echarts.client.view.PersonalView;
@@ -36,7 +34,6 @@ public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Di
 
 	private ServiceHistoryPresenter serviceHistory;
 	private MessagesPresenter messages;
-	private AddMessagePresenter addMessage;
 	private PersonalPresenter personal;
 	private DemographicsPresenter demographics;
 
@@ -69,14 +66,6 @@ public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Di
 				messages = new MessagesPresenter(
 					(MessagesView)view, eventBus,
 					patient);
-		} else if (view instanceof AddMessageView) {
-			if (addMessage == null)
-				addMessage = new AddMessagePresenter(
-					(AddMessageView)view, eventBus,
-					patient);
-			else
-				addMessage.display.show();
-			return;
 		} else if (view instanceof PersonalView) {
 			if (personal == null)
 				personal = new PersonalPresenter(
