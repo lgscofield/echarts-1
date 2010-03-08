@@ -3,10 +3,6 @@ package org.eastway.echarts.client.presenter;
 import org.eastway.echarts.client.EchartsRpc;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.UserImpl;
-import org.eastway.echarts.client.forms.presenter.IspPresenter;
-import org.eastway.echarts.client.forms.presenter.ProgressNotePresenter;
-import org.eastway.echarts.client.forms.view.IspView;
-import org.eastway.echarts.client.forms.view.ProgressNoteView;
 import org.eastway.echarts.client.presenter.AddMessagePresenter;
 import org.eastway.echarts.client.presenter.MessagesPresenter;
 import org.eastway.echarts.client.presenter.PersonalPresenter;
@@ -41,9 +37,7 @@ public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Di
 	private ServiceHistoryPresenter serviceHistory;
 	private MessagesPresenter messages;
 	private AddMessagePresenter addMessage;
-	private ProgressNotePresenter progressNote;
 	private PersonalPresenter personal;
-	private IspPresenter isp;
 	private DemographicsPresenter demographics;
 
 	public PatientTabPresenter(Display display, HandlerManager eventBus,
@@ -83,20 +77,10 @@ public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Di
 			else
 				addMessage.display.show();
 			return;
-		} else if (view instanceof ProgressNoteView) {
-			if (progressNote == null)
-				progressNote = new ProgressNotePresenter(
-					(ProgressNoteView)view, eventBus,
-					patient);
 		} else if (view instanceof PersonalView) {
 			if (personal == null)
 				personal = new PersonalPresenter(
 					(PersonalView)view, eventBus,
-					patient);
-		} else if (view instanceof IspView) {
-			if (isp == null)
-				isp = new IspPresenter(
-					(IspView)view, eventBus,
 					patient);
 		} else if (view instanceof DemographicsView) {
 			if (demographics == null)

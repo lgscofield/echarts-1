@@ -1,7 +1,5 @@
 package org.eastway.echarts.client.view;
 
-import org.eastway.echarts.client.forms.view.IspView;
-import org.eastway.echarts.client.forms.view.ProgressNoteView;
 import org.eastway.echarts.client.presenter.PatientTabPresenter;
 import org.eastway.echarts.client.view.AddMessageView;
 import org.eastway.echarts.client.view.MessagesView;
@@ -26,8 +24,8 @@ public class PatientTabView extends Composite implements PatientTabPresenter.Dis
 	@UiField Tree menu;
 	@UiField DockLayoutPanel displayArea;
 
-	private TreeItem personal, demographics, progressNote, messages,
-			addMessage, treatmentPlan, serviceHistory;
+	private TreeItem personal, demographics, messages, addMessage,
+			serviceHistory;
 
 	public PatientTabView() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -57,17 +55,11 @@ public class PatientTabView extends Composite implements PatientTabPresenter.Dis
 		demographics = menu.addItem("Demographics");
 		demographics.setUserObject(new DemographicsView());
 
-		progressNote = menu.addItem("Progress Note");
-		progressNote.setUserObject(new ProgressNoteView());
-
 		messages = menu.addItem("Messages");
 		messages.setUserObject(new MessagesView());
 
 		addMessage = messages.addItem("Add");
 		addMessage.setUserObject(new AddMessageView());
-
-		treatmentPlan = menu.addItem("Treatment Plan");
-		treatmentPlan.setUserObject(new IspView());
 
 		serviceHistory = menu.addItem("Service History");
 		serviceHistory.setUserObject(new ServiceHistoryView());
