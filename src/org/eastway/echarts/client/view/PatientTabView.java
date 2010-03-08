@@ -23,7 +23,7 @@ public class PatientTabView extends Composite implements PatientTabPresenter.Dis
 	@UiField Tree menu;
 	@UiField DockLayoutPanel displayArea;
 
-	private TreeItem personal, demographics, messages, serviceHistory;
+	private TreeItem forms, personal, demographics, messages, serviceHistory;
 
 	public PatientTabView() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -58,6 +58,9 @@ public class PatientTabView extends Composite implements PatientTabPresenter.Dis
 
 		serviceHistory = menu.addItem("Service History");
 		serviceHistory.setUserObject(new ServiceHistoryView());
+
+		forms = menu.addItem("Forms");
+		forms.setUserObject(new FormsView());
 	}
 
 	@Override

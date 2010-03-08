@@ -15,6 +15,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.Vector;
 
@@ -497,5 +498,35 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 			throw new DbException("Naming exception");
 		}
 		return null;
+	}
+
+	@Override
+	public LinkedHashSet<String[]> getFormsList(String sessionId, String patientId) throws SessionExpiredException, DbException {
+		checkSessionExpire(sessionId);
+
+		String sql = "SELECT * FROM form.Form_list";
+		LinkedHashSet<String[]> formsList = new LinkedHashSet<String[]>();
+
+		Connection con;
+		Statement stmt;
+		ResultSet rs;
+
+		try {
+			con = DbConnection.getConnection();
+			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				String[] s = new String[2];
+				s[0] = rs.getString(1);
+				s[1] = rs.getString(2);
+				formsList.add(s);
+			}
+			return formsList;
+		} catch (SQLException e) {
+			throw new DbException(e);
+		} catch (NamingException e) {
+			throw new DbException("Naming exception");
+		}
 	}
 }
