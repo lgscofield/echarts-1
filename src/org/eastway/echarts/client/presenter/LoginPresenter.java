@@ -8,6 +8,7 @@ import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.shared.HandlerManager;
@@ -45,7 +46,8 @@ public class LoginPresenter extends EchartsPresenter<LoginPresenter.Display> {
 		display.getUsernameTextBox().addKeyPressHandler(new KeyPressHandler() {
 			@Override
 			public void onKeyPress(KeyPressEvent event) {
-
+				if (event.getCharCode() == KeyCodes.KEY_ENTER)
+					doValidate();
 			}
 		});
 		display.getUsernameTextBox().addBlurHandler(new BlurHandler() {
@@ -57,7 +59,8 @@ public class LoginPresenter extends EchartsPresenter<LoginPresenter.Display> {
 		display.getPasswordTextBox().addKeyPressHandler(new KeyPressHandler() {
 			@Override
 			public void onKeyPress(KeyPressEvent event) {
-
+				if (event.getCharCode() == KeyCodes.KEY_ENTER)
+					doValidate();
 			}
 		});
 		display.getPasswordTextBox().addBlurHandler(new BlurHandler() {
@@ -67,57 +70,72 @@ public class LoginPresenter extends EchartsPresenter<LoginPresenter.Display> {
 			}
 		});
 		display.getLoginButton().addClickHandler(new ClickHandler() {
-			// TODO: make this a separate function
 			@Override
 			public void onClick(ClickEvent event) {
-				if (display.validateUsername() && display.validatePassword()) {
-					AsyncCallback<String> callback = new AsyncCallback<String>() {
-						@Override
-						public void onFailure(Throwable caught) {
-							new HandleRpcException(caught);
-						}
-
-						@Override
-						public void onSuccess(String sessionId) {
-							if (sessionId == null || sessionId == "null") {
-								final DialogBox invalid = new DialogBox();
-								VerticalPanel vPanel = new VerticalPanel();
-								invalid.setText("ERROR");
-								Button closeButton = new Button("Close",
-										new ClickHandler() {
-									public void onClick(ClickEvent event) {
-										invalid.hide();
-									}
-								});
-								vPanel.add(new HTML("Invalid username or password"));
-								vPanel.add(closeButton);
-								vPanel.setCellHorizontalAlignment(closeButton,
-										HasHorizontalAlignment.ALIGN_RIGHT);
-								vPanel.setSpacing(4);
-								invalid.add(vPanel);
-								// Show first,
-								// then center,
-								// Daniel son
-								invalid.show();
-								invalid.center();
-								return;
-							}
-							// TODO: fireEvent here
-							// to do this in
-							// EchartsController
-							// final long DURATION =
-							// 3600000; // one hour
-							// Date expires = new
-							// Date(System.currentTimeMillis()
-							// + DURATION);
-							Cookies.setCookie("sessionId", sessionId, null, null,
-									"/", false);
-							Window.Location.reload();
-						}
-					};
-					EchartsRpc.getRpc().validateUser(display.getUsernameTextBox().getText(), display.getPasswordTextBox().getText(), callback);
-				}
+				doValidate();
 			}
 		});
+	}
+
+	private void doValidate() {
+		if (display.validateUsername() && display.validatePassword()) {
+			AsyncCallback<String> callback = new AsyncCallback<String>() {
+				@Override
+				public void onFailure(Throwable caught) {
+					new HandleRpcException(caught);
+				}
+
+				@Override
+				public void onSuccess(String sessionId) {
+					if (sessionId == null
+							|| sessionId == "null") {
+						final DialogBox invalid = new DialogBox();
+						VerticalPanel vPanel = new VerticalPanel();
+						invalid.setText("ERROR");
+						Button closeButton = new Button(
+								"Close",
+								new ClickHandler() {
+									public void onClick(
+											ClickEvent event) {
+										invalid
+												.hide();
+									}
+								});
+						vPanel
+								.add(new HTML(
+										"Invalid username or password"));
+						vPanel.add(closeButton);
+						vPanel
+								.setCellHorizontalAlignment(
+										closeButton,
+										HasHorizontalAlignment.ALIGN_RIGHT);
+						vPanel.setSpacing(4);
+						invalid.add(vPanel);
+						// Show first,
+						// then center,
+						// Daniel son
+						invalid.show();
+						invalid.center();
+						return;
+					}
+					// TODO: fireEvent here
+					// to do this in
+					// EchartsController
+					// final long DURATION =
+					// 3600000; // one hour
+					// Date expires = new
+					// Date(System.currentTimeMillis()
+					// + DURATION);
+					Cookies.setCookie("sessionId",
+							sessionId, null, null,
+							"/", false);
+					Window.Location.reload();
+				}
+			};
+			EchartsRpc.getRpc().validateUser(
+					display.getUsernameTextBox().getText(),
+					display.getPasswordTextBox().getText(),
+					callback);
+		}
 	}
 }
