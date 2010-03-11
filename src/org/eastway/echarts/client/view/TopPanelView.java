@@ -9,6 +9,7 @@ import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -27,8 +28,7 @@ public class TopPanelView extends Composite implements TopPanelPresenter.Display
 	private SuggestBox patientIdBox = new SuggestBox(oracle);
 	private Button patientSearchButton = new Button("Search");
 
-	@UiField
-	ButtonStyle style;
+	@UiField ButtonStyle style;
 
 	interface ButtonStyle extends CssResource {
 		String button();
@@ -47,6 +47,7 @@ public class TopPanelView extends Composite implements TopPanelPresenter.Display
 		patientSearch.add(patientSearchButton);
 		patientSearchButton.addStyleName(style.button());
 		patientIdBox.addStyleName(style.searchbox());
+		logoutButton.setHref("http://ewsql.eastway.local/echarts/logout.aspx?continue=" + Window.Location.getHref());
 	}
 
 	@Override

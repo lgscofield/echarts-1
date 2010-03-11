@@ -1,12 +1,6 @@
 package org.eastway.echarts.server;
 
-import java.io.DataInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashSet;
-import java.util.Random;
 import java.util.Vector;
 
 import javax.naming.NamingException;
@@ -31,89 +24,11 @@ import org.eastway.echarts.shared.ServiceCodes;
 import org.eastway.echarts.shared.SessionExpiredException;
 import org.eastway.echarts.shared.UserData;
 
-import com.google.gwt.user.server.Base64Utils;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 @SuppressWarnings("serial")
 public class PatientServicesImpl extends RemoteServiceServlet implements
 		PatientServices, DbConstants {
-
-	@Override
-	public String validateUser(String username, String password) throws DbException {
-		String sql = "SELECT * FROM [User] WHERE username = '" + username
-				+ "' and password = HASHBYTES('SHA1','" + password + "')";
-
-		Connection con = null;
-		Statement stmt = null;
-		ResultSet srs = null;
-		String sessionId = null;
-
-		try {
-			con = DbConnection.getConnection();
-			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
-			srs = stmt.executeQuery(sql);
-			if (srs.first()) {
-				sessionId = createSessionId();
-				storeSessionId(sessionId, username);
-			} else {
-				sessionId = null;
-			}
-			return sessionId;
-		} catch (SQLException e) {
-			throw new DbException(e);
-		} catch (NamingException e) {
-			throw new DbException("Naming exception");
-		}
-	}
-
-	private void storeSessionId(String sessionId, String username) throws DbException {
-		Date t = new Date();
-		long expire = t.getTime() + 3600000; // 60 minutes
-		String sql = "UPDATE [User] SET SessionId='" + sessionId + "', SessionIdExpire=" + expire + " WHERE Username='" + username + "'";
-		Connection con = null;
-		Statement stmt = null;
-
-		try {
-			con = DbConnection.getConnection();
-			stmt = con.createStatement();
-			stmt.executeUpdate(sql);
-		} catch (NamingException e) {
-			throw new DbException("Naming exception");
-		} catch (SQLException e) {
-			throw new DbException();
-		}
-	}
-
-	private String createSessionId() {
-		InputStream in;
-		byte[] seed = new byte[16];;
-		String sessionId = null;
-
-		try {
-			// We seed Random() with /dev/random on linux servers;
-			// for Windows, we seed with the current timestamp
-			in = new FileInputStream("/dev/random");
-			DataInputStream dataIn = new DataInputStream(in);
-			for (int i = 0; i < 16; i++)
-				seed[i] = dataIn.readByte();
-		} catch (FileNotFoundException e) {
-			Random random = new Random();
-			random.nextBytes(seed);
-		} catch (IOException e) {
-			Random random = new Random();
-			random.nextBytes(seed);
-		}
-
-		try {
-			MessageDigest md = MessageDigest.getInstance("SHA-512");
-			md.update(seed);
-			sessionId = Base64Utils.toBase64(md.digest());
-		} catch (NoSuchAlgorithmException e) {
-			return null;
-		}
-		return sessionId;
-	}
 
 	@Override
 	public Patient getPatient(String patientId, String sessionId)
@@ -427,31 +342,26 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 
 	}
 
-	private boolean checkSessionExpire(String sessionId) throws SessionExpiredException, DbException {
-		String sql = "SELECT SessionIdExpire FROM [User] WHERE SessionId = '" + sessionId + "'";
-		Date t = new Date();
-		long expire = 0;
+	private void checkSessionExpire(String sessionId) throws SessionExpiredException, DbException {
+		String sql = "{call isSessionExpired(?, ?)}";
 		Connection con = null;
-		Statement stmt = null;
-		ResultSet srs = null;
+		CallableStatement stmt = null;
 
 		try {
 			con = DbConnection.getConnection();
-			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			srs = stmt.executeQuery(sql);
-			if (srs.first()) {
-				expire = srs.getLong("SessionIdExpire");
+			stmt = con.prepareCall(sql);
+			stmt.setString("sessionid", sessionId);
+			stmt.registerOutParameter("status", java.sql.Types.BIT);
+			stmt.execute();
+			if (stmt.getBoolean("status")) {
+				throw new SessionExpiredException();
 			}
 		} catch (SQLException e) {
-			throw new DbException();
+			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException("Naming exception");
-		}
-
-		if (t.getTime() > expire) {
-			throw new SessionExpiredException();
-		} else {
-			return true;
+		} catch (SessionExpiredException e) {
+			throw e;
 		}
 	}
 

@@ -31,8 +31,6 @@ public interface PatientServices extends RemoteService {
 
 	public ServiceCodes getServiceCodes(String sessionId) throws SessionExpiredException, DbException;
 
-	public String validateUser(String username, String password) throws DbException;
-
 	public UserData getUserData(String sessionId) throws DbException, SessionExpiredException;
 
 	public LinkedHashSet<String[]> getFormsList(String sessionId, String patientId) throws SessionExpiredException, DbException;

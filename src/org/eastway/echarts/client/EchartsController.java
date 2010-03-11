@@ -4,9 +4,7 @@ import org.eastway.echarts.client.events.LogoutEvent;
 import org.eastway.echarts.client.events.LogoutEventHandler;
 import org.eastway.echarts.client.presenter.DashboardPresenter;
 import org.eastway.echarts.client.presenter.EchartsPresenter;
-import org.eastway.echarts.client.presenter.LoginPresenter;
 import org.eastway.echarts.client.view.DashboardView;
-import org.eastway.echarts.client.view.LoginView;
 import org.eastway.echarts.shared.UserData;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -32,30 +30,15 @@ public class EchartsController implements ValueChangeHandler<String> {
 		eventBus.addHandler(LogoutEvent.TYPE, new LogoutEventHandler() {
 			@Override
 			public void onLogout(LogoutEvent event) {
-				doLogout();
 			}
 		});
-	}
-
-	protected void doLogout() {
-		Cookies.removeCookie("sessionId", "/");
-		UserImpl.setSessionId(null);
-		HandleRpcException.setSessionExpiredState(false);
-		EchartsPresenter<LoginPresenter.Display> presenter = new LoginPresenter(new LoginView(), eventBus);
-		container.clear();
-		container.add(presenter.getDisplay().asWidget());
 	}
 
 	public void go(HasWidgets container) {
 		String sessionId = Cookies.getCookie("sessionId");
 		this.container = container;
-		if (sessionId == null || sessionId == "null") {
-			EchartsPresenter<LoginPresenter.Display> presenter = new LoginPresenter(new LoginView(), eventBus);
-			container.clear();
-			container.add(presenter.getDisplay().asWidget());
-		} else {
+		if (sessionId != null && sessionId != "null")
 			fetchUser(sessionId);
-		}
 	}
 
 	private void fetchUser(String sessionId) {
@@ -63,7 +46,6 @@ public class EchartsController implements ValueChangeHandler<String> {
 			@Override
 			public void onFailure(Throwable caught) {
 				new HandleRpcException(caught);
-				doLogout();
 			}
 
 			@Override
