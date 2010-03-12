@@ -12,6 +12,7 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
@@ -39,6 +40,8 @@ public class EchartsController implements ValueChangeHandler<String> {
 		this.container = container;
 		if (sessionId != null && sessionId != "null")
 			fetchUser(sessionId);
+		else
+			Window.alert("Please login");
 	}
 
 	private void fetchUser(String sessionId) {
