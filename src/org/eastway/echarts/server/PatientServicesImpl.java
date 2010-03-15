@@ -143,7 +143,7 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 
 		try {
 			staffId = getStaffId(sessionId);
-			sql = "SELECT VTicklerList.PATID, Demographics.Name, VTicklerList.ItemName, VTicklerList.[Date] FROM VTicklerList INNER JOIN Demographics ON VTicklerList.PATID = Demographics.PATID WHERE [Date] IS NOT NULL AND VTicklerList.PATID IN (SELECT PATID FROM Assignments WHERE Staff = '"
+			sql = "SELECT VTicklerList.PATID, Demographics.Name, VTicklerList.ItemName, VTicklerList.[Date] FROM VTicklerList INNER JOIN Demographics ON VTicklerList.PATID = Demographics.PATID WHERE [Date] IS NOT NULL AND VTicklerList.PATID IN (SELECT PATID FROM Assignments WHERE StaffId = '"
 				+ staffId + "' AND Disposition = 1) ORDER BY 4 ASC";
 			con = DbConnection.getConnection();
 			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -179,7 +179,7 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 		checkSessionExpire(sessionId);
 		Messages msgs = new Messages();
 
-		String sql = "SELECT ID, PATID, [Descriptor] as 'MessageType', CAST(MessageDate As DateTime) As MessageDate, [Message] as 'Content', [ParentID], StaffName FROM [Messages] INNER JOIN VMessageType ON [Messages].MessageType = VMessageType.MessageType INNER JOIN [User] ON [Messages].LastEditBy = [User].Staff WHERE PATID ="
+		String sql = "SELECT [Messages].ID, PATID, [Descriptor] as 'MessageType', CAST(MessageDate As DateTime) As MessageDate, [Message] as 'Content', [ParentID], StaffName FROM [Messages] INNER JOIN VMessageType ON [Messages].MessageType = VMessageType.MessageType INNER JOIN [User] ON [Messages].LastEditBy = [User].StaffId WHERE PATID ="
 				+ patientId;
 		Connection con = null;
 		Statement stmt = null;
@@ -199,7 +199,7 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 			}
 			return msgs;
 		} catch (SQLException e) {
-			throw new DbException();
+			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException("Naming exception");
 		}
@@ -240,27 +240,22 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 		}
 	}
 
-	private String getStaffId(String sessionId) throws SQLException, NamingException {
-		String sql = "SELECT Staff FROM [User] WHERE SessionId = '"
-					+ sessionId + "'";
-		String staffId = null;
-
+	private String getStaffId(String sessionId) throws NamingException, DbException {
+		String sql = "{call getStaffId(?, ?)}";
 		Connection con = null;
-		Statement stmt = null;
-		ResultSet rs = null;
+		CallableStatement stmt = null;
 
 		try {
 			con = DbConnection.getConnection();
-			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
-			rs = stmt.executeQuery(sql);
-			while(rs.next())
-				staffId = rs.getString("Staff");
-			return staffId;
+			stmt = con.prepareCall(sql);
+			stmt.setString("sessionid", sessionId);
+			stmt.registerOutParameter("staffid", java.sql.Types.VARCHAR);
+			stmt.execute();
+			return stmt.getString("staffid");
 		} catch (SQLException e) {
-			throw e;
+			throw new DbException(e);
 		} catch (NamingException e) {
-			throw e;
+			throw new DbException("Naming exception");
 		}
 	}
 
@@ -366,9 +361,9 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public UserData getUserData(String sessionId) throws DbException, SessionExpiredException {
+	public UserData getUserData(String username, String sessionId) throws DbException, SessionExpiredException {
 		checkSessionExpire(sessionId);
-		String sql = "SELECT [Staff]" +
+		String sql = "SELECT [StaffId]" +
 						",[Username]" +
 						",[JobClassID]" +
 						",[extperm]" +
@@ -381,24 +376,21 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 						",[OfficePhone]" +
 						",[OfficeExt]" +
 						",[StaffDescription]" +
-						",[StaffNPI]" +
-						",[SessionId]" +
-						",[SessionIdExpire]" + " " +
+						",[StaffNPI]" + " " +
 					"FROM [EW-EHR].[dbo].[User]" + " " +
-					"WHERE SessionId = '" + sessionId + "'";
+					"WHERE Username = '" + username + "'";
 
 		try {
 			Connection con = DbConnection.getConnection();
 			Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet srs = stmt.executeQuery(sql);
 			if (srs.next()) {
-				UserData userData = new UserData(srs.getString("Staff"),
+				UserData userData = new UserData(srs.getString("StaffId"),
 						srs.getString("Username"), srs.getString("StaffName"),
 						srs.getString("Program"), srs.getString("Status"),
 						srs.getString("Office"), srs.getString("OfficePhone"),
 						srs.getString("OfficeExt"), srs.getString("StaffDescription"),
-						srs.getString("StaffNPI"), srs.getString("SessionId"),
-						srs.getInt("JobClassId"), srs.getInt("extperm"),
+						srs.getString("StaffNPI"), srs.getInt("JobClassId"), srs.getInt("extperm"),
 						srs.getDate("HireDate"), srs.getDate("TermDate"));
 				return userData;
 			}

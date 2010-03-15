@@ -61,7 +61,7 @@ public class EchartsController implements ValueChangeHandler<String> {
 				}
 			}
 		};
-		EchartsRpc.getRpc().getUserData(sessionId, callback);
+		EchartsRpc.getRpc().getUserData(Cookies.getCookie("echarts_user"), sessionId, callback);
 	}
 
 	@Override

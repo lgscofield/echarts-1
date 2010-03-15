@@ -27,7 +27,7 @@ public interface PatientServicesAsync {
 
 	public void getServiceCodes(String sessionId, AsyncCallback<ServiceCodes> callback);
 
-	public void getUserData(String cookie, AsyncCallback<UserData> callback);
+	public void getUserData(String username, String cookie, AsyncCallback<UserData> callback);
 
 	public void getFormsList(String sessionId, String patientId, AsyncCallback<LinkedHashSet<String[]>> callback);
 }

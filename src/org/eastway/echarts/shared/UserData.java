@@ -8,8 +8,7 @@ import org.eastway.echarts.client.UserImpl;
 @SuppressWarnings("serial")
 public class UserData implements User, Serializable {
 	private String staffId, userName, staffName, program, status, office,
-			officePhone, officeExt, staffDescription, staffNpi,
-			sessionId;
+			officePhone, officeExt, staffDescription, staffNpi;
 	private Integer jobClassId, extendedPermissions;
 	private Date hireDate, termDate;
 
@@ -23,9 +22,8 @@ public class UserData implements User, Serializable {
 			String program, String status, String office,
 			String officePhone, String officeExt,
 			String staffDescription, String staffNpi,
-			String sessionId, Integer jobClassId,
-			Integer extendedPermissions, Date hireDate,
-			Date termDate) {
+			Integer jobClassId, Integer extendedPermissions,
+			Date hireDate, Date termDate) {
 		this.setStaffId(staffId);
 		this.setUserName(userName);
 		this.setStaffName(staffName);
@@ -36,7 +34,6 @@ public class UserData implements User, Serializable {
 		this.setOfficeExt(officeExt);
 		this.setStaffDescription(staffDescription);
 		this.setStaffNpi(staffNpi);
-		this.setSessionId(sessionId);
 		this.setJobClassId(jobClassId);
 		this.setExtendedPermissions(extendedPermissions);
 		this.setHireDate(hireDate);
@@ -76,11 +73,6 @@ public class UserData implements User, Serializable {
 	@Override
 	public String getProgram() {
 		return program;
-	}
-
-	@Override
-	public String getSessionId() {
-		return sessionId;
 	}
 
 	@Override
@@ -151,11 +143,6 @@ public class UserData implements User, Serializable {
 	@Override
 	public void setProgram(String program) {
 		this.program = program;
-	}
-
-	@Override
-	public void setSessionId(String sessionId) {
-		this.sessionId = sessionId;
 	}
 
 	@Override

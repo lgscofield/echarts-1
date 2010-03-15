@@ -33,9 +33,6 @@ public interface User {
 	void setStaffNpi(String staffNpi);
 	String getStaffNpi();
 
-	void setSessionId(String sessionId);
-	String getSessionId();
-
 	void setJobClassId(Integer jobClassId);
 	Integer getJobClassId();
 
