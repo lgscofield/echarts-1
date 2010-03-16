@@ -406,7 +406,7 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 	public LinkedHashSet<String[]> getFormsList(String sessionId, String patientId) throws SessionExpiredException, DbException {
 		checkSessionExpire(sessionId);
 
-		String sql = "SELECT * FROM form.Form_list";
+		String sql = "SELECT * FROM form.Form_list ORDER BY FormOrder ASC";
 		LinkedHashSet<String[]> formsList = new LinkedHashSet<String[]>();
 
 		Connection con;
@@ -419,9 +419,10 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 			rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
-				String[] s = new String[2];
+				String[] s = new String[3];
 				s[0] = rs.getString(1);
 				s[1] = rs.getString(2);
+				s[2] = rs.getString(3);
 				formsList.add(s);
 			}
 			return formsList;

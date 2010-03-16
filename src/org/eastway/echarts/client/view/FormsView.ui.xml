@@ -6,8 +6,6 @@
 
   </ui:style>
   <g:HTMLPanel>
-    <ul>
-      <g:FlowPanel ui:field='formsList' />
-    </ul>
+    <g:FlowPanel ui:field='formsList' />
   </g:HTMLPanel>
 </ui:UiBinder>
