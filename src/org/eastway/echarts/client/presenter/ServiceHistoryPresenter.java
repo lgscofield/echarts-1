@@ -1,10 +1,11 @@
 package org.eastway.echarts.client.presenter;
 
 import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.user.client.ui.HasWidgets;
 
 import org.eastway.echarts.shared.Patient;
 
-public class ServiceHistoryPresenter extends EchartsPresenter<ServiceHistoryPresenter.Display> {
+public class ServiceHistoryPresenter extends Presenter<ServiceHistoryPresenter.Display> {
 
 	public interface Display extends EchartsDisplay {
 		void setName(String name);
@@ -14,5 +15,11 @@ public class ServiceHistoryPresenter extends EchartsPresenter<ServiceHistoryPres
 				Patient patient) {
 		super(display, eventBus);
 		display.setName(patient.getPatientId());
+	}
+
+	@Override
+	public void go(HasWidgets container) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -1,11 +1,17 @@
-package org.eastway.echarts.client.presenter;
+package org.eastway.echarts.dashboard.client.presenter;
 
+import org.eastway.echarts.client.presenter.AlertsPresenter;
+import org.eastway.echarts.client.presenter.EchartsDisplay;
+import org.eastway.echarts.client.presenter.PatientListPresenter;
+import org.eastway.echarts.client.presenter.Presenter;
+import org.eastway.echarts.client.presenter.TopPanelPresenter;
 import org.eastway.echarts.client.view.AlertsView;
 import org.eastway.echarts.client.view.PatientListView;
-import org.eastway.echarts.client.view.PatientTabView;
 import org.eastway.echarts.client.view.TopPanelView;
 import org.eastway.echarts.client.events.OpenPatientEvent;
 import org.eastway.echarts.client.events.OpenPatientEventHandler;
+import org.eastway.echarts.tab.client.presenter.TabPresenter;
+import org.eastway.echarts.tab.client.view.TabView;
 
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -14,9 +20,10 @@ import com.google.gwt.event.logical.shared.HasSelectionHandlers;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 
-public class DashboardPresenter extends EchartsPresenter<DashboardPresenter.Display> {
+public class CommunitySupportSpecialistDashboardPresenter extends Presenter<CommunitySupportSpecialistDashboardPresenter.Display> {
 
 	public interface Display extends EchartsDisplay {
 		HasSelectionHandlers<Integer> getPanel();
@@ -38,7 +45,7 @@ public class DashboardPresenter extends EchartsPresenter<DashboardPresenter.Disp
 		boolean removeTab(Integer i);
 	}
 
-	public DashboardPresenter(Display display, HandlerManager eventBus) {
+	public CommunitySupportSpecialistDashboardPresenter(Display display, HandlerManager eventBus) {
 		super(display, eventBus);
 		bind();
 		fetchWidgets();
@@ -86,8 +93,8 @@ public class DashboardPresenter extends EchartsPresenter<DashboardPresenter.Disp
 	}
 
 	public void openPatient(String patientId) {
-		final PatientTabPresenter patientTab = new PatientTabPresenter(
-			new PatientTabView(), eventBus, patientId);
+		final TabPresenter patientTab = new TabPresenter(
+			new TabView(), eventBus, patientId);
 		display.setPatientTab(patientId,
 					patientTab.getDisplay().asWidget())
 						.addClickHandler(
@@ -100,5 +107,11 @@ public class DashboardPresenter extends EchartsPresenter<DashboardPresenter.Disp
 					display.setSelectedTab(idx - 1);
 			}
 		});
+	}
+
+	@Override
+	public void go(HasWidgets container) {
+		// TODO Auto-generated method stub
+		
 	}
 }

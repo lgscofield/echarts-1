@@ -14,10 +14,10 @@ public class Messages implements Serializable {
 	}
 
 	public Message get(int idx) {
-		if (idx >= this.msgs.size())
-			return null;
-		else
+		if (idx < this.msgs.size())
 			return this.msgs.get(idx);
+		else
+			return null;
 	}
 
 	public int count() {

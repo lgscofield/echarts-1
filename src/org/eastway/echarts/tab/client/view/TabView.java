@@ -1,8 +1,11 @@
-package org.eastway.echarts.client.view;
+package org.eastway.echarts.tab.client.view;
 
-import org.eastway.echarts.client.presenter.PatientTabPresenter;
+import org.eastway.echarts.client.view.DemographicsView;
+import org.eastway.echarts.client.view.FormsView;
 import org.eastway.echarts.client.view.MessagesView;
+import org.eastway.echarts.client.view.PersonalView;
 import org.eastway.echarts.client.view.ServiceHistoryView;
+import org.eastway.echarts.tab.client.presenter.TabPresenter;
 
 import com.google.gwt.event.logical.shared.HasSelectionHandlers;
 import com.google.gwt.core.client.GWT;
@@ -14,18 +17,18 @@ import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
 
-public class PatientTabView extends Composite implements PatientTabPresenter.Display {
+public class TabView extends Composite implements TabPresenter.Display {
 	private static PatientTabViewUiBinder uiBinder = GWT.create(PatientTabViewUiBinder.class);
 
 	interface PatientTabViewUiBinder extends
-			UiBinder<Widget, PatientTabView> {}
+			UiBinder<Widget, TabView> {}
 
 	@UiField Tree menu;
 	@UiField DockLayoutPanel displayArea;
 
 	private TreeItem forms, personal, demographics, messages, serviceHistory;
 
-	public PatientTabView() {
+	public TabView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		buildMenu();
 	}

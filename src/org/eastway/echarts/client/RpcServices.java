@@ -15,8 +15,8 @@ import org.eastway.echarts.shared.UserData;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-@RemoteServiceRelativePath("patientServices")
-public interface PatientServices extends RemoteService {
+@RemoteServiceRelativePath("rpcServices")
+public interface RpcServices extends RemoteService {
 	public Patient getPatient(String cid, String sessionId) throws SessionExpiredException, DbException;
 
 	public Vector<String> getPatientList(String sessionId) throws SessionExpiredException, DbException;

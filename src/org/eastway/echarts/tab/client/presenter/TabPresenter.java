@@ -1,10 +1,14 @@
-package org.eastway.echarts.client.presenter;
+package org.eastway.echarts.tab.client.presenter;
 
-import org.eastway.echarts.client.EchartsRpc;
+import org.eastway.echarts.client.Rpc;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.UserImpl;
+import org.eastway.echarts.client.presenter.DemographicsPresenter;
+import org.eastway.echarts.client.presenter.EchartsDisplay;
+import org.eastway.echarts.client.presenter.FormsPresenter;
 import org.eastway.echarts.client.presenter.MessagesPresenter;
 import org.eastway.echarts.client.presenter.PersonalPresenter;
+import org.eastway.echarts.client.presenter.Presenter;
 import org.eastway.echarts.client.presenter.ServiceHistoryPresenter;
 import org.eastway.echarts.client.view.DemographicsView;
 import org.eastway.echarts.client.view.FormsView;
@@ -18,9 +22,10 @@ import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.TreeItem;
 
-public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Display> {
+public class TabPresenter extends Presenter<TabPresenter.Display> {
 	public interface Display extends EchartsDisplay {
 		HasSelectionHandlers<TreeItem> getMenu();
 
@@ -39,7 +44,7 @@ public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Di
 	private DemographicsPresenter demographics;
 	private FormsPresenter forms;
 
-	public PatientTabPresenter(Display display, HandlerManager eventBus,
+	public TabPresenter(Display display, HandlerManager eventBus,
 							String patientId) {
 		super(display, eventBus);
 		this.eventBus = eventBus;
@@ -67,7 +72,7 @@ public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Di
 			if (messages == null)
 				messages = new MessagesPresenter(
 					(MessagesView)view, eventBus,
-					patient);
+					null, patient);
 		} else if (view instanceof PersonalView) {
 			if (personal == null)
 				personal = new PersonalPresenter(
@@ -98,7 +103,7 @@ public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Di
 				setPatient(patient);
 			}
 		};
-		EchartsRpc.getRpc().getPatient(patientId, UserImpl.getSessionId(),
+		Rpc.singleton().getPatient(patientId, UserImpl.getSessionId(),
 				callback);
 	}
 
@@ -108,5 +113,11 @@ public class PatientTabPresenter extends EchartsPresenter<PatientTabPresenter.Di
 
 	public Patient getPatient() {
 		return this.patient;
+	}
+
+	@Override
+	public void go(HasWidgets container) {
+		// TODO Auto-generated method stub
+		
 	}
 }

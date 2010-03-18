@@ -8,13 +8,14 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Vector;
 
 import javax.naming.NamingException;
 
-import org.eastway.echarts.client.PatientServices;
+import org.eastway.echarts.client.RpcServices;
 import org.eastway.echarts.shared.DbException;
 import org.eastway.echarts.shared.Message;
 import org.eastway.echarts.shared.Messages;
@@ -27,8 +28,8 @@ import org.eastway.echarts.shared.UserData;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 @SuppressWarnings("serial")
-public class PatientServicesImpl extends RemoteServiceServlet implements
-		PatientServices, DbConstants {
+public class RpcServicesImpl extends RemoteServiceServlet implements
+		RpcServices, DbConstants {
 
 	@Override
 	public Patient getPatient(String patientId, String sessionId)
@@ -179,7 +180,7 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 		checkSessionExpire(sessionId);
 		Messages msgs = new Messages();
 
-		String sql = "SELECT [Messages].ID, PATID, [Descriptor] as 'MessageType', CAST(MessageDate As DateTime) As MessageDate, [Message] as 'Content', [ParentID], StaffName FROM [Messages] INNER JOIN VMessageType ON [Messages].MessageType = VMessageType.MessageType INNER JOIN [User] ON [Messages].LastEditBy = [User].StaffId WHERE PATID ="
+		String sql = "SELECT [Messages].ID, PATID, [Descriptor] as 'MessageType', CreationTimestamp, Message, [ParentID], StaffName FROM [Messages] INNER JOIN VMessageType ON [Messages].MessageType = VMessageType.MessageType INNER JOIN [User] ON [Messages].LastEditBy = [User].StaffId WHERE PATID ="
 				+ patientId;
 		Connection con = null;
 		Statement stmt = null;
@@ -192,9 +193,15 @@ public class PatientServicesImpl extends RemoteServiceServlet implements
 			srs = stmt.executeQuery(sql);
 			while (srs.next()) {
 				Message m = new Message();
-				m.add(srs.getInt(1), srs.getString(2), srs.getString(3), srs
-						.getTimestamp(4), srs.getString(5), srs.getInt(6), srs
-						.getString(7));
+				m.setId(srs.getInt(1));
+				m.setPatId(srs.getString(2));
+				m.setMessageType(srs.getString(3));
+				Calendar cal = Calendar.getInstance();
+				cal.setTimeInMillis(srs.getTimestamp(4).getTime());
+				m.setCreationDate(DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(cal.getTime()));
+				m.setMessage(srs.getString(5));
+				m.setParentId(srs.getInt(6));
+				m.setLastModifiedBy(srs.getString(7));
 				msgs.add(m);
 			}
 			return msgs;

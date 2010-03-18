@@ -1,12 +1,12 @@
 package org.eastway.echarts.client.presenter;
 
-import org.eastway.echarts.client.events.SavedPatientMessageEvent;
-import org.eastway.echarts.client.events.SavedPatientMessageEventHandler;
-import org.eastway.echarts.client.EchartsRpc;
+import java.util.ArrayList;
+import java.util.Date;
+
 import org.eastway.echarts.client.HandleRpcException;
+import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.UserImpl;
-import org.eastway.echarts.client.presenter.AddMessagePresenter;
-import org.eastway.echarts.client.view.AddMessageView;
+import org.eastway.echarts.shared.Message;
 import org.eastway.echarts.shared.Messages;
 import org.eastway.echarts.shared.Patient;
 
@@ -14,24 +14,53 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.HasWidgets;
 
-public class MessagesPresenter extends EchartsPresenter<MessagesPresenter.Display> {
+public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
 
 	public interface Display extends EchartsDisplay {
-		void setData(Messages data);
+		void setData(ArrayList<String> data);
 
 		HasClickHandlers getAddButton();
+
+		void setText(String patientId);
+
+		HasClickHandlers getSaveButton();
+
+		HasClickHandlers getCloseButton();
+
+		String getMessage();
+
+		String getMessageType();
+
+		void saved();
+
+		void close();
+
+		void show();
+
+		void setMessageTypes(ArrayList<String> types);
 	}
 
 	private Patient patient;
+	private RpcServicesAsync rpcServices;
+	private Messages messages;
 
-	public MessagesPresenter(Display display, HandlerManager eventBus,
-			Patient patient) {
+	public MessagesPresenter(final Display display, HandlerManager eventBus,
+			RpcServicesAsync rpcServices, Patient patient) {
 		super(display, eventBus);
 		this.patient = patient;
+		this.rpcServices = rpcServices;
+	}
+
+	@Override
+	public void go(final HasWidgets container) {
+		container.clear();
+		container.add(display.asWidget());
+		fetchData();
 		bind();
-		setData();
 	}
 
 	private void bind() {
@@ -41,16 +70,61 @@ public class MessagesPresenter extends EchartsPresenter<MessagesPresenter.Displa
 				showAddMessage();
 			}
 		});
-
-		eventBus.addHandler(SavedPatientMessageEvent.TYPE,
-				new SavedPatientMessageEventHandler() {
-			public void onSavedPatientMessage(SavedPatientMessageEvent event) {
-				refresh();
+		display.getSaveButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				Message m = new Message();
+				m.setPatId(patient.getPatientId());
+				m.setMessageType(display.getMessageType());
+				m.setMessage(display.getMessage());
+				m.setCreationDate(DateTimeFormat.getShortDateTimeFormat().format(new Date()));
+				m.setLastModifiedBy(UserImpl.getStaffName());
+				save(m);
+			}
+		});
+		display.getCloseButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				display.close();
 			}
 		});
 	}
 
-	private void setData() {
+	public void save(final Message m) {
+		AsyncCallback<Void> callback = new AsyncCallback<Void>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				new HandleRpcException(caught);
+			}
+
+			@Override
+			public void onSuccess(Void result) {
+				display.saved();
+				messages.add(m);
+				display.setData(setData(messages));
+			}
+		};
+		rpcServices.addMessage(m, UserImpl.getSessionId(),
+				callback);
+	}
+
+	private void loadMessageType() {
+		AsyncCallback<ArrayList<String>> callback = new AsyncCallback<ArrayList<String>>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				new HandleRpcException(caught);
+			}
+
+			@Override
+			public void onSuccess(ArrayList<String> types) {
+				display.setMessageTypes(types);
+			}
+		};
+		rpcServices.getMessageTypes(UserImpl.getSessionId(),
+				callback);
+	}
+
+	private void fetchData() {
 		AsyncCallback<Messages> callback = new AsyncCallback<Messages>() {
 			@Override
 			public void onFailure(Throwable caught) {
@@ -59,19 +133,40 @@ public class MessagesPresenter extends EchartsPresenter<MessagesPresenter.Displa
 
 			@Override
 			public void onSuccess(Messages data) {
-				display.setData(data);
+				display.setData(setData(data));
 			}
 		};
-		EchartsRpc.getRpc().getMessages(patient.getPatientId(), UserImpl.getSessionId(),
+		rpcServices.getMessages(patient.getPatientId(),	UserImpl.getSessionId(),
 				callback);
 	}
 
-	private void showAddMessage() {
-		new AddMessagePresenter(new AddMessageView(),
-				eventBus, patient);
+	public ArrayList<String> setData(Messages msgs) {
+		this.messages = msgs;
+		ArrayList<String> data = new ArrayList<String>();
+		Message m;
+		if (msgs.get(0) == null)
+			data.add("No Messages");
+		else
+			for (int i = 0; (m = messages.get(i)) != null; i++)
+				data.add(formatMessage(m));
+		return data;
 	}
 
-	private void refresh() {
-		setData();
+	private String formatMessage(Message m) {
+		return "<strong>" + m.getCreationDate()
+			+ "</strong>&mdash;"
+			+ m.getMessageType() + "&mdash;"
+			+ m.getLastModifiedBy()
+			+ "<div class='home-PatientMessage'>"
+			+ m.getMessage() + "</div>";
+	}
+
+	public Message getMessage(int i) {
+		return messages.get(i);
+	}
+
+	private void showAddMessage() {
+		loadMessageType();
+		display.show();
 	}
 }

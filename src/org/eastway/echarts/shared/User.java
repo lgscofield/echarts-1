@@ -3,6 +3,21 @@ package org.eastway.echarts.shared;
 import java.sql.Date;
 
 public interface User {
+
+	interface Role {
+		public final static int ADMINISTRATOR		       = 1;
+		public final static int PSYCHIATRIST		       = 2;
+		public final static int NURSE			       = 3;
+		public final static int COMMUNITY_SUPPORT_SPECIALIST   = 5;
+		public final static int THERAPIST	               = 6;
+		public final static int RESIDENTIAL_SUPPORT_SPECIALIST = 7;
+		public final static int CLINICAL_ADMINISTRATOR	       = 8;
+		public final static int HUMAN_RESOURCES		       = 9;
+		public final static int ACCOUNTS_RECEIVABLE 	       = 10;
+		public final static int GENERAL_ADMINISTRATOR 	       = 11;
+		public final static int UNPRIVILEGED 		       = 12;
+	}
+
 	void setStaffId(String staffId);
 	String getStaffId();
 

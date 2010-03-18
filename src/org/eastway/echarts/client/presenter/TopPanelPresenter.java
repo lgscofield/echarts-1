@@ -2,7 +2,7 @@ package org.eastway.echarts.client.presenter;
 
 import java.util.Vector;
 
-import org.eastway.echarts.client.EchartsRpc;
+import org.eastway.echarts.client.Rpc;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.UserImpl;
 import org.eastway.echarts.client.events.LogoutEvent;
@@ -14,8 +14,9 @@ import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.HasWidgets;
 
-public class TopPanelPresenter extends EchartsPresenter<TopPanelPresenter.Display> {
+public class TopPanelPresenter extends Presenter<TopPanelPresenter.Display> {
 	public interface Display extends EchartsDisplay {
 		void setData(Vector<String> data);
 
@@ -61,6 +62,12 @@ public class TopPanelPresenter extends EchartsPresenter<TopPanelPresenter.Displa
 				display.setData(data);
 			}
 		};
-		EchartsRpc.getRpc().getPatientList(UserImpl.getSessionId(), callback);
+		Rpc.singleton().getPatientList(UserImpl.getSessionId(), callback);
+	}
+
+	@Override
+	public void go(HasWidgets container) {
+		// TODO Auto-generated method stub
+		
 	}
 }

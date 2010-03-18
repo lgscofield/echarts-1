@@ -12,7 +12,7 @@ import org.eastway.echarts.shared.UserData;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public interface PatientServicesAsync {
+public interface RpcServicesAsync {
 	public void getPatient(String u, String sessionId, AsyncCallback<Patient> callback);
 
 	public void getPatientList(String sessionId, AsyncCallback<Vector<String>> callback);

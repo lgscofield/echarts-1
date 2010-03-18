@@ -6,12 +6,12 @@
 <web-app>
 	<!-- Servlets -->
 	<servlet>
-		<servlet-name>patientServicesImpl</servlet-name>
-		<servlet-class>org.eastway.echarts.server.PatientServicesImpl</servlet-class>
+		<servlet-name>rpcServicesImpl</servlet-name>
+		<servlet-class>org.eastway.echarts.server.RpcServicesImpl</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>patientServicesImpl</servlet-name>
-		<url-pattern>/echarts/patientServices</url-pattern>
+		<servlet-name>rpcServicesImpl</servlet-name>
+		<url-pattern>/echarts/rpcServices</url-pattern>
 	</servlet-mapping>
 	<session-config>
 		<session-timeout>60</session-timeout>

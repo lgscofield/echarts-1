@@ -4,13 +4,12 @@ import java.sql.Date;
 
 import org.eastway.echarts.shared.UserData;
 
-import com.google.gwt.user.client.Cookies;
-
 public class UserImpl {
 	private static String staffId, userName, staffName, program, status, office,
 			officePhone, officeExt, staffDescription, staffNpi;
 	private static Integer jobClassId, extendedPermissions;
 	private static Date hireDate, termDate;
+	private static String sessionId;
 
 	public UserImpl(UserData userData) {
 		UserImpl.setStaffId(userData.getStaffId());
@@ -110,7 +109,11 @@ public class UserImpl {
 	}
 
 	public static String getSessionId() {
-		return Cookies.getCookie("sessionId");
+		return sessionId;
+	}
+
+	public static void setSessionId(String sessionId) {
+		UserImpl.sessionId = sessionId;
 	}
 
 	public static void setJobClassId(Integer jobClassId) {

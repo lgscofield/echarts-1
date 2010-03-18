@@ -2,7 +2,7 @@ package org.eastway.echarts.client.presenter;
 
 import java.util.Vector;
 
-import org.eastway.echarts.client.EchartsRpc;
+import org.eastway.echarts.client.Rpc;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.UserImpl;
 import org.eastway.echarts.client.events.OpenPatientEvent;
@@ -12,8 +12,9 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.HasWidgets;
 
-public class PatientListPresenter extends EchartsPresenter<PatientListPresenter.Display> {
+public class PatientListPresenter extends Presenter<PatientListPresenter.Display> {
 	private Vector<String> data;
 
 	public interface Display extends EchartsDisplay {
@@ -26,8 +27,6 @@ public class PatientListPresenter extends EchartsPresenter<PatientListPresenter.
 
 	public PatientListPresenter(Display display, HandlerManager eventBus) {
 		super(display, eventBus);
-		fetchPatientList();
-		bind();
 	}
 
 	private void bind() {
@@ -57,7 +56,7 @@ public class PatientListPresenter extends EchartsPresenter<PatientListPresenter.
 				setData(data);
 			}
 		};
-		EchartsRpc.getRpc().getPatientList(UserImpl.getSessionId(), callback);
+		Rpc.singleton().getPatientList(UserImpl.getSessionId(), callback);
 	}
 
 	private void setData(Vector<String> data) {
@@ -66,5 +65,13 @@ public class PatientListPresenter extends EchartsPresenter<PatientListPresenter.
 
 	private Vector<String> getData() {
 		return this.data;
+	}
+
+	@Override
+	public void go(HasWidgets container) {
+		container.clear();
+		container.add(display.asWidget());
+		fetchPatientList();
+		bind();
 	}
 }

@@ -2,15 +2,16 @@ package org.eastway.echarts.client.presenter;
 
 import java.util.Vector;
 
-import org.eastway.echarts.client.EchartsRpc;
+import org.eastway.echarts.client.Rpc;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.UserImpl;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.HasWidgets;
 
-public class AlertsPresenter extends EchartsPresenter<AlertsPresenter.Display> {
+public class AlertsPresenter extends Presenter<AlertsPresenter.Display> {
 
 	public interface Display extends EchartsDisplay {
 		HasClickHandlers getAlerts();
@@ -36,6 +37,12 @@ public class AlertsPresenter extends EchartsPresenter<AlertsPresenter.Display> {
 				display.setData(data);
 			}
 		};
-		EchartsRpc.getRpc().getAlerts(UserImpl.getSessionId(), callback);
+		Rpc.singleton().getAlerts(UserImpl.getSessionId(), callback);
+	}
+
+	@Override
+	public void go(HasWidgets container) {
+		// TODO Auto-generated method stub
+		
 	}
 }

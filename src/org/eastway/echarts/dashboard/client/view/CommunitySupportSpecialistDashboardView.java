@@ -1,10 +1,10 @@
-package org.eastway.echarts.client.view;
+package org.eastway.echarts.dashboard.client.view;
 
 import org.eastway.echarts.client.ProductivityChart;
 import org.eastway.echarts.client.presenter.AlertsPresenter;
-import org.eastway.echarts.client.presenter.DashboardPresenter;
 import org.eastway.echarts.client.presenter.PatientListPresenter;
 import org.eastway.echarts.client.presenter.TopPanelPresenter;
+import org.eastway.echarts.dashboard.client.presenter.CommunitySupportSpecialistDashboardPresenter;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -20,10 +20,10 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class DashboardView extends Composite implements DashboardPresenter.Display {
+public class CommunitySupportSpecialistDashboardView extends Composite implements CommunitySupportSpecialistDashboardPresenter.Display {
 	private static DashboardViewUiBinder uiBinder = GWT.create(DashboardViewUiBinder.class);
 
-	interface DashboardViewUiBinder extends UiBinder<Widget, DashboardView> {}
+	interface DashboardViewUiBinder extends UiBinder<Widget, CommunitySupportSpecialistDashboardView> {}
 
 	private ProductivityChart gchart = new ProductivityChart();
 
@@ -40,7 +40,7 @@ public class DashboardView extends Composite implements DashboardPresenter.Displ
 	@UiField
 	FlowPanel topPanel;
 
-	public DashboardView() {
+	public CommunitySupportSpecialistDashboardView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		productivityPanel.add(gchart);
 		gchart.update();

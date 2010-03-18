@@ -1,7 +1,6 @@
 package org.eastway.echarts.shared;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 /**
  * A model for patient messages
@@ -14,39 +13,13 @@ public class Message implements Serializable {
 	private Integer id;
 	private String patId;
 	private String messageType;
-	private Timestamp messageDate;
 	private String message;
 	private Integer parentId;
-	private Timestamp lastEdit;
-	private String lastEditBy;
+	private String lastModified;
+	private String creationDate;
+	private String lastModifiedBy;
 
 	public Message() {}
-
-	/**
-	 * This add method is used by the client to send a patient message to
-	 * the server.
-	 */
-	public void add(String patId, String messageType, String message) {
-		this.patId = patId;
-		this.messageType = messageType;
-		this.message = message;
-	}
-
-	/**
-	 * This add method is used by the server to send patient messages
-	 * encapsulated in Messages to the client.
-	 */
-	public void add(Integer id, String patId, String messageType,
-			Timestamp messageDate, String message,
-			Integer parentId, String lastEditBy) {
-		this.id = id;
-		this.patId = patId;
-		this.messageType = messageType;
-		this.messageDate = messageDate;
-		this.message = message;
-		this.parentId = parentId;
-		this.lastEditBy = lastEditBy;
-	}
 
 	/**
 	 * Returns the unique ID of this message in the database
@@ -63,6 +36,13 @@ public class Message implements Serializable {
 	}
 
 	/**
+	 * Sets the patient id
+	 */
+	public void setPatId(String patId) {
+		this.patId = patId;
+	}
+
+	/**
 	 * Returns the message type
 	 */
 	public String getMessageType() {
@@ -70,10 +50,24 @@ public class Message implements Serializable {
 	}
 
 	/**
-	 * Returns the date this message was created
+	 * Sets the message type
 	 */
-	public Timestamp getMessageDate() {
-		return messageDate;
+	public void setMessageType(String messageType) {
+		this.messageType = messageType;
+	}
+
+	/**
+	 * Returns the time this message was created
+	 */
+	public String getCreationDate() {
+		return creationDate;
+	}
+
+	/**
+	 * Sets the time the message was created
+	 */
+	public void setCreationDate(String creationDate) {
+		this.creationDate = creationDate;
 	}
 
 	/**
@@ -81,6 +75,13 @@ public class Message implements Serializable {
 	 */
 	public String getMessage() {
 		return message;
+	}
+
+	/**
+	 * Sets the body of the message
+	 */
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	/**
@@ -92,16 +93,48 @@ public class Message implements Serializable {
 	}
 
 	/**
-	 * Returns the date this message was last edited
+	 * Returns the date this message was last modified
 	 */
-	public Timestamp getLastEdit() {
-		return lastEdit;
+	public String getLastModified() {
+		return lastModified;
 	}
 
 	/**
-	 * Returns the last staff id used to edit this message
+	 * Sets the timestamp this message was last modified
+	 * @param lastModified
 	 */
-	public String getLastEditBy() {
-		return lastEditBy;
+	public void setLastModified(String lastModified) {
+		this.lastModified = lastModified;
+	}
+
+	/**
+	 * Returns the last user that modified this message
+	 */
+	public String getLastModifiedBy() {
+		return lastModifiedBy;
+	}
+
+	/**
+	 * Sets the message unique id
+	 * @param id
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/**
+	 * Sets the parent id
+	 * @param parentId
+	 */
+	public void setParentId(int parentId) {
+		this.parentId = parentId;
+	}
+
+	/**
+	 * Sets lastModifiedBy to the last user that modified this message
+	 * @param lastEditBy
+	 */
+	public void setLastModifiedBy(String lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
 	}
 }

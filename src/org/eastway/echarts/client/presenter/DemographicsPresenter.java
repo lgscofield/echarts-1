@@ -5,8 +5,9 @@ import java.sql.Date;
 import org.eastway.echarts.shared.Patient;
 
 import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.user.client.ui.HasWidgets;
 
-public class DemographicsPresenter extends EchartsPresenter<DemographicsPresenter.Display> {
+public class DemographicsPresenter extends Presenter<DemographicsPresenter.Display> {
 
 	public interface Display extends EchartsDisplay {
 		void setPreferredLanguage(String preferredLanguage);
@@ -35,5 +36,11 @@ public class DemographicsPresenter extends EchartsPresenter<DemographicsPresente
 		display.setRace(patient.getRace());
 		display.setEthnicity(patient.getEthncity());
 		display.setDob(patient.getDob());
+	}
+
+	@Override
+	public void go(HasWidgets container) {
+		// TODO Auto-generated method stub
+		
 	}
 }

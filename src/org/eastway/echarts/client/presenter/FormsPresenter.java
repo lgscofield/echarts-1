@@ -2,15 +2,16 @@ package org.eastway.echarts.client.presenter;
 
 import java.util.LinkedHashSet;
 
-import org.eastway.echarts.client.EchartsRpc;
+import org.eastway.echarts.client.Rpc;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.UserImpl;
 import org.eastway.echarts.shared.Patient;
 
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.HasWidgets;
 
-public class FormsPresenter extends EchartsPresenter<FormsPresenter.Display> {
+public class FormsPresenter extends Presenter<FormsPresenter.Display> {
 
 	public interface Display extends EchartsDisplay {
 		void setData(LinkedHashSet<String[]> data);
@@ -40,6 +41,12 @@ public class FormsPresenter extends EchartsPresenter<FormsPresenter.Display> {
 				display.setData(data);
 			}
 		};
-		EchartsRpc.getRpc().getFormsList(UserImpl.getSessionId(), patient.getPatientId(), callback);
+		Rpc.singleton().getFormsList(UserImpl.getSessionId(), patient.getPatientId(), callback);
+	}
+
+	@Override
+	public void go(HasWidgets container) {
+		// TODO Auto-generated method stub
+		
 	}
 }
