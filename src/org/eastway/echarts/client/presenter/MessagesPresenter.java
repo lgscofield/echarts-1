@@ -8,7 +8,6 @@ import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.UserImpl;
 import org.eastway.echarts.shared.Message;
 import org.eastway.echarts.shared.Messages;
-import org.eastway.echarts.shared.Patient;
 
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -44,14 +43,14 @@ public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
 		void setMessageTypes(ArrayList<String> types);
 	}
 
-	private Patient patient;
+	private String patientid;
 	private RpcServicesAsync rpcServices;
 	private Messages messages;
 
 	public MessagesPresenter(final Display display, HandlerManager eventBus,
-			RpcServicesAsync rpcServices, Patient patient) {
+			RpcServicesAsync rpcServices, String patientid) {
 		super(display, eventBus);
-		this.patient = patient;
+		this.patientid = patientid;
 		this.rpcServices = rpcServices;
 	}
 
@@ -74,7 +73,7 @@ public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
 			@Override
 			public void onClick(ClickEvent event) {
 				Message m = new Message();
-				m.setPatId(patient.getPatientId());
+				m.setPatId(patientid);
 				m.setMessageType(display.getMessageType());
 				m.setMessage(display.getMessage());
 				m.setCreationDate(DateTimeFormat.getShortDateTimeFormat().format(new Date()));
@@ -136,7 +135,7 @@ public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
 				display.setData(setData(data));
 			}
 		};
-		rpcServices.getMessages(patient.getPatientId(),	UserImpl.getSessionId(),
+		rpcServices.getMessages(patientid, UserImpl.getSessionId(),
 				callback);
 	}
 

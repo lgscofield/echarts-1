@@ -1,9 +1,8 @@
 package org.eastway.echarts.tab.client.view;
 
-import org.eastway.echarts.client.view.DemographicsView;
 import org.eastway.echarts.client.view.FormsView;
 import org.eastway.echarts.client.view.MessagesView;
-import org.eastway.echarts.client.view.PersonalView;
+import org.eastway.echarts.client.view.PatientView;
 import org.eastway.echarts.client.view.ServiceHistoryView;
 import org.eastway.echarts.tab.client.presenter.TabPresenter;
 
@@ -26,7 +25,7 @@ public class TabView extends Composite implements TabPresenter.Display {
 	@UiField Tree menu;
 	@UiField DockLayoutPanel displayArea;
 
-	private TreeItem forms, personal, demographics, messages, serviceHistory;
+	private TreeItem forms, personal, messages, serviceHistory;
 
 	public TabView() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -51,10 +50,7 @@ public class TabView extends Composite implements TabPresenter.Display {
 
 	private void buildMenu() {
 		personal = menu.addItem("Personal");
-		personal.setUserObject(new PersonalView());
-
-		demographics = menu.addItem("Demographics");
-		demographics.setUserObject(new DemographicsView());
+		personal.setUserObject(new PatientView());
 
 		messages = menu.addItem("Messages");
 		messages.setUserObject(new MessagesView());

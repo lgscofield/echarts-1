@@ -3,17 +3,14 @@ package org.eastway.echarts.tab.client.presenter;
 import org.eastway.echarts.client.Rpc;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.UserImpl;
-import org.eastway.echarts.client.presenter.DemographicsPresenter;
 import org.eastway.echarts.client.presenter.EchartsDisplay;
 import org.eastway.echarts.client.presenter.FormsPresenter;
 import org.eastway.echarts.client.presenter.MessagesPresenter;
-import org.eastway.echarts.client.presenter.PersonalPresenter;
 import org.eastway.echarts.client.presenter.Presenter;
 import org.eastway.echarts.client.presenter.ServiceHistoryPresenter;
-import org.eastway.echarts.client.view.DemographicsView;
 import org.eastway.echarts.client.view.FormsView;
 import org.eastway.echarts.client.view.MessagesView;
-import org.eastway.echarts.client.view.PersonalView;
+import org.eastway.echarts.client.view.PatientView;
 import org.eastway.echarts.client.view.ServiceHistoryView;
 import org.eastway.echarts.shared.Patient;
 
@@ -40,8 +37,6 @@ public class TabPresenter extends Presenter<TabPresenter.Display> {
 
 	private ServiceHistoryPresenter serviceHistory;
 	private MessagesPresenter messages;
-	private PersonalPresenter personal;
-	private DemographicsPresenter demographics;
 	private FormsPresenter forms;
 
 	public TabPresenter(Display display, HandlerManager eventBus,
@@ -72,17 +67,8 @@ public class TabPresenter extends Presenter<TabPresenter.Display> {
 			if (messages == null)
 				messages = new MessagesPresenter(
 					(MessagesView)view, eventBus,
-					null, patient);
-		} else if (view instanceof PersonalView) {
-			if (personal == null)
-				personal = new PersonalPresenter(
-					(PersonalView)view, eventBus,
-					patient);
-		} else if (view instanceof DemographicsView) {
-			if (demographics == null)
-				demographics = new DemographicsPresenter(
-						(DemographicsView)view, eventBus,
-						patient);
+					null, patient.getPatientId());
+		} else if (view instanceof PatientView) {
 		} else if (view instanceof FormsView) {
 			if (forms == null)
 				forms = new FormsPresenter(

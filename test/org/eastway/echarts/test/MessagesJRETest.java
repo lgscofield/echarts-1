@@ -5,7 +5,6 @@ import org.eastway.echarts.client.UserImpl;
 import org.eastway.echarts.client.presenter.MessagesPresenter;
 import org.eastway.echarts.shared.Message;
 import org.eastway.echarts.shared.Messages;
-import org.eastway.echarts.shared.Patient;
 
 import com.google.gwt.event.shared.HandlerManager;
 
@@ -24,7 +23,7 @@ public class MessagesJRETest extends TestCase {
 		mockRpcService = createStrictMock(RpcServicesAsync.class);
 		eventBus = new HandlerManager(null);
 		mockMessagesDisplay = createStrictMock(MessagesPresenter.Display.class);
-		messagesPresenter = new MessagesPresenter(mockMessagesDisplay, eventBus, mockRpcService, new Patient());
+		messagesPresenter = new MessagesPresenter(mockMessagesDisplay, eventBus, mockRpcService, "00000001");
 	}
 
 	public void testAddMessage() {

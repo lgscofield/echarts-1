@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+  xmlns:g="urn:import:com.google.gwt.user.client.ui">
+  <ui:style type="org.eastway.echarts.client.view.PatientView.PatientViewStyle">
+  </ui:style>
+  <g:FlowPanel>
+    <g:FlexTable ui:field="ft1"></g:FlexTable>
+    <g:FlexTable ui:field="ft2"></g:FlexTable>
+  </g:FlowPanel>
+</ui:UiBinder>
