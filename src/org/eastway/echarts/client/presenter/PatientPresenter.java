@@ -60,7 +60,7 @@ public class PatientPresenter extends Presenter<PatientPresenter.Display> {
 		LinkedHashSet<String[]> data = new LinkedHashSet<String[]>();
 		// TODO: the first value here could easily be set by
 		// patient.getPatientIdTitle() or some such.  This way it could
-		// be stored in the database.
+		// be retrieved from the database.
 		data.add(new String[] { "Patient Id", patient.getPatientId() });
 		data.add(new String[] { "Name", patient.getName() });
 		display.setData(data, data.size());

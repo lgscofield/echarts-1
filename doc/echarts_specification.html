@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<head>
+<title>ECharts Functional Spec</title>
+<style type="text/css">
+	.center {
+		text-align: center;
+	}
+
+	.notcomplete, .openissue {
+		color: red;
+	}
+</style>
+</head>
+<html>
+<body>
+<h1 class="center">Echarts</h1>
+<h2 class="center">Functional Specification</h2>
+<h2 class="center">Author : Ian Hilt</h2>
+<h2 class="center">Last updated : 2010-03-22</h2>
+<h3>Overview</h3>
+<p>First of all, this spec is in no way complete.  Comments and suggestions are
+welcome.</p>
+<p>ECharts is an ERP system for behavioral health care agencies.  It's aimed at
+making provider-patient interactions more effective and efficient.  It will accomplish
+this through the use of a web interface with common web-type components, such as a
+user dashboard, dynamic tabs, and real-time patient search.  The application will
+also provide easy access to a scheduler, patient creation/termination forms,
+and physician's order sheet. all of which will be described in detail below.</p>
+<p>Another goal is to provide an electronic version of the health chart for any
+patient in the system.  This makes it easier for providers to view and edit
+information for any patient as well as removing some of the complexity of maintaining
+a physical chart and the procedure in which the provider would be otherwise involved.</p>
+<p>A messaging component will also be part of ECharts.  This will allow any provider to
+leave a message on a patient's <acronym title="Electronic Health Record">EHR</acronym>
+for any other provider to view.</p>
+<p>Since there will be a need to use paper documents created before this application
+was implemented, ECharts will facilitate scanning and viewing paper documents.</p>
+<p>This spec doesn't make a point of discussing any of the underlying code, but
+rather what the user sees when they interact with ECharts.  Specifically, this
+document is more concerned with the functionality and the interaction design,
+not the exact look and layout.</p>
+<h3>Scenarios</h3>
+<h4>Scenario #1: Sally - A case manager</h4>
+<p></p>
+<h3>Non Goals</h3>
+<ul>
+<li>Do billing</li>
+<li>Validate users</li>
+</ul>
+<h3>Architecture</h3>
+<h4>First contact &mdash; The Dashboard</h4>
+<p>The first thing any user will see is their dashboard.  This is the jump-off
+point to any other services the application may offer.  This also means that
+each user may not have any tools in common with other users.  However, the things
+that will be common is the logo in the upper left of the screen followed by the
+strip where dynamic tabs will be opened, followed by the dashboard area where
+the provider's tools will be visible.</p>
+<p>The screen resolution target is 1024x768.</p>
+<p>Here is a simple flowchart of how a user will access the dashboard.</p>
+<img src="image057.gif" />
+<h5>Community Support Specialist</h5>
+<p></p>
+<h5>Clinical Administrator</h5>
+<p>
+<ul>
+<li>Staff tickler</li>
+</ul>
+</p>
+<h5>Psychiatrist</h5>
+<ul>
+<li>Scheduler</li>
+</ul>
+</body>
+</html>

@@ -43,5 +43,3 @@ the service.
 Spend down is not applied to the non-medicaid contract if the cost of
 the service is over the spend down amount. It is applied to the medicaid
 contract.
-
-Create Service business model and rename BillingStrip table to Services.

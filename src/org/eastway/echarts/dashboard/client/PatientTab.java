@@ -1,4 +1,4 @@
-package org.eastway.echarts.tab.client;
+package org.eastway.echarts.dashboard.client;
 
 import org.eastway.echarts.client.Rpc;
 import org.eastway.echarts.client.presenter.MessagesPresenter;
@@ -11,11 +11,12 @@ import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 
-public class PatientTabBody extends Composite implements SelectionHandler<TreeItem> {
-	private FlowPanel body = new FlowPanel();
+public class PatientTab extends Composite implements SelectionHandler<TreeItem> {
+	private SplitLayoutPanel body = new SplitLayoutPanel();
 	private FlowPanel messagesPanel = new FlowPanel();
 	private FlowPanel patientPanel = new FlowPanel();
 	private FlowPanel displayarea = new FlowPanel();
@@ -23,18 +24,21 @@ public class PatientTabBody extends Composite implements SelectionHandler<TreeIt
 	private PatientPresenter pp;
 	private Tree menu = new Tree();
 
-	public PatientTabBody(HandlerManager eventBus, String patientId) {
+	public PatientTab(HandlerManager eventBus, String patientId) {
 		initWidget(body);
-		body.add(menu);
+		body.addWest(menu, 150);
 		body.add(displayarea);
-		TreeItem messageMenuItem = menu.addItem("Messages");
-		messageMenuItem.setUserObject(messagesPanel);
-		TreeItem patientMenuItem = menu.addItem("Patient");
+
+		TreeItem patientMenuItem = menu.addItem("Patient Summary");
 		patientMenuItem.setUserObject(patientPanel);
 		mp = new MessagesPresenter(new MessagesView(), eventBus, Rpc.singleton(), patientId);
 		mp.go(messagesPanel);
+
+		TreeItem messageMenuItem = menu.addItem("Messages");
+		messageMenuItem.setUserObject(messagesPanel);
 		pp = new PatientPresenter(new PatientView(), eventBus, Rpc.singleton(), patientId);
 		pp.go(patientPanel);
+
 		menu.addSelectionHandler(this);
 		setTreeItemWidth();
 	}

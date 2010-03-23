@@ -1,4 +1,4 @@
-package org.eastway.echarts.dashboard.client.presenter;
+package org.eastway.echarts.dashboard.client;
 
 import org.eastway.echarts.client.presenter.AlertsPresenter;
 import org.eastway.echarts.client.presenter.EchartsDisplay;

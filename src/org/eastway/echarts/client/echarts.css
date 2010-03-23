@@ -76,12 +76,6 @@ html * {
 	float: right;
 }
 
-.patient-Label:hover {
-	cursor: pointer;
-	background-color: #dfeffc;
-	width: 100%;
-}
-
 .patientListPanel {
 	width: 300px;
 }

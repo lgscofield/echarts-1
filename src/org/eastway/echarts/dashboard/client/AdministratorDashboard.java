@@ -3,14 +3,16 @@ package org.eastway.echarts.dashboard.client;
 import org.eastway.echarts.client.events.OpenPatientEvent;
 import org.eastway.echarts.client.events.OpenPatientEventHandler;
 import org.eastway.echarts.client.presenter.PatientListPresenter;
+import org.eastway.echarts.client.presenter.TopPanelPresenter;
 import org.eastway.echarts.client.view.PatientListView;
-import org.eastway.echarts.tab.client.PatientTabBody;
+import org.eastway.echarts.client.view.TopPanelView;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -29,11 +31,16 @@ public class AdministratorDashboard extends Composite {
 			UiBinder<Widget, AdministratorDashboard> {
 	}
 
+	interface Style extends CssResource {
+		String alerts();
+	}
+
+	@UiField Style style;
 	@UiField DockLayoutPanel dockLayoutPanel;
 	@UiField TabLayoutPanel tabLayoutPanel;
 	@UiField FlowPanel patientList;
 	@UiField FlowPanel alertsPanel;
-	@UiField FlowPanel topPanel;
+	@UiField TopPanelView top;
 
 	private HandlerManager eventBus;
 
@@ -43,6 +50,7 @@ public class AdministratorDashboard extends Composite {
 		PatientListPresenter plp = new PatientListPresenter(
 				new PatientListView(), eventBus);
 		plp.go(patientList);
+		new TopPanelPresenter(top, eventBus);
 		bind();
 	}
 
@@ -57,7 +65,7 @@ public class AdministratorDashboard extends Composite {
 	}
 
 	public void openPatient(String patientId) {
-		final PatientTabBody tb = new PatientTabBody(eventBus, patientId);
+		final PatientTab tb = new PatientTab(eventBus, patientId);
 		Label closeTab = new Label();
 		closeTab.setTitle("Close");
 		Label patientIdLabel = new Label(patientId);

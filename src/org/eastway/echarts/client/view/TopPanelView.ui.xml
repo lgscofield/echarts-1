@@ -39,7 +39,7 @@
 		margin-top: 10px;
 	}
   </ui:style>
-  <ui:image field="logo" src="../echarts-logo.gif"/>
+  <ui:image field="logo" src="../images/echarts-logo.gif"/>
   <g:FlowPanel>
     <g:FlowPanel addStyleNames="{style.banner} {style.left}"/>
     <g:Anchor ui:field="logoutButton" addStyleNames="{style.right} {style.logout}">Logout</g:Anchor>

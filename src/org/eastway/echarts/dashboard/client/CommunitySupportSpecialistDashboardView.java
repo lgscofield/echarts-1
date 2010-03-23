@@ -1,10 +1,9 @@
-package org.eastway.echarts.dashboard.client.view;
+package org.eastway.echarts.dashboard.client;
 
 import org.eastway.echarts.client.ProductivityChart;
 import org.eastway.echarts.client.presenter.AlertsPresenter;
 import org.eastway.echarts.client.presenter.PatientListPresenter;
 import org.eastway.echarts.client.presenter.TopPanelPresenter;
-import org.eastway.echarts.dashboard.client.presenter.CommunitySupportSpecialistDashboardPresenter;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;

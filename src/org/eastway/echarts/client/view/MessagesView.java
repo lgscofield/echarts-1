@@ -100,6 +100,7 @@ public class MessagesView extends Composite implements MessagesPresenter.Display
 
 	@Override
 	public void show() {
+		db.setVisible(true);
 		db.show();
 		db.center();
 	}

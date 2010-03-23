@@ -166,6 +166,7 @@ public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
 
 	private void showAddMessage() {
 		loadMessageType();
+		display.setText(patientid);
 		display.show();
 	}
 }

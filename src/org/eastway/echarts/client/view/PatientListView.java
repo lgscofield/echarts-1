@@ -5,19 +5,36 @@ import java.util.Vector;
 
 import org.eastway.echarts.client.presenter.PatientListPresenter;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class PatientListView extends Composite implements PatientListPresenter.Display {
+	private static PatientListViewUiBinder uiBinder = GWT.create(PatientListViewUiBinder.class);
 
-	private FlexTable patientListTable = new FlexTable();
+	interface PatientListViewUiBinder extends UiBinder<Widget, PatientListView> { }
+
+	interface Style extends CssResource {
+		String label();
+	}
+
+	@UiField ScrollPanel list;
+	@UiField Style style;
+
+	private FlexTable table = new FlexTable();
 
 	public PatientListView() {
-		initWidget(patientListTable);
+		initWidget(uiBinder.createAndBindUi(this));
+		list.add(table);
 	}
 
 	@Override
@@ -30,21 +47,21 @@ public class PatientListView extends Composite implements PatientListPresenter.D
 		Iterator<String> r = data.iterator();
 		for (int i = 0; r.hasNext(); i++) {
 			Label lbl = new Label(r.next());
-			patientListTable.setWidget(i, 0, lbl);
-			lbl.addStyleName("patient-Label");
+			table.setWidget(i, 0, lbl);
+			lbl.addStyleName(style.label());
 		}
 	}
 
 	@Override
 	public HasClickHandlers getTable() {
-		return patientListTable;
+		return table;
 	}
 
 	@Override
 	public int getClickedRow(ClickEvent event) {
 		int selected = -1;
 
-		FlexTable.Cell cell = patientListTable.getCellForEvent(event);
+		FlexTable.Cell cell = table.getCellForEvent(event);
 
 		if (cell != null) {
 			if (cell.getCellIndex() >= 0) {

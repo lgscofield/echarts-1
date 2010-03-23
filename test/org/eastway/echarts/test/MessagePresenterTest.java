@@ -5,28 +5,25 @@ import org.eastway.echarts.client.UserImpl;
 import org.eastway.echarts.client.presenter.MessagesPresenter;
 import org.eastway.echarts.shared.Message;
 import org.eastway.echarts.shared.Messages;
+import org.junit.Test;
 
 import com.google.gwt.event.shared.HandlerManager;
 
-import junit.framework.TestCase;
-
 import static org.easymock.EasyMock.createStrictMock;
+import static org.junit.Assert.*;
 
-public class MessagesJRETest extends TestCase {
+public class MessagePresenterTest {
 	private MessagesPresenter messagesPresenter;
 	private RpcServicesAsync mockRpcService;
 	private HandlerManager eventBus;
 	private MessagesPresenter.Display mockMessagesDisplay;
 
-	protected void setUp() throws Exception {
+	@Test public void testAddMessage() {
 		UserImpl.setSessionId("12345");
 		mockRpcService = createStrictMock(RpcServicesAsync.class);
 		eventBus = new HandlerManager(null);
 		mockMessagesDisplay = createStrictMock(MessagesPresenter.Display.class);
 		messagesPresenter = new MessagesPresenter(mockMessagesDisplay, eventBus, mockRpcService, "00000001");
-	}
-
-	public void testAddMessage() {
 		Message m1 = new Message();
 		Message m2 = new Message();
 		Message m3 = new Message();

@@ -40,7 +40,6 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		Connection con = null;
 		Statement stmt = null;
 		ResultSet srs = null;
-
 		try {
 			con = DbConnection.getConnection();
 			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
