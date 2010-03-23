@@ -9,7 +9,5 @@
 		width: 100%;
 	}
   </ui:style>
-  <g:FlowPanel height="100%">
-    <g:ScrollPanel ui:field='list' height='100%' width='300px'></g:ScrollPanel>
-  </g:FlowPanel>
+  <g:FlowPanel ui:field='list'></g:FlowPanel>
 </ui:UiBinder>

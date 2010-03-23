@@ -1,9 +1,12 @@
 package org.eastway.echarts.dashboard.client;
 
+import org.eastway.echarts.client.Rpc;
 import org.eastway.echarts.client.events.OpenPatientEvent;
 import org.eastway.echarts.client.events.OpenPatientEventHandler;
+import org.eastway.echarts.client.presenter.AlertsPresenter;
 import org.eastway.echarts.client.presenter.PatientListPresenter;
 import org.eastway.echarts.client.presenter.TopPanelPresenter;
+import org.eastway.echarts.client.view.AlertsView;
 import org.eastway.echarts.client.view.PatientListView;
 import org.eastway.echarts.client.view.TopPanelView;
 
@@ -20,6 +23,7 @@ import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -38,7 +42,7 @@ public class AdministratorDashboard extends Composite {
 	@UiField Style style;
 	@UiField DockLayoutPanel dockLayoutPanel;
 	@UiField TabLayoutPanel tabLayoutPanel;
-	@UiField FlowPanel patientList;
+	@UiField ScrollPanel patientList;
 	@UiField FlowPanel alertsPanel;
 	@UiField TopPanelView top;
 
@@ -51,6 +55,9 @@ public class AdministratorDashboard extends Composite {
 				new PatientListView(), eventBus);
 		plp.go(patientList);
 		new TopPanelPresenter(top, eventBus);
+
+		AlertsPresenter ap = new AlertsPresenter(new AlertsView(), Rpc.singleton(), eventBus);
+		ap.go(alertsPanel);
 		bind();
 	}
 

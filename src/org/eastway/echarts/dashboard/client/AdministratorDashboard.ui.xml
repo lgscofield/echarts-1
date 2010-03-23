@@ -15,7 +15,11 @@
       <g:TabLayoutPanel ui:field="tabLayoutPanel" barUnit="EM" barHeight="2.6">
         <g:tab>
           <g:header>Dashboard</g:header>
-          <g:FlowPanel ui:field="patientList" />
+          <g:DockLayoutPanel unit='EM'>
+            <g:west size='20'>
+              <g:ScrollPanel ui:field="patientList" />
+            </g:west>
+          </g:DockLayoutPanel>
         </g:tab>
       </g:TabLayoutPanel>
     </g:center>

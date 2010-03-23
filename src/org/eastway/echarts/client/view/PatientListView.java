@@ -13,8 +13,8 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class PatientListView extends Composite implements PatientListPresenter.Display {
@@ -26,7 +26,7 @@ public class PatientListView extends Composite implements PatientListPresenter.D
 		String label();
 	}
 
-	@UiField ScrollPanel list;
+	@UiField FlowPanel list;
 	@UiField Style style;
 
 	private FlexTable table = new FlexTable();

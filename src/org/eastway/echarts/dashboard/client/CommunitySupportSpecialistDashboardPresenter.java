@@ -71,7 +71,7 @@ public class CommunitySupportSpecialistDashboardPresenter extends Presenter<Comm
 	}
 
 	private void fetchAlerts() {
-		AlertsPresenter alerts = new AlertsPresenter(new AlertsView(), eventBus);
+		AlertsPresenter alerts = new AlertsPresenter(new AlertsView(), null, eventBus);
 		display.setAlerts(alerts);
 	}
 
