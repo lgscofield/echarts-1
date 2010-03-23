@@ -46,6 +46,7 @@ public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
 	private String patientid;
 	private RpcServicesAsync rpcServices;
 	private Messages messages;
+	private ArrayList<String> data = new ArrayList<String>();
 
 	public MessagesPresenter(final Display display, HandlerManager eventBus,
 			RpcServicesAsync rpcServices, String patientid) {
@@ -100,7 +101,8 @@ public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
 			public void onSuccess(Void result) {
 				display.saved();
 				messages.add(m);
-				display.setData(setData(messages));
+				setData(messages);
+				display.setData(getData());
 			}
 		};
 		rpcServices.addMessage(m, UserImpl.getSessionId(),
@@ -132,26 +134,31 @@ public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
 
 			@Override
 			public void onSuccess(Messages data) {
-				display.setData(setData(data));
+				setData(data);
+				display.setData(getData());
 			}
 		};
 		rpcServices.getMessages(patientid, UserImpl.getSessionId(),
 				callback);
 	}
 
-	public ArrayList<String> setData(Messages msgs) {
-		this.messages = msgs;
-		ArrayList<String> data = new ArrayList<String>();
-		Message m;
-		if (msgs.get(0) == null)
-			data.add("No Messages");
-		else
-			for (int i = 0; (m = messages.get(i)) != null; i++)
-				data.add(formatMessage(m));
-		return data;
+	public ArrayList<String> getData() {
+		return this.data;
 	}
 
-	private String formatMessage(Message m) {
+	public void setData(Messages msgs) {
+		this.messages = msgs;
+		ArrayList<String> d = new ArrayList<String>();
+		Message m;
+		if (msgs.get(0) == null)
+			d.add("No Messages");
+		else
+			for (int i = 0; (m = messages.get(i)) != null; i++)
+				d.add(formatMessage(m));
+		this.data = d;
+	}
+
+	public String formatMessage(Message m) {
 		return "<strong>" + m.getCreationDate()
 			+ "</strong>&mdash;"
 			+ m.getMessageType() + "&mdash;"

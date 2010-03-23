@@ -1,8 +1,10 @@
 package org.eastway.echarts.dashboard.client;
 
 import org.eastway.echarts.client.Rpc;
+import org.eastway.echarts.client.presenter.FormsPresenter;
 import org.eastway.echarts.client.presenter.MessagesPresenter;
 import org.eastway.echarts.client.presenter.PatientPresenter;
+import org.eastway.echarts.client.view.FormsView;
 import org.eastway.echarts.client.view.MessagesView;
 import org.eastway.echarts.client.view.PatientView;
 
@@ -19,9 +21,11 @@ public class PatientTab extends Composite implements SelectionHandler<TreeItem> 
 	private SplitLayoutPanel body = new SplitLayoutPanel();
 	private FlowPanel messagesPanel = new FlowPanel();
 	private FlowPanel patientPanel = new FlowPanel();
+	private FlowPanel formsPanel = new FlowPanel();
 	private FlowPanel displayarea = new FlowPanel();
 	private MessagesPresenter mp;
 	private PatientPresenter pp;
+	private FormsPresenter fp;
 	private Tree menu = new Tree();
 
 	public PatientTab(HandlerManager eventBus, String patientId) {
@@ -38,6 +42,11 @@ public class PatientTab extends Composite implements SelectionHandler<TreeItem> 
 		messageMenuItem.setUserObject(messagesPanel);
 		pp = new PatientPresenter(new PatientView(), eventBus, Rpc.singleton(), patientId);
 		pp.go(patientPanel);
+
+		TreeItem formsMenuItem = menu.addItem("Forms");
+		formsMenuItem.setUserObject(formsPanel);
+		fp = new FormsPresenter(new FormsView(), eventBus, Rpc.singleton(), patientId);
+		fp.go(formsPanel);
 
 		menu.addSelectionHandler(this);
 		setTreeItemWidth();

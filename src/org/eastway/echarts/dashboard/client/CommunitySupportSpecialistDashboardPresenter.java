@@ -8,13 +8,7 @@ import org.eastway.echarts.client.presenter.TopPanelPresenter;
 import org.eastway.echarts.client.view.AlertsView;
 import org.eastway.echarts.client.view.PatientListView;
 import org.eastway.echarts.client.view.TopPanelView;
-import org.eastway.echarts.client.events.OpenPatientEvent;
-import org.eastway.echarts.client.events.OpenPatientEventHandler;
-import org.eastway.echarts.tab.client.presenter.TabPresenter;
-import org.eastway.echarts.tab.client.view.TabView;
 
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.logical.shared.HasSelectionHandlers;
 import com.google.gwt.event.logical.shared.SelectionEvent;
@@ -63,12 +57,6 @@ public class CommunitySupportSpecialistDashboardPresenter extends Presenter<Comm
 			}
 		});
 
-		eventBus.addHandler(OpenPatientEvent.TYPE,
-				new OpenPatientEventHandler() {
-			public void onOpenPatient(OpenPatientEvent event) {
-				openPatient(event.getId());
-			}
-		});
 	}
 
 	private void fetchWidgets() {
@@ -90,23 +78,6 @@ public class CommunitySupportSpecialistDashboardPresenter extends Presenter<Comm
 	public void fetchPatientList() {
 		PatientListPresenter patientList = new PatientListPresenter(new PatientListView(), eventBus);
 		display.setPatientList(patientList);
-	}
-
-	public void openPatient(String patientId) {
-		final TabPresenter patientTab = new TabPresenter(
-			new TabView(), eventBus, patientId);
-		display.setPatientTab(patientId,
-					patientTab.getDisplay().asWidget())
-						.addClickHandler(
-							new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				Integer idx = display.getIndex(
-					patientTab.getDisplay().asWidget());
-				if (display.removeTab(idx))
-					display.setSelectedTab(idx - 1);
-			}
-		});
 	}
 
 	@Override
