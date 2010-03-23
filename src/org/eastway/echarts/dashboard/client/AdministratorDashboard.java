@@ -1,5 +1,7 @@
 package org.eastway.echarts.dashboard.client;
 
+import java.util.Date;
+
 import org.eastway.echarts.client.Rpc;
 import org.eastway.echarts.client.events.OpenPatientEvent;
 import org.eastway.echarts.client.events.OpenPatientEventHandler;
@@ -10,6 +12,7 @@ import org.eastway.echarts.client.view.AlertsView;
 import org.eastway.echarts.client.view.PatientListView;
 import org.eastway.echarts.client.view.TopPanelView;
 
+import com.bradrydzewski.gwt.calendar.client.Calendar;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -45,6 +48,7 @@ public class AdministratorDashboard extends Composite {
 	@UiField ScrollPanel patientList;
 	@UiField FlowPanel alertsPanel;
 	@UiField TopPanelView top;
+	@UiField FlowPanel scheduler;
 
 	private HandlerManager eventBus;
 
@@ -58,7 +62,19 @@ public class AdministratorDashboard extends Composite {
 
 		AlertsPresenter ap = new AlertsPresenter(new AlertsView(), Rpc.singleton(), eventBus);
 		ap.go(alertsPanel);
+
+		scheduler.add(getScheduler());
+
 		bind();
+	}
+
+	private Calendar getScheduler() {
+		Calendar calendar = new Calendar();
+		calendar.setDate(new Date()); //calendar date, not required
+		calendar.setDays(3); //number of days displayed at a time, not required
+		calendar.setWidth("500px");
+		calendar.setHeight("400px");
+		return calendar;
 	}
 
 	private void bind() {

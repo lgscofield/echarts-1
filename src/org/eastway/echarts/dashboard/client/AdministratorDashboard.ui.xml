@@ -19,6 +19,9 @@
             <g:west size='20'>
               <g:ScrollPanel ui:field="patientList" />
             </g:west>
+            <g:west size='50'>
+              <g:FlowPanel ui:field='scheduler' />
+            </g:west>
           </g:DockLayoutPanel>
         </g:tab>
       </g:TabLayoutPanel>
