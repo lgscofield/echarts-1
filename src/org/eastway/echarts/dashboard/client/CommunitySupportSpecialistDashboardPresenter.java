@@ -11,8 +11,6 @@ import org.eastway.echarts.client.view.TopPanelView;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.logical.shared.HasSelectionHandlers;
-import com.google.gwt.event.logical.shared.SelectionEvent;
-import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
@@ -21,8 +19,6 @@ public class CommunitySupportSpecialistDashboardPresenter extends Presenter<Comm
 
 	public interface Display extends EchartsDisplay {
 		HasSelectionHandlers<Integer> getPanel();
-
-		void setChartVisibility(boolean v);
 
 		void setAlerts(AlertsPresenter alerts);
 
@@ -46,17 +42,6 @@ public class CommunitySupportSpecialistDashboardPresenter extends Presenter<Comm
 	}
 
 	private void bind() {
-		display.getPanel().addSelectionHandler(new SelectionHandler<Integer>() {
-			@Override
-			public void onSelection(SelectionEvent<Integer> event) {
-				if (event.getSelectedItem() == 0) {
-					display.setChartVisibility(true);
-				} else {
-					display.setChartVisibility(false);
-				}
-			}
-		});
-
 	}
 
 	private void fetchWidgets() {

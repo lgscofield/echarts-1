@@ -1,3 +1,13 @@
+adding clients/creating new clients
+
+discharging existing clients
+
+schedular
+
+assigning clients
+
+staff tickler
+
 By September 1st, have a fully integrated electronic chart for one patient.
 
 Patient Search

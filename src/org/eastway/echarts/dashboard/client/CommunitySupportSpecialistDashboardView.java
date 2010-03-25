@@ -1,6 +1,5 @@
 package org.eastway.echarts.dashboard.client;
 
-import org.eastway.echarts.client.ProductivityChart;
 import org.eastway.echarts.client.presenter.AlertsPresenter;
 import org.eastway.echarts.client.presenter.PatientListPresenter;
 import org.eastway.echarts.client.presenter.TopPanelPresenter;
@@ -24,8 +23,6 @@ public class CommunitySupportSpecialistDashboardView extends Composite implement
 
 	interface DashboardViewUiBinder extends UiBinder<Widget, CommunitySupportSpecialistDashboardView> {}
 
-	private ProductivityChart gchart = new ProductivityChart();
-
 	@UiField
 	DockLayoutPanel dockLayoutPanel;
 	@UiField
@@ -41,8 +38,6 @@ public class CommunitySupportSpecialistDashboardView extends Composite implement
 
 	public CommunitySupportSpecialistDashboardView() {
 		initWidget(uiBinder.createAndBindUi(this));
-		productivityPanel.add(gchart);
-		gchart.update();
 	}
 
 	@Override
@@ -99,10 +94,5 @@ public class CommunitySupportSpecialistDashboardView extends Composite implement
 			return true;
 		else
 			return false;
-	}
-
-	@Override
-	public void setChartVisibility(boolean v) {
-		gchart.setVisible(v);
 	}
 }

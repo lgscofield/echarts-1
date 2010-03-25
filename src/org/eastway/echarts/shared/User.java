@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public interface User {
 
-	interface Role {
+	static interface Role {
 		public final static int ADMINISTRATOR		       = 1;
 		public final static int PSYCHIATRIST		       = 2;
 		public final static int NURSE			       = 3;

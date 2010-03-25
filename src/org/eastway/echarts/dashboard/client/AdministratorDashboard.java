@@ -14,6 +14,7 @@ import org.eastway.echarts.client.view.TopPanelView;
 
 import com.bradrydzewski.gwt.calendar.client.Calendar;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -24,6 +25,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
@@ -40,6 +42,9 @@ public class AdministratorDashboard extends Composite {
 
 	interface Style extends CssResource {
 		String alerts();
+		String green();
+		String yellow();
+		String red();
 	}
 
 	@UiField Style style;
@@ -49,6 +54,7 @@ public class AdministratorDashboard extends Composite {
 	@UiField FlowPanel alertsPanel;
 	@UiField TopPanelView top;
 	@UiField FlowPanel scheduler;
+	@UiField SpanElement productivity;
 
 	private HandlerManager eventBus;
 
@@ -62,19 +68,31 @@ public class AdministratorDashboard extends Composite {
 
 		AlertsPresenter ap = new AlertsPresenter(new AlertsView(), Rpc.singleton(), eventBus);
 		ap.go(alertsPanel);
-
-		scheduler.add(getScheduler());
-
+		setProductivity("92");
+		setScheduler(scheduler);
 		bind();
 	}
 
-	private Calendar getScheduler() {
+	private void setProductivity(String credit) {
+		productivity.setInnerText(credit);
+		double cred = new Double(credit);
+
+		if (cred >= 92)
+			productivity.getParentElement().addClassName(style.green());
+		else if (cred >= 87)
+			productivity.getParentElement().addClassName(style.yellow());
+		else
+			productivity.getParentElement().addClassName(style.red());
+	}
+
+	private void setScheduler(HasWidgets container) {
 		Calendar calendar = new Calendar();
 		calendar.setDate(new Date()); //calendar date, not required
-		calendar.setDays(3); //number of days displayed at a time, not required
-		calendar.setWidth("500px");
+		calendar.setDays(1); //number of days displayed at a time, not required
+		calendar.setWidth("100%");
 		calendar.setHeight("400px");
-		return calendar;
+		container.clear();
+		container.add(calendar);
 	}
 
 	private void bind() {
