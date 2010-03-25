@@ -13,3 +13,6 @@ war/WEB-INF/lib/gwt-servlet.jar
 
 # We don't want to track war files either
 *.war
+
+# Inherited modules
+war/org.eastway.echarts*
