@@ -34,7 +34,7 @@ and therapists.
 Case managers should not be able to see other case managers'
 productivity.
 
-Define rules.
+Define role rules.
 
 Historical diagnosis information for patient as a menu item
 
