@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module rename-to='echarts'>
   <inherits name='com.google.gwt.user.User'/>
-  <inherits name='com.googlecode.gchart.GChart'/>
   <inherits name='com.google.gwt.user.theme.standard.Standard'/>
   <inherits name='org.eastway.echarts.appcontroller.AppController' />
   <entry-point class='org.eastway.echarts.client.Echarts'/>
