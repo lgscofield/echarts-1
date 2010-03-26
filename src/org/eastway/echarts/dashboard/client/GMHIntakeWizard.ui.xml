@@ -1,0 +1,126 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+  xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:d="urn:import:com.google.gwt.user.datepicker.client">
+  <ui:style>
+    .border {
+    	border-right: 1px solid LightBlue;
+    }
+  </ui:style>
+  <g:DockLayoutPanel ui:field="panel">
+    <g:west size='100'>
+      <g:Tree addStyleNames='{style.border}' ui:field='steps'></g:Tree>
+    </g:west>
+    <g:center>
+      <g:TabLayoutPanel ui:field='wizard' barHeight='0'>
+        <g:tab>
+          <g:header>Step 1</g:header>
+          <g:ScrollPanel>
+            <g:HTMLPanel>
+              <table>
+                <tr>
+                  <td>
+                    Previous
+                    <span ui:field='agency' />
+                    patient?
+                    <g:CheckBox ui:field='isPreviousPatient'>Yes</g:CheckBox>
+                    <g:HTMLPanel ui:field='returningPatient'
+                      visible='false'>
+                      Who did the patient see?
+                      <g:TextBox ui:field='previousProvider'></g:TextBox>
+                      <br />
+                      When was the patient seen?
+                      <d:DateBox ui:field='previousVisit'></d:DateBox>
+                      (*Can return only if more than 90 days)
+                      <br />
+                      Recipient of
+                      Case management services?
+                      <g:CheckBox ui:field='isRecipientOfCaseManagementServices'>Yes</g:CheckBox>
+                    </g:HTMLPanel>
+                  </td>
+                </tr>
+              </table>
+              <table>
+                <tr>
+                  <td>
+                    First:
+                  </td>
+                  <td>
+                    <g:TextBox ui:field='firstName' />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Last:
+                  </td>
+                  <td>
+                    <g:TextBox ui:field='lastName' />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    MI:
+                  </td>
+                  <td>
+                    <g:TextBox ui:field='middleInitial' />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    DOB:
+                  </td>
+                  <td>
+                    <g:TextBox ui:field='dob' />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    SSN#:
+                  </td>
+                  <td>
+                    <g:TextBox ui:field='ssn' />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    County:
+                  </td>
+                  <td>
+                    <g:TextBox ui:field='county' />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Address:
+                  </td>
+                  <td>
+                    <g:TextBox ui:field='address' />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Phone:
+                  </td>
+                  <td>
+                    <g:TextBox ui:field='phone' />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Alt Phone:
+                  </td>
+                  <td>
+                    <g:TextBox ui:field='altPhone' />
+                  </td>
+                </tr>
+              </table>
+            </g:HTMLPanel>
+          </g:ScrollPanel>
+        </g:tab>
+        <g:tab>
+          <g:header>Step 2</g:header>
+          <g:HTMLPanel>This is step two.</g:HTMLPanel>
+        </g:tab>
+      </g:TabLayoutPanel>
+    </g:center>
+  </g:DockLayoutPanel>
+</ui:UiBinder>

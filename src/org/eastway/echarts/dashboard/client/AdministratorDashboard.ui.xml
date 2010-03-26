@@ -25,6 +25,10 @@
 	.yellow {
 		background-color:yellow;
 	}
+
+	.gmhIntake {
+		cursor: hand;
+	}
     </ui:style>
   <g:DockLayoutPanel unit="EM" ui:field="dockLayoutPanel">
     <g:north size="6">
@@ -42,6 +46,7 @@
             <g:west size='40'>
               <g:FlowPanel>
                 <g:HTMLPanel><div class='{style.productivity}'>Your productivity: <span ui:field='productivity'></span></div></g:HTMLPanel>
+                <g:Anchor styleName='{style.gmhIntake}' ui:field='gmhIntake'>New GMH Intake</g:Anchor>
               </g:FlowPanel>
             </g:west>
             <g:east size='38'>

@@ -22,6 +22,7 @@ import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -55,6 +56,7 @@ public class AdministratorDashboard extends Composite {
 	@UiField TopPanelView top;
 	@UiField FlowPanel scheduler;
 	@UiField SpanElement productivity;
+	@UiField Anchor gmhIntake;
 
 	private HandlerManager eventBus;
 
@@ -103,26 +105,42 @@ public class AdministratorDashboard extends Composite {
 						openPatient(event.getId());
 					}
 				});
+
+		gmhIntake.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				openGMHIntake();
+			}
+		});
 	}
 
-	public void openPatient(String patientId) {
-		final PatientTab tb = new PatientTab(eventBus, patientId);
+	private void addTab(final Widget child, String tab) {
 		Label closeTab = new Label();
-		closeTab.setTitle("Close");
-		Label patientIdLabel = new Label(patientId);
 		HorizontalPanel tabHeader = new HorizontalPanel();
-		tabHeader.add(patientIdLabel);
-		tabHeader.add(closeTab);
+		closeTab.setTitle("Close");
 		closeTab.addStyleName("close-Tab");
-		tabLayoutPanel.add(tb, tabHeader);
 		closeTab.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				Integer idx = tabLayoutPanel.getWidgetIndex(tb);
+				Integer idx = tabLayoutPanel.getWidgetIndex(child);
 				if (tabLayoutPanel.remove(idx))
 					tabLayoutPanel.selectTab(idx - 1);
 			}
 		});
+		tabHeader.add(new Label(tab));
+		tabHeader.add(closeTab);
+		tabLayoutPanel.add(child, tabHeader);
+		setSelectedTab(getIndex(child));
+	}
+
+	private void openGMHIntake() {
+		final GMHIntakeWizard tb = new GMHIntakeWizard();
+		addTab(tb, "New GMH Intake");
+	}
+
+	public void openPatient(String patientId) {
+		final PatientTab tb = new PatientTab(eventBus, patientId);
+		addTab(tb, patientId);
 	}
 
 	public HasClickHandlers setPatientTab(String patientId,
