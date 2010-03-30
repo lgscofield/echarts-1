@@ -6,8 +6,8 @@
 		<Arg>java:comp/env/jdbc/EWEHR</Arg>
 		<Arg>
 			<New class="com.microsoft.sqlserver.jdbc.SQLServerDataSource">
-				<Set name="user">eastway</Set>
-				<Set name="password">600WayneAvenue</Set>
+				<Set name="user">echarts</Set>
+				<Set name="password">echarts</Set>
 				<Set name="databaseName">EW-EHR</Set>
 				<Set name="ServerName">ewsql</Set>
 			</New>
