@@ -4,4 +4,6 @@ import com.google.gwt.i18n.client.Constants;
 
 public interface AgencyConstants extends Constants {
 	String agencyName();
+	String gmhServicesProvided();
+	String gmhServicesNotProvided();
 }

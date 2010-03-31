@@ -341,18 +341,12 @@
                 <g:HTML addStyleNames='{style.inline}' text='{res.agencyName}' />
                 &nbsp;provides for GMH?
                 <g:CheckBox ui:field='informedPatient'>Yes</g:CheckBox>
-                <g:HTML ui:field='servicesProvided'>8 sessions of Individual
-                  Therapy, Group Therapy, Consultation with Psychiatry</g:HTML>
+                <g:HTML text='{res.gmhServicesProvided}' />
               </p>
               <p>
                 <g:HTML addStyleNames='{style.inline}' text='{res.agencyName}' />
                 &nbsp;does not provide
-                <g:HTML ui:field='servicesNotProvided'>
-                  Assessments for child custody, social security
-                  disability, court assessments,
-                  <b>free medication</b>
-                  , housing, employment
-                </g:HTML>
+                <g:HTML text='{res.gmhServicesNotProvided}' />
               </p>
               <p>
                 <g:DecoratorPanel>
