@@ -22,14 +22,15 @@ import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -51,7 +52,7 @@ public class AdministratorDashboard extends Composite {
 	@UiField Style style;
 	@UiField DockLayoutPanel dockLayoutPanel;
 	@UiField TabLayoutPanel tabLayoutPanel;
-	@UiField ScrollPanel patientList;
+	@UiField Anchor patientList;
 	@UiField FlowPanel alertsPanel;
 	@UiField TopPanelView top;
 	@UiField FlowPanel scheduler;
@@ -63,11 +64,7 @@ public class AdministratorDashboard extends Composite {
 	public AdministratorDashboard(HandlerManager eventBus) {
 		this.eventBus = eventBus;
 		initWidget(uiBinder.createAndBindUi(this));
-		PatientListPresenter plp = new PatientListPresenter(
-				new PatientListView(), eventBus);
-		plp.go(patientList);
 		new TopPanelPresenter(top, eventBus);
-
 		AlertsPresenter ap = new AlertsPresenter(new AlertsView(), Rpc.singleton(), eventBus);
 		ap.go(alertsPanel);
 		setProductivity("92");
@@ -169,5 +166,17 @@ public class AdministratorDashboard extends Composite {
 			return true;
 		else
 			return false;
+	}
+
+	@UiHandler(value = { "patientList"})
+	void handlePatientList(ClickEvent event) {
+		DialogBox db = new DialogBox();
+		PatientListPresenter plp = new PatientListPresenter(
+				new PatientListView(), eventBus);
+		plp.go(db);
+		db.setText("Patient List");
+		db.setAutoHideEnabled(true);
+		db.show();
+		db.center();
 	}
 }

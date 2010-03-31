@@ -3,11 +3,13 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
   xmlns:g="urn:import:com.google.gwt.user.client.ui">
   <ui:style type="org.eastway.echarts.client.view.PatientListView.Style">
-  .label:hover {
-  		cursor: pointer;
-		background-color: #dfeffc;
-		width: 100%;
-	}
+    .label:hover {
+    	cursor: pointer;
+    	background-color: #dfeffc;
+    	width: 100%;
+    }
   </ui:style>
-  <g:FlowPanel ui:field='list'></g:FlowPanel>
+      <g:ScrollPanel height='390px'>
+        <g:FlowPanel ui:field='list'></g:FlowPanel>
+      </g:ScrollPanel>
 </ui:UiBinder>

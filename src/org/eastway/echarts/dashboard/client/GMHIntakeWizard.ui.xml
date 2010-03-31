@@ -5,11 +5,37 @@
     .border {
     	border-right: 1px solid LightBlue;
     }
+    
+    .inline {
+    	display: inline;
+    }
+    
+    .smallfont {
+    	font-size: smaller;
+    }
+    
+    .appointment {
+    	height: 20px;
+    	width: 120px;
+    	color: black;
+    	font-size: 105%;
+    	text-decoration: underline;
+    	padding: 10px;
+    	border-top: dashed 1px LightBlue;
+    	border-right: dashed 1px LightBlue;
+    	border-left: dashed 1px LightBlue;
+    }
+    
+    .margin {
+    	margin: 10px;
+    }
   </ui:style>
-  <g:DockLayoutPanel ui:field="panel">
+  <ui:with field='res' type='org.eastway.echarts.client.AgencyConstants' />
+  <g:DockLayoutPanel unit='PX' ui:field="panel">
     <g:west size='100'>
       <g:Tree addStyleNames='{style.border}' ui:field='steps'></g:Tree>
     </g:west>
+
     <g:center>
       <g:TabLayoutPanel ui:field='wizard' barHeight='0'>
         <g:tab>
@@ -19,23 +45,42 @@
               <table>
                 <tr>
                   <td>
-                    Previous
-                    <span ui:field='agency' />
-                    patient?
-                    <g:CheckBox ui:field='isPreviousPatient'>Yes</g:CheckBox>
-                    <g:HTMLPanel ui:field='returningPatient'
-                      visible='false'>
-                      Who did the patient see?
-                      <g:TextBox ui:field='previousProvider'></g:TextBox>
-                      <br />
-                      When was the patient seen?
-                      <d:DateBox ui:field='previousVisit'></d:DateBox>
-                      (*Can return only if more than 90 days)
-                      <br />
-                      Recipient of
-                      Case management services?
-                      <g:CheckBox ui:field='isRecipientOfCaseManagementServices'>Yes</g:CheckBox>
-                    </g:HTMLPanel>
+                    <g:DecoratorPanel>
+                      <g:DisclosurePanel>
+                        <g:header>Click here if this is for a previous
+                          patient</g:header>
+                        <g:HTMLPanel ui:field='returningPatient'
+                          visible='false' addStyleNames='{style.margin}'>
+                          <table>
+                            <tr>
+                              <td>
+                                Who did the patient see?
+                              </td>
+                              <td>
+                                <g:TextBox ui:field='previousProvider'></g:TextBox>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>When was the patient seen?</td>
+                              <td>
+                                <d:DateBox ui:field='previousVisit'></d:DateBox>
+                                (*Can return only if more than 90 days)
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                Recipient of
+                                Case management services?
+                              </td>
+                              <td>
+                                <g:CheckBox
+                                  ui:field='isRecipientOfCaseManagementServices'>Yes</g:CheckBox>
+                              </td>
+                            </tr>
+                          </table>
+                        </g:HTMLPanel>
+                      </g:DisclosurePanel>
+                    </g:DecoratorPanel>
                   </td>
                 </tr>
               </table>
@@ -113,14 +158,265 @@
                   </td>
                 </tr>
               </table>
+              <p>
+                Any family members who receive services at
+                <g:HTML addStyleNames='{style.inline}' text='{res.agencyName}' />
+                ?
+                <g:CheckBox ui:field='familyReceiveServices'>Yes</g:CheckBox>
+              </p>
             </g:HTMLPanel>
           </g:ScrollPanel>
         </g:tab>
         <g:tab>
           <g:header>Step 2</g:header>
-          <g:HTMLPanel>This is step two.</g:HTMLPanel>
+          <g:ScrollPanel>
+            <g:HTMLPanel>
+              <p>
+                Any current or social use of AOD?
+                <g:CheckBox ui:field='useAOD'>YES</g:CheckBox>
+              </p>
+              <p>
+                AOD treatment required or court ordered?
+                <g:CheckBox ui:field='requiredAOD'>YES</g:CheckBox>
+              </p>
+              <p>
+                History of treatment?
+                <g:CheckBox ui:field='historyOfTreatment'>Yes</g:CheckBox>
+                &nbsp;(You are looking for pattern use and frequency for
+                appropriate exclusion with referral.)
+              </p>
+              <p>
+                Description
+                <br />
+                <g:TextArea ui:field='treatmentDescription'
+                  width='700px' height='200px' />
+              </p>
+            </g:HTMLPanel>
+          </g:ScrollPanel>
+        </g:tab>
+        <g:tab>
+          <g:header>Step 3</g:header>
+          <g:ScrollPanel>
+            <g:HTMLPanel>
+              <p>Pregnant?&nbsp;
+                <g:CheckBox ui:field='isPregnant'>Yes</g:CheckBox>
+              </p>
+              <p>IV?&nbsp;
+                <g:CheckBox ui:field='isIVUser'>Yes</g:CheckBox>
+              </p>
+              <p>Referred
+                by&nbsp;
+                <g:TextBox ui:field='referredBy' />
+              </p>
+              <p>Emergency
+                Contact&nbsp;
+                <g:TextBox ui:field='emergencyContact' />
+                &nbsp;Phone number
+                <g:TextBox ui:field='emergencyContactPhoneNumber' />
+              </p>
+              <p>Relationship
+                to patient&nbsp;
+                <g:TextBox ui:field='relationshipToPatient' />
+              </p>
+              <p>Employed?&nbsp;
+                <g:CheckBox ui:field='isEmployed'>Yes</g:CheckBox>
+                &nbsp;Date last employed
+                <g:TextBox ui:field='lastEmployedDate' />
+              </p>
+              <p>Insurance&nbsp;
+                <g:TextBox ui:field='insurance' />
+              </p>
+              <p>
+                Income
+                <g:TextBox ui:field='income' />
+              </p>
+              <p>Desire
+                to work?&nbsp;
+                <g:CheckBox ui:field='hasDesireToWork'>Yes</g:CheckBox>
+              </p>
+              <p>Employment
+                barriers?&nbsp;
+                <g:CheckBox ui:field='hasEmploymentBarriers'>Yes</g:CheckBox>
+              </p>
+            </g:HTMLPanel>
+          </g:ScrollPanel>
+        </g:tab>
+        <g:tab>
+          <g:header>Step 4</g:header>
+          <g:ScrollPanel>
+            <g:HTMLPanel>
+              <p>History
+                of legal problems (i.e. current felonies)?&nbsp;
+                <g:CheckBox ui:field='hasLegalProblems'>Yes</g:CheckBox>
+                <br />
+                <b class='{style.smallfont}'>Potential patient may benefit from referral
+                  to BVR or Powernet (felonies).</b>
+              </p>
+              <p>
+                Description
+                <br />
+                <g:TextArea ui:field='legalProblemsDescription'
+                  width='700px' height='200px' />
+              </p>
+            </g:HTMLPanel>
+          </g:ScrollPanel>
+        </g:tab>
+        <g:tab>
+          <g:header>Step 5</g:header>
+          <g:ScrollPanel>
+            <g:HTMLPanel>
+              <p>Currently
+                receiving Social Security Disability for mental health
+                reasons? (if so, eligible for CPST)&nbsp;
+                <g:CheckBox ui:field='isReceivingSSDForMHReasons'>YES</g:CheckBox>
+              </p>
+              <p>Any
+                recent visits to the ER or hospital?&nbsp;
+                <g:CheckBox ui:field='hasRecentlyVisitedEROrHospital'>Yes</g:CheckBox>
+                <br />
+                What treatment was sought and received?
+                <br />
+                <g:TextArea ui:field='recentlyReceivedTreatment'
+                  width='700px' height='200px' />
+              </p>
+              <p>
+                Previous mental health (i.e., psychotropic medication,
+                therapy, psychiatry, community mental health, case
+                management) treatment
+                <br />
+                <g:TextArea ui:field='previousMentalHealthTreatment'
+                  width='700px' height='200px' />
+              </p>
+              <p>
+                Previous hospitalizations for mental health
+                <br />
+                <g:TextArea ui:field='previousMentalHealthHospitalizations'
+                  width='700px' height='200px' />
+              </p>
+              <p>
+                Current medications
+                <br />
+                <g:TextArea ui:field='currentMedications'
+                  width='700px' height='200px' />
+              </p>
+              <p>Guardian&nbsp;
+                <g:TextBox ui:field='guardian' />
+              </p>
+            </g:HTMLPanel>
+          </g:ScrollPanel>
+        </g:tab>
+        <g:tab>
+          <g:header>Step 6</g:header>
+          <g:ScrollPanel>
+            <g:FlowPanel>
+              <g:HorizontalPanel>
+                <g:HTMLPanel addStyleNames='{style.margin}'>
+                  <b>First appointment offered</b>
+                  &nbsp;
+                  <div>
+                    <g:Label addStyleNames='{style.appointment}'
+                      ui:field='firstAppointmentOffered'></g:Label>
+                  </div>
+                  <d:DatePicker ui:field='firstAppointmentOfferedDatePicker' />
+                </g:HTMLPanel>
+                <g:HTMLPanel addStyleNames='{style.margin}'>
+                  <b>First appointment taken</b>
+                  &nbsp;
+                  <div>
+                    <g:Label addStyleNames='{style.appointment}'
+                      ui:field='firstAppointmentTaken'></g:Label>
+                  </div>
+                  <d:DatePicker ui:field='firstAppointmentTakenDatePicker' />
+                </g:HTMLPanel>
+              </g:HorizontalPanel>
+            </g:FlowPanel>
+          </g:ScrollPanel>
+        </g:tab>
+        <g:tab>
+          <g:header>Step 7</g:header>
+          <g:ScrollPanel>
+            <g:HTMLPanel>
+              <p>
+                Informed patient what services
+                <g:HTML addStyleNames='{style.inline}' text='{res.agencyName}' />
+                &nbsp;provides for GMH?
+                <g:CheckBox ui:field='informedPatient'>Yes</g:CheckBox>
+                <g:HTML ui:field='servicesProvided'>8 sessions of Individual
+                  Therapy, Group Therapy, Consultation with Psychiatry</g:HTML>
+              </p>
+              <p>
+                <g:HTML addStyleNames='{style.inline}' text='{res.agencyName}' />
+                &nbsp;does not provide
+                <g:HTML ui:field='servicesNotProvided'>
+                  Assessments for child custody, social security
+                  disability, court assessments,
+                  <b>free medication</b>
+                  , housing, employment
+                </g:HTML>
+              </p>
+              <p>
+                <g:DecoratorPanel>
+                  <g:DisclosurePanel>
+                    <g:header>Click here to do an inappropriate referral</g:header>
+                    <g:HTMLPanel addStyleNames='{style.margin}'>
+                      <table>
+                        <tr>
+                          <td>
+                            Referral Source
+                            </td><td>
+                            <g:TextBox ui:field='referralSource' />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Phone Number
+                            </td><td>
+                            <g:TextBox ui:field='referralSourcePhoneNumber' />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Service Request
+                            </td><td>
+                            <g:TextBox ui:field='serviceRequest' />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Reason denied
+                            </td><td>
+                            <g:TextBox ui:field='reasonDenied' />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Referred to
+                            </td><td>
+                            <g:TextBox ui:field='referredTo' />
+                          </td>
+                        </tr>
+                      </table>
+                    </g:HTMLPanel>
+                  </g:DisclosurePanel>
+                </g:DecoratorPanel>
+              </p>
+              <p>
+                Other pertinent info
+                <br />
+                <g:TextArea ui:field='otherPertinentInfo'
+                  width='700px' height='200px' />
+              </p>
+            </g:HTMLPanel>
+          </g:ScrollPanel>
         </g:tab>
       </g:TabLayoutPanel>
     </g:center>
+    <g:south size='30'>
+      <g:FlowPanel>
+        <g:Button ui:field='previous' enabled='false'>Previous</g:Button>
+        <g:Button ui:field='next'>Next</g:Button>
+        <g:Button ui:field='finish' enabled='false'>Finish</g:Button>
+      </g:FlowPanel>
+    </g:south>
   </g:DockLayoutPanel>
 </ui:UiBinder>
