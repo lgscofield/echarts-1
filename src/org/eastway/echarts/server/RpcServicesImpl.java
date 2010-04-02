@@ -35,7 +35,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 	public Patient getPatient(String patientId, String sessionId)
 			throws SessionExpiredException, DbException {
 		checkSessionExpire(sessionId);
-		String sql = "SELECT * FROM VDisplayDemographics WHERE PATID = "
+		String sql = "SELECT * FROM VDisplayDemographics WHERE CaseNumber = "
 			+ patientId;
 		Connection con = null;
 		Statement stmt = null;
@@ -64,7 +64,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 					srs.getString("LivingArrangement"),
 					srs.getString("MaritalStatus"),
 					srs.getString("Name"),
-					srs.getString("PATID"),
+					srs.getString("CaseNumber"),
 					srs.getString("Race"),
 					srs.getBoolean("SP_AlcoholDrug"),
 					srs.getBoolean("SP_Blind"),
@@ -105,7 +105,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		Connection con = null;
 		Vector<String> pl = new Vector<String>();
 		checkSessionExpire(sessionId);
-		String sql = "SELECT PATID + ' - ' + Name AS 'SearchString' FROM Demographics ORDER BY Name";
+		String sql = "SELECT CaseNumber + ' - ' + Name AS 'SearchString' FROM Patient ORDER BY Name";
 		Statement stmt = null;
 		ResultSet srs = null;
 
@@ -143,7 +143,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 
 		try {
 			staffId = getStaffId(sessionId);
-			sql = "SELECT VTicklerList.PATID, Demographics.Name, VTicklerList.ItemName, VTicklerList.[Date] FROM VTicklerList INNER JOIN Demographics ON VTicklerList.PATID = Demographics.PATID WHERE [Date] IS NOT NULL AND VTicklerList.PATID IN (SELECT PATID FROM Assignments WHERE StaffId = '"
+			sql = "SELECT VTicklerList.PATID, Patient.Name, VTicklerList.ItemName, VTicklerList.[Date] FROM VTicklerList INNER JOIN Patient ON VTicklerList.PATID = Patient.CaseNumber WHERE [Date] IS NOT NULL AND VTicklerList.PATID IN (SELECT PATID FROM Assignments WHERE StaffId = '"
 				+ staffId + "' AND Disposition = 1) ORDER BY 4 ASC";
 			con = DbConnection.getConnection();
 			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
