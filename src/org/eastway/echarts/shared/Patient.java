@@ -1,57 +1,111 @@
 package org.eastway.echarts.shared;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 @SuppressWarnings("serial")
 public class Patient implements Serializable {
-
-	private String patientId, name, firstName, lastName, suffix, alias,
-			caseStatus, gender, ssn, race, maritalStatus,
-			livingArrangement, employment, incomeSource1,
-			incomeSource2, incomeSource3, allergies, lastEditBy,
-			educationLevel, educationType;
-
-	private boolean veteran, sp_smd, sp_alcoholdrug, sp_forensic, sp_dd,
-			sp_mimr, sp_duidwi, sp_deaf, sp_hearingimpaired,
-			sp_blind, sp_visuallyimpaired, sp_phydisabled,
-			sp_speechimpaired, sp_physicalabuse, sp_sexualabuse,
-			sp_domesticviolence, sp_childalcdrug, sp_hivaids,
-			sp_suicidal, sp_schooldropout, sp_probationparole,
-			sp_generalpopulation;
-
-	private Date dob, lastEdit;
+	private String patientId;
+	private String name;
+	private String firstName;
+	private String lastName;
+	private String suffix;
+	private String alias;
+	private String caseStatus;
+	private String gender;
+	private String ssn;
+	private String race;
+	private String maritalStatus;
+	private String livingArrangement;
+	private String employment;
+	private String incomeSource1;
+	private String incomeSource2;
+	private String incomeSource3;
+	private String allergies;
+	private String lastEditBy;
+	private String educationLevel;
+	private String educationType;
 
 	// TODO insuranceType, preferredLanguage, and ethnicity are not present
 	// in the datebase
 	private String insuranceType;
-
 	private String preferredLanguage;
-
 	private String ethnicity;
+
+	private boolean veteran;
+	private boolean sp_smd;
+	private boolean sp_alcoholdrug;
+	private boolean sp_forensic;
+	private boolean sp_dd;
+	private boolean sp_mimr;
+	private boolean sp_duidwi;
+	private boolean sp_deaf;
+	private boolean sp_hearingimpaired;
+	private boolean sp_blind;
+	private boolean sp_visuallyimpaired;
+	private boolean sp_phydisabled;
+	private boolean sp_speechimpaired;
+	private boolean sp_physicalabuse;
+	private boolean sp_sexualabuse;
+	private boolean sp_domesticviolence;
+	private boolean sp_childalcdrug;
+	private boolean sp_hivaids;
+	private boolean sp_suicidal;
+	private boolean sp_schooldropout;
+	private boolean sp_probationparole;
+	private boolean sp_generalpopulation;
+
+	private Date dob, lastEdit;
 
 	public Patient() { }
 
-	public Patient(String alias, String allergies, String caseStatus,
-			Date dob, String educationLevel, String educationType,
-			String employment, String firstName, String gender,
-			String incomeSource1, String incomeSource2,
-			String incomeSource3, Date lastEdit, String lastEditBy,
-			String lastName, String livingArrangement,
-			String maritalStatus, String name, String patientId,
-			String race, boolean sp_alcoholdrug, boolean sp_blind,
-			boolean sp_childalcdrug, boolean sp_dd, boolean sp_deaf,
-			boolean sp_domesticviolence, boolean sp_duidwi,
-			boolean sp_forensic, boolean sp_generalpopulation,
-			boolean sp_hearingimpaired, boolean sp_hivaids,
-			boolean sp_mimr, boolean sp_phydisabled,
-			boolean sp_physicalabuse, boolean sp_probationparole,
-			boolean sp_schooldropout, boolean sp_sexualabuse,
-			boolean sp_smd, boolean sp_speechimpaired,
-			boolean sp_suicidal, boolean sp_visuallyimpaired,
-			String ssn, String suffix, boolean veteran) {
+	public Patient(String alias,
+			String allergies,
+			String caseStatus,
+			Date dob,
+			String educationLevel,
+			String educationType,
+			String employment,
+			String firstName,
+			String gender,
+			String incomeSource1,
+			String incomeSource2,
+			String incomeSource3,
+			Date lastEdit,
+			String lastEditBy,
+			String lastName,
+			String livingArrangement,
+			String maritalStatus,
+			String name,
+			String patientId,
+			String race,
+			boolean sp_alcoholdrug,
+			boolean sp_blind,
+			boolean sp_childalcdrug,
+			boolean sp_dd,
+			boolean sp_deaf,
+			boolean sp_domesticviolence,
+			boolean sp_duidwi,
+			boolean sp_forensic,
+			boolean sp_generalpopulation,
+			boolean sp_hearingimpaired,
+			boolean sp_hivaids,
+			boolean sp_mimr,
+			boolean sp_phydisabled,
+			boolean sp_physicalabuse,
+			boolean sp_probationparole,
+			boolean sp_schooldropout,
+			boolean sp_sexualabuse,
+			boolean sp_smd,
+			boolean sp_speechimpaired,
+			boolean sp_suicidal,
+			boolean sp_visuallyimpaired,
+			String ssn,
+			String suffix,
+			boolean veteran) {
 		this.alias = alias;
 		this.allergies = allergies;
+		this.patientId = patientId;
 		this.caseStatus = caseStatus;
 		this.dob = dob;
 		this.educationLevel = educationLevel;
@@ -68,7 +122,6 @@ public class Patient implements Serializable {
 		this.livingArrangement = livingArrangement;
 		this.maritalStatus = maritalStatus;
 		this.name = name;
-		this.patientId = patientId;
 		this.race = race;
 		this.sp_alcoholdrug = sp_alcoholdrug;
 		this.sp_blind = sp_blind;
@@ -459,6 +512,7 @@ public class Patient implements Serializable {
 	public void setInsuranceType(String insuranceType) {
 		this.insuranceType = insuranceType;
 	}
+
 	public String getInsuranceType() {
 		return insuranceType;
 	}
