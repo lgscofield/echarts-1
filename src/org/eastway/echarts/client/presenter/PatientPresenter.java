@@ -25,7 +25,7 @@ public class PatientPresenter extends Presenter<PatientPresenter.Display> {
 	}
 
 	public interface Display extends EchartsDisplay {
-		void setData(LinkedHashSet<String[]> data, int ncols);
+		void setData(LinkedHashSet<String[]> data);
 	}
 
 	@Override
@@ -61,8 +61,15 @@ public class PatientPresenter extends Presenter<PatientPresenter.Display> {
 		// TODO: the first value here could easily be set by
 		// patient.getPatientIdTitle() or some such.  This way it could
 		// be retrieved from the database.
-		data.add(new String[] { "Patient Id", patient.getPatientId() });
-		data.add(new String[] { "Name", patient.getName() });
-		display.setData(data, data.size());
+		data.add(new String[] { "Patient Id : ", patient.getPatientId() });
+		data.add(new String[] { "Name : ", patient.getName() });
+		data.add(new String[] { "Gender : ", patient.getGender() });
+		data.add(new String[] { "DOB : ", patient.getDob().toString() });
+		data.add(new String[] { "Ethnicity : ", patient.getEthnicity() });
+		data.add(new String[] { "Preferred Language : ", patient.getPreferredLanguage() });
+		data.add(new String[] { "Race : ", patient.getRace() });
+		data.add(new String[] { "Insurance Type : ", patient.getInsuranceType() });
+		data.add(new String[] { "SSN : ", patient.getSsn() });
+		display.setData(data);
 	}
 }

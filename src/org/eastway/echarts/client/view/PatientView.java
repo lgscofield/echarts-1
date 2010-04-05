@@ -35,11 +35,12 @@ public class PatientView extends Composite implements PatientPresenter.Display {
 	}
 
 	@Override
-	public void setData(LinkedHashSet<String[]> data, int ncols) {
+	public void setData(LinkedHashSet<String[]> data) {
 		int i = 0;
 		for (String[] s : data) {
-			for (int j = 0; j < ncols; j++)
+			for (int j = 0; j < s.length; j++) {
 				ft1.setHTML(i, j, s[j]);
+			}
 			i++;
 		}
 	}

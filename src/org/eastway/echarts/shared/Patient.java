@@ -467,7 +467,7 @@ public class Patient implements Serializable {
 		this.ethnicity = ethnicity;
 	}
 
-	public String getEthncity() {
+	public String getEthnicity() {
 		return ethnicity;
 	}
 }
