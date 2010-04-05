@@ -1,4 +1,4 @@
-package org.eastway.echarts.dashboard.client;
+package org.eastway.echarts.client.view;
 
 import java.util.Date;
 
@@ -24,13 +24,13 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.gwt.user.datepicker.client.DatePicker;
 
-public class GMHIntakeWizard extends Composite implements SelectionHandler<TreeItem> {
+public class EditPatientView extends Composite implements SelectionHandler<TreeItem> {
 
 	private static GMHIntakeWizardUiBinder uiBinder = GWT
 			.create(GMHIntakeWizardUiBinder.class);
 
 	interface GMHIntakeWizardUiBinder extends
-			UiBinder<Widget, GMHIntakeWizard> {
+			UiBinder<Widget, EditPatientView> {
 	}
 
 	@UiField DockLayoutPanel panel;
@@ -66,7 +66,7 @@ public class GMHIntakeWizard extends Composite implements SelectionHandler<TreeI
 			stepSeven
 	};
 
-	public GMHIntakeWizard() {
+	public EditPatientView() {
 		initWidget(uiBinder.createAndBindUi(this));
 
 		stepList[0] = steps.addItem("Step 1");

@@ -9,6 +9,7 @@ import org.eastway.echarts.client.presenter.AlertsPresenter;
 import org.eastway.echarts.client.presenter.PatientListPresenter;
 import org.eastway.echarts.client.presenter.TopPanelPresenter;
 import org.eastway.echarts.client.view.AlertsView;
+import org.eastway.echarts.client.view.EditPatientView;
 import org.eastway.echarts.client.view.PatientListView;
 import org.eastway.echarts.client.view.TopPanelView;
 
@@ -131,8 +132,8 @@ public class AdministratorDashboard extends Composite {
 	}
 
 	private void openGMHIntake() {
-		final GMHIntakeWizard tb = new GMHIntakeWizard();
-		addTab(tb, "New GMH Intake");
+		final EditPatientView tb = new EditPatientView();
+		addTab(tb, "New Patient");
 	}
 
 	public void openPatient(String patientId) {

@@ -68,7 +68,7 @@
                 </g:HorizontalPanel>
                 <g:HorizontalPanel>
                 <g:FlowPanel styleName='{style.anchoricon}'/>
-                <g:Anchor addStyleNames='{style.anchor}' ui:field='gmhIntake'>New GMH Intake</g:Anchor>
+                <g:Anchor addStyleNames='{style.anchor}' ui:field='gmhIntake'>New Patient</g:Anchor>
               </g:HorizontalPanel>
               </g:FlowPanel>
             </g:west>
