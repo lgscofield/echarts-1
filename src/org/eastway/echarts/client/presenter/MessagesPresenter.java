@@ -43,10 +43,10 @@ public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
 		void setMessageTypes(ArrayList<String> types);
 	}
 
-	private String patientid;
 	private RpcServicesAsync rpcServices;
 	private Messages messages;
 	private ArrayList<String> data = new ArrayList<String>();
+	private String patientid;
 
 	public MessagesPresenter(final Display display, HandlerManager eventBus,
 			RpcServicesAsync rpcServices, String patientid) {

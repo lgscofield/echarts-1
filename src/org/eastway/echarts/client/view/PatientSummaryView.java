@@ -2,7 +2,7 @@ package org.eastway.echarts.client.view;
 
 import java.util.LinkedHashSet;
 
-import org.eastway.echarts.client.presenter.PatientPresenter;
+import org.eastway.echarts.client.presenter.PatientSummaryPresenter;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.CssResource;
@@ -12,20 +12,20 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Widget;
 
-public class PatientView extends Composite implements PatientPresenter.Display {
-	private static PatientViewUiBinder uiBinder = GWT.create(PatientViewUiBinder.class);
+public class PatientSummaryView extends Composite implements PatientSummaryPresenter.Display {
+	private static Binder uiBinder = GWT.create(Binder.class);
 
-	interface PatientViewUiBinder extends UiBinder<Widget, PatientView> {}
+	interface Binder extends UiBinder<Widget, PatientSummaryView> {}
 
 	@UiField FlexTable ft1;
 	@UiField FlexTable ft2;
 
-	interface PatientViewStyle extends CssResource {
+	interface Style extends CssResource {
 	}
 
-	@UiField PatientViewStyle style;
+	@UiField Style style;
 
-	public PatientView() {
+	public PatientSummaryView() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 

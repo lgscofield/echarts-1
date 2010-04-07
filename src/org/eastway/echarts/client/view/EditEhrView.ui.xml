@@ -86,6 +86,10 @@
               </table>
               <table>
                 <tr>
+                  <td>Case Number: </td>
+                  <td><g:TextBox ui:field='caseNumber' /></td>
+                </tr>
+                <tr>
                   <td>
                     First:
                   </td>
@@ -173,11 +177,11 @@
             <g:HTMLPanel>
               <p>
                 Any current or social use of AOD?
-                <g:CheckBox ui:field='useAOD'>YES</g:CheckBox>
+                <g:CheckBox ui:field='aod'>YES</g:CheckBox>
               </p>
               <p>
                 AOD treatment required or court ordered?
-                <g:CheckBox ui:field='requiredAOD'>YES</g:CheckBox>
+                <g:CheckBox ui:field='requiredAod'>YES</g:CheckBox>
               </p>
               <p>
                 History of treatment?
@@ -202,7 +206,7 @@
                 <g:CheckBox ui:field='isPregnant'>Yes</g:CheckBox>
               </p>
               <p>IV?&nbsp;
-                <g:CheckBox ui:field='isIVUser'>Yes</g:CheckBox>
+                <g:CheckBox ui:field='isIvUser'>Yes</g:CheckBox>
               </p>
               <p>Referred
                 by&nbsp;
@@ -216,7 +220,7 @@
               </p>
               <p>Relationship
                 to patient&nbsp;
-                <g:TextBox ui:field='relationshipToPatient' />
+                <g:TextBox ui:field='emergencyContactRelationshipToPatient' />
               </p>
               <p>Employed?&nbsp;
                 <g:CheckBox ui:field='isEmployed'>Yes</g:CheckBox>
@@ -224,7 +228,7 @@
                 <g:TextBox ui:field='lastEmployedDate' />
               </p>
               <p>Insurance&nbsp;
-                <g:TextBox ui:field='insurance' />
+                <g:TextBox ui:field='insuranceType' />
               </p>
               <p>
                 Income
@@ -268,11 +272,11 @@
               <p>Currently
                 receiving Social Security Disability for mental health
                 reasons? (if so, eligible for CPST)&nbsp;
-                <g:CheckBox ui:field='isReceivingSSDForMHReasons'>YES</g:CheckBox>
+                <g:CheckBox ui:field='isReceivingSsdForMhReasons'>YES</g:CheckBox>
               </p>
               <p>Any
                 recent visits to the ER or hospital?&nbsp;
-                <g:CheckBox ui:field='hasRecentlyVisitedEROrHospital'>Yes</g:CheckBox>
+                <g:CheckBox ui:field='hasRecentlyVisitedErOrHospital'>Yes</g:CheckBox>
                 <br />
                 What treatment was sought and received?
                 <br />

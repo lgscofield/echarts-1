@@ -2,16 +2,20 @@ package org.eastway.echarts.dashboard.client;
 
 import java.util.Date;
 
+import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.Rpc;
+import org.eastway.echarts.client.UserImpl;
 import org.eastway.echarts.client.events.OpenPatientEvent;
 import org.eastway.echarts.client.events.OpenPatientEventHandler;
 import org.eastway.echarts.client.presenter.AlertsPresenter;
+import org.eastway.echarts.client.presenter.EditEhrPresenter;
 import org.eastway.echarts.client.presenter.PatientListPresenter;
 import org.eastway.echarts.client.presenter.TopPanelPresenter;
 import org.eastway.echarts.client.view.AlertsView;
-import org.eastway.echarts.client.view.EditPatientView;
+import org.eastway.echarts.client.view.EditEhrView;
 import org.eastway.echarts.client.view.PatientListView;
 import org.eastway.echarts.client.view.TopPanelView;
+import org.eastway.echarts.shared.Patient;
 
 import com.bradrydzewski.gwt.calendar.client.Calendar;
 import com.google.gwt.core.client.GWT;
@@ -24,6 +28,7 @@ import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -107,7 +112,7 @@ public class AdministratorDashboard extends Composite {
 		gmhIntake.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				openGMHIntake();
+				openEditPatient();
 			}
 		});
 	}
@@ -131,14 +136,14 @@ public class AdministratorDashboard extends Composite {
 		setSelectedTab(getIndex(child));
 	}
 
-	private void openGMHIntake() {
-		final EditPatientView tb = new EditPatientView();
-		addTab(tb, "New Patient");
+	private void openEditPatient() {
+		EditEhrPresenter epp = new EditEhrPresenter(new EditEhrView(), eventBus, Rpc.singleton());
+		epp.go();
+		addTab(epp.getDisplay().asWidget(), "New Chart");
 	}
 
 	public void openPatient(String patientId) {
-		final PatientTab tb = new PatientTab(eventBus, patientId);
-		addTab(tb, patientId);
+		fetchPatient(patientId);
 	}
 
 	public HasClickHandlers setPatientTab(String patientId,
@@ -169,13 +174,30 @@ public class AdministratorDashboard extends Composite {
 			return false;
 	}
 
+	private void fetchPatient(String patientId) {
+		AsyncCallback<Patient> callback = new AsyncCallback<Patient>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				new HandleRpcException(caught);
+			}
+
+			@Override
+			public void onSuccess(Patient patient) {
+				final PatientTab tb = new PatientTab(eventBus, patient);
+				addTab(tb, patient.getPatientId());
+			}
+		};
+		Rpc.singleton().getPatient(patientId, UserImpl.getSessionId(),
+				callback);
+	}
+
 	@UiHandler(value = { "patientList"})
 	void handlePatientList(ClickEvent event) {
 		DialogBox db = new DialogBox();
 		PatientListPresenter plp = new PatientListPresenter(
 				new PatientListView(), eventBus);
 		plp.go(db);
-		db.setText("Patient List");
+		db.setText("Open Chart");
 		db.setAutoHideEnabled(true);
 		db.show();
 		db.center();

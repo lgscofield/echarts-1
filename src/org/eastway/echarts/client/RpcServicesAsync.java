@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Vector;
 
+import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.Message;
 import org.eastway.echarts.shared.Messages;
 import org.eastway.echarts.shared.Patient;
@@ -30,4 +31,8 @@ public interface RpcServicesAsync {
 	public void getUserData(String username, String cookie, AsyncCallback<UserData> callback);
 
 	public void getFormsList(String sessionId, String patientId, AsyncCallback<LinkedHashSet<String[]>> callback);
+
+	public void saveEhr(Patient patient, String sessionId, AsyncCallback<Patient> callback);
+
+	public void getDemographics(String patientId, String sessionId, AsyncCallback<Demographics> callback);
 }

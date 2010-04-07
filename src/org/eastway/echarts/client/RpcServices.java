@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.Vector;
 
 import org.eastway.echarts.shared.DbException;
+import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.Message;
 import org.eastway.echarts.shared.Messages;
 import org.eastway.echarts.shared.Patient;
@@ -34,4 +35,8 @@ public interface RpcServices extends RemoteService {
 	public UserData getUserData(String username, String sessionId) throws DbException, SessionExpiredException;
 
 	public LinkedHashSet<String[]> getFormsList(String sessionId, String patientId) throws SessionExpiredException, DbException;
+
+	public Patient saveEhr(Patient patient, String sessionId) throws SessionExpiredException, DbException;
+
+	public Demographics getDemographics(String patientid, String sessionId) throws SessionExpiredException, DbException;
 }

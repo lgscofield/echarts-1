@@ -64,11 +64,11 @@
               <g:FlowPanel>
               <g:HorizontalPanel>
                 <g:FlowPanel styleName='{style.anchoricon}'/>
-                <g:Anchor addStyleNames='{style.anchor}' ui:field="patientList">Patient List</g:Anchor>
+                <g:Anchor addStyleNames='{style.anchor}' ui:field="patientList">Open Chart</g:Anchor>
                 </g:HorizontalPanel>
                 <g:HorizontalPanel>
                 <g:FlowPanel styleName='{style.anchoricon}'/>
-                <g:Anchor addStyleNames='{style.anchor}' ui:field='gmhIntake'>New Patient</g:Anchor>
+                <g:Anchor addStyleNames='{style.anchor}' ui:field='gmhIntake'>New Chart</g:Anchor>
               </g:HorizontalPanel>
               </g:FlowPanel>
             </g:west>

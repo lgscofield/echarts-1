@@ -2,6 +2,7 @@ package org.eastway.echarts.server;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -17,6 +18,7 @@ import javax.naming.NamingException;
 
 import org.eastway.echarts.client.RpcServices;
 import org.eastway.echarts.shared.DbException;
+import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.Message;
 import org.eastway.echarts.shared.Messages;
 import org.eastway.echarts.shared.Patient;
@@ -46,50 +48,64 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 					ResultSet.CONCUR_READ_ONLY);
 			srs = stmt.executeQuery(sql);
 			if (srs.next()) {
+				String[] incomeSources = {
+						srs.getString("IncomeSource1"),
+						srs.getString("IncomeSource2"),
+						srs.getString("IncomeSource3")
+				};
+
+				String[] allergies = {
+						srs.getString("Allergies")
+				};
+
+				Demographics d = new Demographics(srs.getString("Gender"),
+						srs.getString("Race"),
+						srs.getString("MaritalStatus"),
+						srs.getString("LivingArrangement"),
+						srs.getString("Employment"),
+						incomeSources,
+						srs.getString("EducationLevel"),
+						srs.getString("EducationType"),
+						allergies,
+						null,
+						null,
+						null,
+						srs.getBoolean("Veteran"),
+						srs.getBoolean("SP_SMD"),
+						srs.getBoolean("SP_AlcoholDrug"),
+						srs.getBoolean("SP_Forensic"),
+						srs.getBoolean("SP_DD"),
+						srs.getBoolean("SP_MIMR"),
+						srs.getBoolean("SP_DUIDWI"),
+						srs.getBoolean("SP_DEAF"),
+						srs.getBoolean("SP_HearingImpaired"),
+						srs.getBoolean("SP_Blind"),
+						srs.getBoolean("SP_VisuallyImpaired"),
+						srs.getBoolean("SP_PhyDisabled"),
+						srs.getBoolean("SP_SpeechImpaired"),
+						srs.getBoolean("SP_PhysicalAbuse"),
+						srs.getBoolean("SP_SexualAbuse"),
+						srs.getBoolean("SP_DomesticViolence"),
+						srs.getBoolean("SP_ChildAlcDrug"),
+						srs.getBoolean("SP_HIVAIDS"),
+						srs.getBoolean("SP_Suicidal"),
+						srs.getBoolean("SP_SchoolDropout"),
+						srs.getBoolean("SP_ProbationParole"),
+						srs.getBoolean("SP_GeneralPopulation"),
+						srs.getDate("DOB"),
+						srs.getDate("LastEdit"),
+						srs.getString("LastEditBy"));
 				Patient p = new Patient(srs.getString("Alias"),
-					srs.getString("Allergies"),
 					srs.getString("CaseStatus"),
-					srs.getDate("DOB"),
-					srs.getString("EducationLevel"),
-					srs.getString("EducationType"),
-					srs.getString("Employment"),
 					srs.getString("FirstName"),
-					srs.getString("Gender"),
-					srs.getString("IncomeSource1"),
-					srs.getString("IncomeSource2"),
-					srs.getString("IncomeSource3"),
 					srs.getDate("LastEdit"),
 					srs.getString("LastEditBy"),
 					srs.getString("LastName"),
-					srs.getString("LivingArrangement"),
-					srs.getString("MaritalStatus"),
 					srs.getString("Name"),
 					srs.getString("CaseNumber"),
-					srs.getString("Race"),
-					srs.getBoolean("SP_AlcoholDrug"),
-					srs.getBoolean("SP_Blind"),
-					srs.getBoolean("SP_ChildAlcDrug"),
-					srs.getBoolean("SP_DD"),
-					srs.getBoolean("SP_Deaf"),
-					srs.getBoolean("SP_DomesticViolence"),
-					srs.getBoolean("SP_DUIDWI"),
-					srs.getBoolean("SP_Forensic"),
-					srs.getBoolean("SP_GeneralPopulation"),
-					srs.getBoolean("SP_HearingImpaired"),
-					srs.getBoolean("SP_HIVAIDS"),
-					srs.getBoolean("SP_MIMR"),
-					srs.getBoolean("SP_PhyDisabled"),
-					srs.getBoolean("SP_PhysicalAbuse"),
-					srs.getBoolean("SP_ProbationParole"),
-					srs.getBoolean("SP_SchoolDropout"),
-					srs.getBoolean("SP_SexualAbuse"),
-					srs.getBoolean("SP_SMD"),
-					srs.getBoolean("SP_SpeechImpaired"),
-					srs.getBoolean("SP_Suicidal"),
-					srs.getBoolean("SP_VisuallyImpaired"),
 					srs.getString("SSN"),
 					srs.getString("Suffix"),
-					srs.getBoolean("Veteran"));
+					d);
 				return p;
 			}
 			return null;
@@ -98,6 +114,43 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		} catch (NamingException e) {
 			throw new DbException("Naming exception");
 		}
+	}
+
+	@Override
+	public Patient saveEhr(Patient patient, String sessionId) throws SessionExpiredException, DbException {
+		checkSessionExpire(sessionId);
+		Connection con = null;
+
+		try {
+			con = DbConnection.getConnection();
+
+			con.setAutoCommit(false);
+
+			PreparedStatement patientInsert = con.prepareStatement("INSERT INTO Patient(CaseNumber, FirstName, LastName)"
+					+ " VALUES(?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
+			patientInsert.setString(1, patient.getPatientId());
+			patientInsert.setString(2, patient.getFirstName());
+			patientInsert.setString(3, patient.getLastName());
+			patientInsert.executeUpdate();
+
+			ResultSet lastInsertIds = patientInsert.getGeneratedKeys();
+
+			PreparedStatement demographicsInsert = con.prepareStatement("INSERT INTO Demographics(Patient_Id,DOB)"
+					+ " VALUES(?,?)");
+
+			if (lastInsertIds.next())
+				demographicsInsert.setInt(1, lastInsertIds.getInt(1));
+			demographicsInsert.setDate(2, new java.sql.Date(patient.getDemographics().getDob().getTime()));
+			demographicsInsert.executeUpdate();
+
+			con.commit();
+			con.setAutoCommit(true);
+		} catch (SQLException e) {
+			throw new DbException(e);
+		} catch (NamingException e) {
+			throw new DbException("Naming exception");
+		}
+		return patient;
 	}
 
 	@Override
@@ -437,5 +490,12 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		} catch (NamingException e) {
 			throw new DbException("Naming exception");
 		}
+	}
+
+	@Override
+	public Demographics getDemographics(String patientid, String sessionId)
+			throws SessionExpiredException, DbException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
