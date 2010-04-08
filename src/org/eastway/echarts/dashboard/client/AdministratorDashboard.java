@@ -201,7 +201,7 @@ public class AdministratorDashboard extends Composite {
 			@Override
 			public void onSuccess(Patient patient) {
 				final PatientTab tb = new PatientTab(eventBus, Rpc.singleton(), patient);
-				addTab(tb, patient.getPatientId());
+				addTab(tb, patient.getCaseNumber());
 			}
 		};
 		Rpc.singleton().getPatient(patientId, UserImpl.getSessionId(),

@@ -260,7 +260,7 @@ public class EditEhrPresenter extends Presenter<EditEhrPresenter.Display> {
 	}
 
 	private void doFinish() {
-		patient.setPatientId(display.getCaseNumber());
+		patient.setCaseNumber(display.getCaseNumber());
 		patient.setFirstName(display.getFirstName());
 		patient.setLastName(display.getLastName());
 		//patient.setDob(display.getDob());

@@ -39,7 +39,7 @@ public class PatientSummaryPresenter extends Presenter<PatientSummaryPresenter.D
 		// TODO: the first value here could easily be set by
 		// patient.getPatientIdTitle() or some such.  This way it could
 		// be retrieved from the database.
-		data.add(new String[] { "Case Number : ", patient.getPatientId() });
+		data.add(new String[] { "Case Number : ", patient.getCaseNumber() });
 		data.add(new String[] { "Name : ", patient.getName() });
 		data.add(new String[] { "Gender : ", patient.getDemographics().getGender() });
 		data.add(new String[] { "DOB : ", patient.getDemographics().getDob().toString() });

@@ -14,7 +14,7 @@ public class ServiceHistoryPresenter extends Presenter<ServiceHistoryPresenter.D
 	public ServiceHistoryPresenter(Display display, HandlerManager eventBus,
 				Patient patient) {
 		super(display, eventBus);
-		display.setName(patient.getPatientId());
+		display.setName(patient.getCaseNumber());
 	}
 
 	@Override

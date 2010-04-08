@@ -14,6 +14,7 @@ public class Demographics implements Serializable {
 	private String educationLevel;
 	private String educationType;
 	private String[] allergies;
+	private String religion;
 
 	// TODO insuranceType, preferredLanguage, and ethnicity are not present
 	// in the datebase
@@ -61,6 +62,7 @@ public class Demographics implements Serializable {
 			String insuranceType,
 			String preferredLanguage,
 			String ethnicity,
+			String religion,
 			boolean isVeteran,
 			boolean isSmd,
 			boolean isAlcoholDrug,
@@ -98,6 +100,7 @@ public class Demographics implements Serializable {
 		setInsuranceType(insuranceType);
 		setPreferredLanguage(preferredLanguage);
 		setEthnicity(ethnicity);
+		setReligion(religion);
 		setVeteran(isVeteran);
 		setSmd(isSmd);
 		setAlcoholDrug(isAlcoholDrug);
@@ -317,11 +320,11 @@ public class Demographics implements Serializable {
 		return isPhyDisabled;
 	}
 
-	public void setSpeechImpaired(boolean isSpeechimpaired) {
-		this.isSpeechImpaired = isSpeechimpaired;
+	public void setSpeechImpaired(boolean isSpeechImpaired) {
+		this.isSpeechImpaired = isSpeechImpaired;
 	}
 
-	public boolean isSpeechimpaired() {
+	public boolean isSpeechImpaired() {
 		return isSpeechImpaired;
 	}
 
@@ -419,5 +422,13 @@ public class Demographics implements Serializable {
 
 	public String getLastEditBy() {
 		return lastEditBy;
+	}
+
+	private void setReligion(String religion) {
+		this.religion = religion;
+	}
+
+	public String getReligion() {
+		return religion;
 	}
 }

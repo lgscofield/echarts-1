@@ -50,12 +50,12 @@ public class PatientTab extends Composite implements SelectionHandler<TreeItem> 
 
 		TreeItem messageMenuItem = menu.addItem("Messages");
 		messageMenuItem.setUserObject(messagesPanel);
-		mp = new MessagesPresenter(new MessagesView(), eventBus, rpcServices, patient.getPatientId());
+		mp = new MessagesPresenter(new MessagesView(), eventBus, rpcServices, patient.getCaseNumber());
 		mp.go(messagesPanel);
 
 		TreeItem formsMenuItem = menu.addItem("Forms");
 		formsMenuItem.setUserObject(formsPanel);
-		fp = new FormsPresenter(new FormsView(), eventBus, rpcServices, patient.getPatientId());
+		fp = new FormsPresenter(new FormsView(), eventBus, rpcServices, patient.getCaseNumber());
 		fp.go(formsPanel);
 
 		menu.addSelectionHandler(this);

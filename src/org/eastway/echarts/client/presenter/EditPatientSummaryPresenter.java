@@ -87,12 +87,12 @@ public class EditPatientSummaryPresenter extends Presenter<EditPatientSummaryPre
 	private void setData() {
 		//display.getAddress().setText(patient.getAddress());
 		//display.getAltPhone().setText(patient.getAltPhone());
-		display.getCaseNumber().setText(patient.getPatientId());
+		display.getCaseNumber().setText(patient.getCaseNumber());
 		//display.getCounty().setText(patient.getCounty());
 		display.getDob().setValue(patient.getDemographics().getDob());
 		display.getFirstName().setText(patient.getFirstName());
 		display.getLastName().setText(patient.getLastName());
-		//display.getMiddleInitial().setText(patient.getMiddleInitial());
+		display.getMiddleInitial().setText(patient.getMiddleInitial());
 		//display.getPhone().setText(patient.getPhone());
 		display.getSsn().setText(patient.getSsn());
 	}
@@ -107,10 +107,10 @@ public class EditPatientSummaryPresenter extends Presenter<EditPatientSummaryPre
 	}
 
 	private void doSave() {
-		patient.setPatientId(display.getCaseNumber().getText());
+		patient.setCaseNumber(display.getCaseNumber().getText());
 		patient.setFirstName(display.getFirstName().getText());
 		patient.setLastName(display.getLastName().getText());
-		//patient.setMiddleInitial(display.getMiddleInitial().getText());
+		patient.setMiddleInitial(display.getMiddleInitial().getText());
 		patient.getDemographics().setDob(display.getDob().getValue());
 		patient.setSsn(display.getSsn().getText());
 		//patient.setCounty(display.getCounty().getText());

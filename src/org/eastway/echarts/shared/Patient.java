@@ -5,9 +5,11 @@ import java.util.Date;
 
 @SuppressWarnings("serial")
 public class Patient implements Serializable {
-	private String patientId;
+	private long patientId;
+	private String caseNumber;
 	private String firstName;
 	private String lastName;
+	private String middleInitial;
 	private String suffix;
 	private String alias;
 	private String caseStatus;
@@ -19,33 +21,36 @@ public class Patient implements Serializable {
 	public Patient() { }
 
 	public Patient(String alias,
+			String caseNumber,
 			String caseStatus,
 			String firstName,
 			Date lastEdit,
 			String lastEditBy,
 			String lastName,
-			String name,
-			String patientId,
+			String middleInitial,
+			long patientId,
 			String ssn,
 			String suffix,
 			Demographics demographics) {
 		setAlias(alias);
-		setPatientId(patientId);
+		setCaseNumber(caseNumber);
 		setCaseStatus(caseStatus);
 		setFirstName(firstName);
 		setLastEdit(lastEdit);
 		setLastEditBy(lastEditBy);
 		setLastName(lastName);
+		setMiddleInitial(middleInitial);
+		setPatientId(patientId);
 		setSsn(ssn);
 		setSuffix(suffix);
 		setDemographics(demographics);
 	}
 
-	public void setPatientId(String patientId) {
+	public void setPatientId(long patientId) {
 		this.patientId = patientId;
 	}
 
-	public String getPatientId() {
+	public long getPatientId() {
 		return patientId;
 	}
 
@@ -123,5 +128,21 @@ public class Patient implements Serializable {
 
 	public Demographics getDemographics() {
 		return demographics;
+	}
+
+	public void setCaseNumber(String caseNumber) {
+		this.caseNumber = caseNumber;
+	}
+
+	public String getCaseNumber() {
+		return caseNumber;
+	}
+
+	public void setMiddleInitial(String middleInitial) {
+		this.middleInitial = middleInitial;
+	}
+
+	public String getMiddleInitial() {
+		return middleInitial;
 	}
 }

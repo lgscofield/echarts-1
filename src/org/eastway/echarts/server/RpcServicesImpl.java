@@ -39,7 +39,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 	public EHR getEhr(long ehrId, String sessionId)
 			throws SessionExpiredException, DbException {
 		checkSessionExpire(sessionId);
-		String sql = "SELECT * FROM Patient INNER JOIN Ehr on Ehr.ehr_id = Patient.ehr_id WHERE EHR.ehr_id = " + ehrId + " ORDER BY Patient_Id";
+		String sql = "SELECT * FROM Patient INNER JOIN Ehr on Ehr.subject_id = Patient.Patient_id WHERE EHR.ehr_id = " + ehrId + " ORDER BY Patient_Id";
 		Connection con = null;
 		Statement stmt = null;
 		ResultSet srs = null;
@@ -65,7 +65,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 	public Patient getPatient(long patientId, String sessionId)
 			throws SessionExpiredException, DbException {
 		checkSessionExpire(sessionId);
-		String sql = "SELECT * FROM VDisplayDemographics WHERE CaseNumber = "
+		String sql = "SELECT * FROM Patient INNER JOIN Demographics ON Patient.Patient_Id = Demographics.Patient_Id WHERE Patient.Patient_Id = "
 			+ patientId;
 		Connection con = null;
 		Statement stmt = null;
@@ -98,6 +98,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 						null,
 						null,
 						null,
+						null,
 						srs.getBoolean("Veteran"),
 						srs.getBoolean("SP_SMD"),
 						srs.getBoolean("SP_AlcoholDrug"),
@@ -124,13 +125,14 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 						srs.getDate("LastEdit"),
 						srs.getString("LastEditBy"));
 				Patient p = new Patient(srs.getString("Alias"),
+					srs.getString("CaseNumber"),
 					srs.getString("CaseStatus"),
 					srs.getString("FirstName"),
 					srs.getDate("LastEdit"),
 					srs.getString("LastEditBy"),
 					srs.getString("LastName"),
-					srs.getString("Name"),
-					srs.getString("CaseNumber"),
+					srs.getString("MiddleInitial"),
+					srs.getLong("Patient_Id"),
 					srs.getString("SSN"),
 					srs.getString("Suffix"),
 					d);
@@ -154,23 +156,97 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 
 			con.setAutoCommit(false);
 
-			PreparedStatement patientInsert = con.prepareStatement("INSERT INTO Patient(CaseNumber, FirstName, LastName, Name)"
-					+ " VALUES(?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
-			patientInsert.setString(1, patient.getPatientId());
+			PreparedStatement patientInsert = con.prepareStatement(
+					"INSERT INTO Patient("
+						+ "CaseNumber, FirstName, LastName, Name, ehr_id, SSN, CaseStatus)"
+						+ " VALUES(?,?,?,?,(SELECT ehr_id FROM Ehr WHERE subject_id = ?),?,?)",
+					PreparedStatement.RETURN_GENERATED_KEYS);
+			patientInsert.setString(1, patient.getCaseNumber());
 			patientInsert.setString(2, patient.getFirstName());
 			patientInsert.setString(3, patient.getLastName());
 			patientInsert.setString(4, patient.getName());
+			patientInsert.setLong(5, patient.getPatientId());
+			patientInsert.setString(6, patient.getSsn());
+			patientInsert.setString(7, patient.getCaseStatus());
 			patientInsert.executeUpdate();
 
 			ResultSet lastInsertIds = patientInsert.getGeneratedKeys();
 
-			PreparedStatement demographicsInsert = con.prepareStatement("INSERT INTO Demographics(Patient_Id,DOB)"
-					+ " VALUES(?,?)");
+			PreparedStatement demographicsInsert = con.prepareStatement(
+					"INSERT INTO Demographics("
+					+ "Patient_Id,DOB,Insurance,Gender,"
+					+ "Race,Veteran,Religion,MaritalStatus,"
+					+ "EducationLevel,EducationType,LivingArrangement,Employment,"
+					+ "IncomeSource1,IncomeSource2,IncomeSource3,Allergies,"
+					+ "SP_SMD,SP_AlcoholDrug,SP_Forensic,SP_DD,"
+					+ "SP_MIMR,SP_DUIDWI,SP_Deaf,SP_HearingImpaired,"
+					+ "SP_Blind,SP_VisuallyImpaired,SP_PhyDisabled,SP_SpeechImpaired,"
+					+ "SP_PhysicalAbuse,SP_SexualAbuse,SP_DomesticViolence,SP_ChildAlcDrug,"
+					+ "SP_HIVAIDS,SP_Suicidal,SP_SchoolDropout,SP_ProbationParole,"
+					+ "SP_GeneralPopulation,LastEditBy"
+					+ ") VALUES("
+					+ "?,?,?,?,"
+					+ "?,?,?,?,"
+					+ "?,?,?,?,"
+					+ "?,?,?,?,"
+					+ "?,?,?,?,"
+					+ "?,?,?,?,"
+					+ "?,?,?,?,"
+					+ "?,?,?,?,"
+					+ "?,?,?,?,"
+					+ "?,?"
+					+ ")");
+
+			int patientID = -1;
 
 			if (lastInsertIds.next())
-				demographicsInsert.setInt(1, lastInsertIds.getInt(1));
+				patientID = lastInsertIds.getInt(1);
+
+			demographicsInsert.setInt(1, patientID);
 			demographicsInsert.setDate(2, new java.sql.Date(patient.getDemographics().getDob().getTime()));
+			demographicsInsert.setString(3, patient.getDemographics().getInsuranceType());
+			demographicsInsert.setString(4, patient.getDemographics().getGender());
+			demographicsInsert.setString(5, patient.getDemographics().getRace());
+			demographicsInsert.setBoolean(6, patient.getDemographics().isVeteran());
+			demographicsInsert.setString(7, patient.getDemographics().getReligion());
+			demographicsInsert.setString(8, patient.getDemographics().getMaritalStatus());
+			demographicsInsert.setString(9, patient.getDemographics().getEducationLevel());
+			demographicsInsert.setString(10, patient.getDemographics().getEducationType());
+			demographicsInsert.setString(11, patient.getDemographics().getLivingArrangement());
+			demographicsInsert.setString(12, patient.getDemographics().getEmployment());
+			demographicsInsert.setString(13, patient.getDemographics().getIncomeSources()[0]);
+			demographicsInsert.setString(14, patient.getDemographics().getIncomeSources()[1]);
+			demographicsInsert.setString(15, patient.getDemographics().getIncomeSources()[2]);
+			demographicsInsert.setString(16, patient.getDemographics().getAllergies()[0]);
+			demographicsInsert.setBoolean(17, patient.getDemographics().isSmd());
+			demographicsInsert.setBoolean(18, patient.getDemographics().isAlcoholDrug());
+			demographicsInsert.setBoolean(19, patient.getDemographics().isForensic());
+			demographicsInsert.setBoolean(20, patient.getDemographics().isDd());
+			demographicsInsert.setBoolean(21, patient.getDemographics().isMimr());
+			demographicsInsert.setBoolean(22, patient.getDemographics().isDuidwi());
+			demographicsInsert.setBoolean(23, patient.getDemographics().isDeaf());
+			demographicsInsert.setBoolean(24, patient.getDemographics().isHearingImpaired());
+			demographicsInsert.setBoolean(25, patient.getDemographics().isBlind());
+			demographicsInsert.setBoolean(26, patient.getDemographics().isVisuallyImpaired());
+			demographicsInsert.setBoolean(27, patient.getDemographics().isPhyDisabled());
+			demographicsInsert.setBoolean(28, patient.getDemographics().isSpeechImpaired());
+			demographicsInsert.setBoolean(29, patient.getDemographics().isPhysicalAbuse());
+			demographicsInsert.setBoolean(30, patient.getDemographics().isSexualAbuse());
+			demographicsInsert.setBoolean(31, patient.getDemographics().isDomesticViolence());
+			demographicsInsert.setBoolean(32, patient.getDemographics().isChildAlcDrug());
+			demographicsInsert.setBoolean(33, patient.getDemographics().isHivAids());
+			demographicsInsert.setBoolean(34, patient.getDemographics().isSuicidal());
+			demographicsInsert.setBoolean(35, patient.getDemographics().isSchoolDropout());
+			demographicsInsert.setBoolean(36, patient.getDemographics().isProbationParole());
+			demographicsInsert.setBoolean(37, patient.getDemographics().isGeneralPopulation());
+			demographicsInsert.setString(38, getStaffId(sessionId));
+			
 			demographicsInsert.executeUpdate();
+
+			PreparedStatement ehrInsert = con.prepareStatement("UPDATE Ehr SET subject_id = ? WHERE subject_id = ?");
+			ehrInsert.setLong(1, patientID);
+			ehrInsert.setLong(2, patient.getPatientId());
+			ehrInsert.executeUpdate();
 
 			con.commit();
 			con.setAutoCommit(true);
@@ -187,7 +263,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		Connection con = null;
 		LinkedHashMap<String, Long> pl = new LinkedHashMap<String, Long>();
 		checkSessionExpire(sessionId);
-		String sql = "SELECT CaseNumber + ' - ' + LastName + ', ' + FirstName AS SearchString, Patient.ehr_id FROM Patient INNER JOIN Ehr ON Ehr.subject_id = Patient.Patient_ID";
+		String sql = "SELECT CaseNumber + ' - ' + LastName + ', ' + FirstName AS SearchString, Ehr.ehr_id FROM Patient INNER JOIN Ehr ON Ehr.subject_id = Patient.Patient_ID ORDER BY LastName";
 		Statement stmt = null;
 		ResultSet srs = null;
 
