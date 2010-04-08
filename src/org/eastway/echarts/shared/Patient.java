@@ -6,7 +6,6 @@ import java.util.Date;
 @SuppressWarnings("serial")
 public class Patient implements Serializable {
 	private String patientId;
-	private String name;
 	private String firstName;
 	private String lastName;
 	private String suffix;
@@ -37,7 +36,6 @@ public class Patient implements Serializable {
 		setLastEdit(lastEdit);
 		setLastEditBy(lastEditBy);
 		setLastName(lastName);
-		setName(name);
 		setSsn(ssn);
 		setSuffix(suffix);
 		setDemographics(demographics);
@@ -51,12 +49,8 @@ public class Patient implements Serializable {
 		return patientId;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public String getName() {
-		return name;
+		return getLastName() + ", " + getFirstName();
 	}
 
 	public void setFirstName(String firstName) {

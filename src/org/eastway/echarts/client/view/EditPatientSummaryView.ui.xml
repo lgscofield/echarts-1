@@ -1,0 +1,89 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+  xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:d="urn:import:com.google.gwt.user.datepicker.client">
+  <g:HTMLPanel>
+    <table>
+      <tr>
+        <td>
+          Case Number:
+      </td>
+        <td>
+          <g:TextBox ui:field='caseNumber' />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          First:
+      </td>
+        <td>
+          <g:TextBox ui:field='firstName' />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Last:
+      </td>
+        <td>
+          <g:TextBox ui:field='lastName' />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          MI:
+      </td>
+        <td>
+          <g:TextBox ui:field='middleInitial' />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          DOB:
+      </td>
+        <td>
+          <d:DateBox ui:field='dob' />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          SSN#:
+      </td>
+        <td>
+          <g:TextBox ui:field='ssn' />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          County:
+      </td>
+        <td>
+          <g:TextBox ui:field='county' />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Address:
+      </td>
+        <td>
+          <g:TextBox ui:field='address' />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Phone:
+      </td>
+        <td>
+          <g:TextBox ui:field='phone' />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Alt Phone:
+      </td>
+        <td>
+          <g:TextBox ui:field='altPhone' />
+        </td>
+      </tr>
+    </table>
+    <g:Anchor ui:field='save'>Save</g:Anchor>
+  </g:HTMLPanel>
+</ui:UiBinder>

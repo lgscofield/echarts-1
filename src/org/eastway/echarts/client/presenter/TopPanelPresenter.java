@@ -1,12 +1,12 @@
 package org.eastway.echarts.client.presenter;
 
-import java.util.Vector;
+import java.util.LinkedHashMap;
 
 import org.eastway.echarts.client.Rpc;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.UserImpl;
 import org.eastway.echarts.client.events.LogoutEvent;
-import org.eastway.echarts.client.events.OpenPatientEvent;
+import org.eastway.echarts.client.events.OpenEhrEvent;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -18,7 +18,7 @@ import com.google.gwt.user.client.ui.HasWidgets;
 
 public class TopPanelPresenter extends Presenter<TopPanelPresenter.Display> {
 	public interface Display extends EchartsDisplay {
-		void setData(Vector<String> data);
+		void setData(LinkedHashMap<String, Long> data);
 
 		HasClickHandlers getSearchButton();
 
@@ -26,6 +26,8 @@ public class TopPanelPresenter extends Presenter<TopPanelPresenter.Display> {
 
 		HasClickHandlers getLogoutButton();
 	}
+
+	private LinkedHashMap<String, Long> data;
 
 	public TopPanelPresenter(Display display, HandlerManager eventBus) {
 		super(display, eventBus);
@@ -37,7 +39,7 @@ public class TopPanelPresenter extends Presenter<TopPanelPresenter.Display> {
 		display.getSearchButton().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				eventBus.fireEvent(new OpenPatientEvent(display.getSuggestBox().getText().replaceAll("(.*) - .*", "$1")));
+				eventBus.fireEvent(new OpenEhrEvent(data.get(display.getSuggestBox().getText())));
 				display.getSuggestBox().setText("");
 			}
 		});
@@ -50,7 +52,7 @@ public class TopPanelPresenter extends Presenter<TopPanelPresenter.Display> {
 	}
 
 	public void fetchData() {
-		AsyncCallback<Vector<String>> callback = new AsyncCallback<Vector<String>>() {
+		AsyncCallback<LinkedHashMap<String, Long>> callback = new AsyncCallback<LinkedHashMap<String, Long>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -58,11 +60,16 @@ public class TopPanelPresenter extends Presenter<TopPanelPresenter.Display> {
 			}
 
 			@Override
-			public void onSuccess(Vector<String> data) {
+			public void onSuccess(LinkedHashMap<String, Long> data) {
 				display.setData(data);
+				setData(data);
 			}
 		};
 		Rpc.singleton().getPatientList(UserImpl.getSessionId(), callback);
+	}
+
+	protected void setData(LinkedHashMap<String, Long> data) {
+		this.data = data;
 	}
 
 	@Override

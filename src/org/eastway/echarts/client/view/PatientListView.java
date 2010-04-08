@@ -1,7 +1,7 @@
 package org.eastway.echarts.client.view;
 
-import java.util.Iterator;
-import java.util.Vector;
+import java.util.LinkedHashMap;
+import java.util.Set;
 
 import org.eastway.echarts.client.presenter.PatientListPresenter;
 
@@ -42,12 +42,14 @@ public class PatientListView extends Composite implements PatientListPresenter.D
 	}
 
 	@Override
-	public void setData(Vector<String> data) {
-		Iterator<String> r = data.iterator();
-		for (int i = 0; r.hasNext(); i++) {
-			Label lbl = new Label(r.next());
+	public void setData(LinkedHashMap<String, Long> data) {
+		Set<String> d = data.keySet();
+		int i = 0;
+		for (String s : d) {
+			Label lbl = new Label(s);
 			table.setWidget(i, 0, lbl);
 			lbl.addStyleName(style.label());
+			i++;
 		}
 	}
 
@@ -57,7 +59,7 @@ public class PatientListView extends Composite implements PatientListPresenter.D
 	}
 
 	@Override
-	public int getClickedRow(ClickEvent event) {
+	public String getClickedRow(ClickEvent event) {
 		int selected = -1;
 
 		FlexTable.Cell cell = table.getCellForEvent(event);
@@ -67,6 +69,6 @@ public class PatientListView extends Composite implements PatientListPresenter.D
 				selected = cell.getRowIndex();
 			}
 		}
-		return selected;
+		return table.getText(selected, 0);
 	}
 }

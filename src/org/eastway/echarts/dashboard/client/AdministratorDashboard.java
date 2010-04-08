@@ -5,8 +5,8 @@ import java.util.Date;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.Rpc;
 import org.eastway.echarts.client.UserImpl;
-import org.eastway.echarts.client.events.OpenPatientEvent;
-import org.eastway.echarts.client.events.OpenPatientEventHandler;
+import org.eastway.echarts.client.events.OpenEhrEvent;
+import org.eastway.echarts.client.events.OpenEhrEventHandler;
 import org.eastway.echarts.client.presenter.AlertsPresenter;
 import org.eastway.echarts.client.presenter.EditEhrPresenter;
 import org.eastway.echarts.client.presenter.PatientListPresenter;
@@ -15,6 +15,7 @@ import org.eastway.echarts.client.view.AlertsView;
 import org.eastway.echarts.client.view.EditEhrView;
 import org.eastway.echarts.client.view.PatientListView;
 import org.eastway.echarts.client.view.TopPanelView;
+import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.Patient;
 
 import com.bradrydzewski.gwt.calendar.client.Calendar;
@@ -101,10 +102,10 @@ public class AdministratorDashboard extends Composite {
 	}
 
 	private void bind() {
-		eventBus.addHandler(OpenPatientEvent.TYPE,
-				new OpenPatientEventHandler() {
+		eventBus.addHandler(OpenEhrEvent.TYPE,
+				new OpenEhrEventHandler() {
 					public void onOpenPatient(
-							OpenPatientEvent event) {
+							OpenEhrEvent event) {
 						openPatient(event.getId());
 					}
 				});
@@ -142,7 +143,7 @@ public class AdministratorDashboard extends Composite {
 		addTab(epp.getDisplay().asWidget(), "New Chart");
 	}
 
-	public void openPatient(String patientId) {
+	public void openPatient(long patientId) {
 		fetchPatient(patientId);
 	}
 
@@ -174,7 +175,23 @@ public class AdministratorDashboard extends Composite {
 			return false;
 	}
 
-	private void fetchPatient(String patientId) {
+	private void fetchPatient(long ehrId) {
+		AsyncCallback<EHR> callback = new AsyncCallback<EHR>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				new HandleRpcException(caught);
+			}
+
+			@Override
+			public void onSuccess(EHR ehr) {
+				getPatient(ehr.getPatientIds().get(0));
+			}
+		};
+		Rpc.singleton().getEhr(ehrId, UserImpl.getSessionId(),
+				callback);
+	}
+
+	private void getPatient(Long patientId) {
 		AsyncCallback<Patient> callback = new AsyncCallback<Patient>() {
 			@Override
 			public void onFailure(Throwable caught) {

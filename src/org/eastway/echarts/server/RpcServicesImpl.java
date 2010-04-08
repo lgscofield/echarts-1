@@ -9,9 +9,10 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Vector;
 
 import javax.naming.NamingException;
@@ -19,6 +20,7 @@ import javax.naming.NamingException;
 import org.eastway.echarts.client.RpcServices;
 import org.eastway.echarts.shared.DbException;
 import org.eastway.echarts.shared.Demographics;
+import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.Message;
 import org.eastway.echarts.shared.Messages;
 import org.eastway.echarts.shared.Patient;
@@ -34,7 +36,33 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		RpcServices, DbConstants {
 
 	@Override
-	public Patient getPatient(String patientId, String sessionId)
+	public EHR getEhr(long ehrId, String sessionId)
+			throws SessionExpiredException, DbException {
+		checkSessionExpire(sessionId);
+		String sql = "SELECT * FROM Patient INNER JOIN Ehr on Ehr.ehr_id = Patient.ehr_id WHERE EHR.ehr_id = " + ehrId + " ORDER BY Patient_Id";
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet srs = null;
+		List<Long> patientIds = new ArrayList<Long>();
+		try {
+			con = DbConnection.getConnection();
+			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			srs = stmt.executeQuery(sql);
+
+			while (srs.next())
+				patientIds.add(srs.getLong("Patient_Id"));
+			EHR ehr = new EHR(ehrId, patientIds);
+			return ehr;
+		} catch (SQLException e) {
+			throw new DbException(e);
+		} catch (NamingException e) {
+			throw new DbException("Naming exception");
+		}
+	}
+
+	@Override
+	public Patient getPatient(long patientId, String sessionId)
 			throws SessionExpiredException, DbException {
 		checkSessionExpire(sessionId);
 		String sql = "SELECT * FROM VDisplayDemographics WHERE CaseNumber = "
@@ -126,11 +154,12 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 
 			con.setAutoCommit(false);
 
-			PreparedStatement patientInsert = con.prepareStatement("INSERT INTO Patient(CaseNumber, FirstName, LastName)"
-					+ " VALUES(?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
+			PreparedStatement patientInsert = con.prepareStatement("INSERT INTO Patient(CaseNumber, FirstName, LastName, Name)"
+					+ " VALUES(?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
 			patientInsert.setString(1, patient.getPatientId());
 			patientInsert.setString(2, patient.getFirstName());
 			patientInsert.setString(3, patient.getLastName());
+			patientInsert.setString(4, patient.getName());
 			patientInsert.executeUpdate();
 
 			ResultSet lastInsertIds = patientInsert.getGeneratedKeys();
@@ -154,11 +183,11 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public Vector<String> getPatientList(String sessionId) throws SessionExpiredException, DbException {
+	public LinkedHashMap<String, Long> getPatientList(String sessionId) throws SessionExpiredException, DbException {
 		Connection con = null;
-		Vector<String> pl = new Vector<String>();
+		LinkedHashMap<String, Long> pl = new LinkedHashMap<String, Long>();
 		checkSessionExpire(sessionId);
-		String sql = "SELECT CaseNumber + ' - ' + Name AS 'SearchString' FROM Patient ORDER BY Name";
+		String sql = "SELECT CaseNumber + ' - ' + LastName + ', ' + FirstName AS SearchString, Patient.ehr_id FROM Patient INNER JOIN Ehr ON Ehr.subject_id = Patient.Patient_ID";
 		Statement stmt = null;
 		ResultSet srs = null;
 
@@ -168,7 +197,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 					ResultSet.CONCUR_READ_ONLY);
 			srs = stmt.executeQuery(sql);
 			while (srs.next())
-				pl.add(srs.getString(1));
+				pl.put(srs.getString(1), srs.getLong(2));
 			return pl;
 		} catch (SQLException e) {
 			throw new DbException();

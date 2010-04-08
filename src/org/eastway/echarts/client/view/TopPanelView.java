@@ -1,6 +1,6 @@
 package org.eastway.echarts.client.view;
 
-import java.util.Vector;
+import java.util.LinkedHashMap;
 
 import org.eastway.echarts.client.presenter.TopPanelPresenter;
 
@@ -56,8 +56,8 @@ public class TopPanelView extends Composite implements TopPanelPresenter.Display
 	}
 
 	@Override
-	public void setData(Vector<String> data) {
-		oracle.addAll(data);
+	public void setData(LinkedHashMap<String, Long> data) {
+		oracle.addAll(data.keySet());
 	}
 
 	@Override

@@ -1,11 +1,11 @@
 package org.eastway.echarts.client.presenter;
 
-import java.util.Vector;
+import java.util.LinkedHashMap;
 
 import org.eastway.echarts.client.Rpc;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.UserImpl;
-import org.eastway.echarts.client.events.OpenPatientEvent;
+import org.eastway.echarts.client.events.OpenEhrEvent;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -15,15 +15,15 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class PatientListPresenter extends Presenter<PatientListPresenter.Display> {
-	private Vector<String> data;
-
 	public interface Display extends EchartsDisplay {
-		void setData(Vector<String> data);
+		void setData(LinkedHashMap<String, Long> data);
 
 		HasClickHandlers getTable();
 
-		int getClickedRow(ClickEvent event);
+		String getClickedRow(ClickEvent event);
 	}
+
+	private LinkedHashMap<String, Long> data;
 
 	public PatientListPresenter(Display display, HandlerManager eventBus) {
 		super(display, eventBus);
@@ -33,25 +33,25 @@ public class PatientListPresenter extends Presenter<PatientListPresenter.Display
 		display.getTable().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				int selected = display.getClickedRow(event);
+				String selected = display.getClickedRow(event);
 
-				if (selected >= 0) {
-					String patientId = getData().get(selected).toString().replaceAll("(.*) - .*", "$1");
-					eventBus.fireEvent(new OpenPatientEvent(patientId));
+				if (selected != null) {
+					long ehrId = getData().get(selected);
+					eventBus.fireEvent(new OpenEhrEvent(ehrId));
 				}
 			}
 		});
 	}
 
 	public void fetchPatientList() {
-		AsyncCallback<Vector<String>> callback = new AsyncCallback<Vector<String>>() {
+		AsyncCallback<LinkedHashMap<String, Long>> callback = new AsyncCallback<LinkedHashMap<String, Long>>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				new HandleRpcException(caught);
 			}
 
 			@Override
-			public void onSuccess(Vector<String> data) {
+			public void onSuccess(LinkedHashMap<String, Long> data) {
 				display.setData(data);
 				setData(data);
 			}
@@ -59,11 +59,11 @@ public class PatientListPresenter extends Presenter<PatientListPresenter.Display
 		Rpc.singleton().getPatientList(UserImpl.getSessionId(), callback);
 	}
 
-	private void setData(Vector<String> data) {
+	private void setData(LinkedHashMap<String, Long> data) {
 		this.data = data;
 	}
 
-	private Vector<String> getData() {
+	private LinkedHashMap<String, Long> getData() {
 		return this.data;
 	}
 
