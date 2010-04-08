@@ -149,8 +149,9 @@ public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
 		this.messages = msgs;
 		ArrayList<String[]> d = new ArrayList<String[]>();
 		Message m;
+
 		if (msgs.get(0) == null)
-			d.add(null);
+			d = null;
 		else
 			for (int i = 0; (m = messages.get(i)) != null; i++) {
 				String[] msgstr = {

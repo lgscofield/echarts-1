@@ -44,9 +44,11 @@ public class MessagesView extends Composite implements MessagesPresenter.Display
 	@Override
 	public void setData(ArrayList<String[]> data) {
 		messages.clear();
-		for (String[] s : data) {
-			messages.add(formatMessage(s));
-		}
+		if (data == null)
+			messages.add(new HTML("No messages"));
+		else
+			for (String[] s : data)
+				messages.add(formatMessage(s));
 	}
 
 	public HTML formatMessage(String[] m) {
