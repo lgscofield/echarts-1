@@ -16,7 +16,7 @@ public class Message implements Serializable {
 	private String message;
 	private Integer parentId;
 	private String lastModified;
-	private String creationDate;
+	private long creationDate;
 	private String lastModifiedBy;
 
 	public Message() {}
@@ -59,14 +59,14 @@ public class Message implements Serializable {
 	/**
 	 * Returns the time this message was created
 	 */
-	public String getCreationDate() {
+	public long getCreationDate() {
 		return creationDate;
 	}
 
 	/**
 	 * Sets the time the message was created
 	 */
-	public void setCreationDate(String creationDate) {
+	public void setCreationDate(long creationDate) {
 		this.creationDate = creationDate;
 	}
 

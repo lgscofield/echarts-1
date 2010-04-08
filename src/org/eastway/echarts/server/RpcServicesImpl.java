@@ -248,9 +248,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 				m.setId(srs.getInt(1));
 				m.setPatId(srs.getString(2));
 				m.setMessageType(srs.getString(3));
-				Calendar cal = Calendar.getInstance();
-				cal.setTimeInMillis(srs.getTimestamp(4).getTime());
-				m.setCreationDate(DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(cal.getTime()));
+				m.setCreationDate(srs.getTimestamp(4).getTime());
 				m.setMessage(srs.getString(5));
 				m.setParentId(srs.getInt(6));
 				m.setLastModifiedBy(srs.getString(7));

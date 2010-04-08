@@ -13,14 +13,13 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
 
 	public interface Display extends EchartsDisplay {
-		void setData(ArrayList<String> data);
+		void setData(ArrayList<String[]> data);
 
 		HasClickHandlers getAddButton();
 
@@ -45,7 +44,7 @@ public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
 
 	private RpcServicesAsync rpcServices;
 	private Messages messages;
-	private ArrayList<String> data = new ArrayList<String>();
+	private ArrayList<String[]> data = new ArrayList<String[]>();
 	private String patientid;
 
 	public MessagesPresenter(final Display display, HandlerManager eventBus,
@@ -77,7 +76,7 @@ public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
 				m.setPatId(patientid);
 				m.setMessageType(display.getMessageType());
 				m.setMessage(display.getMessage());
-				m.setCreationDate(DateTimeFormat.getShortDateTimeFormat().format(new Date()));
+				m.setCreationDate(new Date().getTime());
 				m.setLastModifiedBy(UserImpl.getStaffName());
 				save(m);
 			}
@@ -142,29 +141,27 @@ public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
 				callback);
 	}
 
-	public ArrayList<String> getData() {
+	public ArrayList<String[]> getData() {
 		return this.data;
 	}
 
 	public void setData(Messages msgs) {
 		this.messages = msgs;
-		ArrayList<String> d = new ArrayList<String>();
+		ArrayList<String[]> d = new ArrayList<String[]>();
 		Message m;
 		if (msgs.get(0) == null)
-			d.add("No Messages");
+			d.add(null);
 		else
-			for (int i = 0; (m = messages.get(i)) != null; i++)
-				d.add(formatMessage(m));
+			for (int i = 0; (m = messages.get(i)) != null; i++) {
+				String[] msgstr = {
+					new Long(m.getCreationDate()).toString(),
+					m.getMessageType(),
+					m.getLastModifiedBy(),
+					m.getMessage()
+				};
+				d.add(msgstr);
+			}
 		this.data = d;
-	}
-
-	public String formatMessage(Message m) {
-		return "<strong>" + m.getCreationDate()
-			+ "</strong>&mdash;"
-			+ m.getMessageType() + "&mdash;"
-			+ m.getLastModifiedBy()
-			+ "<div class='home-PatientMessage'>"
-			+ m.getMessage() + "</div>";
 	}
 
 	public Message getMessage(int i) {

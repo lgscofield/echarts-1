@@ -1,11 +1,13 @@
 package org.eastway.echarts.client.view;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.eastway.echarts.client.presenter.MessagesPresenter;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
@@ -40,11 +42,22 @@ public class MessagesView extends Composite implements MessagesPresenter.Display
 	}
 
 	@Override
-	public void setData(ArrayList<String> data) {
+	public void setData(ArrayList<String[]> data) {
 		messages.clear();
-		for (String s : data) {
-			messages.add(new HTML(s));
+		for (String[] s : data) {
+			messages.add(formatMessage(s));
 		}
+	}
+
+	public HTML formatMessage(String[] m) {
+		return new HTML("<strong>"
+				+ DateTimeFormat
+					.getFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZZ")
+					.format(new Date(new Long(m[0])))
+				+ "</strong>&mdash;"
+				+ m[1] + "&mdash;"
+				+ m[2] + "<div class='home-PatientMessage'>"
+				+ m[3] + "</div>");
 	}
 
 	@Override
