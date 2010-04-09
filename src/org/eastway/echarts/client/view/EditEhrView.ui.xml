@@ -88,6 +88,8 @@
                 <tr>
                   <td>Case Number: </td>
                   <td><g:TextBox ui:field='caseNumber' /></td>
+                  <td>Case Status</td>
+                  <td><g:TextBox ui:field='caseStatus'/></td>
                 </tr>
                 <tr>
                   <td>
@@ -115,10 +117,26 @@
                 </tr>
                 <tr>
                   <td>
+                    Suffix
+                  </td>
+                  <td>
+                    <g:TextBox ui:field='suffix' />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Alias
+                  </td>
+                  <td>
+                    <g:TextBox ui:field='alias' />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
                     DOB:
                   </td>
                   <td>
-                    <g:TextBox ui:field='dob' />
+                    <d:DateBox ui:field='dob' />
                   </td>
                 </tr>
                 <tr>
@@ -185,7 +203,7 @@
               </p>
               <p>
                 History of treatment?
-                <g:CheckBox ui:field='historyOfTreatment'>Yes</g:CheckBox>
+                <g:CheckBox ui:field='hasHistoryOfTreatment'>Yes</g:CheckBox>
                 &nbsp;(You are looking for pattern use and frequency for
                 appropriate exclusion with referral.)
               </p>

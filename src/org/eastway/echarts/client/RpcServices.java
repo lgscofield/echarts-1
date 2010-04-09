@@ -43,4 +43,6 @@ public interface RpcServices extends RemoteService {
 	public Demographics getDemographics(String patientid, String sessionId) throws SessionExpiredException, DbException;
 
 	public Patient getPatient(long patientId, String sessionId) throws SessionExpiredException, DbException;
+
+	public void newEhr(Patient patient, String sessionId) throws SessionExpiredException, DbException;
 }

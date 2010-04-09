@@ -13,19 +13,16 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
-import com.google.gwt.user.client.ui.TextArea;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DateBox;
-import com.google.gwt.user.datepicker.client.DatePicker;
 
 import org.eastway.echarts.client.presenter.EditEhrPresenter;
 
@@ -46,54 +43,57 @@ public class EditEhrView extends Composite implements
 	@UiField HTMLPanel returningPatient;
 
 	/* Begin Chart data */
-	@UiField TextBox previousProvider;
+	@UiField HasText previousProvider;
 	@UiField DateBox previousVisit;
-	@UiField TextBox caseNumber;
-	@UiField TextBox firstName;
-	@UiField TextBox lastName;
-	@UiField TextBox middleInitial;
-	@UiField TextBox dob;
-	@UiField TextBox ssn;
-	@UiField TextBox county;
-	@UiField TextBox address;
-	@UiField TextBox phone;
-	@UiField TextBox altPhone;
-	@UiField CheckBox aod;
-	@UiField CheckBox requiredAod;
-	@UiField CheckBox historyOfTreatment;
-	@UiField TextArea treatmentDescription;
-	@UiField CheckBox isPregnant;
-	@UiField CheckBox isIvUser;
-	@UiField TextBox referredBy;
-	@UiField TextBox emergencyContact;
-	@UiField TextBox emergencyContactPhoneNumber;
-	@UiField TextBox emergencyContactRelationshipToPatient;
-	@UiField CheckBox isEmployed;
-	@UiField TextBox lastEmployedDate;
-	@UiField TextBox insuranceType;
-	@UiField TextBox income;
-	@UiField CheckBox hasDesireToWork;
-	@UiField CheckBox hasEmploymentBarriers;
-	@UiField CheckBox hasLegalProblems;
-	@UiField TextArea legalProblemsDescription;
-	@UiField CheckBox isReceivingSsdForMhReasons;
-	@UiField CheckBox hasRecentlyVisitedErOrHospital;
-	@UiField TextArea recentlyReceivedTreatment;
-	@UiField TextArea previousMentalHealthTreatment;
-	@UiField TextArea previousMentalHealthHospitalizations;
-	@UiField TextArea currentMedications;
-	@UiField TextBox guardian;
-	@UiField DatePicker firstAppointmentOfferedDatePicker;
-	@UiField Label firstAppointmentOffered;
-	@UiField DatePicker firstAppointmentTakenDatePicker;
-	@UiField Label firstAppointmentTaken;
-	@UiField CheckBox informedPatient;
-	@UiField TextBox referralSource;
-	@UiField TextBox referralSourcePhoneNumber;
-	@UiField TextBox serviceRequest;
-	@UiField TextBox reasonDenied;
-	@UiField TextBox referredTo;
-	@UiField TextArea otherPertinentInfo;
+	@UiField HasText caseNumber;
+	@UiField HasText caseStatus;
+	@UiField HasText firstName;
+	@UiField HasText lastName;
+	@UiField HasText middleInitial;
+	@UiField HasText suffix;
+	@UiField HasText alias;
+	@UiField HasValue<Date> dob;
+	@UiField HasText ssn;
+	@UiField HasText county;
+	@UiField HasText address;
+	@UiField HasText phone;
+	@UiField HasText altPhone;
+	@UiField HasValue<Boolean> aod;
+	@UiField HasValue<Boolean> requiredAod;
+	@UiField HasValue<Boolean> hasHistoryOfTreatment;
+	@UiField HasText treatmentDescription;
+	@UiField HasValue<Boolean> isPregnant;
+	@UiField HasValue<Boolean> isIvUser;
+	@UiField HasText referredBy;
+	@UiField HasText emergencyContact;
+	@UiField HasText emergencyContactPhoneNumber;
+	@UiField HasText emergencyContactRelationshipToPatient;
+	@UiField HasValue<Boolean> isEmployed;
+	@UiField HasText lastEmployedDate;
+	@UiField HasText insuranceType;
+	@UiField HasText income;
+	@UiField HasValue<Boolean> hasDesireToWork;
+	@UiField HasValue<Boolean> hasEmploymentBarriers;
+	@UiField HasValue<Boolean> hasLegalProblems;
+	@UiField HasText legalProblemsDescription;
+	@UiField HasValue<Boolean> isReceivingSsdForMhReasons;
+	@UiField HasValue<Boolean> hasRecentlyVisitedErOrHospital;
+	@UiField HasText recentlyReceivedTreatment;
+	@UiField HasText previousMentalHealthTreatment;
+	@UiField HasText previousMentalHealthHospitalizations;
+	@UiField HasText currentMedications;
+	@UiField HasText guardian;
+	@UiField HasValue<Date> firstAppointmentOfferedDatePicker;
+	@UiField HasText firstAppointmentOffered;
+	@UiField HasValue<Date> firstAppointmentTakenDatePicker;
+	@UiField HasText firstAppointmentTaken;
+	@UiField HasValue<Boolean> informedPatient;
+	@UiField HasText referralSource;
+	@UiField HasText referralSourcePhoneNumber;
+	@UiField HasText serviceRequest;
+	@UiField HasText reasonDenied;
+	@UiField HasText referredTo;
+	@UiField HasText otherPertinentInfo;
 	/* End Chart Data */
 
 	@UiField Button next, previous, finish;
@@ -191,11 +191,6 @@ public class EditEhrView extends Composite implements
 		}
 	}
 
-	@UiHandler(value = { "finish"})
-	void handleFinish(ClickEvent event) {
-		// TODO : do something really cool with the data
-	}
-
 	@UiHandler(value = { "firstAppointmentOfferedDatePicker"})
 	void handleFirstAppointmentOffered(ValueChangeEvent<Date> event) {
 		Date date = event.getValue();
@@ -211,494 +206,514 @@ public class EditEhrView extends Composite implements
 	}
 
 	@Override
+	public HasText getAddress() {
+		return address;
+	}
+
+	@Override
+	public HasText getAltPhone() {
+		return altPhone;
+	}
+
+	@Override
+	public HasText getCaseNumber() {
+		return caseNumber;
+	}
+
+	@Override
+	public HasText getCounty() {
+		return county;
+	}
+
+	@Override
+	public HasText getCurrentMedications() {
+		return currentMedications;
+	}
+
+	@Override
+	public HasValue<Date> getDob() {
+		return dob;
+	}
+
+	@Override
+	public HasText getEmergencyContact() {
+		return emergencyContact;
+	}
+
+	@Override
+	public HasText getEmergencyContactPhoneNumber() {
+		return emergencyContactPhoneNumber;
+	}
+
+	@Override
+	public HasText getEmergencyContactRelationshipToPatient() {
+		return emergencyContactRelationshipToPatient;
+	}
+
+	@Override
 	public HasClickHandlers getFinishButton() {
 		return finish;
 	}
 
 	@Override
-	public String getFirstName() {
-		return firstName.getText();
+	public HasText getFirstAppointmentOffered() {
+		return firstAppointmentOffered;
 	}
 
 	@Override
-	public String getLastName() {
-		return lastName.getText();
+	public HasValue<Date> getFirstAppointmentOfferedDatePicker() {
+		return firstAppointmentOfferedDatePicker;
 	}
 
 	@Override
-	public String getMiddleInitial() {
-		return middleInitial.getText();
+	public HasText getFirstAppointmentTaken() {
+		return firstAppointmentTaken;
 	}
 
 	@Override
-	public Date getDob() {
-		Date date = DateTimeFormat.getMediumDateFormat().parse(dob.getText());
-		return date;
+	public HasValue<Date> getFirstAppointmentTakenDatePicker() {
+		return firstAppointmentTakenDatePicker;
 	}
 
 	@Override
-	public String getCaseNumber() {
-		return caseNumber.getText();
+	public HasText getFirstName() {
+		return firstName;
 	}
 
 	@Override
-	public void setCaseNumber(TextBox caseNumber) {
+	public HasText getGuardian() {
+		return guardian;
+	}
+
+	@Override
+	public HasText getIncome() {
+		return income;
+	}
+
+	@Override
+	public HasText getInsuranceType() {
+		return insuranceType;
+	}
+
+	@Override
+	public HasText getLastEmployedDate() {
+		return lastEmployedDate;
+	}
+
+	@Override
+	public HasText getLastName() {
+		return lastName;
+	}
+
+	@Override
+	public HasText getLegalProblemsDescription() {
+		return legalProblemsDescription;
+	}
+
+	@Override
+	public HasText getMiddleInitial() {
+		return middleInitial;
+	}
+
+	@Override
+	public HasText getOtherPertinentInfo() {
+		return otherPertinentInfo;
+	}
+
+	@Override
+	public HasText getPhone() {
+		return phone;
+	}
+
+	@Override
+	public HasText getPreviousMentalHealthHospitalizations() {
+		return previousMentalHealthHospitalizations;
+	}
+
+	@Override
+	public HasText getPreviousMentalHealthTreatment() {
+		return previousMentalHealthTreatment;
+	}
+
+	@Override
+	public HasText getPreviousProvider() {
+		return previousProvider;
+	}
+
+	@Override
+	public HasValue<Date> getPreviousVisit() {
+		return previousVisit;
+	}
+
+	@Override
+	public HasText getReasonDenied() {
+		return reasonDenied;
+	}
+
+	@Override
+	public HasText getRecentlyReceivedTreatment() {
+		return recentlyReceivedTreatment;
+	}
+
+	@Override
+	public HasText getReferralSource() {
+		return referralSource;
+	}
+
+	@Override
+	public HasText getReferralSourcePhoneNumber() {
+		return referralSourcePhoneNumber;
+	}
+
+	@Override
+	public HasText getReferredBy() {
+		return referredBy;
+	}
+
+	@Override
+	public HasText getReferredTo() {
+		return referredTo;
+	}
+
+	@Override
+	public HasText getServiceRequest() {
+		return serviceRequest;
+	}
+
+	@Override
+	public HasText getSsn() {
+		return ssn;
+	}
+
+	@Override
+	public HasText getTreatmentDescription() {
+		return treatmentDescription;
+	}
+
+	@Override
+	public HasValue<Boolean> hasDesireToWork() {
+		return hasDesireToWork;
+	}
+
+	@Override
+	public HasValue<Boolean> hasEmploymentBarriers() {
+		return hasEmploymentBarriers;
+	}
+
+	@Override
+	public HasValue<Boolean> hasHistoryOfTreatment() {
+		return hasHistoryOfTreatment;
+	}
+
+	@Override
+	public HasValue<Boolean> hasLegalProblems() {
+		return hasLegalProblems;
+	}
+
+	@Override
+	public HasValue<Boolean> hasRecentlyVisitedErOrHospital() {
+		return hasRecentlyVisitedErOrHospital;
+	}
+
+	@Override
+	public HasValue<Boolean> isAod() {
+		return aod;
+	}
+
+	@Override
+	public HasValue<Boolean> isEmployed() {
+		return isEmployed;
+	}
+
+	@Override
+	public HasValue<Boolean> isInformedPatient() {
+		return informedPatient;
+	}
+
+	@Override
+	public HasValue<Boolean> isIvUser() {
+		return isIvUser;
+	}
+
+	@Override
+	public HasValue<Boolean> isPregnant() {
+		return isPregnant;
+	}
+
+	@Override
+	public HasValue<Boolean> isReceivingSsdForMhReasons() {
+		return isReceivingSsdForMhReasons;
+	}
+
+	@Override
+	public HasValue<Boolean> isRequiredAod() {
+		return requiredAod;
+	}
+
+	@Override
+	public void setAddress(HasText address) {
+		this.address = address;
+	}
+
+	@Override
+	public void setAltPhone(HasText altPhone) {
+		this.altPhone = altPhone;
+	}
+
+	@Override
+	public void setAod(HasValue<Boolean> aod) {
+		this.aod = aod;
+	}
+
+	@Override
+	public void setCaseNumber(HasText caseNumber) {
 		this.caseNumber = caseNumber;
 	}
 
 	@Override
-	public String getPreviousProvider() {
-		return previousProvider.getText();
+	public void setCounty(HasText county) {
+		this.county = county;
 	}
 
 	@Override
-	public void setPreviousProvider(String previousProvider) {
-		this.previousProvider.setText(previousProvider);
+	public void setCurrentMedications(HasText currentMedications) {
+		this.currentMedications = currentMedications;
 	}
 
 	@Override
-	public Date getPreviousVisit() {
-		return previousVisit.getValue();
+	public void setDesireToWork(HasValue<Boolean> hasDesireToWork) {
+		this.hasDesireToWork = hasDesireToWork;
 	}
 
 	@Override
-	public void setPreviousVisit(Date previousVisit) {
-		this.previousVisit.setValue(previousVisit);
+	public void setDob(HasValue<Date> dob) {
+		this.dob = dob;
 	}
 
 	@Override
-	public String getSsn() {
-		return ssn.getText();
+	public void setEmergencyContact(HasText emergencyContact) {
+		this.emergencyContact = emergencyContact;
 	}
 
 	@Override
-	public void setSsn(String ssn) {
-		this.ssn.setText(ssn);
-	}
-
-	@Override
-	public String getCounty() {
-		return county.getText();
-	}
-
-	@Override
-	public void setCounty(String county) {
-		this.county.setText(county);
-	}
-
-	@Override
-	public String getAddress() {
-		return address.getText();
-	}
-
-	@Override
-	public void setAddress(String address) {
-		this.address.setText(address);
-	}
-
-	@Override
-	public String getPhone() {
-		return phone.getText();
-	}
-
-	@Override
-	public void setPhone(String phone) {
-		this.phone.setText(phone);
-	}
-
-	@Override
-	public String getAltPhone() {
-		return altPhone.getText();
-	}
-
-	@Override
-	public void setAltPhone(String altPhone) {
-		this.altPhone.setText(altPhone);
-	}
-
-	@Override
-	public boolean isAod() {
-		return aod.isEnabled();
-	}
-
-	@Override
-	public void setAod(boolean useAod) {
-		this.aod.setEnabled(useAod);
-	}
-
-	@Override
-	public boolean isRequiredAod() {
-		return requiredAod.isEnabled();
-	}
-
-	@Override
-	public void setRequiredAod(boolean requiredAod) {
-		this.requiredAod.setEnabled(requiredAod);
-	}
-
-	@Override
-	public boolean hasHistoryOfTreatment() {
-		return historyOfTreatment.isEnabled();
-	}
-
-	@Override
-	public void setHistoryOfTreatment(boolean historyOfTreatment) {
-		this.historyOfTreatment.setEnabled(historyOfTreatment);
-	}
-
-	@Override
-	public String getTreatmentDescription() {
-		return treatmentDescription.getText();
-	}
-
-	@Override
-	public void setTreatmentDescription(String treatmentDescription) {
-		this.treatmentDescription.setText(treatmentDescription);
-	}
-
-	@Override
-	public boolean isPregnant() {
-		return isPregnant.isEnabled();
-	}
-
-	@Override
-	public void setPregnant(boolean isPregnant) {
-		this.isPregnant.setEnabled(isPregnant);
-	}
-
-	@Override
-	public boolean isIvUser() {
-		return isIvUser.isEnabled();
-	}
-
-	@Override
-	public void setIvUser(boolean isIvUser) {
-		this.isIvUser.setEnabled(isIvUser);
-	}
-
-	@Override
-	public String getReferredBy() {
-		return referredBy.getText();
-	}
-
-	@Override
-	public void setReferredBy(String referredBy) {
-		this.referredBy.setText(referredBy);
-	}
-
-	@Override
-	public String getEmergencyContact() {
-		return emergencyContact.getText();
-	}
-
-	@Override
-	public void setEmergencyContact(String emergencyContact) {
-		this.emergencyContact.setText(emergencyContact);
-	}
-
-	@Override
-	public String getEmergencyContactPhoneNumber() {
-		return emergencyContactPhoneNumber.getText();
-	}
-
-	@Override
-	public void setEmergencyContactPhoneNumber(String emergencyContactPhoneNumber) {
-		this.emergencyContactPhoneNumber.setText(emergencyContactPhoneNumber);
-	}
-
-	@Override
-	public String getEmergencyContactRelationshipToPatient() {
-		return emergencyContactRelationshipToPatient.getText();
+	public void setEmergencyContactPhoneNumber(
+			HasText emergencyContactPhoneNumber) {
+		this.emergencyContactPhoneNumber = emergencyContactPhoneNumber;
 	}
 
 	@Override
 	public void setEmergencyContactRelationshipToPatient(
-			String emergencyContactRelationshipToPatient) {
-		this.emergencyContactRelationshipToPatient.setText(emergencyContactRelationshipToPatient);
+			HasText emergencyContactRelationshipToPatient) {
+		this.emergencyContactRelationshipToPatient = emergencyContactRelationshipToPatient;
 	}
 
 	@Override
-	public boolean isEmployed() {
-		return isEmployed.isEnabled();
+	public void setEmployed(HasValue<Boolean> isEmployed) {
+		this.isEmployed = isEmployed;
 	}
 
 	@Override
-	public void setEmployed(boolean isEmployed) {
-		this.isEmployed.setEnabled(isEmployed);
+	public void setEmploymentBarriers(
+			HasValue<Boolean> hasEmploymentBarriers) {
+		this.hasEmploymentBarriers = hasEmploymentBarriers;
 	}
 
 	@Override
-	public String getLastEmployedDate() {
-		return lastEmployedDate.getText();
-	}
-
-	@Override
-	public void setLastEmployedDate(String lastEmployedDate) {
-		this.lastEmployedDate.setText(lastEmployedDate);
-	}
-
-	@Override
-	public String getInsuranceType() {
-		return insuranceType.getText();
-	}
-
-	@Override
-	public void setInsuranceType(String insuranceType) {
-		this.insuranceType.setText(insuranceType);
-	}
-
-	@Override
-	public String getIncome() {
-		return income.getText();
-	}
-
-	@Override
-	public void setIncome(String income) {
-		this.income.setText(income);
-	}
-
-	@Override
-	public boolean hasDesireToWork() {
-		return hasDesireToWork.isEnabled();
-	}
-
-	@Override
-	public void setDesireToWork(boolean hasDesireToWork) {
-		this.hasDesireToWork.setEnabled(hasDesireToWork);
-	}
-
-	@Override
-	public boolean hasEmploymentBarriers() {
-		return hasEmploymentBarriers.isEnabled();
-	}
-
-	@Override
-	public void setEmploymentBarriers(boolean hasEmploymentBarriers) {
-		this.hasEmploymentBarriers.setEnabled(hasEmploymentBarriers);
-	}
-
-	@Override
-	public boolean hasLegalProblems() {
-		return hasLegalProblems.isEnabled();
-	}
-
-	@Override
-	public void setLegalProblems(boolean hasLegalProblems) {
-		this.hasLegalProblems.setEnabled(hasLegalProblems);
-	}
-
-	@Override
-	public String getLegalProblemsDescription() {
-		return legalProblemsDescription.getText();
-	}
-
-	@Override
-	public void setLegalProblemsDescription(String legalProblemsDescription) {
-		this.legalProblemsDescription.setText(legalProblemsDescription);
-	}
-
-	@Override
-	public boolean isReceivingSsdForMhReasons() {
-		return isReceivingSsdForMhReasons.isEnabled();
-	}
-
-	@Override
-	public void setReceivingSsdForMhReasons(boolean isReceivingSsdForMhReasons) {
-		this.isReceivingSsdForMhReasons.setEnabled(isReceivingSsdForMhReasons);
-	}
-
-	@Override
-	public boolean hasRecentlyVisitedErOrHospital() {
-		return hasRecentlyVisitedErOrHospital.isEnabled();
-	}
-
-	@Override
-	public void setRecentlyVisitedErOrHospital(
-			boolean hasRecentlyVisitedErOrHospital) {
-		this.hasRecentlyVisitedErOrHospital.setEnabled(hasRecentlyVisitedErOrHospital);
-	}
-
-	@Override
-	public String getRecentlyReceivedTreatment() {
-		return recentlyReceivedTreatment.getText();
-	}
-
-	@Override
-	public void setRecentlyReceivedTreatment(String recentlyReceivedTreatment) {
-		this.recentlyReceivedTreatment.setText(recentlyReceivedTreatment);
-	}
-
-	@Override
-	public String getPreviousMentalHealthTreatment() {
-		return previousMentalHealthTreatment.getText();
-	}
-
-	@Override
-	public void setPreviousMentalHealthTreatment(
-			String previousMentalHealthTreatment) {
-		this.previousMentalHealthTreatment.setText(previousMentalHealthTreatment);
-	}
-
-	@Override
-	public String getPreviousMentalHealthHospitalizations() {
-		return previousMentalHealthHospitalizations.getText();
-	}
-
-	@Override
-	public void setPreviousMentalHealthHospitalizations(
-			String previousMentalHealthHospitalizations) {
-		this.previousMentalHealthHospitalizations.setText(previousMentalHealthHospitalizations);
-	}
-
-	@Override
-	public String getCurrentMedications() {
-		return currentMedications.getText();
-	}
-
-	@Override
-	public void setCurrentMedications(String currentMedications) {
-		this.currentMedications.setText(currentMedications);
-	}
-
-	@Override
-	public String getGuardian() {
-		return guardian.getText();
-	}
-
-	@Override
-	public void setGuardian(String guardian) {
-		this.guardian.setText(guardian);
-	}
-
-	@Override
-	public Date getFirstAppointmentOfferedDatePicker() {
-		return firstAppointmentOfferedDatePicker.getValue();
+	public void setFirstAppointmentOffered(HasText firstAppointmentOffered) {
+		this.firstAppointmentOffered = firstAppointmentOffered;
 	}
 
 	@Override
 	public void setFirstAppointmentOfferedDatePicker(
-			Date firstAppointmentOfferedDatePicker) {
-		this.firstAppointmentOfferedDatePicker.setValue(firstAppointmentOfferedDatePicker);
+			HasValue<Date> firstAppointmentOfferedDatePicker) {
+		this.firstAppointmentOfferedDatePicker = firstAppointmentOfferedDatePicker;
 	}
 
 	@Override
-	public String getFirstAppointmentOffered() {
-		return firstAppointmentOffered.getText();
-	}
-
-	@Override
-	public void setFirstAppointmentOffered(String firstAppointmentOffered) {
-		this.firstAppointmentOffered.setText(firstAppointmentOffered);
-	}
-
-	@Override
-	public Date getFirstAppointmentTakenDatePicker() {
-		return firstAppointmentTakenDatePicker.getValue();
+	public void setFirstAppointmentTaken(HasText firstAppointmentTaken) {
+		this.firstAppointmentTaken = firstAppointmentTaken;
 	}
 
 	@Override
 	public void setFirstAppointmentTakenDatePicker(
-			Date firstAppointmentTakenDatePicker) {
-		this.firstAppointmentTakenDatePicker.setValue(firstAppointmentTakenDatePicker);
+			HasValue<Date> firstAppointmentTakenDatePicker) {
+		this.firstAppointmentTakenDatePicker = firstAppointmentTakenDatePicker;
 	}
 
 	@Override
-	public String getFirstAppointmentTaken() {
-		return firstAppointmentTaken.getText();
+	public void setFirstName(HasText firstName) {
+		this.firstName = firstName;
 	}
 
 	@Override
-	public void setFirstAppointmentTaken(String firstAppointmentTaken) {
-		this.firstAppointmentTaken.setText(firstAppointmentTaken);
+	public void setGuardian(HasText guardian) {
+		this.guardian = guardian;
 	}
 
 	@Override
-	public boolean isInformedPatient() {
-		return informedPatient.isEnabled();
+	public void setHistoryOfTreatment(HasValue<Boolean> hasHistoryOfTreatment) {
+		this.hasHistoryOfTreatment = hasHistoryOfTreatment;
 	}
 
 	@Override
-	public void setInformedPatient(boolean informedPatient) {
-		this.informedPatient.setEnabled(informedPatient);
+	public void setIncome(HasText income) {
+		this.income = income;
 	}
 
 	@Override
-	public String getReferralSource() {
-		return referralSource.getText();
+	public void setInformedPatient(HasValue<Boolean> informedPatient) {
+		this.informedPatient = informedPatient;
 	}
 
 	@Override
-	public void setReferralSource(String referralSource) {
-		this.referralSource.setText(referralSource);
+	public void setInsuranceType(HasText insuranceType) {
+		this.insuranceType = insuranceType;
 	}
 
 	@Override
-	public String getReferralSourcePhoneNumber() {
-		return referralSourcePhoneNumber.getText();
+	public void setIvUser(HasValue<Boolean> isIvUser) {
+		this.isIvUser = isIvUser;
 	}
 
 	@Override
-	public void setReferralSourcePhoneNumber(String referralSourcePhoneNumber) {
-		this.referralSourcePhoneNumber.setText(referralSourcePhoneNumber);
+	public void setLastEmployedDate(HasText lastEmployedDate) {
+		this.lastEmployedDate = lastEmployedDate;
 	}
 
 	@Override
-	public String getServiceRequest() {
-		return serviceRequest.getText();
+	public void setLastName(HasText lastName) {
+		this.lastName = lastName;
 	}
 
 	@Override
-	public void setServiceRequest(String serviceRequest) {
-		this.serviceRequest.setText(serviceRequest);
+	public void setLegalProblems(HasValue<Boolean> hasLegalProblems) {
+		this.hasLegalProblems = hasLegalProblems;
 	}
 
 	@Override
-	public String getReasonDenied() {
-		return reasonDenied.getText();
+	public void setLegalProblemsDescription(HasText legalProblemsDescription) {
+		this.legalProblemsDescription = legalProblemsDescription;
 	}
 
 	@Override
-	public void setReasonDenied(String reasonDenied) {
-		this.reasonDenied.setText(reasonDenied);
+	public void setMiddleInitial(HasText middleInitial) {
+		this.middleInitial = middleInitial;
 	}
 
 	@Override
-	public String getReferredTo() {
-		return referredTo.getText();
+	public void setOtherPertinentInfo(HasText otherPertinentInfo) {
+		this.otherPertinentInfo = otherPertinentInfo;
 	}
 
 	@Override
-	public void setReferredTo(String referredTo) {
-		this.referredTo.setText(referredTo);
+	public void setPhone(HasText phone) {
+		this.phone = phone;
 	}
 
 	@Override
-	public String getOtherPertinentInfo() {
-		return otherPertinentInfo.getText();
+	public void setPregnant(HasValue<Boolean> isPregnant) {
+		this.isPregnant = isPregnant;
 	}
 
 	@Override
-	public void setOtherPertinentInfo(String otherPertinentInfo) {
-		this.otherPertinentInfo.setText(otherPertinentInfo);
+	public void setPreviousMentalHealthHospitalizations(
+			HasText previousMentalHealthHospitalizations) {
+		this.previousMentalHealthHospitalizations = previousMentalHealthHospitalizations;
 	}
 
 	@Override
-	public void setFirstName(String firstName) {
-		this.firstName.setText(firstName);
+	public void setPreviousMentalHealthTreatment(
+			HasText previousMentalHealthTreatment) {
+		this.previousMentalHealthTreatment = previousMentalHealthTreatment;
 	}
 
 	@Override
-	public void setLastName(String lastName) {
-		this.lastName.setText(lastName);
+	public void setPreviousProvider(HasText previousProvider) {
+		this.previousProvider = previousProvider;
 	}
 
 	@Override
-	public void setMiddleInitial(String middleInitial) {
-		this.middleInitial.setText(middleInitial);
+	public void setPreviousVisit(HasValue<Date> previousVisit) {
+		this.previousVisit.setValue(previousVisit.getValue());
 	}
 
 	@Override
-	public void setDob(String dob) {
-		this.dob.setText(dob);
+	public void setReasonDenied(HasText reasonDenied) {
+		this.reasonDenied = reasonDenied;
+	}
+
+	@Override
+	public void setReceivingSsdForMhReasons(
+			HasValue<Boolean> isReceivingSsdForMhReasons) {
+		this.isReceivingSsdForMhReasons = isReceivingSsdForMhReasons;
+	}
+
+	@Override
+	public void setRecentlyReceivedTreatment(
+			HasText recentlyReceivedTreatment) {
+		this.recentlyReceivedTreatment = recentlyReceivedTreatment;
+	}
+
+	@Override
+	public void setRecentlyVisitedErOrHospital(
+			HasValue<Boolean> hasRecentlyVisitedErOrHospital) {
+		this.hasRecentlyVisitedErOrHospital = hasRecentlyVisitedErOrHospital;
+	}
+
+	@Override
+	public void setReferralSource(HasText referralSource) {
+		this.referralSource = referralSource;
+	}
+
+	@Override
+	public void setReferralSourcePhoneNumber(
+			HasText referralSourcePhoneNumber) {
+		this.referralSourcePhoneNumber = referralSourcePhoneNumber;
+	}
+
+	@Override
+	public void setReferredBy(HasText referredBy) {
+		this.referredBy = referredBy;
+	}
+
+	@Override
+	public void setReferredTo(HasText referredTo) {
+		this.referredTo = referredTo;
+	}
+
+	@Override
+	public void setRequiredAod(HasValue<Boolean> requiredAod) {
+		this.requiredAod = requiredAod;
+	}
+
+	@Override
+	public void setServiceRequest(HasText serviceRequest) {
+		this.serviceRequest = serviceRequest;
+	}
+
+	@Override
+	public void setSsn(HasText ssn) {
+		this.ssn = ssn;
+	}
+
+	@Override
+	public void setTreatmentDescription(
+			HasText treatmentDescription) {
+		this.treatmentDescription = treatmentDescription;
+	}
+
+	@Override
+	public HasText getCaseStatus() {
+		return caseStatus;
+	}
+
+	@Override
+	public HasText getSuffix() {
+		return suffix;
+	}
+
+	@Override
+	public HasText getAlias() {
+		return alias;
 	}
 }

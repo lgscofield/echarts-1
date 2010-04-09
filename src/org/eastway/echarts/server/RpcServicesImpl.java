@@ -158,16 +158,18 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 
 			PreparedStatement patientInsert = con.prepareStatement(
 					"INSERT INTO Patient("
-						+ "CaseNumber, FirstName, LastName, Name, ehr_id, SSN, CaseStatus)"
-						+ " VALUES(?,?,?,?,(SELECT ehr_id FROM Ehr WHERE subject_id = ?),?,?)",
+						+ "CaseNumber, FirstName, MiddleInitial, LastName, Name, ehr_id, SSN, CaseStatus, LastEditBy, LastEdit)"
+						+ " VALUES(?,?,?,?,?,(SELECT ehr_id FROM Ehr WHERE subject_id = ?),?,?,?,GETDATE())",
 					PreparedStatement.RETURN_GENERATED_KEYS);
 			patientInsert.setString(1, patient.getCaseNumber());
 			patientInsert.setString(2, patient.getFirstName());
-			patientInsert.setString(3, patient.getLastName());
-			patientInsert.setString(4, patient.getName());
-			patientInsert.setLong(5, patient.getPatientId());
-			patientInsert.setString(6, patient.getSsn());
-			patientInsert.setString(7, patient.getCaseStatus());
+			patientInsert.setString(3, patient.getMiddleInitial());
+			patientInsert.setString(4, patient.getLastName());
+			patientInsert.setString(5, patient.getName());
+			patientInsert.setLong(6, patient.getPatientId());
+			patientInsert.setString(7, patient.getSsn());
+			patientInsert.setString(8, patient.getCaseStatus());
+			patientInsert.setString(9, getStaffId(sessionId));
 			patientInsert.executeUpdate();
 
 			ResultSet lastInsertIds = patientInsert.getGeneratedKeys();
@@ -183,7 +185,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 					+ "SP_Blind,SP_VisuallyImpaired,SP_PhyDisabled,SP_SpeechImpaired,"
 					+ "SP_PhysicalAbuse,SP_SexualAbuse,SP_DomesticViolence,SP_ChildAlcDrug,"
 					+ "SP_HIVAIDS,SP_Suicidal,SP_SchoolDropout,SP_ProbationParole,"
-					+ "SP_GeneralPopulation,LastEditBy"
+					+ "SP_GeneralPopulation,LastEditBy,LastEdit"
 					+ ") VALUES("
 					+ "?,?,?,?,"
 					+ "?,?,?,?,"
@@ -194,7 +196,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 					+ "?,?,?,?,"
 					+ "?,?,?,?,"
 					+ "?,?,?,?,"
-					+ "?,?"
+					+ "?,?,GETDATE()"
 					+ ")");
 
 			int patientID = -1;
@@ -256,6 +258,134 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 			throw new DbException("Naming exception");
 		}
 		return patient;
+	}
+
+	@Override
+	public void newEhr(Patient patient, String sessionId) throws SessionExpiredException, DbException {
+		checkSessionExpire(sessionId);
+		Connection con = null;
+
+		try {
+			con = DbConnection.getConnection();
+
+			con.setAutoCommit(false);
+
+			PreparedStatement patientInsert = con.prepareStatement(
+					"INSERT INTO Patient("
+						+ "CaseNumber, FirstName, MiddleInitial, LastName, Name, SSN, CaseStatus, LastEdit"
+						+ ")"
+						+ " VALUES(?,?,?,?,?,?,?,GETDATE())",
+					PreparedStatement.RETURN_GENERATED_KEYS);
+			patientInsert.setString(1, patient.getCaseNumber());
+			patientInsert.setString(2, patient.getFirstName());
+			patientInsert.setString(3, patient.getMiddleInitial());
+			patientInsert.setString(4, patient.getLastName());
+			patientInsert.setString(5, patient.getName());
+			patientInsert.setString(6, patient.getSsn());
+			patientInsert.setString(7, patient.getCaseStatus());
+			patientInsert.executeUpdate();
+
+			ResultSet lastPatientInsertIds = patientInsert.getGeneratedKeys();
+			int patientID = -1;
+			if (lastPatientInsertIds.next())
+				patientID = lastPatientInsertIds.getInt(1);
+
+			PreparedStatement ehrInsert = con.prepareStatement(
+					"INSERT INTO Ehr("
+						+ "subject_id,time_created"
+						+ ")"
+						+ " VALUES(?,GETDATE())", PreparedStatement.RETURN_GENERATED_KEYS);
+			ehrInsert.setLong(1, patientID);
+			ehrInsert.executeUpdate();
+
+			ResultSet lastEhrInsertIds = ehrInsert.getGeneratedKeys();
+			int ehrID = -1;
+			if (lastEhrInsertIds.next())
+				ehrID = lastEhrInsertIds.getInt(1);
+
+			PreparedStatement patientUpdate = con.prepareStatement(
+					"UPDATE Patient SET ehr_id = ? WHERE Patient_Id = ?");
+			patientUpdate.setInt(1, ehrID);
+			patientUpdate.setInt(2, patientID);
+			patientUpdate.executeUpdate();
+
+			PreparedStatement demographicsInsert = con.prepareStatement(
+					"INSERT INTO Demographics("
+					+ "Patient_Id,DOB,Insurance,Gender,"
+					+ "Race,Veteran,Religion,MaritalStatus,"
+					+ "EducationLevel,EducationType,LivingArrangement,Employment,"
+					+ "IncomeSource1,IncomeSource2,IncomeSource3,Allergies,"
+					+ "SP_SMD,SP_AlcoholDrug,SP_Forensic,SP_DD,"
+					+ "SP_MIMR,SP_DUIDWI,SP_Deaf,SP_HearingImpaired,"
+					+ "SP_Blind,SP_VisuallyImpaired,SP_PhyDisabled,SP_SpeechImpaired,"
+					+ "SP_PhysicalAbuse,SP_SexualAbuse,SP_DomesticViolence,SP_ChildAlcDrug,"
+					+ "SP_HIVAIDS,SP_Suicidal,SP_SchoolDropout,SP_ProbationParole,"
+					+ "SP_GeneralPopulation,LastEditBy,LastEdit"
+					+ ") VALUES("
+					+ "?,?,?,?,"
+					+ "?,?,?,?,"
+					+ "?,?,?,?,"
+					+ "?,?,?,?,"
+					+ "?,?,?,?,"
+					+ "?,?,?,?,"
+					+ "?,?,?,?,"
+					+ "?,?,?,?,"
+					+ "?,?,?,?,"
+					+ "?,?,GETDATE()"
+					+ ")");
+
+			demographicsInsert.setInt(1, patientID);
+			demographicsInsert.setDate(2, new java.sql.Date(patient.getDemographics().getDob().getTime()));
+			demographicsInsert.setString(3, patient.getDemographics().getInsuranceType());
+			demographicsInsert.setString(4, patient.getDemographics().getGender());
+			demographicsInsert.setString(5, patient.getDemographics().getRace());
+			demographicsInsert.setBoolean(6, patient.getDemographics().isVeteran());
+			demographicsInsert.setString(7, patient.getDemographics().getReligion());
+			demographicsInsert.setString(8, patient.getDemographics().getMaritalStatus());
+			demographicsInsert.setString(9, patient.getDemographics().getEducationLevel());
+			demographicsInsert.setString(10, patient.getDemographics().getEducationType());
+			demographicsInsert.setString(11, patient.getDemographics().getLivingArrangement());
+			demographicsInsert.setString(12, patient.getDemographics().getEmployment());
+//			demographicsInsert.setString(13, patient.getDemographics().getIncomeSources()[0]);
+			demographicsInsert.setString(13, null);
+//			demographicsInsert.setString(14, patient.getDemographics().getIncomeSources()[1]);
+			demographicsInsert.setString(14, null);
+//			demographicsInsert.setString(15, patient.getDemographics().getIncomeSources()[2]);
+			demographicsInsert.setString(15, null);
+//			demographicsInsert.setString(16, patient.getDemographics().getAllergies()[0]);
+			demographicsInsert.setString(16, null);
+			demographicsInsert.setBoolean(17, patient.getDemographics().isSmd());
+			demographicsInsert.setBoolean(18, patient.getDemographics().isAlcoholDrug());
+			demographicsInsert.setBoolean(19, patient.getDemographics().isForensic());
+			demographicsInsert.setBoolean(20, patient.getDemographics().isDd());
+			demographicsInsert.setBoolean(21, patient.getDemographics().isMimr());
+			demographicsInsert.setBoolean(22, patient.getDemographics().isDuidwi());
+			demographicsInsert.setBoolean(23, patient.getDemographics().isDeaf());
+			demographicsInsert.setBoolean(24, patient.getDemographics().isHearingImpaired());
+			demographicsInsert.setBoolean(25, patient.getDemographics().isBlind());
+			demographicsInsert.setBoolean(26, patient.getDemographics().isVisuallyImpaired());
+			demographicsInsert.setBoolean(27, patient.getDemographics().isPhyDisabled());
+			demographicsInsert.setBoolean(28, patient.getDemographics().isSpeechImpaired());
+			demographicsInsert.setBoolean(29, patient.getDemographics().isPhysicalAbuse());
+			demographicsInsert.setBoolean(30, patient.getDemographics().isSexualAbuse());
+			demographicsInsert.setBoolean(31, patient.getDemographics().isDomesticViolence());
+			demographicsInsert.setBoolean(32, patient.getDemographics().isChildAlcDrug());
+			demographicsInsert.setBoolean(33, patient.getDemographics().isHivAids());
+			demographicsInsert.setBoolean(34, patient.getDemographics().isSuicidal());
+			demographicsInsert.setBoolean(35, patient.getDemographics().isSchoolDropout());
+			demographicsInsert.setBoolean(36, patient.getDemographics().isProbationParole());
+			demographicsInsert.setBoolean(37, patient.getDemographics().isGeneralPopulation());
+			demographicsInsert.setString(38, getStaffId(sessionId));
+
+			demographicsInsert.executeUpdate();
+
+			con.commit();
+			con.setAutoCommit(true);
+		} catch (SQLException e) {
+			throw new DbException(e);
+		} catch (NamingException e) {
+			throw new DbException("Naming exception");
+		}
 	}
 
 	@Override

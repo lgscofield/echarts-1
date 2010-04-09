@@ -5,6 +5,7 @@ import java.util.Date;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.UserImpl;
+import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.Patient;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -12,218 +13,224 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.gwt.user.client.ui.TextBox;
 
 public class EditEhrPresenter extends Presenter<EditEhrPresenter.Display> {
 	public interface Display extends EchartsDisplay {
 		HasClickHandlers getFinishButton();
 
-		String getFirstName();
+		HasText getFirstName();
 
-		String getLastName();
+		HasText getLastName();
 
-		String getMiddleInitial();
+		HasText getMiddleInitial();
 
-		Date getDob();
+		HasValue<Date> getDob();
 
-		String getCaseNumber();
+		HasText getCaseNumber();
 
-		void setCaseNumber(TextBox caseNumber);
+		void setCaseNumber(HasText caseNumber);
 
-		String getPreviousProvider();
+		HasText getPreviousProvider();
 
-		void setPreviousProvider(String previousProvider);
+		void setPreviousProvider(HasText previousProvider);
 
-		Date getPreviousVisit();
+		HasValue<Date> getPreviousVisit();
 
-		void setPreviousVisit(Date previousVisit);
+		void setPreviousVisit(HasValue<Date> previousVisit);
 
-		String getSsn();
+		HasText getSsn();
 
-		void setSsn(String ssn);
+		void setSsn(HasText ssn);
 
-		String getCounty();
+		HasText getCounty();
 
-		void setCounty(String county);
+		void setCounty(HasText county);
 
-		String getAddress();
+		HasText getAddress();
 
-		void setAddress(String address);
+		void setAddress(HasText address);
 
-		String getPhone();
+		HasText getPhone();
 
-		void setPhone(String phone);
+		void setPhone(HasText phone);
 
-		String getAltPhone();
+		HasText getAltPhone();
 
-		void setAltPhone(String altPhone);
+		void setAltPhone(HasText altPhone);
 
-		boolean isAod();
+		HasValue<Boolean> isAod();
 
-		void setAod(boolean useAod);
+		void setAod(HasValue<Boolean> useAod);
 
-		boolean isRequiredAod();
+		HasValue<Boolean> isRequiredAod();
 
-		void setRequiredAod(boolean requiredAod);
+		void setRequiredAod(HasValue<Boolean> requiredAod);
 
-		boolean hasHistoryOfTreatment();
+		HasValue<Boolean> hasHistoryOfTreatment();
 
-		void setHistoryOfTreatment(boolean historyOfTreatment);
+		void setHistoryOfTreatment(HasValue<Boolean> historyOfTreatment);
 
-		String getTreatmentDescription();
+		HasText getTreatmentDescription();
 
-		void setTreatmentDescription(String treatmentDescription);
+		void setTreatmentDescription(HasText treatmentDescription);
 
-		boolean isPregnant();
+		HasValue<Boolean> isPregnant();
 
-		void setPregnant(boolean isPregnant);
+		void setPregnant(HasValue<Boolean> isPregnant);
 
-		boolean isIvUser();
+		HasValue<Boolean> isIvUser();
 
-		void setIvUser(boolean isIvUser);
+		void setIvUser(HasValue<Boolean> isIvUser);
 
-		String getReferredBy();
+		HasText getReferredBy();
 
-		void setReferredBy(String referredBy);
+		void setReferredBy(HasText referredBy);
 
-		String getEmergencyContact();
+		HasText getEmergencyContact();
 
-		void setEmergencyContact(String emergencyContact);
+		void setEmergencyContact(HasText emergencyContact);
 
-		String getEmergencyContactPhoneNumber();
+		HasText getEmergencyContactPhoneNumber();
 
 		void setEmergencyContactPhoneNumber(
-				String emergencyContactPhoneNumber);
+				HasText emergencyContactPhoneNumber);
 
-		String getEmergencyContactRelationshipToPatient();
+		HasText getEmergencyContactRelationshipToPatient();
 
 		void setEmergencyContactRelationshipToPatient(
-				String emergencyContactRelationshipToPatient);
+				HasText emergencyContactRelationshipToPatient);
 
-		boolean isEmployed();
+		HasValue<Boolean> isEmployed();
 
-		void setEmployed(boolean isEmployed);
+		void setEmployed(HasValue<Boolean> isEmployed);
 
-		String getLastEmployedDate();
+		HasText getLastEmployedDate();
 
-		void setLastEmployedDate(String lastEmployedDate);
+		void setLastEmployedDate(HasText lastEmployedDate);
 
-		String getInsuranceType();
+		HasText getInsuranceType();
 
-		void setInsuranceType(String insuranceType);
+		void setInsuranceType(HasText insuranceType);
 
-		String getIncome();
+		HasText getIncome();
 
-		void setIncome(String income);
+		void setIncome(HasText income);
 
-		boolean hasDesireToWork();
+		HasValue<Boolean> hasDesireToWork();
 
-		void setDesireToWork(boolean hasDesireToWork);
+		void setDesireToWork(HasValue<Boolean> hasDesireToWork);
 
-		boolean hasEmploymentBarriers();
+		HasValue<Boolean> hasEmploymentBarriers();
 
-		void setEmploymentBarriers(boolean hasEmploymentBarriers);
+		void setEmploymentBarriers(HasValue<Boolean> hasEmploymentBarriers);
 
-		boolean hasLegalProblems();
+		HasValue<Boolean> hasLegalProblems();
 
-		void setLegalProblems(boolean hasLegalProblems);
+		void setLegalProblems(HasValue<Boolean> hasLegalProblems);
 
-		String getLegalProblemsDescription();
+		HasText getLegalProblemsDescription();
 
-		void setLegalProblemsDescription(String legalProblemsDescription);
+		void setLegalProblemsDescription(HasText legalProblemsDescription);
 
-		boolean isReceivingSsdForMhReasons();
+		HasValue<Boolean> isReceivingSsdForMhReasons();
 
 		void setReceivingSsdForMhReasons(
-				boolean isReceivingSsdForMhReasons);
+				HasValue<Boolean> isReceivingSsdForMhReasons);
 
-		boolean hasRecentlyVisitedErOrHospital();
+		HasValue<Boolean> hasRecentlyVisitedErOrHospital();
 
 		void setRecentlyVisitedErOrHospital(
-				boolean hasRecentlyVisitedErOrHospital);
+				HasValue<Boolean> hasRecentlyVisitedErOrHospital);
 
-		String getRecentlyReceivedTreatment();
+		HasText getRecentlyReceivedTreatment();
 
 		void setRecentlyReceivedTreatment(
-				String recentlyReceivedTreatment);
+				HasText recentlyReceivedTreatment);
 
-		String getPreviousMentalHealthTreatment();
+		HasText getPreviousMentalHealthTreatment();
 
 		void setPreviousMentalHealthTreatment(
-				String previousMentalHealthTreatment);
+				HasText previousMentalHealthTreatment);
 
-		String getPreviousMentalHealthHospitalizations();
+		HasText getPreviousMentalHealthHospitalizations();
 
 		void setPreviousMentalHealthHospitalizations(
-				String previousMentalHealthHospitalizations);
+				HasText previousMentalHealthHospitalizations);
 
-		String getCurrentMedications();
+		HasText getCurrentMedications();
 
-		void setCurrentMedications(String currentMedications);
+		void setCurrentMedications(HasText currentMedications);
 
-		String getGuardian();
+		HasText getGuardian();
 
-		void setGuardian(String guardian);
+		void setGuardian(HasText guardian);
 
-		Date getFirstAppointmentOfferedDatePicker();
+		HasValue<Date> getFirstAppointmentOfferedDatePicker();
 
 		void setFirstAppointmentOfferedDatePicker(
-				Date firstAppointmentOfferedDatePicker);
+				HasValue<Date> firstAppointmentOfferedDatePicker);
 
-		String getFirstAppointmentOffered();
+		HasText getFirstAppointmentOffered();
 
-		void setFirstAppointmentOffered(String firstAppointmentOffered);
+		void setFirstAppointmentOffered(HasText firstAppointmentOffered);
 
-		Date getFirstAppointmentTakenDatePicker();
+		HasValue<Date> getFirstAppointmentTakenDatePicker();
 
 		void setFirstAppointmentTakenDatePicker(
-				Date firstAppointmentTakenDatePicker);
+				HasValue<Date> firstAppointmentTakenDatePicker);
 
-		String getFirstAppointmentTaken();
+		HasText getFirstAppointmentTaken();
 
-		void setFirstAppointmentTaken(String firstAppointmentTaken);
+		void setFirstAppointmentTaken(HasText firstAppointmentTaken);
 
-		boolean isInformedPatient();
+		HasValue<Boolean> isInformedPatient();
 
-		void setInformedPatient(boolean informedPatient);
+		void setInformedPatient(HasValue<Boolean> informedPatient);
 
-		String getReferralSource();
+		HasText getReferralSource();
 
-		void setReferralSource(String referralSource);
+		void setReferralSource(HasText referralSource);
 
-		String getReferralSourcePhoneNumber();
+		HasText getReferralSourcePhoneNumber();
 
 		void setReferralSourcePhoneNumber(
-				String referralSourcePhoneNumber);
+				HasText referralSourcePhoneNumber);
 
-		String getServiceRequest();
+		HasText getServiceRequest();
 
-		void setServiceRequest(String serviceRequest);
+		void setServiceRequest(HasText serviceRequest);
 
-		String getReasonDenied();
+		HasText getReasonDenied();
 
-		void setReasonDenied(String reasonDenied);
+		void setReasonDenied(HasText reasonDenied);
 
-		String getReferredTo();
+		HasText getReferredTo();
 
-		void setReferredTo(String referredTo);
+		void setReferredTo(HasText referredTo);
 
-		String getOtherPertinentInfo();
+		HasText getOtherPertinentInfo();
 
-		void setOtherPertinentInfo(String otherPertinentInfo);
+		void setOtherPertinentInfo(HasText otherPertinentInfo);
 
-		void setFirstName(String firstName);
+		void setFirstName(HasText firstName);
 
-		void setLastName(String lastName);
+		void setLastName(HasText lastName);
 
-		void setMiddleInitial(String middleInitial);
+		void setMiddleInitial(HasText middleInitial);
 
-		void setDob(String dob);
+		void setDob(HasValue<Date> dob);
+
+		HasText getCaseStatus();
+
+		HasText getSuffix();
+
+		HasText getAlias();
 	}
 
 	private RpcServicesAsync rpcServices;
-	private Patient patient;
 
 	public EditEhrPresenter(Display display, HandlerManager eventBus,
 					RpcServicesAsync rpcServices) {
@@ -235,7 +242,6 @@ public class EditEhrPresenter extends Presenter<EditEhrPresenter.Display> {
 					Patient patient,
 					RpcServicesAsync rpcServices) {
 		super(display, eventBus);
-		this.patient = patient;
 		this.rpcServices = rpcServices;
 	}
 
@@ -260,81 +266,33 @@ public class EditEhrPresenter extends Presenter<EditEhrPresenter.Display> {
 	}
 
 	private void doFinish() {
-		patient.setCaseNumber(display.getCaseNumber());
-		patient.setFirstName(display.getFirstName());
-		patient.setLastName(display.getLastName());
-		//patient.setDob(display.getDob());
+		Patient patient = new Patient();
+		Demographics d = new Demographics();
+		patient.setDemographics(d);
 
-		AsyncCallback<Patient> callback = new AsyncCallback<Patient>() {
+		patient.setCaseNumber(display.getCaseNumber().getText());
+		patient.setFirstName(display.getFirstName().getText());
+		patient.setLastName(display.getLastName().getText());
+		patient.setMiddleInitial(display.getMiddleInitial().getText());
+		patient.setSuffix(display.getSuffix().getText());
+		patient.setAlias(display.getAlias().getText());
+		patient.setSsn(display.getSsn().getText());
+		patient.setCaseStatus(display.getCaseStatus().getText());
+		patient.getDemographics().setDob(display.getDob().getValue());
+		patient.setLastEdit(new Date());
+		patient.setLastEditBy(UserImpl.getUserName());
+
+		AsyncCallback<Void> callback = new AsyncCallback<Void>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				new HandleRpcException(caught);
 			}
 
 			@Override
-			public void onSuccess(Patient result) {
-				setPatient(result);
-				//setData(result);
+			public void onSuccess(Void result) {
+				;
 			}
 		};
-		rpcServices.saveEhr(patient, UserImpl.getSessionId(), callback);
-	}
-
-	public void setPatient(Patient patient) {
-		this.patient = patient;
-	}
-
-//	public void setData(EH chart) {
-//		Patient patient = fetchPatient(chart.getSubjectId());
-//		display.setAddress(chart.getAddress());
-//		display.setAltPhone(chart.getAltPhone());
-//		display.setCaseNumber(chart.getCaseNumber());
-//		display.setCounty(chart.getCounty());
-//		display.setCurrentMedications(chart.getCurrentMedications());
-//		display.setDob(chart.getDob());
-//		display.setEmergencyContact(chart.getEmergencyContact());
-//		display.setEmergencyContactPhoneNumber(chart.getEmergencyContactPhoneNumber());
-//		display.setEmergencyContactRelationshipToPatient(chart.getEmergencyContactRelationshipToPatient());
-//		display.setFirstAppointmentOffered(chart.getFirstAppointmentOfferred());
-//		display.setFirstAppointmentTaken(chart.getFirstAppointmentTaken());
-//		display.setFirstName(chart.getFirstName());
-//		display.setGuardian(chart.getGuardian());
-//		display.setHasDesireToWork(chart.getHasDesireToWork());
-//		display.setHasEmploymentBarriers(chart.getHasEmploymentBarriers());
-//		display.setHasLegalProblems(chart.getHasLegalProblems());
-//		display.setHasRecentlyVisitedErOrHospital(chart.getHasRecentlyVisitedErOrHospital());
-//		display.setHistoryOfTreatment(chart.getHistoryOfTreatment());
-//		display.setIncome(chart.getIncome());
-//		display.setInformedPatient(chart.getInformedPatient());
-//		display.setInsuranceType(chart.getInsuranceType());
-//		display.setIsEmployed(chart.getIsEmployed());
-//		display.setIsIvUser(chart.getIsIvUser());
-//		display.setIsPregnant(chart.getIsPregnant());
-//		display.setIsReceivingSsdForMhReasons(chart.getIsReceivingSsdForMhReasons());
-//		display.setLastEmployedDate(chart.getLastEmployedDate());
-//		display.setLastName(chart.getLastName());
-//		display.setLegalProblemsDescription(chart.getLegalProblemsDescription());
-//		display.setMiddleInitial(chart.getMiddleInitial());
-//		display.setOtherPertinentInfo(chart.getOtherPertinentInfo());
-//		display.setPhone(chart.getPhone());
-//		display.setPreviousMentalHealthHospitalizations(chart.getPreviousMentalHealthHospitalizations());
-//		display.setPreviousMentalHealthTreatment(chart.getPreviousMentalHealthTreatment());
-//		display.setPreviousProvider(chart.getPreviousProvider());
-//		display.setPreviousVisit(chart.getPreviousVisit());
-//		display.setReasonDenied(chart.getReasonDenied());
-//		display.setRecentlyReceivedTreatment(chart.getRecentlyReceivedTreatment());
-//		display.setReferralSource(chart.getReferralSource());
-//		display.setReferralSourcePhoneNumber(chart.getReferralSourcePhoneNumber());
-//		display.setReferredBy(chart.getReferredBy());
-//		display.setReferredTo(chart.getReferredTo());
-//		display.setRequiredAod(chart.getRequiredAod());
-//		display.setServiceRequest(chart.getServiceRequest());
-//		display.setSsn(chart.getSsn());
-//		display.setTreatmentDescription(chart.getTreatmentDescription());
-//		display.setUseAod(chart.getUseAod());
-//	}
-
-	private Patient fetchPatient(int subjectId) {
-		return null;
+		rpcServices.newEhr(patient, UserImpl.getSessionId(), callback);
 	}
 }
