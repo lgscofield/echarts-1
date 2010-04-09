@@ -40,5 +40,5 @@ public interface RpcServicesAsync {
 
 	public void getPatient(long patientId, String sessionId, AsyncCallback<Patient> callback);
 
-	public void newEhr(Patient patient, String sessionId, AsyncCallback<Void> callback);
+	public void addEhr(Patient patient, String sessionId, AsyncCallback<Void> callback);
 }

@@ -8,11 +8,11 @@ import org.eastway.echarts.client.UserImpl;
 import org.eastway.echarts.client.events.OpenEhrEvent;
 import org.eastway.echarts.client.events.OpenEhrEventHandler;
 import org.eastway.echarts.client.presenter.AlertsPresenter;
-import org.eastway.echarts.client.presenter.NewEhrPresenter;
+import org.eastway.echarts.client.presenter.AddEhrPresenter;
 import org.eastway.echarts.client.presenter.PatientListPresenter;
 import org.eastway.echarts.client.presenter.TopPanelPresenter;
 import org.eastway.echarts.client.view.AlertsView;
-import org.eastway.echarts.client.view.NewEhrView;
+import org.eastway.echarts.client.view.AddEhrView;
 import org.eastway.echarts.client.view.PatientListView;
 import org.eastway.echarts.client.view.TopPanelView;
 import org.eastway.echarts.shared.EHR;
@@ -138,7 +138,7 @@ public class AdministratorDashboard extends Composite {
 	}
 
 	private void openEditPatient() {
-		NewEhrPresenter epp = new NewEhrPresenter(new NewEhrView(), eventBus, Rpc.singleton());
+		AddEhrPresenter epp = new AddEhrPresenter(new AddEhrView(), eventBus, Rpc.singleton());
 		epp.go();
 		addTab(epp.getDisplay().asWidget(), "New Chart");
 	}
