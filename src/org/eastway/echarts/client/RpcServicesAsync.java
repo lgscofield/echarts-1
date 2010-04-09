@@ -34,7 +34,7 @@ public interface RpcServicesAsync {
 
 	public void getFormsList(String sessionId, String patientId, AsyncCallback<LinkedHashSet<String[]>> callback);
 
-	public void saveEhr(Patient patient, String sessionId, AsyncCallback<Patient> callback);
+	public void editEhr(Patient patient, String sessionId, AsyncCallback<Patient> callback);
 
 	public void getDemographics(String patientId, String sessionId, AsyncCallback<Demographics> callback);
 

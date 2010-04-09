@@ -129,6 +129,6 @@ public class EditPatientSummaryPresenter extends Presenter<EditPatientSummaryPre
 				;
 			}
 		};
-		rpcServices.saveEhr(patient, UserImpl.getSessionId(), callback);
+		rpcServices.editEhr(patient, UserImpl.getSessionId(), callback);
 	}
 }

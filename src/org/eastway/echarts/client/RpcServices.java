@@ -38,7 +38,7 @@ public interface RpcServices extends RemoteService {
 
 	public LinkedHashSet<String[]> getFormsList(String sessionId, String patientId) throws SessionExpiredException, DbException;
 
-	public Patient saveEhr(Patient patient, String sessionId) throws SessionExpiredException, DbException;
+	public Patient editEhr(Patient patient, String sessionId) throws SessionExpiredException, DbException;
 
 	public Demographics getDemographics(String patientid, String sessionId) throws SessionExpiredException, DbException;
 

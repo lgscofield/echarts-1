@@ -147,7 +147,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public Patient saveEhr(Patient patient, String sessionId) throws SessionExpiredException, DbException {
+	public Patient editEhr(Patient patient, String sessionId) throws SessionExpiredException, DbException {
 		checkSessionExpire(sessionId);
 		Connection con = null;
 
