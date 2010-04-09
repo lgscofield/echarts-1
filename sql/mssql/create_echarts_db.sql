@@ -409,39 +409,43 @@ CREATE TABLE [dbo].[ServiceCodes](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Referral]    Script Date: 04/09/2010 12:39:31 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[Referral](
-	[ID] [numeric](18, 0) IDENTITY(1,1) NOT NULL,
-	[PATID] [varchar](7) NOT NULL,
-	[Program] [varchar](10) NULL,
-	[UCI] [varchar](7) NULL,
-	[UPID] [varchar](5) NULL,
-	[ReferralSource] [varchar](10) NULL,
-	[ReferralType] [varchar](5) NULL,
-	[ReferralDate] [datetime] NULL,
-	[TakenByStaff] [varchar](4) NULL,
-	[AdmissionDate] [datetime] NULL,
-	[LevelofCare] [varchar](2) NULL,
-	[PlanType] [varchar](1) NULL,
-	[LastService] [datetime] NULL,
-	[DischargeDate] [datetime] NULL,
-	[Disposition] [varchar](1) NULL,
-	[LastEdit] [datetime] NULL,
-	[LastEditBy] [varchar](4) NULL,
- CONSTRAINT [PK_Referral] PRIMARY KEY CLUSTERED 
-(
-	[ID] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-SET ANSI_PADDING OFF
-GO
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'110', N'Pharmacological Mgt. - Evaluation', N'104')
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'120', N'Diagnostic Assessment', NULL)
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'210', N'BH Counseling and Therapy - Individual', N'102')
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'220', N'BH Counseling and Therapy - Group', NULL)
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'235', N'ODADAS (AOD Family/Couple Counseling)', NULL)
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'390', N'CPST Individual - Primary', N'101')
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'391', N'CPST Individual - Secondary', N'101')
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'392', N'CPST Group - Primary', NULL)
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'393', N'CPST Group - Secondary', NULL)
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'394', N'CPST Mont. Co.', N'101')
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'395', N'CPST Intake', N'101')
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'437', N'Pharmacological Mgt. - Assessment', N'103')
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'440', N'Pharmacological Mgt. - Ongoing', NULL)
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'441', N'Pharmacological Mgt. - Aftercare', NULL)
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'510', N'Doors Job Development', NULL)
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'511', N'Doors Job Coaching', NULL)
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'512', N'Doors Benefits Consultation', NULL)
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'513', N'SupEmp - Voc Services Individual', NULL)
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'514', N'SupEmp - Macsis (CSP Individual)', N'101')
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'520', N'Doors Group', NULL)
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'521', N'SupEmp - BVR Group', NULL)
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'522', N'SupEmp - BSVI Group', NULL)
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'523', N'SupEmp - Voc Services Group', NULL)
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'524', N'SupEmp - Macsis (CSP Group)', NULL)
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'710', N'ODADAS - Individual AOD Counseling', N'102')
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'720', N'ODADAS - Group AOD Counseling', NULL)
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'913', N'SupEmp - NON-BILLABLE', NULL)
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'982', N'Not able to attend', NULL)
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'983', N'Kid refuses services', NULL)
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'984', N'MIA/AWOL', NULL)
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'985', N'NO SHOW (INCARCERATION)', NULL)
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'988', N'Inappropriate For Services', NULL)
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'989', N'No Show For Intake', NULL)
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'996', N'NO SHOW (HOSPITALIZATION)', NULL)
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'997', N'CANCELLATION', NULL)
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'998', N'NO SHOW', NULL)
+INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'999', N'NON-BILLABLE', NULL)
 /****** Object:  Table [form].[ProgressNote]    Script Date: 04/09/2010 12:39:31 ******/
 SET ANSI_NULLS ON
 GO
