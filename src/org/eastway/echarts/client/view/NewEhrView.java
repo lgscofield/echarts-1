@@ -24,17 +24,17 @@ import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DateBox;
 
-import org.eastway.echarts.client.presenter.EditEhrPresenter;
+import org.eastway.echarts.client.presenter.NewEhrPresenter;
 
-public class EditEhrView extends Composite implements
+public class NewEhrView extends Composite implements
 						SelectionHandler<TreeItem>,
-						EditEhrPresenter.Display {
+						NewEhrPresenter.Display {
 
 	private static EditEhrViewUiBinder uiBinder = GWT
 			.create(EditEhrViewUiBinder.class);
 
 	interface EditEhrViewUiBinder extends
-			UiBinder<Widget, EditEhrView> {
+			UiBinder<Widget, NewEhrView> {
 	}
 
 	@UiField DockLayoutPanel panel;
@@ -116,7 +116,7 @@ public class EditEhrView extends Composite implements
 			stepSeven
 	};
 
-	public EditEhrView() {
+	public NewEhrView() {
 		initWidget(uiBinder.createAndBindUi(this));
 
 		stepList[0] = steps.addItem("Step 1");
