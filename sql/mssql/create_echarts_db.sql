@@ -1309,7 +1309,9 @@ As
 BEGIN
 	SET NOCOUNT ON;
 	DECLARE @sessionExpire datetime2 = (SELECT DATEADD(ss, (SELECT SessionIdExpire FROM [EW-EHR].[dbo].[SessionIdLog] WHERE SessionId = @sessionid)/1000, '1970-01-01 00:00:00'))
-	IF @sessionExpire < GETUTCDATE()
+	DECLARE @now datetime2 = (SELECT GETUTCDATE())
+
+	IF @sessionExpire < @now OR @sessionExpire IS Null
 		SELECT @status = 1 /** Session has expired **/
 	ELSE
 		SELECT @status = 0 /** Session has not expired **/
