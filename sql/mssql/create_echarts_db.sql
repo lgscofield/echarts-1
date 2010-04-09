@@ -540,6 +540,14 @@ CREATE TABLE [form].[Form_list](
 GO
 SET ANSI_PADDING OFF
 GO
+INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'Community Psychiatric Supportive Treatment Progress Note', N'http://ewsql/echarts-asp/101CPSTEdit.asp', N'Progress Notes', 2)
+INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'General Mental Health Services Acknowledgement', N'http://ewsql/echarts-asp/105GMHServiceAck.asp', N'Miscellaneous', 10)
+INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'Individual Progress Note', N'http://ewsql/echarts-asp/102IPNEdit.asp', N'Progress Notes', 3)
+INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'ISP Review', N'http://ewsql/echarts-asp/noForm.asp', N'Individualized Service Plan', 9)
+INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'ISP Update', N'http://ewsql/echarts-asp/noForm.asp', N'Individualized Service Plan', 8)
+INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'New ISP', N'http://ewsql/echarts-asp/GandO.asp', N'Individualized Service Plan', 7)
+INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'Phamacological Management/Nursing Progress Note', N'http://ewsql/echarts-asp/103PM-NPNEdit.asp', N'Progress Notes', 4)
+INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'Pharmacological Management Progress Note', N'http://ewsql/echarts-asp/104PharmEdit.asp', N'Progress Notes', 5)
 /****** Object:  Table [dbo].[DiagnosisData]    Script Date: 04/09/2010 12:39:31 ******/
 SET ANSI_NULLS ON
 GO
