@@ -174,7 +174,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 			PreparedStatement patientInsert = con.prepareStatement(
 					"INSERT INTO Patient("
 						+ "CaseNumber, FirstName, MiddleInitial, LastName, Name, ehr_id, SSN, CaseStatus, LastEditBy, LastEdit)"
-						+ " VALUES(?,?,?,?,?,(SELECT ehr_id FROM Ehr WHERE subject_id = ?),?,?,?,GETDATE())",
+						+ " VALUES(?,?,?,?,?,(SELECT ehr_id FROM Ehr WHERE subject_id = ?),?,?,?,GETUTCDATE())",
 					PreparedStatement.RETURN_GENERATED_KEYS);
 			patientInsert.setString(1, patient.getCaseNumber());
 			patientInsert.setString(2, patient.getFirstName());
@@ -211,7 +211,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 					+ "?,?,?,?,"
 					+ "?,?,?,?,"
 					+ "?,?,?,?,"
-					+ "?,?,GETDATE()"
+					+ "?,?,GETUTCDATE()"
 					+ ")");
 
 			int patientID = -1;
@@ -289,7 +289,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 					"INSERT INTO Patient("
 						+ "CaseNumber, FirstName, MiddleInitial, LastName, Name, SSN, CaseStatus, LastEdit"
 						+ ")"
-						+ " VALUES(?,?,?,?,?,?,?,GETDATE())",
+						+ " VALUES(?,?,?,?,?,?,?,GETUTCDATE())",
 					PreparedStatement.RETURN_GENERATED_KEYS);
 			patientInsert.setString(1, patient.getCaseNumber());
 			patientInsert.setString(2, patient.getFirstName());
@@ -309,7 +309,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 					"INSERT INTO Ehr("
 						+ "subject_id,time_created"
 						+ ")"
-						+ " VALUES(?,GETDATE())", PreparedStatement.RETURN_GENERATED_KEYS);
+						+ " VALUES(?,GETUTCDATE())", PreparedStatement.RETURN_GENERATED_KEYS);
 			ehrInsert.setLong(1, patientID);
 			ehrInsert.executeUpdate();
 
@@ -346,7 +346,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 					+ "?,?,?,?,"
 					+ "?,?,?,?,"
 					+ "?,?,?,?,"
-					+ "?,?,GETDATE()"
+					+ "?,?,GETUTCDATE()"
 					+ ")");
 
 			demographicsInsert.setInt(1, patientID);
