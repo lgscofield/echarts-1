@@ -961,6 +961,17 @@ CREATE TABLE [form].[ISP_ServiceDescriptions](
 GO
 SET ANSI_PADDING OFF
 GO
+INSERT [form].[ISP_ServiceDescriptions] ([ID], [ServiceDescriptions]) VALUES (CAST(2 AS Numeric(18, 0)), N'MH Assessment')
+INSERT [form].[ISP_ServiceDescriptions] ([ID], [ServiceDescriptions]) VALUES (CAST(4 AS Numeric(18, 0)), N'MH Pharm. Mgmt')
+INSERT [form].[ISP_ServiceDescriptions] ([ID], [ServiceDescriptions]) VALUES (CAST(5 AS Numeric(18, 0)), N'BH Individ Counseling/Ther')
+INSERT [form].[ISP_ServiceDescriptions] ([ID], [ServiceDescriptions]) VALUES (CAST(6 AS Numeric(18, 0)), N'BH Group Counseling/Ther')
+INSERT [form].[ISP_ServiceDescriptions] ([ID], [ServiceDescriptions]) VALUES (CAST(7 AS Numeric(18, 0)), N'CPST Individ Svcs')
+INSERT [form].[ISP_ServiceDescriptions] ([ID], [ServiceDescriptions]) VALUES (CAST(8 AS Numeric(18, 0)), N'CPST Group Svcs')
+INSERT [form].[ISP_ServiceDescriptions] ([ID], [ServiceDescriptions]) VALUES (CAST(20 AS Numeric(18, 0)), N'------------------------------')
+INSERT [form].[ISP_ServiceDescriptions] ([ID], [ServiceDescriptions]) VALUES (CAST(21 AS Numeric(18, 0)), N'AoD Crisis Intervention')
+INSERT [form].[ISP_ServiceDescriptions] ([ID], [ServiceDescriptions]) VALUES (CAST(25 AS Numeric(18, 0)), N'AoD Individual Counseling')
+INSERT [form].[ISP_ServiceDescriptions] ([ID], [ServiceDescriptions]) VALUES (CAST(26 AS Numeric(18, 0)), N'AoD Group Counseling')
+INSERT [form].[ISP_ServiceDescriptions] ([ID], [ServiceDescriptions]) VALUES (CAST(27 AS Numeric(18, 0)), N'AoD Case Management')
 /****** Object:  Table [form].[ISP]    Script Date: 04/09/2010 12:39:31 ******/
 SET ANSI_NULLS ON
 GO
