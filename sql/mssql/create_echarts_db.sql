@@ -3656,40 +3656,40 @@ BEGIN
 END
 GO
 /****** Object:  Default [DF_Tickler_LastEdit]    Script Date: 04/09/2010 12:39:31 ******/
-ALTER TABLE [dbo].[Tickler] ADD  CONSTRAINT [DF_Tickler_LastEdit]  DEFAULT (getdate()) FOR [LastEdit]
+ALTER TABLE [dbo].[Tickler] ADD  CONSTRAINT [DF_Tickler_LastEdit]  DEFAULT (getutcdate()) FOR [LastEdit]
 GO
 /****** Object:  Default [DF_SystemLog_EventDate]    Script Date: 04/09/2010 12:39:31 ******/
-ALTER TABLE [dbo].[SystemLog] ADD  CONSTRAINT [DF_SystemLog_EventDate]  DEFAULT (getdate()) FOR [EventDate]
+ALTER TABLE [dbo].[SystemLog] ADD  CONSTRAINT [DF_SystemLog_EventDate]  DEFAULT (getutcdate()) FOR [EventDate]
 GO
 /****** Object:  Default [DF_Referral_UPID]    Script Date: 04/09/2010 12:39:31 ******/
 ALTER TABLE [dbo].[Referral] ADD  CONSTRAINT [DF_Referral_UPID]  DEFAULT ('01396') FOR [UPID]
 GO
 /****** Object:  Default [DF_Referral_LastEdit]    Script Date: 04/09/2010 12:39:31 ******/
-ALTER TABLE [dbo].[Referral] ADD  CONSTRAINT [DF_Referral_LastEdit]  DEFAULT (getdate()) FOR [LastEdit]
+ALTER TABLE [dbo].[Referral] ADD  CONSTRAINT [DF_Referral_LastEdit]  DEFAULT (getutcdate()) FOR [LastEdit]
 GO
 /****** Object:  Default [DF_ProgressNote_EntryDate]    Script Date: 04/09/2010 12:39:31 ******/
-ALTER TABLE [form].[ProgressNote] ADD  CONSTRAINT [DF_ProgressNote_EntryDate]  DEFAULT (getdate()) FOR [EntryDate]
+ALTER TABLE [form].[ProgressNote] ADD  CONSTRAINT [DF_ProgressNote_EntryDate]  DEFAULT (getutcdate()) FOR [EntryDate]
 GO
 /****** Object:  Default [DF_Assignments_CreateDate]    Script Date: 04/09/2010 12:39:31 ******/
-ALTER TABLE [dbo].[Assignments] ADD  CONSTRAINT [DF_Assignments_CreateDate]  DEFAULT (getdate()) FOR [CreateDate]
+ALTER TABLE [dbo].[Assignments] ADD  CONSTRAINT [DF_Assignments_CreateDate]  DEFAULT (getutcdate()) FOR [CreateDate]
 GO
 /****** Object:  Default [DF_Assignments_LastEdit]    Script Date: 04/09/2010 12:39:31 ******/
-ALTER TABLE [dbo].[Assignments] ADD  CONSTRAINT [DF_Assignments_LastEdit]  DEFAULT (getdate()) FOR [LastEdit]
+ALTER TABLE [dbo].[Assignments] ADD  CONSTRAINT [DF_Assignments_LastEdit]  DEFAULT (getutcdate()) FOR [LastEdit]
 GO
 /****** Object:  Default [DF_AddressData_LastEdit]    Script Date: 04/09/2010 12:39:31 ******/
-ALTER TABLE [dbo].[AddressData] ADD  CONSTRAINT [DF_AddressData_LastEdit]  DEFAULT (getdate()) FOR [LastEdit]
+ALTER TABLE [dbo].[AddressData] ADD  CONSTRAINT [DF_AddressData_LastEdit]  DEFAULT (getutcdate()) FOR [LastEdit]
 GO
 /****** Object:  Default [DF_DiagnosisData_LastEdit]    Script Date: 04/09/2010 12:39:31 ******/
-ALTER TABLE [dbo].[DiagnosisData] ADD  CONSTRAINT [DF_DiagnosisData_LastEdit]  DEFAULT (getdate()) FOR [LastEdit]
+ALTER TABLE [dbo].[DiagnosisData] ADD  CONSTRAINT [DF_DiagnosisData_LastEdit]  DEFAULT (getutcdate()) FOR [LastEdit]
 GO
 /****** Object:  Default [DF_Messages_CreationTimestamp]    Script Date: 04/09/2010 12:39:31 ******/
-ALTER TABLE [dbo].[Messages] ADD  CONSTRAINT [DF_Messages_CreationTimestamp]  DEFAULT (getdate()) FOR [CreationTimestamp]
+ALTER TABLE [dbo].[Messages] ADD  CONSTRAINT [DF_Messages_CreationTimestamp]  DEFAULT (getutcdate()) FOR [CreationTimestamp]
 GO
 /****** Object:  Default [DF_Messages_LastEdit]    Script Date: 04/09/2010 12:39:31 ******/
-ALTER TABLE [dbo].[Messages] ADD  CONSTRAINT [DF_Messages_LastEdit]  DEFAULT (getdate()) FOR [LastEdit]
+ALTER TABLE [dbo].[Messages] ADD  CONSTRAINT [DF_Messages_LastEdit]  DEFAULT (getutcdate()) FOR [LastEdit]
 GO
 /****** Object:  Default [DF_BillingStrip_EntryDate]    Script Date: 04/09/2010 12:39:31 ******/
-ALTER TABLE [form].[BillingStrip] ADD  CONSTRAINT [DF_BillingStrip_EntryDate]  DEFAULT (getdate()) FOR [EntryDate]
+ALTER TABLE [form].[BillingStrip] ADD  CONSTRAINT [DF_BillingStrip_EntryDate]  DEFAULT (getutcdate()) FOR [EntryDate]
 GO
 /****** Object:  ForeignKey [FK_Demographics_PatientId]    Script Date: 04/09/2010 12:39:31 ******/
 ALTER TABLE [dbo].[Demographics]  WITH CHECK ADD  CONSTRAINT [FK_Demographics_PatientId] FOREIGN KEY([Patient_Id])
