@@ -9,7 +9,7 @@
 				<Set name="user">echarts</Set>
 				<Set name="password">echarts</Set>
 				<Set name="databaseName">EW-EHR</Set>
-				<Set name="ServerName">ewsql</Set>
+				<Set name="ServerName">localhost</Set>
 			</New>
 		</Arg>
 	</New>
