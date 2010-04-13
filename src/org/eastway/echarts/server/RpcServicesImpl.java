@@ -21,6 +21,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -526,14 +527,18 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		try {
 			staffId = getStaffId(sessionId);
 			messageType = getMessageType(msg.getMessageType());
-
-			sql = "INSERT INTO Messages(PATID, MessageType, Message, LastEditBy)"
+			Timestamp ts = new Timestamp(System.currentTimeMillis());
+			sql = "INSERT INTO Messages(PATID, CreationTimestamp, MessageType, Message, LastEdit, LastEditBy)"
 				+ "Values ('"
 				+ msg.getPatId()
-				+ "',"
+				+ "','"
+				+ ts
+				+ "','"
 				+ messageType
-				+ ",'"
+				+ "','"
 				+ msg.getMessage()
+				+ "','"
+				+ ts
 				+ "','"
 				+ staffId + "')";
 
@@ -541,7 +546,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 			stmt = con.createStatement();
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
-			throw new DbException("Error adding message", e);
+			throw new DbException(e);
 		} catch (NamingException e) {
 			throw new DbException("Naming exception");
 		}
