@@ -30,6 +30,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
@@ -74,7 +75,7 @@ public class MessagesView extends Composite implements MessagesPresenter.Display
 				+ "</strong>&mdash;"
 				+ m[1] + "&mdash;"
 				+ m[2] + "<div class='home-PatientMessage'>"
-				+ m[3] + "</div>");
+				+ new Label(m[3]) + "</div>");
 	}
 
 	@Override
