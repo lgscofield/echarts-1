@@ -483,7 +483,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		Messages msgs = new Messages();
 
 		String sql = "SELECT [Messages].ID, PATID, [Descriptor] as 'MessageType', CreationTimestamp, Message, [ParentID], StaffName FROM [Messages] INNER JOIN VMessageType ON [Messages].MessageType = VMessageType.MessageType INNER JOIN [User] ON [Messages].LastEditBy = [User].StaffId WHERE PATID ="
-				+ patientId;
+				+ patientId + " ORDER BY ID";
 		Connection con = null;
 		Statement stmt = null;
 		ResultSet srs = null;
