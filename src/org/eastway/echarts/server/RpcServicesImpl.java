@@ -521,7 +521,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		String staffId = null;
 		int messageType;
 		Connection con = null;
-		Statement stmt = null;
+		PreparedStatement stmt = null;
 		String sql = null;
 
 		try {
@@ -529,22 +529,20 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 			messageType = getMessageType(msg.getMessageType());
 			Timestamp ts = new Timestamp(System.currentTimeMillis());
 			sql = "INSERT INTO Messages(PATID, CreationTimestamp, MessageType, Message, LastEdit, LastEditBy)"
-				+ "Values ('"
-				+ msg.getPatId()
-				+ "','"
-				+ ts
-				+ "','"
-				+ messageType
-				+ "','"
-				+ msg.getMessage()
-				+ "','"
-				+ ts
-				+ "','"
-				+ staffId + "')";
+				+ " Values (?,?,?,?,?,?)";
 
 			con = DbConnection.getConnection();
-			stmt = con.createStatement();
-			stmt.executeUpdate(sql);
+
+			stmt = con.prepareStatement(sql);
+
+			stmt.setString(1, msg.getPatId());
+			stmt.setTimestamp(2, ts);
+			stmt.setInt(3, messageType);
+			stmt.setString(4, msg.getMessage());
+			stmt.setTimestamp(5, ts);
+			stmt.setString(6, staffId);
+
+			stmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new DbException(e);
 		} catch (NamingException e) {
