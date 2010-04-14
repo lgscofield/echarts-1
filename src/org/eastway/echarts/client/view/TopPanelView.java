@@ -16,12 +16,14 @@
 package org.eastway.echarts.client.view;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 
 import org.eastway.echarts.client.presenter.TopPanelPresenter;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -101,19 +103,21 @@ public class TopPanelView extends Composite implements TopPanelPresenter.Display
 			return;
 		}
 		currentPatientData.clear();
+		int i = 0;
 		FlexTable cpd = new FlexTable();
 		cpd.setText(0,0,"Name:");
-		cpd.setText(0,1,data.get(0)[1]);
+		cpd.setText(0,1,data.get(i++)[1]);
 		cpd.setText(0,2,"DOB:");
-		cpd.setText(0,3,data.get(1)[1]);
+		cpd.setText(0,3,DateTimeFormat.getFormat("M/d/y").format(new Date(new Long(data.get(i++)[1]))).toString());
+		cpd.setText(0,4,"(" + data.get(i++)[1] + ")");
 
 		cpd.setText(1,0,"Case Status:");
-		cpd.setText(1,1,data.get(2)[1]);
+		cpd.setText(1,1,data.get(i++)[1]);
 		cpd.setText(1,2,"Provider:");
-		cpd.setText(1,3,data.get(3)[1]);
+		cpd.setText(1,3,data.get(i++)[1]);
 
 		cpd.setText(2,0,"SSN:");
-		cpd.setText(2,1,data.get(4)[1]);
+		cpd.setText(2,1,data.get(i++)[1]);
 		currentPatientData.add(cpd);
 	}
 }

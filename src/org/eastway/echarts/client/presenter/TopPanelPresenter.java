@@ -16,6 +16,7 @@
 package org.eastway.echarts.client.presenter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 
 import org.eastway.echarts.client.Rpc;
@@ -86,7 +87,11 @@ public class TopPanelPresenter extends Presenter<TopPanelPresenter.Display> {
 		ArrayList<String[]> data = new ArrayList<String[]>();
 
 		data.add(new String[] {"Name",patient.getName()});
-		data.add(new String[] {"DOB",patient.getDemographics().getDob().toString()});
+		data.add(new String[] {"DOB",new Long(patient.getDemographics().getDob().getTime()).toString()});
+
+		Long age = (new Date().getTime() - patient.getDemographics().getDob().getTime()) / (3600*24*365) / 1000;
+
+		data.add(new String[] {"Age",  age.toString() });
 		data.add(new String[] {"Case Status",patient.getCaseStatus()});
 		data.add(new String[] {"Provider",UserImpl.getStaffName()});
 		data.add(new String[] {"SSN",patient.getSsn()});
