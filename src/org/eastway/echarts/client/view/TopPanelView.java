@@ -15,6 +15,7 @@
  */
 package org.eastway.echarts.client.view;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import org.eastway.echarts.client.presenter.TopPanelPresenter;
@@ -28,6 +29,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
@@ -55,6 +57,8 @@ public class TopPanelView extends Composite implements TopPanelPresenter.Display
 	FlowPanel patientSearch;
 	@UiField
 	Anchor logoutButton;
+
+	@UiField FlowPanel currentPatientData;
 
 	public TopPanelView() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -88,5 +92,28 @@ public class TopPanelView extends Composite implements TopPanelPresenter.Display
 	@Override
 	public HasClickHandlers getLogoutButton() {
 		return logoutButton;
+	}
+
+	@Override
+	public void setCurrentPatientData(ArrayList<String[]> data) {
+		if (data == null) {
+			currentPatientData.clear();
+			return;
+		}
+		currentPatientData.clear();
+		FlexTable cpd = new FlexTable();
+		cpd.setText(0,0,"Name:");
+		cpd.setText(0,1,data.get(0)[1]);
+		cpd.setText(0,2,"DOB:");
+		cpd.setText(0,3,data.get(1)[1]);
+
+		cpd.setText(1,0,"Case Status:");
+		cpd.setText(1,1,data.get(2)[1]);
+		cpd.setText(1,2,"Provider:");
+		cpd.setText(1,3,data.get(3)[1]);
+
+		cpd.setText(2,0,"SSN:");
+		cpd.setText(2,1,data.get(4)[1]);
+		currentPatientData.add(cpd);
 	}
 }

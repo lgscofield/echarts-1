@@ -47,8 +47,10 @@ public class PatientTab extends Composite implements SelectionHandler<TreeItem> 
 	private EditPatientSummaryPresenter ep;
 	private FormsPresenter fp;
 	private Tree menu = new Tree();
+	private Patient patient;
 
 	public PatientTab(HandlerManager eventBus, RpcServicesAsync rpcServices, Patient patient) {
+		this.setPatient(patient);
 		initWidget(body);
 		body.addWest(menu, 150);
 		body.add(displayarea);
@@ -88,5 +90,13 @@ public class PatientTab extends Composite implements SelectionHandler<TreeItem> 
 		int items = menu.getItemCount();
 		for (int i = 0; i < items; i++)
 			menu.getItem(i).setWidth("0px");
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
+
+	public Patient getPatient() {
+		return patient;
 	}
 }

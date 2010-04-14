@@ -15,13 +15,17 @@
  */
 package org.eastway.echarts.client.presenter;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import org.eastway.echarts.client.Rpc;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.UserImpl;
+import org.eastway.echarts.client.events.ChangeCurrentPatientEvent;
+import org.eastway.echarts.client.events.ChangeCurrentPatientEventHandler;
 import org.eastway.echarts.client.events.LogoutEvent;
 import org.eastway.echarts.client.events.OpenEhrEvent;
+import org.eastway.echarts.shared.Patient;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -40,6 +44,8 @@ public class TopPanelPresenter extends Presenter<TopPanelPresenter.Display> {
 		HasText getSuggestBox();
 
 		HasClickHandlers getLogoutButton();
+
+		void setCurrentPatientData(ArrayList<String[]> data);
 	}
 
 	private LinkedHashMap<String, Long> data;
@@ -64,6 +70,27 @@ public class TopPanelPresenter extends Presenter<TopPanelPresenter.Display> {
 				eventBus.fireEvent(new LogoutEvent());
 			}
 		});
+		eventBus.addHandler(ChangeCurrentPatientEvent.TYPE, new ChangeCurrentPatientEventHandler() {
+			@Override
+			public void onChangeCurrentPatient(ChangeCurrentPatientEvent event) {
+				setCurrentPatientData(event.getPatient());
+			}
+		});
+	}
+
+	private void setCurrentPatientData(Patient patient) {
+		if (patient == null) {
+			display.setCurrentPatientData(null);
+			return;
+		}
+		ArrayList<String[]> data = new ArrayList<String[]>();
+
+		data.add(new String[] {"Name",patient.getName()});
+		data.add(new String[] {"DOB",patient.getDemographics().getDob().toString()});
+		data.add(new String[] {"Case Status",patient.getCaseStatus()});
+		data.add(new String[] {"Provider",UserImpl.getStaffName()});
+		data.add(new String[] {"SSN",patient.getSsn()});
+		display.setCurrentPatientData(data);
 	}
 
 	public void fetchData() {

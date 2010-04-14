@@ -27,6 +27,14 @@
 		float: right;
 	}
 
+	.margin {
+		margin:10px;
+	}
+
+	.italics {
+		font-style: italic;
+	}
+
 	.button {
 		padding: 3px;
 		margin: 4px 2px 2px 2px;
@@ -57,5 +65,6 @@
     <g:FlowPanel addStyleNames="{style.banner} {style.left}"/>
     <g:Anchor ui:field="logoutButton" addStyleNames="{style.right} {style.logout}">Logout</g:Anchor>
     <g:FlowPanel ui:field="patientSearch" addStyleNames="{style.right} {style.top}"/>
+    <g:FlowPanel ui:field='currentPatientData' addStyleNames='{style.left} {style.margin} {style.italics}' />
   </g:FlowPanel>
 </ui:UiBinder>

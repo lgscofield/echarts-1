@@ -20,6 +20,7 @@ import java.util.Date;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.Rpc;
 import org.eastway.echarts.client.UserImpl;
+import org.eastway.echarts.client.events.ChangeCurrentPatientEvent;
 import org.eastway.echarts.client.events.OpenEhrEvent;
 import org.eastway.echarts.client.events.OpenEhrEventHandler;
 import org.eastway.echarts.client.presenter.AlertsPresenter;
@@ -39,6 +40,8 @@ import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -129,6 +132,16 @@ public class AdministratorDashboard extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 				openEditPatient();
+			}
+		});
+		tabLayoutPanel.addSelectionHandler(new SelectionHandler<Integer>() {
+			@Override
+			public void onSelection(SelectionEvent<Integer> event) {
+				Widget w = tabLayoutPanel.getWidget(event.getSelectedItem());
+				if (w instanceof PatientTab)
+					eventBus.fireEvent(new ChangeCurrentPatientEvent(((PatientTab) w).getPatient()));
+				else
+					eventBus.fireEvent(new ChangeCurrentPatientEvent(null));
 			}
 		});
 	}
