@@ -32,6 +32,9 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.naming.NamingException;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 import org.eastway.echarts.client.RpcServices;
 import org.eastway.echarts.shared.DbException;
@@ -433,48 +436,16 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 	public Vector<String> getAlerts(String sessionId) throws SessionExpiredException, DbException {
 		checkSessionExpire(sessionId);
 
-		Vector<String> alerts = new Vector<String>();
-		String sql = null;
-		String staffId = null;
-		Connection con = null;
-		Statement stmt = null;
-		ResultSet srs = null;
-		Date today = new Date();
-		Date dueDate = new Date();
-		DateFormat df = new SimpleDateFormat("M/dd/yyyy");
-		long diff;
-		String warningMessage;
-
-		try {
-			staffId = getStaffId(sessionId);
-			sql = "SELECT VTicklerList.PATID, Patient.Name, VTicklerList.ItemName, VTicklerList.[Date] FROM VTicklerList INNER JOIN Patient ON VTicklerList.PATID = Patient.CaseNumber WHERE [Date] IS NOT NULL AND VTicklerList.PATID IN (SELECT PATID FROM Assignments WHERE StaffId = '"
-				+ staffId + "' AND Disposition = 1) ORDER BY 4 ASC";
-			con = DbConnection.getConnection();
-			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
-			srs = stmt.executeQuery(sql);
-			while (srs.next()) {
-				String a = new String();
-				dueDate = srs.getDate(4);
-				diff = dueDate.getTime() - today.getTime();
-				if (diff <= 0) {
-					warningMessage = " is overdue by <font color='red'><b>"
-							+ (diff / (1000 * 60 * 60 * 24)) + "</b></font>";
-				} else {
-					warningMessage = " is due in <font color='green'><b>"
-							+ (diff / (1000 * 60 * 60 * 24)) + "</b></font>";
-				}
-				a = srs.getString(1) + " - " + srs.getString(2) + ": "
-						+ srs.getString(3) + warningMessage + " days ("
-						+ df.format(dueDate) + ")";
-				alerts.add(a);
-			}
-			return alerts;
-		} catch (SQLException e) {
-			throw new DbException();
-		} catch (NamingException e) {
-			throw new DbException("Naming exception");
-		}
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
+		EntityManager em = emf.createEntityManager();
+		AlertService service = new AlertService(em);
+		List<Alert> alerts = service.findAllAlerts();
+		Vector<String> alertsDto = new Vector<String>();
+		for (Alert a : alerts)
+			alertsDto.add(a.getPatientId() + " " + a.getItemName() + " " + a.getDate().toString());
+		em.close();
+		emf.close();
+		return alertsDto;
 	}
 
 	@Override
