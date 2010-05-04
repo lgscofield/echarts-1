@@ -22,10 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -37,12 +34,16 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import org.eastway.echarts.client.RpcServices;
+import org.eastway.echarts.domain.Alert;
+import org.eastway.echarts.domain.AlertService;
+import org.eastway.echarts.domain.Patient;
+import org.eastway.echarts.domain.PatientService;
 import org.eastway.echarts.shared.DbException;
 import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.Message;
 import org.eastway.echarts.shared.Messages;
-import org.eastway.echarts.shared.Patient;
+import org.eastway.echarts.shared.PatientDTO;
 import org.eastway.echarts.shared.ServiceCode;
 import org.eastway.echarts.shared.ServiceCodes;
 import org.eastway.echarts.shared.SessionExpiredException;
@@ -81,7 +82,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public Patient getPatient(long patientId, String sessionId)
+	public PatientDTO getPatient(long patientId, String sessionId)
 			throws SessionExpiredException, DbException {
 		checkSessionExpire(sessionId);
 		String sql = "SELECT * FROM Patient INNER JOIN Demographics ON Patient.Patient_Id = Demographics.Patient_Id WHERE Patient.Patient_Id = "
@@ -143,7 +144,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 						srs.getDate("DOB"),
 						srs.getDate("LastEdit"),
 						srs.getString("LastEditBy"));
-				Patient p = new Patient(srs.getString("Alias"),
+				PatientDTO p = new PatientDTO(srs.getString("Alias"),
 					srs.getString("CaseNumber"),
 					srs.getString("CaseStatus"),
 					srs.getString("FirstName"),
@@ -166,7 +167,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public Patient editEhr(Patient patient, String sessionId) throws SessionExpiredException, DbException {
+	public PatientDTO editEhr(PatientDTO patient, String sessionId) throws SessionExpiredException, DbException {
 		checkSessionExpire(sessionId);
 		Connection con = null;
 
@@ -280,41 +281,38 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public void addEhr(Patient patient, String sessionId) throws SessionExpiredException, DbException {
+	public void addEhr(PatientDTO patient, String sessionId) throws SessionExpiredException, DbException {
 		checkSessionExpire(sessionId);
 		Connection con = null;
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
+		EntityManager em = emf.createEntityManager();
+		PatientService service = new PatientService(em);
+
+		em.getTransaction().begin();
+		Patient newPatient = service.createPatient(patient.getAlias(),
+				patient.getCaseNumber(),
+				patient.getCaseStatus(),
+				0,
+				patient.getFirstName(),
+				patient.getLastEdit(),
+				patient.getLastEditBy(),
+				patient.getLastName(),
+				patient.getMiddleInitial(),
+				patient.getSsn(),
+				patient.getSuffix());
+		em.getTransaction().commit();
 
 		try {
 			con = DbConnection.getConnection();
 
 			con.setAutoCommit(false);
 
-			PreparedStatement patientInsert = con.prepareStatement(
-					"INSERT INTO Patient("
-						+ "CaseNumber, FirstName, MiddleInitial, LastName, Name, SSN, CaseStatus, LastEdit"
-						+ ")"
-						+ " VALUES(?,?,?,?,?,?,?,GETUTCDATE())",
-					PreparedStatement.RETURN_GENERATED_KEYS);
-			patientInsert.setString(1, patient.getCaseNumber());
-			patientInsert.setString(2, patient.getFirstName());
-			patientInsert.setString(3, patient.getMiddleInitial());
-			patientInsert.setString(4, patient.getLastName());
-			patientInsert.setString(5, patient.getName());
-			patientInsert.setString(6, patient.getSsn());
-			patientInsert.setString(7, patient.getCaseStatus());
-			patientInsert.executeUpdate();
-
-			ResultSet lastPatientInsertIds = patientInsert.getGeneratedKeys();
-			int patientID = -1;
-			if (lastPatientInsertIds.next())
-				patientID = lastPatientInsertIds.getInt(1);
-
 			PreparedStatement ehrInsert = con.prepareStatement(
 					"INSERT INTO Ehr("
 						+ "subject_id,time_created"
 						+ ")"
 						+ " VALUES(?,GETUTCDATE())", PreparedStatement.RETURN_GENERATED_KEYS);
-			ehrInsert.setLong(1, patientID);
+			ehrInsert.setLong(1, newPatient.getId());
 			ehrInsert.executeUpdate();
 
 			ResultSet lastEhrInsertIds = ehrInsert.getGeneratedKeys();
@@ -325,7 +323,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 			PreparedStatement patientUpdate = con.prepareStatement(
 					"UPDATE Patient SET ehr_id = ? WHERE Patient_Id = ?");
 			patientUpdate.setInt(1, ehrID);
-			patientUpdate.setInt(2, patientID);
+			patientUpdate.setLong(2, newPatient.getId());
 			patientUpdate.executeUpdate();
 
 			PreparedStatement demographicsInsert = con.prepareStatement(
@@ -353,7 +351,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 					+ "?,?,GETUTCDATE()"
 					+ ")");
 
-			demographicsInsert.setInt(1, patientID);
+			demographicsInsert.setLong(1, newPatient.getId());
 			demographicsInsert.setDate(2, new java.sql.Date(patient.getDemographics().getDob().getTime()));
 			demographicsInsert.setString(3, patient.getDemographics().getInsuranceType());
 			demographicsInsert.setString(4, patient.getDemographics().getGender());
@@ -400,6 +398,8 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 
 			con.commit();
 			con.setAutoCommit(true);
+			em.close();
+			emf.close();
 		} catch (SQLException e) {
 			throw new DbException(e);
 		} catch (NamingException e) {
@@ -409,27 +409,19 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 
 	@Override
 	public LinkedHashMap<String, Long> getPatientList(String sessionId) throws SessionExpiredException, DbException {
-		Connection con = null;
-		LinkedHashMap<String, Long> pl = new LinkedHashMap<String, Long>();
 		checkSessionExpire(sessionId);
-		String sql = "SELECT CaseNumber + ' - ' + LastName + ', ' + FirstName AS SearchString, Ehr.ehr_id FROM Patient INNER JOIN Ehr ON Ehr.subject_id = Patient.Patient_ID ORDER BY LastName";
-		Statement stmt = null;
-		ResultSet srs = null;
-
-		try {
-			con = DbConnection.getConnection();
-			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
-			srs = stmt.executeQuery(sql);
-			while (srs.next())
-				pl.put(srs.getString(1), srs.getLong(2));
-			return pl;
-		} catch (SQLException e) {
-			throw new DbException();
-		} catch (NamingException e) {
-			throw new DbException("Naming exception");
-		}
-
+		LinkedHashMap<String, Long> pl = new LinkedHashMap<String, Long>();
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
+		EntityManager em = emf.createEntityManager();
+		PatientService service = new PatientService(em);
+		List<Patient> patients = service.findAllPatients();
+		for (Patient patient : patients)
+			pl.put(patient.getCaseNumber() + " - " + patient.getName(), patient.getEhrId());
+		
+		//String sql = "SELECT CaseNumber + ' - ' + LastName + ', ' + FirstName AS SearchString, Ehr.ehr_id FROM Patient INNER JOIN Ehr ON Ehr.subject_id = Patient.Patient_ID ORDER BY LastName";
+		em.close();
+		emf.close();
+		return pl;
 	}
 
 	@Override

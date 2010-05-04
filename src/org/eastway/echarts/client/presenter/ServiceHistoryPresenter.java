@@ -18,7 +18,7 @@ package org.eastway.echarts.client.presenter;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-import org.eastway.echarts.shared.Patient;
+import org.eastway.echarts.shared.PatientDTO;
 
 public class ServiceHistoryPresenter extends Presenter<ServiceHistoryPresenter.Display> {
 
@@ -27,7 +27,7 @@ public class ServiceHistoryPresenter extends Presenter<ServiceHistoryPresenter.D
 	}
 
 	public ServiceHistoryPresenter(Display display, HandlerManager eventBus,
-				Patient patient) {
+				PatientDTO patient) {
 		super(display, eventBus);
 		display.setName(patient.getCaseNumber());
 	}

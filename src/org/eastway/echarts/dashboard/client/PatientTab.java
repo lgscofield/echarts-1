@@ -24,7 +24,7 @@ import org.eastway.echarts.client.view.EditPatientSummaryView;
 import org.eastway.echarts.client.view.FormsView;
 import org.eastway.echarts.client.view.MessagesView;
 import org.eastway.echarts.client.view.PatientSummaryView;
-import org.eastway.echarts.shared.Patient;
+import org.eastway.echarts.shared.PatientDTO;
 
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
@@ -47,9 +47,9 @@ public class PatientTab extends Composite implements SelectionHandler<TreeItem> 
 	private EditPatientSummaryPresenter ep;
 	private FormsPresenter fp;
 	private Tree menu = new Tree();
-	private Patient patient;
+	private PatientDTO patient;
 
-	public PatientTab(HandlerManager eventBus, RpcServicesAsync rpcServices, Patient patient) {
+	public PatientTab(HandlerManager eventBus, RpcServicesAsync rpcServices, PatientDTO patient) {
 		this.setPatient(patient);
 		initWidget(body);
 		body.addWest(menu, 150);
@@ -92,11 +92,11 @@ public class PatientTab extends Composite implements SelectionHandler<TreeItem> 
 			menu.getItem(i).setWidth("0px");
 	}
 
-	public void setPatient(Patient patient) {
+	public void setPatient(PatientDTO patient) {
 		this.patient = patient;
 	}
 
-	public Patient getPatient() {
+	public PatientDTO getPatient() {
 		return patient;
 	}
 }

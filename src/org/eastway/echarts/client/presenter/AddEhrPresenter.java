@@ -21,7 +21,7 @@ import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.UserImpl;
 import org.eastway.echarts.shared.Demographics;
-import org.eastway.echarts.shared.Patient;
+import org.eastway.echarts.shared.PatientDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -274,7 +274,7 @@ public class AddEhrPresenter extends Presenter<AddEhrPresenter.Display> {
 	}
 
 	private void doFinish() {
-		Patient patient = new Patient();
+		PatientDTO patient = new PatientDTO();
 		Demographics d = new Demographics();
 		patient.setDemographics(d);
 

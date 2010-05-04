@@ -24,7 +24,7 @@ import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.Message;
 import org.eastway.echarts.shared.Messages;
-import org.eastway.echarts.shared.Patient;
+import org.eastway.echarts.shared.PatientDTO;
 import org.eastway.echarts.shared.ServiceCodes;
 import org.eastway.echarts.shared.UserData;
 
@@ -49,11 +49,11 @@ public interface RpcServicesAsync {
 
 	public void getFormsList(String sessionId, String patientId, AsyncCallback<LinkedHashSet<String[]>> callback);
 
-	public void editEhr(Patient patient, String sessionId, AsyncCallback<Patient> callback);
+	public void editEhr(PatientDTO patient, String sessionId, AsyncCallback<PatientDTO> callback);
 
 	public void getDemographics(String patientId, String sessionId, AsyncCallback<Demographics> callback);
 
-	public void getPatient(long patientId, String sessionId, AsyncCallback<Patient> callback);
+	public void getPatient(long patientId, String sessionId, AsyncCallback<PatientDTO> callback);
 
-	public void addEhr(Patient patient, String sessionId, AsyncCallback<Void> callback);
+	public void addEhr(PatientDTO patient, String sessionId, AsyncCallback<Void> callback);
 }

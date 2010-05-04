@@ -13,14 +13,25 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.shared;
+package org.eastway.echarts.domain;
 
-import java.io.Serializable;
 import java.util.Date;
 
-@SuppressWarnings("serial")
-public class Patient implements Serializable {
-	private long patientId;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class Patient {
+	@Id
+	@GeneratedValue(strategy=GenerationType.TABLE)
+	@Column(name="Patient_Id")
+	private long id;
+
+	@Column(name="ehr_id")
+	private long ehrId;
 	private String caseNumber;
 	private String firstName;
 	private String lastName;
@@ -31,42 +42,27 @@ public class Patient implements Serializable {
 	private String ssn;
 	private String lastEditBy;
 	private Date lastEdit;
-	private Demographics demographics;
 
 	public Patient() { }
 
-	public Patient(String alias,
-			String caseNumber,
-			String caseStatus,
-			String firstName,
-			Date lastEdit,
-			String lastEditBy,
-			String lastName,
-			String middleInitial,
-			long patientId,
-			String ssn,
-			String suffix,
-			Demographics demographics) {
-		setAlias(alias);
-		setCaseNumber(caseNumber);
-		setCaseStatus(caseStatus);
-		setFirstName(firstName);
-		setLastEdit(lastEdit);
-		setLastEditBy(lastEditBy);
-		setLastName(lastName);
-		setMiddleInitial(middleInitial);
-		setPatientId(patientId);
-		setSsn(ssn);
-		setSuffix(suffix);
-		setDemographics(demographics);
+	public Patient(long id) {
+		this.setId(id);
 	}
 
-	public void setPatientId(long patientId) {
-		this.patientId = patientId;
+	public void setEhrId(long ehrId) {
+		this.ehrId = ehrId;
 	}
 
-	public long getPatientId() {
-		return patientId;
+	public long getEhrId() {
+		return ehrId;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public long getId() {
+		return id;
 	}
 
 	public String getName() {
@@ -135,14 +131,6 @@ public class Patient implements Serializable {
 
 	public Date getLastEdit() {
 		return lastEdit;
-	}
-
-	public void setDemographics(Demographics demographics) {
-		this.demographics = demographics;
-	}
-
-	public Demographics getDemographics() {
-		return demographics;
 	}
 
 	public void setCaseNumber(String caseNumber) {

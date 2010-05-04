@@ -18,18 +18,18 @@ package org.eastway.echarts.client.presenter;
 import java.util.LinkedHashSet;
 
 import org.eastway.echarts.client.RpcServicesAsync;
-import org.eastway.echarts.shared.Patient;
+import org.eastway.echarts.shared.PatientDTO;
 
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class PatientSummaryPresenter extends Presenter<PatientSummaryPresenter.Display> {
 
-	private Patient patient;
+	private PatientDTO patient;
 
 	public PatientSummaryPresenter(Display display,
 			HandlerManager eventBus, RpcServicesAsync singleton,
-			Patient patient) {
+			PatientDTO patient) {
 		super(display, eventBus);
 		this.patient = patient;
 	}
@@ -45,7 +45,7 @@ public class PatientSummaryPresenter extends Presenter<PatientSummaryPresenter.D
 		setPersonalData();
 	}
 
-	protected void setPatient(Patient patient) {
+	protected void setPatient(PatientDTO patient) {
 		this.patient = patient;
 	}
 

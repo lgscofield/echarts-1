@@ -20,7 +20,7 @@ import java.util.Date;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.UserImpl;
-import org.eastway.echarts.shared.Patient;
+import org.eastway.echarts.shared.PatientDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -80,12 +80,12 @@ public class EditPatientSummaryPresenter extends Presenter<EditPatientSummaryPre
 	}
 
 	private RpcServicesAsync rpcServices;
-	private Patient patient;
+	private PatientDTO patient;
 
 	public EditPatientSummaryPresenter(
 			Display display,
 			HandlerManager eventBus, RpcServicesAsync rpcServices,
-			Patient patient) {
+			PatientDTO patient) {
 		super(display, eventBus);
 		this.rpcServices = rpcServices;
 		this.patient = patient;
@@ -133,14 +133,14 @@ public class EditPatientSummaryPresenter extends Presenter<EditPatientSummaryPre
 		//patient.setPhone(display.getPhone().getText());
 		//patient.setAltPhone(display.getAltPhone().getText());
 
-		AsyncCallback<Patient> callback = new AsyncCallback<Patient>() {
+		AsyncCallback<PatientDTO> callback = new AsyncCallback<PatientDTO>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				new HandleRpcException(caught);
 			}
 
 			@Override
-			public void onSuccess(Patient result) {
+			public void onSuccess(PatientDTO result) {
 				;
 			}
 		};

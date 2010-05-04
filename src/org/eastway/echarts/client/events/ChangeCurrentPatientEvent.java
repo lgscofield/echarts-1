@@ -15,15 +15,15 @@
  */
 package org.eastway.echarts.client.events;
 
-import org.eastway.echarts.shared.Patient;
+import org.eastway.echarts.shared.PatientDTO;
 
 import com.google.gwt.event.shared.GwtEvent;
 
 public class ChangeCurrentPatientEvent extends GwtEvent<ChangeCurrentPatientEventHandler> {
 	public static Type<ChangeCurrentPatientEventHandler> TYPE = new Type<ChangeCurrentPatientEventHandler>();
-	private Patient patient;
+	private PatientDTO patient;
 
-	public ChangeCurrentPatientEvent(Patient patient) {
+	public ChangeCurrentPatientEvent(PatientDTO patient) {
 		this.patient = patient;
 	}
 
@@ -37,7 +37,7 @@ public class ChangeCurrentPatientEvent extends GwtEvent<ChangeCurrentPatientEven
 		return TYPE;
 	}
 
-	public Patient getPatient() {
+	public PatientDTO getPatient() {
 		return patient;
 	}
 }

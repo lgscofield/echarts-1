@@ -25,7 +25,7 @@ import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.Message;
 import org.eastway.echarts.shared.Messages;
-import org.eastway.echarts.shared.Patient;
+import org.eastway.echarts.shared.PatientDTO;
 import org.eastway.echarts.shared.ServiceCodes;
 import org.eastway.echarts.shared.SessionExpiredException;
 import org.eastway.echarts.shared.UserData;
@@ -53,11 +53,11 @@ public interface RpcServices extends RemoteService {
 
 	public LinkedHashSet<String[]> getFormsList(String sessionId, String patientId) throws SessionExpiredException, DbException;
 
-	public Patient editEhr(Patient patient, String sessionId) throws SessionExpiredException, DbException;
+	public PatientDTO editEhr(PatientDTO patient, String sessionId) throws SessionExpiredException, DbException;
 
 	public Demographics getDemographics(String patientid, String sessionId) throws SessionExpiredException, DbException;
 
-	public Patient getPatient(long patientId, String sessionId) throws SessionExpiredException, DbException;
+	public PatientDTO getPatient(long patientId, String sessionId) throws SessionExpiredException, DbException;
 
-	public void addEhr(Patient patient, String sessionId) throws SessionExpiredException, DbException;
+	public void addEhr(PatientDTO patient, String sessionId) throws SessionExpiredException, DbException;
 }

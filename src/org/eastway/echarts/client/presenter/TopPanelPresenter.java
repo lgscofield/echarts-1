@@ -26,7 +26,7 @@ import org.eastway.echarts.client.events.ChangeCurrentPatientEvent;
 import org.eastway.echarts.client.events.ChangeCurrentPatientEventHandler;
 import org.eastway.echarts.client.events.LogoutEvent;
 import org.eastway.echarts.client.events.OpenEhrEvent;
-import org.eastway.echarts.shared.Patient;
+import org.eastway.echarts.shared.PatientDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -79,7 +79,7 @@ public class TopPanelPresenter extends Presenter<TopPanelPresenter.Display> {
 		});
 	}
 
-	private void setCurrentPatientData(Patient patient) {
+	private void setCurrentPatientData(PatientDTO patient) {
 		if (patient == null) {
 			display.setCurrentPatientData(null);
 			return;
