@@ -31,7 +31,7 @@ import org.eastway.echarts.client.view.AlertsView;
 import org.eastway.echarts.client.view.AddEhrView;
 import org.eastway.echarts.client.view.PatientListView;
 import org.eastway.echarts.client.view.TopPanelView;
-import org.eastway.echarts.shared.EHR;
+import org.eastway.echarts.shared.EHRDTO;
 import org.eastway.echarts.shared.PatientDTO;
 
 import com.bradrydzewski.gwt.calendar.client.Calendar;
@@ -204,14 +204,14 @@ public class AdministratorDashboard extends Composite {
 	}
 
 	private void fetchPatient(long ehrId) {
-		AsyncCallback<EHR> callback = new AsyncCallback<EHR>() {
+		AsyncCallback<EHRDTO> callback = new AsyncCallback<EHRDTO>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				new HandleRpcException(caught);
 			}
 
 			@Override
-			public void onSuccess(EHR ehr) {
+			public void onSuccess(EHRDTO ehr) {
 				getPatient(ehr.getPatientIds().get(0));
 			}
 		};

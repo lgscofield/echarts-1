@@ -22,6 +22,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Patient {
@@ -30,8 +31,8 @@ public class Patient {
 	@Column(name="Patient_Id")
 	private long id;
 
-	@Column(name="ehr_id")
-	private long ehrId;
+	@OneToOne(mappedBy="subject")
+	private EHR ehr;
 	private String caseNumber;
 	private String firstName;
 	private String lastName;
@@ -49,12 +50,12 @@ public class Patient {
 		this.setId(id);
 	}
 
-	public void setEhrId(long ehrId) {
-		this.ehrId = ehrId;
+	public void setEhr(EHR ehr) {
+		this.ehr = ehr;
 	}
 
-	public long getEhrId() {
-		return ehrId;
+	public EHR getEhr() {
+		return ehr;
 	}
 
 	public void setId(long id) {

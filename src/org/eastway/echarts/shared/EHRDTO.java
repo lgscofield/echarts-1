@@ -19,13 +19,13 @@ import java.io.Serializable;
 import java.util.List;
 
 @SuppressWarnings("serial")
-public class EHR implements Serializable {
+public class EHRDTO implements Serializable {
 	private List<Long> patientIds;
 	private long ehrId;
 
-	public EHR() { }
+	public EHRDTO() { }
 
-	public EHR(long ehrId, List<Long> patientIds) {
+	public EHRDTO(long ehrId, List<Long> patientIds) {
 		this.setEhrId(ehrId);
 		this.setPatientIds(patientIds);
 	}

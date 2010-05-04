@@ -21,7 +21,7 @@ import java.util.LinkedHashSet;
 import java.util.Vector;
 
 import org.eastway.echarts.shared.Demographics;
-import org.eastway.echarts.shared.EHR;
+import org.eastway.echarts.shared.EHRDTO;
 import org.eastway.echarts.shared.Message;
 import org.eastway.echarts.shared.Messages;
 import org.eastway.echarts.shared.PatientDTO;
@@ -31,7 +31,7 @@ import org.eastway.echarts.shared.UserData;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface RpcServicesAsync {
-	public void getEhr(long ehrId, String sessionId, AsyncCallback<EHR> callback);
+	public void getEhr(long ehrId, String sessionId, AsyncCallback<EHRDTO> callback);
 
 	public void getPatientList(String sessionId, AsyncCallback<LinkedHashMap<String, Long>> callback);
 

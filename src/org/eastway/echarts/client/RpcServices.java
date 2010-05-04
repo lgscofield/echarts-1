@@ -22,7 +22,7 @@ import java.util.Vector;
 
 import org.eastway.echarts.shared.DbException;
 import org.eastway.echarts.shared.Demographics;
-import org.eastway.echarts.shared.EHR;
+import org.eastway.echarts.shared.EHRDTO;
 import org.eastway.echarts.shared.Message;
 import org.eastway.echarts.shared.Messages;
 import org.eastway.echarts.shared.PatientDTO;
@@ -35,7 +35,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 @RemoteServiceRelativePath("rpcServices")
 public interface RpcServices extends RemoteService {
-	public EHR getEhr(long ehrId, String sessionId) throws SessionExpiredException, DbException;
+	public EHRDTO getEhr(long ehrId, String sessionId) throws SessionExpiredException, DbException;
 
 	public LinkedHashMap<String, Long> getPatientList(String sessionId) throws SessionExpiredException, DbException;
 

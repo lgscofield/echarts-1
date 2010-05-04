@@ -36,11 +36,13 @@ import javax.persistence.Persistence;
 import org.eastway.echarts.client.RpcServices;
 import org.eastway.echarts.domain.Alert;
 import org.eastway.echarts.domain.AlertService;
+import org.eastway.echarts.domain.EHR;
+import org.eastway.echarts.domain.EHRService;
 import org.eastway.echarts.domain.Patient;
 import org.eastway.echarts.domain.PatientService;
 import org.eastway.echarts.shared.DbException;
 import org.eastway.echarts.shared.Demographics;
-import org.eastway.echarts.shared.EHR;
+import org.eastway.echarts.shared.EHRDTO;
 import org.eastway.echarts.shared.Message;
 import org.eastway.echarts.shared.Messages;
 import org.eastway.echarts.shared.PatientDTO;
@@ -56,7 +58,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		RpcServices, DbConstants {
 
 	@Override
-	public EHR getEhr(long ehrId, String sessionId)
+	public EHRDTO getEhr(long ehrId, String sessionId)
 			throws SessionExpiredException, DbException {
 		checkSessionExpire(sessionId);
 		String sql = "SELECT * FROM Patient INNER JOIN Ehr on Ehr.subject_id = Patient.Patient_id WHERE EHR.ehr_id = " + ehrId + " ORDER BY Patient_Id";
@@ -72,7 +74,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 
 			while (srs.next())
 				patientIds.add(srs.getLong("Patient_Id"));
-			EHR ehr = new EHR(ehrId, patientIds);
+			EHRDTO ehr = new EHRDTO(ehrId, patientIds);
 			return ehr;
 		} catch (SQLException e) {
 			throw new DbException(e);
@@ -292,7 +294,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		Patient newPatient = service.createPatient(patient.getAlias(),
 				patient.getCaseNumber(),
 				patient.getCaseStatus(),
-				0,
+				null,
 				patient.getFirstName(),
 				patient.getLastEdit(),
 				patient.getLastEditBy(),
@@ -413,10 +415,10 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		LinkedHashMap<String, Long> pl = new LinkedHashMap<String, Long>();
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
 		EntityManager em = emf.createEntityManager();
-		PatientService service = new PatientService(em);
-		List<Patient> patients = service.findAllPatients();
-		for (Patient patient : patients)
-			pl.put(patient.getCaseNumber() + " - " + patient.getName(), patient.getEhrId());
+		EHRService service = new EHRService(em);
+		List<EHR> ehrList = service.findAll();
+		for (EHR ehr : ehrList)
+			pl.put(ehr.getSubject().getCaseNumber() + " - " + ehr.getSubject().getName(), ehr.getId());
 		
 		//String sql = "SELECT CaseNumber + ' - ' + LastName + ', ' + FirstName AS SearchString, Ehr.ehr_id FROM Patient INNER JOIN Ehr ON Ehr.subject_id = Patient.Patient_ID ORDER BY LastName";
 		em.close();
