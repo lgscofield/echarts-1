@@ -9,11 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.TableGenerator;
 
 @Entity
 public class EHR {
 	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE)
+	@TableGenerator(name="tg", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.TABLE, generator="tg")
 	@Column(name="ehr_id")
 	private long id;
 
