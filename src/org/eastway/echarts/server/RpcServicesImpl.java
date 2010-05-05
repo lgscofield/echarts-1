@@ -42,7 +42,7 @@ import org.eastway.echarts.domain.EHRService;
 import org.eastway.echarts.domain.Patient;
 import org.eastway.echarts.domain.PatientService;
 import org.eastway.echarts.shared.DbException;
-import org.eastway.echarts.shared.Demographics;
+import org.eastway.echarts.shared.DemographicsDTO;
 import org.eastway.echarts.shared.EHRDTO;
 import org.eastway.echarts.shared.Message;
 import org.eastway.echarts.shared.Messages;
@@ -109,7 +109,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 						srs.getString("Allergies")
 				};
 
-				Demographics d = new Demographics(srs.getString("Gender"),
+				DemographicsDTO d = new DemographicsDTO(srs.getString("Gender"),
 						srs.getString("Race"),
 						srs.getString("MaritalStatus"),
 						srs.getString("LivingArrangement"),
@@ -698,7 +698,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public Demographics getDemographics(String patientid, String sessionId)
+	public DemographicsDTO getDemographics(String patientid, String sessionId)
 			throws SessionExpiredException, DbException {
 		// TODO Auto-generated method stub
 		return null;

@@ -31,7 +31,7 @@ public class PatientDTO implements Serializable {
 	private String ssn;
 	private String lastEditBy;
 	private Date lastEdit;
-	private Demographics demographics;
+	private DemographicsDTO demographics;
 
 	public PatientDTO() { }
 
@@ -46,7 +46,7 @@ public class PatientDTO implements Serializable {
 			long patientId,
 			String ssn,
 			String suffix,
-			Demographics demographics) {
+			DemographicsDTO demographics) {
 		setAlias(alias);
 		setCaseNumber(caseNumber);
 		setCaseStatus(caseStatus);
@@ -137,11 +137,11 @@ public class PatientDTO implements Serializable {
 		return lastEdit;
 	}
 
-	public void setDemographics(Demographics demographics) {
+	public void setDemographics(DemographicsDTO demographics) {
 		this.demographics = demographics;
 	}
 
-	public Demographics getDemographics() {
+	public DemographicsDTO getDemographics() {
 		return demographics;
 	}
 

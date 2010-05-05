@@ -20,7 +20,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Vector;
 
-import org.eastway.echarts.shared.Demographics;
+import org.eastway.echarts.shared.DemographicsDTO;
 import org.eastway.echarts.shared.EHRDTO;
 import org.eastway.echarts.shared.Message;
 import org.eastway.echarts.shared.Messages;
@@ -51,7 +51,7 @@ public interface RpcServicesAsync {
 
 	public void editEhr(PatientDTO patient, String sessionId, AsyncCallback<PatientDTO> callback);
 
-	public void getDemographics(String patientId, String sessionId, AsyncCallback<Demographics> callback);
+	public void getDemographics(String patientId, String sessionId, AsyncCallback<DemographicsDTO> callback);
 
 	public void getPatient(long patientId, String sessionId, AsyncCallback<PatientDTO> callback);
 

@@ -20,7 +20,7 @@ import java.util.Date;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.UserImpl;
-import org.eastway.echarts.shared.Demographics;
+import org.eastway.echarts.shared.DemographicsDTO;
 import org.eastway.echarts.shared.PatientDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -275,7 +275,7 @@ public class AddEhrPresenter extends Presenter<AddEhrPresenter.Display> {
 
 	private void doFinish() {
 		PatientDTO patient = new PatientDTO();
-		Demographics d = new Demographics();
+		DemographicsDTO d = new DemographicsDTO();
 		patient.setDemographics(d);
 
 		patient.setCaseNumber(display.getCaseNumber().getText());
