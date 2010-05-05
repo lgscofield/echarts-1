@@ -37,7 +37,7 @@ public class PatientService {
 	public Patient createPatient(String alias,
 			String caseNumber,
 			String caseStatus,
-			EHR ehr,
+			long ehrId,
 			String firstName,
 			Date lastEdit,
 			String lastEditBy,
@@ -49,7 +49,7 @@ public class PatientService {
 		patient.setAlias(alias);
 		patient.setCaseNumber(caseNumber);
 		patient.setCaseStatus(caseStatus);
-		patient.setEhr(ehr);
+		patient.setEhrId(ehrId);
 		patient.setFirstName(firstName);
 		patient.setLastEdit(lastEdit);
 		patient.setLastEditBy(lastEditBy);
