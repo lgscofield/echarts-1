@@ -17,6 +17,7 @@ package org.eastway.echarts.server;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -283,50 +284,38 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public void addEhr(PatientDTO patient, String sessionId) throws SessionExpiredException, DbException {
+	public void addEhr(PatientDTO patientDto, String sessionId) throws SessionExpiredException, DbException {
 		checkSessionExpire(sessionId);
 		Connection con = null;
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
 		EntityManager em = emf.createEntityManager();
-		PatientService service = new PatientService(em);
+		PatientService patientService = new PatientService(em);
 
 		em.getTransaction().begin();
-		Patient newPatient = service.createPatient(patient.getAlias(),
-				patient.getCaseNumber(),
-				patient.getCaseStatus(),
-				null,
-				patient.getFirstName(),
-				patient.getLastEdit(),
-				patient.getLastEditBy(),
-				patient.getLastName(),
-				patient.getMiddleInitial(),
-				patient.getSsn(),
-				patient.getSuffix());
+		EHR ehr = new EHR();
+
+		em.persist(ehr);
+
+		Patient patient = patientService.createPatient(patientDto.getAlias(),
+				patientDto.getCaseNumber(),
+				patientDto.getCaseStatus(),
+				ehr.getId(),
+				patientDto.getFirstName(),
+				patientDto.getLastEdit(),
+				patientDto.getLastEditBy(),
+				patientDto.getLastName(),
+				patientDto.getMiddleInitial(),
+				patientDto.getSsn(),
+				patientDto.getSuffix());
+		ehr.setSubject(patient);
+		ehr.setTimeCreated(new Date(System.currentTimeMillis()));
+		em.persist(ehr);
 		em.getTransaction().commit();
 
 		try {
 			con = DbConnection.getConnection();
 
 			con.setAutoCommit(false);
-
-			PreparedStatement ehrInsert = con.prepareStatement(
-					"INSERT INTO Ehr("
-						+ "subject_id,time_created"
-						+ ")"
-						+ " VALUES(?,GETUTCDATE())", PreparedStatement.RETURN_GENERATED_KEYS);
-			ehrInsert.setLong(1, newPatient.getId());
-			ehrInsert.executeUpdate();
-
-			ResultSet lastEhrInsertIds = ehrInsert.getGeneratedKeys();
-			int ehrID = -1;
-			if (lastEhrInsertIds.next())
-				ehrID = lastEhrInsertIds.getInt(1);
-
-			PreparedStatement patientUpdate = con.prepareStatement(
-					"UPDATE Patient SET ehr_id = ? WHERE Patient_Id = ?");
-			patientUpdate.setInt(1, ehrID);
-			patientUpdate.setLong(2, newPatient.getId());
-			patientUpdate.executeUpdate();
 
 			PreparedStatement demographicsInsert = con.prepareStatement(
 					"INSERT INTO Demographics("
@@ -353,18 +342,18 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 					+ "?,?,GETUTCDATE()"
 					+ ")");
 
-			demographicsInsert.setLong(1, newPatient.getId());
-			demographicsInsert.setDate(2, new java.sql.Date(patient.getDemographics().getDob().getTime()));
-			demographicsInsert.setString(3, patient.getDemographics().getInsuranceType());
-			demographicsInsert.setString(4, patient.getDemographics().getGender());
-			demographicsInsert.setString(5, patient.getDemographics().getRace());
-			demographicsInsert.setBoolean(6, patient.getDemographics().isVeteran());
-			demographicsInsert.setString(7, patient.getDemographics().getReligion());
-			demographicsInsert.setString(8, patient.getDemographics().getMaritalStatus());
-			demographicsInsert.setString(9, patient.getDemographics().getEducationLevel());
-			demographicsInsert.setString(10, patient.getDemographics().getEducationType());
-			demographicsInsert.setString(11, patient.getDemographics().getLivingArrangement());
-			demographicsInsert.setString(12, patient.getDemographics().getEmployment());
+			demographicsInsert.setLong(1, patient.getId());
+			demographicsInsert.setDate(2, new java.sql.Date(patientDto.getDemographics().getDob().getTime()));
+			demographicsInsert.setString(3, patientDto.getDemographics().getInsuranceType());
+			demographicsInsert.setString(4, patientDto.getDemographics().getGender());
+			demographicsInsert.setString(5, patientDto.getDemographics().getRace());
+			demographicsInsert.setBoolean(6, patientDto.getDemographics().isVeteran());
+			demographicsInsert.setString(7, patientDto.getDemographics().getReligion());
+			demographicsInsert.setString(8, patientDto.getDemographics().getMaritalStatus());
+			demographicsInsert.setString(9, patientDto.getDemographics().getEducationLevel());
+			demographicsInsert.setString(10, patientDto.getDemographics().getEducationType());
+			demographicsInsert.setString(11, patientDto.getDemographics().getLivingArrangement());
+			demographicsInsert.setString(12, patientDto.getDemographics().getEmployment());
 //			demographicsInsert.setString(13, patient.getDemographics().getIncomeSources()[0]);
 			demographicsInsert.setString(13, null);
 //			demographicsInsert.setString(14, patient.getDemographics().getIncomeSources()[1]);
@@ -373,27 +362,27 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 			demographicsInsert.setString(15, null);
 //			demographicsInsert.setString(16, patient.getDemographics().getAllergies()[0]);
 			demographicsInsert.setString(16, null);
-			demographicsInsert.setBoolean(17, patient.getDemographics().isSmd());
-			demographicsInsert.setBoolean(18, patient.getDemographics().isAlcoholDrug());
-			demographicsInsert.setBoolean(19, patient.getDemographics().isForensic());
-			demographicsInsert.setBoolean(20, patient.getDemographics().isDd());
-			demographicsInsert.setBoolean(21, patient.getDemographics().isMimr());
-			demographicsInsert.setBoolean(22, patient.getDemographics().isDuidwi());
-			demographicsInsert.setBoolean(23, patient.getDemographics().isDeaf());
-			demographicsInsert.setBoolean(24, patient.getDemographics().isHearingImpaired());
-			demographicsInsert.setBoolean(25, patient.getDemographics().isBlind());
-			demographicsInsert.setBoolean(26, patient.getDemographics().isVisuallyImpaired());
-			demographicsInsert.setBoolean(27, patient.getDemographics().isPhyDisabled());
-			demographicsInsert.setBoolean(28, patient.getDemographics().isSpeechImpaired());
-			demographicsInsert.setBoolean(29, patient.getDemographics().isPhysicalAbuse());
-			demographicsInsert.setBoolean(30, patient.getDemographics().isSexualAbuse());
-			demographicsInsert.setBoolean(31, patient.getDemographics().isDomesticViolence());
-			demographicsInsert.setBoolean(32, patient.getDemographics().isChildAlcDrug());
-			demographicsInsert.setBoolean(33, patient.getDemographics().isHivAids());
-			demographicsInsert.setBoolean(34, patient.getDemographics().isSuicidal());
-			demographicsInsert.setBoolean(35, patient.getDemographics().isSchoolDropout());
-			demographicsInsert.setBoolean(36, patient.getDemographics().isProbationParole());
-			demographicsInsert.setBoolean(37, patient.getDemographics().isGeneralPopulation());
+			demographicsInsert.setBoolean(17, patientDto.getDemographics().isSmd());
+			demographicsInsert.setBoolean(18, patientDto.getDemographics().isAlcoholDrug());
+			demographicsInsert.setBoolean(19, patientDto.getDemographics().isForensic());
+			demographicsInsert.setBoolean(20, patientDto.getDemographics().isDd());
+			demographicsInsert.setBoolean(21, patientDto.getDemographics().isMimr());
+			demographicsInsert.setBoolean(22, patientDto.getDemographics().isDuidwi());
+			demographicsInsert.setBoolean(23, patientDto.getDemographics().isDeaf());
+			demographicsInsert.setBoolean(24, patientDto.getDemographics().isHearingImpaired());
+			demographicsInsert.setBoolean(25, patientDto.getDemographics().isBlind());
+			demographicsInsert.setBoolean(26, patientDto.getDemographics().isVisuallyImpaired());
+			demographicsInsert.setBoolean(27, patientDto.getDemographics().isPhyDisabled());
+			demographicsInsert.setBoolean(28, patientDto.getDemographics().isSpeechImpaired());
+			demographicsInsert.setBoolean(29, patientDto.getDemographics().isPhysicalAbuse());
+			demographicsInsert.setBoolean(30, patientDto.getDemographics().isSexualAbuse());
+			demographicsInsert.setBoolean(31, patientDto.getDemographics().isDomesticViolence());
+			demographicsInsert.setBoolean(32, patientDto.getDemographics().isChildAlcDrug());
+			demographicsInsert.setBoolean(33, patientDto.getDemographics().isHivAids());
+			demographicsInsert.setBoolean(34, patientDto.getDemographics().isSuicidal());
+			demographicsInsert.setBoolean(35, patientDto.getDemographics().isSchoolDropout());
+			demographicsInsert.setBoolean(36, patientDto.getDemographics().isProbationParole());
+			demographicsInsert.setBoolean(37, patientDto.getDemographics().isGeneralPopulation());
 			demographicsInsert.setString(38, getStaffId(sessionId));
 
 			demographicsInsert.executeUpdate();
