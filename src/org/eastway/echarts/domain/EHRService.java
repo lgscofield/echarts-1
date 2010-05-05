@@ -22,6 +22,7 @@ public class EHRService {
 	public EHR createEhr(Patient subject, Date timeCreated) {
 		EHR ehr = new EHR();
 		ehr.setSubject(subject);
+		ehr.setTimeCreated(timeCreated);
 		getEntityManager().persist(ehr);
 		return ehr;
 	}
