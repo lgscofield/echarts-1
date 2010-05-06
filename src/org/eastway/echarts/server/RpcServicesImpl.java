@@ -73,6 +73,8 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		ArrayList<Long> patientIds = new ArrayList<Long>();
 		patientIds.add(ehr.getSubject().getId());
 		ehrDto.setPatientIds(patientIds);
+		em.close();
+		emf.close();
 		return ehrDto;
 	}
 
@@ -98,7 +100,8 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		patientDto.setPatientId(patient.getId());
 		patientDto.setSsn(patient.getSsn());
 		patientDto.setSuffix(patient.getSuffix());
-
+		em.close();
+		emf.close();
 		return patientDto;
 	}
 
@@ -640,7 +643,8 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		demographicsDto.setSuicidal(demographics.isSuicidal());
 		demographicsDto.setVeteran(demographics.isVeteran());
 		demographicsDto.setVisuallyImpaired(demographics.isVisuallyImpaired());
-
+		em.close();
+		emf.close();
 		return demographicsDto;
 	}
 }
