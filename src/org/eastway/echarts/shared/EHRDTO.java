@@ -18,12 +18,10 @@ package org.eastway.echarts.shared;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.eastway.echarts.domain.Patient;
-
 @SuppressWarnings("serial")
 public class EHRDTO implements Serializable {
 	private long id;
-	private Patient subject;
+	private PatientDTO subject;
 	private Date timeCreated;
 
 	public EHRDTO() { }
@@ -48,11 +46,11 @@ public class EHRDTO implements Serializable {
 		return timeCreated;
 	}
 
-	public void setSubject(Patient subject) {
+	public void setSubject(PatientDTO subject) {
 		this.subject = subject;
 	}
 
-	public Patient getSubject() {
+	public PatientDTO getSubject() {
 		return subject;
 	}
 }
