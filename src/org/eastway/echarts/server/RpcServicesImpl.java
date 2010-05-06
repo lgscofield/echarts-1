@@ -130,7 +130,63 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 
 		em.getTransaction().begin();
 		EHR ehr = ehrService.find(ehrDto.getId());
-		Patient patient = getPatient(ehrDto.getSubject());
+
+		PatientDTO patientDto = ehrDto.getSubject();
+		PatientService patientService = new PatientService(em);
+		Patient patient = patientService.create(patientDto.getAlias(),
+				patientDto.getCaseNumber(),
+				patientDto.getCaseStatus(),
+				ehr.getId(),
+				patientDto.getFirstName(),
+				patientDto.getLastEdit(),
+				patientDto.getLastEditBy(),
+				patientDto.getLastName(),
+				patientDto.getMiddleInitial(),
+				patientDto.getSsn(),
+				patientDto.getSuffix());
+
+		DemographicsService demographicsService = new DemographicsService(em);
+		DemographicsDTO demographicsDto = patientDto.getDemographics();
+		demographicsService.create(demographicsDto.getGender(),
+				demographicsDto.getRace(),
+				demographicsDto.getMaritalStatus(),
+				demographicsDto.getLivingArrangement(),
+				demographicsDto.getEmployment(),
+				demographicsDto.getIncomeSources(),
+				demographicsDto.getEducationLevel(),
+				demographicsDto.getEducationType(),
+				demographicsDto.getAllergies(),
+				demographicsDto.getInsuranceType(),
+				demographicsDto.getPreferredLanguage(),
+				demographicsDto.getEthnicity(),
+				demographicsDto.getReligion(),
+				patient.getId(),
+				demographicsDto.isVeteran(),
+				demographicsDto.isSmd(),
+				demographicsDto.isAlcoholDrug(),
+				demographicsDto.isForensic(),
+				demographicsDto.isDd(),
+				demographicsDto.isMimr(),
+				demographicsDto.isDuidwi(),
+				demographicsDto.isDeaf(),
+				demographicsDto.isHearingImpaired(),
+				demographicsDto.isBlind(),
+				demographicsDto.isVisuallyImpaired(),
+				demographicsDto.isPhyDisabled(),
+				demographicsDto.isSpeechImpaired(),
+				demographicsDto.isPhysicalAbuse(),
+				demographicsDto.isSexualAbuse(),
+				demographicsDto.isDomesticViolence(),
+				demographicsDto.isChildAlcDrug(),
+				demographicsDto.isHivAids(),
+				demographicsDto.isSuicidal(),
+				demographicsDto.isSchoolDropout(),
+				demographicsDto.isProbationParole(),
+				demographicsDto.isGeneralPopulation(),
+				demographicsDto.getDob(),
+				new Date(System.currentTimeMillis()),
+				demographicsDto.getLastEditBy());
+
 		ehr.setSubject(patient);
 		em.persist(ehr);
 		em.getTransaction().commit();
@@ -180,7 +236,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 				demographicsDto.getPreferredLanguage(),
 				demographicsDto.getEthnicity(),
 				demographicsDto.getReligion(),
-				ehr.getId(),
+				patient.getId(),
 				demographicsDto.isVeteran(),
 				demographicsDto.isSmd(),
 				demographicsDto.isAlcoholDrug(),
