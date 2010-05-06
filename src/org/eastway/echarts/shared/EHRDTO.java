@@ -16,33 +16,43 @@
 package org.eastway.echarts.shared;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
+
+import org.eastway.echarts.domain.Patient;
 
 @SuppressWarnings("serial")
 public class EHRDTO implements Serializable {
-	private List<Long> patientIds;
-	private long ehrId;
+	private long id;
+	private Patient subject;
+	private Date timeCreated;
 
 	public EHRDTO() { }
 
-	public EHRDTO(long ehrId, List<Long> patientIds) {
-		this.setEhrId(ehrId);
-		this.setPatientIds(patientIds);
+	public EHRDTO(long id) {
+		this.setId(id);
 	}
 
-	public void setPatientIds(List<Long> patientIds) {
-		this.patientIds = patientIds;
+	public void setId(long id) {
+		this.id = id;
 	}
 
-	public List<Long> getPatientIds() {
-		return patientIds;
+	public long getId() {
+		return id;
 	}
 
-	public void setEhrId(long ehrId) {
-		this.ehrId = ehrId;
+	public void setTimeCreated(Date timeCreated) {
+		this.timeCreated = timeCreated;
 	}
 
-	public long getEhrId() {
-		return ehrId;
+	public Date getTimeCreated() {
+		return timeCreated;
+	}
+
+	public void setSubject(Patient subject) {
+		this.subject = subject;
+	}
+
+	public Patient getSubject() {
+		return subject;
 	}
 }
