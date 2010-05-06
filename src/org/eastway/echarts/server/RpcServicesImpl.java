@@ -37,6 +37,7 @@ import javax.persistence.Persistence;
 import org.eastway.echarts.client.RpcServices;
 import org.eastway.echarts.domain.Alert;
 import org.eastway.echarts.domain.AlertService;
+import org.eastway.echarts.domain.Demographics;
 import org.eastway.echarts.domain.DemographicsService;
 import org.eastway.echarts.domain.EHR;
 import org.eastway.echarts.domain.EHRService;
@@ -66,7 +67,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
 		EntityManager em = emf.createEntityManager();
 		EHRService ehrService = new EHRService(em);
-		EHR ehr = ehrService.findEhr(ehrId);
+		EHR ehr = ehrService.find(ehrId);
 		EHRDTO ehrDto = new EHRDTO();
 		ehrDto.setEhrId(ehr.getId());
 		ArrayList<Long> patientIds = new ArrayList<Long>();
@@ -79,85 +80,26 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 	public PatientDTO getPatient(long patientId, String sessionId)
 			throws SessionExpiredException, DbException {
 		checkSessionExpire(sessionId);
-		String sql = "SELECT * FROM Patient INNER JOIN Demographics ON Patient.Patient_Id = Demographics.Patient_Id WHERE Patient.Patient_Id = "
-			+ patientId;
-		Connection con = null;
-		Statement stmt = null;
-		ResultSet srs = null;
-		try {
-			con = DbConnection.getConnection();
-			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
-			srs = stmt.executeQuery(sql);
-			if (srs.next()) {
-				String[] incomeSources = {
-						srs.getString("IncomeSource1"),
-						srs.getString("IncomeSource2"),
-						srs.getString("IncomeSource3")
-				};
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
+		EntityManager em = emf.createEntityManager();
+		PatientService patientService = new PatientService(em);
+		Patient patient = patientService.find(patientId);
+		PatientDTO patientDto = new PatientDTO();
 
-				String[] allergies = {
-						srs.getString("Allergies")
-				};
+		patientDto.setAlias(patient.getAlias());
+		patientDto.setCaseNumber(patient.getCaseNumber());
+		patientDto.setCaseStatus(patient.getCaseStatus());
+		patientDto.setDemographics(getDemographics(patientId, sessionId));
+		patientDto.setFirstName(patient.getFirstName());
+		patientDto.setLastEdit(patient.getLastEdit());
+		patientDto.setLastEditBy(patient.getLastEditBy());
+		patientDto.setLastName(patient.getLastName());
+		patientDto.setMiddleInitial(patient.getMiddleInitial());
+		patientDto.setPatientId(patient.getId());
+		patientDto.setSsn(patient.getSsn());
+		patientDto.setSuffix(patient.getSuffix());
 
-				DemographicsDTO d = new DemographicsDTO(srs.getString("Gender"),
-						srs.getString("Race"),
-						srs.getString("MaritalStatus"),
-						srs.getString("LivingArrangement"),
-						srs.getString("Employment"),
-						incomeSources,
-						srs.getString("EducationLevel"),
-						srs.getString("EducationType"),
-						allergies,
-						null,
-						null,
-						null,
-						null,
-						srs.getBoolean("Veteran"),
-						srs.getBoolean("SP_SMD"),
-						srs.getBoolean("SP_AlcoholDrug"),
-						srs.getBoolean("SP_Forensic"),
-						srs.getBoolean("SP_DD"),
-						srs.getBoolean("SP_MIMR"),
-						srs.getBoolean("SP_DUIDWI"),
-						srs.getBoolean("SP_DEAF"),
-						srs.getBoolean("SP_HearingImpaired"),
-						srs.getBoolean("SP_Blind"),
-						srs.getBoolean("SP_VisuallyImpaired"),
-						srs.getBoolean("SP_PhyDisabled"),
-						srs.getBoolean("SP_SpeechImpaired"),
-						srs.getBoolean("SP_PhysicalAbuse"),
-						srs.getBoolean("SP_SexualAbuse"),
-						srs.getBoolean("SP_DomesticViolence"),
-						srs.getBoolean("SP_ChildAlcDrug"),
-						srs.getBoolean("SP_HIVAIDS"),
-						srs.getBoolean("SP_Suicidal"),
-						srs.getBoolean("SP_SchoolDropout"),
-						srs.getBoolean("SP_ProbationParole"),
-						srs.getBoolean("SP_GeneralPopulation"),
-						srs.getDate("DOB"),
-						srs.getDate("LastEdit"),
-						srs.getString("LastEditBy"));
-				PatientDTO p = new PatientDTO(srs.getString("Alias"),
-					srs.getString("CaseNumber"),
-					srs.getString("CaseStatus"),
-					srs.getString("FirstName"),
-					srs.getDate("LastEdit"),
-					srs.getString("LastEditBy"),
-					srs.getString("LastName"),
-					srs.getString("MiddleInitial"),
-					srs.getLong("Patient_Id"),
-					srs.getString("SSN"),
-					srs.getString("Suffix"),
-					d);
-				return p;
-			}
-			return null;
-		} catch (SQLException e) {
-			throw new DbException(e);
-		} catch (NamingException e) {
-			throw new DbException("Naming exception");
-		}
+		return patientDto;
 	}
 
 	@Override
@@ -285,7 +227,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		EHR ehr = new EHR();
 		em.persist(ehr);
 
-		Patient patient = patientService.createPatient(patientDto.getAlias(),
+		Patient patient = patientService.create(patientDto.getAlias(),
 				patientDto.getCaseNumber(),
 				patientDto.getCaseStatus(),
 				ehr.getId(),
@@ -370,7 +312,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
 		EntityManager em = emf.createEntityManager();
 		AlertService service = new AlertService(em);
-		List<Alert> alerts = service.findAllAlerts();
+		List<Alert> alerts = service.findAll();
 		Vector<String> alertsDto = new Vector<String>();
 		for (Alert a : alerts)
 			alertsDto.add(a.getPatientId() + " " + a.getItemName() + " " + a.getDate().toString());
@@ -650,5 +592,55 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 			throws SessionExpiredException, DbException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public DemographicsDTO getDemographics(long id, String sessionId)
+			throws SessionExpiredException, DbException {
+		checkSessionExpire(sessionId);
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
+		EntityManager em = emf.createEntityManager();
+		DemographicsService demographicsService = new DemographicsService(em);
+		Demographics demographics = demographicsService.find(id);
+		DemographicsDTO demographicsDto = new DemographicsDTO();
+
+		demographicsDto.setAlcoholDrug(demographics.isAlcoholDrug());
+		demographicsDto.setAllergies(demographics.getAllergies());
+		demographicsDto.setBlind(demographics.isBlind());
+		demographicsDto.setChildAlcDrug(demographics.isChildAlcDrug());
+		demographicsDto.setDd(demographics.isDd());
+		demographicsDto.setDeaf(demographics.isDeaf());
+		demographicsDto.setDob(demographics.getDob());
+		demographicsDto.setDomesticViolence(demographics.isDomesticViolence());
+		demographicsDto.setDuidwi(demographics.isDuidwi());
+		demographicsDto.setEducationLevel(demographics.getEducationLevel());
+		demographicsDto.setEducationType(demographics.getEducationType());
+		demographicsDto.setEmployment(demographics.getEmployment());
+		demographicsDto.setEthnicity(demographics.getEthnicity());
+		demographicsDto.setForensic(demographics.isForensic());
+		demographicsDto.setGender(demographics.getGender());
+		demographicsDto.setGeneralPopulation(demographics.isGeneralPopulation());
+		demographicsDto.setHearingImpaired(demographics.isHearingImpaired());
+		demographicsDto.setHivAids(demographics.isHivAids());
+		demographicsDto.setIncomeSources(demographics.getIncomeSources());
+		demographicsDto.setInsuranceType(demographics.getInsuranceType());
+		demographicsDto.setLastEdit(demographics.getLastEdit());
+		demographicsDto.setLastEditBy(demographics.getLastEditBy());
+		demographicsDto.setLivingArrangement(demographics.getLivingArrangement());
+		demographicsDto.setMaritalStatus(demographics.getMaritalStatus());
+		demographicsDto.setMimr(demographics.isMimr());
+		demographicsDto.setPhyDisabled(demographics.isPhyDisabled());
+		demographicsDto.setPhysicalAbuse(demographics.isPhysicalAbuse());
+		demographicsDto.setPreferredLanguage(demographics.getPreferredLanguage());
+		demographicsDto.setProbationParole(demographics.isProbationParole());
+		demographicsDto.setRace(demographics.getRace());
+		demographicsDto.setSchoolDropout(demographics.isSchoolDropout());
+		demographicsDto.setSexualAbuse(demographics.isSexualAbuse());
+		demographicsDto.setSmd(demographics.isSmd());
+		demographicsDto.setSpeechImpaired(demographics.isSpeechImpaired());
+		demographicsDto.setSuicidal(demographics.isSuicidal());
+		demographicsDto.setVeteran(demographics.isVeteran());
+		demographicsDto.setVisuallyImpaired(demographics.isVisuallyImpaired());
+
+		return demographicsDto;
 	}
 }
