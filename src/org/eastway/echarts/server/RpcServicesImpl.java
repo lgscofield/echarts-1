@@ -63,26 +63,16 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 	public EHRDTO getEhr(long ehrId, String sessionId)
 			throws SessionExpiredException, DbException {
 		checkSessionExpire(sessionId);
-		String sql = "SELECT * FROM Patient INNER JOIN Ehr on Ehr.subject_id = Patient.Patient_id WHERE EHR.ehr_id = " + ehrId + " ORDER BY Patient_Id";
-		Connection con = null;
-		Statement stmt = null;
-		ResultSet srs = null;
-		List<Long> patientIds = new ArrayList<Long>();
-		try {
-			con = DbConnection.getConnection();
-			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
-			srs = stmt.executeQuery(sql);
-
-			while (srs.next())
-				patientIds.add(srs.getLong("Patient_Id"));
-			EHRDTO ehr = new EHRDTO(ehrId, patientIds);
-			return ehr;
-		} catch (SQLException e) {
-			throw new DbException(e);
-		} catch (NamingException e) {
-			throw new DbException("Naming exception");
-		}
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
+		EntityManager em = emf.createEntityManager();
+		EHRService ehrService = new EHRService(em);
+		EHR ehr = ehrService.findEhr(ehrId);
+		EHRDTO ehrDto = new EHRDTO();
+		ehrDto.setEhrId(ehr.getId());
+		ArrayList<Long> patientIds = new ArrayList<Long>();
+		patientIds.add(ehr.getSubject().getId());
+		ehrDto.setPatientIds(patientIds);
+		return ehrDto;
 	}
 
 	@Override
