@@ -97,6 +97,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		patientDto.setLastName(patient.getLastName());
 		patientDto.setMiddleInitial(patient.getMiddleInitial());
 		patientDto.setId(patient.getId());
+		patientDto.setEhrId(patient.getEhrId());
 		patientDto.setSsn(patient.getSsn());
 		patientDto.setSuffix(patient.getSuffix());
 		em.close();
@@ -125,11 +126,11 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		checkSessionExpire(sessionId);
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
 		EntityManager em = emf.createEntityManager();
+		EHRService ehrService = new EHRService(em);
 
 		em.getTransaction().begin();
-		EHR ehr = new EHR();
+		EHR ehr = ehrService.find(ehrDto.getId());
 		Patient patient = getPatient(ehrDto.getSubject());
-		ehr.setId(ehrDto.getId());
 		ehr.setSubject(patient);
 		em.persist(ehr);
 		em.getTransaction().commit();
