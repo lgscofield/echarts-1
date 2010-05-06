@@ -24,6 +24,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.TableGenerator;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Demographics {
@@ -72,6 +73,7 @@ public class Demographics {
 	private boolean isProbationParole;
 	private boolean isGeneralPopulation;
 	private Date dob;
+	@NotNull
 	private Date lastEdit;
 	private String lastEditBy;
 

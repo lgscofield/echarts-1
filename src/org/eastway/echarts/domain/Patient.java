@@ -24,6 +24,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.TableGenerator;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Patient {
@@ -47,6 +48,7 @@ public class Patient {
 	private String caseStatus;
 	private String ssn;
 	private String lastEditBy;
+	@NotNull
 	private Date lastEdit;
 
 	public Patient() { }
