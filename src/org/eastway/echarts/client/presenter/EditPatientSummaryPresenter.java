@@ -20,6 +20,7 @@ import java.util.Date;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.UserImpl;
+import org.eastway.echarts.shared.EHRDTO;
 import org.eastway.echarts.shared.PatientDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -133,17 +134,20 @@ public class EditPatientSummaryPresenter extends Presenter<EditPatientSummaryPre
 		//patient.setPhone(display.getPhone().getText());
 		//patient.setAltPhone(display.getAltPhone().getText());
 
-		AsyncCallback<PatientDTO> callback = new AsyncCallback<PatientDTO>() {
+		EHRDTO ehr = new EHRDTO(patient.getEhrId());
+		ehr.setSubject(patient);
+
+		AsyncCallback<EHRDTO> callback = new AsyncCallback<EHRDTO>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				new HandleRpcException(caught);
 			}
 
 			@Override
-			public void onSuccess(PatientDTO result) {
+			public void onSuccess(EHRDTO result) {
 				;
 			}
 		};
-		rpcServices.editEhr(patient, UserImpl.getSessionId(), callback);
+		rpcServices.editEhr(ehr, UserImpl.getSessionId(), callback);
 	}
 }
