@@ -34,7 +34,7 @@ public class AlertService {
 		return em;
 	}
 
-	public Alert createAlert(int id, String patientId, String name, String itemName,
+	public Alert create(int id, String patientId, String name, String itemName,
 			Date date) {
 		Alert alert = new Alert(id);
 		alert.setPatientId(patientId);
@@ -45,17 +45,17 @@ public class AlertService {
 		return alert;
 	}
 
-	public void removeAlert(int id) {
-		Alert alert = findAlert(id);
+	public void remove(int id) {
+		Alert alert = find(id);
 		if (alert != null)
 			getEntityManager().remove(alert);
 	}
 
-	public Alert findAlert(int id) {
+	public Alert find(int id) {
 		return getEntityManager().find(Alert.class, id);
 	}
 
-	public List<Alert> findAllAlerts() {
+	public List<Alert> findAll() {
 		TypedQuery<Alert> query = getEntityManager().createQuery(
 				"SELECT a FROM Alert a", Alert.class);
 		return query.getResultList();

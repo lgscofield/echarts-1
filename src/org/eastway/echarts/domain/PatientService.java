@@ -34,7 +34,7 @@ public class PatientService {
 		return em;
 	}
 
-	public Patient createPatient(String alias,
+	public Patient create(String alias,
 			String caseNumber,
 			String caseStatus,
 			long ehrId,
@@ -61,17 +61,17 @@ public class PatientService {
 		return patient;
 	}
 
-	public void removePatient(long id) {
+	public void remove(long id) {
 		Patient patient = getEntityManager().find(Patient.class, id);
 		if (patient != null)
 			getEntityManager().remove(patient);
 	}
 
-	public Patient findPatient(long id) {
+	public Patient find(long id) {
 		return getEntityManager().find(Patient.class, id);
 	}
 
-	public List<Patient> findAllPatients() {
+	public List<Patient> findAll() {
 		TypedQuery<Patient> query = getEntityManager().createQuery(
 				"SELECT p FROM Patient p", Patient.class);
 		return query.getResultList();

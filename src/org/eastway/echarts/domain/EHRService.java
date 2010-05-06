@@ -34,7 +34,7 @@ public class EHRService {
 		return em;
 	}
 
-	public EHR createEhr(Patient subject, Date timeCreated) {
+	public EHR create(Patient subject, Date timeCreated) {
 		EHR ehr = new EHR();
 		ehr.setSubject(subject);
 		ehr.setTimeCreated(timeCreated);
@@ -42,7 +42,7 @@ public class EHRService {
 		return ehr;
 	}
 
-	public EHR findEhr(long ehrId) {
+	public EHR find(long ehrId) {
 		return getEntityManager().find(EHR.class, ehrId);
 	}
 
