@@ -162,7 +162,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE VIEW [dbo].[VDisplayDemographics]
 AS
-SELECT     dbo.Demographics.Gender, dbo.Demographics.DOB, dbo.Demographics.Race, dbo.Demographics.Veteran, dbo.Demographics.Religion, 
+SELECT     dbo.Demographics.Gender, dbo.Demographics.DOB, dbo.Demographics.Race, dbo.Demographics.IsVeteran, dbo.Demographics.Religion, 
                       dbo.Demographics.MaritalStatus, dbo.Demographics.EducationLevel, dbo.Demographics.EducationType, dbo.Demographics.LivingArrangement, 
                       dbo.Demographics.Employment, dbo.Demographics.IncomeSource1, dbo.Demographics.IncomeSource2, dbo.Demographics.IncomeSource3, 
                       dbo.Demographics.Allergies, dbo.Demographics.IsSMD, dbo.Demographics.IsAlcoholDrug, dbo.Demographics.IsForensic, dbo.Demographics.IsDD, 
