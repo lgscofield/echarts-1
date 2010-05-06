@@ -69,10 +69,9 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		EHRService ehrService = new EHRService(em);
 		EHR ehr = ehrService.find(ehrId);
 		EHRDTO ehrDto = new EHRDTO();
-		ehrDto.setEhrId(ehr.getId());
-		ArrayList<Long> patientIds = new ArrayList<Long>();
-		patientIds.add(ehr.getSubject().getId());
-		ehrDto.setPatientIds(patientIds);
+		ehrDto.setId(ehr.getId());
+		ehrDto.setSubject(ehr.getSubject());
+		ehrDto.setTimeCreated(ehr.getTimeCreated());
 		em.close();
 		emf.close();
 		return ehrDto;
