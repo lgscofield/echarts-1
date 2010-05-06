@@ -105,22 +105,6 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		return patientDto;
 	}
 
-	private Patient getPatient(PatientDTO patientDto) {
-		Patient patient = new Patient();
-		patient.setAlias(patientDto.getAlias());
-		patient.setCaseNumber(patientDto.getCaseNumber());
-		patient.setCaseStatus(patientDto.getCaseStatus());
-		patient.setFirstName(patientDto.getFirstName());
-		patient.setLastEdit(patientDto.getLastEdit());
-		patient.setLastEditBy(patientDto.getLastEditBy());
-		patient.setLastName(patientDto.getLastName());
-		patient.setMiddleInitial(patientDto.getMiddleInitial());
-		patient.setId(patientDto.getId());
-		patient.setSsn(patientDto.getSsn());
-		patient.setSuffix(patientDto.getSuffix());
-		return patient;
-	}
-
 	@Override
 	public EHRDTO editEhr(EHRDTO ehrDto, String sessionId) throws SessionExpiredException, DbException {
 		checkSessionExpire(sessionId);
