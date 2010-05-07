@@ -17,8 +17,6 @@ package org.eastway.echarts.dashboard.client;
 
 import org.eastway.echarts.client.EHRServices;
 import org.eastway.echarts.client.EHRServicesAsync;
-import org.eastway.echarts.client.PatientServices;
-import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.presenter.EditPatientSummaryPresenter;
 import org.eastway.echarts.client.presenter.FormsPresenter;

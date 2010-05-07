@@ -19,7 +19,6 @@ import java.util.Date;
 
 import org.eastway.echarts.client.EHRServicesAsync;
 import org.eastway.echarts.client.HandleRpcException;
-import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.UserImpl;
 import org.eastway.echarts.shared.DemographicsDTO;
 import org.eastway.echarts.shared.EHRDTO;
