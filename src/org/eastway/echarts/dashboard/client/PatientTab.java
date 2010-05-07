@@ -15,6 +15,10 @@
  */
 package org.eastway.echarts.dashboard.client;
 
+import org.eastway.echarts.client.EHRServices;
+import org.eastway.echarts.client.EHRServicesAsync;
+import org.eastway.echarts.client.PatientServices;
+import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.presenter.EditPatientSummaryPresenter;
 import org.eastway.echarts.client.presenter.FormsPresenter;
@@ -26,6 +30,7 @@ import org.eastway.echarts.client.view.MessagesView;
 import org.eastway.echarts.client.view.PatientSummaryView;
 import org.eastway.echarts.shared.PatientDTO;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
@@ -57,12 +62,12 @@ public class PatientTab extends Composite implements SelectionHandler<TreeItem> 
 
 		TreeItem patientMenuItem = menu.addItem("Patient Summary");
 		patientMenuItem.setUserObject(patientPanel);
-		pp = new PatientSummaryPresenter(new PatientSummaryView(), eventBus, rpcServices, patient);
+		pp = new PatientSummaryPresenter(new PatientSummaryView(), eventBus, GWT.<EHRServicesAsync>create(EHRServices.class), patient);
 		pp.go(patientPanel);
 
 		TreeItem editPatientMenuItem = patientMenuItem.addItem("Edit");
 		editPatientMenuItem.setUserObject(editPatientPanel);
-		ep = new EditPatientSummaryPresenter(new EditPatientSummaryView(), eventBus, rpcServices, patient);
+		ep = new EditPatientSummaryPresenter(new EditPatientSummaryView(), eventBus, GWT.<EHRServicesAsync>create(EHRServices.class), patient);
 		ep.go(editPatientPanel);
 
 		TreeItem messageMenuItem = menu.addItem("Messages");

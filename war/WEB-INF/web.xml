@@ -22,9 +22,33 @@
 		<servlet-name>rpcServicesImpl</servlet-name>
 		<servlet-class>org.eastway.echarts.server.RpcServicesImpl</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>ehrServicesImpl</servlet-name>
+		<servlet-class>org.eastway.echarts.server.EHRServicesImpl</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>patientServicesImpl</servlet-name>
+		<servlet-class>org.eastway.echarts.server.PatientServicesImpl</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>demographicsServicesImpl</servlet-name>
+		<servlet-class>org.eastway.echarts.server.DemographicsServicesImpl</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>rpcServicesImpl</servlet-name>
 		<url-pattern>/echarts/rpcServices</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ehrServicesImpl</servlet-name>
+		<url-pattern>/echarts/ehrServices</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>patientServicesImpl</servlet-name>
+		<url-pattern>/echarts/patientServices</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>demographicsServicesImpl</servlet-name>
+		<url-pattern>/echarts/demographicsServices</url-pattern>
 	</servlet-mapping>
 	<session-config>
 		<session-timeout>60</session-timeout>

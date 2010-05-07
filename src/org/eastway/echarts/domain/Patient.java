@@ -26,18 +26,20 @@ import javax.persistence.OneToOne;
 import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotNull;
 
+import org.eastway.echarts.shared.PatientDTO;
+
 @Entity
 public class Patient {
 	@Id
-	@TableGenerator(name="tg", allocationSize=1)
-	@GeneratedValue(strategy=GenerationType.TABLE, generator="tg")
-	@Column(name="Patient_Id")
+	@TableGenerator(name = "tg", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "tg")
+	@Column(name = "Patient_Id")
 	private long id;
 
-	@OneToOne(mappedBy="subject")
+	@OneToOne(mappedBy = "subject")
 	private EHR ehr;
 
-	@Column(name="ehr_id")
+	@Column(name = "ehr_id")
 	private long ehrId;
 	private String caseNumber;
 	private String firstName;
@@ -51,7 +53,7 @@ public class Patient {
 	@NotNull
 	private Date lastEdit;
 
-	public Patient() { }
+	public Patient() {}
 
 	public Patient(long id) {
 		this.setId(id);
@@ -163,5 +165,22 @@ public class Patient {
 
 	public String getMiddleInitial() {
 		return middleInitial;
+	}
+
+	public PatientDTO toDto() {
+		PatientDTO patientDto = new PatientDTO();
+		patientDto.setAlias(this.getAlias());
+		patientDto.setCaseNumber(this.getCaseNumber());
+		patientDto.setCaseStatus(this.getCaseStatus());
+		patientDto.setFirstName(this.getFirstName());
+		patientDto.setLastEdit(this.getLastEdit());
+		patientDto.setLastEditBy(this.getLastEditBy());
+		patientDto.setLastName(this.getLastName());
+		patientDto.setMiddleInitial(this.getMiddleInitial());
+		patientDto.setId(this.getId());
+		patientDto.setEhrId(this.getEhrId());
+		patientDto.setSsn(this.getSsn());
+		patientDto.setSuffix(this.getSuffix());
+		return patientDto;
 	}
 }

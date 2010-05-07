@@ -17,7 +17,7 @@ package org.eastway.echarts.client.presenter;
 
 import java.util.LinkedHashSet;
 
-import org.eastway.echarts.client.RpcServicesAsync;
+import org.eastway.echarts.client.EHRServicesAsync;
 import org.eastway.echarts.shared.PatientDTO;
 
 import com.google.gwt.event.shared.HandlerManager;
@@ -28,7 +28,7 @@ public class PatientSummaryPresenter extends Presenter<PatientSummaryPresenter.D
 	private PatientDTO patient;
 
 	public PatientSummaryPresenter(Display display,
-			HandlerManager eventBus, RpcServicesAsync singleton,
+			HandlerManager eventBus, EHRServicesAsync ehrServicesAsync,
 			PatientDTO patient) {
 		super(display, eventBus);
 		this.patient = patient;

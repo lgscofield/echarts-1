@@ -15,6 +15,8 @@
  */
 package org.eastway.echarts.dashboard.client;
 
+import org.eastway.echarts.client.PatientServices;
+import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.presenter.AlertsPresenter;
 import org.eastway.echarts.client.presenter.EchartsDisplay;
 import org.eastway.echarts.client.presenter.PatientListPresenter;
@@ -24,6 +26,7 @@ import org.eastway.echarts.client.view.AlertsView;
 import org.eastway.echarts.client.view.PatientListView;
 import org.eastway.echarts.client.view.TopPanelView;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.logical.shared.HasSelectionHandlers;
 import com.google.gwt.event.shared.HandlerManager;
@@ -49,6 +52,7 @@ public class CommunitySupportSpecialistDashboardPresenter extends Presenter<Comm
 
 		boolean removeTab(Integer i);
 	}
+	private PatientServicesAsync patientServices = GWT.<PatientServicesAsync>create(PatientServices.class);
 
 	public CommunitySupportSpecialistDashboardPresenter(Display display, HandlerManager eventBus) {
 		super(display, eventBus);
@@ -66,7 +70,7 @@ public class CommunitySupportSpecialistDashboardPresenter extends Presenter<Comm
 	}
 
 	private void fetchTopPanel() {
-		TopPanelPresenter topPanel = new TopPanelPresenter(new TopPanelView(), eventBus);
+		TopPanelPresenter topPanel = new TopPanelPresenter(new TopPanelView(), eventBus, patientServices);
 		display.setTopPanel(topPanel);
 	}
 
@@ -76,7 +80,7 @@ public class CommunitySupportSpecialistDashboardPresenter extends Presenter<Comm
 	}
 
 	public void fetchPatientList() {
-		PatientListPresenter patientList = new PatientListPresenter(new PatientListView(), eventBus);
+		PatientListPresenter patientList = new PatientListPresenter(new PatientListView(), eventBus, patientServices);
 		display.setPatientList(patientList);
 	}
 

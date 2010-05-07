@@ -17,8 +17,8 @@ package org.eastway.echarts.client.presenter;
 
 import java.util.Date;
 
+import org.eastway.echarts.client.EHRServicesAsync;
 import org.eastway.echarts.client.HandleRpcException;
-import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.UserImpl;
 import org.eastway.echarts.shared.EHRDTO;
 import org.eastway.echarts.shared.PatientDTO;
@@ -80,15 +80,15 @@ public class EditPatientSummaryPresenter extends Presenter<EditPatientSummaryPre
 		void setSave(HasClickHandlers save);
 	}
 
-	private RpcServicesAsync rpcServices;
+	private EHRServicesAsync ehrServices;
 	private PatientDTO patient;
 
 	public EditPatientSummaryPresenter(
 			Display display,
-			HandlerManager eventBus, RpcServicesAsync rpcServices,
+			HandlerManager eventBus, EHRServicesAsync ehrServices,
 			PatientDTO patient) {
 		super(display, eventBus);
-		this.rpcServices = rpcServices;
+		this.ehrServices = ehrServices;
 		this.patient = patient;
 	}
 
@@ -148,6 +148,6 @@ public class EditPatientSummaryPresenter extends Presenter<EditPatientSummaryPre
 				;
 			}
 		};
-		rpcServices.editEhr(ehr, UserImpl.getSessionId(), callback);
+		ehrServices.editEhr(ehr, UserImpl.getSessionId(), callback);
 	}
 }

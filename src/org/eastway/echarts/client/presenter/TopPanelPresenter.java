@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 
-import org.eastway.echarts.client.Rpc;
+import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.UserImpl;
 import org.eastway.echarts.client.events.ChangeCurrentPatientEvent;
@@ -50,9 +50,11 @@ public class TopPanelPresenter extends Presenter<TopPanelPresenter.Display> {
 	}
 
 	private LinkedHashMap<String, Long> data;
+	private PatientServicesAsync patientServices;
 
-	public TopPanelPresenter(Display display, HandlerManager eventBus) {
+	public TopPanelPresenter(Display display, HandlerManager eventBus, PatientServicesAsync patientServices) {
 		super(display, eventBus);
+		this.patientServices = patientServices;
 		fetchData();
 		bind();
 	}
@@ -112,7 +114,7 @@ public class TopPanelPresenter extends Presenter<TopPanelPresenter.Display> {
 				setData(data);
 			}
 		};
-		Rpc.singleton().getPatientList(UserImpl.getSessionId(), callback);
+		patientServices.getPatientList(UserImpl.getSessionId(), callback);
 	}
 
 	protected void setData(LinkedHashMap<String, Long> data) {

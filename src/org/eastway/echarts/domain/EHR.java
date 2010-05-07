@@ -26,6 +26,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.TableGenerator;
 
+import org.eastway.echarts.shared.EHRDTO;
+
 @Entity
 public class EHR {
 	@Id
@@ -71,4 +73,11 @@ public class EHR {
 		return subject;
 	}
 
+	public EHRDTO toDto() {
+		EHRDTO ehrDto = new EHRDTO();
+		ehrDto.setId(this.getId());
+		ehrDto.setSubject(this.getSubject().toDto());
+		ehrDto.setTimeCreated(this.getTimeCreated());
+		return ehrDto;
+	}
 }

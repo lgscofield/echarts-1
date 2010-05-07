@@ -17,7 +17,11 @@ package org.eastway.echarts.dashboard.client;
 
 import java.util.Date;
 
+import org.eastway.echarts.client.EHRServices;
+import org.eastway.echarts.client.EHRServicesAsync;
 import org.eastway.echarts.client.HandleRpcException;
+import org.eastway.echarts.client.PatientServices;
+import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.Rpc;
 import org.eastway.echarts.client.UserImpl;
 import org.eastway.echarts.client.events.ChangeCurrentPatientEvent;
@@ -83,12 +87,14 @@ public class AdministratorDashboard extends Composite {
 	@UiField SpanElement productivity;
 	@UiField Anchor gmhIntake;
 
+	private EHRServicesAsync ehrServices = GWT.<EHRServicesAsync>create(EHRServices.class);
+	private PatientServicesAsync patientServices = GWT.<PatientServicesAsync>create(PatientServices.class);
 	private HandlerManager eventBus;
 
 	public AdministratorDashboard(HandlerManager eventBus) {
 		this.eventBus = eventBus;
 		initWidget(uiBinder.createAndBindUi(this));
-		new TopPanelPresenter(top, eventBus);
+		new TopPanelPresenter(top, eventBus, patientServices);
 		AlertsPresenter ap = new AlertsPresenter(new AlertsView(), Rpc.singleton(), eventBus);
 		ap.go(alertsPanel);
 		setProductivity("92");
@@ -165,7 +171,7 @@ public class AdministratorDashboard extends Composite {
 	}
 
 	private void openEditPatient() {
-		AddEhrPresenter epp = new AddEhrPresenter(new AddEhrView(), eventBus, Rpc.singleton());
+		AddEhrPresenter epp = new AddEhrPresenter(new AddEhrView(), eventBus, ehrServices);
 		epp.go();
 		addTab(epp.getDisplay().asWidget(), "New Chart");
 	}
@@ -215,7 +221,7 @@ public class AdministratorDashboard extends Composite {
 				addTab(tb, ehr.getSubject().getName());
 			}
 		};
-		Rpc.singleton().getEhr(ehrId, UserImpl.getSessionId(),
+		ehrServices.getEhr(ehrId, UserImpl.getSessionId(),
 				callback);
 	}
 
@@ -223,7 +229,7 @@ public class AdministratorDashboard extends Composite {
 	void handlePatientList(ClickEvent event) {
 		DialogBox db = new DialogBox();
 		PatientListPresenter plp = new PatientListPresenter(
-				new PatientListView(), eventBus);
+				new PatientListView(), eventBus, patientServices);
 		plp.go(db);
 		db.setText("Open Chart");
 		db.setAutoHideEnabled(true);

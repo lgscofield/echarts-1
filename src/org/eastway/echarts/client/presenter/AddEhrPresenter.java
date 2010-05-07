@@ -17,10 +17,12 @@ package org.eastway.echarts.client.presenter;
 
 import java.util.Date;
 
+import org.eastway.echarts.client.EHRServicesAsync;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.UserImpl;
 import org.eastway.echarts.shared.DemographicsDTO;
+import org.eastway.echarts.shared.EHRDTO;
 import org.eastway.echarts.shared.PatientDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -245,10 +247,10 @@ public class AddEhrPresenter extends Presenter<AddEhrPresenter.Display> {
 		HasText getAlias();
 	}
 
-	private RpcServicesAsync rpcServices;
+	private EHRServicesAsync rpcServices;
 
 	public AddEhrPresenter(Display display, HandlerManager eventBus,
-					RpcServicesAsync rpcServices) {
+					EHRServicesAsync rpcServices) {
 		super(display, eventBus);
 		this.rpcServices = rpcServices;
 	}
@@ -274,8 +276,10 @@ public class AddEhrPresenter extends Presenter<AddEhrPresenter.Display> {
 	}
 
 	private void doFinish() {
+		EHRDTO ehrDto = new EHRDTO();
 		PatientDTO patient = new PatientDTO();
 		DemographicsDTO d = new DemographicsDTO();
+		ehrDto.setSubject(patient);
 		patient.setDemographics(d);
 
 		patient.setCaseNumber(display.getCaseNumber().getText());
@@ -301,6 +305,6 @@ public class AddEhrPresenter extends Presenter<AddEhrPresenter.Display> {
 				;
 			}
 		};
-		rpcServices.addEhr(patient, UserImpl.getSessionId(), callback);
+		rpcServices.addEhr(ehrDto, UserImpl.getSessionId(), callback);
 	}
 }

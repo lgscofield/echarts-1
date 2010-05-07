@@ -26,16 +26,18 @@ import javax.persistence.OneToOne;
 import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotNull;
 
+import org.eastway.echarts.shared.DemographicsDTO;
+
 @Entity
 public class Demographics {
 	@Id
-	@TableGenerator(name="tg", allocationSize=1)
-	@GeneratedValue(strategy=GenerationType.TABLE, generator="tg")
-	@Column(name="Demographics_Id")
+	@TableGenerator(name = "tg", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "tg")
+	@Column(name = "Demographics_Id")
 	private long id;
-	@OneToOne(mappedBy="subject")
+	@OneToOne(mappedBy = "subject")
 	private EHR ehr;
-	@Column(name="Patient_Id")
+	@Column(name = "Patient_Id")
 	private long patientId;
 	private String gender;
 	private String race;
@@ -77,46 +79,25 @@ public class Demographics {
 	private Date lastEdit;
 	private String lastEditBy;
 
-	public Demographics() { }
+	public Demographics() {}
 
-	public Demographics(String gender,
-			String race,
-			String maritalStatus,
-			String livingArrangement,
-			String employment,
-			String[] incomeSources,
-			String educationLevel,
-			String educationType,
-			String[] allergies,
-			String insuranceType,
-			String preferredLanguage,
-			String ethnicity,
-			String religion,
-			boolean isVeteran,
-			boolean isSmd,
-			boolean isAlcoholDrug,
-			boolean isForensic,
-			boolean isDd,
-			boolean isMimr,
-			boolean isDuidwi,
-			boolean isDeaf,
-			boolean isHearingImpaired,
-			boolean isBlind,
-			boolean isVisuallyImpaired,
-			boolean isPhyDisabled,
-			boolean isSpeechImpaired,
-			boolean isPhysicalAbuse,
-			boolean isSexualAbuse,
-			boolean isDomesticViolence,
-			boolean isChildAlcDrug,
-			boolean isHivAids,
-			boolean isSuicidal,
-			boolean isSchoolDropout,
-			boolean isProbationParole,
-			boolean isGeneralPopulation,
-			Date dob,
-			Date lastEdit,
-			String lastEditBy) {
+	public Demographics(String gender, String race, String maritalStatus,
+			String livingArrangement, String employment,
+			String[] incomeSources, String educationLevel,
+			String educationType, String[] allergies,
+			String insuranceType, String preferredLanguage,
+			String ethnicity, String religion, boolean isVeteran,
+			boolean isSmd, boolean isAlcoholDrug,
+			boolean isForensic, boolean isDd, boolean isMimr,
+			boolean isDuidwi, boolean isDeaf,
+			boolean isHearingImpaired, boolean isBlind,
+			boolean isVisuallyImpaired, boolean isPhyDisabled,
+			boolean isSpeechImpaired, boolean isPhysicalAbuse,
+			boolean isSexualAbuse, boolean isDomesticViolence,
+			boolean isChildAlcDrug, boolean isHivAids,
+			boolean isSuicidal, boolean isSchoolDropout,
+			boolean isProbationParole, boolean isGeneralPopulation,
+			Date dob, Date lastEdit, String lastEditBy) {
 		setGender(gender);
 		setRace(race);
 		setMaritalStatus(maritalStatus);
@@ -483,5 +464,51 @@ public class Demographics {
 
 	public String getReligion() {
 		return religion;
+	}
+
+	public DemographicsDTO toDto() {
+		DemographicsDTO demographicsDto = new DemographicsDTO();
+		demographicsDto.setAlcoholDrug(this.isAlcoholDrug());
+		demographicsDto.setAllergies(this.getAllergies());
+		demographicsDto.setBlind(this.isBlind());
+		demographicsDto.setChildAlcDrug(this.isChildAlcDrug());
+		demographicsDto.setDd(this.isDd());
+		demographicsDto.setDeaf(this.isDeaf());
+		demographicsDto.setDob(this.getDob());
+		demographicsDto.setDomesticViolence(this.isDomesticViolence());
+		demographicsDto.setDuidwi(this.isDuidwi());
+		demographicsDto.setEducationLevel(this.getEducationLevel());
+		demographicsDto.setEducationType(this.getEducationType());
+		demographicsDto.setEmployment(this.getEmployment());
+		demographicsDto.setEthnicity(this.getEthnicity());
+		demographicsDto.setForensic(this.isForensic());
+		demographicsDto.setGender(this.getGender());
+		demographicsDto
+				.setGeneralPopulation(this
+						.isGeneralPopulation());
+		demographicsDto.setHearingImpaired(this.isHearingImpaired());
+		demographicsDto.setHivAids(this.isHivAids());
+		demographicsDto.setIncomeSources(this.getIncomeSources());
+		demographicsDto.setInsuranceType(this.getInsuranceType());
+		demographicsDto.setLastEdit(this.getLastEdit());
+		demographicsDto.setLastEditBy(this.getLastEditBy());
+		demographicsDto.setLivingArrangement(this
+				.getLivingArrangement());
+		demographicsDto.setMaritalStatus(this.getMaritalStatus());
+		demographicsDto.setMimr(this.isMimr());
+		demographicsDto.setPhyDisabled(this.isPhyDisabled());
+		demographicsDto.setPhysicalAbuse(this.isPhysicalAbuse());
+		demographicsDto.setPreferredLanguage(this
+				.getPreferredLanguage());
+		demographicsDto.setProbationParole(this.isProbationParole());
+		demographicsDto.setRace(this.getRace());
+		demographicsDto.setSchoolDropout(this.isSchoolDropout());
+		demographicsDto.setSexualAbuse(this.isSexualAbuse());
+		demographicsDto.setSmd(this.isSmd());
+		demographicsDto.setSpeechImpaired(this.isSpeechImpaired());
+		demographicsDto.setSuicidal(this.isSuicidal());
+		demographicsDto.setVeteran(this.isVeteran());
+		demographicsDto.setVisuallyImpaired(this.isVisuallyImpaired());
+		return demographicsDto;
 	}
 }
