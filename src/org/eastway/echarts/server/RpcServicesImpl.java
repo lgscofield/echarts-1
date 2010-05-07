@@ -261,8 +261,6 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		List<EHR> ehrList = service.findAll();
 		for (EHR ehr : ehrList)
 			pl.put(ehr.getSubject().getCaseNumber() + " - " + ehr.getSubject().getName(), ehr.getId());
-		
-		//String sql = "SELECT CaseNumber + ' - ' + LastName + ', ' + FirstName AS SearchString, Ehr.ehr_id FROM Patient INNER JOIN Ehr ON Ehr.subject_id = Patient.Patient_ID ORDER BY LastName";
 		em.close();
 		emf.close();
 		return pl;
