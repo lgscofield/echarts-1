@@ -61,6 +61,8 @@
       <!-- Additional arguments like -style PRETTY or -logLevel DEBUG -->
       <arg line="${gwt.args}"/>
       <arg value="org.eastway.echarts.Echarts"/>
+      <arg value="-bindAddress"/>
+      <arg value="ewihilt.eastway.local"/>
     </java>
   </target>
 
