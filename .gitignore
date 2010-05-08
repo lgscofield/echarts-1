@@ -19,3 +19,6 @@ war/WEB-INF/lib/gwt-servlet.jar
 
 # Inherited modules
 war/org.eastway.echarts*
+
+# Ignore any ant generated reports
+reports
