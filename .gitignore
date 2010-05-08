@@ -2,6 +2,9 @@
 war/echarts
 war/WEB-INF/classes
 
+# We don't care about class files in general
+*.class
+
 # Don't track patch files
 *.patch
 
