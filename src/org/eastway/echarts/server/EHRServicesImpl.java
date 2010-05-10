@@ -71,7 +71,7 @@ public class EHRServicesImpl extends RpcServicesImpl implements EHRServices {
 				patientDto.getCaseStatus(),
 				ehr.getId(),
 				patientDto.getFirstName(),
-				patientDto.getLastEdit(),
+				new Date(System.currentTimeMillis()),
 				patientDto.getLastEditBy(),
 				patientDto.getLastName(),
 				patientDto.getMiddleInitial(),
