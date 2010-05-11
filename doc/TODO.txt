@@ -1,3 +1,5 @@
+Make CaseNumber an entity with its own unique id.
+
 adding clients/creating new clients
 
 discharging existing clients
