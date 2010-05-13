@@ -22,14 +22,14 @@ public interface User {
 		public final static int ADMINISTRATOR		       = 1;
 		public final static int PSYCHIATRIST		       = 2;
 		public final static int NURSE			       = 3;
-		public final static int COMMUNITY_SUPPORT_SPECIALIST   = 5;
-		public final static int THERAPIST	               = 6;
-		public final static int RESIDENTIAL_SUPPORT_SPECIALIST = 7;
-		public final static int CLINICAL_ADMINISTRATOR	       = 8;
-		public final static int HUMAN_RESOURCES		       = 9;
-		public final static int ACCOUNTS_RECEIVABLE 	       = 10;
-		public final static int GENERAL_ADMINISTRATOR 	       = 11;
-		public final static int UNPRIVILEGED 		       = 12;
+		public final static int COMMUNITY_SUPPORT_SPECIALIST   = 4;
+		public final static int THERAPIST	               = 5;
+		public final static int RESIDENTIAL_SUPPORT_SPECIALIST = 6;
+		public final static int CLINICAL_ADMINISTRATOR	       = 7;
+		public final static int HUMAN_RESOURCES		       = 8;
+		public final static int ACCOUNTS_RECEIVABLE 	       = 9;
+		public final static int GENERAL_ADMINISTRATOR 	       = 10;
+		public final static int UNPRIVILEGED 		       = 11;
 	}
 
 	void setStaffId(String staffId);
