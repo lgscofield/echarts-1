@@ -22,7 +22,7 @@ import java.util.Vector;
 import org.eastway.echarts.shared.Message;
 import org.eastway.echarts.shared.Messages;
 import org.eastway.echarts.shared.ServiceCodes;
-import org.eastway.echarts.shared.UserData;
+import org.eastway.echarts.shared.UserDTO;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -37,7 +37,7 @@ public interface RpcServicesAsync {
 
 	public void getServiceCodes(String sessionId, AsyncCallback<ServiceCodes> callback);
 
-	public void getUserData(String username, String cookie, AsyncCallback<UserData> callback);
+	public void getUser(String username, String cookie, AsyncCallback<UserDTO> callback);
 
 	public void getFormsList(String sessionId, String patientId, AsyncCallback<LinkedHashSet<String[]>> callback);
 }

@@ -17,7 +17,7 @@ package org.eastway.echarts.client;
 
 import org.eastway.echarts.appcontroller.client.AdministratorController;
 import org.eastway.echarts.shared.User;
-import org.eastway.echarts.shared.UserData;
+import org.eastway.echarts.shared.UserDTO;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -56,17 +56,17 @@ public class Echarts implements EntryPoint {
 	}
 
 	private void fetchUser(String sessionId) {
-		AsyncCallback<UserData> callback = new AsyncCallback<UserData>() {
+		AsyncCallback<UserDTO> callback = new AsyncCallback<UserDTO>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				new HandleRpcException(caught);
 			}
 
 			@Override
-			public void onSuccess(UserData userData) {
-				userData.initUser();
+			public void onSuccess(UserDTO userDto) {
+				userDto.initUser();
 				UserImpl.setSessionId(Cookies.getCookie("sessionId"));
-				switch (UserImpl.getJobClassId()) {
+				switch (UserImpl.getRoleId()) {
 				case User.Role.ACCOUNTS_RECEIVABLE : break;
 				case User.Role.ADMINISTRATOR :
 					AdministratorController controller = new AdministratorController(new HandlerManager(null));
@@ -84,6 +84,6 @@ public class Echarts implements EntryPoint {
 				}
 			}
 		};
-		Rpc.singleton().getUserData(Cookies.getCookie("echarts_user"), sessionId, callback);
+		Rpc.singleton().getUser(Cookies.getCookie("echarts_user"), sessionId, callback);
 	}
 }

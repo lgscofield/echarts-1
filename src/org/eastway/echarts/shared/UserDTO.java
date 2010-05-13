@@ -16,28 +16,39 @@
 package org.eastway.echarts.shared;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import org.eastway.echarts.client.UserImpl;
 
 @SuppressWarnings("serial")
-public class UserData implements User, Serializable {
-	private String staffId, userName, staffName, program, status, office,
-			officePhone, officeExt, staffDescription, staffNpi;
-	private Integer jobClassId, extendedPermissions;
+public class UserDTO implements User, Serializable {
+	private String staffId;
+	private String userName;
+	private String staffName;
+	private String program;
+	private String status;
+	private String office;
+	private String officePhone;
+	private String officeExt;
+	private String staffDescription;
+	private String staffNpi;
+	private Integer roleId;
+	byte[] extendedPermissions;
 	private Date hireDate, termDate;
+	private long id;
+	private RoleDTO role;
 
 	public void initUser() {
 		new UserImpl(this);
 	}
 
-	public UserData() { };
+	public UserDTO() { };
 
-	public UserData(String staffId, String userName, String staffName,
+	public UserDTO(String staffId, String userName, String staffName,
 			String program, String status, String office,
 			String officePhone, String officeExt,
 			String staffDescription, String staffNpi,
-			Integer jobClassId, Integer extendedPermissions,
+			Integer roleId, byte[] extendedPermissions,
 			Date hireDate, Date termDate) {
 		this.setStaffId(staffId);
 		this.setUserName(userName);
@@ -49,14 +60,14 @@ public class UserData implements User, Serializable {
 		this.setOfficeExt(officeExt);
 		this.setStaffDescription(staffDescription);
 		this.setStaffNpi(staffNpi);
-		this.setJobClassId(jobClassId);
+		this.setRoleId(roleId);
 		this.setExtendedPermissions(extendedPermissions);
 		this.setHireDate(hireDate);
 		this.setTermDate(termDate);
 	}
 
 	@Override
-	public Integer getExtendedPermissions() {
+	public byte[] getExtendedPermissions() {
 		return extendedPermissions;
 	}
 
@@ -66,8 +77,8 @@ public class UserData implements User, Serializable {
 	}
 
 	@Override
-	public Integer getJobClassId() {
-		return jobClassId;
+	public Integer getRoleId() {
+		return roleId;
 	}
 
 	@Override
@@ -126,8 +137,8 @@ public class UserData implements User, Serializable {
 	}
 
 	@Override
-	public void setExtendedPermissions(Integer extendedPermissions) {
-		this.extendedPermissions = extendedPermissions;
+	public void setExtendedPermissions(byte[] permissions) {
+		this.extendedPermissions = permissions;
 	}
 
 	@Override
@@ -136,8 +147,8 @@ public class UserData implements User, Serializable {
 	}
 
 	@Override
-	public void setJobClassId(Integer jobClassId) {
-		this.jobClassId = jobClassId;
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
 	}
 
 	@Override
@@ -193,5 +204,23 @@ public class UserData implements User, Serializable {
 	@Override
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	@Override
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	@Override
+	public long getId() {
+		return id;
+	}
+
+	public void setRole(RoleDTO role) {
+		this.role = role;
+	}
+
+	public RoleDTO getRole() {
+		return role;
 	}
 }

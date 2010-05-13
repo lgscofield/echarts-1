@@ -35,13 +35,15 @@ import javax.persistence.Persistence;
 import org.eastway.echarts.client.RpcServices;
 import org.eastway.echarts.domain.Alert;
 import org.eastway.echarts.domain.AlertService;
+import org.eastway.echarts.domain.User;
+import org.eastway.echarts.domain.UserService;
 import org.eastway.echarts.shared.DbException;
 import org.eastway.echarts.shared.Message;
 import org.eastway.echarts.shared.Messages;
 import org.eastway.echarts.shared.ServiceCode;
 import org.eastway.echarts.shared.ServiceCodes;
 import org.eastway.echarts.shared.SessionExpiredException;
-import org.eastway.echarts.shared.UserData;
+import org.eastway.echarts.shared.UserDTO;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -259,45 +261,15 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public UserData getUserData(String username, String sessionId) throws DbException, SessionExpiredException {
+	public UserDTO getUser(String username, String sessionId) throws DbException, SessionExpiredException {
 		checkSessionExpire(sessionId);
-		String sql = "SELECT [StaffId]" +
-						",[Username]" +
-						",[JobClassID]" +
-						",[extperm]" +
-						",[StaffName]" +
-						",[Program]" +
-						",[HireDate]" +
-						",[Status]" +
-						",[TermDate]" +
-						",[Office]" +
-						",[OfficePhone]" +
-						",[OfficeExt]" +
-						",[StaffDescription]" +
-						",[StaffNPI]" + " " +
-					"FROM [EW-EHR].[dbo].[User]" + " " +
-					"WHERE Username = '" + username + "'";
-
-		try {
-			Connection con = DbConnection.getConnection();
-			Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			ResultSet srs = stmt.executeQuery(sql);
-			if (srs.next()) {
-				UserData userData = new UserData(srs.getString("StaffId"),
-						srs.getString("Username"), srs.getString("StaffName"),
-						srs.getString("Program"), srs.getString("Status"),
-						srs.getString("Office"), srs.getString("OfficePhone"),
-						srs.getString("OfficeExt"), srs.getString("StaffDescription"),
-						srs.getString("StaffNPI"), srs.getInt("JobClassId"), srs.getInt("extperm"),
-						srs.getDate("HireDate"), srs.getDate("TermDate"));
-				return userData;
-			}
-		} catch (SQLException e) {
-			throw new DbException(e);
-		} catch (NamingException e) {
-			throw new DbException("Naming exception");
-		}
-		return null;
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
+		EntityManager em = emf.createEntityManager();
+		UserService userService = new UserService(em);
+		User user = userService.find(username);
+		em.close();
+		emf.close();
+		return user.toDto();
 	}
 
 	@Override

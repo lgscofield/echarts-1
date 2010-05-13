@@ -15,32 +15,62 @@
  */
 package org.eastway.echarts.client;
 
-import java.sql.Date;
+import java.util.Date;
 
-import org.eastway.echarts.shared.UserData;
+import org.eastway.echarts.shared.RoleDTO;
+import org.eastway.echarts.shared.UserDTO;
 
 public class UserImpl {
-	private static String staffId, userName, staffName, program, status, office,
-			officePhone, officeExt, staffDescription, staffNpi;
-	private static Integer jobClassId, extendedPermissions;
+	private static String staffId;
+	private static String userName;
+	private static String staffName;
+	private static String program;
+	private static String status;
+	private static String office;
+	private static String officePhone;
+	private static String officeExt;
+	private static String staffDescription;
+	private static String staffNpi;
+	private static Integer roleId;
+	private static byte[] extendedPermissions;
 	private static Date hireDate, termDate;
 	private static String sessionId;
+	private static RoleDTO role;
+	private static long id;
 
-	public UserImpl(UserData userData) {
-		UserImpl.setStaffId(userData.getStaffId());
-		UserImpl.setUserName(userData.getUserName());
-		UserImpl.setStaffName(userData.getStaffName());
-		UserImpl.setProgram(userData.getProgram());
-		UserImpl.setStatus(userData.getStatus());
-		UserImpl.setOffice(userData.getOffice());
-		UserImpl.setOfficePhone(userData.getOfficePhone());
-		UserImpl.setOfficeExt(userData.getOfficeExt());
-		UserImpl.setStaffDescription(userData.getStaffDescription());
-		UserImpl.setStaffNpi(userData.getStaffNpi());
-		UserImpl.setJobClassId(userData.getJobClassId());
-		UserImpl.setExtendedPermissions(userData.getExtendedPermissions());
-		UserImpl.setHireDate(userData.getHireDate());
-		UserImpl.setTermDate(userData.getTermDate());
+	public UserImpl(UserDTO userDto) {
+		UserImpl.extendedPermissions = userDto.getExtendedPermissions();
+		UserImpl.hireDate = userDto.getHireDate();
+		UserImpl.id = userDto.getId();
+		UserImpl.office = userDto.getOffice();
+		UserImpl.officeExt = userDto.getOfficeExt();
+		UserImpl.officePhone = userDto.getOfficePhone();
+		UserImpl.program = userDto.getProgram();
+		UserImpl.role = userDto.getRole();
+		UserImpl.roleId = userDto.getRoleId();
+		UserImpl.staffDescription = userDto.getStaffDescription();
+		UserImpl.staffId = userDto.getStaffId();
+		UserImpl.staffName = userDto.getStaffName();
+		UserImpl.staffNpi = userDto.getStaffNpi();
+		UserImpl.status = userDto.getStatus();
+		UserImpl.termDate = userDto.getTermDate();
+		UserImpl.userName = userDto.getUserName();
+	}
+
+	public static void setId(long id) {
+		UserImpl.id = id;
+	}
+
+	public static long getId() {
+		return UserImpl.id;
+	}
+
+	public static void setRole(RoleDTO role) {
+		UserImpl.role = role;
+	}
+
+	public static RoleDTO getRole() {
+		return UserImpl.role;
 	}
 
 	public static void setStaffId(String staffId) {
@@ -131,19 +161,19 @@ public class UserImpl {
 		UserImpl.sessionId = sessionId;
 	}
 
-	public static void setJobClassId(Integer jobClassId) {
-		UserImpl.jobClassId = jobClassId;
+	public static void setRoleId(Integer roleId) {
+		UserImpl.roleId = roleId;
 	}
 
-	public static Integer getJobClassId() {
-		return jobClassId;
+	public static Integer getRoleId() {
+		return roleId;
 	}
 
-	public static void setExtendedPermissions(Integer extendedPermissions) {
+	public static void setExtendedPermissions(byte[] extendedPermissions) {
 		UserImpl.extendedPermissions = extendedPermissions;
 	}
 
-	public static Integer getExtendedPermissions() {
+	public static byte[] getExtendedPermissions() {
 		return extendedPermissions;
 	}
 

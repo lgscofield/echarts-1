@@ -15,10 +15,9 @@
  */
 package org.eastway.echarts.shared;
 
-import java.sql.Date;
+import java.util.Date;
 
 public interface User {
-
 	static interface Role {
 		public final static int ADMINISTRATOR		       = 1;
 		public final static int PSYCHIATRIST		       = 2;
@@ -63,15 +62,18 @@ public interface User {
 	void setStaffNpi(String staffNpi);
 	String getStaffNpi();
 
-	void setJobClassId(Integer jobClassId);
-	Integer getJobClassId();
+	void setRoleId(Integer roleId);
+	Integer getRoleId();
 
-	void setExtendedPermissions(Integer extendedPermissions);
-	Integer getExtendedPermissions();
+	void setExtendedPermissions(byte[] extendedPermissions);
+	byte[] getExtendedPermissions();
 
 	void setHireDate(Date hireDate);
 	Date getHireDate();
 
 	void setTermDate(Date termDate);
 	Date getTermDate();
+
+	void setId(long id);
+	long getId();
 }

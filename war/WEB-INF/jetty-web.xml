@@ -21,7 +21,7 @@
 			<New class="com.microsoft.sqlserver.jdbc.SQLServerDataSource">
 				<Set name="user">echarts</Set>
 				<Set name="password">echarts</Set>
-				<Set name="databaseName">EW-EHR</Set>
+				<Set name="databaseName">echarts</Set>
 				<Set name="ServerName">localhost</Set>
 			</New>
 		</Arg>
