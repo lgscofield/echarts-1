@@ -15,12 +15,12 @@
  */
 package org.eastway.echarts.server;
 
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Vector;
@@ -29,6 +29,7 @@ import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 
 import org.eastway.echarts.client.RpcServices;
 import org.eastway.echarts.domain.Alert;
@@ -37,6 +38,7 @@ import org.eastway.echarts.domain.Message;
 import org.eastway.echarts.domain.MessageService;
 import org.eastway.echarts.domain.MessageType;
 import org.eastway.echarts.domain.MessageTypeService;
+import org.eastway.echarts.domain.SessionIdLog;
 import org.eastway.echarts.domain.User;
 import org.eastway.echarts.domain.UserService;
 import org.eastway.echarts.shared.DbException;
@@ -152,26 +154,26 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 	}
 
 	protected void checkSessionExpire(String sessionId) throws SessionExpiredException, DbException {
-		String sql = "{call isSessionExpired(?, ?)}";
-		Connection con = null;
-		CallableStatement stmt = null;
+		if (sessionId == null)
+			throw new IllegalArgumentException("Please login");
 
-		try {
-			con = DbConnection.getConnection();
-			stmt = con.prepareCall(sql);
-			stmt.setString("sessionid", sessionId);
-			stmt.registerOutParameter("status", java.sql.Types.BIT);
-			stmt.execute();
-			if (stmt.getBoolean("status")) {
-				throw new SessionExpiredException();
-			}
-		} catch (SQLException e) {
-			throw new DbException(e);
-		} catch (NamingException e) {
-			throw new DbException("Naming exception");
-		} catch (SessionExpiredException e) {
-			throw e;
-		}
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
+		EntityManager em = emf.createEntityManager();
+
+		TypedQuery<SessionIdLog> query = em.createQuery(
+				"SELECT s FROM SessionIdLog s WHERE s.sessionId = '" + sessionId + "'",
+					SessionIdLog.class);
+		SessionIdLog sil = query.getSingleResult();
+		Date now = new Date();
+		Date expire = new Date(sil.getSessionIdExpire());
+
+		if (now.after(expire))
+			throw new SessionExpiredException();
+		if (sil == null)
+			throw new SessionExpiredException("Please login");
+
+		em.close();
+		emf.close();
 	}
 
 	@Override

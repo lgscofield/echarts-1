@@ -20,4 +20,8 @@ public class SessionExpiredException extends Exception {
 	public SessionExpiredException() {
 		super("Session Expired");
 	}
+
+	public SessionExpiredException(String message) {
+		super(message);
+	}
 }
