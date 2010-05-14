@@ -593,7 +593,7 @@ INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES 
 INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'ISP Review', N'http://ewsql/echarts-asp/noForm.asp', N'Individualized Service Plan', 9)
 INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'ISP Update', N'http://ewsql/echarts-asp/noForm.asp', N'Individualized Service Plan', 8)
 INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'New ISP', N'http://ewsql/echarts-asp/GandO.asp', N'Individualized Service Plan', 7)
-INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'Phamacological Management/Nursing Progress Note', N'http://ewsql/echarts-asp/103PM-NPNEdit.asp', N'Progress Notes', 4)
+INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'Pharmacological Management/Nursing Progress Note', N'http://ewsql/echarts-asp/103PM-NPNEdit.asp', N'Progress Notes', 4)
 INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'Pharmacological Management Progress Note', N'http://ewsql/echarts-asp/104PharmEdit.asp', N'Progress Notes', 5)
 /****** Object:  Table [dbo].[DiagnosisData]    Script Date: 05/14/2010 12:16:50 ******/
 SET ANSI_NULLS ON
