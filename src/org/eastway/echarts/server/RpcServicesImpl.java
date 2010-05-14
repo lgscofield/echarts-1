@@ -15,17 +15,12 @@
  */
 package org.eastway.echarts.server;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Vector;
 
-import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -34,6 +29,7 @@ import javax.persistence.TypedQuery;
 import org.eastway.echarts.client.RpcServices;
 import org.eastway.echarts.domain.Alert;
 import org.eastway.echarts.domain.AlertService;
+import org.eastway.echarts.domain.Link;
 import org.eastway.echarts.domain.Message;
 import org.eastway.echarts.domain.MessageService;
 import org.eastway.echarts.domain.MessageType;
@@ -162,30 +158,22 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 	public LinkedHashSet<String[]> getFormsList(String sessionId, String patientId) throws SessionExpiredException, DbException {
 		checkSessionExpire(sessionId);
 
-		String sql = "SELECT * FROM form.Form_list ORDER BY FormOrder ASC";
-		LinkedHashSet<String[]> formsList = new LinkedHashSet<String[]>();
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
+		EntityManager em = emf.createEntityManager();
 
-		Connection con;
-		Statement stmt;
-		ResultSet rs;
-
-		try {
-			con = DbConnection.getConnection();
-			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			rs = stmt.executeQuery(sql);
-
-			while (rs.next()) {
-				String[] s = new String[3];
-				s[0] = rs.getString(1);
-				s[1] = rs.getString(2);
-				s[2] = rs.getString(3);
-				formsList.add(s);
-			}
-			return formsList;
-		} catch (SQLException e) {
-			throw new DbException(e);
-		} catch (NamingException e) {
-			throw new DbException("Naming exception");
+		TypedQuery<Link> query = em.createQuery(
+				"SELECT link FROM Link link", Link.class);
+		List<Link> linkList = query.getResultList();
+		LinkedHashSet<String[]> linkDto = new LinkedHashSet<String[]>();
+		for (Link link : linkList) {
+			String[] s = new String[3];
+			s[0] = link.getName();
+			s[1] = link.getUrl();
+			s[2] = link.getHeader();
+			linkDto.add(s);
 		}
+		em.close();
+		emf.close();
+		return linkDto;
 	}
 }
