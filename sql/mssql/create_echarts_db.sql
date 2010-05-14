@@ -15,13 +15,13 @@
  */
 USE [echarts]
 GO
-/****** Object:  User [echarts]    Script Date: 05/13/2010 08:43:06 ******/
+/****** Object:  User [echarts]    Script Date: 05/14/2010 12:16:47 ******/
 CREATE USER [echarts] FOR LOGIN [echarts] WITH DEFAULT_SCHEMA=[dbo]
 GO
-/****** Object:  Schema [form]    Script Date: 05/13/2010 08:43:06 ******/
+/****** Object:  Schema [form]    Script Date: 05/14/2010 12:16:47 ******/
 CREATE SCHEMA [form] AUTHORIZATION [dbo]
 GO
-/****** Object:  Table [dbo].[Demographics]    Script Date: 05/13/2010 08:43:07 ******/
+/****** Object:  Table [dbo].[Demographics]    Script Date: 05/14/2010 12:16:49 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -80,7 +80,7 @@ CREATE TABLE [dbo].[Demographics](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Alert]    Script Date: 05/13/2010 08:43:07 ******/
+/****** Object:  Table [dbo].[Alert]    Script Date: 05/14/2010 12:16:49 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -101,7 +101,7 @@ CREATE TABLE [dbo].[Alert](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Patient]    Script Date: 05/13/2010 08:43:07 ******/
+/****** Object:  Table [dbo].[Patient]    Script Date: 05/14/2010 12:16:49 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -130,7 +130,7 @@ CREATE TABLE [dbo].[Patient](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Ehr]    Script Date: 05/13/2010 08:43:07 ******/
+/****** Object:  Table [dbo].[Ehr]    Script Date: 05/14/2010 12:16:49 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -155,7 +155,7 @@ CREATE TABLE [dbo].[Ehr](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  View [dbo].[VDisplayDemographics]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  View [dbo].[VDisplayDemographics]    Script Date: 05/14/2010 12:16:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -352,7 +352,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=2 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VDisplayDemographics'
 GO
-/****** Object:  Table [dbo].[Tickler]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Table [dbo].[Tickler]    Script Date: 05/14/2010 12:16:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -384,7 +384,7 @@ CREATE TABLE [dbo].[Tickler](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[SystemLog]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Table [dbo].[SystemLog]    Script Date: 05/14/2010 12:16:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -406,7 +406,7 @@ CREATE TABLE [dbo].[SystemLog](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[SessionIdLog]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Table [dbo].[SessionIdLog]    Script Date: 05/14/2010 12:16:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -429,7 +429,7 @@ CREATE TABLE [dbo].[SessionIdLog](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[ServiceCodes]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Table [dbo].[ServiceCodes]    Script Date: 05/14/2010 12:16:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -485,7 +485,7 @@ INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'9
 INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'997', N'CANCELLATION', NULL)
 INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'998', N'NO SHOW', NULL)
 INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'999', N'NON-BILLABLE', NULL)
-/****** Object:  Table [dbo].[Role]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Table [dbo].[Role]    Script Date: 05/14/2010 12:16:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -496,7 +496,7 @@ CREATE TABLE [dbo].[Role](
 	[Role_Id] [int] NOT NULL,
 	[RoleName] [varchar](25) NULL,
 	[Permission] [binary](4) NULL,
- CONSTRAINT [PK_Roles] PRIMARY KEY CLUSTERED
+ CONSTRAINT [PK_Roles] PRIMARY KEY CLUSTERED 
 (
 	[Role_Id] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
@@ -515,7 +515,7 @@ INSERT [dbo].[Role] ([Role_Id], [RoleName], [Permission]) VALUES (8, N'Human Res
 INSERT [dbo].[Role] ([Role_Id], [RoleName], [Permission]) VALUES (9, N'Accounts Recievable', 0x00000009)
 INSERT [dbo].[Role] ([Role_Id], [RoleName], [Permission]) VALUES (10, N'General Admin', 0x0000000A)
 INSERT [dbo].[Role] ([Role_Id], [RoleName], [Permission]) VALUES (11, N'Unprivileged', NULL)
-/****** Object:  Table [dbo].[Referral]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Table [dbo].[Referral]    Script Date: 05/14/2010 12:16:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -548,7 +548,7 @@ CREATE TABLE [dbo].[Referral](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [form].[ProgressNote]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Table [form].[ProgressNote]    Script Date: 05/14/2010 12:16:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -567,7 +567,7 @@ CREATE TABLE [form].[ProgressNote](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [form].[Form_list]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Table [form].[Form_list]    Script Date: 05/14/2010 12:16:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -595,7 +595,7 @@ INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES 
 INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'New ISP', N'http://ewsql/echarts-asp/GandO.asp', N'Individualized Service Plan', 7)
 INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'Phamacological Management/Nursing Progress Note', N'http://ewsql/echarts-asp/103PM-NPNEdit.asp', N'Progress Notes', 4)
 INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'Pharmacological Management Progress Note', N'http://ewsql/echarts-asp/104PharmEdit.asp', N'Progress Notes', 5)
-/****** Object:  Table [dbo].[DiagnosisData]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Table [dbo].[DiagnosisData]    Script Date: 05/14/2010 12:16:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -628,7 +628,7 @@ CREATE TABLE [dbo].[DiagnosisData](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[DiagnosisAxis2]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Table [dbo].[DiagnosisAxis2]    Script Date: 05/14/2010 12:16:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -659,7 +659,7 @@ INSERT [dbo].[DiagnosisAxis2] ([ICD9], [Description], [DSMIV], [508k], [TabDiagn
 INSERT [dbo].[DiagnosisAxis2] ([ICD9], [Description], [DSMIV], [508k], [TabDiagnosis]) VALUES (N'319  ', N' MENTAL RETARDATION NOS  ', N'319  ', 0, N'Mental Retardation')
 INSERT [dbo].[DiagnosisAxis2] ([ICD9], [Description], [DSMIV], [508k], [TabDiagnosis]) VALUES (N'V62.89 ', N' BORDERLINE INTELLECTUAL FUNCTIONING', N'V62.89 ', 0, NULL)
 INSERT [dbo].[DiagnosisAxis2] ([ICD9], [Description], [DSMIV], [508k], [TabDiagnosis]) VALUES (N'V71.09 ', N' NO DIAGNOSIS ON AXIS II', N'V71.09 ', 0, NULL)
-/****** Object:  Table [dbo].[DiagnosisAxis1]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Table [dbo].[DiagnosisAxis1]    Script Date: 05/14/2010 12:16:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -918,7 +918,7 @@ INSERT [dbo].[DiagnosisAxis1] ([ICD9], [Description], [DSMIV], [508k], [TabDiagn
 INSERT [dbo].[DiagnosisAxis1] ([ICD9], [Description], [DSMIV], [508k], [TabDiagnosis]) VALUES (N'V62.89 ', N' PSYCHOLOGICAL STRESS NEC  ', N'V62.89 ', 0, NULL)
 INSERT [dbo].[DiagnosisAxis1] ([ICD9], [Description], [DSMIV], [508k], [TabDiagnosis]) VALUES (N'V71.01 ', N' OBSV-ADULT ANTISOC BEHAV  ', N'V71.01 ', 0, NULL)
 INSERT [dbo].[DiagnosisAxis1] ([ICD9], [Description], [DSMIV], [508k], [TabDiagnosis]) VALUES (N'V71.02 ', N' OBSV-ADOLESC ANTISOC BEH  ', N'V71.02 ', 0, NULL)
-/****** Object:  Table [dbo].[Assignments]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Table [dbo].[Assignments]    Script Date: 05/14/2010 12:16:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -945,7 +945,7 @@ CREATE TABLE [dbo].[Assignments](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[AddressData]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Table [dbo].[AddressData]    Script Date: 05/14/2010 12:16:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -977,7 +977,55 @@ CREATE TABLE [dbo].[AddressData](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [form].[ISPObjectives]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Table [dbo].[Message]    Script Date: 05/14/2010 12:16:50 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Message](
+	[Message_Id] [int] NOT NULL,
+	[ehr_id] [bigint] NOT NULL,
+	[MessageType_Id] [int] NULL,
+	[CreationTimestamp] [datetime] NULL,
+	[Message] [varchar](max) NULL,
+	[Parent] [int] NULL,
+	[LastEdit] [datetime] NULL,
+	[LastEditBy] [varchar](15) NULL,
+ CONSTRAINT [PK_Message] PRIMARY KEY CLUSTERED 
+(
+	[Message_Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[MessageType]    Script Date: 05/14/2010 12:16:50 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[MessageType](
+	[MessageType_Id] [int] NOT NULL,
+	[Type] [varchar](50) NULL,
+ CONSTRAINT [PK_MessageType] PRIMARY KEY CLUSTERED 
+(
+	[MessageType_Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+INSERT [dbo].[MessageType] ([MessageType_Id], [Type]) VALUES (1, N'Referral')
+INSERT [dbo].[MessageType] ([MessageType_Id], [Type]) VALUES (2, N'Case Management')
+INSERT [dbo].[MessageType] ([MessageType_Id], [Type]) VALUES (3, N'Therapy')
+INSERT [dbo].[MessageType] ([MessageType_Id], [Type]) VALUES (4, N'Medication')
+INSERT [dbo].[MessageType] ([MessageType_Id], [Type]) VALUES (5, N'Bulletin')
+INSERT [dbo].[MessageType] ([MessageType_Id], [Type]) VALUES (6, N'Triage')
+/****** Object:  Table [form].[ISPObjectives]    Script Date: 05/14/2010 12:16:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1013,7 +1061,7 @@ CREATE TABLE [form].[ISPObjectives](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [form].[ISPGoals]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Table [form].[ISPGoals]    Script Date: 05/14/2010 12:16:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1049,7 +1097,7 @@ CREATE TABLE [form].[ISPGoals](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [form].[ISP_ServiceDescriptions]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Table [form].[ISP_ServiceDescriptions]    Script Date: 05/14/2010 12:16:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1074,7 +1122,7 @@ INSERT [form].[ISP_ServiceDescriptions] ([ID], [ServiceDescriptions]) VALUES (CA
 INSERT [form].[ISP_ServiceDescriptions] ([ID], [ServiceDescriptions]) VALUES (CAST(25 AS Numeric(18, 0)), N'AoD Individual Counseling')
 INSERT [form].[ISP_ServiceDescriptions] ([ID], [ServiceDescriptions]) VALUES (CAST(26 AS Numeric(18, 0)), N'AoD Group Counseling')
 INSERT [form].[ISP_ServiceDescriptions] ([ID], [ServiceDescriptions]) VALUES (CAST(27 AS Numeric(18, 0)), N'AoD Case Management')
-/****** Object:  Table [form].[ISP]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Table [form].[ISP]    Script Date: 05/14/2010 12:16:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1120,7 +1168,7 @@ CREATE TABLE [form].[ISP](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[hibernate_sequences]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Table [dbo].[hibernate_sequences]    Script Date: 05/14/2010 12:16:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1138,31 +1186,7 @@ CREATE TABLE [dbo].[hibernate_sequences](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Messages]    Script Date: 05/13/2010 08:43:09 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[Messages](
-	[ID] [numeric](18, 0) IDENTITY(1,1) NOT NULL,
-	[PATID] [varchar](7) NOT NULL,
-	[MessageType] [smallint] NULL,
-	[CreationTimestamp] [datetime] NULL,
-	[Message] [varchar](max) NULL,
-	[ParentID] [numeric](18, 0) NULL,
-	[LastEdit] [datetime] NULL,
-	[LastEditBy] [varchar](15) NULL,
- CONSTRAINT [PK_Messages] PRIMARY KEY CLUSTERED 
-(
-	[ID] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-SET ANSI_PADDING OFF
-GO
-/****** Object:  Table [dbo].[Codes]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Table [dbo].[Codes]    Script Date: 05/14/2010 12:16:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1333,7 +1357,7 @@ INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAS
 INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(149 AS Numeric(18, 0)), N'AddressType', NULL, N'Guardian')
 INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(150 AS Numeric(18, 0)), N'AddressType', NULL, N'Employer')
 SET IDENTITY_INSERT [dbo].[Codes] OFF
-/****** Object:  Table [form].[BillingStrip]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Table [form].[BillingStrip]    Script Date: 05/14/2010 12:16:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1368,7 +1392,7 @@ CREATE TABLE [form].[BillingStrip](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  StoredProcedure [dbo].[isSessionExpired]    Script Date: 05/13/2010 08:43:10 ******/
+/****** Object:  StoredProcedure [dbo].[isSessionExpired]    Script Date: 05/14/2010 12:16:51 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1389,7 +1413,7 @@ BEGIN
 		SELECT @status = 0 /** Session has not expired **/
 END
 GO
-/****** Object:  View [dbo].[VTicklerList]    Script Date: 05/13/2010 08:43:10 ******/
+/****** Object:  View [dbo].[VTicklerList]    Script Date: 05/14/2010 12:16:51 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1532,7 +1556,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VTicklerList'
 GO
-/****** Object:  View [dbo].[VSuffix]    Script Date: 05/13/2010 08:43:10 ******/
+/****** Object:  View [dbo].[VSuffix]    Script Date: 05/14/2010 12:16:51 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1665,7 +1689,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VSuffix'
 GO
-/****** Object:  View [dbo].[VRace]    Script Date: 05/13/2010 08:43:10 ******/
+/****** Object:  View [dbo].[VRace]    Script Date: 05/14/2010 12:16:51 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1798,7 +1822,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VRace'
 GO
-/****** Object:  View [dbo].[VMessageType]    Script Date: 05/13/2010 08:43:10 ******/
+/****** Object:  View [dbo].[VMessageType]    Script Date: 05/14/2010 12:16:51 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1931,7 +1955,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VMessageType'
 GO
-/****** Object:  View [dbo].[VMaritalStatus]    Script Date: 05/13/2010 08:43:10 ******/
+/****** Object:  View [dbo].[VMaritalStatus]    Script Date: 05/14/2010 12:16:51 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2065,7 +2089,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VMaritalStatus'
 GO
-/****** Object:  View [dbo].[VMainAddress]    Script Date: 05/13/2010 08:43:10 ******/
+/****** Object:  View [dbo].[VMainAddress]    Script Date: 05/14/2010 12:16:51 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2198,7 +2222,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VMainAddress'
 GO
-/****** Object:  View [dbo].[VLivingArrangement]    Script Date: 05/13/2010 08:43:10 ******/
+/****** Object:  View [dbo].[VLivingArrangement]    Script Date: 05/14/2010 12:16:51 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2331,7 +2355,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VLivingArrangement'
 GO
-/****** Object:  View [dbo].[VLevelofCare]    Script Date: 05/13/2010 08:43:10 ******/
+/****** Object:  View [dbo].[VLevelofCare]    Script Date: 05/14/2010 12:16:51 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2464,7 +2488,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VLevelofCare'
 GO
-/****** Object:  View [dbo].[VIncomeSource]    Script Date: 05/13/2010 08:43:10 ******/
+/****** Object:  View [dbo].[VIncomeSource]    Script Date: 05/14/2010 12:16:51 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2597,7 +2621,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VIncomeSource'
 GO
-/****** Object:  View [dbo].[VGender]    Script Date: 05/13/2010 08:43:10 ******/
+/****** Object:  View [dbo].[VGender]    Script Date: 05/14/2010 12:16:51 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2730,7 +2754,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VGender'
 GO
-/****** Object:  View [dbo].[VEmployment]    Script Date: 05/13/2010 08:43:10 ******/
+/****** Object:  View [dbo].[VEmployment]    Script Date: 05/14/2010 12:16:51 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2863,7 +2887,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VEmployment'
 GO
-/****** Object:  View [dbo].[VEducationType]    Script Date: 05/13/2010 08:43:10 ******/
+/****** Object:  View [dbo].[VEducationType]    Script Date: 05/14/2010 12:16:51 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2996,7 +3020,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VEducationType'
 GO
-/****** Object:  View [dbo].[VEducationLevel]    Script Date: 05/13/2010 08:43:10 ******/
+/****** Object:  View [dbo].[VEducationLevel]    Script Date: 05/14/2010 12:16:51 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3129,7 +3153,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VEducationLevel'
 GO
-/****** Object:  View [dbo].[VDisposition]    Script Date: 05/13/2010 08:43:10 ******/
+/****** Object:  View [dbo].[VDisposition]    Script Date: 05/14/2010 12:16:51 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3262,7 +3286,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VDisposition'
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 05/13/2010 08:43:10 ******/
+/****** Object:  Table [dbo].[User]    Script Date: 05/14/2010 12:16:51 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3302,7 +3326,7 @@ CREATE TABLE [dbo].[User](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  View [dbo].[VCounty]    Script Date: 05/13/2010 08:43:10 ******/
+/****** Object:  View [dbo].[VCounty]    Script Date: 05/14/2010 12:16:51 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3435,7 +3459,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VCounty'
 GO
-/****** Object:  View [dbo].[VCaseStatus]    Script Date: 05/13/2010 08:43:10 ******/
+/****** Object:  View [dbo].[VCaseStatus]    Script Date: 05/14/2010 12:16:51 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3569,7 +3593,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VCaseStatus'
 GO
-/****** Object:  View [dbo].[VActiveReferral]    Script Date: 05/13/2010 08:43:10 ******/
+/****** Object:  View [dbo].[VActiveReferral]    Script Date: 05/14/2010 12:16:51 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3703,7 +3727,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VActiveReferral'
 GO
-/****** Object:  View [dbo].[VActiveAssignments]    Script Date: 05/13/2010 08:43:10 ******/
+/****** Object:  View [dbo].[VActiveAssignments]    Script Date: 05/14/2010 12:16:51 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3849,7 +3873,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VActiveAssignments'
 GO
-/****** Object:  Table [dbo].[UserSessionMap]    Script Date: 05/13/2010 08:43:10 ******/
+/****** Object:  Table [dbo].[UserSessionMap]    Script Date: 05/14/2010 12:16:51 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3859,7 +3883,7 @@ CREATE TABLE [dbo].[UserSessionMap](
 	[UserId] [int] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  StoredProcedure [dbo].[getStaffId]    Script Date: 05/13/2010 08:43:10 ******/
+/****** Object:  StoredProcedure [dbo].[getStaffId]    Script Date: 05/14/2010 12:16:51 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3873,91 +3897,109 @@ BEGIN
 	SELECT @staffid = (SELECT StaffId FROM[User] WHERE [User].Id = (SELECT UserId FROM [UserSessionMap] inner join [SessionIdLog] on [UserSessionMap].SessionId=[SessionIdLog].Id WHERE [SessionIdLog].SessionId =@sessionid));
 END
 GO
-/****** Object:  Default [DF_Tickler_LastEdit]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Default [DF_Tickler_LastEdit]    Script Date: 05/14/2010 12:16:50 ******/
 ALTER TABLE [dbo].[Tickler] ADD  CONSTRAINT [DF_Tickler_LastEdit]  DEFAULT (getutcdate()) FOR [LastEdit]
 GO
-/****** Object:  Default [DF_SystemLog_EventDate]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Default [DF_SystemLog_EventDate]    Script Date: 05/14/2010 12:16:50 ******/
 ALTER TABLE [dbo].[SystemLog] ADD  CONSTRAINT [DF_SystemLog_EventDate]  DEFAULT (getutcdate()) FOR [EventDate]
 GO
-/****** Object:  Default [DF_Referral_UPID]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Default [DF_Referral_UPID]    Script Date: 05/14/2010 12:16:50 ******/
 ALTER TABLE [dbo].[Referral] ADD  CONSTRAINT [DF_Referral_UPID]  DEFAULT ('01396') FOR [UPID]
 GO
-/****** Object:  Default [DF_Referral_LastEdit]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Default [DF_Referral_LastEdit]    Script Date: 05/14/2010 12:16:50 ******/
 ALTER TABLE [dbo].[Referral] ADD  CONSTRAINT [DF_Referral_LastEdit]  DEFAULT (getdate()) FOR [LastEdit]
 GO
-/****** Object:  Default [DF_ProgressNote_EntryDate]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Default [DF_ProgressNote_EntryDate]    Script Date: 05/14/2010 12:16:50 ******/
 ALTER TABLE [form].[ProgressNote] ADD  CONSTRAINT [DF_ProgressNote_EntryDate]  DEFAULT (getutcdate()) FOR [EntryDate]
 GO
-/****** Object:  Default [DF_DiagnosisData_LastEdit]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Default [DF_DiagnosisData_LastEdit]    Script Date: 05/14/2010 12:16:50 ******/
 ALTER TABLE [dbo].[DiagnosisData] ADD  CONSTRAINT [DF_DiagnosisData_LastEdit]  DEFAULT (getutcdate()) FOR [LastEdit]
 GO
-/****** Object:  Default [DF_Assignments_CreateDate]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Default [DF_Assignments_CreateDate]    Script Date: 05/14/2010 12:16:50 ******/
 ALTER TABLE [dbo].[Assignments] ADD  CONSTRAINT [DF_Assignments_CreateDate]  DEFAULT (getutcdate()) FOR [CreateDate]
 GO
-/****** Object:  Default [DF_Assignments_LastEdit]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Default [DF_Assignments_LastEdit]    Script Date: 05/14/2010 12:16:50 ******/
 ALTER TABLE [dbo].[Assignments] ADD  CONSTRAINT [DF_Assignments_LastEdit]  DEFAULT (getutcdate()) FOR [LastEdit]
 GO
-/****** Object:  Default [DF_AddressData_LastEdit]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Default [DF_AddressData_LastEdit]    Script Date: 05/14/2010 12:16:50 ******/
 ALTER TABLE [dbo].[AddressData] ADD  CONSTRAINT [DF_AddressData_LastEdit]  DEFAULT (getutcdate()) FOR [LastEdit]
 GO
-/****** Object:  Default [DF_BillingStrip_EntryDate]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  Default [DF_BillingStrip_EntryDate]    Script Date: 05/14/2010 12:16:50 ******/
 ALTER TABLE [form].[BillingStrip] ADD  CONSTRAINT [DF_BillingStrip_EntryDate]  DEFAULT (getutcdate()) FOR [EntryDate]
 GO
-/****** Object:  ForeignKey [FK_Demographics_PatientId]    Script Date: 05/13/2010 08:43:07 ******/
+/****** Object:  ForeignKey [FK_Demographics_PatientId]    Script Date: 05/14/2010 12:16:49 ******/
 ALTER TABLE [dbo].[Demographics]  WITH CHECK ADD  CONSTRAINT [FK_Demographics_PatientId] FOREIGN KEY([Patient_Id])
 REFERENCES [dbo].[Patient] ([Patient_Id])
 GO
 ALTER TABLE [dbo].[Demographics] CHECK CONSTRAINT [FK_Demographics_PatientId]
 GO
-/****** Object:  ForeignKey [FK_Alert_Patient]    Script Date: 05/13/2010 08:43:07 ******/
+/****** Object:  ForeignKey [FK_Alert_Patient]    Script Date: 05/14/2010 12:16:49 ******/
 ALTER TABLE [dbo].[Alert]  WITH CHECK ADD  CONSTRAINT [FK_Alert_Patient] FOREIGN KEY([patientId])
 REFERENCES [dbo].[Patient] ([Patient_Id])
 GO
 ALTER TABLE [dbo].[Alert] CHECK CONSTRAINT [FK_Alert_Patient]
 GO
-/****** Object:  ForeignKey [FK_Patient_Ehr]    Script Date: 05/13/2010 08:43:07 ******/
+/****** Object:  ForeignKey [FK_Patient_Ehr]    Script Date: 05/14/2010 12:16:49 ******/
 ALTER TABLE [dbo].[Patient]  WITH CHECK ADD  CONSTRAINT [FK_Patient_Ehr] FOREIGN KEY([ehr_id])
 REFERENCES [dbo].[Ehr] ([ehr_id])
 GO
 ALTER TABLE [dbo].[Patient] CHECK CONSTRAINT [FK_Patient_Ehr]
 GO
-/****** Object:  ForeignKey [FK_Ehr_Ehr]    Script Date: 05/13/2010 08:43:07 ******/
+/****** Object:  ForeignKey [FK_Ehr_Ehr]    Script Date: 05/14/2010 12:16:49 ******/
 ALTER TABLE [dbo].[Ehr]  WITH CHECK ADD  CONSTRAINT [FK_Ehr_Ehr] FOREIGN KEY([subject_id])
 REFERENCES [dbo].[Patient] ([Patient_Id])
 GO
 ALTER TABLE [dbo].[Ehr] CHECK CONSTRAINT [FK_Ehr_Ehr]
 GO
-/****** Object:  ForeignKey [FK_ProgressNote_ProgressNote]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  ForeignKey [FK_ProgressNote_ProgressNote]    Script Date: 05/14/2010 12:16:50 ******/
 ALTER TABLE [form].[ProgressNote]  WITH CHECK ADD  CONSTRAINT [FK_ProgressNote_ProgressNote] FOREIGN KEY([TicketNum])
 REFERENCES [form].[ProgressNote] ([TicketNum])
 GO
 ALTER TABLE [form].[ProgressNote] CHECK CONSTRAINT [FK_ProgressNote_ProgressNote]
 GO
-/****** Object:  ForeignKey [FK_BillingStrip_ProgressNote]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  ForeignKey [FK_Message_Ehr]    Script Date: 05/14/2010 12:16:50 ******/
+ALTER TABLE [dbo].[Message]  WITH CHECK ADD  CONSTRAINT [FK_Message_Ehr] FOREIGN KEY([ehr_id])
+REFERENCES [dbo].[Ehr] ([ehr_id])
+GO
+ALTER TABLE [dbo].[Message] CHECK CONSTRAINT [FK_Message_Ehr]
+GO
+/****** Object:  ForeignKey [FK_Message_MessageType]    Script Date: 05/14/2010 12:16:50 ******/
+ALTER TABLE [dbo].[Message]  WITH CHECK ADD  CONSTRAINT [FK_Message_MessageType] FOREIGN KEY([MessageType_Id])
+REFERENCES [dbo].[MessageType] ([MessageType_Id])
+GO
+ALTER TABLE [dbo].[Message] CHECK CONSTRAINT [FK_Message_MessageType]
+GO
+/****** Object:  ForeignKey [FK_MessageType_MessageType]    Script Date: 05/14/2010 12:16:50 ******/
+ALTER TABLE [dbo].[MessageType]  WITH CHECK ADD  CONSTRAINT [FK_MessageType_MessageType] FOREIGN KEY([MessageType_Id])
+REFERENCES [dbo].[MessageType] ([MessageType_Id])
+GO
+ALTER TABLE [dbo].[MessageType] CHECK CONSTRAINT [FK_MessageType_MessageType]
+GO
+/****** Object:  ForeignKey [FK_BillingStrip_ProgressNote]    Script Date: 05/14/2010 12:16:50 ******/
 ALTER TABLE [form].[BillingStrip]  WITH CHECK ADD  CONSTRAINT [FK_BillingStrip_ProgressNote] FOREIGN KEY([ID])
 REFERENCES [form].[ProgressNote] ([TicketNum])
 GO
 ALTER TABLE [form].[BillingStrip] CHECK CONSTRAINT [FK_BillingStrip_ProgressNote]
 GO
-/****** Object:  ForeignKey [FK_BillingStrip_ServiceCodes]    Script Date: 05/13/2010 08:43:09 ******/
+/****** Object:  ForeignKey [FK_BillingStrip_ServiceCodes]    Script Date: 05/14/2010 12:16:50 ******/
 ALTER TABLE [form].[BillingStrip]  WITH CHECK ADD  CONSTRAINT [FK_BillingStrip_ServiceCodes] FOREIGN KEY([Service])
 REFERENCES [dbo].[ServiceCodes] ([Service])
 GO
 ALTER TABLE [form].[BillingStrip] CHECK CONSTRAINT [FK_BillingStrip_ServiceCodes]
 GO
-/****** Object:  ForeignKey [FK_Role_Role_Id]    Script Date: 05/13/2010 08:43:10 ******/
+/****** Object:  ForeignKey [FK_Role_Role_Id]    Script Date: 05/14/2010 12:16:51 ******/
 ALTER TABLE [dbo].[User]  WITH CHECK ADD  CONSTRAINT [FK_Role_Role_Id] FOREIGN KEY([Role_Id])
 REFERENCES [dbo].[Role] ([Role_Id])
 GO
 ALTER TABLE [dbo].[User] CHECK CONSTRAINT [FK_Role_Role_Id]
 GO
-/****** Object:  ForeignKey [FK_UserSessionMap_SessionIdLog]    Script Date: 05/13/2010 08:43:10 ******/
+/****** Object:  ForeignKey [FK_UserSessionMap_SessionIdLog]    Script Date: 05/14/2010 12:16:51 ******/
 ALTER TABLE [dbo].[UserSessionMap]  WITH CHECK ADD  CONSTRAINT [FK_UserSessionMap_SessionIdLog] FOREIGN KEY([SessionId])
 REFERENCES [dbo].[SessionIdLog] ([Id])
 GO
 ALTER TABLE [dbo].[UserSessionMap] CHECK CONSTRAINT [FK_UserSessionMap_SessionIdLog]
 GO
-/****** Object:  ForeignKey [FK_UserSessionMap_UserId]    Script Date: 05/13/2010 08:43:10 ******/
+/****** Object:  ForeignKey [FK_UserSessionMap_UserId]    Script Date: 05/14/2010 12:16:51 ******/
 ALTER TABLE [dbo].[UserSessionMap]  WITH CHECK ADD  CONSTRAINT [FK_UserSessionMap_UserId] FOREIGN KEY([UserId])
 REFERENCES [dbo].[User] ([Id])
 GO
