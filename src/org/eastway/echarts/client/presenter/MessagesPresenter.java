@@ -17,12 +17,14 @@ package org.eastway.echarts.client.presenter;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.UserImpl;
-import org.eastway.echarts.shared.Message;
-import org.eastway.echarts.shared.Messages;
+import org.eastway.echarts.shared.EHRDTO;
+import org.eastway.echarts.shared.MessageDTO;
+import org.eastway.echarts.shared.MessageTypeDTO;
 
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -58,14 +60,14 @@ public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
 	}
 
 	private RpcServicesAsync rpcServices;
-	private Messages messages;
+	private List<MessageDTO> messages;
 	private ArrayList<String[]> data = new ArrayList<String[]>();
-	private String patientid;
+	private EHRDTO ehr;
 
 	public MessagesPresenter(final Display display, HandlerManager eventBus,
-			RpcServicesAsync rpcServices, String patientid) {
+			RpcServicesAsync rpcServices, EHRDTO ehr) {
 		super(display, eventBus);
-		this.patientid = patientid;
+		this.ehr = ehr;
 		this.rpcServices = rpcServices;
 	}
 
@@ -87,12 +89,15 @@ public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
 		display.getSaveButton().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				Message m = new Message();
-				m.setPatId(patientid);
-				m.setMessageType(display.getMessageType());
+				MessageDTO m = new MessageDTO();
+				m.setEhrId(ehr.getId());
+				MessageTypeDTO mtDto = new MessageTypeDTO();
+				mtDto.setType(display.getMessageType());
+				m.setMessageType(mtDto);
 				m.setMessage(display.getMessage());
-				m.setCreationDate(new Date().getTime());
-				m.setLastModifiedBy(UserImpl.getStaffName());
+				m.setCreationTimestamp(new Date());
+				m.setLastEdit(new Date());
+				m.setLastEditBy(UserImpl.getUserName());
 				save(m);
 			}
 		});
@@ -104,17 +109,17 @@ public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
 		});
 	}
 
-	public void save(final Message m) {
-		AsyncCallback<Void> callback = new AsyncCallback<Void>() {
+	public void save(final MessageDTO m) {
+		AsyncCallback<MessageDTO> callback = new AsyncCallback<MessageDTO>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				new HandleRpcException(caught);
 			}
 
 			@Override
-			public void onSuccess(Void result) {
+			public void onSuccess(MessageDTO result) {
 				display.saved();
-				messages.add(m);
+				messages.add(result);
 				setData(messages);
 				display.setData(getData());
 			}
@@ -140,19 +145,19 @@ public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
 	}
 
 	private void fetchData() {
-		AsyncCallback<Messages> callback = new AsyncCallback<Messages>() {
+		AsyncCallback<List<MessageDTO>> callback = new AsyncCallback<List<MessageDTO>>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				new HandleRpcException(caught);
 			}
 
 			@Override
-			public void onSuccess(Messages data) {
+			public void onSuccess(List<MessageDTO> data) {
 				setData(data);
 				display.setData(getData());
 			}
 		};
-		rpcServices.getMessages(patientid, UserImpl.getSessionId(),
+		rpcServices.getMessages(ehr.getId(), UserImpl.getSessionId(),
 				callback);
 	}
 
@@ -160,33 +165,29 @@ public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
 		return this.data;
 	}
 
-	public void setData(Messages msgs) {
+	public void setData(List<MessageDTO> msgs) {
 		this.messages = msgs;
 		ArrayList<String[]> d = new ArrayList<String[]>();
-		Message m;
 
-		if (msgs.get(0) == null)
-			d = null;
-		else
-			for (int i = 0; (m = messages.get(i)) != null; i++) {
-				String[] msgstr = {
-					new Long(m.getCreationDate()).toString(),
-					m.getMessageType(),
-					m.getLastModifiedBy(),
+		for (MessageDTO m : msgs) {
+			String[] msgstr = {
+					new Long(m.getCreationTimestamp().getTime()).toString(),
+					m.getMessageType().getType(),
+					m.getLastEditBy(),
 					m.getMessage()
 				};
 				d.add(msgstr);
-			}
+		}
 		this.data = d;
 	}
 
-	public Message getMessage(int i) {
+	public MessageDTO getMessage(int i) {
 		return messages.get(i);
 	}
 
 	private void showAddMessage() {
 		loadMessageType();
-		display.setText(patientid);
+		display.setText(ehr.getSubject().getCaseNumber());
 		display.show();
 	}
 }

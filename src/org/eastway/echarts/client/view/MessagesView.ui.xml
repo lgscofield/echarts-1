@@ -25,7 +25,7 @@
     <g:FlowPanel ui:field="messages" />
     <g:DialogBox ui:field="db" visible='false' modal="false">
       <g:FlowPanel>
-        <g:TextArea ui:field="message" width="400px" height="400px" />
+        <g:RichTextArea ui:field="message" width="400px" height="400px" />
         <g:FlowPanel>
           <g:FlowPanel addStyleNames="{style.h}">
             <g:ListBox ui:field="messageTypes" />

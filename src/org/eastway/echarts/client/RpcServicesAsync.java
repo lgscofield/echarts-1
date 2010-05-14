@@ -17,10 +17,10 @@ package org.eastway.echarts.client;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Vector;
 
-import org.eastway.echarts.shared.Message;
-import org.eastway.echarts.shared.Messages;
+import org.eastway.echarts.shared.MessageDTO;
 import org.eastway.echarts.shared.ServiceCodes;
 import org.eastway.echarts.shared.UserDTO;
 
@@ -29,11 +29,11 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public interface RpcServicesAsync {
 	public void getAlerts(String sessionId, AsyncCallback<Vector<String>> callback);
 
-	public void getMessages(String p, String sessionId, AsyncCallback<Messages> callback);
+	public void getMessages(long ehrId, String sessionId, AsyncCallback<List<MessageDTO>> callback);
 
 	public void getMessageTypes(String sessionId, AsyncCallback<ArrayList<String>> callback);
 
-	public void addMessage(Message msg, String sessionId, AsyncCallback<Void> callback);
+	public void addMessage(MessageDTO msg, String sessionId, AsyncCallback<MessageDTO> callback);
 
 	public void getServiceCodes(String sessionId, AsyncCallback<ServiceCodes> callback);
 

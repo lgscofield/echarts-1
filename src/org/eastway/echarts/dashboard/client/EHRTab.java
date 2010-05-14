@@ -26,7 +26,7 @@ import org.eastway.echarts.client.view.EditPatientSummaryView;
 import org.eastway.echarts.client.view.FormsView;
 import org.eastway.echarts.client.view.MessagesView;
 import org.eastway.echarts.client.view.PatientSummaryView;
-import org.eastway.echarts.shared.PatientDTO;
+import org.eastway.echarts.shared.EHRDTO;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.SelectionEvent;
@@ -38,7 +38,7 @@ import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 
-public class PatientTab extends Composite implements SelectionHandler<TreeItem> {
+public class EHRTab extends Composite implements SelectionHandler<TreeItem> {
 	private SplitLayoutPanel body = new SplitLayoutPanel();
 	private FlowPanel messagesPanel = new FlowPanel();
 	private FlowPanel patientPanel = new FlowPanel();
@@ -50,32 +50,32 @@ public class PatientTab extends Composite implements SelectionHandler<TreeItem> 
 	private EditPatientSummaryPresenter ep;
 	private FormsPresenter fp;
 	private Tree menu = new Tree();
-	private PatientDTO patient;
+	private EHRDTO ehr;
 
-	public PatientTab(HandlerManager eventBus, RpcServicesAsync rpcServices, PatientDTO patient) {
-		this.setPatient(patient);
+	public EHRTab(HandlerManager eventBus, RpcServicesAsync rpcServices, EHRDTO ehr) {
+		this.setEhr(ehr);
 		initWidget(body);
 		body.addWest(menu, 150);
 		body.add(displayarea);
 
 		TreeItem patientMenuItem = menu.addItem("Patient Summary");
 		patientMenuItem.setUserObject(patientPanel);
-		pp = new PatientSummaryPresenter(new PatientSummaryView(), eventBus, GWT.<EHRServicesAsync>create(EHRServices.class), patient);
+		pp = new PatientSummaryPresenter(new PatientSummaryView(), eventBus, GWT.<EHRServicesAsync>create(EHRServices.class), ehr.getSubject());
 		pp.go(patientPanel);
 
 		TreeItem editPatientMenuItem = patientMenuItem.addItem("Edit");
 		editPatientMenuItem.setUserObject(editPatientPanel);
-		ep = new EditPatientSummaryPresenter(new EditPatientSummaryView(), eventBus, GWT.<EHRServicesAsync>create(EHRServices.class), patient);
+		ep = new EditPatientSummaryPresenter(new EditPatientSummaryView(), eventBus, GWT.<EHRServicesAsync>create(EHRServices.class), ehr.getSubject());
 		ep.go(editPatientPanel);
 
 		TreeItem messageMenuItem = menu.addItem("Messages");
 		messageMenuItem.setUserObject(messagesPanel);
-		mp = new MessagesPresenter(new MessagesView(), eventBus, rpcServices, patient.getCaseNumber());
+		mp = new MessagesPresenter(new MessagesView(), eventBus, rpcServices, ehr);
 		mp.go(messagesPanel);
 
 		TreeItem formsMenuItem = menu.addItem("Forms");
 		formsMenuItem.setUserObject(formsPanel);
-		fp = new FormsPresenter(new FormsView(), eventBus, rpcServices, patient.getCaseNumber());
+		fp = new FormsPresenter(new FormsView(), eventBus, rpcServices, ehr.getSubject().getCaseNumber());
 		fp.go(formsPanel);
 
 		menu.addSelectionHandler(this);
@@ -95,11 +95,11 @@ public class PatientTab extends Composite implements SelectionHandler<TreeItem> 
 			menu.getItem(i).setWidth("0px");
 	}
 
-	public void setPatient(PatientDTO patient) {
-		this.patient = patient;
+	public void setEhr(EHRDTO ehr) {
+		this.ehr = ehr;
 	}
 
-	public PatientDTO getPatient() {
-		return patient;
+	public EHRDTO getEhr() {
+		return ehr;
 	}
 }

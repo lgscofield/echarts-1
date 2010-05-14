@@ -143,8 +143,8 @@ public class AdministratorDashboard extends Composite {
 			@Override
 			public void onSelection(SelectionEvent<Integer> event) {
 				Widget w = tabLayoutPanel.getWidget(event.getSelectedItem());
-				if (w instanceof PatientTab)
-					eventBus.fireEvent(new ChangeCurrentPatientEvent(((PatientTab) w).getPatient()));
+				if (w instanceof EHRTab)
+					eventBus.fireEvent(new ChangeCurrentPatientEvent(((EHRTab) w).getEhr().getSubject()));
 				else
 					eventBus.fireEvent(new ChangeCurrentPatientEvent(null));
 			}
@@ -217,7 +217,7 @@ public class AdministratorDashboard extends Composite {
 
 			@Override
 			public void onSuccess(EHRDTO ehr) {
-				final PatientTab tb = new PatientTab(eventBus, Rpc.singleton(), ehr.getSubject());
+				final EHRTab tb = new EHRTab(eventBus, Rpc.singleton(), ehr);
 				addTab(tb, ehr.getSubject().getName());
 			}
 		};

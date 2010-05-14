@@ -17,11 +17,9 @@ package org.eastway.echarts.server;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -35,11 +33,14 @@ import javax.persistence.Persistence;
 import org.eastway.echarts.client.RpcServices;
 import org.eastway.echarts.domain.Alert;
 import org.eastway.echarts.domain.AlertService;
+import org.eastway.echarts.domain.Message;
+import org.eastway.echarts.domain.MessageService;
+import org.eastway.echarts.domain.MessageType;
+import org.eastway.echarts.domain.MessageTypeService;
 import org.eastway.echarts.domain.User;
 import org.eastway.echarts.domain.UserService;
 import org.eastway.echarts.shared.DbException;
-import org.eastway.echarts.shared.Message;
-import org.eastway.echarts.shared.Messages;
+import org.eastway.echarts.shared.MessageDTO;
 import org.eastway.echarts.shared.ServiceCode;
 import org.eastway.echarts.shared.ServiceCodes;
 import org.eastway.echarts.shared.SessionExpiredException;
@@ -68,144 +69,57 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public Messages getMessages(String patientId, String sessionId)
+	public List<MessageDTO> getMessages(long ehrId, String sessionId)
 			throws SessionExpiredException, DbException {
 		checkSessionExpire(sessionId);
-		Messages msgs = new Messages();
 
-		String sql = "SELECT [Messages].ID, PATID, [Descriptor] as 'MessageType', CreationTimestamp, Message, [ParentID], StaffName FROM [Messages] INNER JOIN VMessageType ON [Messages].MessageType = VMessageType.MessageType INNER JOIN [User] ON [Messages].LastEditBy = [User].StaffId WHERE PATID ="
-				+ patientId + " ORDER BY ID";
-		Connection con = null;
-		Statement stmt = null;
-		ResultSet srs = null;
-
-		try {
-			con = DbConnection.getConnection();
-			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
-			srs = stmt.executeQuery(sql);
-			while (srs.next()) {
-				Message m = new Message();
-				m.setId(srs.getInt(1));
-				m.setPatId(srs.getString(2));
-				m.setMessageType(srs.getString(3));
-				m.setCreationDate(srs.getTimestamp(4).getTime());
-				m.setMessage(srs.getString(5));
-				m.setParentId(srs.getInt(6));
-				m.setLastModifiedBy(srs.getString(7));
-				msgs.add(m);
-			}
-			return msgs;
-		} catch (SQLException e) {
-			throw new DbException(e);
-		} catch (NamingException e) {
-			throw new DbException("Naming exception");
-		}
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
+		EntityManager em = emf.createEntityManager();
+		MessageService service = new MessageService(em);
+		List<Message> messages = service.findList(ehrId);
+		List<MessageDTO> messagesDto = new ArrayList<MessageDTO>();
+		for (Message m : messages)
+			messagesDto.add(m.toDto());
+		em.close();
+		emf.close();
+		return messagesDto;
 	}
 
 	@Override
-	public void addMessage(Message msg, String sessionId)
+	public MessageDTO addMessage(MessageDTO msg, String sessionId)
 			throws SessionExpiredException, DbException {
 		checkSessionExpire(sessionId);
 
-		String staffId = null;
-		int messageType;
-		Connection con = null;
-		PreparedStatement stmt = null;
-		String sql = null;
-
-		try {
-			staffId = getStaffId(sessionId);
-			messageType = getMessageType(msg.getMessageType());
-			Timestamp ts = new Timestamp(System.currentTimeMillis());
-			sql = "INSERT INTO Messages(PATID, CreationTimestamp, MessageType, Message, LastEdit, LastEditBy)"
-				+ " Values (?,?,?,?,?,?)";
-
-			con = DbConnection.getConnection();
-
-			stmt = con.prepareStatement(sql);
-
-			stmt.setString(1, msg.getPatId());
-			stmt.setTimestamp(2, ts);
-			stmt.setInt(3, messageType);
-			stmt.setString(4, msg.getMessage());
-			stmt.setTimestamp(5, ts);
-			stmt.setString(6, staffId);
-
-			stmt.executeUpdate();
-		} catch (SQLException e) {
-			throw new DbException(e);
-		} catch (NamingException e) {
-			throw new DbException("Naming exception");
-		}
-	}
-
-	private String getStaffId(String sessionId) throws NamingException, DbException {
-		String sql = "{call getStaffId(?, ?)}";
-		Connection con = null;
-		CallableStatement stmt = null;
-
-		try {
-			con = DbConnection.getConnection();
-			stmt = con.prepareCall(sql);
-			stmt.setString("sessionid", sessionId);
-			stmt.registerOutParameter("staffid", java.sql.Types.VARCHAR);
-			stmt.execute();
-			return stmt.getString("staffid");
-		} catch (SQLException e) {
-			throw new DbException(e);
-		} catch (NamingException e) {
-			throw new DbException("Naming exception");
-		}
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
+		EntityManager em = emf.createEntityManager();
+		MessageService ms = new MessageService(em);
+		MessageTypeService mts = new MessageTypeService(em);
+		MessageType mType = mts.find(msg.getMessageType().getType());
+		Message parent = null;
+		if (msg.getParent() != null)
+			parent = ms.find(msg.getParent().getId());
+		em.getTransaction().begin();
+		Message newMessage = ms.create(msg.getCreationTimestamp(), msg.getEhrId(), msg.getLastEdit(),
+				msg.getLastEditBy(), msg.getMessage(), mType, parent);
+		em.getTransaction().commit();
+		em.close();
+		emf.close();
+		return newMessage.toDto();
 	}
 
 	@Override
 	public ArrayList<String> getMessageTypes(String sessionId)
 			throws SessionExpiredException, DbException {
-		checkSessionExpire(sessionId);
-		ArrayList<String> messageType = new ArrayList<String>();
-		String sql = "SELECT * FROM VMessageType";
-		Connection con = null;
-		Statement stmt = null;
-		ResultSet srs = null;
-
-		try {
-			con = DbConnection.getConnection();
-			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
-			srs = stmt.executeQuery(sql);
-			while (srs.next()) {
-				messageType.add(srs.getString("Descriptor"));
-			}
-			return messageType;
-		} catch (SQLException e) {
-			throw new DbException(e);
-		} catch (NamingException e) {
-			throw new DbException("Naming exceptions");
-		}
-	}
-
-	private int getMessageType(String messageType) throws SQLException, DbException {
-		String sql = "SELECT * FROM VMessageType WHERE Descriptor ='"
-				+ messageType + "'";
-		Connection con = null;
-		Statement stmt = null;
-		ResultSet srs = null;
-
-		try {
-			con = DbConnection.getConnection();
-			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
-			srs = stmt.executeQuery(sql);
-			while (srs.next()) {
-				return srs.getInt("MessageType");
-			}
-			throw new DbException("Message type not found");
-		} catch (SQLException e) {
-			throw e;
-		} catch (NamingException e) {
-			throw new DbException("Naming exception");
-		}
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
+		EntityManager em = emf.createEntityManager();
+		MessageTypeService mts = new MessageTypeService(em);
+		List<MessageType> mtl = mts.findAll();
+		ArrayList<String> mtsl = new ArrayList<String>();
+		for (MessageType mt : mtl)
+			mtsl.add(mt.getType());
+		em.close();
+		emf.close();
+		return mtsl;
 	}
 
 	@Override

@@ -30,9 +30,8 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.Widget;
 
 public class MessagesView extends Composite implements MessagesPresenter.Display {
@@ -46,7 +45,7 @@ public class MessagesView extends Composite implements MessagesPresenter.Display
 	@UiField DialogBox db;
 	@UiField Button saveButton, closeButton;
 	@UiField ListBox messageTypes;
-	@UiField TextArea message;
+	@UiField RichTextArea message;
 
 	public MessagesView() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -68,6 +67,7 @@ public class MessagesView extends Composite implements MessagesPresenter.Display
 	}
 
 	public HTML formatMessage(String[] m) {
+		HTML message = new HTML(m[3]);
 		return new HTML("<strong>"
 				+ DateTimeFormat
 					.getFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZZ")
@@ -75,7 +75,7 @@ public class MessagesView extends Composite implements MessagesPresenter.Display
 				+ "</strong>&mdash;"
 				+ m[1] + "&mdash;"
 				+ m[2] + "<div class='home-PatientMessage'>"
-				+ new Label(m[3]) + "</div>");
+				+ message + "</div>");
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class MessagesView extends Composite implements MessagesPresenter.Display
 
 	@Override
 	public String getMessage() {
-		return message.getText();
+		return message.getHTML();
 	}
 
 	@Override
