@@ -22,7 +22,6 @@ import java.util.Vector;
 
 import org.eastway.echarts.shared.DbException;
 import org.eastway.echarts.shared.MessageDTO;
-import org.eastway.echarts.shared.ServiceCodes;
 import org.eastway.echarts.shared.SessionExpiredException;
 import org.eastway.echarts.shared.UserDTO;
 
@@ -38,8 +37,6 @@ public interface RpcServices extends RemoteService {
 	public ArrayList<String> getMessageTypes(String sessionId) throws SessionExpiredException, DbException;
 
 	public MessageDTO addMessage(MessageDTO msg, String sessionId) throws SessionExpiredException, DbException;
-
-	public ServiceCodes getServiceCodes(String sessionId) throws SessionExpiredException, DbException;
 
 	public UserDTO getUser(String username, String sessionId) throws DbException, SessionExpiredException;
 

@@ -43,8 +43,6 @@ import org.eastway.echarts.domain.User;
 import org.eastway.echarts.domain.UserService;
 import org.eastway.echarts.shared.DbException;
 import org.eastway.echarts.shared.MessageDTO;
-import org.eastway.echarts.shared.ServiceCode;
-import org.eastway.echarts.shared.ServiceCodes;
 import org.eastway.echarts.shared.SessionExpiredException;
 import org.eastway.echarts.shared.UserDTO;
 
@@ -124,34 +122,6 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		return mtsl;
 	}
 
-	@Override
-	public ServiceCodes getServiceCodes(String sessionId) throws SessionExpiredException, DbException {
-		checkSessionExpire(sessionId);
-		String sql = "SELECT * FROM ServiceCodes";
-		ServiceCodes serviceCodes = new ServiceCodes();
-		Connection con = null;
-		Statement stmt = null;
-		ResultSet srs = null;
-
-		try {
-			con = DbConnection.getConnection();
-			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
-			srs = stmt.executeQuery(sql);
-			while (srs.next()) {
-				ServiceCode serviceCode = new ServiceCode();
-				serviceCode.add(srs.getInt("Service"), srs
-						.getString("Description"), srs.getString("TemplateID"));
-				serviceCodes.add(serviceCode);
-			}
-			return serviceCodes;
-		} catch (SQLException e) {
-			throw new DbException(e);
-		} catch (NamingException e) {
-			throw new DbException("Naming exception");
-		}
-
-	}
 
 	protected void checkSessionExpire(String sessionId) throws SessionExpiredException, DbException {
 		if (sessionId == null)

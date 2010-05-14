@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Vector;
 
 import org.eastway.echarts.shared.MessageDTO;
-import org.eastway.echarts.shared.ServiceCodes;
 import org.eastway.echarts.shared.UserDTO;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -34,8 +33,6 @@ public interface RpcServicesAsync {
 	public void getMessageTypes(String sessionId, AsyncCallback<ArrayList<String>> callback);
 
 	public void addMessage(MessageDTO msg, String sessionId, AsyncCallback<MessageDTO> callback);
-
-	public void getServiceCodes(String sessionId, AsyncCallback<ServiceCodes> callback);
 
 	public void getUser(String username, String cookie, AsyncCallback<UserDTO> callback);
 
