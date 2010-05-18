@@ -15,7 +15,7 @@
  */
 package org.eastway.echarts.shared;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Service {
 	private String patientId;
