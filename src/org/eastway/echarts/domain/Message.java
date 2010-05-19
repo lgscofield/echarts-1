@@ -39,7 +39,7 @@ public class Message {
 	private long ehrId;
 	@ManyToOne
 	@JoinColumn(name = "MessageType_Id")
-	private MessageType messageType;
+	private Code messageType;
 	private Date creationTimestamp;
 	private String message;
 	@ManyToOne
@@ -70,11 +70,11 @@ public class Message {
 		return ehrId;
 	}
 
-	public void setMessageType(MessageType messageType) {
+	public void setMessageType(Code messageType) {
 		this.messageType = messageType;
 	}
 
-	public MessageType getMessageType() {
+	public Code getMessageType() {
 		return messageType;
 	}
 

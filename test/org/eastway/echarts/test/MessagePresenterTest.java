@@ -22,9 +22,9 @@ import java.util.List;
 import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.UserImpl;
 import org.eastway.echarts.client.presenter.MessagesPresenter;
+import org.eastway.echarts.shared.CodeDTO;
 import org.eastway.echarts.shared.EHRDTO;
 import org.eastway.echarts.shared.MessageDTO;
-import org.eastway.echarts.shared.MessageTypeDTO;
 import org.eastway.echarts.shared.PatientDTO;
 import org.junit.Test;
 
@@ -56,8 +56,8 @@ public class MessagePresenterTest {
 
 		m1.setEhrId(ehr.getId());
 
-		MessageTypeDTO mtDto = new MessageTypeDTO();
-		mtDto.setType("Referral");
+		CodeDTO mtDto = new CodeDTO();
+		mtDto.setDescriptor("Referral Message");
 		m1.setMessageType(mtDto);
 		m1.setMessage("This is test 1");
 		m1.setCreationTimestamp(timestamp);
@@ -120,7 +120,7 @@ public class MessagePresenterTest {
 		ArrayList<String[]> data = messagesPresenter.getData();
 
 		assertTrue(new Date(new Long(data.get(0)[0])).equals(timestamp));
-		assertTrue(data.get(0)[1].equals(mtDto.getType()));
+		assertTrue(data.get(0)[1].equals(mtDto.getDescriptor()));
 		assertTrue(data.get(0)[2].equals("johndoe"));
 		assertTrue(data.get(0)[3].equals("This is test 1"));
 	}

@@ -15,11 +15,11 @@
  */
 package org.eastway.echarts.client;
 
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Vector;
 
+import org.eastway.echarts.shared.CodeDTO;
 import org.eastway.echarts.shared.DbException;
 import org.eastway.echarts.shared.MessageDTO;
 import org.eastway.echarts.shared.SessionExpiredException;
@@ -34,7 +34,7 @@ public interface RpcServices extends RemoteService {
 
 	public List<MessageDTO> getMessages(long ehrId, String sessionId) throws SessionExpiredException, DbException;
 
-	public ArrayList<String> getMessageTypes(String sessionId) throws SessionExpiredException, DbException;
+	public List<CodeDTO> getMessageTypes(String sessionId) throws SessionExpiredException, DbException;
 
 	public MessageDTO addMessage(MessageDTO msg, String sessionId) throws SessionExpiredException, DbException;
 

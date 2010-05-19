@@ -15,11 +15,11 @@
  */
 package org.eastway.echarts.client;
 
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Vector;
 
+import org.eastway.echarts.shared.CodeDTO;
 import org.eastway.echarts.shared.MessageDTO;
 import org.eastway.echarts.shared.UserDTO;
 
@@ -30,7 +30,7 @@ public interface RpcServicesAsync {
 
 	public void getMessages(long ehrId, String sessionId, AsyncCallback<List<MessageDTO>> callback);
 
-	public void getMessageTypes(String sessionId, AsyncCallback<ArrayList<String>> callback);
+	public void getMessageTypes(String sessionId, AsyncCallback<List<CodeDTO>> callback);
 
 	public void addMessage(MessageDTO msg, String sessionId, AsyncCallback<MessageDTO> callback);
 

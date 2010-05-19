@@ -22,9 +22,9 @@ import java.util.List;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.UserImpl;
+import org.eastway.echarts.shared.CodeDTO;
 import org.eastway.echarts.shared.EHRDTO;
 import org.eastway.echarts.shared.MessageDTO;
-import org.eastway.echarts.shared.MessageTypeDTO;
 
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -63,6 +63,7 @@ public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
 	private List<MessageDTO> messages;
 	private ArrayList<String[]> data = new ArrayList<String[]>();
 	private EHRDTO ehr;
+	private List<CodeDTO> types;
 
 	public MessagesPresenter(final Display display, HandlerManager eventBus,
 			RpcServicesAsync rpcServices, EHRDTO ehr) {
@@ -91,8 +92,7 @@ public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
 			public void onClick(ClickEvent event) {
 				MessageDTO m = new MessageDTO();
 				m.setEhrId(ehr.getId());
-				MessageTypeDTO mtDto = new MessageTypeDTO();
-				mtDto.setType(display.getMessageType());
+				CodeDTO mtDto = findMessageType(display.getMessageType());
 				m.setMessageType(mtDto);
 				m.setMessage(display.getMessage());
 				m.setCreationTimestamp(new Date());
@@ -109,7 +109,15 @@ public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
 		});
 	}
 
-	public void save(final MessageDTO m) {
+	public CodeDTO findMessageType(String messageType) {
+		List<CodeDTO> types = getTypes();
+		for (CodeDTO type : types)
+			if (type.getDescriptor().matches(messageType))
+				return type;
+		return null;
+	}
+
+	public void save(MessageDTO m) {
 		AsyncCallback<MessageDTO> callback = new AsyncCallback<MessageDTO>() {
 			@Override
 			public void onFailure(Throwable caught) {
@@ -129,15 +137,19 @@ public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
 	}
 
 	private void loadMessageType() {
-		AsyncCallback<ArrayList<String>> callback = new AsyncCallback<ArrayList<String>>() {
+		AsyncCallback<List<CodeDTO>> callback = new AsyncCallback<List<CodeDTO>>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				new HandleRpcException(caught);
 			}
 
 			@Override
-			public void onSuccess(ArrayList<String> types) {
-				display.setMessageTypes(types);
+			public void onSuccess(List<CodeDTO> types) {
+				setTypes(types);
+				ArrayList<String> data = new ArrayList<String>();
+				for (CodeDTO type : types)
+					data.add(type.getDescriptor());
+				display.setMessageTypes(data);
 			}
 		};
 		rpcServices.getMessageTypes(UserImpl.getSessionId(),
@@ -172,7 +184,7 @@ public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
 		for (MessageDTO m : msgs) {
 			String[] msgstr = {
 					new Long(m.getCreationTimestamp().getTime()).toString(),
-					m.getMessageType().getType(),
+					m.getMessageType().getDescriptor(),
 					m.getLastEditBy(),
 					m.getMessage()
 				};
@@ -189,5 +201,13 @@ public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
 		loadMessageType();
 		display.setText(ehr.getSubject().getCaseNumber());
 		display.show();
+	}
+
+	public void setTypes(List<CodeDTO> types) {
+		this.types = types;
+	}
+
+	public List<CodeDTO> getTypes() {
+		return types;
 	}
 }

@@ -29,14 +29,15 @@ import javax.persistence.TypedQuery;
 import org.eastway.echarts.client.RpcServices;
 import org.eastway.echarts.domain.Alert;
 import org.eastway.echarts.domain.AlertService;
+import org.eastway.echarts.domain.Code;
+import org.eastway.echarts.domain.CodeService;
 import org.eastway.echarts.domain.Link;
 import org.eastway.echarts.domain.Message;
 import org.eastway.echarts.domain.MessageService;
-import org.eastway.echarts.domain.MessageType;
-import org.eastway.echarts.domain.MessageTypeService;
 import org.eastway.echarts.domain.SessionIdLog;
 import org.eastway.echarts.domain.User;
 import org.eastway.echarts.domain.UserService;
+import org.eastway.echarts.shared.CodeDTO;
 import org.eastway.echarts.shared.DbException;
 import org.eastway.echarts.shared.MessageDTO;
 import org.eastway.echarts.shared.SessionExpiredException;
@@ -89,8 +90,8 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
 		EntityManager em = emf.createEntityManager();
 		MessageService ms = new MessageService(em);
-		MessageTypeService mts = new MessageTypeService(em);
-		MessageType mType = mts.find(msg.getMessageType().getType());
+		CodeService cs = new CodeService(em);
+		Code mType = cs.find(msg.getMessageType().getCodeId());
 		Message parent = null;
 		if (msg.getParent() != null)
 			parent = ms.find(msg.getParent().getId());
@@ -104,15 +105,15 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public ArrayList<String> getMessageTypes(String sessionId)
+	public List<CodeDTO> getMessageTypes(String sessionId)
 			throws SessionExpiredException, DbException {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
 		EntityManager em = emf.createEntityManager();
-		MessageTypeService mts = new MessageTypeService(em);
-		List<MessageType> mtl = mts.findAll();
-		ArrayList<String> mtsl = new ArrayList<String>();
-		for (MessageType mt : mtl)
-			mtsl.add(mt.getType());
+		CodeService cs = new CodeService(em);
+		List<Code> mtList = cs.findColumnName("MessageType");
+		List<CodeDTO> mtsl = new ArrayList<CodeDTO>();
+		for (Code mt : mtList)
+			mtsl.add(mt.toDto());
 		em.close();
 		emf.close();
 		return mtsl;

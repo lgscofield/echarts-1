@@ -48,7 +48,7 @@ public class MessageService {
 			Date lastEdit,
 			String lastEditBy,
 			String content,
-			MessageType type,
+			Code type,
 			Message parent) {
 		Message message = new Message();
 		message.setCreationTimestamp(creationTimestamp);

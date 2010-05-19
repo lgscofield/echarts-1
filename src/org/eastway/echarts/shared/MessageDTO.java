@@ -33,7 +33,7 @@ public class MessageDTO implements Serializable {
 	private String lastEditBy;
 	private String message;
 	private long ehrId;
-	private MessageTypeDTO messageType;
+	private CodeDTO messageType;
 	private MessageDTO parent;
 
 	public MessageDTO() { }
@@ -84,11 +84,11 @@ public class MessageDTO implements Serializable {
 		return ehrId;
 	}
 
-	public void setMessageType(MessageTypeDTO messageType) {
+	public void setMessageType(CodeDTO messageType) {
 		this.messageType = messageType;
 	}
 
-	public MessageTypeDTO getMessageType() {
+	public CodeDTO getMessageType() {
 		return messageType;
 	}
 
