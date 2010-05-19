@@ -1,3 +1,7 @@
+Create Code domain object to allow search for code values.
+
+Convert LastEditBy to a FK to User table.
+
 Make CaseNumber an entity with its own unique id.
 
 adding clients/creating new clients
