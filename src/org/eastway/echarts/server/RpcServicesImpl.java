@@ -23,6 +23,7 @@ import java.util.Vector;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
@@ -130,15 +131,17 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		TypedQuery<SessionIdLog> query = em.createQuery(
 				"SELECT s FROM SessionIdLog s WHERE s.sessionId = '" + sessionId + "'",
 					SessionIdLog.class);
-		SessionIdLog sil = query.getSingleResult();
+		SessionIdLog sil = null;
+		try {
+			sil = query.getSingleResult();
+		} catch (NoResultException e) {
+			throw new SessionExpiredException("Please login");
+		}
 		Date now = new Date();
 		Date expire = new Date(sil.getSessionIdExpire());
 
 		if (now.after(expire))
 			throw new SessionExpiredException();
-		if (sil == null)
-			throw new SessionExpiredException("Please login");
-
 		em.close();
 		emf.close();
 	}
