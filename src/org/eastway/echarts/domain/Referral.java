@@ -25,7 +25,7 @@ public class Referral {
 	private String levelOfCare;
 	private String planType;
 	private Date lastService;
-	private String dischargeDate;
+	private Date dischargeDate;
 	private String disposition;
 	private Date lastEdit;
 	private String lastEditBy;
@@ -128,11 +128,11 @@ public class Referral {
 		return lastService;
 	}
 
-	public void setDischargeDate(String dischargeDate) {
+	public void setDischargeDate(Date dischargeDate) {
 		this.dischargeDate = dischargeDate;
 	}
 
-	public String getDischargeDate() {
+	public Date getDischargeDate() {
 		return dischargeDate;
 	}
 
