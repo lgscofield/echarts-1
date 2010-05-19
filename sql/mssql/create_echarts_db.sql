@@ -15,13 +15,13 @@
  */
 USE [echarts]
 GO
-/****** Object:  User [echarts]    Script Date: 05/19/2010 10:22:52 ******/
+/****** Object:  User [echarts]    Script Date: 05/19/2010 14:44:00 ******/
 CREATE USER [echarts] FOR LOGIN [echarts] WITH DEFAULT_SCHEMA=[dbo]
 GO
-/****** Object:  Schema [form]    Script Date: 05/19/2010 10:22:52 ******/
+/****** Object:  Schema [form]    Script Date: 05/19/2010 14:44:00 ******/
 CREATE SCHEMA [form] AUTHORIZATION [dbo]
 GO
-/****** Object:  Table [dbo].[Demographics]    Script Date: 05/19/2010 10:22:54 ******/
+/****** Object:  Table [dbo].[Demographics]    Script Date: 05/19/2010 14:44:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -80,7 +80,7 @@ CREATE TABLE [dbo].[Demographics](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Alert]    Script Date: 05/19/2010 10:22:54 ******/
+/****** Object:  Table [dbo].[Alert]    Script Date: 05/19/2010 14:44:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -101,7 +101,7 @@ CREATE TABLE [dbo].[Alert](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Patient]    Script Date: 05/19/2010 10:22:54 ******/
+/****** Object:  Table [dbo].[Patient]    Script Date: 05/19/2010 14:44:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -130,7 +130,7 @@ CREATE TABLE [dbo].[Patient](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Ehr]    Script Date: 05/19/2010 10:22:54 ******/
+/****** Object:  Table [dbo].[Ehr]    Script Date: 05/19/2010 14:44:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -155,7 +155,40 @@ CREATE TABLE [dbo].[Ehr](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  View [dbo].[VDisplayDemographics]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Table [dbo].[Referral]    Script Date: 05/19/2010 14:44:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Referral](
+	[Referral_Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[ehr_id] [bigint] NOT NULL,
+	[Program] [varchar](10) NULL,
+	[UCI] [varchar](7) NULL,
+	[UPID] [varchar](5) NULL,
+	[ReferralSource] [varchar](10) NULL,
+	[ReferralType] [varchar](5) NULL,
+	[ReferralDate] [datetime] NULL,
+	[TakenByStaff] [varchar](15) NULL,
+	[AdmissionDate] [datetime] NULL,
+	[LevelofCare] [varchar](2) NULL,
+	[PlanType] [varchar](1) NULL,
+	[LastService] [datetime] NULL,
+	[DischargeDate] [datetime] NULL,
+	[Disposition] [varchar](1) NULL,
+	[LastEdit] [datetime] NULL,
+	[LastEditBy] [varchar](15) NULL,
+ CONSTRAINT [PK_Referral] PRIMARY KEY CLUSTERED 
+(
+	[Referral_Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  View [dbo].[VDisplayDemographics]    Script Date: 05/19/2010 14:44:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -352,68 +385,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=2 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VDisplayDemographics'
 GO
-/****** Object:  Table [dbo].[Referral]    Script Date: 05/19/2010 10:22:55 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[Referral](
-	[Referral_Id] [bigint] IDENTITY(1,1) NOT NULL,
-	[ehr_id] [bigint] NOT NULL,
-	[Program] [varchar](10) NULL,
-	[UCI] [varchar](7) NULL,
-	[UPID] [varchar](5) NULL,
-	[ReferralSource] [varchar](10) NULL,
-	[ReferralType] [varchar](5) NULL,
-	[ReferralDate] [datetime] NULL,
-	[TakenByStaff] [varchar](15) NULL,
-	[AdmissionDate] [datetime] NULL,
-	[LevelofCare] [varchar](2) NULL,
-	[PlanType] [varchar](1) NULL,
-	[LastService] [datetime] NULL,
-	[DischargeDate] [datetime] NULL,
-	[Disposition] [varchar](1) NULL,
-	[LastEdit] [datetime] NULL,
-	[LastEditBy] [varchar](15) NULL,
- CONSTRAINT [PK_Referral] PRIMARY KEY CLUSTERED 
-(
-	[Referral_Id] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-SET ANSI_PADDING OFF
-GO
-/****** Object:  Table [form].[Form_list]    Script Date: 05/19/2010 10:22:55 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [form].[Form_list](
-	[FormName] [varchar](60) NOT NULL,
-	[FormUrl] [varchar](75) NOT NULL,
-	[Header] [varchar](30) NULL,
-	[FormOrder] [smallint] NULL,
- CONSTRAINT [PK_Form_list] PRIMARY KEY CLUSTERED 
-(
-	[FormName] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-SET ANSI_PADDING OFF
-GO
-INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'Community Psychiatric Supportive Treatment Progress Note', N'http://ewsql/echarts-asp/101CPSTEdit.asp', N'Progress Notes', 2)
-INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'General Mental Health Services Acknowledgement', N'http://ewsql/echarts-asp/105GMHServiceAck.asp', N'Miscellaneous', 10)
-INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'Individual Progress Note', N'http://ewsql/echarts-asp/102IPNEdit.asp', N'Progress Notes', 3)
-INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'ISP Review', N'http://ewsql/echarts-asp/noForm.asp', N'Individualized Service Plan', 9)
-INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'ISP Update', N'http://ewsql/echarts-asp/noForm.asp', N'Individualized Service Plan', 8)
-INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'New ISP', N'http://ewsql/echarts-asp/GandO.asp', N'Individualized Service Plan', 7)
-INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'Pharmacological Management Progress Note', N'http://ewsql/echarts-asp/104PharmEdit.asp', N'Progress Notes', 5)
-INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'Pharmacological Management/Nursing Progress Note', N'http://ewsql/echarts-asp/103PM-NPNEdit.asp', N'Progress Notes', 4)
-/****** Object:  Table [dbo].[Tickler]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Table [dbo].[Tickler]    Script Date: 05/19/2010 14:44:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -445,7 +417,7 @@ CREATE TABLE [dbo].[Tickler](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[SystemLog]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Table [dbo].[SystemLog]    Script Date: 05/19/2010 14:44:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -467,7 +439,7 @@ CREATE TABLE [dbo].[SystemLog](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[SessionIdLog]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Table [dbo].[SessionIdLog]    Script Date: 05/19/2010 14:44:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -490,7 +462,7 @@ CREATE TABLE [dbo].[SessionIdLog](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[ServiceCodes]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Table [dbo].[ServiceCodes]    Script Date: 05/19/2010 14:44:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -546,7 +518,7 @@ INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'9
 INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'997', N'CANCELLATION', NULL)
 INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'998', N'NO SHOW', NULL)
 INSERT [dbo].[ServiceCodes] ([Service], [Description], [TemplateID]) VALUES (N'999', N'NON-BILLABLE', NULL)
-/****** Object:  Table [dbo].[Role]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Table [dbo].[Role]    Script Date: 05/19/2010 14:44:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -576,7 +548,35 @@ INSERT [dbo].[Role] ([Role_Id], [RoleName], [Permission]) VALUES (8, N'Human Res
 INSERT [dbo].[Role] ([Role_Id], [RoleName], [Permission]) VALUES (9, N'Accounts Recievable', 0x00000009)
 INSERT [dbo].[Role] ([Role_Id], [RoleName], [Permission]) VALUES (10, N'General Admin', 0x0000000A)
 INSERT [dbo].[Role] ([Role_Id], [RoleName], [Permission]) VALUES (11, N'Unprivileged', NULL)
-/****** Object:  Table [form].[ProgressNote]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Table [form].[Form_list]    Script Date: 05/19/2010 14:44:04 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [form].[Form_list](
+	[FormName] [varchar](60) NOT NULL,
+	[FormUrl] [varchar](75) NOT NULL,
+	[Header] [varchar](30) NULL,
+	[FormOrder] [smallint] NULL,
+ CONSTRAINT [PK_Form_list] PRIMARY KEY CLUSTERED 
+(
+	[FormName] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'Community Psychiatric Supportive Treatment Progress Note', N'http://ewsql/echarts-asp/101CPSTEdit.asp', N'Progress Notes', 2)
+INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'General Mental Health Services Acknowledgement', N'http://ewsql/echarts-asp/105GMHServiceAck.asp', N'Miscellaneous', 10)
+INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'Individual Progress Note', N'http://ewsql/echarts-asp/102IPNEdit.asp', N'Progress Notes', 3)
+INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'ISP Review', N'http://ewsql/echarts-asp/noForm.asp', N'Individualized Service Plan', 9)
+INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'ISP Update', N'http://ewsql/echarts-asp/noForm.asp', N'Individualized Service Plan', 8)
+INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'New ISP', N'http://ewsql/echarts-asp/GandO.asp', N'Individualized Service Plan', 7)
+INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'Pharmacological Management Progress Note', N'http://ewsql/echarts-asp/104PharmEdit.asp', N'Progress Notes', 5)
+INSERT [form].[Form_list] ([FormName], [FormUrl], [Header], [FormOrder]) VALUES (N'Pharmacological Management/Nursing Progress Note', N'http://ewsql/echarts-asp/103PM-NPNEdit.asp', N'Progress Notes', 4)
+/****** Object:  Table [form].[ProgressNote]    Script Date: 05/19/2010 14:44:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -595,7 +595,7 @@ CREATE TABLE [form].[ProgressNote](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[DiagnosisData]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Table [dbo].[DiagnosisData]    Script Date: 05/19/2010 14:44:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -628,7 +628,7 @@ CREATE TABLE [dbo].[DiagnosisData](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[DiagnosisAxis2]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Table [dbo].[DiagnosisAxis2]    Script Date: 05/19/2010 14:44:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -659,7 +659,7 @@ INSERT [dbo].[DiagnosisAxis2] ([ICD9], [Description], [DSMIV], [508k], [TabDiagn
 INSERT [dbo].[DiagnosisAxis2] ([ICD9], [Description], [DSMIV], [508k], [TabDiagnosis]) VALUES (N'319  ', N' MENTAL RETARDATION NOS  ', N'319  ', 0, N'Mental Retardation')
 INSERT [dbo].[DiagnosisAxis2] ([ICD9], [Description], [DSMIV], [508k], [TabDiagnosis]) VALUES (N'V62.89 ', N' BORDERLINE INTELLECTUAL FUNCTIONING', N'V62.89 ', 0, NULL)
 INSERT [dbo].[DiagnosisAxis2] ([ICD9], [Description], [DSMIV], [508k], [TabDiagnosis]) VALUES (N'V71.09 ', N' NO DIAGNOSIS ON AXIS II', N'V71.09 ', 0, NULL)
-/****** Object:  Table [dbo].[DiagnosisAxis1]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Table [dbo].[DiagnosisAxis1]    Script Date: 05/19/2010 14:44:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -918,7 +918,7 @@ INSERT [dbo].[DiagnosisAxis1] ([ICD9], [Description], [DSMIV], [508k], [TabDiagn
 INSERT [dbo].[DiagnosisAxis1] ([ICD9], [Description], [DSMIV], [508k], [TabDiagnosis]) VALUES (N'V62.89 ', N' PSYCHOLOGICAL STRESS NEC  ', N'V62.89 ', 0, NULL)
 INSERT [dbo].[DiagnosisAxis1] ([ICD9], [Description], [DSMIV], [508k], [TabDiagnosis]) VALUES (N'V71.01 ', N' OBSV-ADULT ANTISOC BEHAV  ', N'V71.01 ', 0, NULL)
 INSERT [dbo].[DiagnosisAxis1] ([ICD9], [Description], [DSMIV], [508k], [TabDiagnosis]) VALUES (N'V71.02 ', N' OBSV-ADOLESC ANTISOC BEH  ', N'V71.02 ', 0, NULL)
-/****** Object:  Table [dbo].[Assignments]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Table [dbo].[Assignments]    Script Date: 05/19/2010 14:44:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -945,7 +945,7 @@ CREATE TABLE [dbo].[Assignments](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[AddressData]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Table [dbo].[AddressData]    Script Date: 05/19/2010 14:44:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -977,55 +977,7 @@ CREATE TABLE [dbo].[AddressData](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Message]    Script Date: 05/19/2010 10:22:55 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[Message](
-	[Message_Id] [int] NOT NULL,
-	[ehr_id] [bigint] NOT NULL,
-	[MessageType_Id] [int] NULL,
-	[CreationTimestamp] [datetime] NULL,
-	[Message] [varchar](max) NULL,
-	[Parent] [int] NULL,
-	[LastEdit] [datetime] NULL,
-	[LastEditBy] [varchar](15) NULL,
- CONSTRAINT [PK_Message] PRIMARY KEY CLUSTERED 
-(
-	[Message_Id] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-SET ANSI_PADDING OFF
-GO
-/****** Object:  Table [dbo].[MessageType]    Script Date: 05/19/2010 10:22:55 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[MessageType](
-	[MessageType_Id] [int] NOT NULL,
-	[Type] [varchar](50) NULL,
- CONSTRAINT [PK_MessageType] PRIMARY KEY CLUSTERED 
-(
-	[MessageType_Id] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-SET ANSI_PADDING OFF
-GO
-INSERT [dbo].[MessageType] ([MessageType_Id], [Type]) VALUES (1, N'Referral')
-INSERT [dbo].[MessageType] ([MessageType_Id], [Type]) VALUES (2, N'Case Management')
-INSERT [dbo].[MessageType] ([MessageType_Id], [Type]) VALUES (3, N'Therapy')
-INSERT [dbo].[MessageType] ([MessageType_Id], [Type]) VALUES (4, N'Medication')
-INSERT [dbo].[MessageType] ([MessageType_Id], [Type]) VALUES (5, N'Bulletin')
-INSERT [dbo].[MessageType] ([MessageType_Id], [Type]) VALUES (6, N'Triage')
-/****** Object:  Table [form].[ISPObjectives]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Table [form].[ISPObjectives]    Script Date: 05/19/2010 14:44:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1061,7 +1013,7 @@ CREATE TABLE [form].[ISPObjectives](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [form].[ISPGoals]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Table [form].[ISPGoals]    Script Date: 05/19/2010 14:44:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1097,7 +1049,7 @@ CREATE TABLE [form].[ISPGoals](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [form].[ISP_ServiceDescriptions]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Table [form].[ISP_ServiceDescriptions]    Script Date: 05/19/2010 14:44:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1122,7 +1074,7 @@ INSERT [form].[ISP_ServiceDescriptions] ([ID], [ServiceDescriptions]) VALUES (CA
 INSERT [form].[ISP_ServiceDescriptions] ([ID], [ServiceDescriptions]) VALUES (CAST(25 AS Numeric(18, 0)), N'AoD Individual Counseling')
 INSERT [form].[ISP_ServiceDescriptions] ([ID], [ServiceDescriptions]) VALUES (CAST(26 AS Numeric(18, 0)), N'AoD Group Counseling')
 INSERT [form].[ISP_ServiceDescriptions] ([ID], [ServiceDescriptions]) VALUES (CAST(27 AS Numeric(18, 0)), N'AoD Case Management')
-/****** Object:  Table [form].[ISP]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Table [form].[ISP]    Script Date: 05/19/2010 14:44:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1168,7 +1120,7 @@ CREATE TABLE [form].[ISP](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[hibernate_sequences]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Table [dbo].[hibernate_sequences]    Script Date: 05/19/2010 14:44:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1186,7 +1138,31 @@ CREATE TABLE [dbo].[hibernate_sequences](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Codes]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Table [dbo].[Message]    Script Date: 05/19/2010 14:44:04 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Message](
+	[Message_Id] [bigint] NOT NULL,
+	[ehr_id] [bigint] NOT NULL,
+	[MessageType_Id] [bigint] NULL,
+	[CreationTimestamp] [datetime] NULL,
+	[Message] [varchar](max) NULL,
+	[Parent] [bigint] NULL,
+	[LastEdit] [datetime] NULL,
+	[LastEditBy] [varchar](15) NULL,
+ CONSTRAINT [PK_Message] PRIMARY KEY CLUSTERED 
+(
+	[Message_Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Codes]    Script Date: 05/19/2010 14:44:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1194,7 +1170,7 @@ GO
 SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[Codes](
-	[CodeID] [numeric](18, 0) IDENTITY(1,1) NOT NULL,
+	[CodeID] [bigint] IDENTITY(1,1) NOT NULL,
 	[ColumnName] [varchar](20) NULL,
 	[Value] [varchar](3) NULL,
 	[Descriptor] [varchar](60) NULL,
@@ -1207,157 +1183,157 @@ GO
 SET ANSI_PADDING OFF
 GO
 SET IDENTITY_INSERT [dbo].[Codes] ON
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(1 AS Numeric(18, 0)), N'CaseStatus', N'A', N'Active')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(2 AS Numeric(18, 0)), N'CaseStatus', N'D', N'Terminated')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(3 AS Numeric(18, 0)), N'CaseStatus', N'P', N'Pre-Admit')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(4 AS Numeric(18, 0)), N'Gender', N'M', N'Male')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(5 AS Numeric(18, 0)), N'Gender', N'F', N'Female')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(6 AS Numeric(18, 0)), N'Suffix', N'II', N'II')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(7 AS Numeric(18, 0)), N'Suffix', N'III', N'III')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(8 AS Numeric(18, 0)), N'Suffix', N'JR', N'JR')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(9 AS Numeric(18, 0)), N'Suffix', N'SR', N'SR')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(10 AS Numeric(18, 0)), N'MaritalStatus', N'S', N'Single (Never Married)')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(11 AS Numeric(18, 0)), N'MaritalStatus', N'D', N'Divorced')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(12 AS Numeric(18, 0)), N'MaritalStatus', N'M', N'Married')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(13 AS Numeric(18, 0)), N'MaritalStatus', N'O', N'Other')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(14 AS Numeric(18, 0)), N'MaritalStatus', N'W', N'Widowed')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(17 AS Numeric(18, 0)), N'LivingArrangement', N'A', N'Own Home')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(18 AS Numeric(18, 0)), N'LivingArrangement', N'B', N'Friend''s Home')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(19 AS Numeric(18, 0)), N'LivingArrangement', N'C', N'Relative''s Home')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(20 AS Numeric(18, 0)), N'LivingArrangement', N'D', N'Supervised Group Living')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(21 AS Numeric(18, 0)), N'LivingArrangement', N'E', N'Supervised Apartment')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(22 AS Numeric(18, 0)), N'LivingArrangement', N'F', N'Boarding Home')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(23 AS Numeric(18, 0)), N'LivingArrangement', N'G', N'Crisis Residential')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(24 AS Numeric(18, 0)), N'LivingArrangement', N'H', N'Child Foster Care')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(25 AS Numeric(18, 0)), N'LivingArrangement', N'I', N'Adult Foster Care')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(26 AS Numeric(18, 0)), N'LivingArrangement', N'J', N'Intermediate Care Facility')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(27 AS Numeric(18, 0)), N'LivingArrangement', N'K', N'Skilled Nursing Facility')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(28 AS Numeric(18, 0)), N'LivingArrangement', N'L', N'Resite Care')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(29 AS Numeric(18, 0)), N'LivingArrangement', N'M', N'Mental Retardation Intermediate Care Facility')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(30 AS Numeric(18, 0)), N'LivingArrangement', N'N', N'Licensed Mental Retardation Intermediate Care Facililty')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(31 AS Numeric(18, 0)), N'LivingArrangement', N'O', N'State Mental Retardation Institution')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(32 AS Numeric(18, 0)), N'LivingArrangement', N'P', N'State Mental Health Institution')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(33 AS Numeric(18, 0)), N'LivingArrangement', N'Q', N'Hospital')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(34 AS Numeric(18, 0)), N'LivingArrangement', N'R', N'Correctional Facility')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(35 AS Numeric(18, 0)), N'LivingArrangement', N'S', N'Homeless')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(36 AS Numeric(18, 0)), N'LivingArrangement', N'T', N'Rest Home')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(37 AS Numeric(18, 0)), N'LivingArrangement', N'U', N'Other')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(38 AS Numeric(18, 0)), N'EducationLevel', N'00', N'Less than Grade 1')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(39 AS Numeric(18, 0)), N'EducationLevel', N'01', N'Grade 1')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(40 AS Numeric(18, 0)), N'EducationLevel', N'02', N'Grade 2')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(41 AS Numeric(18, 0)), N'EducationLevel', N'03', N'Grade 3')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(42 AS Numeric(18, 0)), N'EducationLevel', N'04', N'Grade 4')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(43 AS Numeric(18, 0)), N'EducationLevel', N'05', N'Grade 5')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(44 AS Numeric(18, 0)), N'EducationLevel', N'06', N'Grade 6')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(45 AS Numeric(18, 0)), N'EducationLevel', N'07', N'Grade 7')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(46 AS Numeric(18, 0)), N'EducationLevel', N'08', N'Grade 8')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(47 AS Numeric(18, 0)), N'EducationLevel', N'09', N'Grade 9')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(48 AS Numeric(18, 0)), N'EducationLevel', N'10', N'Grade 10')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(49 AS Numeric(18, 0)), N'EducationLevel', N'11', N'Grade 11')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(50 AS Numeric(18, 0)), N'EducationLevel', N'12', N'High School Diploma/GED')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(51 AS Numeric(18, 0)), N'EducationLevel', N'13', N'Trade or Technical School')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(52 AS Numeric(18, 0)), N'EducationLevel', N'14', N'Some College')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(53 AS Numeric(18, 0)), N'EducationLevel', N'15', N'2 Year College/Associate Degree')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(54 AS Numeric(18, 0)), N'EducationLevel', N'16', N'4 Year College/Undergrad. Degree')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(55 AS Numeric(18, 0)), N'EducationLevel', N'17', N'Graduate Courses')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(56 AS Numeric(18, 0)), N'EducationLevel', N'18', N'Graduate Degree')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(57 AS Numeric(18, 0)), N'EducationLevel', N'19', N'Post-Graduate Studies')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(58 AS Numeric(18, 0)), N'EducationLevel', N'20', N'Further Specialized Studies')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(59 AS Numeric(18, 0)), N'EducationType', N'1', N'Regular')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(60 AS Numeric(18, 0)), N'EducationType', N'2', N'Severe Behavioral Handicaped (SBH)')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(61 AS Numeric(18, 0)), N'EducationType', N'3', N'Learning Disabled (LD)')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(62 AS Numeric(18, 0)), N'EducationType', N'4', N'Hearing Impaired (HI)')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(63 AS Numeric(18, 0)), N'EducationType', N'5', N'Visually Impaired (VI)')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(64 AS Numeric(18, 0)), N'EducationType', N'6', N'Multihandicapped')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(65 AS Numeric(18, 0)), N'EducationType', N'7', N'Developmentally Disabled (DD)')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(66 AS Numeric(18, 0)), N'EducationType', N'8', N'Orthopedically Handicapped (OH)')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(67 AS Numeric(18, 0)), N'EducationType', N'9', N'Other')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(68 AS Numeric(18, 0)), N'Employment', N'A', N'Full Time (35 Hrs+ per week)')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(69 AS Numeric(18, 0)), N'Employment', N'B', N'Part Time (<35 Hrs per week)')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(70 AS Numeric(18, 0)), N'Employment', N'C', N'Sheltered Employment')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(71 AS Numeric(18, 0)), N'Employment', N'D', N'Unemployed')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(72 AS Numeric(18, 0)), N'Employment', N'E', N'Homemaker')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(73 AS Numeric(18, 0)), N'Employment', N'F', N'Student')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(74 AS Numeric(18, 0)), N'Employment', N'G', N'Retired')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(75 AS Numeric(18, 0)), N'Employment', N'H', N'Disabled')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(76 AS Numeric(18, 0)), N'Employment', N'I', N'Inmate of Institution')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(77 AS Numeric(18, 0)), N'Employment', N'J', N'Other')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(78 AS Numeric(18, 0)), N'IncomeSource', N'A', N'Wages/Salary Income')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(79 AS Numeric(18, 0)), N'IncomeSource', N'B', N'Family or Relative')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(80 AS Numeric(18, 0)), N'IncomeSource', N'C', N'Alimony')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(81 AS Numeric(18, 0)), N'IncomeSource', N'D', N'Child Support')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(82 AS Numeric(18, 0)), N'IncomeSource', N'E', N'Savings or Investments')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(83 AS Numeric(18, 0)), N'IncomeSource', N'F', N'Disability Insurance/Worker''s Compensation')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(84 AS Numeric(18, 0)), N'IncomeSource', N'G', N'Unemployment Compensation')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(85 AS Numeric(18, 0)), N'IncomeSource', N'H', N'Retirement Pension')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(86 AS Numeric(18, 0)), N'IncomeSource', N'I', N'Social Security Retirement')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(87 AS Numeric(18, 0)), N'IncomeSource', N'J', N'General Relief/Welfare')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(88 AS Numeric(18, 0)), N'IncomeSource', N'K', N'Aid for a Dependent Child (ADC or AFD)')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(89 AS Numeric(18, 0)), N'IncomeSource', N'L', N'Supplemental Security Income (SSI)')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(90 AS Numeric(18, 0)), N'IncomeSource', N'M', N'Social Security Disability Insurance (SSDI)')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(91 AS Numeric(18, 0)), N'IncomeSource', N'N', N'Other')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(92 AS Numeric(18, 0)), N'IncomeSource', N'P', N'None')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(93 AS Numeric(18, 0)), N'Race', N'A', N'Asian')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(94 AS Numeric(18, 0)), N'Race', N'B', N'Black or African American')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(95 AS Numeric(18, 0)), N'Race', N'M', N'Alaskan Native')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(96 AS Numeric(18, 0)), N'Race', N'N', N'American Indian')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(97 AS Numeric(18, 0)), N'Race', N'P', N'Hispanic')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(98 AS Numeric(18, 0)), N'Race', N'U', N'Unknown')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(99 AS Numeric(18, 0)), N'Race', N'W', N'White')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(100 AS Numeric(18, 0)), N'LevelofCare', N'A1', N'Consultation and Early Intervention (Level 0.5)')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(101 AS Numeric(18, 0)), N'LevelofCare', N'B1', N'Outpatient Services (Level I-A)')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(102 AS Numeric(18, 0)), N'LevelofCare', N'B2', N'Intensive Outpatient Services (Level I-B)')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (1, N'CaseStatus', N'A', N'Active')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (2, N'CaseStatus', N'D', N'Terminated')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (3, N'CaseStatus', N'P', N'Pre-Admit')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (4, N'Gender', N'M', N'Male')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (5, N'Gender', N'F', N'Female')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (6, N'Suffix', N'II', N'II')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (7, N'Suffix', N'III', N'III')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (8, N'Suffix', N'JR', N'JR')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (9, N'Suffix', N'SR', N'SR')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (10, N'MaritalStatus', N'S', N'Single (Never Married)')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (11, N'MaritalStatus', N'D', N'Divorced')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (12, N'MaritalStatus', N'M', N'Married')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (13, N'MaritalStatus', N'O', N'Other')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (14, N'MaritalStatus', N'W', N'Widowed')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (17, N'LivingArrangement', N'A', N'Own Home')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (18, N'LivingArrangement', N'B', N'Friend''s Home')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (19, N'LivingArrangement', N'C', N'Relative''s Home')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (20, N'LivingArrangement', N'D', N'Supervised Group Living')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (21, N'LivingArrangement', N'E', N'Supervised Apartment')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (22, N'LivingArrangement', N'F', N'Boarding Home')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (23, N'LivingArrangement', N'G', N'Crisis Residential')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (24, N'LivingArrangement', N'H', N'Child Foster Care')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (25, N'LivingArrangement', N'I', N'Adult Foster Care')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (26, N'LivingArrangement', N'J', N'Intermediate Care Facility')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (27, N'LivingArrangement', N'K', N'Skilled Nursing Facility')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (28, N'LivingArrangement', N'L', N'Resite Care')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (29, N'LivingArrangement', N'M', N'Mental Retardation Intermediate Care Facility')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (30, N'LivingArrangement', N'N', N'Licensed Mental Retardation Intermediate Care Facililty')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (31, N'LivingArrangement', N'O', N'State Mental Retardation Institution')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (32, N'LivingArrangement', N'P', N'State Mental Health Institution')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (33, N'LivingArrangement', N'Q', N'Hospital')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (34, N'LivingArrangement', N'R', N'Correctional Facility')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (35, N'LivingArrangement', N'S', N'Homeless')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (36, N'LivingArrangement', N'T', N'Rest Home')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (37, N'LivingArrangement', N'U', N'Other')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (38, N'EducationLevel', N'00', N'Less than Grade 1')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (39, N'EducationLevel', N'01', N'Grade 1')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (40, N'EducationLevel', N'02', N'Grade 2')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (41, N'EducationLevel', N'03', N'Grade 3')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (42, N'EducationLevel', N'04', N'Grade 4')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (43, N'EducationLevel', N'05', N'Grade 5')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (44, N'EducationLevel', N'06', N'Grade 6')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (45, N'EducationLevel', N'07', N'Grade 7')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (46, N'EducationLevel', N'08', N'Grade 8')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (47, N'EducationLevel', N'09', N'Grade 9')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (48, N'EducationLevel', N'10', N'Grade 10')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (49, N'EducationLevel', N'11', N'Grade 11')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (50, N'EducationLevel', N'12', N'High School Diploma/GED')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (51, N'EducationLevel', N'13', N'Trade or Technical School')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (52, N'EducationLevel', N'14', N'Some College')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (53, N'EducationLevel', N'15', N'2 Year College/Associate Degree')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (54, N'EducationLevel', N'16', N'4 Year College/Undergrad. Degree')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (55, N'EducationLevel', N'17', N'Graduate Courses')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (56, N'EducationLevel', N'18', N'Graduate Degree')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (57, N'EducationLevel', N'19', N'Post-Graduate Studies')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (58, N'EducationLevel', N'20', N'Further Specialized Studies')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (59, N'EducationType', N'1', N'Regular')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (60, N'EducationType', N'2', N'Severe Behavioral Handicaped (SBH)')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (61, N'EducationType', N'3', N'Learning Disabled (LD)')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (62, N'EducationType', N'4', N'Hearing Impaired (HI)')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (63, N'EducationType', N'5', N'Visually Impaired (VI)')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (64, N'EducationType', N'6', N'Multihandicapped')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (65, N'EducationType', N'7', N'Developmentally Disabled (DD)')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (66, N'EducationType', N'8', N'Orthopedically Handicapped (OH)')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (67, N'EducationType', N'9', N'Other')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (68, N'Employment', N'A', N'Full Time (35 Hrs+ per week)')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (69, N'Employment', N'B', N'Part Time (<35 Hrs per week)')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (70, N'Employment', N'C', N'Sheltered Employment')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (71, N'Employment', N'D', N'Unemployed')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (72, N'Employment', N'E', N'Homemaker')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (73, N'Employment', N'F', N'Student')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (74, N'Employment', N'G', N'Retired')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (75, N'Employment', N'H', N'Disabled')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (76, N'Employment', N'I', N'Inmate of Institution')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (77, N'Employment', N'J', N'Other')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (78, N'IncomeSource', N'A', N'Wages/Salary Income')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (79, N'IncomeSource', N'B', N'Family or Relative')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (80, N'IncomeSource', N'C', N'Alimony')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (81, N'IncomeSource', N'D', N'Child Support')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (82, N'IncomeSource', N'E', N'Savings or Investments')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (83, N'IncomeSource', N'F', N'Disability Insurance/Worker''s Compensation')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (84, N'IncomeSource', N'G', N'Unemployment Compensation')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (85, N'IncomeSource', N'H', N'Retirement Pension')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (86, N'IncomeSource', N'I', N'Social Security Retirement')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (87, N'IncomeSource', N'J', N'General Relief/Welfare')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (88, N'IncomeSource', N'K', N'Aid for a Dependent Child (ADC or AFD)')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (89, N'IncomeSource', N'L', N'Supplemental Security Income (SSI)')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (90, N'IncomeSource', N'M', N'Social Security Disability Insurance (SSDI)')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (91, N'IncomeSource', N'N', N'Other')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (92, N'IncomeSource', N'P', N'None')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (93, N'Race', N'A', N'Asian')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (94, N'Race', N'B', N'Black or African American')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (95, N'Race', N'M', N'Alaskan Native')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (96, N'Race', N'N', N'American Indian')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (97, N'Race', N'P', N'Hispanic')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (98, N'Race', N'U', N'Unknown')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (99, N'Race', N'W', N'White')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (100, N'LevelofCare', N'A1', N'Consultation and Early Intervention (Level 0.5)')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (101, N'LevelofCare', N'B1', N'Outpatient Services (Level I-A)')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (102, N'LevelofCare', N'B2', N'Intensive Outpatient Services (Level I-B)')
 GO
 print 'Processed 100 total records'
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(103 AS Numeric(18, 0)), N'LevelofCare', N'B3', N'Day Treatment (Level I-C)')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(104 AS Numeric(18, 0)), N'LevelofCare', N'C1', N'Non-Medical Community Residential Treatment (Level II-A)')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(105 AS Numeric(18, 0)), N'LevelofCare', N'C2', N'Medical Community Residential (Level II-B)')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(106 AS Numeric(18, 0)), N'LevelofCare', N'D1', N'Ambulatory Detoxification (Level III-A)')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(107 AS Numeric(18, 0)), N'LevelofCare', N'D2', N'23-Hours Observation Bed (Level III-B)')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(108 AS Numeric(18, 0)), N'LevelofCare', N'D3', N'Sub-Acute Detoxification (Level IV)')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(109 AS Numeric(18, 0)), N'LevelofCare', N'NA', N'Not Applicable')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(110 AS Numeric(18, 0)), N'County', NULL, N'Adams')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(111 AS Numeric(18, 0)), N'County', NULL, N'Butler')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(112 AS Numeric(18, 0)), N'County', NULL, N'Champaign')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(113 AS Numeric(18, 0)), N'County', NULL, N'Clark')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(114 AS Numeric(18, 0)), N'County', NULL, N'Clermont')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(115 AS Numeric(18, 0)), N'County', NULL, N'Clinton')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(116 AS Numeric(18, 0)), N'County', NULL, N'Darke')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(117 AS Numeric(18, 0)), N'County', NULL, N'Defiance')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(118 AS Numeric(18, 0)), N'County', NULL, N'Fairfield')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(119 AS Numeric(18, 0)), N'County', NULL, N'Franklin')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(120 AS Numeric(18, 0)), N'County', NULL, N'Greene')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(121 AS Numeric(18, 0)), N'County', NULL, N'Hamilton')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(122 AS Numeric(18, 0)), N'County', NULL, N'Licking')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(123 AS Numeric(18, 0)), N'County', NULL, N'Lucas')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(124 AS Numeric(18, 0)), N'County', NULL, N'Marion')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(125 AS Numeric(18, 0)), N'County', NULL, N'Miami')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(126 AS Numeric(18, 0)), N'County', NULL, N'Monroe')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(127 AS Numeric(18, 0)), N'County', NULL, N'Montgomery')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(128 AS Numeric(18, 0)), N'County', NULL, N'Morrow')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(129 AS Numeric(18, 0)), N'County', NULL, N'Paulding')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(130 AS Numeric(18, 0)), N'County', NULL, N'Preble')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(131 AS Numeric(18, 0)), N'County', NULL, N'Richland')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(132 AS Numeric(18, 0)), N'County', NULL, N'Shelby')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(133 AS Numeric(18, 0)), N'County', NULL, N'Trumbull')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(134 AS Numeric(18, 0)), N'County', NULL, N'Tuscarawas')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(135 AS Numeric(18, 0)), N'County', NULL, N'Union')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(136 AS Numeric(18, 0)), N'County', NULL, N'Unknown')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(137 AS Numeric(18, 0)), N'County', NULL, N'Warren')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(139 AS Numeric(18, 0)), N'Disposition', N'1', N'Open')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(140 AS Numeric(18, 0)), N'Disposition', N'0', N'Closed')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(141 AS Numeric(18, 0)), N'MessageType', N'1', N'Referral Message')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(142 AS Numeric(18, 0)), N'MessageType', N'2', N'Case Management Message')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(143 AS Numeric(18, 0)), N'MessageType', N'3', N'Therapy Message')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(144 AS Numeric(18, 0)), N'MessageType', N'4', N'Medication Message')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(145 AS Numeric(18, 0)), N'MessageType', N'5', N'Bulletin Message')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(146 AS Numeric(18, 0)), N'MessageType', N'6', N'Triage Message')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(147 AS Numeric(18, 0)), N'AddressType', NULL, N'Main')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(148 AS Numeric(18, 0)), N'AddressType', NULL, N'Emergency')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(149 AS Numeric(18, 0)), N'AddressType', NULL, N'Guardian')
-INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (CAST(150 AS Numeric(18, 0)), N'AddressType', NULL, N'Employer')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (103, N'LevelofCare', N'B3', N'Day Treatment (Level I-C)')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (104, N'LevelofCare', N'C1', N'Non-Medical Community Residential Treatment (Level II-A)')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (105, N'LevelofCare', N'C2', N'Medical Community Residential (Level II-B)')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (106, N'LevelofCare', N'D1', N'Ambulatory Detoxification (Level III-A)')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (107, N'LevelofCare', N'D2', N'23-Hours Observation Bed (Level III-B)')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (108, N'LevelofCare', N'D3', N'Sub-Acute Detoxification (Level IV)')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (109, N'LevelofCare', N'NA', N'Not Applicable')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (110, N'County', NULL, N'Adams')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (111, N'County', NULL, N'Butler')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (112, N'County', NULL, N'Champaign')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (113, N'County', NULL, N'Clark')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (114, N'County', NULL, N'Clermont')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (115, N'County', NULL, N'Clinton')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (116, N'County', NULL, N'Darke')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (117, N'County', NULL, N'Defiance')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (118, N'County', NULL, N'Fairfield')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (119, N'County', NULL, N'Franklin')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (120, N'County', NULL, N'Greene')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (121, N'County', NULL, N'Hamilton')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (122, N'County', NULL, N'Licking')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (123, N'County', NULL, N'Lucas')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (124, N'County', NULL, N'Marion')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (125, N'County', NULL, N'Miami')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (126, N'County', NULL, N'Monroe')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (127, N'County', NULL, N'Montgomery')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (128, N'County', NULL, N'Morrow')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (129, N'County', NULL, N'Paulding')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (130, N'County', NULL, N'Preble')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (131, N'County', NULL, N'Richland')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (132, N'County', NULL, N'Shelby')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (133, N'County', NULL, N'Trumbull')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (134, N'County', NULL, N'Tuscarawas')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (135, N'County', NULL, N'Union')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (136, N'County', NULL, N'Unknown')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (137, N'County', NULL, N'Warren')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (139, N'Disposition', N'1', N'Open')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (140, N'Disposition', N'0', N'Closed')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (141, N'MessageType', N'1', N'Referral Message')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (142, N'MessageType', N'2', N'Case Management Message')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (143, N'MessageType', N'3', N'Therapy Message')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (144, N'MessageType', N'4', N'Medication Message')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (145, N'MessageType', N'5', N'Bulletin Message')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (146, N'MessageType', N'6', N'Triage Message')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (147, N'AddressType', NULL, N'Main')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (148, N'AddressType', NULL, N'Emergency')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (149, N'AddressType', NULL, N'Guardian')
+INSERT [dbo].[Codes] ([CodeID], [ColumnName], [Value], [Descriptor]) VALUES (150, N'AddressType', NULL, N'Employer')
 SET IDENTITY_INSERT [dbo].[Codes] OFF
-/****** Object:  Table [form].[BillingStrip]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Table [form].[BillingStrip]    Script Date: 05/19/2010 14:44:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1392,47 +1368,28 @@ CREATE TABLE [form].[BillingStrip](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  StoredProcedure [dbo].[isSessionExpired]    Script Date: 05/19/2010 14:44:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
+CREATE PROC [dbo].[isSessionExpired] (
+		@sessionid varchar(500),
+		@status bit OUTPUT
+	)
+As
+BEGIN
+	SET NOCOUNT ON;
+	DECLARE @sessionExpire datetime2 = (SELECT DATEADD(ss, (SELECT SessionIdExpire FROM [echarts].[dbo].[SessionIdLog] WHERE SessionId = @sessionid)/1000, '1970-01-01 00:00:00'))
+	DECLARE @now datetime2 = (SELECT GETUTCDATE())
+
+	IF @sessionExpire < @now OR @sessionExpire IS Null
+		SELECT @status = 1 /** Session has expired **/
+	ELSE
+		SELECT @status = 0 /** Session has not expired **/
+END
 GO
-CREATE TABLE [dbo].[User](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Username] [varchar](15) NOT NULL,
-	[StaffId] [varchar](4) NOT NULL,
-	[Password] [varbinary](50) NULL,
-	[Role_Id] [int] NULL,
-	[extperm] [bit] NULL,
-	[StaffName] [varchar](35) NULL,
-	[Program] [varchar](3) NULL,
-	[HireDate] [datetime] NULL,
-	[Status] [varchar](10) NULL,
-	[TermDate] [datetime] NULL,
-	[Office] [varchar](15) NULL,
-	[OfficePhone] [varchar](12) NULL,
-	[OfficeExt] [varchar](4) NULL,
-	[StaffDescription] [varchar](25) NULL,
-	[StaffNPI] [varchar](15) NULL,
- CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY],
- CONSTRAINT [IX_User_StaffId] UNIQUE NONCLUSTERED 
-(
-	[StaffId] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY],
- CONSTRAINT [IX_User_Username] UNIQUE NONCLUSTERED 
-(
-	[Username] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-SET ANSI_PADDING OFF
-GO
-/****** Object:  View [dbo].[VTicklerList]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  View [dbo].[VTicklerList]    Script Date: 05/19/2010 14:44:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1575,7 +1532,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VTicklerList'
 GO
-/****** Object:  View [dbo].[VSuffix]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  View [dbo].[VSuffix]    Script Date: 05/19/2010 14:44:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1708,7 +1665,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VSuffix'
 GO
-/****** Object:  View [dbo].[VRace]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  View [dbo].[VRace]    Script Date: 05/19/2010 14:44:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1841,7 +1798,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VRace'
 GO
-/****** Object:  View [dbo].[VMessageType]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  View [dbo].[VMessageType]    Script Date: 05/19/2010 14:44:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1974,7 +1931,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VMessageType'
 GO
-/****** Object:  View [dbo].[VMaritalStatus]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  View [dbo].[VMaritalStatus]    Script Date: 05/19/2010 14:44:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2108,7 +2065,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VMaritalStatus'
 GO
-/****** Object:  View [dbo].[VMainAddress]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  View [dbo].[VMainAddress]    Script Date: 05/19/2010 14:44:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2241,7 +2198,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VMainAddress'
 GO
-/****** Object:  View [dbo].[VLivingArrangement]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  View [dbo].[VLivingArrangement]    Script Date: 05/19/2010 14:44:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2374,7 +2331,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VLivingArrangement'
 GO
-/****** Object:  View [dbo].[VLevelofCare]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  View [dbo].[VLevelofCare]    Script Date: 05/19/2010 14:44:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2507,7 +2464,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VLevelofCare'
 GO
-/****** Object:  View [dbo].[VIncomeSource]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  View [dbo].[VIncomeSource]    Script Date: 05/19/2010 14:44:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2640,7 +2597,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VIncomeSource'
 GO
-/****** Object:  View [dbo].[VGender]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  View [dbo].[VGender]    Script Date: 05/19/2010 14:44:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2773,7 +2730,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VGender'
 GO
-/****** Object:  View [dbo].[VEmployment]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  View [dbo].[VEmployment]    Script Date: 05/19/2010 14:44:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2906,7 +2863,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VEmployment'
 GO
-/****** Object:  View [dbo].[VEducationType]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  View [dbo].[VEducationType]    Script Date: 05/19/2010 14:44:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3039,7 +2996,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VEducationType'
 GO
-/****** Object:  View [dbo].[VEducationLevel]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  View [dbo].[VEducationLevel]    Script Date: 05/19/2010 14:44:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3172,7 +3129,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VEducationLevel'
 GO
-/****** Object:  View [dbo].[VDisposition]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  View [dbo].[VDisposition]    Script Date: 05/19/2010 14:44:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3305,7 +3262,47 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VDisposition'
 GO
-/****** Object:  View [dbo].[VCounty]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Table [dbo].[User]    Script Date: 05/19/2010 14:44:05 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[User](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Username] [varchar](15) NOT NULL,
+	[StaffId] [varchar](4) NOT NULL,
+	[Password] [varbinary](50) NULL,
+	[Role_Id] [int] NULL,
+	[extperm] [bit] NULL,
+	[StaffName] [varchar](35) NULL,
+	[Program] [varchar](3) NULL,
+	[HireDate] [datetime] NULL,
+	[Status] [varchar](10) NULL,
+	[TermDate] [datetime] NULL,
+	[Office] [varchar](15) NULL,
+	[OfficePhone] [varchar](12) NULL,
+	[OfficeExt] [varchar](4) NULL,
+	[StaffDescription] [varchar](25) NULL,
+	[StaffNPI] [varchar](15) NULL,
+ CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY],
+ CONSTRAINT [IX_User_StaffId] UNIQUE NONCLUSTERED 
+(
+	[StaffId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY],
+ CONSTRAINT [IX_User_Username] UNIQUE NONCLUSTERED 
+(
+	[Username] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  View [dbo].[VCounty]    Script Date: 05/19/2010 14:44:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3438,7 +3435,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VCounty'
 GO
-/****** Object:  View [dbo].[VCaseStatus]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  View [dbo].[VCaseStatus]    Script Date: 05/19/2010 14:44:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3572,28 +3569,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VCaseStatus'
 GO
-/****** Object:  StoredProcedure [dbo].[isSessionExpired]    Script Date: 05/19/2010 10:22:57 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE PROC [dbo].[isSessionExpired] (
-		@sessionid varchar(500),
-		@status bit OUTPUT
-	)
-As
-BEGIN
-	SET NOCOUNT ON;
-	DECLARE @sessionExpire datetime2 = (SELECT DATEADD(ss, (SELECT SessionIdExpire FROM [echarts].[dbo].[SessionIdLog] WHERE SessionId = @sessionid)/1000, '1970-01-01 00:00:00'))
-	DECLARE @now datetime2 = (SELECT GETUTCDATE())
-
-	IF @sessionExpire < @now OR @sessionExpire IS Null
-		SELECT @status = 1 /** Session has expired **/
-	ELSE
-		SELECT @status = 0 /** Session has not expired **/
-END
-GO
-/****** Object:  View [dbo].[VActiveAssignments]    Script Date: 05/19/2010 10:22:57 ******/
+/****** Object:  View [dbo].[VActiveAssignments]    Script Date: 05/19/2010 14:44:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3739,7 +3715,7 @@ End
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'VActiveAssignments'
 GO
-/****** Object:  Table [dbo].[UserSessionMap]    Script Date: 05/19/2010 10:22:57 ******/
+/****** Object:  Table [dbo].[UserSessionMap]    Script Date: 05/19/2010 14:44:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3749,7 +3725,7 @@ CREATE TABLE [dbo].[UserSessionMap](
 	[UserId] [int] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  StoredProcedure [dbo].[getStaffId]    Script Date: 05/19/2010 10:22:57 ******/
+/****** Object:  StoredProcedure [dbo].[getStaffId]    Script Date: 05/19/2010 14:44:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3763,112 +3739,106 @@ BEGIN
 	SELECT @staffid = (SELECT StaffId FROM[User] WHERE [User].Id = (SELECT UserId FROM [UserSessionMap] inner join [SessionIdLog] on [UserSessionMap].SessionId=[SessionIdLog].Id WHERE [SessionIdLog].SessionId =@sessionid));
 END
 GO
-/****** Object:  Default [DF_Referral_UPID]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Default [DF_Referral_UPID]    Script Date: 05/19/2010 14:44:02 ******/
 ALTER TABLE [dbo].[Referral] ADD  CONSTRAINT [DF_Referral_UPID]  DEFAULT ('01396') FOR [UPID]
 GO
-/****** Object:  Default [DF_Tickler_LastEdit]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Default [DF_Tickler_LastEdit]    Script Date: 05/19/2010 14:44:04 ******/
 ALTER TABLE [dbo].[Tickler] ADD  CONSTRAINT [DF_Tickler_LastEdit]  DEFAULT (getutcdate()) FOR [LastEdit]
 GO
-/****** Object:  Default [DF_SystemLog_EventDate]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Default [DF_SystemLog_EventDate]    Script Date: 05/19/2010 14:44:04 ******/
 ALTER TABLE [dbo].[SystemLog] ADD  CONSTRAINT [DF_SystemLog_EventDate]  DEFAULT (getutcdate()) FOR [EventDate]
 GO
-/****** Object:  Default [DF_ProgressNote_EntryDate]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Default [DF_ProgressNote_EntryDate]    Script Date: 05/19/2010 14:44:04 ******/
 ALTER TABLE [form].[ProgressNote] ADD  CONSTRAINT [DF_ProgressNote_EntryDate]  DEFAULT (getutcdate()) FOR [EntryDate]
 GO
-/****** Object:  Default [DF_DiagnosisData_LastEdit]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Default [DF_DiagnosisData_LastEdit]    Script Date: 05/19/2010 14:44:04 ******/
 ALTER TABLE [dbo].[DiagnosisData] ADD  CONSTRAINT [DF_DiagnosisData_LastEdit]  DEFAULT (getutcdate()) FOR [LastEdit]
 GO
-/****** Object:  Default [DF_Assignments_CreateDate]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Default [DF_Assignments_CreateDate]    Script Date: 05/19/2010 14:44:04 ******/
 ALTER TABLE [dbo].[Assignments] ADD  CONSTRAINT [DF_Assignments_CreateDate]  DEFAULT (getutcdate()) FOR [CreateDate]
 GO
-/****** Object:  Default [DF_Assignments_LastEdit]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Default [DF_Assignments_LastEdit]    Script Date: 05/19/2010 14:44:04 ******/
 ALTER TABLE [dbo].[Assignments] ADD  CONSTRAINT [DF_Assignments_LastEdit]  DEFAULT (getutcdate()) FOR [LastEdit]
 GO
-/****** Object:  Default [DF_AddressData_LastEdit]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Default [DF_AddressData_LastEdit]    Script Date: 05/19/2010 14:44:04 ******/
 ALTER TABLE [dbo].[AddressData] ADD  CONSTRAINT [DF_AddressData_LastEdit]  DEFAULT (getutcdate()) FOR [LastEdit]
 GO
-/****** Object:  Default [DF_BillingStrip_EntryDate]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  Default [DF_BillingStrip_EntryDate]    Script Date: 05/19/2010 14:44:04 ******/
 ALTER TABLE [form].[BillingStrip] ADD  CONSTRAINT [DF_BillingStrip_EntryDate]  DEFAULT (getutcdate()) FOR [EntryDate]
 GO
-/****** Object:  ForeignKey [FK_Demographics_PatientId]    Script Date: 05/19/2010 10:22:54 ******/
+/****** Object:  ForeignKey [FK_Demographics_PatientId]    Script Date: 05/19/2010 14:44:02 ******/
 ALTER TABLE [dbo].[Demographics]  WITH CHECK ADD  CONSTRAINT [FK_Demographics_PatientId] FOREIGN KEY([Patient_Id])
 REFERENCES [dbo].[Patient] ([Patient_Id])
 GO
 ALTER TABLE [dbo].[Demographics] CHECK CONSTRAINT [FK_Demographics_PatientId]
 GO
-/****** Object:  ForeignKey [FK_Alert_Patient]    Script Date: 05/19/2010 10:22:54 ******/
+/****** Object:  ForeignKey [FK_Alert_Patient]    Script Date: 05/19/2010 14:44:02 ******/
 ALTER TABLE [dbo].[Alert]  WITH CHECK ADD  CONSTRAINT [FK_Alert_Patient] FOREIGN KEY([patientId])
 REFERENCES [dbo].[Patient] ([Patient_Id])
 GO
 ALTER TABLE [dbo].[Alert] CHECK CONSTRAINT [FK_Alert_Patient]
 GO
-/****** Object:  ForeignKey [FK_Patient_Ehr]    Script Date: 05/19/2010 10:22:54 ******/
+/****** Object:  ForeignKey [FK_Patient_Ehr]    Script Date: 05/19/2010 14:44:02 ******/
 ALTER TABLE [dbo].[Patient]  WITH CHECK ADD  CONSTRAINT [FK_Patient_Ehr] FOREIGN KEY([ehr_id])
 REFERENCES [dbo].[Ehr] ([ehr_id])
 GO
 ALTER TABLE [dbo].[Patient] CHECK CONSTRAINT [FK_Patient_Ehr]
 GO
-/****** Object:  ForeignKey [FK_Ehr_Ehr]    Script Date: 05/19/2010 10:22:54 ******/
+/****** Object:  ForeignKey [FK_Ehr_Ehr]    Script Date: 05/19/2010 14:44:02 ******/
 ALTER TABLE [dbo].[Ehr]  WITH CHECK ADD  CONSTRAINT [FK_Ehr_Ehr] FOREIGN KEY([subject_id])
 REFERENCES [dbo].[Patient] ([Patient_Id])
 GO
 ALTER TABLE [dbo].[Ehr] CHECK CONSTRAINT [FK_Ehr_Ehr]
 GO
-/****** Object:  ForeignKey [FK_Referral_Referral]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  ForeignKey [FK_Referral_Referral]    Script Date: 05/19/2010 14:44:02 ******/
 ALTER TABLE [dbo].[Referral]  WITH CHECK ADD  CONSTRAINT [FK_Referral_Referral] FOREIGN KEY([ehr_id])
 REFERENCES [dbo].[Ehr] ([ehr_id])
 GO
 ALTER TABLE [dbo].[Referral] CHECK CONSTRAINT [FK_Referral_Referral]
 GO
-/****** Object:  ForeignKey [FK_ProgressNote_ProgressNote]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  ForeignKey [FK_ProgressNote_ProgressNote]    Script Date: 05/19/2010 14:44:04 ******/
 ALTER TABLE [form].[ProgressNote]  WITH CHECK ADD  CONSTRAINT [FK_ProgressNote_ProgressNote] FOREIGN KEY([TicketNum])
 REFERENCES [form].[ProgressNote] ([TicketNum])
 GO
 ALTER TABLE [form].[ProgressNote] CHECK CONSTRAINT [FK_ProgressNote_ProgressNote]
 GO
-/****** Object:  ForeignKey [FK_Message_Ehr]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  ForeignKey [FK_Message_Codes]    Script Date: 05/19/2010 14:44:04 ******/
+ALTER TABLE [dbo].[Message]  WITH CHECK ADD  CONSTRAINT [FK_Message_Codes] FOREIGN KEY([MessageType_Id])
+REFERENCES [dbo].[Codes] ([CodeID])
+GO
+ALTER TABLE [dbo].[Message] CHECK CONSTRAINT [FK_Message_Codes]
+GO
+/****** Object:  ForeignKey [FK_Message_Ehr]    Script Date: 05/19/2010 14:44:04 ******/
 ALTER TABLE [dbo].[Message]  WITH CHECK ADD  CONSTRAINT [FK_Message_Ehr] FOREIGN KEY([ehr_id])
 REFERENCES [dbo].[Ehr] ([ehr_id])
 GO
 ALTER TABLE [dbo].[Message] CHECK CONSTRAINT [FK_Message_Ehr]
 GO
-/****** Object:  ForeignKey [FK_Message_MessageType]    Script Date: 05/19/2010 10:22:55 ******/
-ALTER TABLE [dbo].[Message]  WITH CHECK ADD  CONSTRAINT [FK_Message_MessageType] FOREIGN KEY([MessageType_Id])
-REFERENCES [dbo].[MessageType] ([MessageType_Id])
-GO
-ALTER TABLE [dbo].[Message] CHECK CONSTRAINT [FK_Message_MessageType]
-GO
-/****** Object:  ForeignKey [FK_MessageType_MessageType]    Script Date: 05/19/2010 10:22:55 ******/
-ALTER TABLE [dbo].[MessageType]  WITH CHECK ADD  CONSTRAINT [FK_MessageType_MessageType] FOREIGN KEY([MessageType_Id])
-REFERENCES [dbo].[MessageType] ([MessageType_Id])
-GO
-ALTER TABLE [dbo].[MessageType] CHECK CONSTRAINT [FK_MessageType_MessageType]
-GO
-/****** Object:  ForeignKey [FK_BillingStrip_ProgressNote]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  ForeignKey [FK_BillingStrip_ProgressNote]    Script Date: 05/19/2010 14:44:04 ******/
 ALTER TABLE [form].[BillingStrip]  WITH CHECK ADD  CONSTRAINT [FK_BillingStrip_ProgressNote] FOREIGN KEY([ID])
 REFERENCES [form].[ProgressNote] ([TicketNum])
 GO
 ALTER TABLE [form].[BillingStrip] CHECK CONSTRAINT [FK_BillingStrip_ProgressNote]
 GO
-/****** Object:  ForeignKey [FK_BillingStrip_ServiceCodes]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  ForeignKey [FK_BillingStrip_ServiceCodes]    Script Date: 05/19/2010 14:44:04 ******/
 ALTER TABLE [form].[BillingStrip]  WITH CHECK ADD  CONSTRAINT [FK_BillingStrip_ServiceCodes] FOREIGN KEY([Service])
 REFERENCES [dbo].[ServiceCodes] ([Service])
 GO
 ALTER TABLE [form].[BillingStrip] CHECK CONSTRAINT [FK_BillingStrip_ServiceCodes]
 GO
-/****** Object:  ForeignKey [FK_Role_Role_Id]    Script Date: 05/19/2010 10:22:55 ******/
+/****** Object:  ForeignKey [FK_Role_Role_Id]    Script Date: 05/19/2010 14:44:05 ******/
 ALTER TABLE [dbo].[User]  WITH CHECK ADD  CONSTRAINT [FK_Role_Role_Id] FOREIGN KEY([Role_Id])
 REFERENCES [dbo].[Role] ([Role_Id])
 GO
 ALTER TABLE [dbo].[User] CHECK CONSTRAINT [FK_Role_Role_Id]
 GO
-/****** Object:  ForeignKey [FK_UserSessionMap_SessionIdLog]    Script Date: 05/19/2010 10:22:57 ******/
+/****** Object:  ForeignKey [FK_UserSessionMap_SessionIdLog]    Script Date: 05/19/2010 14:44:05 ******/
 ALTER TABLE [dbo].[UserSessionMap]  WITH CHECK ADD  CONSTRAINT [FK_UserSessionMap_SessionIdLog] FOREIGN KEY([SessionId])
 REFERENCES [dbo].[SessionIdLog] ([Id])
 GO
 ALTER TABLE [dbo].[UserSessionMap] CHECK CONSTRAINT [FK_UserSessionMap_SessionIdLog]
 GO
-/****** Object:  ForeignKey [FK_UserSessionMap_UserId]    Script Date: 05/19/2010 10:22:57 ******/
+/****** Object:  ForeignKey [FK_UserSessionMap_UserId]    Script Date: 05/19/2010 14:44:05 ******/
 ALTER TABLE [dbo].[UserSessionMap]  WITH CHECK ADD  CONSTRAINT [FK_UserSessionMap_UserId] FOREIGN KEY([UserId])
 REFERENCES [dbo].[User] ([Id])
 GO
