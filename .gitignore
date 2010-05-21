@@ -2,23 +2,8 @@
 war/echarts
 war/WEB-INF/classes
 
-# We don't care about class files in general
-*.class
+# Anything in target is ignorable
+target/*
 
-# Don't track patch files
-*.patch
-
-# Preference files are user specific
-*.prefs
-
-# Gwt servlet is automatically copied here, so ignore it for tracking
-war/WEB-INF/lib/gwt-servlet.jar
-
-# We don't want to track war files either
-*.war
-
-# Inherited modules
-war/org.eastway.echarts*
-
-# Ignore any ant generated reports
-reports
+# Spring roo log file
+log.roo
