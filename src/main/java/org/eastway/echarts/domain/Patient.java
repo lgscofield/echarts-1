@@ -27,7 +27,6 @@ import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotNull;
 
 import org.eastway.echarts.shared.PatientDTO;
-import org.hibernate.annotations.Type;
 
 @Entity
 public class Patient {
