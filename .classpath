@@ -16,7 +16,7 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="lib/gwt-cal-0.9.0-beta1.jar"/>
 	<classpathentry kind="lib" path="lib/gwt-dnd-3.0.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/ihilt/workspace/echarts-old/war/WEB-INF/lib/sqljdbc4.jar"/>
+	<classpathentry kind="lib" path="lib/sqljdbc4.jar"/>
 	<classpathentry kind="lib" path="lib/easymock-2.5.2.jar"/>
 	<classpathentry kind="output" path="target/echarts-0.1.0-SNAPSHOT/WEB-INF/classes"/>
 </classpath>
