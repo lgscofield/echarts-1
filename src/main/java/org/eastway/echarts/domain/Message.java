@@ -27,7 +27,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.TableGenerator;
 
 import org.eastway.echarts.shared.MessageDTO;
-import org.hibernate.annotations.Type;
 
 @Entity
 public class Message {
@@ -42,7 +41,6 @@ public class Message {
 	@JoinColumn(name = "MessageType_Id")
 	private Code messageType;
 	private Date creationTimestamp;
-	@Type(type="text")
 	private String message;
 	@ManyToOne
 	@JoinColumn(name = "Message_Id", insertable = false, updatable = false)

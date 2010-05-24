@@ -23,6 +23,7 @@ import java.util.Vector;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
@@ -135,6 +136,8 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		try {
 			sil = query.getSingleResult();
 		} catch (EmptyResultDataAccessException e) {
+			throw new SessionExpiredException("Please login");
+		} catch (NoResultException e) {
 			throw new SessionExpiredException("Please login");
 		}
 		Date now = new Date();
