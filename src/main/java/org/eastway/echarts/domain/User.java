@@ -15,6 +15,7 @@
  */
 package org.eastway.echarts.domain;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -22,6 +23,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
@@ -35,6 +38,11 @@ public class User {
 	@TableGenerator(name = "tg", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "tg")
 	private long id;
+	@ManyToMany
+	@JoinTable(name="user_session_map",
+			joinColumns=@JoinColumn(name="user_id"),
+			inverseJoinColumns=@JoinColumn(name="session_id"))
+	private Collection<SessionIdLog> sessionIds;
 	private String username;
 	private String staffId;
 	@ManyToOne
