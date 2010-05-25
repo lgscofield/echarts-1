@@ -22,24 +22,24 @@ import java.util.LinkedHashSet;
 
 import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.UserImpl;
-import org.eastway.echarts.client.presenter.FormsPresenter;
+import org.eastway.echarts.client.presenter.LinkPresenter;
 import org.junit.Test;
 
 import com.google.gwt.event.shared.HandlerManager;
 
 public class FormsPresenterTest {
-	private FormsPresenter fp;
+	private LinkPresenter fp;
 	private RpcServicesAsync mockRpc;
-	private FormsPresenter.Display mockView;
+	private LinkPresenter.Display mockView;
 	private HandlerManager eventBus;
 	private LinkedHashSet<String[]> data = new LinkedHashSet<String[]>();
 	private String patientid = "000000008";
 
 	public FormsPresenterTest() {
-		mockView = createStrictMock(FormsPresenter.Display.class);
+		mockView = createStrictMock(LinkPresenter.Display.class);
 		mockRpc = createStrictMock(RpcServicesAsync.class);
 		eventBus = new HandlerManager(null);
-		fp = new FormsPresenter(mockView, eventBus, mockRpc, patientid);
+		fp = new LinkPresenter(mockView, eventBus, mockRpc, patientid);
 	}
 
 	@Test public void testSetData() {

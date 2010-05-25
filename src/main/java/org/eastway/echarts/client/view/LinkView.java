@@ -18,7 +18,7 @@ package org.eastway.echarts.client.view;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 
-import org.eastway.echarts.client.presenter.FormsPresenter;
+import org.eastway.echarts.client.presenter.LinkPresenter;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -29,14 +29,14 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
-public class FormsView extends Composite implements FormsPresenter.Display {
+public class LinkView extends Composite implements LinkPresenter.Display {
 	private static FormsViewUiBinder uiBinder = GWT.create(FormsViewUiBinder.class);
 
-	interface FormsViewUiBinder extends UiBinder<Widget, FormsView> { }
+	interface FormsViewUiBinder extends UiBinder<Widget, LinkView> { }
 
 	@UiField FlowPanel formsList;
 
-	public FormsView() {
+	public LinkView() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 

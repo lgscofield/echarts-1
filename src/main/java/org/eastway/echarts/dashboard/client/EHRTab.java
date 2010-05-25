@@ -19,11 +19,11 @@ import org.eastway.echarts.client.EHRServices;
 import org.eastway.echarts.client.EHRServicesAsync;
 import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.presenter.EditPatientSummaryPresenter;
-import org.eastway.echarts.client.presenter.FormsPresenter;
+import org.eastway.echarts.client.presenter.LinkPresenter;
 import org.eastway.echarts.client.presenter.MessagesPresenter;
 import org.eastway.echarts.client.presenter.PatientSummaryPresenter;
 import org.eastway.echarts.client.view.EditPatientSummaryView;
-import org.eastway.echarts.client.view.FormsView;
+import org.eastway.echarts.client.view.LinkView;
 import org.eastway.echarts.client.view.MessagesView;
 import org.eastway.echarts.client.view.PatientSummaryView;
 import org.eastway.echarts.shared.EHRDTO;
@@ -48,7 +48,7 @@ public class EHRTab extends Composite implements SelectionHandler<TreeItem> {
 	private MessagesPresenter mp;
 	private PatientSummaryPresenter pp;
 	private EditPatientSummaryPresenter ep;
-	private FormsPresenter fp;
+	private LinkPresenter fp;
 	private Tree menu = new Tree();
 	private EHRDTO ehr;
 
@@ -75,7 +75,7 @@ public class EHRTab extends Composite implements SelectionHandler<TreeItem> {
 
 		TreeItem formsMenuItem = menu.addItem("Forms");
 		formsMenuItem.setUserObject(formsPanel);
-		fp = new FormsPresenter(new FormsView(), eventBus, rpcServices, ehr.getSubject().getCaseNumber());
+		fp = new LinkPresenter(new LinkView(), eventBus, rpcServices, ehr.getSubject().getCaseNumber());
 		fp.go(formsPanel);
 
 		menu.addSelectionHandler(this);
