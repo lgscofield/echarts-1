@@ -16,6 +16,7 @@
 package org.eastway.echarts.domain;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,6 +24,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.TableGenerator;
 
@@ -35,6 +37,9 @@ public class EHR {
 	@GeneratedValue(strategy=GenerationType.TABLE, generator="tg")
 	@Column(name="ehr_id")
 	private long id;
+
+	@OneToMany
+	private Set<Assignment> assignments;
 
 	@OneToOne
 	@JoinColumn(name="subject_id")
@@ -71,6 +76,14 @@ public class EHR {
 
 	public Patient getSubject() {
 		return subject;
+	}
+
+	public void setAssignments(Set<Assignment> assignments) {
+		this.assignments = assignments;
+	}
+
+	public Set<Assignment> getAssignments() {
+		return assignments;
 	}
 
 	public EHRDTO toDto() {

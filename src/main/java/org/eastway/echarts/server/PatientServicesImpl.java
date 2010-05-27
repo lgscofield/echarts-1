@@ -23,8 +23,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import org.eastway.echarts.client.PatientServices;
-import org.eastway.echarts.domain.EHR;
-import org.eastway.echarts.domain.EHRService;
+import org.eastway.echarts.domain.Assignment;
 import org.eastway.echarts.domain.Patient;
 import org.eastway.echarts.domain.PatientService;
 import org.eastway.echarts.shared.DbException;
@@ -55,11 +54,14 @@ public class PatientServicesImpl extends RpcServicesImpl implements PatientServi
 		EntityManagerFactory emf = Persistence
 				.createEntityManagerFactory("EchartsPersistence");
 		EntityManager em = emf.createEntityManager();
-		EHRService service = new EHRService(em);
-		List<EHR> ehrList = service.findAll();
-		for (EHR ehr : ehrList)
-			pl.put(ehr.getSubject().getCaseNumber() + " - "
-					+ ehr.getSubject().getName(), ehr.getId());
+		List<Assignment> assignments = em.createQuery(
+				"SELECT a From Assignment a Where a.staff = 5434", Assignment.class).getResultList();
+		for (Assignment assignment : assignments)
+			if (assignment != null)
+				pl.put(assignment.getEhr().getSubject().getCaseNumber() + " - "
+						+ assignment.getEhr().getSubject().getFirstName() + ", "
+						+ assignment.getEhr().getSubject().getLastName(),
+						assignment.getEhr().getId());
 		em.close();
 		emf.close();
 		return pl;
