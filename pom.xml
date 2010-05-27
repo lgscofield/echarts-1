@@ -590,7 +590,7 @@
                 <artifactId>gwt-maven-plugin</artifactId>
                 <version>1.3.1.google</version>
                 <configuration>
-				<logLevel>INFO" -bindAddress ewihilt.eastway.local -logLevel "INFO</logLevel>
+				<logLevel>INFO</logLevel>
 				<style>PRETTY</style>
 				<gwtVersion>2.1.0.M1</gwtVersion>
 				<runTarget>/echarts.html</runTarget>

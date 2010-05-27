@@ -77,15 +77,15 @@ public class AdministratorDashboard extends Composite {
 		String red();
 	}
 
-	@UiField Style style;
+	//@UiField Style style;
 	@UiField DockLayoutPanel dockLayoutPanel;
 	@UiField TabLayoutPanel tabLayoutPanel;
 	@UiField Anchor patientList;
 	@UiField FlowPanel alertsPanel;
 	@UiField TopPanelView top;
 	@UiField FlowPanel scheduler;
-	@UiField SpanElement productivity;
-	@UiField Anchor gmhIntake;
+	//@UiField SpanElement productivity;
+	//@UiField Anchor gmhIntake;
 
 	private EHRServicesAsync ehrServices = GWT.<EHRServicesAsync>create(EHRServices.class);
 	private PatientServicesAsync patientServices = GWT.<PatientServicesAsync>create(PatientServices.class);
@@ -97,22 +97,22 @@ public class AdministratorDashboard extends Composite {
 		new TopPanelPresenter(top, eventBus, patientServices);
 		AlertsPresenter ap = new AlertsPresenter(new AlertsView(), Rpc.singleton(), eventBus);
 		ap.go(alertsPanel);
-		setProductivity("92");
+		//setProductivity("92");
 		setScheduler(scheduler);
 		bind();
 	}
 
-	private void setProductivity(String credit) {
-		productivity.setInnerText(credit);
-		double cred = new Double(credit);
-
-		if (cred >= 92)
-			productivity.getParentElement().addClassName(style.green());
-		else if (cred >= 87)
-			productivity.getParentElement().addClassName(style.yellow());
-		else
-			productivity.getParentElement().addClassName(style.red());
-	}
+//	private void setProductivity(String credit) {
+//		productivity.setInnerText(credit);
+//		double cred = new Double(credit);
+//
+//		if (cred >= 92)
+//			productivity.getParentElement().addClassName(style.green());
+//		else if (cred >= 87)
+//			productivity.getParentElement().addClassName(style.yellow());
+//		else
+//			productivity.getParentElement().addClassName(style.red());
+//	}
 
 	private void setScheduler(HasWidgets container) {
 		Calendar calendar = new Calendar();
@@ -133,12 +133,12 @@ public class AdministratorDashboard extends Composite {
 					}
 				});
 
-		gmhIntake.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				openEditPatient();
-			}
-		});
+//		gmhIntake.addClickHandler(new ClickHandler() {
+//			@Override
+//			public void onClick(ClickEvent event) {
+//				openEditPatient();
+//			}
+//		});
 		tabLayoutPanel.addSelectionHandler(new SelectionHandler<Integer>() {
 			@Override
 			public void onSelection(SelectionEvent<Integer> event) {

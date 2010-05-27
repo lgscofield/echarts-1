@@ -63,10 +63,10 @@ public class EHRTab extends Composite implements SelectionHandler<TreeItem> {
 		pp = new PatientSummaryPresenter(new PatientSummaryView(), eventBus, GWT.<EHRServicesAsync>create(EHRServices.class), ehr.getSubject());
 		pp.go(patientPanel);
 
-		TreeItem editPatientMenuItem = patientMenuItem.addItem("Edit");
-		editPatientMenuItem.setUserObject(editPatientPanel);
-		ep = new EditPatientSummaryPresenter(new EditPatientSummaryView(), eventBus, GWT.<EHRServicesAsync>create(EHRServices.class), ehr.getSubject());
-		ep.go(editPatientPanel);
+		//TreeItem editPatientMenuItem = patientMenuItem.addItem("Edit");
+		//editPatientMenuItem.setUserObject(editPatientPanel);
+		//ep = new EditPatientSummaryPresenter(new EditPatientSummaryView(), eventBus, GWT.<EHRServicesAsync>create(EHRServices.class), ehr.getSubject());
+		//ep.go(editPatientPanel);
 
 		TreeItem messageMenuItem = menu.addItem("Messages");
 		messageMenuItem.setUserObject(messagesPanel);

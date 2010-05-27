@@ -79,19 +79,19 @@
                 <g:FlowPanel styleName='{style.anchoricon}'/>
                 <g:Anchor addStyleNames='{style.anchor}' ui:field="patientList">Open Chart</g:Anchor>
                 </g:HorizontalPanel>
-                <g:HorizontalPanel>
-                <g:FlowPanel styleName='{style.anchoricon}'/>
-                <g:Anchor addStyleNames='{style.anchor}' ui:field='gmhIntake'>New Chart</g:Anchor>
-              </g:HorizontalPanel>
+<!--                <g:HorizontalPanel>-->
+<!--                <g:FlowPanel styleName='{style.anchoricon}'/>-->
+<!--				<g:Anchor addStyleNames='{style.anchor}' ui:field='gmhIntake'>New Chart</g:Anchor>-->
+<!--              </g:HorizontalPanel>-->
               </g:FlowPanel>
             </g:west>
             <g:west size='40'>
               <g:FlowPanel>
                 <g:HTMLPanel>
-                  <div class='{style.productivity}'>
-                    Your productivity:
-                    <span ui:field='productivity'></span>
-                  </div>
+<!--                  <div class='{style.productivity}'>-->
+<!--                    Your productivity:-->
+<!--                    <span ui:field='productivity'></span>-->
+<!--                  </div>-->
                 </g:HTMLPanel>
               </g:FlowPanel>
             </g:west>
