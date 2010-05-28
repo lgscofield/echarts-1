@@ -47,7 +47,7 @@ public class PatientServicesImpl extends RpcServicesImpl implements PatientServi
 	}
 
 	@Override
-	public LinkedHashMap<String, Long> getPatientList(String sessionId)
+	public LinkedHashMap<String, Long> getPatientList(String sessionId, String staffId)
 			throws SessionExpiredException, DbException {
 		checkSessionExpire(sessionId);
 		LinkedHashMap<String, Long> pl = new LinkedHashMap<String, Long>();
@@ -55,7 +55,7 @@ public class PatientServicesImpl extends RpcServicesImpl implements PatientServi
 				.createEntityManagerFactory("EchartsPersistence");
 		EntityManager em = emf.createEntityManager();
 		List<Assignment> assignments = em.createQuery(
-				"SELECT a From Assignment a Where a.staff = 5434", Assignment.class).getResultList();
+				"SELECT a From Assignment a Where a.staff = '" + staffId + "'", Assignment.class).getResultList();
 		for (Assignment assignment : assignments)
 			if (assignment != null)
 				pl.put(assignment.getEhr().getSubject().getCaseNumber() + " - "

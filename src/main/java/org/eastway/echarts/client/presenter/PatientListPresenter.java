@@ -73,7 +73,7 @@ public class PatientListPresenter extends Presenter<PatientListPresenter.Display
 				setData(data);
 			}
 		};
-		patientServices.getPatientList(UserImpl.getSessionId(), callback);
+		patientServices.getPatientList(UserImpl.getSessionId(), UserImpl.getStaffId(), callback);
 	}
 
 	private void setData(LinkedHashMap<String, Long> data) {

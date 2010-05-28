@@ -114,7 +114,7 @@ public class TopPanelPresenter extends Presenter<TopPanelPresenter.Display> {
 				setData(data);
 			}
 		};
-		patientServices.getPatientList(UserImpl.getSessionId(), callback);
+		patientServices.getPatientList(UserImpl.getSessionId(), UserImpl.getStaffId(), callback);
 	}
 
 	protected void setData(LinkedHashMap<String, Long> data) {

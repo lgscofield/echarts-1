@@ -28,5 +28,5 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 public interface PatientServices extends RemoteService {
 	public PatientDTO getPatient(long patientId, String sessionId) throws SessionExpiredException, DbException;
 
-	public LinkedHashMap<String, Long> getPatientList(String sessionId) throws SessionExpiredException, DbException;
+	public LinkedHashMap<String, Long> getPatientList(String sessionId, String staffId) throws SessionExpiredException, DbException;
 }
