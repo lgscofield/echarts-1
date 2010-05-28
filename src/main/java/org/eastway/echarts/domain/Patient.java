@@ -183,4 +183,22 @@ public class Patient {
 		patientDto.setSuffix(this.getSuffix());
 		return patientDto;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Id: ").append(getId()).append(", ")
+			.append("Ehr Id: ").append(getEhrId()).append(", ")
+			.append("CaseNumber: ").append(getCaseNumber()).append(", ")
+			.append("FirstName: ").append(getFirstName()).append(", ")
+			.append("LastName: ").append(getLastName()).append(", ")
+			.append("MiddleInitial: ").append(getMiddleInitial()).append(", ")
+			.append("Suffix: ").append(getSuffix()).append(", ")
+			.append("Alias: ").append(getAlias()).append(", ")
+			.append("CaseStatus: ").append(getCaseStatus()).append(", ")
+			.append("SSN: ").append(getSsn()).append(", ")
+			.append("LastEditBy: ").append(getLastEditBy()).append(", ")
+			.append("LastEdit: ").append(getLastEdit());
+		return sb.toString();
+	}
 }
