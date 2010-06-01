@@ -34,6 +34,7 @@ import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
@@ -44,7 +45,7 @@ public class EHRTab extends Composite implements SelectionHandler<TreeItem> {
 	private FlowPanel patientPanel = new FlowPanel();
 	private FlowPanel editPatientPanel = new FlowPanel();
 	private FlowPanel formsPanel = new FlowPanel();
-	private FlowPanel displayarea = new FlowPanel();
+	private ScrollPanel displayarea = new  ScrollPanel();
 	private MessagesPresenter mp;
 	private PatientSummaryPresenter pp;
 	private EditPatientSummaryPresenter ep;
