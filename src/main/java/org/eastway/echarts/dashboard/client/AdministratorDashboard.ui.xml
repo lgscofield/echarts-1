@@ -102,11 +102,11 @@
         </g:tab>
       </g:TabLayoutPanel>
     </g:center>
-    <g:south size="8">
-      <g:HTMLPanel addStyleNames="{style.alerts}">
-        <b>Alerts</b>
-        <g:FlowPanel ui:field="alertsPanel" />
-      </g:HTMLPanel>
-    </g:south>
+<!--    <g:south size="8">-->
+<!--      <g:HTMLPanel addStyleNames="{style.alerts}">-->
+<!--        <b>Alerts</b>-->
+<!--        <g:FlowPanel ui:field="alertsPanel" />-->
+<!--      </g:HTMLPanel>-->
+<!--    </g:south>-->
   </g:DockLayoutPanel>
 </ui:UiBinder>

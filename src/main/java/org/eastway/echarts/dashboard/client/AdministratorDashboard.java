@@ -81,7 +81,7 @@ public class AdministratorDashboard extends Composite {
 	@UiField DockLayoutPanel dockLayoutPanel;
 	@UiField TabLayoutPanel tabLayoutPanel;
 	@UiField Anchor patientList;
-	@UiField FlowPanel alertsPanel;
+	//@UiField FlowPanel alertsPanel;
 	@UiField TopPanelView top;
 	@UiField FlowPanel scheduler;
 	//@UiField SpanElement productivity;
@@ -95,8 +95,8 @@ public class AdministratorDashboard extends Composite {
 		this.eventBus = eventBus;
 		initWidget(uiBinder.createAndBindUi(this));
 		new TopPanelPresenter(top, eventBus, patientServices);
-		AlertsPresenter ap = new AlertsPresenter(new AlertsView(), Rpc.singleton(), eventBus);
-		ap.go(alertsPanel);
+		//AlertsPresenter ap = new AlertsPresenter(new AlertsView(), Rpc.singleton(), eventBus);
+		//ap.go(alertsPanel);
 		//setProductivity("92");
 		setScheduler(scheduler);
 		bind();
