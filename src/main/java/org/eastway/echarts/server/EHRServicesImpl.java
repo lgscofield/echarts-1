@@ -44,9 +44,7 @@ public class EHRServicesImpl extends RpcServicesImpl implements EHRServices {
 		EHRService ehrService = new EHRService(em);
 		EHR ehr = ehrService.find(ehrId);
 		EHRDTO ehrDto = new EHRDTO();
-		ehrDto.setId(ehr.getId());
-		ehrDto.setTimeCreated(ehr.getTimeCreated());
-		ehrDto.setSubject(ehr.getSubject().toDto());
+		ehrDto = ehr.toDto();
 		DemographicsService ds = new DemographicsService(em);
 		ehrDto.getSubject().setDemographics(ds.find(ehrDto.getSubject().getId()).toDto());
 		em.close();

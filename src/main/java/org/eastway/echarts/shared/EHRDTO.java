@@ -17,12 +17,14 @@ package org.eastway.echarts.shared;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class EHRDTO implements Serializable {
 	private long id;
 	private PatientDTO subject;
 	private Date timeCreated;
+	private List<AssignmentDTO> assignments;
 
 	public EHRDTO() { }
 
@@ -52,5 +54,13 @@ public class EHRDTO implements Serializable {
 
 	public PatientDTO getSubject() {
 		return subject;
+	}
+
+	public void setAssignments(List<AssignmentDTO> assignments) {
+		this.assignments = assignments;
+	}
+
+	public List<AssignmentDTO> getAssignments() {
+		return this.assignments;
 	}
 }

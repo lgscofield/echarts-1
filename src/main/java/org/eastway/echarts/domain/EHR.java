@@ -15,8 +15,9 @@
  */
 package org.eastway.echarts.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,8 +27,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.TableGenerator;
 
+import org.eastway.echarts.shared.AssignmentDTO;
 import org.eastway.echarts.shared.EHRDTO;
 
 @Entity
@@ -39,7 +42,8 @@ public class EHR {
 	private long id;
 
 	@OneToMany
-	private Set<Assignment> assignments;
+	@OrderBy(value="orderDate DESC")
+	private List<Assignment> assignments;
 
 	@OneToOne
 	@JoinColumn(name="subject_id")
@@ -78,11 +82,11 @@ public class EHR {
 		return subject;
 	}
 
-	public void setAssignments(Set<Assignment> assignments) {
+	public void setAssignments(List<Assignment> assignments) {
 		this.assignments = assignments;
 	}
 
-	public Set<Assignment> getAssignments() {
+	public List<Assignment> getAssignments() {
 		return assignments;
 	}
 
@@ -91,6 +95,11 @@ public class EHR {
 		ehrDto.setId(this.getId());
 		ehrDto.setSubject(this.getSubject().toDto());
 		ehrDto.setTimeCreated(this.getTimeCreated());
+		List<AssignmentDTO> assignments = new ArrayList<AssignmentDTO>();
+		for (Assignment a : this.assignments)
+			assignments.add(a.toDto());
+		ehrDto.setAssignments(assignments);
+
 		return ehrDto;
 	}
 }

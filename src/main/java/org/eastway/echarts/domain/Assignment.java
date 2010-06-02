@@ -13,6 +13,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import org.eastway.echarts.shared.AssignmentDTO;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Orders")
@@ -170,5 +172,24 @@ public class Assignment implements Serializable {
 
 	public EHR getEhr() {
 		return ehr;
+	}
+
+	public AssignmentDTO toDto() {
+		AssignmentDTO dto = new AssignmentDTO();
+		dto.setId(this.id);
+		//dto.setEhr(this.ehr.toDto());
+		dto.setAssignmentDate(this.assignmentDate);
+		dto.setService(this.service);
+		dto.setStaff(this.staff);
+		dto.setOrderDate(this.orderDate);
+		dto.setDisposition(this.disposition);
+		dto.setStaffName(this.staffName);
+		dto.setTermDate(this.termDate);
+		dto.setPlanId(this.planId == null ? 0 : this.planId);
+		dto.setTrtEpisode(this.trtEpisode);
+		dto.setProgram(this.program);
+		dto.setLastEdit(this.lastEdit);
+		dto.setLastEditBy(this.lastEditBy);
+		return dto;
 	}
 }

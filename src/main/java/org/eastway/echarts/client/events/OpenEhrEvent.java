@@ -27,7 +27,7 @@ public class OpenEhrEvent extends GwtEvent<OpenEhrEventHandler> {
 
 	@Override
 	protected void dispatch(OpenEhrEventHandler handler) {
-		handler.onOpenPatient(this);
+		handler.onOpenEhr(this);
 	}
 
 	@Override

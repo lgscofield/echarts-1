@@ -97,7 +97,7 @@ public class TopPanelView extends Composite implements TopPanelPresenter.Display
 	}
 
 	@Override
-	public void setCurrentPatientData(ArrayList<String[]> data) {
+	public void setCurrentEhrData(ArrayList<String[]> data) {
 		if (data == null) {
 			currentPatientData.clear();
 			return;
@@ -108,15 +108,16 @@ public class TopPanelView extends Composite implements TopPanelPresenter.Display
 		cpd.setText(0,0,data.get(i)[0] + ":");
 		cpd.setText(0,1,data.get(i++)[1]);
 		cpd.setText(0,2,data.get(i)[0] + ":");
-		cpd.setText(0,3,DateTimeFormat.getFormat("M/d/y").format(new Date(new Long(data.get(i++)[1]))).toString());
-		cpd.setText(0,4,"(" + data.get(i++)[1] + ")");
+		String dob = DateTimeFormat.getFormat("M/d/y").format(new Date(new Long(data.get(i++)[1]))).toString();
+		String age = "(" + data.get(i++)[1] + ")";
+		cpd.setText(0,3,dob + " " + age);
 
 		cpd.setText(1,0,data.get(i)[0] + ":");
 		cpd.setText(1,1,data.get(i++)[1]);
 		cpd.setText(1,2,data.get(i)[0] + ":");
 		cpd.setText(1,3,data.get(i++)[1]);
 
-		cpd.setText(2,0,data.get(i)[0]);
+		cpd.setText(2,0,data.get(i)[0] + ":");
 		cpd.setText(2,1,data.get(i++)[1]);
 		currentPatientData.add(cpd);
 	}

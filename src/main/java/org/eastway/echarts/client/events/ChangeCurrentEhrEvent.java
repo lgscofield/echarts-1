@@ -15,29 +15,29 @@
  */
 package org.eastway.echarts.client.events;
 
-import org.eastway.echarts.shared.PatientDTO;
+import org.eastway.echarts.shared.EHRDTO;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-public class ChangeCurrentPatientEvent extends GwtEvent<ChangeCurrentPatientEventHandler> {
-	public static Type<ChangeCurrentPatientEventHandler> TYPE = new Type<ChangeCurrentPatientEventHandler>();
-	private PatientDTO patient;
+public class ChangeCurrentEhrEvent extends GwtEvent<ChangeCurrentEhrEventHandler> {
+	public static Type<ChangeCurrentEhrEventHandler> TYPE = new Type<ChangeCurrentEhrEventHandler>();
+	private EHRDTO ehr;
 
-	public ChangeCurrentPatientEvent(PatientDTO patient) {
-		this.patient = patient;
+	public ChangeCurrentEhrEvent(EHRDTO ehr) {
+		this.ehr = ehr;
 	}
 
 	@Override
-	protected void dispatch(ChangeCurrentPatientEventHandler handler) {
-		handler.onChangeCurrentPatient(this);
+	protected void dispatch(ChangeCurrentEhrEventHandler handler) {
+		handler.onChangeCurrentEhr(this);
 	}
 
 	@Override
-	public Type<ChangeCurrentPatientEventHandler> getAssociatedType() {
+	public Type<ChangeCurrentEhrEventHandler> getAssociatedType() {
 		return TYPE;
 	}
 
-	public PatientDTO getPatient() {
-		return patient;
+	public EHRDTO getEhr() {
+		return ehr;
 	}
 }

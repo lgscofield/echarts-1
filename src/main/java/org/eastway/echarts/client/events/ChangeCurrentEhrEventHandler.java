@@ -17,6 +17,6 @@ package org.eastway.echarts.client.events;
 
 import com.google.gwt.event.shared.EventHandler;
 
-public interface ChangeCurrentPatientEventHandler extends EventHandler {
-	void onChangeCurrentPatient(ChangeCurrentPatientEvent event);
+public interface ChangeCurrentEhrEventHandler extends EventHandler {
+	void onChangeCurrentEhr(ChangeCurrentEhrEvent event);
 }

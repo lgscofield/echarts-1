@@ -18,14 +18,17 @@ package org.eastway.echarts.client.presenter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.UserImpl;
-import org.eastway.echarts.client.events.ChangeCurrentPatientEvent;
-import org.eastway.echarts.client.events.ChangeCurrentPatientEventHandler;
+import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
+import org.eastway.echarts.client.events.ChangeCurrentEhrEventHandler;
 import org.eastway.echarts.client.events.LogoutEvent;
 import org.eastway.echarts.client.events.OpenEhrEvent;
+import org.eastway.echarts.shared.AssignmentDTO;
+import org.eastway.echarts.shared.EHRDTO;
 import org.eastway.echarts.shared.PatientDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -46,7 +49,7 @@ public class TopPanelPresenter extends Presenter<TopPanelPresenter.Display> {
 
 		HasClickHandlers getLogoutButton();
 
-		void setCurrentPatientData(ArrayList<String[]> data);
+		void setCurrentEhrData(ArrayList<String[]> data);
 	}
 
 	private LinkedHashMap<String, Long> data;
@@ -73,21 +76,21 @@ public class TopPanelPresenter extends Presenter<TopPanelPresenter.Display> {
 				eventBus.fireEvent(new LogoutEvent());
 			}
 		});
-		eventBus.addHandler(ChangeCurrentPatientEvent.TYPE, new ChangeCurrentPatientEventHandler() {
+		eventBus.addHandler(ChangeCurrentEhrEvent.TYPE, new ChangeCurrentEhrEventHandler() {
 			@Override
-			public void onChangeCurrentPatient(ChangeCurrentPatientEvent event) {
-				setCurrentPatientData(event.getPatient());
+			public void onChangeCurrentEhr(ChangeCurrentEhrEvent event) {
+				setCurrentEhrData(event.getEhr());
 			}
 		});
 	}
 
-	private void setCurrentPatientData(PatientDTO patient) {
-		if (patient == null) {
-			display.setCurrentPatientData(null);
+	private void setCurrentEhrData(EHRDTO ehr) {
+		if (ehr == null) {
+			display.setCurrentEhrData(null);
 			return;
 		}
 		ArrayList<String[]> data = new ArrayList<String[]>();
-
+		PatientDTO patient = ehr.getSubject();
 		data.add(new String[] {"Name",patient.getName()});
 		data.add(new String[] {"DOB",new Long(patient.getDemographics().getDob().getTime()).toString()});
 
@@ -95,9 +98,22 @@ public class TopPanelPresenter extends Presenter<TopPanelPresenter.Display> {
 
 		data.add(new String[] {"Age",  age.toString() });
 		data.add(new String[] {"Case Status",patient.getCaseStatus()});
-		data.add(new String[] {"Provider",UserImpl.getStaffName()});
+		data.add(new String[] {"Provider", getProvider(ehr.getAssignments()) });
 		data.add(new String[] {"SSN",patient.getSsn()});
-		display.setCurrentPatientData(data);
+		display.setCurrentEhrData(data);
+	}
+
+	private String getProvider(List<AssignmentDTO> assignments) {
+		for (AssignmentDTO assignment : assignments) {
+			if (assignment.getService() != "S CS")
+				continue;
+			else
+				return assignment.getStaffName();
+		}
+
+		for (AssignmentDTO assignment : assignments)
+			return assignment.getStaffName();
+		return null;
 	}
 
 	public void fetchData() {

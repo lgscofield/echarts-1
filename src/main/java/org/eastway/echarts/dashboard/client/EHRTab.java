@@ -26,6 +26,7 @@ import org.eastway.echarts.client.view.EditPatientSummaryView;
 import org.eastway.echarts.client.view.LinkView;
 import org.eastway.echarts.client.view.MessagesView;
 import org.eastway.echarts.client.view.PatientSummaryView;
+import org.eastway.echarts.shared.AssignmentDTO;
 import org.eastway.echarts.shared.EHRDTO;
 
 import com.google.gwt.core.client.GWT;

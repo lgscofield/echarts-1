@@ -24,7 +24,7 @@ import org.eastway.echarts.client.PatientServices;
 import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.Rpc;
 import org.eastway.echarts.client.UserImpl;
-import org.eastway.echarts.client.events.ChangeCurrentPatientEvent;
+import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
 import org.eastway.echarts.client.events.OpenEhrEvent;
 import org.eastway.echarts.client.events.OpenEhrEventHandler;
 import org.eastway.echarts.client.presenter.AlertsPresenter;
@@ -127,9 +127,9 @@ public class AdministratorDashboard extends Composite {
 	private void bind() {
 		eventBus.addHandler(OpenEhrEvent.TYPE,
 				new OpenEhrEventHandler() {
-					public void onOpenPatient(
+					public void onOpenEhr(
 							OpenEhrEvent event) {
-						openPatient(event.getId());
+						openEhr(event.getId());
 					}
 				});
 
@@ -144,9 +144,9 @@ public class AdministratorDashboard extends Composite {
 			public void onSelection(SelectionEvent<Integer> event) {
 				Widget w = tabLayoutPanel.getWidget(event.getSelectedItem());
 				if (w instanceof EHRTab)
-					eventBus.fireEvent(new ChangeCurrentPatientEvent(((EHRTab) w).getEhr().getSubject()));
+					eventBus.fireEvent(new ChangeCurrentEhrEvent(((EHRTab) w).getEhr()));
 				else
-					eventBus.fireEvent(new ChangeCurrentPatientEvent(null));
+					eventBus.fireEvent(new ChangeCurrentEhrEvent(null));
 			}
 		});
 	}
@@ -176,8 +176,8 @@ public class AdministratorDashboard extends Composite {
 		addTab(epp.getDisplay().asWidget(), "New Chart");
 	}
 
-	public void openPatient(long patientId) {
-		fetchPatient(patientId);
+	public void openEhr(long ehrId) {
+		fetchEhr(ehrId);
 	}
 
 	public HasClickHandlers setPatientTab(String patientId,
@@ -208,7 +208,7 @@ public class AdministratorDashboard extends Composite {
 			return false;
 	}
 
-	private void fetchPatient(long ehrId) {
+	private void fetchEhr(long ehrId) {
 		AsyncCallback<EHRDTO> callback = new AsyncCallback<EHRDTO>() {
 			@Override
 			public void onFailure(Throwable caught) {
