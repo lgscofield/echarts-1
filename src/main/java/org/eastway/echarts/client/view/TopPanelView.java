@@ -105,18 +105,18 @@ public class TopPanelView extends Composite implements TopPanelPresenter.Display
 		currentPatientData.clear();
 		int i = 0;
 		FlexTable cpd = new FlexTable();
-		cpd.setText(0,0,"Name:");
+		cpd.setText(0,0,data.get(i)[0] + ":");
 		cpd.setText(0,1,data.get(i++)[1]);
-		cpd.setText(0,2,"DOB:");
+		cpd.setText(0,2,data.get(i)[0] + ":");
 		cpd.setText(0,3,DateTimeFormat.getFormat("M/d/y").format(new Date(new Long(data.get(i++)[1]))).toString());
 		cpd.setText(0,4,"(" + data.get(i++)[1] + ")");
 
-		cpd.setText(1,0,"Case Status:");
+		cpd.setText(1,0,data.get(i)[0] + ":");
 		cpd.setText(1,1,data.get(i++)[1]);
-		cpd.setText(1,2,"Provider:");
+		cpd.setText(1,2,data.get(i)[0] + ":");
 		cpd.setText(1,3,data.get(i++)[1]);
 
-		cpd.setText(2,0,"SSN:");
+		cpd.setText(2,0,data.get(i)[0]);
 		cpd.setText(2,1,data.get(i++)[1]);
 		currentPatientData.add(cpd);
 	}
