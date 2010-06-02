@@ -60,8 +60,10 @@ public class PatientServicesImpl extends RpcServicesImpl implements PatientServi
 		for (Assignment assignment : assignments)
 			if (assignment != null)
 				pl.put(assignment.getEhr().getSubject().getCaseNumber() + " - "
-						+ assignment.getEhr().getSubject().getLastName() + ", "
-						+ assignment.getEhr().getSubject().getFirstName(),
+						+ assignment.getEhr().getSubject().getLastName()
+						+ (assignment.getEhr().getSubject().getSuffix() == null ? ", " : " " + assignment.getEhr().getSubject().getSuffix() + ", ")
+						+ assignment.getEhr().getSubject().getFirstName()
+						+ (assignment.getEhr().getSubject().getMiddleInitial() == null ? "" : ", " + assignment.getEhr().getSubject().getMiddleInitial()),
 						assignment.getEhr().getId());
 		em.close();
 		emf.close();
