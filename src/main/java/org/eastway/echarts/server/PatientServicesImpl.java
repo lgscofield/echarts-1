@@ -55,7 +55,8 @@ public class PatientServicesImpl extends RpcServicesImpl implements PatientServi
 				.createEntityManagerFactory("EchartsPersistence");
 		EntityManager em = emf.createEntityManager();
 		List<Assignment> assignments = em.createQuery(
-				"SELECT a From Assignment a Where a.staff = '" + staffId + "' And a.disposition = 'Open'", Assignment.class).getResultList();
+				"SELECT a From Assignment a Where a.staff = '" + staffId + "' And a.disposition = 'Open' Order By a.ehr.subject.lastName ASC, a.ehr.subject.firstName ASC", Assignment.class).getResultList();
+
 		for (Assignment assignment : assignments)
 			if (assignment != null)
 				pl.put(assignment.getEhr().getSubject().getCaseNumber() + " - "
