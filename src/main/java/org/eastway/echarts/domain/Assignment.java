@@ -186,7 +186,7 @@ public class Assignment implements Serializable {
 		dto.setStaffName(this.staffName);
 		dto.setTermDate(this.termDate);
 		dto.setPlanId(this.planId == null ? 0 : this.planId);
-		dto.setTrtEpisode(this.trtEpisode);
+		dto.setTrtEpisode(this.trtEpisode == null ? 0 : this.trtEpisode);
 		dto.setProgram(this.program);
 		dto.setLastEdit(this.lastEdit);
 		dto.setLastEditBy(this.lastEditBy);
