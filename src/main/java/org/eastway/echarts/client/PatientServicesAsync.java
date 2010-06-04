@@ -17,12 +17,12 @@ package org.eastway.echarts.client;
 
 import java.util.LinkedHashMap;
 
-import org.eastway.echarts.shared.PatientDTO;
+import org.eastway.echarts.shared.Patient;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface PatientServicesAsync {
-	public void getPatient(long patientId, String sessionId, AsyncCallback<PatientDTO> callback);
+	public void getPatient(long patientId, String sessionId, AsyncCallback<Patient> callback);
 
 	public void getPatientList(String sessionId, String staffId, AsyncCallback<LinkedHashMap<String, Long>> callback);
 }

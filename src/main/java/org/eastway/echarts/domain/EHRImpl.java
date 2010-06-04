@@ -28,13 +28,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
+import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
-import org.eastway.echarts.shared.AssignmentDTO;
+import org.eastway.echarts.shared.Assignment;
+import org.eastway.echarts.shared.Demographics;
+import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.EHRDTO;
+import org.eastway.echarts.shared.Patient;
+import org.eastway.echarts.shared.PatientDTO;
 
 @Entity
-public class EHR {
+@Table(name = "EHR")
+public class EHRImpl implements EHR {
 	@Id
 	@TableGenerator(name="tg", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.TABLE, generator="tg")
@@ -43,63 +49,91 @@ public class EHR {
 
 	@OneToMany
 	@OrderBy(value="orderDate DESC")
-	private List<Assignment> assignments;
+	private List<AssignmentImpl> assignments;
 
 	@OneToOne
 	@JoinColumn(name="subject_id")
-	private Patient subject;
+	private PatientImpl subject;
 
 	@Column(name="time_created")
 	private Date timeCreated;
 
-	public EHR() { }
+	@OneToOne
+	@JoinColumn(name="demographics")
+	private DemographicsImpl demographics;
 
-	public EHR(long id) {
+	public EHRImpl() { }
+
+	public EHRImpl(long id) {
 		this.id = id;
 	}
 
+	@Override
 	public void setId(long id) {
 		this.id = id;
 	}
 
+	@Override
 	public long getId() {
 		return id;
 	}
 
+	@Override
 	public void setTimeCreated(Date timeCreated) {
 		this.timeCreated = timeCreated;
 	}
 
+	@Override
 	public Date getTimeCreated() {
 		return timeCreated;
 	}
 
+	@Override
 	public void setSubject(Patient subject) {
-		this.subject = subject;
+		this.subject = (PatientImpl) subject;
 	}
 
+	@Override
 	public Patient getSubject() {
 		return subject;
 	}
 
+	@Override
 	public void setAssignments(List<Assignment> assignments) {
-		this.assignments = assignments;
+		this.assignments.clear();
+		for (Assignment assignment : assignments)
+			this.assignments.add((AssignmentImpl) assignment);
 	}
 
+	@Override
 	public List<Assignment> getAssignments() {
+		List<Assignment> assignments = new ArrayList<Assignment>();
+		for (AssignmentImpl assignment : this.assignments)
+			assignments.add(assignment);
 		return assignments;
 	}
 
+	@Override
 	public EHRDTO toDto() {
 		EHRDTO ehrDto = new EHRDTO();
 		ehrDto.setId(this.getId());
-		ehrDto.setSubject(this.getSubject().toDto());
+		ehrDto.setSubject((PatientDTO) this.getSubject().toDto());
 		ehrDto.setTimeCreated(this.getTimeCreated());
-		List<AssignmentDTO> assignments = new ArrayList<AssignmentDTO>();
+		List<Assignment> assignments = new ArrayList<Assignment>();
 		for (Assignment a : this.assignments)
 			assignments.add(a.toDto());
 		ehrDto.setAssignments(assignments);
 
 		return ehrDto;
+	}
+
+	@Override
+	public Demographics getDemographics() {
+		return demographics;
+	}
+
+	@Override
+	public void setDemographics(Demographics demographics) {
+		this.demographics = (DemographicsImpl) demographics;
 	}
 }

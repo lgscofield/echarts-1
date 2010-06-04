@@ -19,9 +19,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 @SuppressWarnings("serial")
-public class AssignmentDTO implements Serializable {
-	private long id;
-	private EHRDTO ehr;
+public class AssignmentDTO implements Serializable, Assignment {
+	private Integer id;
+	private EHR ehr;
 	private Date assignmentDate;
 	private String service;
 	private String staff;
@@ -37,115 +37,148 @@ public class AssignmentDTO implements Serializable {
 
 	public AssignmentDTO() { }
 
-	public void setId(long id) {
+	@Override
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public long getId() {
+	@Override
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setEhr(EHRDTO ehr) {
+	@Override
+	public void setEhr(EHR ehr) {
 		this.ehr = ehr;
 	}
 
-	public EHRDTO getEhr() {
+	@Override
+	public EHR getEhr() {
 		return this.ehr;
 	}
 
+	@Override
 	public void setAssignmentDate(Date assignmentDate) {
 		this.assignmentDate = assignmentDate;
 	}
 
+	@Override
 	public Date getAssignmentDate() {
 		return this.assignmentDate;
 	}
 
+	@Override
 	public void setService(String service) {
 		this.service = service;
 	}
 
+	@Override
 	public String getService() {
 		return this.service;
 	}
 
+	@Override
 	public void setStaff(String staff) {
 		this.staff = staff;
 	}
 
+	@Override
 	public String getStaff() {
 		return this.staff;
 	}
 
+	@Override
 	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
 	}
 
+	@Override
 	public Date getOrderDate() {
 		return this.orderDate;
 	}
 
+	@Override
 	public void setDisposition(String disposition) {
 		this.disposition = disposition;
 	}
 
+	@Override
 	public String getDisposition() {
 		return this.disposition;
 	}
 
+	@Override
 	public void setStaffName(String staffName) {
 		this.staffName = staffName;
 	}
 
+	@Override
 	public String getStaffName() {
 		return this.staffName;
 	}
 
+	@Override
 	public void setTermDate(Date termDate) {
 		this.termDate = termDate;
 	}
 
+	@Override
 	public Date getTermDate() {
 		return this.termDate;
 	}
 
-	public void setPlanId(int planId) {
-		this.planId = planId;
-	}
-
-	public int getPlanId() {
+	@Override
+	public Integer getPlanId() {
 		return this.planId;
 	}
 
-	public void setTrtEpisode(int trtEpisode) {
-		this.trtEpisode = trtEpisode;
-	}
-
-	public int getTrtEpisode() {
+	@Override
+	public Integer getTrtEpisode() {
 		return this.trtEpisode;
 	}
 
+	@Override
 	public void setProgram(String program) {
 		this.program = program;
 	}
 
+	@Override
 	public String getProgram() {
 		return this.program;
 	}
 
+	@Override
 	public void setLastEdit(Date lastEdit) {
 		this.lastEdit = lastEdit;
 	}
 
+	@Override
 	public Date getLastEdit() {
 		return this.lastEdit;
 	}
 
+	@Override
 	public void setLastEditBy(String lastEditBy) {
 		this.lastEditBy = lastEditBy;
 	}
 
+	@Override
 	public String getLastEditBy() {
 		return this.lastEditBy;
+	}
+
+	@Override
+	public void setPlanId(Integer planId) {
+		this.planId = planId;
+	}
+
+	@Override
+	public void setTrtEpisode(Integer trtEpisode) {
+		this.trtEpisode = trtEpisode;
+	}
+
+	@Override
+	public AssignmentDTO toDto() {
+		return this;
 	}
 }

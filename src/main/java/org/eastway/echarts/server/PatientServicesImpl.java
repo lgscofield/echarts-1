@@ -23,9 +23,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import org.eastway.echarts.client.PatientServices;
-import org.eastway.echarts.domain.Assignment;
-import org.eastway.echarts.domain.Patient;
+import org.eastway.echarts.domain.AssignmentImpl;
+import org.eastway.echarts.domain.PatientImpl;
 import org.eastway.echarts.domain.PatientService;
+import org.eastway.echarts.shared.Assignment;
 import org.eastway.echarts.shared.DbException;
 import org.eastway.echarts.shared.PatientDTO;
 import org.eastway.echarts.shared.SessionExpiredException;
@@ -40,7 +41,7 @@ public class PatientServicesImpl extends RpcServicesImpl implements PatientServi
 				.createEntityManagerFactory("EchartsPersistence");
 		EntityManager em = emf.createEntityManager();
 		PatientService patientService = new PatientService(em);
-		Patient patient = patientService.find(patientId);
+		PatientImpl patient = patientService.find(patientId);
 		em.close();
 		emf.close();
 		return patient.toDto();
@@ -54,8 +55,8 @@ public class PatientServicesImpl extends RpcServicesImpl implements PatientServi
 		EntityManagerFactory emf = Persistence
 				.createEntityManagerFactory("EchartsPersistence");
 		EntityManager em = emf.createEntityManager();
-		List<Assignment> assignments = em.createQuery(
-				"SELECT a From Assignment a Where a.staff = '" + staffId + "' And a.disposition = 'Open' Order By a.ehr.subject.lastName ASC, a.ehr.subject.firstName ASC", Assignment.class).getResultList();
+		List<AssignmentImpl> assignments = em.createQuery(
+				"SELECT a From AssignmentImpl a Where a.staff = '" + staffId + "' And a.disposition = 'Open' Order By a.ehr.subject.lastName ASC, a.ehr.subject.firstName ASC", AssignmentImpl.class).getResultList();
 
 		for (Assignment assignment : assignments)
 			if (assignment != null)

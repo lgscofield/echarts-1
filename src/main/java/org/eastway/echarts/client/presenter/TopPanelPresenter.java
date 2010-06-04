@@ -27,9 +27,10 @@ import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEventHandler;
 import org.eastway.echarts.client.events.LogoutEvent;
 import org.eastway.echarts.client.events.OpenEhrEvent;
-import org.eastway.echarts.shared.AssignmentDTO;
-import org.eastway.echarts.shared.EHRDTO;
-import org.eastway.echarts.shared.PatientDTO;
+import org.eastway.echarts.shared.Assignment;
+import org.eastway.echarts.shared.Demographics;
+import org.eastway.echarts.shared.EHR;
+import org.eastway.echarts.shared.Patient;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -84,17 +85,18 @@ public class TopPanelPresenter extends Presenter<TopPanelPresenter.Display> {
 		});
 	}
 
-	private void setCurrentEhrData(EHRDTO ehr) {
+	private void setCurrentEhrData(EHR ehr) {
 		if (ehr == null) {
 			display.setCurrentEhrData(null);
 			return;
 		}
 		ArrayList<String[]> data = new ArrayList<String[]>();
-		PatientDTO patient = ehr.getSubject();
+		Patient patient = ehr.getSubject();
+		Demographics demographics = ehr.getDemographics();
 		data.add(new String[] {"Name",patient.getName()});
-		data.add(new String[] {"DOB",new Long(patient.getDemographics().getDob().getTime()).toString()});
+		data.add(new String[] {"DOB",new Long(demographics.getDob().getTime()).toString()});
 
-		Long age = (new Date().getTime() - patient.getDemographics().getDob().getTime()) / (3600*24*365) / 1000;
+		Long age = (new Date().getTime() - demographics.getDob().getTime()) / (3600*24*365) / 1000;
 
 		data.add(new String[] {"Age",  age.toString() });
 		data.add(new String[] {"Case Status",patient.getCaseStatus()});
@@ -103,15 +105,15 @@ public class TopPanelPresenter extends Presenter<TopPanelPresenter.Display> {
 		display.setCurrentEhrData(data);
 	}
 
-	private String getProvider(List<AssignmentDTO> assignments) {
-		for (AssignmentDTO assignment : assignments) {
+	private String getProvider(List<Assignment> assignments) {
+		for (Assignment assignment : assignments) {
 			if (assignment.getService() != "S CS")
 				continue;
 			else
 				return assignment.getStaffName();
 		}
 
-		for (AssignmentDTO assignment : assignments)
+		for (Assignment assignment : assignments)
 			return assignment.getStaffName();
 		return null;
 	}

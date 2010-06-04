@@ -22,6 +22,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import org.eastway.echarts.shared.Demographics;
+
 public class DemographicsService {
 	@PersistenceContext(unitName="DemographicsService")
 	protected EntityManager em;
@@ -73,7 +75,7 @@ public class DemographicsService {
 			Date dob,
 			Date lastEdit,
 			String lastEditBy) {
-		Demographics demographics = new Demographics();
+		Demographics demographics = new DemographicsImpl();
 		demographics.setGender(gender);
 		demographics.setRace(race);
 		demographics.setMaritalStatus(maritalStatus);
@@ -118,18 +120,18 @@ public class DemographicsService {
 	}
 
 	public void remove(long demographicsId) {
-		Demographics demographics = getEntityManager().find(Demographics.class, demographicsId);
+		Demographics demographics = getEntityManager().find(DemographicsImpl.class, demographicsId);
 		if (demographics != null)
 			getEntityManager().remove(demographics);
 	}
 
 	public Demographics find(long demographicsId) {
-		return getEntityManager().find(Demographics.class, demographicsId);
+		return getEntityManager().find(DemographicsImpl.class, demographicsId);
 	}
 
-	public List<Demographics> findAll() {
-		TypedQuery<Demographics> query = getEntityManager().createQuery(
-				"SELECT * FROM Demographics d", Demographics.class);
+	public List<DemographicsImpl> findAll() {
+		TypedQuery<DemographicsImpl> query = getEntityManager().createQuery(
+				"SELECT * FROM DemographicsImpl d", DemographicsImpl.class);
 		return query.getResultList();
 	}
 }

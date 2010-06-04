@@ -1,0 +1,12 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<g:HTMLPanel>
+		<p>Gender : <span ui:field='gender'/></p>
+		<p>Race : <span ui:field='race'/></p>
+		<p>Education Level : <span ui:field='educationLevel'/></p>
+		<p>Education Type : <span ui:field='educationType'/></p>
+		<p>Is alcohol/drug : <span ui:field='isAlcoholDrug'/></p>
+		<p>Is blind : <span ui:field='isBlind'/></p>
+	</g:HTMLPanel>
+</ui:UiBinder>

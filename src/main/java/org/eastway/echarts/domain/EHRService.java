@@ -22,6 +22,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import org.eastway.echarts.shared.EHR;
+import org.eastway.echarts.shared.Patient;
+
 public class EHRService {
 	@PersistenceContext(unitName="EHRService")
 	protected EntityManager em;
@@ -35,20 +38,20 @@ public class EHRService {
 	}
 
 	public EHR create(Patient subject, Date timeCreated) {
-		EHR ehr = new EHR();
+		EHR ehr = new EHRImpl();
 		ehr.setSubject(subject);
 		ehr.setTimeCreated(timeCreated);
 		getEntityManager().persist(ehr);
 		return ehr;
 	}
 
-	public EHR find(long ehrId) {
-		return getEntityManager().find(EHR.class, ehrId);
+	public EHRImpl find(long ehrId) {
+		return getEntityManager().find(EHRImpl.class, ehrId);
 	}
 
-	public List<EHR> findAll() {
-		TypedQuery<EHR> query = getEntityManager().createQuery(
-				"SELECT e FROM EHR e", EHR.class);
+	public List<EHRImpl> findAll() {
+		TypedQuery<EHRImpl> query = getEntityManager().createQuery(
+				"SELECT e FROM EHRImpl e", EHRImpl.class);
 		return query.getResultList();
 	}
 }

@@ -19,9 +19,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 @SuppressWarnings("serial")
-public class PatientDTO implements Serializable {
+public class PatientDTO implements Serializable, Patient {
 	private long id;
 	private long ehrId;
+	private EHR ehr;
 	private String caseNumber;
 	private String firstName;
 	private String lastName;
@@ -32,7 +33,6 @@ public class PatientDTO implements Serializable {
 	private String ssn;
 	private String lastEditBy;
 	private Date lastEdit;
-	private DemographicsDTO demographics;
 
 	public PatientDTO() { }
 
@@ -48,7 +48,7 @@ public class PatientDTO implements Serializable {
 			long ehrId,
 			String ssn,
 			String suffix,
-			DemographicsDTO demographics) {
+			Demographics demographics) {
 		setAlias(alias);
 		setCaseNumber(caseNumber);
 		setCaseStatus(caseStatus);
@@ -61,114 +61,145 @@ public class PatientDTO implements Serializable {
 		setEhrId(ehrId);
 		setSsn(ssn);
 		setSuffix(suffix);
-		setDemographics(demographics);
 	}
 
+	@Override
 	public void setId(long id) {
 		this.id = id;
 	}
 
+	@Override
 	public long getId() {
 		return id;
 	}
 
+	@Override
 	public void setEhrId(long ehrId) {
 		this.ehrId = ehrId;
 	}
 
+	@Override
 	public long getEhrId() {
 		return ehrId;
 	}
 
+	@Override
 	public String getName() {
 		return getLastName() + ", " + getFirstName();
 	}
 
+	@Override
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
+	@Override
 	public String getFirstName() {
 		return firstName;
 	}
 
+	@Override
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 
+	@Override
 	public String getLastName() {
 		return lastName;
 	}
 
+	@Override
 	public void setSuffix(String suffix) {
 		this.suffix = suffix;
 	}
 
+	@Override
 	public String getSuffix() {
 		return suffix;
 	}
 
+	@Override
 	public void setAlias(String alias) {
 		this.alias = alias;
 	}
 
+	@Override
 	public String getAlias() {
 		return alias;
 	}
 
+	@Override
 	public void setCaseStatus(String caseStatus) {
 		this.caseStatus = caseStatus;
 	}
 
+	@Override
 	public String getCaseStatus() {
 		return caseStatus;
 	}
 
+	@Override
 	public void setSsn(String ssn) {
 		this.ssn = ssn;
 	}
 
+	@Override
 	public String getSsn() {
 		return ssn;
 	}
 
+	@Override
 	public void setLastEditBy(String lastEditBy) {
 		this.lastEditBy = lastEditBy;
 	}
 
+	@Override
 	public String getLastEditBy() {
 		return lastEditBy;
 	}
 
+	@Override
 	public void setLastEdit(Date lastEdit) {
 		this.lastEdit = lastEdit;
 	}
 
+	@Override
 	public Date getLastEdit() {
 		return lastEdit;
 	}
 
-	public void setDemographics(DemographicsDTO demographics) {
-		this.demographics = demographics;
-	}
-
-	public DemographicsDTO getDemographics() {
-		return demographics;
-	}
-
+	@Override
 	public void setCaseNumber(String caseNumber) {
 		this.caseNumber = caseNumber;
 	}
 
+	@Override
 	public String getCaseNumber() {
 		return caseNumber;
 	}
 
+	@Override
 	public void setMiddleInitial(String middleInitial) {
 		this.middleInitial = middleInitial;
 	}
 
+	@Override
 	public String getMiddleInitial() {
 		return middleInitial;
+	}
+
+	@Override
+	public EHR getEhr() {
+		return ehr;
+	}
+
+	@Override
+	public void setEhr(EHR ehr) {
+		this.ehr = ehr;
+	}
+
+	@Override
+	public PatientDTO toDto() {
+		return this;
 	}
 }

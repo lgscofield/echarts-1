@@ -23,13 +23,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotNull;
 
+import org.eastway.echarts.shared.EHR;
+import org.eastway.echarts.shared.Patient;
 import org.eastway.echarts.shared.PatientDTO;
 
 @Entity
-public class Patient {
+@Table(name = "Patient")
+public class PatientImpl implements Patient {
 	@Id
 	@TableGenerator(name = "tg", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "tg")
@@ -37,7 +41,7 @@ public class Patient {
 	private long id;
 
 	@OneToOne(mappedBy = "subject")
-	private EHR ehr;
+	private EHRImpl ehr;
 
 	@Column(name = "ehr_id")
 	private long ehrId;
@@ -53,120 +57,148 @@ public class Patient {
 	@NotNull
 	private Date lastEdit;
 
-	public Patient() {}
+	public PatientImpl() {}
 
-	public Patient(long id) {
+	public PatientImpl(long id) {
 		this.setId(id);
 	}
 
+	@Override
 	public void setEhr(EHR ehr) {
-		this.ehr = ehr;
+		this.ehr = (EHRImpl) ehr;
 	}
 
+	@Override
 	public EHR getEhr() {
 		return ehr;
 	}
 
+	@Override
 	public void setEhrId(long ehrId) {
 		this.ehrId = ehrId;
 	}
 
+	@Override
 	public long getEhrId() {
 		return ehrId;
 	}
 
+	@Override
 	public void setId(long id) {
 		this.id = id;
 	}
 
+	@Override
 	public long getId() {
 		return id;
 	}
 
+	@Override
 	public String getName() {
 		return getLastName() + ", " + getFirstName();
 	}
 
+	@Override
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
+	@Override
 	public String getFirstName() {
 		return firstName;
 	}
 
+	@Override
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 
+	@Override
 	public String getLastName() {
 		return lastName;
 	}
 
+	@Override
 	public void setSuffix(String suffix) {
 		this.suffix = suffix;
 	}
 
+	@Override
 	public String getSuffix() {
 		return suffix;
 	}
 
+	@Override
 	public void setAlias(String alias) {
 		this.alias = alias;
 	}
 
+	@Override
 	public String getAlias() {
 		return alias;
 	}
 
+	@Override
 	public void setCaseStatus(String caseStatus) {
 		this.caseStatus = caseStatus;
 	}
 
+	@Override
 	public String getCaseStatus() {
 		return caseStatus;
 	}
 
+	@Override
 	public void setSsn(String ssn) {
 		this.ssn = ssn;
 	}
 
+	@Override
 	public String getSsn() {
 		return ssn;
 	}
 
+	@Override
 	public void setLastEditBy(String lastEditBy) {
 		this.lastEditBy = lastEditBy;
 	}
 
+	@Override
 	public String getLastEditBy() {
 		return lastEditBy;
 	}
 
+	@Override
 	public void setLastEdit(Date lastEdit) {
 		this.lastEdit = lastEdit;
 	}
 
+	@Override
 	public Date getLastEdit() {
 		return lastEdit;
 	}
 
+	@Override
 	public void setCaseNumber(String caseNumber) {
 		this.caseNumber = caseNumber;
 	}
 
+	@Override
 	public String getCaseNumber() {
 		return caseNumber;
 	}
 
+	@Override
 	public void setMiddleInitial(String middleInitial) {
 		this.middleInitial = middleInitial;
 	}
 
+	@Override
 	public String getMiddleInitial() {
 		return middleInitial;
 	}
 
+	@Override
 	public PatientDTO toDto() {
 		PatientDTO patientDto = new PatientDTO();
 		patientDto.setAlias(this.getAlias());

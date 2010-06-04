@@ -20,8 +20,9 @@ import java.util.Date;
 import org.eastway.echarts.client.EHRServicesAsync;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.UserImpl;
-import org.eastway.echarts.shared.DemographicsDTO;
+import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.EHRDTO;
+import org.eastway.echarts.shared.Patient;
 import org.eastway.echarts.shared.PatientDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -275,11 +276,9 @@ public class AddEhrPresenter extends Presenter<AddEhrPresenter.Display> {
 	}
 
 	private void doFinish() {
-		EHRDTO ehrDto = new EHRDTO();
-		PatientDTO patient = new PatientDTO();
-		DemographicsDTO d = new DemographicsDTO();
+		EHR ehrDto = new EHRDTO();
+		Patient patient = new PatientDTO();
 		ehrDto.setSubject(patient);
-		patient.setDemographics(d);
 
 		patient.setCaseNumber(display.getCaseNumber().getText());
 		patient.setFirstName(display.getFirstName().getText());
@@ -289,7 +288,6 @@ public class AddEhrPresenter extends Presenter<AddEhrPresenter.Display> {
 		patient.setAlias(display.getAlias().getText());
 		patient.setSsn(display.getSsn().getText());
 		patient.setCaseStatus(display.getCaseStatus().getText());
-		patient.getDemographics().setDob(display.getDob().getValue());
 		patient.setLastEdit(new Date());
 		patient.setLastEditBy(UserImpl.getUserName());
 

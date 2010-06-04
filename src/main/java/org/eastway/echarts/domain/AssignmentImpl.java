@@ -13,19 +13,21 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import org.eastway.echarts.shared.Assignment;
 import org.eastway.echarts.shared.AssignmentDTO;
+import org.eastway.echarts.shared.EHR;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Orders")
-public class Assignment implements Serializable {
+public class AssignmentImpl implements Serializable, Assignment {
 
 	@Id
     @Column(name = "order_id")
     private Integer id;
 
     @ManyToOne
-    private EHR ehr;
+    private EHRImpl ehr;
 
     @Column(name = "Date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -60,120 +62,149 @@ public class Assignment implements Serializable {
 
     private String lastEditBy;
 
-    public Assignment() { }
+    public AssignmentImpl() { }
 
+    @Override
     public void setId(Integer id) {
     	this.id = id;
     }
 
+    @Override
     public Integer getId() {
     	return id;
     }
-
+    
+    @Override
 	public void setAssignmentDate(Date assignmentDate) {
 		this.assignmentDate = assignmentDate;
 	}
 
+    @Override
 	public Date getAssignmentDate() {
 		return assignmentDate;
 	}
 
+    @Override
 	public void setService(String service) {
 		this.service = service;
 	}
 
+    @Override
 	public String getService() {
 		return service;
 	}
 
+    @Override
 	public void setStaff(String staff) {
 		this.staff = staff;
 	}
 
+    @Override
 	public String getStaff() {
 		return staff;
 	}
 
+    @Override
 	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
 	}
 
+    @Override
 	public Date getOrderDate() {
 		return orderDate;
 	}
 
+    @Override
 	public void setDisposition(String disposition) {
 		this.disposition = disposition;
 	}
 
+    @Override
 	public String getDisposition() {
 		return disposition;
 	}
 
+    @Override
 	public void setStaffName(String staffName) {
 		this.staffName = staffName;
 	}
 
+    @Override
 	public String getStaffName() {
 		return staffName;
 	}
 
+    @Override
 	public void setTermDate(Date termDate) {
 		this.termDate = termDate;
 	}
 
+    @Override
 	public Date getTermDate() {
 		return termDate;
 	}
 
+    @Override
 	public void setPlanId(Integer planId) {
 		this.planId = planId;
 	}
 
+    @Override
 	public Integer getPlanId() {
 		return planId;
 	}
 
+    @Override
 	public void setTrtEpisode(Integer trtEpisode) {
 		this.trtEpisode = trtEpisode;
 	}
 
+    @Override
 	public Integer getTrtEpisode() {
 		return trtEpisode;
 	}
 
+    @Override
 	public void setProgram(String program) {
 		this.program = program;
 	}
 
+    @Override
 	public String getProgram() {
 		return program;
 	}
 
+    @Override
 	public void setLastEdit(Date lastEdit) {
 		this.lastEdit = lastEdit;
 	}
 
+    @Override
 	public Date getLastEdit() {
 		return lastEdit;
 	}
 
+    @Override
 	public void setLastEditBy(String lastEditBy) {
 		this.lastEditBy = lastEditBy;
 	}
 
+    @Override
 	public String getLastEditBy() {
 		return lastEditBy;
 	}
 
+    @Override
 	public void setEhr(EHR ehr) {
-		this.ehr = ehr;
+		this.ehr = (EHRImpl) ehr;
 	}
 
+    @Override
 	public EHR getEhr() {
 		return ehr;
 	}
 
+	@Override
 	public AssignmentDTO toDto() {
 		AssignmentDTO dto = new AssignmentDTO();
 		dto.setId(this.id);

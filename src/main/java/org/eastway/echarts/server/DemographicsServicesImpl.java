@@ -20,10 +20,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import org.eastway.echarts.client.DemographicsServices;
-import org.eastway.echarts.domain.Demographics;
 import org.eastway.echarts.domain.DemographicsService;
 import org.eastway.echarts.shared.DbException;
 import org.eastway.echarts.shared.DemographicsDTO;
+import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.SessionExpiredException;
 
 @SuppressWarnings("serial")

@@ -20,8 +20,9 @@ import java.util.Date;
 import org.eastway.echarts.client.EHRServicesAsync;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.UserImpl;
+import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.EHRDTO;
-import org.eastway.echarts.shared.PatientDTO;
+import org.eastway.echarts.shared.Patient;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -81,12 +82,12 @@ public class EditPatientSummaryPresenter extends Presenter<EditPatientSummaryPre
 	}
 
 	private EHRServicesAsync ehrServices;
-	private PatientDTO patient;
+	private Patient patient;
 
 	public EditPatientSummaryPresenter(
 			Display display,
 			HandlerManager eventBus, EHRServicesAsync ehrServices,
-			PatientDTO patient) {
+			Patient patient) {
 		super(display, eventBus);
 		this.ehrServices = ehrServices;
 		this.patient = patient;
@@ -105,7 +106,6 @@ public class EditPatientSummaryPresenter extends Presenter<EditPatientSummaryPre
 		//display.getAltPhone().setText(patient.getAltPhone());
 		display.getCaseNumber().setText(patient.getCaseNumber());
 		//display.getCounty().setText(patient.getCounty());
-		display.getDob().setValue(patient.getDemographics().getDob());
 		display.getFirstName().setText(patient.getFirstName());
 		display.getLastName().setText(patient.getLastName());
 		display.getMiddleInitial().setText(patient.getMiddleInitial());
@@ -127,24 +127,23 @@ public class EditPatientSummaryPresenter extends Presenter<EditPatientSummaryPre
 		patient.setFirstName(display.getFirstName().getText());
 		patient.setLastName(display.getLastName().getText());
 		patient.setMiddleInitial(display.getMiddleInitial().getText());
-		patient.getDemographics().setDob(display.getDob().getValue());
 		patient.setSsn(display.getSsn().getText());
 		//patient.setCounty(display.getCounty().getText());
 		//patient.setAddress(display.getAddress().getText());
 		//patient.setPhone(display.getPhone().getText());
 		//patient.setAltPhone(display.getAltPhone().getText());
 
-		EHRDTO ehr = new EHRDTO(patient.getEhrId());
+		EHR ehr = new EHRDTO(patient.getEhrId());
 		ehr.setSubject(patient);
 
-		AsyncCallback<EHRDTO> callback = new AsyncCallback<EHRDTO>() {
+		AsyncCallback<EHR> callback = new AsyncCallback<EHR>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				new HandleRpcException(caught);
 			}
 
 			@Override
-			public void onSuccess(EHRDTO result) {
+			public void onSuccess(EHR result) {
 				;
 			}
 		};

@@ -18,20 +18,22 @@ package org.eastway.echarts.client.presenter;
 import java.util.LinkedHashSet;
 
 import org.eastway.echarts.client.EHRServicesAsync;
-import org.eastway.echarts.shared.PatientDTO;
+import org.eastway.echarts.shared.Demographics;
+import org.eastway.echarts.shared.EHR;
+import org.eastway.echarts.shared.Patient;
 
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class PatientSummaryPresenter extends Presenter<PatientSummaryPresenter.Display> {
 
-	private PatientDTO patient;
+	private EHR ehr;
 
 	public PatientSummaryPresenter(Display display,
 			HandlerManager eventBus, EHRServicesAsync ehrServicesAsync,
-			PatientDTO patient) {
+			EHR ehr) {
 		super(display, eventBus);
-		this.patient = patient;
+		this.ehr = ehr;
 	}
 
 	public interface Display extends EchartsDisplay {
@@ -45,8 +47,8 @@ public class PatientSummaryPresenter extends Presenter<PatientSummaryPresenter.D
 		setPersonalData();
 	}
 
-	protected void setPatient(PatientDTO patient) {
-		this.patient = patient;
+	protected void setEhr(EHR ehr) {
+		this.ehr = ehr;
 	}
 
 	void setPersonalData() {
@@ -54,14 +56,16 @@ public class PatientSummaryPresenter extends Presenter<PatientSummaryPresenter.D
 		// TODO: the first value here could easily be set by
 		// patient.getPatientIdTitle() or some such.  This way it could
 		// be retrieved from the database.
+		Patient patient = ehr.getSubject();
+		Demographics demographics = ehr.getDemographics();
 		data.add(new String[] { "Case Number : ", patient.getCaseNumber() });
 		data.add(new String[] { "Name : ", patient.getName() });
-		data.add(new String[] { "Gender : ", patient.getDemographics().getGender() });
-		data.add(new String[] { "DOB : ", patient.getDemographics().getDob().toString() });
-		data.add(new String[] { "Ethnicity : ", patient.getDemographics().getEthnicity() });
-		data.add(new String[] { "Preferred Language : ", patient.getDemographics().getPreferredLanguage() });
-		data.add(new String[] { "Race : ", patient.getDemographics().getRace() });
-		data.add(new String[] { "Insurance Type : ", patient.getDemographics().getInsuranceType() });
+		data.add(new String[] { "Gender : ", demographics.getGender() });
+		data.add(new String[] { "DOB : ", demographics.getDob().toString() });
+		data.add(new String[] { "Ethnicity : ", demographics.getEthnicity() });
+		data.add(new String[] { "Preferred Language : ", demographics.getPreferredLanguage() });
+		data.add(new String[] { "Race : ", demographics.getRace() });
+		data.add(new String[] { "Insurance Type : ", demographics.getInsuranceType() });
 		data.add(new String[] { "SSN : ", patient.getSsn() });
 		display.setData(data);
 	}

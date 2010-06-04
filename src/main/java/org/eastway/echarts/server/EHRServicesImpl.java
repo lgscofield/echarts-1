@@ -23,37 +23,37 @@ import javax.persistence.Persistence;
 
 import org.eastway.echarts.client.EHRServices;
 import org.eastway.echarts.domain.DemographicsService;
-import org.eastway.echarts.domain.EHR;
+import org.eastway.echarts.domain.EHRImpl;
 import org.eastway.echarts.domain.EHRService;
-import org.eastway.echarts.domain.Patient;
 import org.eastway.echarts.domain.PatientService;
 import org.eastway.echarts.shared.DbException;
-import org.eastway.echarts.shared.DemographicsDTO;
+import org.eastway.echarts.shared.Demographics;
+import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.EHRDTO;
-import org.eastway.echarts.shared.PatientDTO;
+import org.eastway.echarts.shared.Patient;
 import org.eastway.echarts.shared.SessionExpiredException;
 
 @SuppressWarnings("serial")
 public class EHRServicesImpl extends RpcServicesImpl implements EHRServices {
 	@Override
-	public EHRDTO getEhr(long ehrId, String sessionId) throws SessionExpiredException, DbException {
+	public EHR getEhr(long ehrId, String sessionId) throws SessionExpiredException, DbException {
 		checkSessionExpire(sessionId);
 		EntityManagerFactory emf = Persistence
 				.createEntityManagerFactory("EchartsPersistence");
 		EntityManager em = emf.createEntityManager();
 		EHRService ehrService = new EHRService(em);
-		EHR ehr = ehrService.find(ehrId);
-		EHRDTO ehrDto = new EHRDTO();
+		EHRImpl ehr = ehrService.find(ehrId);
+		EHR ehrDto = new EHRDTO();
 		ehrDto = ehr.toDto();
 		DemographicsService ds = new DemographicsService(em);
-		ehrDto.getSubject().setDemographics(ds.find(ehrDto.getSubject().getId()).toDto());
+		ehrDto.setDemographics(ds.find(ehrDto.getSubject().getId()).toDto());
 		em.close();
 		emf.close();
 		return ehrDto;
 	}
 
 	@Override
-	public EHRDTO editEhr(EHRDTO ehrDto, String sessionId) throws SessionExpiredException, DbException {
+	public EHR editEhr(EHR ehrDto, String sessionId) throws SessionExpiredException, DbException {
 		checkSessionExpire(sessionId);
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
 		EntityManager em = emf.createEntityManager();
@@ -62,7 +62,7 @@ public class EHRServicesImpl extends RpcServicesImpl implements EHRServices {
 		em.getTransaction().begin();
 		EHR ehr = ehrService.find(ehrDto.getId());
 
-		PatientDTO patientDto = ehrDto.getSubject();
+		Patient patientDto = ehrDto.getSubject();
 		PatientService patientService = new PatientService(em);
 		Patient patient = patientService.create(patientDto.getAlias(),
 				patientDto.getCaseNumber(),
@@ -77,7 +77,7 @@ public class EHRServicesImpl extends RpcServicesImpl implements EHRServices {
 				patientDto.getSuffix());
 
 		DemographicsService demographicsService = new DemographicsService(em);
-		DemographicsDTO demographicsDto = patientDto.getDemographics();
+		Demographics demographicsDto = ehrDto.getDemographics();
 		demographicsService.create(demographicsDto.getGender(),
 				demographicsDto.getRace(),
 				demographicsDto.getMaritalStatus(),
@@ -127,17 +127,17 @@ public class EHRServicesImpl extends RpcServicesImpl implements EHRServices {
 	}
 
 	@Override
-	public void addEhr(EHRDTO ehrDto, String sessionId) throws SessionExpiredException, DbException {
+	public void addEhr(EHR ehrDto, String sessionId) throws SessionExpiredException, DbException {
 		checkSessionExpire(sessionId);
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
 		EntityManager em = emf.createEntityManager();
 		PatientService patientService = new PatientService(em);
 
 		em.getTransaction().begin();
-		EHR ehr = new EHR();
+		EHR ehr = new EHRImpl();
 		em.persist(ehr);
 
-		PatientDTO patientDto = ehrDto.getSubject();
+		Patient patientDto = ehrDto.getSubject();
 		Patient patient = patientService.create(patientDto.getAlias(),
 				patientDto.getCaseNumber(),
 				patientDto.getCaseStatus(),
@@ -154,7 +154,7 @@ public class EHRServicesImpl extends RpcServicesImpl implements EHRServices {
 		em.persist(ehr);
 
 		DemographicsService demographicsService = new DemographicsService(em);
-		DemographicsDTO demographicsDto = patientDto.getDemographics();
+		Demographics demographicsDto = ehrDto.getDemographics();
 		demographicsService.create(demographicsDto.getGender(),
 				demographicsDto.getRace(),
 				demographicsDto.getMaritalStatus(),

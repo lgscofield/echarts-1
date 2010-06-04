@@ -20,11 +20,12 @@ import java.util.Date;
 import java.util.List;
 
 @SuppressWarnings("serial")
-public class EHRDTO implements Serializable {
+public class EHRDTO implements Serializable, EHR {
 	private long id;
-	private PatientDTO subject;
+	private Patient subject;
+	private Demographics demographics;
 	private Date timeCreated;
-	private List<AssignmentDTO> assignments;
+	private List<Assignment> assignments;
 
 	public EHRDTO() { }
 
@@ -32,35 +33,58 @@ public class EHRDTO implements Serializable {
 		this.setId(id);
 	}
 
+	@Override
 	public void setId(long id) {
 		this.id = id;
 	}
 
+	@Override
 	public long getId() {
 		return id;
 	}
 
+	@Override
 	public void setTimeCreated(Date timeCreated) {
 		this.timeCreated = timeCreated;
 	}
 
+	@Override
 	public Date getTimeCreated() {
 		return timeCreated;
 	}
 
-	public void setSubject(PatientDTO subject) {
+	@Override
+	public void setSubject(Patient subject) {
 		this.subject = subject;
 	}
 
-	public PatientDTO getSubject() {
+	@Override
+	public Patient getSubject() {
 		return subject;
 	}
 
-	public void setAssignments(List<AssignmentDTO> assignments) {
+	@Override
+	public List<Assignment> getAssignments() {
+		return this.assignments;
+	}
+
+	@Override
+	public void setAssignments(List<Assignment> assignments) {
 		this.assignments = assignments;
 	}
 
-	public List<AssignmentDTO> getAssignments() {
-		return this.assignments;
+	@Override
+	public EHRDTO toDto() {
+		return this;
+	}
+
+	@Override
+	public void setDemographics(Demographics demographics) {
+		this.demographics = demographics;
+	}
+
+	@Override
+	public Demographics getDemographics() {
+		return this.demographics;
 	}
 }

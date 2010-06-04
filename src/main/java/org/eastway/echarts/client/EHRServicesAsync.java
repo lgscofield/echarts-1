@@ -15,14 +15,14 @@
  */
 package org.eastway.echarts.client;
 
-import org.eastway.echarts.shared.EHRDTO;
+import org.eastway.echarts.shared.EHR;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface EHRServicesAsync {
-	public void getEhr(long ehrId, String sessionId, AsyncCallback<EHRDTO> callback);
+	public void getEhr(long ehrId, String sessionId, AsyncCallback<EHR> callback);
 
-	public void editEhr(EHRDTO ehrDto, String sessionId, AsyncCallback<EHRDTO> callback);
+	public void editEhr(EHR ehrDto, String sessionId, AsyncCallback<EHR> callback);
 
-	public void addEhr(EHRDTO ehrDto, String sessionId, AsyncCallback<Void> callback);
+	public void addEhr(EHR ehrDto, String sessionId, AsyncCallback<Void> callback);
 }

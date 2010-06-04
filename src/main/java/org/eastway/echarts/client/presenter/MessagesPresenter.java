@@ -23,7 +23,7 @@ import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.UserImpl;
 import org.eastway.echarts.shared.CodeDTO;
-import org.eastway.echarts.shared.EHRDTO;
+import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.MessageDTO;
 
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -62,11 +62,11 @@ public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
 	private RpcServicesAsync rpcServices;
 	private List<MessageDTO> messages;
 	private ArrayList<String[]> data = new ArrayList<String[]>();
-	private EHRDTO ehr;
+	private EHR ehr;
 	private List<CodeDTO> types;
 
 	public MessagesPresenter(final Display display, HandlerManager eventBus,
-			RpcServicesAsync rpcServices, EHRDTO ehr) {
+			RpcServicesAsync rpcServices, EHR ehr) {
 		super(display, eventBus);
 		this.ehr = ehr;
 		this.rpcServices = rpcServices;
