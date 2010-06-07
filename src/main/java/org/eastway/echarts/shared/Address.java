@@ -1,131 +1,72 @@
-/*
- * Copyright 2010 Ian Hilt
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- * 
- * http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
- */
 package org.eastway.echarts.shared;
 
-public class Address {
-	private String title;
-	private String[] street;
-	private String city;
-	private String state;
-	private String zip;
-	private String county;
-	private String[] phone;
-	private String[] phoneDescription;
-	private long lastEdit;
-	private String lastEditBy;
+import java.util.Date;
 
-	public Address(String title,
-			String[] street,
-			String city,
-			String state,
-			String zip,
-			String county,
-			String[] phone,
-			String[] phoneDescription,
-			long lastEdit,
-			String lastEditBy) {
-		setTitle(title);
-		setStreet(street);
-		setCity(city);
-		setState(state);
-		setZip(zip);
-		setCounty(county);
-		setPhone(phone);
-		setPhoneDescription(phoneDescription);
-		setLastEdit(lastEdit);
-		setLastEditBy(lastEditBy);
-	}
+public interface Address {
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+	public void setId(long id);
 
-	public String getTitle() {
-		return title;
-	}
+	public long getId();
 
-	public void setStreet(String[] street) {
-		this.street = street;
-	}
+	public void setCaseNumber(String caseNumber);
 
-	public String[] getStreet() {
-		return street;
-	}
+	public String getCaseNumber();
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+	public void setDescriptor(String descriptor);
 
-	public String getCity() {
-		return city;
-	}
+	public String getDescriptor();
 
-	public void setState(String state) {
-		this.state = state;
-	}
+	public void setTitle(String title);
 
-	public String getState() {
-		return state;
-	}
+	public String getTitle();
 
-	public void setZip(String zip) {
-		this.zip = zip;
-	}
+	public void setStreet1(String street1);
 
-	public String getZip() {
-		return zip;
-	}
+	public String getStreet1();
 
-	public void setCounty(String county) {
-		this.county = county;
-	}
+	public void setStreet2(String street2);
 
-	public String getCounty() {
-		return county;
-	}
+	public String getStreet2();
 
-	public void setPhone(String[] phone) {
-		this.phone = phone;
-	}
+	public void setCity(String city);
 
-	public String[] getPhone() {
-		return phone;
-	}
+	public String getCity();
 
-	public void setPhoneDescription(String[] phoneDescription) {
-		this.phoneDescription = phoneDescription;
-	}
+	public void setState(String state);
 
-	public String[] getPhoneDescription() {
-		return phoneDescription;
-	}
+	public String getState();
 
-	public void setLastEdit(long lastEdit) {
-		this.lastEdit = lastEdit;
-	}
+	public void setZip(String zip);
 
-	public long getLastEdit() {
-		return lastEdit;
-	}
+	public String getZip();
 
-	public void setLastEditBy(String lastEditBy) {
-		this.lastEditBy = lastEditBy;
-	}
+	public void setCounty(String county);
 
-	public String getLastEditBy() {
-		return lastEditBy;
-	}
+	public String getCounty();
+
+	public void setPhone1(String phone1);
+
+	public String getPhone1();
+
+	public void setPhone1Desc(String phone1desc);
+
+	public String getPhone1Desc();
+
+	public void setPhone2(String phone2);
+
+	public String getPhone2();
+
+	public void setPhone2Desc(String phone2desc);
+
+	public String getPhone2Desc();
+
+	public void setLastEdit(Date lastEdit);
+
+	public Date getLastEdit();
+
+	public void setLastEditBy(String lastEditBy);
+
+	public String getLastEditBy();
+
+	public AddressDTO toDto();
 }
