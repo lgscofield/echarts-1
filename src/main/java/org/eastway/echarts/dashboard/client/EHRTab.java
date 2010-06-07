@@ -17,17 +17,21 @@ package org.eastway.echarts.dashboard.client;
 
 import org.eastway.echarts.client.EHRServices;
 import org.eastway.echarts.client.EHRServicesAsync;
+import org.eastway.echarts.client.ReferralServices;
+import org.eastway.echarts.client.ReferralServicesAsync;
 import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.presenter.DemographicsPresenter;
 import org.eastway.echarts.client.presenter.EditPatientSummaryPresenter;
 import org.eastway.echarts.client.presenter.LinkPresenter;
 import org.eastway.echarts.client.presenter.MessagesPresenter;
 import org.eastway.echarts.client.presenter.PatientSummaryPresenter;
+import org.eastway.echarts.client.presenter.ReferralPresenter;
 import org.eastway.echarts.client.view.DemographicsView;
 import org.eastway.echarts.client.view.EditPatientSummaryView;
 import org.eastway.echarts.client.view.LinkView;
 import org.eastway.echarts.client.view.MessagesView;
 import org.eastway.echarts.client.view.PatientSummaryView;
+import org.eastway.echarts.client.view.ReferralView;
 import org.eastway.echarts.shared.EHR;
 
 import com.google.gwt.core.client.GWT;
@@ -47,12 +51,14 @@ public class EHRTab extends Composite implements SelectionHandler<TreeItem> {
 	private FlowPanel patientPanel = new FlowPanel();
 	private FlowPanel editPatientPanel = new FlowPanel();
 	private FlowPanel demographicsPanel = new FlowPanel();
+	private FlowPanel referralPanel = new FlowPanel();
 	private FlowPanel formsPanel = new FlowPanel();
 	private ScrollPanel displayarea = new  ScrollPanel();
 	private MessagesPresenter mp;
 	private PatientSummaryPresenter pp;
 	private EditPatientSummaryPresenter ep;
 	private DemographicsPresenter dp;
+	private ReferralPresenter rp;
 	private LinkPresenter fp;
 	private Tree menu = new Tree();
 	private EHR ehr;
@@ -77,6 +83,11 @@ public class EHRTab extends Composite implements SelectionHandler<TreeItem> {
 		demographicsMenuItem.setUserObject(demographicsPanel);
 		dp = new DemographicsPresenter(new DemographicsView(), eventBus, GWT.<EHRServicesAsync>create(EHRServices.class), ehr);
 		dp.go(demographicsPanel);
+
+		TreeItem referralMenuItem = menu.addItem("Referral");
+		referralMenuItem.setUserObject(referralPanel);
+		rp = new ReferralPresenter(new ReferralView(), eventBus, GWT.<ReferralServicesAsync>create(ReferralServices.class), ehr);
+		rp.go(referralPanel);
 
 		TreeItem messageMenuItem = menu.addItem("Messages");
 		messageMenuItem.setUserObject(messagesPanel);

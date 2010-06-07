@@ -1,0 +1,76 @@
+package org.eastway.echarts.shared;
+
+import java.util.Date;
+
+public interface Referral {
+
+	public void setId(long id);
+
+	public long getId();
+
+	public void setEhr(EHR ehr);
+
+	public EHR getEhr();
+
+	public void setProgram(String program);
+
+	public String getProgram();
+
+	public void setUCI(String UCI);
+
+	public String getUCI();
+
+	public void setUPId(String UPId);
+
+	public String getUPId();
+
+	public void setReferralSource(String referralSource);
+
+	public String getReferralSource();
+
+	public void setReferralType(String referralType);
+
+	public String getReferralType();
+
+	public void setReferralDate(Date referralDate);
+
+	public Date getReferralDate();
+
+	public void setTakenByStaff(String takenByStaff);
+
+	public String getTakenByStaff();
+
+	public void setAdmissionDate(Date admissionDate);
+
+	public Date getAdmissionDate();
+
+	public void setLevelOfCare(String levelOfCare);
+
+	public String getLevelOfCare();
+
+	public void setPlanType(String planType);
+
+	public String getPlanType();
+
+	public void setLastService(Date lastService);
+
+	public Date getLastService();
+
+	public void setDischargeDate(Date dischargeDate);
+
+	public Date getDischargeDate();
+
+	public void setDisposition(String disposition);
+
+	public String getDisposition();
+
+	public void setLastEdit(Date lastEdit);
+
+	public Date getLastEdit();
+
+	public void setLastEditBy(String lastEditBy);
+
+	public String getLastEditBy();
+
+	public ReferralDTO toDto();
+}

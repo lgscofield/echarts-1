@@ -38,6 +38,10 @@
 		<servlet-name>demographicsServicesImpl</servlet-name>
 		<servlet-class>org.eastway.echarts.server.DemographicsServicesImpl</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>referralServicesImpl</servlet-name>
+		<servlet-class>org.eastway.echarts.server.ReferralServicesImpl</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>rpcServicesImpl</servlet-name>
 		<url-pattern>/echarts/rpcServices</url-pattern>
@@ -53,6 +57,10 @@
 	<servlet-mapping>
 		<servlet-name>demographicsServicesImpl</servlet-name>
 		<url-pattern>/echarts/demographicsServices</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>referralServicesImpl</servlet-name>
+		<url-pattern>/echarts/referralServices</url-pattern>
 	</servlet-mapping>
 	<session-config>
 		<session-timeout>60</session-timeout>
