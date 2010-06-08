@@ -44,6 +44,18 @@ public class DiagnosisPresenter extends Presenter<DiagnosisPresenter.Display> {
 	public void setData() {
 		for (Diagnosis diagnosis : ehr.getDiagnoses()) {
 			display.setAxis1A(diagnosis.getAxis1A());
+			display.setAxis1B(diagnosis.getAxis1B());
+			display.setAxis1C(diagnosis.getAxis1C());
+			display.setAxis1D(diagnosis.getAxis1D());
+			display.setAxis1E(diagnosis.getAxis1E());
+			display.setAxis2A(diagnosis.getAxis2A());
+			display.setAxis2B(diagnosis.getAxis2B());
+			display.setAxis2C(diagnosis.getAxis2C());
+			display.setAxis3(diagnosis.getAxis3());
+			display.setAxis4(diagnosis.getAxis4());
+			display.setCurrentGAF(diagnosis.getCurrentGAF());
+			display.setHighestGAF(diagnosis.getHighestGAF());
+			display.setDate(diagnosis.getDate());
 			display.nextRecord();
 		}
 	}

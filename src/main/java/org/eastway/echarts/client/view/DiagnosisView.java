@@ -37,6 +37,22 @@ public class DiagnosisView extends Composite implements DiagnosisPresenter.Displ
 	@UiField FlexTable diagnoses;
 	private int record = 0;
 
+	enum Column {
+		AXIS1A,
+		AXIS1B,
+		AXIS1C,
+		AXIS1D,
+		AXIS1E,
+		AXIS2A,
+		AXIS2B,
+		AXIS2C,
+		AXIS3,
+		AXIS4,
+		CURRENTGAF,
+		HIGHESTGAF,
+		DATE,
+	}
+
 	public DiagnosisView() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
@@ -155,61 +171,52 @@ public class DiagnosisView extends Composite implements DiagnosisPresenter.Displ
 
 	@Override
 	public void setAxis1A(String axis1a) {
-		this.diagnoses.setText(record, 0, axis1a);
+		this.diagnoses.setText(record, Column.AXIS1A.ordinal(), axis1a);
 	}
 
 	@Override
 	public void setAxis1B(String axis1b) {
-		// TODO Auto-generated method stub
-		
+		this.diagnoses.setText(record, Column.AXIS1B.ordinal(), axis1b);
 	}
 
 	@Override
 	public void setAxis1C(String axis1c) {
-		// TODO Auto-generated method stub
-		
+		this.diagnoses.setText(record, Column.AXIS1C.ordinal(), axis1c);
 	}
 
 	@Override
 	public void setAxis1D(String axis1d) {
-		// TODO Auto-generated method stub
-		
+		this.diagnoses.setText(record, Column.AXIS1D.ordinal(), axis1d);
 	}
 
 	@Override
 	public void setAxis1E(String axis1e) {
-		// TODO Auto-generated method stub
-		
+		this.diagnoses.setText(record, Column.AXIS1E.ordinal(), axis1e);
 	}
 
 	@Override
 	public void setAxis2A(String axis2a) {
-		// TODO Auto-generated method stub
-		
+		this.diagnoses.setText(record, Column.AXIS2A.ordinal(), axis2a);
 	}
 
 	@Override
 	public void setAxis2B(String axis2b) {
-		// TODO Auto-generated method stub
-		
+		this.diagnoses.setText(record, Column.AXIS2B.ordinal(), axis2b);
 	}
 
 	@Override
 	public void setAxis2C(String axis2c) {
-		// TODO Auto-generated method stub
-		
+		this.diagnoses.setText(record, Column.AXIS2C.ordinal(), axis2c);
 	}
 
 	@Override
 	public void setAxis3(String axis3) {
-		// TODO Auto-generated method stub
-		
+		this.diagnoses.setText(record, Column.AXIS3.ordinal(), axis3);
 	}
 
 	@Override
 	public void setAxis4(String axis4) {
-		// TODO Auto-generated method stub
-		
+		this.diagnoses.setText(record, Column.AXIS4.ordinal(), axis4);
 	}
 
 	@Override
@@ -220,20 +227,17 @@ public class DiagnosisView extends Composite implements DiagnosisPresenter.Displ
 
 	@Override
 	public void setCurrentGAF(int currentGAF) {
-		// TODO Auto-generated method stub
-		
+		this.diagnoses.setText(record, Column.CURRENTGAF.ordinal(), new Integer(currentGAF).toString());
 	}
 
 	@Override
 	public void setDate(Date date) {
-		// TODO Auto-generated method stub
-		
+		this.diagnoses.setText(record, Column.DATE.ordinal(), date.toString());
 	}
 
 	@Override
 	public void setHighestGAF(int highestGAF) {
-		// TODO Auto-generated method stub
-		
+		this.diagnoses.setText(record, Column.HIGHESTGAF.ordinal(), new Integer(highestGAF).toString());
 	}
 
 	@Override
