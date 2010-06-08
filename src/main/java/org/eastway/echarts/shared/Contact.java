@@ -15,33 +15,34 @@
  */
 package org.eastway.echarts.shared;
 
-import java.util.Date;
 import java.util.List;
 
-public interface EHR {
+public interface Contact {
+
 	public void setId(long id);
 
 	public long getId();
 
-	public void setTimeCreated(Date timeCreated);
+	public void setFirstName(String firstName);
 
-	public Date getTimeCreated();
+	public String getFirstName();
 
-	public void setSubject(Patient subject);
+	public void setLastName(String lastName);
 
-	public Patient getSubject();
+	public String getLastName();
 
-	public void setAssignments(List<Assignment> assignments);
+	public void setType(String type);
 
-	public List<Assignment> getAssignments();
+	public String getType();
 
-	public void setDemographics(Demographics demographics);
+	public void setRelationship(String relationship);
 
-	public Demographics getDemographics();
+	public String getRelationship();
 
-	public EHRDTO toDto();
+	public void addAddress(Address address);
 
-	public void setContacts(List<Contact> contacts);
+	public List<Address> getAddresses();
 
-	public List<Contact> getContacts();
+	public ContactDTO toDto();
+
 }

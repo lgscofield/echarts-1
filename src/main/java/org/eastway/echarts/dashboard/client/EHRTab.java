@@ -23,6 +23,7 @@ import org.eastway.echarts.client.ReferralServices;
 import org.eastway.echarts.client.ReferralServicesAsync;
 import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.presenter.AddressPresenter;
+import org.eastway.echarts.client.presenter.ContactPresenter;
 import org.eastway.echarts.client.presenter.DemographicsPresenter;
 import org.eastway.echarts.client.presenter.EditPatientSummaryPresenter;
 import org.eastway.echarts.client.presenter.LinkPresenter;
@@ -30,6 +31,7 @@ import org.eastway.echarts.client.presenter.MessagesPresenter;
 import org.eastway.echarts.client.presenter.PatientSummaryPresenter;
 import org.eastway.echarts.client.presenter.ReferralPresenter;
 import org.eastway.echarts.client.view.AddressView;
+import org.eastway.echarts.client.view.ContactView;
 import org.eastway.echarts.client.view.DemographicsView;
 import org.eastway.echarts.client.view.EditPatientSummaryView;
 import org.eastway.echarts.client.view.LinkView;
@@ -57,6 +59,7 @@ public class EHRTab extends Composite implements SelectionHandler<TreeItem> {
 	private FlowPanel demographicsPanel = new FlowPanel();
 	private FlowPanel referralPanel = new FlowPanel();
 	private FlowPanel addressPanel = new FlowPanel();
+	private FlowPanel contactPanel = new FlowPanel();
 	private FlowPanel formsPanel = new FlowPanel();
 	private ScrollPanel displayarea = new  ScrollPanel();
 	private MessagesPresenter mp;
@@ -65,6 +68,7 @@ public class EHRTab extends Composite implements SelectionHandler<TreeItem> {
 	private DemographicsPresenter dp;
 	private ReferralPresenter rp;
 	private AddressPresenter ap;
+	private ContactPresenter cp;
 	private LinkPresenter fp;
 	private Tree menu = new Tree();
 	private EHR ehr;
@@ -99,6 +103,11 @@ public class EHRTab extends Composite implements SelectionHandler<TreeItem> {
 		addressMenuItem.setUserObject(addressPanel);
 		ap = new AddressPresenter(new AddressView(), eventBus, GWT.<AddressServicesAsync>create(AddressServices.class), ehr);
 		ap.go(addressPanel);
+
+		TreeItem contactMenuItem = menu.addItem("Contacts");
+		contactMenuItem.setUserObject(contactPanel);
+		cp = new ContactPresenter(new ContactView(), eventBus, ehr);
+		cp.go(contactPanel);
 
 		TreeItem messageMenuItem = menu.addItem("Messages");
 		messageMenuItem.setUserObject(messagesPanel);

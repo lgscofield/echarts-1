@@ -32,6 +32,7 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
 import org.eastway.echarts.shared.Assignment;
+import org.eastway.echarts.shared.Contact;
 import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.EHRDTO;
@@ -62,6 +63,10 @@ public class EHRImpl implements EHR {
 	@OneToOne(targetEntity = DemographicsImpl.class)
 	@JoinColumn
 	private DemographicsImpl demographics;
+
+	@OneToMany(targetEntity = ContactImpl.class)
+	@JoinColumn
+	private List<ContactImpl> contacts;
 
 	public EHRImpl() { }
 
@@ -115,6 +120,31 @@ public class EHRImpl implements EHR {
 	}
 
 	@Override
+	public Demographics getDemographics() {
+		return demographics;
+	}
+
+	@Override
+	public void setDemographics(Demographics demographics) {
+		this.demographics = (DemographicsImpl) demographics;
+	}
+
+	@Override
+	public void setContacts(List<Contact> contacts) {
+		this.contacts.clear();
+		for (Contact contact : contacts)
+			this.contacts.add((ContactImpl) contact);
+	}
+
+	@Override
+	public List<Contact> getContacts() {
+		List<Contact> contacts = new ArrayList<Contact>();
+		for (ContactImpl contact : this.contacts)
+			contacts.add(contact);
+		return contacts;
+	}
+
+	@Override
 	public EHRDTO toDto() {
 		EHRDTO ehrDto = new EHRDTO();
 		ehrDto.setId(this.getId());
@@ -125,16 +155,11 @@ public class EHRImpl implements EHR {
 			assignments.add(a.toDto());
 		ehrDto.setAssignments(assignments);
 
+		List<Contact> contacts = new ArrayList<Contact>();
+		for (Contact c : this.contacts)
+			contacts.add(c.toDto());
+		ehrDto.setContacts(contacts);
 		return ehrDto;
 	}
 
-	@Override
-	public Demographics getDemographics() {
-		return demographics;
-	}
-
-	@Override
-	public void setDemographics(Demographics demographics) {
-		this.demographics = (DemographicsImpl) demographics;
-	}
 }
