@@ -25,6 +25,7 @@ import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.presenter.AddressPresenter;
 import org.eastway.echarts.client.presenter.ContactPresenter;
 import org.eastway.echarts.client.presenter.DemographicsPresenter;
+import org.eastway.echarts.client.presenter.DiagnosisPresenter;
 import org.eastway.echarts.client.presenter.EditPatientSummaryPresenter;
 import org.eastway.echarts.client.presenter.LinkPresenter;
 import org.eastway.echarts.client.presenter.MessagesPresenter;
@@ -33,6 +34,7 @@ import org.eastway.echarts.client.presenter.ReferralPresenter;
 import org.eastway.echarts.client.view.AddressView;
 import org.eastway.echarts.client.view.ContactView;
 import org.eastway.echarts.client.view.DemographicsView;
+import org.eastway.echarts.client.view.DiagnosisView;
 import org.eastway.echarts.client.view.EditPatientSummaryView;
 import org.eastway.echarts.client.view.LinkView;
 import org.eastway.echarts.client.view.MessagesView;
@@ -60,6 +62,7 @@ public class EHRTab extends Composite implements SelectionHandler<TreeItem> {
 	private FlowPanel referralPanel = new FlowPanel();
 	private FlowPanel addressPanel = new FlowPanel();
 	private FlowPanel contactPanel = new FlowPanel();
+	private FlowPanel diagnosisPanel = new FlowPanel();
 	private FlowPanel formsPanel = new FlowPanel();
 	private ScrollPanel displayarea = new  ScrollPanel();
 	private MessagesPresenter mp;
@@ -69,6 +72,7 @@ public class EHRTab extends Composite implements SelectionHandler<TreeItem> {
 	private ReferralPresenter rp;
 	private AddressPresenter ap;
 	private ContactPresenter cp;
+	private DiagnosisPresenter diagp;
 	private LinkPresenter fp;
 	private Tree menu = new Tree();
 	private EHR ehr;
@@ -108,6 +112,11 @@ public class EHRTab extends Composite implements SelectionHandler<TreeItem> {
 		contactMenuItem.setUserObject(contactPanel);
 		cp = new ContactPresenter(new ContactView(), eventBus, ehr);
 		cp.go(contactPanel);
+
+		TreeItem diagnosisMenuItem = menu.addItem("Diagnoses");
+		diagnosisMenuItem.setUserObject(diagnosisPanel);
+		diagp = new DiagnosisPresenter(new DiagnosisView(), eventBus, ehr);
+		diagp.go(diagnosisPanel);
 
 		TreeItem messageMenuItem = menu.addItem("Messages");
 		messageMenuItem.setUserObject(messagesPanel);
