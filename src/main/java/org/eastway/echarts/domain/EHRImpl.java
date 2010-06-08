@@ -47,19 +47,20 @@ public class EHRImpl implements EHR {
 	@Column(name="ehr_id")
 	private long id;
 
-	@OneToMany
+	@OneToMany(targetEntity = AssignmentImpl.class)
+	@JoinColumn
 	@OrderBy(value="orderDate DESC")
 	private List<AssignmentImpl> assignments;
 
-	@OneToOne
+	@OneToOne(targetEntity = PatientImpl.class)
 	@JoinColumn(name="subject_id")
 	private PatientImpl subject;
 
 	@Column(name="time_created")
 	private Date timeCreated;
 
-	@OneToOne
-	@JoinColumn(name="demographics")
+	@OneToOne(targetEntity = DemographicsImpl.class)
+	@JoinColumn
 	private DemographicsImpl demographics;
 
 	public EHRImpl() { }
