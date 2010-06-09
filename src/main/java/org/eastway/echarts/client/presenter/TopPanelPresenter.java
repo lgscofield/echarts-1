@@ -107,7 +107,7 @@ public class TopPanelPresenter extends Presenter<TopPanelPresenter.Display> {
 
 	private String getProvider(List<Assignment> assignments) {
 		for (Assignment assignment : assignments) {
-			if (assignment.getService() != "S CS")
+			if (!assignment.getService().matches("S CS"))
 				continue;
 			else
 				return assignment.getStaffName();
