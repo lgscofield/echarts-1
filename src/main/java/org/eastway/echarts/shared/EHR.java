@@ -52,4 +52,8 @@ public interface EHR {
 	public void setAppointments(List<Appointment> appointments);
 
 	public List<Appointment> getAppointments();
+
+	public void setMedications(List<Medication> medications);
+
+	public List<Medication> getMedications();
 }

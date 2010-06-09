@@ -29,6 +29,7 @@ import org.eastway.echarts.client.presenter.DemographicsPresenter;
 import org.eastway.echarts.client.presenter.DiagnosisPresenter;
 import org.eastway.echarts.client.presenter.EditPatientSummaryPresenter;
 import org.eastway.echarts.client.presenter.LinkPresenter;
+import org.eastway.echarts.client.presenter.MedicationPresenter;
 import org.eastway.echarts.client.presenter.MessagesPresenter;
 import org.eastway.echarts.client.presenter.PatientSummaryPresenter;
 import org.eastway.echarts.client.presenter.ReferralPresenter;
@@ -39,6 +40,7 @@ import org.eastway.echarts.client.view.DemographicsView;
 import org.eastway.echarts.client.view.DiagnosisView;
 import org.eastway.echarts.client.view.EditPatientSummaryView;
 import org.eastway.echarts.client.view.LinkView;
+import org.eastway.echarts.client.view.MedicationView;
 import org.eastway.echarts.client.view.MessagesView;
 import org.eastway.echarts.client.view.PatientSummaryView;
 import org.eastway.echarts.client.view.ReferralView;
@@ -66,6 +68,7 @@ public class EHRTab extends Composite implements SelectionHandler<TreeItem> {
 	private FlowPanel contactPanel = new FlowPanel();
 	private FlowPanel diagnosisPanel = new FlowPanel();
 	private FlowPanel appointmentPanel = new FlowPanel();
+	private FlowPanel medicationPanel = new FlowPanel();
 	private FlowPanel formsPanel = new FlowPanel();
 	private ScrollPanel displayarea = new  ScrollPanel();
 	private MessagesPresenter mp;
@@ -77,6 +80,7 @@ public class EHRTab extends Composite implements SelectionHandler<TreeItem> {
 	private ContactPresenter cp;
 	private DiagnosisPresenter diagp;
 	private AppointmentPresenter appointp;
+	private MedicationPresenter medp;
 	private LinkPresenter fp;
 	private Tree menu = new Tree();
 	private EHR ehr;
@@ -126,6 +130,11 @@ public class EHRTab extends Composite implements SelectionHandler<TreeItem> {
 		appointmentMenuItem.setUserObject(appointmentPanel);
 		appointp = new AppointmentPresenter(new AppointmentView(), eventBus, ehr);
 		appointp.go(appointmentPanel);
+
+		TreeItem medicationMenuItem = menu.addItem("Medications");
+		medicationMenuItem.setUserObject(medicationPanel);
+		medp = new MedicationPresenter(new MedicationView(), eventBus, ehr);
+		medp.go(medicationPanel);
 
 		TreeItem messageMenuItem = menu.addItem("Messages");
 		messageMenuItem.setUserObject(messagesPanel);

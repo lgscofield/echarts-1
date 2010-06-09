@@ -38,6 +38,7 @@ import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.Diagnosis;
 import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.EHRDTO;
+import org.eastway.echarts.shared.Medication;
 import org.eastway.echarts.shared.Patient;
 import org.eastway.echarts.shared.PatientDTO;
 
@@ -77,6 +78,10 @@ public class EHRImpl implements EHR {
 	@OneToMany(targetEntity = AppointmentImpl.class)
 	@JoinColumn
 	private List<AppointmentImpl> appointments;
+
+	@OneToMany(targetEntity = MedicationImpl.class)
+	@JoinColumn
+	private List<MedicationImpl> medications;
 
 	public EHRImpl() { }
 
@@ -185,11 +190,27 @@ public class EHRImpl implements EHR {
 	}
 
 	@Override
+	public List<Medication> getMedications() {
+		List<Medication> medications = new ArrayList<Medication>();
+		for (MedicationImpl medication : this.medications)
+			medications.add(medication);
+		return medications;
+	}
+
+	@Override
+	public void setMedications(List<Medication> medications) {
+		this.medications.clear();
+		for (Medication medication : medications)
+			this.medications.add((MedicationImpl) medication);
+	}
+
+	@Override
 	public EHRDTO toDto() {
 		EHRDTO ehrDto = new EHRDTO();
 		ehrDto.setId(this.getId());
 		ehrDto.setSubject((PatientDTO) this.getSubject().toDto());
 		ehrDto.setTimeCreated(this.getTimeCreated());
+
 		List<Assignment> assignments = new ArrayList<Assignment>();
 		for (Assignment a : this.assignments)
 			assignments.add(a.toDto());
@@ -209,6 +230,12 @@ public class EHRImpl implements EHR {
 		for (Appointment a : this.appointments)
 			appointments.add(a.toDto());
 		ehrDto.setAppointments(appointments);
+
+		List<Medication> medications = new ArrayList<Medication>();
+		for (Medication m : this.medications)
+			medications.add(m.toDto());
+		ehrDto.setMedications(medications);
+
 		return ehrDto;
 	}
 
