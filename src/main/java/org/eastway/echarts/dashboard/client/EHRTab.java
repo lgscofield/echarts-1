@@ -23,6 +23,7 @@ import org.eastway.echarts.client.ReferralServices;
 import org.eastway.echarts.client.ReferralServicesAsync;
 import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.presenter.AddressPresenter;
+import org.eastway.echarts.client.presenter.AppointmentPresenter;
 import org.eastway.echarts.client.presenter.ContactPresenter;
 import org.eastway.echarts.client.presenter.DemographicsPresenter;
 import org.eastway.echarts.client.presenter.DiagnosisPresenter;
@@ -32,6 +33,7 @@ import org.eastway.echarts.client.presenter.MessagesPresenter;
 import org.eastway.echarts.client.presenter.PatientSummaryPresenter;
 import org.eastway.echarts.client.presenter.ReferralPresenter;
 import org.eastway.echarts.client.view.AddressView;
+import org.eastway.echarts.client.view.AppointmentView;
 import org.eastway.echarts.client.view.ContactView;
 import org.eastway.echarts.client.view.DemographicsView;
 import org.eastway.echarts.client.view.DiagnosisView;
@@ -63,6 +65,7 @@ public class EHRTab extends Composite implements SelectionHandler<TreeItem> {
 	private FlowPanel addressPanel = new FlowPanel();
 	private FlowPanel contactPanel = new FlowPanel();
 	private FlowPanel diagnosisPanel = new FlowPanel();
+	private FlowPanel appointmentPanel = new FlowPanel();
 	private FlowPanel formsPanel = new FlowPanel();
 	private ScrollPanel displayarea = new  ScrollPanel();
 	private MessagesPresenter mp;
@@ -73,6 +76,7 @@ public class EHRTab extends Composite implements SelectionHandler<TreeItem> {
 	private AddressPresenter ap;
 	private ContactPresenter cp;
 	private DiagnosisPresenter diagp;
+	private AppointmentPresenter appointp;
 	private LinkPresenter fp;
 	private Tree menu = new Tree();
 	private EHR ehr;
@@ -117,6 +121,11 @@ public class EHRTab extends Composite implements SelectionHandler<TreeItem> {
 		diagnosisMenuItem.setUserObject(diagnosisPanel);
 		diagp = new DiagnosisPresenter(new DiagnosisView(), eventBus, ehr);
 		diagp.go(diagnosisPanel);
+
+		TreeItem appointmentMenuItem = menu.addItem("Appointments");
+		appointmentMenuItem.setUserObject(appointmentPanel);
+		appointp = new AppointmentPresenter(new AppointmentView(), eventBus, ehr);
+		appointp.go(appointmentPanel);
 
 		TreeItem messageMenuItem = menu.addItem("Messages");
 		messageMenuItem.setUserObject(messagesPanel);

@@ -48,4 +48,8 @@ public interface EHR {
 	public List<Diagnosis> getDiagnoses();
 
 	public void setDiagnoses(List<Diagnosis> diagnoses);
+
+	public void setAppointments(List<Appointment> appointments);
+
+	public List<Appointment> getAppointments();
 }

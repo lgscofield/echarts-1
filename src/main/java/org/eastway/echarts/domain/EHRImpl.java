@@ -31,6 +31,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
+import org.eastway.echarts.shared.Appointment;
 import org.eastway.echarts.shared.Assignment;
 import org.eastway.echarts.shared.Contact;
 import org.eastway.echarts.shared.Demographics;
@@ -72,6 +73,10 @@ public class EHRImpl implements EHR {
 	@OneToMany(targetEntity = DiagnosisImpl.class)
 	@JoinColumn
 	private List<DiagnosisImpl> diagnoses;
+
+	@OneToMany(targetEntity = AppointmentImpl.class)
+	@JoinColumn
+	private List<AppointmentImpl> appointments;
 
 	public EHRImpl() { }
 
@@ -165,6 +170,21 @@ public class EHRImpl implements EHR {
 	}
 
 	@Override
+	public List<Appointment> getAppointments() {
+		List<Appointment> appointments = new ArrayList<Appointment>();
+		for (AppointmentImpl appointment : this.appointments)
+			appointments.add(appointment);
+		return appointments;
+	}
+
+	@Override
+	public void setAppointments(List<Appointment> appointments) {
+		this.appointments.clear();
+		for (Appointment appointment : appointments)
+			this.appointments.add((AppointmentImpl) appointment);
+	}
+
+	@Override
 	public EHRDTO toDto() {
 		EHRDTO ehrDto = new EHRDTO();
 		ehrDto.setId(this.getId());
@@ -185,6 +205,10 @@ public class EHRImpl implements EHR {
 			diagnoses.add(d.toDto());
 		ehrDto.setDiagnoses(diagnoses);
 
+		List<Appointment> appointments = new ArrayList<Appointment>();
+		for (Appointment a : this.appointments)
+			appointments.add(a.toDto());
+		ehrDto.setAppointments(appointments);
 		return ehrDto;
 	}
 
