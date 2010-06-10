@@ -29,7 +29,7 @@ public class PatientDTO implements Serializable, Patient {
 	private String middleInitial;
 	private String suffix;
 	private String alias;
-	private String caseStatus;
+	private Code caseStatus;
 	private String ssn;
 	private String lastEditBy;
 	private Date lastEdit;
@@ -38,7 +38,7 @@ public class PatientDTO implements Serializable, Patient {
 
 	public PatientDTO(String alias,
 			String caseNumber,
-			String caseStatus,
+			Code caseStatus,
 			String firstName,
 			Date lastEdit,
 			String lastEditBy,
@@ -129,12 +129,12 @@ public class PatientDTO implements Serializable, Patient {
 	}
 
 	@Override
-	public void setCaseStatus(String caseStatus) {
+	public void setCaseStatus(Code caseStatus) {
 		this.caseStatus = caseStatus;
 	}
 
 	@Override
-	public String getCaseStatus() {
+	public Code getCaseStatus() {
 		return caseStatus;
 	}
 

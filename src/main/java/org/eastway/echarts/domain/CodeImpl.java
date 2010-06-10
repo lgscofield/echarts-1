@@ -21,11 +21,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.eastway.echarts.shared.Code;
 import org.eastway.echarts.shared.CodeDTO;
 
 @Entity
 @Table(name="Codes")
-public class Code {
+public class CodeImpl implements Code {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long codeId;
@@ -33,7 +34,7 @@ public class Code {
 	private String value;
 	private String descriptor;
 
-	public Code() { }
+	public CodeImpl() { }
 
 	public void setCodeId(long codeId) {
 		this.codeId = codeId;

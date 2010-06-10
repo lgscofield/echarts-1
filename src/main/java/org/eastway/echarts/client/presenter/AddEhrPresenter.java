@@ -287,7 +287,7 @@ public class AddEhrPresenter extends Presenter<AddEhrPresenter.Display> {
 		patient.setSuffix(display.getSuffix().getText());
 		patient.setAlias(display.getAlias().getText());
 		patient.setSsn(display.getSsn().getText());
-		patient.setCaseStatus(display.getCaseStatus().getText());
+		//patient.setCaseStatus(display.getCaseStatus().getText());
 		patient.setLastEdit(new Date());
 		patient.setLastEditBy(UserImpl.getUserName());
 

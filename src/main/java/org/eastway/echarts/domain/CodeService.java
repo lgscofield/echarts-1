@@ -21,6 +21,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import org.eastway.echarts.shared.Code;
+
 public class CodeService {
 	@PersistenceContext(unitName="CodesService")
 	protected EntityManager em;
@@ -33,14 +35,14 @@ public class CodeService {
 		return em;
 	}
 
-	public List<Code> findColumnName(String columnName) {
-		TypedQuery<Code> query = getEntityManager().createQuery(
-				"SELECT c FROM Code c WHERE c.columnName = '" + columnName + "'",
-				Code.class);
+	public List<CodeImpl> findColumnName(String columnName) {
+		TypedQuery<CodeImpl> query = getEntityManager().createQuery(
+				"SELECT c FROM CodeImpl c WHERE c.columnName = '" + columnName + "'",
+				CodeImpl.class);
 		return query.getResultList();
 	}
 
 	public Code find(long id) {
-		return getEntityManager().find(Code.class, id);
+		return getEntityManager().find(CodeImpl.class, id);
 	}
 }

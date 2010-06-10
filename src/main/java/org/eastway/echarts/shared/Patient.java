@@ -17,7 +17,6 @@ package org.eastway.echarts.shared;
 
 import java.util.Date;
 
-
 public interface Patient {
 
 	public void setEhr(EHR ehr);
@@ -50,9 +49,9 @@ public interface Patient {
 
 	public String getAlias();
 
-	public void setCaseStatus(String caseStatus);
+	public void setCaseStatus(Code caseStatus);
 
-	public String getCaseStatus();
+	public Code getCaseStatus();
 
 	public void setSsn(String ssn);
 

@@ -30,7 +30,7 @@ import javax.persistence.TypedQuery;
 import org.eastway.echarts.client.RpcServices;
 import org.eastway.echarts.domain.Alert;
 import org.eastway.echarts.domain.AlertService;
-import org.eastway.echarts.domain.Code;
+import org.eastway.echarts.domain.CodeImpl;
 import org.eastway.echarts.domain.CodeService;
 import org.eastway.echarts.domain.Link;
 import org.eastway.echarts.domain.Message;
@@ -38,6 +38,7 @@ import org.eastway.echarts.domain.MessageService;
 import org.eastway.echarts.domain.SessionIdLog;
 import org.eastway.echarts.domain.User;
 import org.eastway.echarts.domain.UserService;
+import org.eastway.echarts.shared.Code;
 import org.eastway.echarts.shared.CodeDTO;
 import org.eastway.echarts.shared.DbException;
 import org.eastway.echarts.shared.MessageDTO;
@@ -112,7 +113,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
 		EntityManager em = emf.createEntityManager();
 		CodeService cs = new CodeService(em);
-		List<Code> mtList = cs.findColumnName("MessageType");
+		List<CodeImpl> mtList = cs.findColumnName("MessageType");
 		List<CodeDTO> mtsl = new ArrayList<CodeDTO>();
 		for (Code mt : mtList)
 			mtsl.add(mt.toDto());

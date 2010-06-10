@@ -22,6 +22,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import org.eastway.echarts.shared.Code;
 import org.eastway.echarts.shared.Patient;
 
 public class PatientService {
@@ -38,7 +39,7 @@ public class PatientService {
 
 	public Patient create(String alias,
 			String caseNumber,
-			String caseStatus,
+			Code caseStatus,
 			long ehrId,
 			String firstName,
 			Date lastEdit,

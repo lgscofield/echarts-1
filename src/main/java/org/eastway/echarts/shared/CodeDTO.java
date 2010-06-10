@@ -18,7 +18,7 @@ package org.eastway.echarts.shared;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
-public class CodeDTO implements Serializable {
+public class CodeDTO implements Serializable, Code {
 	private long codeId;
 	private String columnName;
 	private String value;
@@ -56,5 +56,10 @@ public class CodeDTO implements Serializable {
 
 	public String getDescriptor() {
 		return descriptor;
+	}
+
+	@Override
+	public CodeDTO toDto() {
+		return this;
 	}
 }

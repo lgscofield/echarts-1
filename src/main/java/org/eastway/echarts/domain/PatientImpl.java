@@ -22,11 +22,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotNull;
 
+import org.eastway.echarts.shared.Code;
 import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.Patient;
 import org.eastway.echarts.shared.PatientDTO;
@@ -51,7 +53,8 @@ public class PatientImpl implements Patient {
 	private String middleInitial;
 	private String suffix;
 	private String alias;
-	private String caseStatus;
+	@ManyToOne
+	private CodeImpl caseStatus;
 	private String ssn;
 	private String lastEditBy;
 	@NotNull
@@ -139,12 +142,12 @@ public class PatientImpl implements Patient {
 	}
 
 	@Override
-	public void setCaseStatus(String caseStatus) {
-		this.caseStatus = caseStatus;
+	public void setCaseStatus(Code caseStatus) {
+		this.caseStatus = (CodeImpl) caseStatus;
 	}
 
 	@Override
-	public String getCaseStatus() {
+	public Code getCaseStatus() {
 		return caseStatus;
 	}
 
@@ -203,7 +206,7 @@ public class PatientImpl implements Patient {
 		PatientDTO patientDto = new PatientDTO();
 		patientDto.setAlias(this.getAlias());
 		patientDto.setCaseNumber(this.getCaseNumber());
-		patientDto.setCaseStatus(this.getCaseStatus());
+		patientDto.setCaseStatus(this.getCaseStatus().toDto());
 		patientDto.setFirstName(this.getFirstName());
 		patientDto.setLastEdit(this.getLastEdit());
 		patientDto.setLastEditBy(this.getLastEditBy());

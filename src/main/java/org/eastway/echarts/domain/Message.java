@@ -26,6 +26,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.TableGenerator;
 
+import org.eastway.echarts.shared.Code;
 import org.eastway.echarts.shared.MessageDTO;
 
 @Entity
@@ -39,7 +40,7 @@ public class Message {
 	private long ehrId;
 	@ManyToOne
 	@JoinColumn(name = "MessageType_Id")
-	private Code messageType;
+	private CodeImpl messageType;
 	private Date creationTimestamp;
 	private String message;
 	@ManyToOne
@@ -71,7 +72,7 @@ public class Message {
 	}
 
 	public void setMessageType(Code messageType) {
-		this.messageType = messageType;
+		this.messageType = (CodeImpl) messageType;
 	}
 
 	public Code getMessageType() {

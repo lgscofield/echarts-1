@@ -99,7 +99,7 @@ public class TopPanelPresenter extends Presenter<TopPanelPresenter.Display> {
 		Long age = (new Date().getTime() - demographics.getDob().getTime()) / (3600*24*365) / 1000;
 
 		data.add(new String[] {"Age",  age.toString() });
-		data.add(new String[] {"Case Status",patient.getCaseStatus()});
+		data.add(new String[] {"Case Status",patient.getCaseStatus().getDescriptor() });
 		data.add(new String[] {"Provider", getProvider(ehr.getAssignments()) });
 		data.add(new String[] {"SSN",patient.getSsn()});
 		display.setCurrentEhrData(data);
