@@ -83,9 +83,9 @@ public class AppointmentView extends Composite implements AppointmentPresenter.D
 	}
 
 	@Override
-	public Date getEndTime() {
+	public float getEndTime() {
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
 
 	@Override
@@ -119,9 +119,9 @@ public class AppointmentView extends Composite implements AppointmentPresenter.D
 	}
 
 	@Override
-	public Date getStartTime() {
+	public float getStartTime() {
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
 
 	@Override
@@ -140,8 +140,8 @@ public class AppointmentView extends Composite implements AppointmentPresenter.D
 	}
 
 	@Override
-	public void setEndTime(Date endTime) {
-		this.appointments.setText(record, Column.END_TIME.ordinal(), endTime.toString());
+	public void setEndTime(float endTime) {
+		this.appointments.setText(record, Column.END_TIME.ordinal(), new Float(endTime).toString());
 	}
 
 	@Override
@@ -171,8 +171,8 @@ public class AppointmentView extends Composite implements AppointmentPresenter.D
 	}
 
 	@Override
-	public void setStartTime(Date startTime) {
-		this.appointments.setText(record, Column.START_TIME.ordinal(), startTime.toString());
+	public void setStartTime(float startTime) {
+		this.appointments.setText(record, Column.START_TIME.ordinal(), new Float(startTime).toString());
 	}
 
 	@Override

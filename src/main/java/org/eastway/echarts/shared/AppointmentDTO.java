@@ -24,13 +24,13 @@ public class AppointmentDTO implements Appointment, Serializable {
 	private String activity;
 	private Date appointmentDate;
 	private String caseNumber;
-	private Date endTime;
+	private float endTime;
 	private long id;
 	private String location;
 	private String notes;
 	private String priority;
 	private String staff;
-	private Date startTime;
+	private float startTime;
 
 	@Override
 	public String getActivity() {
@@ -48,7 +48,7 @@ public class AppointmentDTO implements Appointment, Serializable {
 	}
 
 	@Override
-	public Date getEndTime() {
+	public float getEndTime() {
 		return endTime;
 	}
 
@@ -78,7 +78,7 @@ public class AppointmentDTO implements Appointment, Serializable {
 	}
 
 	@Override
-	public Date getStartTime() {
+	public float getStartTime() {
 		return startTime;
 	}
 
@@ -98,7 +98,7 @@ public class AppointmentDTO implements Appointment, Serializable {
 	}
 
 	@Override
-	public void setEndTime(Date endTime) {
+	public void setEndTime(float endTime) {
 		this.endTime = endTime;
 	}
 
@@ -128,7 +128,7 @@ public class AppointmentDTO implements Appointment, Serializable {
 	}
 
 	@Override
-	public void setStartTime(Date startTime) {
+	public void setStartTime(float startTime) {
 		this.startTime = startTime;
 	}
 

@@ -31,14 +31,14 @@ public class AppointmentImpl implements Appointment {
 	private String activity;
 	private Date appointmentDate;
 	private String caseNumber;
-	private Date endTime;
+	private float endTime;
 	@Id
 	private long id;
 	private String location;
 	private String notes;
 	private String priority;
 	private String staff;
-	private Date startTime;
+	private float startTime;
 
 	@Override
 	public String getActivity() {
@@ -56,7 +56,7 @@ public class AppointmentImpl implements Appointment {
 	}
 
 	@Override
-	public Date getEndTime() {
+	public float getEndTime() {
 		return endTime;
 	}
 
@@ -86,7 +86,7 @@ public class AppointmentImpl implements Appointment {
 	}
 
 	@Override
-	public Date getStartTime() {
+	public float getStartTime() {
 		return startTime;
 	}
 
@@ -106,7 +106,7 @@ public class AppointmentImpl implements Appointment {
 	}
 
 	@Override
-	public void setEndTime(Date endTime) {
+	public void setEndTime(float endTime) {
 		this.endTime = endTime;
 	}
 
@@ -136,7 +136,7 @@ public class AppointmentImpl implements Appointment {
 	}
 
 	@Override
-	public void setStartTime(Date startTime) {
+	public void setStartTime(float startTime) {
 		this.startTime = startTime;
 	}
 

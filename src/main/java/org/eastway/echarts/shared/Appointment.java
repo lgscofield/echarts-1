@@ -31,13 +31,13 @@ public interface Appointment {
 
 	public String getCaseNumber();
 
-	public void setStartTime(Date startTime);
+	public void setStartTime(float startTime);
 
-	public Date getStartTime();
+	public float getStartTime();
 
-	public void setEndTime(Date endTime);
+	public void setEndTime(float endTime);
 
-	public Date getEndTime();
+	public float getEndTime();
 
 	public void setActivity(String activity);
 
