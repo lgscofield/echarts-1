@@ -128,4 +128,10 @@ public class ContactView extends Composite implements ContactPresenter.Display {
 	public void nextRecord() {
 		record++;
 	}
+
+	@Override
+	public void setAddresses(List<Address> addresses) {
+		// TODO Auto-generated method stub
+		
+	}
 }

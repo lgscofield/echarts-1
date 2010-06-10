@@ -41,6 +41,8 @@ public interface Contact {
 
 	public void addAddress(Address address);
 
+	public void setAddresses(List<Address> addresses);
+
 	public List<Address> getAddresses();
 
 	public ContactDTO toDto();

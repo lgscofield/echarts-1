@@ -84,6 +84,11 @@ public class ContactDTO implements Serializable, Contact {
 	}
 
 	@Override
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
+	}
+
+	@Override
 	public void setRelationship(String relationship) {
 		this.relationship = relationship;
 	}
@@ -92,4 +97,5 @@ public class ContactDTO implements Serializable, Contact {
 	public ContactDTO toDto() {
 		return this;
 	}
+
 }

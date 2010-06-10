@@ -101,6 +101,13 @@ public class ContactImpl implements Contact {
 	}
 
 	@Override
+	public void setAddresses(List<Address> addresses) {
+		this.addresses.clear();
+		for (Address address : addresses)
+			this.addresses.add((AddressImpl) address);
+	}
+
+	@Override
 	public void setRelationship(String relationship) {
 		this.relationship = relationship;
 	}
@@ -113,8 +120,12 @@ public class ContactImpl implements Contact {
 		dto.setLastName(lastName);
 		dto.setRelationship(relationship);
 		dto.setType(type);
-		for (Address a : addresses)
-			dto.addAddress(a.toDto());
+
+		List<Address> addresses = new ArrayList<Address>();
+		for (Address address : this.addresses)
+			addresses.add(address.toDto());
+		dto.setAddresses(addresses);
+
 		return dto;
 	}
 
