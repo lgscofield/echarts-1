@@ -14,9 +14,9 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style>
-		
+
 	</ui:style>
 	<g:HTMLPanel>
-		<g:FlexTable ui:field='appointments'/>
+		<g:FlexTable ui:field='appointments' />
 	</g:HTMLPanel>
 </ui:UiBinder> 

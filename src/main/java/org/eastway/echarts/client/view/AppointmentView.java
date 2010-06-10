@@ -42,16 +42,28 @@ public class AppointmentView extends Composite implements AppointmentPresenter.D
 		ACTIVITY,
 		APPOINTMENT_DATE,
 		CASE_NUMBER,
+		START_TIME,
 		END_TIME,
 		LOCATION,
 		NOTES,
 		PRIORITY,
 		STAFF,
-		START_TIME,
 	}
 
 	public AppointmentView() {
 		initWidget(uiBinder.createAndBindUi(this));
+		appointments.setHTML(record, Column.ACTIVITY.ordinal(), "<b>ACTIVITY</b>");
+		appointments.setHTML(record, Column.APPOINTMENT_DATE.ordinal(), "<b>APPOINTMENT DATE</b>");
+		appointments.setHTML(record, Column.CASE_NUMBER.ordinal(), "<b>CASE NUMBER</b>");
+		appointments.setHTML(record, Column.END_TIME.ordinal(), "<b>END TIME</b>");
+		appointments.setHTML(record, Column.LOCATION.ordinal(), "<b>LOCATION</b>");
+		appointments.setHTML(record, Column.NOTES.ordinal(), "<b>NOTES</b>");
+		appointments.setHTML(record, Column.PRIORITY.ordinal(), "<b>PRIORITY</b>");
+		appointments.setHTML(record, Column.STAFF.ordinal(), "<b>STAFF</b>");
+		appointments.setHTML(record, Column.START_TIME.ordinal(), "<b>START TIME</b>");
+		appointments.setBorderWidth(1);
+		nextRecord();
+		
 	}
 
 	@Override
