@@ -38,6 +38,24 @@ public class ContactView extends Composite implements ContactPresenter.Display {
 	@UiField FlexTable contacts;
 	private int record = 0;
 
+	enum Column {
+		ADDRESS_CASE_NUMBER,
+		ADDRESS_CITY,
+		ADDRESS_COUNTY,
+		ADDRESS_DESCRIPTOR,
+		ADDRESS_LAST_EDIT,
+		ADDRESS_LAST_EDIT_BY,
+		ADDRESS_PHONE1,
+		ADDRESS_PHONE1_DESC,
+		ADDRESS_PHONE2,
+		ADDRESS_PHONE2_DESC,
+		ADDRESS_STATE,
+		ADDRESS_STREET1,
+		ADDRESS_STREET2,
+		ADDRESS_TITLE,
+		ADDRESS_ZIP,
+	}
+
 	public ContactView() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
@@ -129,9 +147,26 @@ public class ContactView extends Composite implements ContactPresenter.Display {
 		record++;
 	}
 
+	// This should be done in the presenter...
 	@Override
 	public void setAddresses(List<Address> addresses) {
-		// TODO Auto-generated method stub
-		
+		for (Address address : addresses) {
+			this.contacts.setText(record, Column.ADDRESS_CASE_NUMBER.ordinal(), address.getCaseNumber());
+			this.contacts.setText(record, Column.ADDRESS_CITY.ordinal(), address.getCity());
+			this.contacts.setText(record, Column.ADDRESS_COUNTY.ordinal(), address.getCounty());
+			this.contacts.setText(record, Column.ADDRESS_DESCRIPTOR.ordinal(), address.getDescriptor());
+			this.contacts.setText(record, Column.ADDRESS_LAST_EDIT.ordinal(), address.getLastEdit().toString());
+			this.contacts.setText(record, Column.ADDRESS_LAST_EDIT_BY.ordinal(), address.getLastEditBy());
+			this.contacts.setText(record, Column.ADDRESS_PHONE1.ordinal(),address.getPhone1());
+			this.contacts.setText(record, Column.ADDRESS_PHONE1_DESC.ordinal(), address.getPhone1Desc());
+			this.contacts.setText(record, Column.ADDRESS_PHONE2.ordinal(), address.getPhone2());
+			this.contacts.setText(record, Column.ADDRESS_PHONE2_DESC.ordinal(), address.getPhone2Desc());
+			this.contacts.setText(record, Column.ADDRESS_STATE.ordinal(), address.getState());
+			this.contacts.setText(record, Column.ADDRESS_STREET1.ordinal(), address.getStreet1());
+			this.contacts.setText(record, Column.ADDRESS_STREET2.ordinal(), address.getStreet2());
+			this.contacts.setText(record, Column.ADDRESS_TITLE.ordinal(), address.getTitle());
+			this.contacts.setText(record, Column.ADDRESS_ZIP.ordinal(), address.getZip());
+			nextRecord();
+		}
 	}
 }

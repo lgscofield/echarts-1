@@ -45,6 +45,9 @@ public class ContactPresenter extends Presenter<ContactPresenter.Display> {
 	public void setData() {
 		for (Contact contact : ehr.getContacts()) {
 			display.setFirstName(contact.getFirstName());
+			display.setRelationship(contact.getRelationship());
+			display.setType(contact.getType());
+			display.setAddresses(contact.getAddresses());
 			display.nextRecord();
 		}
 	}
