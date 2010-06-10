@@ -36,7 +36,7 @@ public class AppointmentImpl implements Appointment {
 	private long id;
 	private String location;
 	private String notes;
-	private String priority;
+	private float priority;
 	private String staff;
 	private float startTime;
 
@@ -76,7 +76,7 @@ public class AppointmentImpl implements Appointment {
 	}
 
 	@Override
-	public String getPriority() {
+	public float getPriority() {
 		return priority;
 	}
 
@@ -126,7 +126,7 @@ public class AppointmentImpl implements Appointment {
 	}
 
 	@Override
-	public void setPriority(String priority) {
+	public void setPriority(float priority) {
 		this.priority = priority;
 	}
 

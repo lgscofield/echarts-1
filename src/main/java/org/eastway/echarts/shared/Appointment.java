@@ -43,9 +43,9 @@ public interface Appointment {
 
 	public String getActivity();
 
-	public void setPriority(String priority);
+	public void setPriority(float priority);
 
-	public String getPriority();
+	public float getPriority();
 
 	public void setStaff(String staff);
 

@@ -107,9 +107,8 @@ public class AppointmentView extends Composite implements AppointmentPresenter.D
 	}
 
 	@Override
-	public String getPriority() {
-		// TODO Auto-generated method stub
-		return null;
+	public float getPriority() {
+		return 0;
 	}
 
 	@Override
@@ -161,8 +160,8 @@ public class AppointmentView extends Composite implements AppointmentPresenter.D
 	}
 
 	@Override
-	public void setPriority(String priority) {
-		this.appointments.setText(record, Column.PRIORITY.ordinal(), priority);
+	public void setPriority(float priority) {
+		this.appointments.setText(record, Column.PRIORITY.ordinal(), new Float(priority).toString());
 	}
 
 	@Override
