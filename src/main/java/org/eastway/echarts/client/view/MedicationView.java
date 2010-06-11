@@ -41,6 +41,7 @@ public class MedicationView extends Composite implements MedicationPresenter.Dis
 
 	public MedicationView() {
 		initWidget(uiBinder.createAndBindUi(this));
+		medications.setBorderWidth(1);
 	}
 
 	@Override
