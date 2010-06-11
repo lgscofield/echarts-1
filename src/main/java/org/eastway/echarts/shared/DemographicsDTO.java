@@ -22,22 +22,19 @@ import java.util.Date;
 public class DemographicsDTO implements Serializable, Demographics {
 	private long id;
 	private EHR ehr;
-	private String gender;
-	private String race;
-	private String maritalStatus;
-	private String livingArrangement;
-	private String employment;
+	private Code gender;
+	private Code race;
+	private Code maritalStatus;
+	private Code livingArrangement;
+	private Code employment;
 	private String[] incomeSources;
-	private String educationLevel;
-	private String educationType;
+	private Code educationLevel;
+	private Code educationType;
 	private String[] allergies;
 	private String religion;
-
-	// TODO insuranceType, preferredLanguage, and ethnicity are not present
-	// in the datebase
 	private String insuranceType;
 	private String preferredLanguage;
-	private String ethnicity;
+	private Code ethnicity;
 
 	private boolean isVeteran;
 	private boolean isSmd;
@@ -68,18 +65,18 @@ public class DemographicsDTO implements Serializable, Demographics {
 
 	public DemographicsDTO() { }
 
-	public DemographicsDTO(String gender,
-			String race,
-			String maritalStatus,
-			String livingArrangement,
-			String employment,
+	public DemographicsDTO(Code gender,
+			Code race,
+			Code maritalStatus,
+			Code livingArrangement,
+			Code employment,
 			String[] incomeSources,
-			String educationLevel,
-			String educationType,
+			Code educationLevel,
+			Code educationType,
 			String[] allergies,
 			String insuranceType,
 			String preferredLanguage,
-			String ethnicity,
+			Code ethnicity,
 			String religion,
 			boolean isVeteran,
 			boolean isSmd,
@@ -147,52 +144,52 @@ public class DemographicsDTO implements Serializable, Demographics {
 	}
 
 	@Override
-	public void setGender(String gender) {
+	public void setGender(Code gender) {
 		this.gender = gender;
 	}
 
 	@Override
-	public String getGender() {
+	public Code getGender() {
 		return gender;
 	}
 
 	@Override
-	public void setRace(String race) {
+	public void setRace(Code race) {
 		this.race = race;
 	}
 
 	@Override
-	public String getRace() {
+	public Code getRace() {
 		return race;
 	}
 
 	@Override
-	public void setMaritalStatus(String maritalStatus) {
+	public void setMaritalStatus(Code maritalStatus) {
 		this.maritalStatus = maritalStatus;
 	}
 
 	@Override
-	public String getMaritalStatus() {
+	public Code getMaritalStatus() {
 		return maritalStatus;
 	}
 
 	@Override
-	public void setLivingArrangement(String livingArrangement) {
+	public void setLivingArrangement(Code livingArrangement) {
 		this.livingArrangement = livingArrangement;
 	}
 
 	@Override
-	public String getLivingArrangement() {
+	public Code getLivingArrangement() {
 		return livingArrangement;
 	}
 
 	@Override
-	public void setEmployment(String employment) {
+	public void setEmployment(Code employment) {
 		this.employment = employment;
 	}
 
 	@Override
-	public String getEmployment() {
+	public Code getEmployment() {
 		return employment;
 	}
 
@@ -207,22 +204,22 @@ public class DemographicsDTO implements Serializable, Demographics {
 	}
 
 	@Override
-	public void setEducationLevel(String educationLevel) {
+	public void setEducationLevel(Code educationLevel) {
 		this.educationLevel = educationLevel;
 	}
 
 	@Override
-	public String getEducationLevel() {
+	public Code getEducationLevel() {
 		return educationLevel;
 	}
 
 	@Override
-	public void setEducationType(String educationType) {
+	public void setEducationType(Code educationType) {
 		this.educationType = educationType;
 	}
 
 	@Override
-	public String getEducationType() {
+	public Code getEducationType() {
 		return educationType;
 	}
 
@@ -257,12 +254,12 @@ public class DemographicsDTO implements Serializable, Demographics {
 	}
 
 	@Override
-	public void setEthnicity(String ethnicity) {
+	public void setEthnicity(Code ethnicity) {
 		this.ethnicity = ethnicity;
 	}
 
 	@Override
-	public String getEthnicity() {
+	public Code getEthnicity() {
 		return ethnicity;
 	}
 

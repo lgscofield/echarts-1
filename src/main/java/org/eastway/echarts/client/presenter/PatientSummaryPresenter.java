@@ -60,11 +60,11 @@ public class PatientSummaryPresenter extends Presenter<PatientSummaryPresenter.D
 		Demographics demographics = ehr.getDemographics();
 		data.add(new String[] { "Case Number : ", patient.getCaseNumber() });
 		data.add(new String[] { "Name : ", patient.getName() });
-		data.add(new String[] { "Gender : ", demographics.getGender() });
+		data.add(new String[] { "Gender : ", demographics.getGender().getDescriptor() });
 		data.add(new String[] { "DOB : ", demographics.getDob().toString() });
-		data.add(new String[] { "Ethnicity : ", demographics.getEthnicity() });
+		data.add(new String[] { "Ethnicity : ", demographics.getEthnicity().getDescriptor() });
 		data.add(new String[] { "Preferred Language : ", demographics.getPreferredLanguage() });
-		data.add(new String[] { "Race : ", demographics.getRace() });
+		data.add(new String[] { "Race : ", demographics.getRace().getDescriptor() });
 		data.add(new String[] { "Insurance Type : ", demographics.getInsuranceType() });
 		data.add(new String[] { "SSN : ", patient.getSsn() });
 		display.setData(data);

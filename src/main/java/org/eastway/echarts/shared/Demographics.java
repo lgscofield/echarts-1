@@ -32,37 +32,37 @@ public interface Demographics {
 
 	public long getPatientId();
 
-	public void setGender(String gender);
+	public void setGender(Code gender);
 
-	public String getGender();
+	public Code getGender();
 
-	public void setRace(String race);
+	public void setRace(Code race);
 
-	public String getRace();
+	public Code getRace();
 
-	public void setMaritalStatus(String maritalStatus);
+	public void setMaritalStatus(Code maritalStatus);
 
-	public String getMaritalStatus();
+	public Code getMaritalStatus();
 
-	public void setLivingArrangement(String livingArrangement);
+	public void setLivingArrangement(Code livingArrangement);
 
-	public String getLivingArrangement();
+	public Code getLivingArrangement();
 
-	public void setEmployment(String employment);
+	public void setEmployment(Code employment);
 
-	public String getEmployment();
+	public Code getEmployment();
 
 	public void setIncomeSources(String[] incomeSources);
 
 	public String[] getIncomeSources();
 
-	public void setEducationLevel(String educationLevel);
+	public void setEducationLevel(Code educationLevel);
 
-	public String getEducationLevel();
+	public Code getEducationLevel();
 
-	public void setEducationType(String educationType);
+	public void setEducationType(Code educationType);
 
-	public String getEducationType();
+	public Code getEducationType();
 
 	public void setAllergies(String[] allergies);
 
@@ -76,9 +76,9 @@ public interface Demographics {
 
 	public String getPreferredLanguage();
 
-	public void setEthnicity(String ethnicity);
+	public void setEthnicity(Code ethnicity);
 
-	public String getEthnicity();
+	public Code getEthnicity();
 
 	public void setVeteran(boolean veteran);
 

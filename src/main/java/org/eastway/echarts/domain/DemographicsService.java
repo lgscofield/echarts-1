@@ -22,6 +22,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import org.eastway.echarts.shared.Code;
 import org.eastway.echarts.shared.Demographics;
 
 public class DemographicsService {
@@ -36,18 +37,18 @@ public class DemographicsService {
 		return em;
 	}
 
-	public Demographics create(String gender,
-			String race,
-			String maritalStatus,
-			String livingArrangement,
-			String employment,
+	public Demographics create(Code gender,
+			Code race,
+			Code maritalStatus,
+			Code livingArrangement,
+			Code employment,
 			String[] incomeSources,
-			String educationLevel,
-			String educationType,
+			Code educationLevel,
+			Code educationType,
 			String[] allergies,
 			String insuranceType,
 			String preferredLanguage,
-			String ethnicity,
+			Code ethnicity,
 			String religion,
 			long patientId,
 			boolean isVeteran,

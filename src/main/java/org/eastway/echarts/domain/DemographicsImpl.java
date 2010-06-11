@@ -22,11 +22,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotNull;
 
+import org.eastway.echarts.shared.Code;
 import org.eastway.echarts.shared.DemographicsDTO;
 import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.EHR;
@@ -43,19 +45,27 @@ public class DemographicsImpl implements Demographics {
 	private EHRImpl ehr;
 	@Column(name = "Patient_Id")
 	private long patientId;
-	private String gender;
-	private String race;
-	private String maritalStatus;
-	private String livingArrangement;
-	private String employment;
+	@ManyToOne
+	private CodeImpl gender;
+	@ManyToOne
+	private CodeImpl race;
+	@ManyToOne
+	private CodeImpl maritalStatus;
+	@ManyToOne
+	private CodeImpl livingArrangement;
+	@ManyToOne
+	private CodeImpl employment;
 	private String[] incomeSources;
-	private String educationLevel;
-	private String educationType;
+	@ManyToOne
+	private CodeImpl educationLevel;
+	@ManyToOne
+	private CodeImpl educationType;
 	private String[] allergies;
 	private String religion;
 	private String insuranceType;
 	private String preferredLanguage;
-	private String ethnicity;
+	@ManyToOne
+	private CodeImpl ethnicity;
 	private boolean isVeteran;
 	private boolean isSmd;
 	private boolean isAlcoholDrug;
@@ -85,12 +95,12 @@ public class DemographicsImpl implements Demographics {
 
 	public DemographicsImpl() {}
 
-	public DemographicsImpl(String gender, String race, String maritalStatus,
-			String livingArrangement, String employment,
-			String[] incomeSources, String educationLevel,
-			String educationType, String[] allergies,
+	public DemographicsImpl(Code gender, Code race, Code maritalStatus,
+			Code livingArrangement, Code employment,
+			String[] incomeSources, Code educationLevel,
+			Code educationType, String[] allergies,
 			String insuranceType, String preferredLanguage,
-			String ethnicity, String religion, boolean isVeteran,
+			Code ethnicity, String religion, boolean isVeteran,
 			boolean isSmd, boolean isAlcoholDrug,
 			boolean isForensic, boolean isDd, boolean isMimr,
 			boolean isDuidwi, boolean isDeaf,
@@ -173,52 +183,52 @@ public class DemographicsImpl implements Demographics {
 	}
 
 	@Override
-	public void setGender(String gender) {
-		this.gender = gender;
+	public void setGender(Code gender) {
+		this.gender = (CodeImpl) gender;
 	}
 
 	@Override
-	public String getGender() {
+	public Code getGender() {
 		return gender;
 	}
 
 	@Override
-	public void setRace(String race) {
-		this.race = race;
+	public void setRace(Code race) {
+		this.race = (CodeImpl) race;
 	}
 
 	@Override
-	public String getRace() {
+	public Code getRace() {
 		return race;
 	}
 
 	@Override
-	public void setMaritalStatus(String maritalStatus) {
-		this.maritalStatus = maritalStatus;
+	public void setMaritalStatus(Code maritalStatus) {
+		this.maritalStatus = (CodeImpl) maritalStatus;
 	}
 
 	@Override
-	public String getMaritalStatus() {
+	public Code getMaritalStatus() {
 		return maritalStatus;
 	}
 
 	@Override
-	public void setLivingArrangement(String livingArrangement) {
-		this.livingArrangement = livingArrangement;
+	public void setLivingArrangement(Code livingArrangement) {
+		this.livingArrangement = (CodeImpl) livingArrangement;
 	}
 
 	@Override
-	public String getLivingArrangement() {
+	public Code getLivingArrangement() {
 		return livingArrangement;
 	}
 
 	@Override
-	public void setEmployment(String employment) {
-		this.employment = employment;
+	public void setEmployment(Code employment) {
+		this.employment = (CodeImpl) employment;
 	}
 
 	@Override
-	public String getEmployment() {
+	public Code getEmployment() {
 		return employment;
 	}
 
@@ -233,22 +243,22 @@ public class DemographicsImpl implements Demographics {
 	}
 
 	@Override
-	public void setEducationLevel(String educationLevel) {
-		this.educationLevel = educationLevel;
+	public void setEducationLevel(Code educationLevel) {
+		this.educationLevel = (CodeImpl) educationLevel;
 	}
 
 	@Override
-	public String getEducationLevel() {
+	public Code getEducationLevel() {
 		return educationLevel;
 	}
 
 	@Override
-	public void setEducationType(String educationType) {
-		this.educationType = educationType;
+	public void setEducationType(Code educationType) {
+		this.educationType = (CodeImpl) educationType;
 	}
 
 	@Override
-	public String getEducationType() {
+	public Code getEducationType() {
 		return educationType;
 	}
 
@@ -283,12 +293,12 @@ public class DemographicsImpl implements Demographics {
 	}
 
 	@Override
-	public void setEthnicity(String ethnicity) {
-		this.ethnicity = ethnicity;
+	public void setEthnicity(Code ethnicity) {
+		this.ethnicity = (CodeImpl) ethnicity;
 	}
 
 	@Override
-	public String getEthnicity() {
+	public Code getEthnicity() {
 		return ethnicity;
 	}
 
@@ -564,12 +574,12 @@ public class DemographicsImpl implements Demographics {
 		demographicsDto.setDob(this.getDob());
 		demographicsDto.setDomesticViolence(this.isDomesticViolence());
 		demographicsDto.setDuidwi(this.isDuidwi());
-		demographicsDto.setEducationLevel(this.getEducationLevel());
-		demographicsDto.setEducationType(this.getEducationType());
-		demographicsDto.setEmployment(this.getEmployment());
-		demographicsDto.setEthnicity(this.getEthnicity());
+		demographicsDto.setEducationLevel(this.getEducationLevel().toDto());
+		demographicsDto.setEducationType(educationType.toDto());
+		demographicsDto.setEmployment(employment.toDto());
+		demographicsDto.setEthnicity(this.getEthnicity().toDto());
 		demographicsDto.setForensic(this.isForensic());
-		demographicsDto.setGender(this.getGender());
+		demographicsDto.setGender(this.getGender().toDto());
 		demographicsDto
 				.setGeneralPopulation(this
 						.isGeneralPopulation());
@@ -579,16 +589,15 @@ public class DemographicsImpl implements Demographics {
 		demographicsDto.setInsuranceType(this.getInsuranceType());
 		demographicsDto.setLastEdit(this.getLastEdit());
 		demographicsDto.setLastEditBy(this.getLastEditBy());
-		demographicsDto.setLivingArrangement(this
-				.getLivingArrangement());
-		demographicsDto.setMaritalStatus(this.getMaritalStatus());
+		demographicsDto.setLivingArrangement(livingArrangement.toDto());
+		demographicsDto.setMaritalStatus(maritalStatus.toDto());
 		demographicsDto.setMimr(this.isMimr());
 		demographicsDto.setPhyDisabled(this.isPhyDisabled());
 		demographicsDto.setPhysicalAbuse(this.isPhysicalAbuse());
 		demographicsDto.setPreferredLanguage(this
 				.getPreferredLanguage());
 		demographicsDto.setProbationParole(this.isProbationParole());
-		demographicsDto.setRace(this.getRace());
+		demographicsDto.setRace(this.getRace().toDto());
 		demographicsDto.setSchoolDropout(this.isSchoolDropout());
 		demographicsDto.setSexualAbuse(this.isSexualAbuse());
 		demographicsDto.setSmd(this.isSmd());

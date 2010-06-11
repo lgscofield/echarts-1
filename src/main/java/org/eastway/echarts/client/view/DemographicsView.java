@@ -18,6 +18,7 @@ package org.eastway.echarts.client.view;
 import java.util.Date;
 
 import org.eastway.echarts.client.presenter.DemographicsPresenter;
+import org.eastway.echarts.shared.Code;
 import org.eastway.echarts.shared.DemographicsDTO;
 import org.eastway.echarts.shared.EHR;
 
@@ -64,13 +65,13 @@ public class DemographicsView extends Composite implements DemographicsPresenter
 	}
 
 	@Override
-	public String getEducationLevel() {
+	public Code getEducationLevel() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String getEducationType() {
+	public Code getEducationType() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -82,19 +83,19 @@ public class DemographicsView extends Composite implements DemographicsPresenter
 	}
 
 	@Override
-	public String getEmployment() {
+	public Code getEmployment() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String getEthnicity() {
+	public Code getEthnicity() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String getGender() {
+	public Code getGender() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -130,13 +131,13 @@ public class DemographicsView extends Composite implements DemographicsPresenter
 	}
 
 	@Override
-	public String getLivingArrangement() {
+	public Code getLivingArrangement() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String getMaritalStatus() {
+	public Code getMaritalStatus() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -154,7 +155,7 @@ public class DemographicsView extends Composite implements DemographicsPresenter
 	}
 
 	@Override
-	public String getRace() {
+	public Code getRace() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -350,13 +351,13 @@ public class DemographicsView extends Composite implements DemographicsPresenter
 	}
 
 	@Override
-	public void setEducationLevel(String educationLevel) {
-		this.educationLevel.setInnerText(educationLevel);
+	public void setEducationLevel(Code educationLevel) {
+		this.educationLevel.setInnerText(educationLevel.getDescriptor());
 	}
 
 	@Override
-	public void setEducationType(String educationType) {
-		this.educationType.setInnerText(educationType);
+	public void setEducationType(Code educationType) {
+		this.educationType.setInnerText(educationType.getDescriptor());
 	}
 
 	@Override
@@ -366,13 +367,13 @@ public class DemographicsView extends Composite implements DemographicsPresenter
 	}
 
 	@Override
-	public void setEmployment(String employment) {
+	public void setEmployment(Code employment) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void setEthnicity(String ethnicity) {
+	public void setEthnicity(Code ethnicity) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -384,8 +385,8 @@ public class DemographicsView extends Composite implements DemographicsPresenter
 	}
 
 	@Override
-	public void setGender(String gender) {
-		this.gender.setInnerText(gender);
+	public void setGender(Code gender) {
+		this.gender.setInnerText(gender.getDescriptor());
 	}
 
 	@Override
@@ -437,13 +438,13 @@ public class DemographicsView extends Composite implements DemographicsPresenter
 	}
 
 	@Override
-	public void setLivingArrangement(String livingArrangement) {
+	public void setLivingArrangement(Code livingArrangement) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void setMaritalStatus(String maritalStatus) {
+	public void setMaritalStatus(Code maritalStatus) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -485,8 +486,8 @@ public class DemographicsView extends Composite implements DemographicsPresenter
 	}
 
 	@Override
-	public void setRace(String race) {
-		this.race.setInnerText(race);
+	public void setRace(Code race) {
+		this.race.setInnerText(race.getDescriptor());
 	}
 
 	@Override
