@@ -45,7 +45,7 @@ public class AppointmentPresenter extends Presenter<AppointmentPresenter.Display
 		for (Appointment a : ehr.getAppointments()) {
 			display.setActivity(a.getActivity());
 			display.setAppointmentDate(a.getAppointmentDate());
-			display.setCaseNumber(a.getCaseNumber());
+			//display.setCaseNumber(a.getCaseNumber());
 			display.setEndTime(a.getEndTime());
 			display.setId(a.getId());
 			display.setLocation(a.getLocation());

@@ -37,11 +37,12 @@ public class AppointmentView extends Composite implements AppointmentPresenter.D
 
 	private int record = 0;
 	@UiField FlexTable appointments;
+	private String emptyCellFiller = "&nbsp;";
 
 	enum Column {
 		ACTIVITY,
 		APPOINTMENT_DATE,
-		CASE_NUMBER,
+		//CASE_NUMBER,
 		START_TIME,
 		END_TIME,
 		LOCATION,
@@ -54,7 +55,7 @@ public class AppointmentView extends Composite implements AppointmentPresenter.D
 		initWidget(uiBinder.createAndBindUi(this));
 		appointments.setHTML(record, Column.ACTIVITY.ordinal(), "<b>ACTIVITY</b>");
 		appointments.setHTML(record, Column.APPOINTMENT_DATE.ordinal(), "<b>APPOINTMENT DATE</b>");
-		appointments.setHTML(record, Column.CASE_NUMBER.ordinal(), "<b>CASE NUMBER</b>");
+		//appointments.setHTML(record, Column.CASE_NUMBER.ordinal(), "<b>CASE NUMBER</b>");
 		appointments.setHTML(record, Column.END_TIME.ordinal(), "<b>END TIME</b>");
 		appointments.setHTML(record, Column.LOCATION.ordinal(), "<b>LOCATION</b>");
 		appointments.setHTML(record, Column.NOTES.ordinal(), "<b>NOTES</b>");
@@ -137,22 +138,28 @@ public class AppointmentView extends Composite implements AppointmentPresenter.D
 
 	@Override
 	public void setActivity(String activity) {
-		this.appointments.setText(record, Column.ACTIVITY.ordinal(), activity);
+		if (activity == null || activity.matches(""))
+			appointments.setHTML(record, Column.ACTIVITY.ordinal(), emptyCellFiller);
+		else
+			appointments.setText(record, Column.ACTIVITY.ordinal(), activity);
 	}
 
 	@Override
 	public void setAppointmentDate(Date appointmentDate) {
-		this.appointments.setText(record, Column.APPOINTMENT_DATE.ordinal(), appointmentDate.toString());
+		appointments.setText(record, Column.APPOINTMENT_DATE.ordinal(), appointmentDate.toString());
 	}
 
 	@Override
 	public void setCaseNumber(String caseNumber) {
-		this.appointments.setText(record, Column.CASE_NUMBER.ordinal(), caseNumber);
+		//if (caseNumber == null || caseNumber.matches(""))
+		//	appointments.setHTML(record, Column.CASE_NUMBER.ordinal(), emptyCellFiller);
+		//else
+		//	appointments.setText(record, Column.CASE_NUMBER.ordinal(), caseNumber);
 	}
 
 	@Override
 	public void setEndTime(float endTime) {
-		this.appointments.setText(record, Column.END_TIME.ordinal(), new Float(endTime).toString());
+		appointments.setText(record, Column.END_TIME.ordinal(), new Float(endTime).toString());
 	}
 
 	@Override
@@ -163,12 +170,18 @@ public class AppointmentView extends Composite implements AppointmentPresenter.D
 
 	@Override
 	public void setLocation(String location) {
-		this.appointments.setText(record, Column.LOCATION.ordinal(), location);
+		if (location == null || location.matches(""))
+			appointments.setHTML(record, Column.LOCATION.ordinal(), emptyCellFiller);
+		else
+			appointments.setText(record, Column.LOCATION.ordinal(), location);
 	}
 
 	@Override
 	public void setNotes(String notes) {
-		this.appointments.setText(record, Column.NOTES.ordinal(), notes);
+		if (notes == null || notes.matches(""))
+			appointments.setHTML(record, Column.NOTES.ordinal(), emptyCellFiller);
+		else
+			appointments.setText(record, Column.NOTES.ordinal(), notes);
 	}
 
 	@Override
@@ -178,12 +191,15 @@ public class AppointmentView extends Composite implements AppointmentPresenter.D
 
 	@Override
 	public void setStaff(String staff) {
-		this.appointments.setText(record, Column.STAFF.ordinal(), staff);
+		if (staff == null || staff.matches(""))
+			appointments.setHTML(record, Column.STAFF.ordinal(), emptyCellFiller);
+		else
+			appointments.setText(record, Column.STAFF.ordinal(), staff);
 	}
 
 	@Override
 	public void setStartTime(float startTime) {
-		this.appointments.setText(record, Column.START_TIME.ordinal(), new Float(startTime).toString());
+		appointments.setText(record, Column.START_TIME.ordinal(), new Float(startTime).toString());
 	}
 
 	@Override
