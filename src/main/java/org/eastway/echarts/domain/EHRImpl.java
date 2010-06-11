@@ -77,6 +77,7 @@ public class EHRImpl implements EHR {
 
 	@OneToMany(targetEntity = AppointmentImpl.class)
 	@JoinColumn
+	@OrderBy(value="appointmentDate DESC")
 	private List<AppointmentImpl> appointments;
 
 	@OneToMany(targetEntity = MedicationImpl.class)
