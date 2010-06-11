@@ -36,6 +36,7 @@ public class DiagnosisView extends Composite implements DiagnosisPresenter.Displ
 
 	@UiField FlexTable diagnoses;
 	private int record = 0;
+	private String emptyCellFiller = "&nbsp;";
 
 	enum Column {
 		AXIS1A,
@@ -55,6 +56,21 @@ public class DiagnosisView extends Composite implements DiagnosisPresenter.Displ
 
 	public DiagnosisView() {
 		initWidget(uiBinder.createAndBindUi(this));
+		diagnoses.setHTML(record, Column.AXIS1A.ordinal(), "<b>AXIS 1A</b>");
+		diagnoses.setHTML(record, Column.AXIS1B.ordinal(), "<b>AXIS 1B</b>");
+		diagnoses.setHTML(record, Column.AXIS1C.ordinal(), "<b>AXIS 1C</b>");
+		diagnoses.setHTML(record, Column.AXIS1D.ordinal(), "<b>AXIS 1D</b>");
+		diagnoses.setHTML(record, Column.AXIS1E.ordinal(), "<b>AXIS 1E</b>");
+		diagnoses.setHTML(record, Column.AXIS2A.ordinal(), "<b>AXIS 2A</b>");
+		diagnoses.setHTML(record, Column.AXIS2B.ordinal(), "<b>AXIS 2B</b>");
+		diagnoses.setHTML(record, Column.AXIS2C.ordinal(), "<b>AXIS 2C</b>");
+		diagnoses.setHTML(record, Column.AXIS3.ordinal(), "<b>AXIS 3</b>");
+		diagnoses.setHTML(record, Column.AXIS4.ordinal(), "<b>AXIS 4</b>");
+		diagnoses.setHTML(record, Column.CURRENTGAF.ordinal(), "<b>CURRENT GAF</b>");
+		diagnoses.setHTML(record, Column.HIGHESTGAF.ordinal(), "<b>HIGHEST GAF</b>");
+		diagnoses.setHTML(record, Column.DATE.ordinal(), "<b>DATE</b>");
+		diagnoses.setBorderWidth(1);
+		nextRecord();
 	}
 
 	@Override
@@ -171,52 +187,82 @@ public class DiagnosisView extends Composite implements DiagnosisPresenter.Displ
 
 	@Override
 	public void setAxis1A(String axis1a) {
-		this.diagnoses.setText(record, Column.AXIS1A.ordinal(), axis1a);
+		if (axis1a == null || axis1a.matches(""))
+			diagnoses.setHTML(record, Column.AXIS1A.ordinal(), emptyCellFiller);
+		else
+			diagnoses.setText(record, Column.AXIS1A.ordinal(), axis1a);
 	}
 
 	@Override
 	public void setAxis1B(String axis1b) {
-		this.diagnoses.setText(record, Column.AXIS1B.ordinal(), axis1b);
+		if (axis1b == null || axis1b.matches(""))
+			diagnoses.setHTML(record, Column.AXIS1B.ordinal(), emptyCellFiller);
+		else
+			diagnoses.setText(record, Column.AXIS1B.ordinal(), axis1b);
 	}
 
 	@Override
 	public void setAxis1C(String axis1c) {
-		this.diagnoses.setText(record, Column.AXIS1C.ordinal(), axis1c);
+		if (axis1c == null || axis1c.matches(""))
+			diagnoses.setHTML(record, Column.AXIS1C.ordinal(), emptyCellFiller);
+		else
+			diagnoses.setText(record, Column.AXIS1C.ordinal(), axis1c);
 	}
 
 	@Override
 	public void setAxis1D(String axis1d) {
-		this.diagnoses.setText(record, Column.AXIS1D.ordinal(), axis1d);
+		if (axis1d == null || axis1d.matches(""))
+			diagnoses.setHTML(record, Column.AXIS1D.ordinal(), emptyCellFiller);
+		else
+			diagnoses.setText(record, Column.AXIS1D.ordinal(), axis1d);
 	}
 
 	@Override
 	public void setAxis1E(String axis1e) {
-		this.diagnoses.setText(record, Column.AXIS1E.ordinal(), axis1e);
+		if (axis1e == null || axis1e.matches(""))
+			diagnoses.setHTML(record, Column.AXIS1E.ordinal(), emptyCellFiller);
+		else
+			diagnoses.setText(record, Column.AXIS1E.ordinal(), axis1e);
 	}
 
 	@Override
 	public void setAxis2A(String axis2a) {
-		this.diagnoses.setText(record, Column.AXIS2A.ordinal(), axis2a);
+		if (axis2a == null || axis2a.matches(""))
+			diagnoses.setHTML(record, Column.AXIS2A.ordinal(), emptyCellFiller);
+		else
+			diagnoses.setText(record, Column.AXIS2A.ordinal(), axis2a);
 	}
 
 	@Override
 	public void setAxis2B(String axis2b) {
-		this.diagnoses.setText(record, Column.AXIS2B.ordinal(), axis2b);
+		if (axis2b == null || axis2b.matches(""))
+			diagnoses.setHTML(record, Column.AXIS2B.ordinal(), emptyCellFiller);
+		else
+			diagnoses.setText(record, Column.AXIS2B.ordinal(), axis2b);
 	}
 
 	@Override
 	public void setAxis2C(String axis2c) {
-		this.diagnoses.setText(record, Column.AXIS2C.ordinal(), axis2c);
+		if (axis2c == null || axis2c.matches(""))
+			diagnoses.setHTML(record, Column.AXIS2C.ordinal(), emptyCellFiller);
+		else
+			diagnoses.setText(record, Column.AXIS2C.ordinal(), axis2c);
 	}
 
 	@Override
 	public void setAxis3(String axis3) {
-		this.diagnoses.setText(record, Column.AXIS3.ordinal(), axis3);
+		if (axis3 == null || axis3.matches(""))
+			diagnoses.setHTML(record, Column.AXIS3.ordinal(), emptyCellFiller);
+		else
+			diagnoses.setText(record, Column.AXIS3.ordinal(), axis3);
 	}
 
 	@Override
 	public void setAxis4(String axis4) {
-		this.diagnoses.setText(record, Column.AXIS4.ordinal(), axis4);
+		if (axis4 == null || axis4.matches(""))
+			diagnoses.setHTML(record, Column.AXIS4.ordinal(), emptyCellFiller);
+		else
+			diagnoses.setText(record, Column.AXIS4.ordinal(), axis4);
 	}
 
 	@Override
@@ -227,17 +273,17 @@ public class DiagnosisView extends Composite implements DiagnosisPresenter.Displ
 
 	@Override
 	public void setCurrentGAF(int currentGAF) {
-		this.diagnoses.setText(record, Column.CURRENTGAF.ordinal(), new Integer(currentGAF).toString());
+		diagnoses.setText(record, Column.CURRENTGAF.ordinal(), new Integer(currentGAF).toString());
 	}
 
 	@Override
 	public void setDate(Date date) {
-		this.diagnoses.setText(record, Column.DATE.ordinal(), date.toString());
+		diagnoses.setText(record, Column.DATE.ordinal(), date.toString());
 	}
 
 	@Override
 	public void setHighestGAF(int highestGAF) {
-		this.diagnoses.setText(record, Column.HIGHESTGAF.ordinal(), new Integer(highestGAF).toString());
+		diagnoses.setText(record, Column.HIGHESTGAF.ordinal(), new Integer(highestGAF).toString());
 	}
 
 	@Override
