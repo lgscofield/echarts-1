@@ -7,3 +7,6 @@ target/*
 
 # Spring roo log file
 log.roo
+
+# Settings for eclipse
+.settings
