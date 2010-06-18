@@ -15,8 +15,12 @@
   <inherits name='com.google.gwt.user.theme.standard.Standard'/>
   <inherits name='com.google.gwt.app.App' />
   <inherits name='com.google.gwt.requestfactory.RequestFactory'/>
-  <inherits name='org.eastway.echarts.appcontroller.AppController' />
+  <inherits name='com.bradrydzewski.gwt.calendar.Calendar' />
+  <inherits name='com.bradrydzewski.gwt.calendar.theme.google.Google' />
+  <inherits name='com.allen_sauer.gwt.dnd.gwt-dnd'/>
   <entry-point class='org.eastway.echarts.client.Echarts'/>
   <source path='client'/>
   <source path='shared'/>
+  <source path='dashboard/client'/>
+  <source path='appcontroller/client'/>
 </module>
