@@ -57,6 +57,6 @@ public class ReferralPresenter extends Presenter<ReferralPresenter.Display> {
 				display.setUCI(referral.getUCI());
 			}
 		};
-		rpcServices.findByEhr(ehr, UserImpl.getSessionId(), callback);
+		rpcServices.findByEhr(ehr.getId(), UserImpl.getSessionId(), callback);
 	}
 }

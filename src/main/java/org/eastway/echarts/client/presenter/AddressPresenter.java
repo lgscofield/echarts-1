@@ -64,6 +64,6 @@ public class AddressPresenter extends Presenter<AddressPresenter.Display> {
 				}
 			}
 		};
-		rpcServices.findByEhr(ehr, UserImpl.getSessionId(), callback);
+		rpcServices.findByCaseNumber(ehr.getSubject().getCaseNumber(), UserImpl.getSessionId(), callback);
 	}
 }
