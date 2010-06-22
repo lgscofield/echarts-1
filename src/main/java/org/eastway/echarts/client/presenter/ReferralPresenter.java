@@ -27,7 +27,9 @@ import com.google.gwt.user.client.ui.HasWidgets;
 
 public class ReferralPresenter extends Presenter<ReferralPresenter.Display> {
 
-	public interface Display extends EchartsDisplay, Referral { }
+	public interface Display extends EchartsDisplay, Referral {
+		void nextRecord();
+	}
 
 	private ReferralServicesAsync rpcServices;
 	private EHR ehr;
@@ -54,7 +56,21 @@ public class ReferralPresenter extends Presenter<ReferralPresenter.Display> {
 
 			@Override
 			public void onSuccess(Referral referral) {
+				display.setAdmissionDate(referral.getAdmissionDate());
+				display.setDischargeDate(referral.getDischargeDate());
+				display.setDisposition(referral.getDisposition());
+				display.setLastEdit(referral.getLastEdit());
+				display.setLastEditBy(referral.getLastEditBy());
+				display.setLastService(referral.getLastService());
+				display.setLevelOfCare(referral.getLevelOfCare());
+				display.setPlanType(referral.getPlanType());
+				display.setProgram(referral.getPlanType());
+				display.setReferralDate(referral.getReferralDate());
+				display.setReferralSource(referral.getReferralSource());
+				display.setReferralType(referral.getReferralType());
+				display.setTakenByStaff(referral.getTakenByStaff());
 				display.setUCI(referral.getUCI());
+				display.setUPId(referral.getUPId());
 			}
 		};
 		rpcServices.findByEhr(ehr.getId(), UserImpl.getSessionId(), callback);

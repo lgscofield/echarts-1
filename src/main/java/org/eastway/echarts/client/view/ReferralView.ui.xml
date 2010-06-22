@@ -14,7 +14,6 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<g:HTMLPanel>
-		<div>Referral Date : <span ui:field='referralDate'/></div>
-		<div>UCI : <span ui:field='UCI'/></div>
+		<g:FlexTable ui:field="referrals"/>
 	</g:HTMLPanel>
 </ui:UiBinder>
