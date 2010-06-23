@@ -212,6 +212,7 @@ public class EHRImpl implements EHR {
 		ehrDto.setId(this.getId());
 		ehrDto.setSubject((PatientDTO) this.getSubject().toDto());
 		ehrDto.setTimeCreated(this.getTimeCreated());
+		ehrDto.setDemographics(demographics.toDto());
 
 		List<Assignment> assignments = new ArrayList<Assignment>();
 		for (Assignment a : this.assignments)
