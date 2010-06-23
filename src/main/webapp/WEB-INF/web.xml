@@ -70,25 +70,8 @@
 		<servlet-name>addressServicesImpl</servlet-name>
 		<url-pattern>/echarts/addressServices</url-pattern>
 	</servlet-mapping>
-	<session-config>
-		<session-timeout>60</session-timeout>
-	</session-config>
 	<!-- Default page to serve -->
 	<welcome-file-list>
 		<welcome-file>echarts.html</welcome-file>
 	</welcome-file-list>
-	<resource-ref>
-		<description>
-			This resource provides the EW-EHR database connection.
-		</description>
-		<res-ref-name>
-			jdbc/EWEHR
-		</res-ref-name>
-		<res-type>
-			javax.sql.DataSource
-		</res-type>
-		<res-auth>
-			Container
-		</res-auth>
-	</resource-ref>
 </web-app>
