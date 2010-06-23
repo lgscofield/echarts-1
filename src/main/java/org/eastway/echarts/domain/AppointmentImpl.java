@@ -23,6 +23,7 @@ import javax.persistence.Table;
 
 import org.eastway.echarts.shared.Appointment;
 import org.eastway.echarts.shared.AppointmentDTO;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "Appointment")
@@ -33,8 +34,9 @@ public class AppointmentImpl implements Appointment {
 	private String caseNumber;
 	private float endTime;
 	@Id
-	private long id;
+	private int id;
 	private String location;
+	@Type(type = "text")
 	private String notes;
 	private float priority;
 	private String staff;
@@ -61,7 +63,7 @@ public class AppointmentImpl implements Appointment {
 	}
 
 	@Override
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
@@ -111,7 +113,7 @@ public class AppointmentImpl implements Appointment {
 	}
 
 	@Override
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

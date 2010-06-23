@@ -19,9 +19,9 @@ import java.util.Date;
 
 public interface Appointment {
 
-	public void setId(long id);
+	public void setId(int id);
 
-	public long getId();
+	public int getId();
 
 	public void setAppointmentDate(Date appointmentDate);
 

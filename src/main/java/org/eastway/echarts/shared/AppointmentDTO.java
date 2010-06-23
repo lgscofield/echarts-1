@@ -25,7 +25,7 @@ public class AppointmentDTO implements Appointment, Serializable {
 	private Date appointmentDate;
 	private String caseNumber;
 	private float endTime;
-	private long id;
+	private int id;
 	private String location;
 	private String notes;
 	private float priority;
@@ -53,7 +53,7 @@ public class AppointmentDTO implements Appointment, Serializable {
 	}
 
 	@Override
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
@@ -103,7 +103,7 @@ public class AppointmentDTO implements Appointment, Serializable {
 	}
 
 	@Override
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

@@ -26,6 +26,8 @@ import java.util.Date;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Null;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import org.eastway.echarts.shared.Assignment;
@@ -67,7 +69,8 @@ public class AssignmentImpl implements Serializable, Assignment {
 
     private Integer planId;
 
-    private Integer trtEpisode;
+    @Null
+    private short trtEpisode;
 
     private String program;
 
