@@ -173,12 +173,12 @@ public class AssignmentImpl implements Serializable, Assignment {
 	}
 
     @Override
-	public void setTrtEpisode(Integer trtEpisode) {
+	public void setTrtEpisode(short trtEpisode) {
 		this.trtEpisode = trtEpisode;
 	}
 
     @Override
-	public Integer getTrtEpisode() {
+	public short getTrtEpisode() {
 		return trtEpisode;
 	}
 
@@ -235,7 +235,7 @@ public class AssignmentImpl implements Serializable, Assignment {
 		dto.setStaffName(this.staffName);
 		dto.setTermDate(this.termDate);
 		dto.setPlanId(this.planId == null ? 0 : this.planId);
-		dto.setTrtEpisode(this.trtEpisode == null ? 0 : this.trtEpisode);
+		dto.setTrtEpisode(this.trtEpisode);
 		dto.setProgram(this.program);
 		dto.setLastEdit(this.lastEdit);
 		dto.setLastEditBy(this.lastEditBy);

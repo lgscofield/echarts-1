@@ -56,9 +56,9 @@ public interface Assignment {
 
 	public Integer getPlanId();
 
-	public void setTrtEpisode(Integer trtEpisode);
+	public void setTrtEpisode(short trtEpisode);
 
-	public Integer getTrtEpisode();
+	public short getTrtEpisode();
 
 	public void setProgram(String program);
 
