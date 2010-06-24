@@ -49,8 +49,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 @SuppressWarnings("serial")
-public class RpcServicesImpl extends RemoteServiceServlet implements
-		RpcServices, DbConstants {
+public class RpcServicesImpl extends RemoteServiceServlet implements RpcServices {
 
 	@Override
 	public Vector<String> getAlerts(String sessionId) throws SessionExpiredException, DbException {
