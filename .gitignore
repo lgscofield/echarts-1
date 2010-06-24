@@ -10,3 +10,6 @@ log.roo
 
 # Settings for eclipse
 .settings
+
+# Directory created by DevMode
+src/main/webapp/echarts
