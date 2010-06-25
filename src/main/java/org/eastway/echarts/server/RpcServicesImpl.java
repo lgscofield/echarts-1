@@ -36,7 +36,7 @@ import org.eastway.echarts.domain.Link;
 import org.eastway.echarts.domain.Message;
 import org.eastway.echarts.domain.MessageService;
 import org.eastway.echarts.domain.SessionIdLog;
-import org.eastway.echarts.domain.User;
+import org.eastway.echarts.domain.UserImpl;
 import org.eastway.echarts.domain.UserService;
 import org.eastway.echarts.shared.Code;
 import org.eastway.echarts.shared.CodeDTO;
@@ -155,7 +155,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements RpcServices
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
 		EntityManager em = emf.createEntityManager();
 		UserService userService = new UserService(em);
-		User user = userService.find(username);
+		UserImpl user = userService.find(username);
 		em.close();
 		emf.close();
 		return user.toDto();

@@ -33,7 +33,7 @@ import org.eastway.echarts.shared.UserDTO;
 
 @Entity
 @Table(name="Echarts_User")
-public class User {
+public class UserImpl {
 	@Id
 	@TableGenerator(name = "tg", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "tg")
@@ -60,9 +60,9 @@ public class User {
 	private String staffDescription;
 	private String staffNpi;
 
-	public User() {	}
+	public UserImpl() {	}
 
-	public User(long id) {
+	public UserImpl(long id) {
 		this.id = id;
 	}
 

@@ -31,18 +31,18 @@ public class UserService {
 		return em;
 	}
 
-	public User create() {
-		User user = new User();
+	public UserImpl create() {
+		UserImpl user = new UserImpl();
 		return user;
 	}
 
-	public User find(long userId) {
-		return getEntityManager().find(User.class, userId);
+	public UserImpl find(long userId) {
+		return getEntityManager().find(UserImpl.class, userId);
 	}
 
-	public User find(String username) {
-		TypedQuery<User> query = getEntityManager().createQuery(
-				"SELECT u FROM User u WHERE u.username = '" + username + "'", User.class);
+	public UserImpl find(String username) {
+		TypedQuery<UserImpl> query = getEntityManager().createQuery(
+				"SELECT u FROM User u WHERE u.username = '" + username + "'", UserImpl.class);
 		return query.getSingleResult();
 	}
 }
