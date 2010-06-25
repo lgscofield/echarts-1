@@ -25,7 +25,7 @@ import javax.persistence.TableGenerator;
 import org.eastway.echarts.shared.RoleDTO;
 
 @Entity
-public class Role {
+public class RoleImpl {
 	@Id
 	@TableGenerator(name = "tg", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "tg")
@@ -34,9 +34,9 @@ public class Role {
 	private String roleName;
 	private byte[] permission;
 
-	public Role() { }
+	public RoleImpl() { }
 
-	public Role(int id) {
+	public RoleImpl(int id) {
 		this.id = id;
 	}
 
