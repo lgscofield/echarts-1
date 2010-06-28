@@ -22,8 +22,8 @@ import org.eastway.echarts.client.EHRServicesAsync;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.PatientServices;
 import org.eastway.echarts.client.PatientServicesAsync;
-import org.eastway.echarts.client.Rpc;
-import org.eastway.echarts.client.UserImpl;
+import org.eastway.echarts.client.RpcServices;
+import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
 import org.eastway.echarts.client.events.OpenEhrEvent;
 import org.eastway.echarts.client.events.OpenEhrEventHandler;
@@ -50,6 +50,7 @@ import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
@@ -62,12 +63,12 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class AdministratorDashboard extends Composite {
+public class Dashboard extends Composite {
 	private static DashboardViewUiBinder uiBinder = GWT
 			.create(DashboardViewUiBinder.class);
 
 	interface DashboardViewUiBinder extends
-			UiBinder<Widget, AdministratorDashboard> {
+			UiBinder<Widget, Dashboard> {
 	}
 
 	interface Style extends CssResource {
@@ -87,11 +88,12 @@ public class AdministratorDashboard extends Composite {
 	//@UiField SpanElement productivity;
 	//@UiField Anchor gmhIntake;
 
+	private RpcServicesAsync rpcServices = GWT.<RpcServicesAsync>create(RpcServices.class);
 	private EHRServicesAsync ehrServices = GWT.<EHRServicesAsync>create(EHRServices.class);
 	private PatientServicesAsync patientServices = GWT.<PatientServicesAsync>create(PatientServices.class);
 	private HandlerManager eventBus;
 
-	public AdministratorDashboard(HandlerManager eventBus) {
+	public Dashboard(HandlerManager eventBus) {
 		this.eventBus = eventBus;
 		initWidget(uiBinder.createAndBindUi(this));
 		new TopPanelPresenter(top, eventBus, patientServices);
@@ -217,11 +219,11 @@ public class AdministratorDashboard extends Composite {
 
 			@Override
 			public void onSuccess(EHR ehr) {
-				final EHRTab tb = new EHRTab(eventBus, Rpc.singleton(), ehr);
+				final EHRTab tb = new EHRTab(eventBus, rpcServices, ehr);
 				addTab(tb, ehr.getSubject().getName());
 			}
 		};
-		ehrServices.getEhr(ehrId, UserImpl.getSessionId(),
+		ehrServices.getEhr(ehrId, Cookies.getCookie("sessionId"),
 				callback);
 	}
 

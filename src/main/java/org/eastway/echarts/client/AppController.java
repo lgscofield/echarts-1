@@ -13,14 +13,17 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.appcontroller.client;
+package org.eastway.echarts.client;
 
+import org.eastway.echarts.dashboard.client.Dashboard;
+
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public abstract class AppController implements ValueChangeHandler<String> {
+public class AppController implements ValueChangeHandler<String> {
 	protected final HandlerManager eventBus;
 	protected HasWidgets container;
 
@@ -29,7 +32,9 @@ public abstract class AppController implements ValueChangeHandler<String> {
 		bind();
 	}
 
-	public abstract void bind();
+	public void bind() {
+		History.addValueChangeHandler(this);
+	}
 
 	public void go(final HasWidgets container) {
 		this.container = container;
@@ -38,6 +43,17 @@ public abstract class AppController implements ValueChangeHandler<String> {
 			History.fireCurrentHistoryState();
 		} else if ("".equals(History.getToken())) {
 			History.newItem("dashboard");
+		}
+	}
+
+	@Override
+	public void onValueChange(ValueChangeEvent<String> event) {
+		String token = event.getValue();
+		if (token != null) {
+			if (token.equals("dashboard")) {
+				container.clear();
+				container.add(new Dashboard(eventBus));
+			}
 		}
 	}
 }

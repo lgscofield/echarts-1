@@ -16,7 +16,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
   xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:e="urn:import:org.eastway.echarts.client.view">
   <ui:style
-    type="org.eastway.echarts.dashboard.client.AdministratorDashboard.Style">
+    type="org.eastway.echarts.dashboard.client.Dashboard.Style">
       .alerts {
       	border-top: 1px solid SkyBlue;
       }
