@@ -20,44 +20,24 @@ import java.util.LinkedHashMap;
 import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.events.OpenEhrEvent;
+import org.eastway.echarts.client.view.PatientListView;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class PatientListPresenter extends Presenter<PatientListPresenter.Display> {
-	public interface Display extends EchartsDisplay {
-		void setData(LinkedHashMap<String, Long> data);
-
-		HasClickHandlers getTable();
-
-		String getClickedRow(ClickEvent event);
-	}
-
+public class PatientListPresenter implements PatientListView.Presenter<LinkedHashMap<String, Long>> {
 	private LinkedHashMap<String, Long> data;
+	private PatientListView<LinkedHashMap<String, Long>> display;
 	private PatientServicesAsync patientServices;
+	private HandlerManager eventBus;
 
-	public PatientListPresenter(Display display, HandlerManager eventBus, PatientServicesAsync patientServices) {
-		super(display, eventBus);
+	public PatientListPresenter(PatientListView<LinkedHashMap<String, Long>> display, HandlerManager eventBus, PatientServicesAsync patientServices) {
 		this.patientServices = patientServices;
-	}
-
-	private void bind() {
-		display.getTable().addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				String selected = display.getClickedRow(event);
-
-				if (selected != null) {
-					long ehrId = getData().get(selected);
-					eventBus.fireEvent(new OpenEhrEvent(ehrId));
-				}
-			}
-		});
+		this.display = display;
+		this.display.setPresenter(this);
+		this.eventBus = eventBus;
 	}
 
 	public void fetchPatientList() {
@@ -84,11 +64,21 @@ public class PatientListPresenter extends Presenter<PatientListPresenter.Display
 		return this.data;
 	}
 
-	@Override
 	public void go(HasWidgets container) {
 		container.clear();
 		container.add(display.asWidget());
+	}
+
+	@Override
+	public void onOpenChartClicked() {
 		fetchPatientList();
-		bind();
+	}
+
+	@Override
+	public void onItemSelected(String row) {
+		if (row != null) {
+			long ehrId = getData().get(row);
+			eventBus.fireEvent(new OpenEhrEvent(ehrId));
+		}
 	}
 }

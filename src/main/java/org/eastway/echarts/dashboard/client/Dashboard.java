@@ -16,6 +16,7 @@
 package org.eastway.echarts.dashboard.client;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
 
 import org.eastway.echarts.client.EHRServices;
 import org.eastway.echarts.client.EHRServicesAsync;
@@ -27,19 +28,14 @@ import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
 import org.eastway.echarts.client.events.OpenEhrEvent;
 import org.eastway.echarts.client.events.OpenEhrEventHandler;
-import org.eastway.echarts.client.presenter.AlertsPresenter;
-import org.eastway.echarts.client.presenter.AddEhrPresenter;
 import org.eastway.echarts.client.presenter.PatientListPresenter;
 import org.eastway.echarts.client.presenter.TopPanelPresenter;
-import org.eastway.echarts.client.view.AlertsView;
-import org.eastway.echarts.client.view.AddEhrView;
-import org.eastway.echarts.client.view.PatientListView;
+import org.eastway.echarts.client.view.PatientListViewImpl;
 import org.eastway.echarts.client.view.TopPanelView;
 import org.eastway.echarts.shared.EHR;
 
 import com.bradrydzewski.gwt.calendar.client.Calendar;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -49,17 +45,15 @@ import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -81,7 +75,7 @@ public class Dashboard extends Composite {
 	//@UiField Style style;
 	@UiField DockLayoutPanel dockLayoutPanel;
 	@UiField TabLayoutPanel tabLayoutPanel;
-	@UiField Anchor patientList;
+	@UiField ScrollPanel patientListPanel;
 	//@UiField FlowPanel alertsPanel;
 	@UiField TopPanelView top;
 	@UiField FlowPanel scheduler;
@@ -102,6 +96,9 @@ public class Dashboard extends Composite {
 		//setProductivity("92");
 		setScheduler(scheduler);
 		bind();
+		PatientListPresenter plp = new PatientListPresenter(
+				new PatientListViewImpl<LinkedHashMap<String, Long>>(), eventBus, patientServices);
+		plp.go(patientListPanel);
 	}
 
 //	private void setProductivity(String credit) {
@@ -172,11 +169,11 @@ public class Dashboard extends Composite {
 		setSelectedTab(getIndex(child));
 	}
 
-	private void openEditPatient() {
-		AddEhrPresenter epp = new AddEhrPresenter(new AddEhrView(), eventBus, ehrServices);
-		epp.go();
-		addTab(epp.getDisplay().asWidget(), "New Chart");
-	}
+//	private void openEditPatient() {
+//		AddEhrPresenter epp = new AddEhrPresenter(new AddEhrView(), eventBus, ehrServices);
+//		epp.go();
+//		addTab(epp.getDisplay().asWidget(), "New Chart");
+//	}
 
 	public void openEhr(long ehrId) {
 		fetchEhr(ehrId);
@@ -225,17 +222,5 @@ public class Dashboard extends Composite {
 		};
 		ehrServices.getEhr(ehrId, Cookies.getCookie("sessionId"),
 				callback);
-	}
-
-	@UiHandler(value = { "patientList"})
-	void handlePatientList(ClickEvent event) {
-		DialogBox db = new DialogBox();
-		PatientListPresenter plp = new PatientListPresenter(
-				new PatientListView(), eventBus, patientServices);
-		plp.go(db);
-		db.setText("Open Chart");
-		db.setAutoHideEnabled(true);
-		db.show();
-		db.center();
 	}
 }

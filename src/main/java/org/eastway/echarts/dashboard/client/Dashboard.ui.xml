@@ -39,17 +39,6 @@
       	background-color: yellow;
       }
       
-      .anchoricon {
-      	cursor: pointer;
-      	float:left;
-		background-image: url('css/images/ui-icons_6da8d5_256x240.png');
-		background-position: -32px -80px;
-		height: 16px;
-		width: 16px;
-		background-repeat: no-repeat;
-		overflow: hidden;
-      }
-      
       .anchor:hover {
       	text-decoration: underline;
       	cursor: pointer;
@@ -72,33 +61,14 @@
         barUnit="EM" barHeight="2.6">
         <g:tab>
           <g:header>Dashboard</g:header>
-          <g:DockLayoutPanel unit='PCT'>
-            <g:west size='25'>
-              <g:FlowPanel>
-              <g:HorizontalPanel>
-                <g:FlowPanel styleName='{style.anchoricon}'/>
-                <g:Anchor addStyleNames='{style.anchor}' ui:field="patientList">Open Chart</g:Anchor>
-                </g:HorizontalPanel>
-<!--                <g:HorizontalPanel>-->
-<!--                <g:FlowPanel styleName='{style.anchoricon}'/>-->
-<!--				<g:Anchor addStyleNames='{style.anchor}' ui:field='gmhIntake'>New Chart</g:Anchor>-->
-<!--              </g:HorizontalPanel>-->
-              </g:FlowPanel>
-            </g:west>
-            <g:west size='40'>
-              <g:FlowPanel>
-                <g:HTMLPanel>
-<!--                  <div class='{style.productivity}'>-->
-<!--                    Your productivity:-->
-<!--                    <span ui:field='productivity'></span>-->
-<!--                  </div>-->
-                </g:HTMLPanel>
-              </g:FlowPanel>
-            </g:west>
-            <g:east size='35'>
+          <g:SplitLayoutPanel>
+            <g:west size='250'>
+           		<g:ScrollPanel ui:field='patientListPanel'/>
+           	</g:west>
+            <g:east size='250'>
               <g:FlowPanel ui:field='scheduler' />
             </g:east>
-          </g:DockLayoutPanel>
+          </g:SplitLayoutPanel>
         </g:tab>
       </g:TabLayoutPanel>
     </g:center>

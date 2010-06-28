@@ -22,7 +22,8 @@
     	width: 100%;
     }
   </ui:style>
-      <g:ScrollPanel height='390px'>
-        <g:FlowPanel ui:field='list'></g:FlowPanel>
-      </g:ScrollPanel>
+  <g:DisclosurePanel ui:field='display'>
+  <g:header>Open Chart</g:header>
+  	<g:FlexTable ui:field='table'/>
+  </g:DisclosurePanel>
 </ui:UiBinder>
