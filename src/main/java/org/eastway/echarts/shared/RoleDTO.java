@@ -18,7 +18,7 @@ package org.eastway.echarts.shared;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
-public class RoleDTO implements Serializable {
+public class RoleDTO implements Serializable, Role {
 	private int id;
 	private String roleName;
 	private byte[] permission;
@@ -29,23 +29,33 @@ public class RoleDTO implements Serializable {
 		this.id = id;
 	}
 
+	@Override
 	public int getId() {
 		return id;
 	}
 
+	@Override
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
 	}
 
+	@Override
 	public String getRoleName() {
 		return roleName;
 	}
 
+	@Override
 	public void setPermission(byte[] permission) {
 		this.permission = permission;
 	}
 
+	@Override
 	public byte[] getPermission() {
 		return permission;
+	}
+
+	@Override
+	public RoleDTO toDto() {
+		return this;
 	}
 }

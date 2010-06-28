@@ -20,12 +20,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
+import org.eastway.echarts.shared.Role;
 import org.eastway.echarts.shared.RoleDTO;
 
 @Entity
-public class RoleImpl {
+@Table(name = "Role")
+public class RoleImpl implements Role {
 	@Id
 	@TableGenerator(name = "tg", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "tg")
@@ -40,30 +43,37 @@ public class RoleImpl {
 		this.id = id;
 	}
 
+	@Override
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	@Override
 	public int getId() {
 		return id;
 	}
 
+	@Override
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
 	}
 
+	@Override
 	public String getRoleName() {
 		return roleName;
 	}
 
+	@Override
 	public void setPermission(byte[] permission) {
 		this.permission = permission;
 	}
 
+	@Override
 	public byte[] getPermission() {
 		return permission;
 	}
 
+	@Override
 	public RoleDTO toDto() {
 		RoleDTO roleDto = new RoleDTO();
 		roleDto.setId(this.getId());
