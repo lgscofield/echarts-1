@@ -67,6 +67,8 @@ public class TopPanelPresenter extends Presenter<TopPanelPresenter.Display> {
 		display.getSearchButton().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+				if (display.getSuggestBox().getText().isEmpty())
+					return;
 				eventBus.fireEvent(new OpenEhrEvent(data.get(display.getSuggestBox().getText())));
 				display.getSuggestBox().setText("");
 			}
