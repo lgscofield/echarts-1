@@ -42,7 +42,7 @@ public class UserService {
 
 	public UserImpl find(String username) {
 		TypedQuery<UserImpl> query = getEntityManager().createQuery(
-				"SELECT u FROM User u WHERE u.username = '" + username + "'", UserImpl.class);
+				"SELECT u FROM UserImpl u WHERE u.username = '" + username + "'", UserImpl.class);
 		return query.getSingleResult();
 	}
 }

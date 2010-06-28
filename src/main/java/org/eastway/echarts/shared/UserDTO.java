@@ -18,12 +18,10 @@ package org.eastway.echarts.shared;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.eastway.echarts.client.UserImpl;
-
 @SuppressWarnings("serial")
 public class UserDTO implements User, Serializable {
 	private String staffId;
-	private String userName;
+	private String username;
 	private String staffName;
 	private String program;
 	private String status;
@@ -32,39 +30,14 @@ public class UserDTO implements User, Serializable {
 	private String officeExt;
 	private String staffDescription;
 	private String staffNpi;
-	private Integer roleId;
 	byte[] extendedPermissions;
 	private Date hireDate, termDate;
 	private long id;
-	private RoleDTO role;
-
-	public void initUser() {
-		new UserImpl(this);
-	}
+	private Role role;
+	private String supervisor;
+	private String sessionId;
 
 	public UserDTO() { };
-
-	public UserDTO(String staffId, String userName, String staffName,
-			String program, String status, String office,
-			String officePhone, String officeExt,
-			String staffDescription, String staffNpi,
-			Integer roleId, byte[] extendedPermissions,
-			Date hireDate, Date termDate) {
-		this.setStaffId(staffId);
-		this.setUserName(userName);
-		this.setStaffName(staffName);
-		this.setProgram(program);
-		this.setStatus(status);
-		this.setOffice(office);
-		this.setOfficePhone(officePhone);
-		this.setOfficeExt(officeExt);
-		this.setStaffDescription(staffDescription);
-		this.setStaffNpi(staffNpi);
-		this.setRoleId(roleId);
-		this.setExtendedPermissions(extendedPermissions);
-		this.setHireDate(hireDate);
-		this.setTermDate(termDate);
-	}
 
 	@Override
 	public byte[] getExtendedPermissions() {
@@ -74,11 +47,6 @@ public class UserDTO implements User, Serializable {
 	@Override
 	public Date getHireDate() {
 		return hireDate;
-	}
-
-	@Override
-	public Integer getRoleId() {
-		return roleId;
 	}
 
 	@Override
@@ -132,8 +100,8 @@ public class UserDTO implements User, Serializable {
 	}
 
 	@Override
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
 
 	@Override
@@ -144,11 +112,6 @@ public class UserDTO implements User, Serializable {
 	@Override
 	public void setHireDate(Date hireDate) {
 		this.hireDate = hireDate;
-	}
-
-	@Override
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
 	}
 
 	@Override
@@ -202,8 +165,8 @@ public class UserDTO implements User, Serializable {
 	}
 
 	@Override
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	@Override
@@ -216,11 +179,38 @@ public class UserDTO implements User, Serializable {
 		return id;
 	}
 
-	public void setRole(RoleDTO role) {
+	@Override
+	public void setRole(Role role) {
 		this.role = role;
 	}
 
-	public RoleDTO getRole() {
+	@Override
+	public String getSupervisor() {
+		return supervisor;
+	}
+
+	@Override
+	public void setSupervisor(String supervisor) {
+		this.supervisor = supervisor;
+	}
+
+	@Override
+	public UserDTO toDto() {
+		return this;
+	}
+
+	@Override
+	public Role getRole() {
 		return role;
+	}
+
+	@Override
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	@Override
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
 	}
 }

@@ -18,25 +18,11 @@ package org.eastway.echarts.shared;
 import java.util.Date;
 
 public interface User {
-	static interface Role {
-		public final static int ADMINISTRATOR		       = 1;
-		public final static int PSYCHIATRIST		       = 2;
-		public final static int NURSE			       = 3;
-		public final static int COMMUNITY_SUPPORT_SPECIALIST   = 4;
-		public final static int THERAPIST	               = 5;
-		public final static int RESIDENTIAL_SUPPORT_SPECIALIST = 6;
-		public final static int CLINICAL_ADMINISTRATOR	       = 7;
-		public final static int HUMAN_RESOURCES		       = 8;
-		public final static int ACCOUNTS_RECEIVABLE 	       = 9;
-		public final static int GENERAL_ADMINISTRATOR 	       = 10;
-		public final static int UNPRIVILEGED 		       = 11;
-	}
-
 	void setStaffId(String staffId);
 	String getStaffId();
 
-	void setUserName(String userName);
-	String getUserName();
+	void setUsername(String username);
+	String getUsername();
 
 	void setStaffName(String staffName);
 	String getStaffName();
@@ -62,9 +48,6 @@ public interface User {
 	void setStaffNpi(String staffNpi);
 	String getStaffNpi();
 
-	void setRoleId(Integer roleId);
-	Integer getRoleId();
-
 	void setExtendedPermissions(byte[] extendedPermissions);
 	byte[] getExtendedPermissions();
 
@@ -76,4 +59,15 @@ public interface User {
 
 	void setId(long id);
 	long getId();
+
+	void setSupervisor(String supervisor);
+	String getSupervisor();
+
+	UserDTO toDto();
+
+	void setRole(Role role);
+	Role getRole();
+
+	void setSessionId(String sessionId);
+	String getSessionId();
 }

@@ -43,7 +43,7 @@ import org.eastway.echarts.shared.CodeDTO;
 import org.eastway.echarts.shared.DbException;
 import org.eastway.echarts.shared.MessageDTO;
 import org.eastway.echarts.shared.SessionExpiredException;
-import org.eastway.echarts.shared.UserDTO;
+import org.eastway.echarts.shared.User;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -150,7 +150,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements RpcServices
 	}
 
 	@Override
-	public UserDTO getUser(String username, String sessionId) throws DbException, SessionExpiredException {
+	public User getUser(String username, String sessionId) throws DbException, SessionExpiredException {
 		checkSessionExpire(sessionId);
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
 		EntityManager em = emf.createEntityManager();

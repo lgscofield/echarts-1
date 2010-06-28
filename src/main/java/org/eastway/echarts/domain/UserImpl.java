@@ -29,11 +29,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
+import org.eastway.echarts.shared.Role;
+import org.eastway.echarts.shared.User;
 import org.eastway.echarts.shared.UserDTO;
 
 @Entity
 @Table(name="Echarts_User")
-public class UserImpl {
+public class UserImpl implements User {
 	@Id
 	@TableGenerator(name = "tg", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "tg")
@@ -47,8 +49,8 @@ public class UserImpl {
 	private String staffId;
 	@ManyToOne
 	@JoinColumn(name = "Role_Id")
-	private Role role;
-	private byte[] extPerm;
+	private RoleImpl role;
+	private byte[] extendedPermissions;
 	private String staffName;
 	private String program;
 	private Date hireDate;
@@ -59,6 +61,7 @@ public class UserImpl {
 	private String officeExt;
 	private String staffDescription;
 	private String staffNpi;
+	private String supervisor;
 
 	public UserImpl() {	}
 
@@ -66,22 +69,27 @@ public class UserImpl {
 		this.id = id;
 	}
 
+	@Override
 	public void setId(long id) {
 		this.id = id;
 	}
 
+	@Override
 	public long getId() {
 		return id;
 	}
 
+	@Override
 	public void setUsername(String username) {
 		this.username = username;
 	}
 
+	@Override
 	public String getUsername() {
 		return username;
 	}
 
+	@Override
 	public void setStaffId(String staffId) {
 		this.staffId = staffId;
 	}
@@ -90,120 +98,167 @@ public class UserImpl {
 		return staffId;
 	}
 
+	@Override
 	public void setRole(Role role) {
-		this.role = role;
+		this.role = (RoleImpl) role;
 	}
 
+	@Override
 	public Role getRole() {
 		return role;
 	}
 
-	public void setExtPerm(byte[] extPerm) {
-		this.extPerm = extPerm;
-	}
-
-	public byte[] getExtPerm() {
-		return extPerm;
-	}
-
+	@Override
 	public void setStaffName(String staffName) {
 		this.staffName = staffName;
 	}
 
+	@Override
 	public String getStaffName() {
 		return staffName;
 	}
 
+	@Override
 	public void setProgram(String program) {
 		this.program = program;
 	}
 
+	@Override
 	public String getProgram() {
 		return program;
 	}
 
+	@Override
 	public void setHireDate(Date hireDate) {
 		this.hireDate = hireDate;
 	}
 
+	@Override
 	public Date getHireDate() {
 		return hireDate;
 	}
 
+	@Override
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
+	@Override
 	public String getStatus() {
 		return status;
 	}
 
+	@Override
 	public void setTermDate(Date termDate) {
 		this.termDate = termDate;
 	}
 
+	@Override
 	public Date getTermDate() {
 		return termDate;
 	}
 
+	@Override
 	public void setOffice(String office) {
 		this.office = office;
 	}
 
+	@Override
 	public String getOffice() {
 		return office;
 	}
 
+	@Override
 	public void setOfficePhone(String officePhone) {
 		this.officePhone = officePhone;
 	}
 
+	@Override
 	public String getOfficePhone() {
 		return officePhone;
 	}
 
+	@Override
 	public void setOfficeExt(String officeExt) {
 		this.officeExt = officeExt;
 	}
 
+	@Override
 	public String getOfficeExt() {
 		return officeExt;
 	}
 
+	@Override
 	public void setStaffDescription(String staffDescription) {
 		this.staffDescription = staffDescription;
 	}
 
+	@Override
 	public String getStaffDescription() {
 		return staffDescription;
 	}
 
+	@Override
 	public void setStaffNpi(String staffNpi) {
 		this.staffNpi = staffNpi;
 	}
 
+	@Override
 	public String getStaffNpi() {
 		return staffNpi;
 	}
 
+	@Override
 	public UserDTO toDto() {
 		UserDTO userDto = new UserDTO();
-		userDto.setExtendedPermissions(this.getExtPerm());
+		userDto.setExtendedPermissions(this.getExtendedPermissions());
 		userDto.setHireDate(this.getHireDate());
 		userDto.setId(this.getId());
 		userDto.setOffice(this.getOffice());
 		userDto.setOfficeExt(this.getOfficeExt());
 		userDto.setOfficePhone(this.getOfficePhone());
 		userDto.setProgram(this.getProgram());
-		userDto.setRole(this.getRole().toDto());
-		userDto.setRoleId(this.getRole().getId());
+		userDto.setRole(role);
 		userDto.setStaffDescription(this.getStaffDescription());
 		userDto.setStaffId(this.getStaffId());
 		userDto.setStaffName(this.getStaffName());
 		userDto.setStaffNpi(this.getStaffNpi());
 		userDto.setStatus(this.getStatus());
 		userDto.setTermDate(this.getTermDate());
-		userDto.setUserName(this.getUsername());
+		userDto.setUsername(this.getUsername());
 		return userDto;
+	}
+
+	@Override
+	public byte[] getExtendedPermissions() {
+		return extendedPermissions;
+	}
+
+	@Override
+	public String getSupervisor() {
+		return supervisor;
+	}
+
+	@Override
+	public void setExtendedPermissions(byte[] extendedPermissions) {
+		this.extendedPermissions = extendedPermissions;
+	}
+
+	@Override
+	public void setSupervisor(String supervisor) {
+		this.supervisor = supervisor;
+	}
+
+	@Override
+	public String getSessionId() {
+		for (SessionIdLog sessionId : sessionIds)
+			return sessionId.getSessionId();
+		return null;
+	}
+
+	@Override
+	public void setSessionId(String sessionId) {
+		// TODO Auto-generated method stub
+		
 	}
 }
