@@ -19,10 +19,10 @@ import java.util.Vector;
 
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.RpcServicesAsync;
-import org.eastway.echarts.client.UserImpl;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
@@ -54,7 +54,7 @@ public class AlertsPresenter extends Presenter<AlertsPresenter.Display> {
 				display.setData(data);
 			}
 		};
-		rpcServices.getAlerts(UserImpl.getSessionId(), callback);
+		rpcServices.getAlerts(Cookies.getCookie("sessionId"), callback);
 	}
 
 	@Override

@@ -23,7 +23,7 @@ import org.eastway.echarts.shared.CodeDTO;
 import org.eastway.echarts.shared.DbException;
 import org.eastway.echarts.shared.MessageDTO;
 import org.eastway.echarts.shared.SessionExpiredException;
-import org.eastway.echarts.shared.UserDTO;
+import org.eastway.echarts.shared.User;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -38,7 +38,7 @@ public interface RpcServices extends RemoteService {
 
 	public MessageDTO addMessage(MessageDTO msg, String sessionId) throws SessionExpiredException, DbException;
 
-	public UserDTO getUser(String username, String sessionId) throws DbException, SessionExpiredException;
+	public User getUser(String username, String sessionId) throws DbException, SessionExpiredException;
 
 	public LinkedHashSet<String[]> getFormsList(String sessionId, String patientId) throws SessionExpiredException, DbException;
 }

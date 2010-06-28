@@ -19,9 +19,9 @@ import java.util.LinkedHashSet;
 
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.RpcServicesAsync;
-import org.eastway.echarts.client.UserImpl;
 
 import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
@@ -56,7 +56,7 @@ public class LinkPresenter extends Presenter<LinkPresenter.Display> {
 				display.setData(getData());
 			}
 		};
-		rpcServices.getFormsList(UserImpl.getSessionId(), patientid, callback);
+		rpcServices.getFormsList(Cookies.getCookie("sessionId"), patientid, callback);
 	}
 
 	public LinkedHashSet<String[]> getData() {
@@ -66,7 +66,7 @@ public class LinkPresenter extends Presenter<LinkPresenter.Display> {
 	public void setData(LinkedHashSet<String[]> d) {
 		this.data = d;
 		for (String[] s : data) {
-			s[1] += "?staffid=" + UserImpl.getStaffId() + "&PATID=" + patientid;
+			s[1] += "?staffid=" + Cookies.getCookie("staff_id") + "&PATID=" + patientid;
 		}
 	}
 
