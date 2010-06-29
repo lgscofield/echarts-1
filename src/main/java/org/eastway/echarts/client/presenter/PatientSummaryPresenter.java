@@ -25,15 +25,16 @@ import org.eastway.echarts.shared.Patient;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class PatientSummaryPresenter extends Presenter<PatientSummaryPresenter.Display> {
+public class PatientSummaryPresenter implements Presenter {
 
 	private EHR ehr;
+	private Display display;
 
 	public PatientSummaryPresenter(Display display,
 			HandlerManager eventBus, EHRServicesAsync ehrServicesAsync,
 			EHR ehr) {
-		super(display, eventBus);
 		this.ehr = ehr;
+		this.display = display;
 	}
 
 	public interface Display extends EchartsDisplay {

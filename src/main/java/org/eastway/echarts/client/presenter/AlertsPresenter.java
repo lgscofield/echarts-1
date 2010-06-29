@@ -26,7 +26,7 @@ import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class AlertsPresenter extends Presenter<AlertsPresenter.Display> {
+public class AlertsPresenter implements Presenter {
 
 	public interface Display extends EchartsDisplay {
 		HasClickHandlers getAlerts();
@@ -35,10 +35,11 @@ public class AlertsPresenter extends Presenter<AlertsPresenter.Display> {
 	}
 
 	private RpcServicesAsync rpcServices;
+	private Display display;
 
 	public AlertsPresenter(Display display, RpcServicesAsync rpcServices, HandlerManager eventBus) {
-		super(display, eventBus);
 		this.rpcServices = rpcServices;
+		this.display = display;
 	}
 
 	public void fetchAlerts() {

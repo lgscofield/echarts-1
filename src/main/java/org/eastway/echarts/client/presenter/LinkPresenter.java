@@ -25,7 +25,7 @@ import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class LinkPresenter extends Presenter<LinkPresenter.Display> {
+public class LinkPresenter implements Presenter {
 
 	public interface Display extends EchartsDisplay {
 		void setData(LinkedHashSet<String[]> data);
@@ -34,12 +34,13 @@ public class LinkPresenter extends Presenter<LinkPresenter.Display> {
 	private String patientid;
 	private LinkedHashSet<String[]> data;
 	private RpcServicesAsync rpcServices;
+	private Display display;
 
 	public LinkPresenter(Display display, HandlerManager eventBus,
 			RpcServicesAsync rpcServices, String patientid) {
-		super(display, eventBus);
 		this.patientid = patientid;
 		this.rpcServices = rpcServices;
+		this.display = display;
 	}
 
 	private void fetchData() {

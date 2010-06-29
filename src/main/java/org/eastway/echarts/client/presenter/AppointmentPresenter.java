@@ -21,17 +21,18 @@ import org.eastway.echarts.shared.EHR;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class AppointmentPresenter extends Presenter<AppointmentPresenter.Display> {
+public class AppointmentPresenter implements Presenter {
 
 	public interface Display extends EchartsDisplay, Appointment {
 		public void nextRecord();
 	}
 
 	private EHR ehr;
+	private Display display;
 
 	public AppointmentPresenter(Display display, HandlerManager eventBus, EHR ehr) {
-		super(display, eventBus);
 		this.ehr = ehr;
+		this.display = display;
 	}
 
 	@Override

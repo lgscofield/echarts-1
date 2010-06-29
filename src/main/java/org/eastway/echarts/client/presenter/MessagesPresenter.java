@@ -33,7 +33,7 @@ import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
+public class MessagesPresenter implements Presenter {
 
 	public interface Display extends EchartsDisplay {
 		void setData(ArrayList<String[]> data);
@@ -64,12 +64,13 @@ public class MessagesPresenter extends Presenter<MessagesPresenter.Display> {
 	private ArrayList<String[]> data = new ArrayList<String[]>();
 	private EHR ehr;
 	private List<CodeDTO> types;
+	private Display display;
 
 	public MessagesPresenter(final Display display, HandlerManager eventBus,
 			RpcServicesAsync rpcServices, EHR ehr) {
-		super(display, eventBus);
 		this.ehr = ehr;
 		this.rpcServices = rpcServices;
+		this.display = display;
 	}
 
 	@Override

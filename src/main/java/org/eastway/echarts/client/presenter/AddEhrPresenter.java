@@ -34,7 +34,7 @@ import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class AddEhrPresenter extends Presenter<AddEhrPresenter.Display> {
+public class AddEhrPresenter implements Presenter {
 	public interface Display extends EchartsDisplay {
 		HasClickHandlers getFinishButton();
 
@@ -248,11 +248,12 @@ public class AddEhrPresenter extends Presenter<AddEhrPresenter.Display> {
 	}
 
 	private EHRServicesAsync rpcServices;
+	private Display display;
 
 	public AddEhrPresenter(Display display, HandlerManager eventBus,
 					EHRServicesAsync rpcServices) {
-		super(display, eventBus);
 		this.rpcServices = rpcServices;
+		this.display = display;
 	}
 
 	@Override

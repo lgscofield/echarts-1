@@ -40,7 +40,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class TopPanelPresenter extends Presenter<TopPanelPresenter.Display> {
+public class TopPanelPresenter implements Presenter {
 	public interface Display extends EchartsDisplay {
 		void setData(LinkedHashMap<String, Long> data);
 
@@ -55,9 +55,12 @@ public class TopPanelPresenter extends Presenter<TopPanelPresenter.Display> {
 
 	private LinkedHashMap<String, Long> data;
 	private PatientServicesAsync patientServices;
+	private Display display;
+	private HandlerManager eventBus;
 
 	public TopPanelPresenter(Display display, HandlerManager eventBus, PatientServicesAsync patientServices) {
-		super(display, eventBus);
+		this.display = display;
+		this.eventBus = eventBus;
 		this.patientServices = patientServices;
 		fetchData();
 		bind();

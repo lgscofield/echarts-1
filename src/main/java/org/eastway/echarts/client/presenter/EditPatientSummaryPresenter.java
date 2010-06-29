@@ -33,7 +33,7 @@ import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class EditPatientSummaryPresenter extends Presenter<EditPatientSummaryPresenter.Display> {
+public class EditPatientSummaryPresenter implements Presenter {
 
 	public interface Display extends EchartsDisplay {
 		HasText getCaseNumber();
@@ -83,14 +83,15 @@ public class EditPatientSummaryPresenter extends Presenter<EditPatientSummaryPre
 
 	private EHRServicesAsync ehrServices;
 	private Patient patient;
+	private Display display;
 
 	public EditPatientSummaryPresenter(
 			Display display,
 			HandlerManager eventBus, EHRServicesAsync ehrServices,
 			Patient patient) {
-		super(display, eventBus);
 		this.ehrServices = ehrServices;
 		this.patient = patient;
+		this.display = display;
 	}
 
 	@Override

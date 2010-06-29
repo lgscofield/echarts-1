@@ -27,7 +27,7 @@ import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class AddressPresenter extends Presenter<AddressPresenter.Display> {
+public class AddressPresenter implements Presenter {
 
 	public interface Display extends EchartsDisplay, Address {
 		void nextRecord();
@@ -35,11 +35,12 @@ public class AddressPresenter extends Presenter<AddressPresenter.Display> {
 
 	private AddressServicesAsync rpcServices;
 	private EHR ehr;
+	private Display display;
 
 	public AddressPresenter(Display display, HandlerManager eventBus, AddressServicesAsync rpcServices, EHR ehr) {
-		super(display, eventBus);
 		this.rpcServices = rpcServices;
 		this.ehr = ehr;
+		this.display = display;
 	}
 
 	@Override

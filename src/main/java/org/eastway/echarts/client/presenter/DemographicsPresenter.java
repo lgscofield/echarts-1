@@ -22,16 +22,17 @@ import org.eastway.echarts.shared.Demographics;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class DemographicsPresenter extends Presenter<DemographicsPresenter.Display> {
+public class DemographicsPresenter implements Presenter {
 
 	public interface Display extends EchartsDisplay, Demographics { }
 
 	private EHR ehr;
+	private Display display;
 
 	public DemographicsPresenter(Display display,
 			HandlerManager eventBus, EHRServicesAsync rpcServices, EHR ehr) {
-		super(display, eventBus);
 		this.ehr = ehr;
+		this.display = display;
 	}
 
 	@Override

@@ -20,15 +20,17 @@ import com.google.gwt.user.client.ui.HasWidgets;
 
 import org.eastway.echarts.shared.PatientDTO;
 
-public class ServiceHistoryPresenter extends Presenter<ServiceHistoryPresenter.Display> {
+public class ServiceHistoryPresenter implements Presenter {
 
 	public interface Display extends EchartsDisplay {
 		void setName(String name);
 	}
 
+	private Display display;
+
 	public ServiceHistoryPresenter(Display display, HandlerManager eventBus,
 				PatientDTO patient) {
-		super(display, eventBus);
+		this.display = display;
 		display.setName(patient.getCaseNumber());
 	}
 

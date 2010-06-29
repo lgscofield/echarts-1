@@ -25,7 +25,7 @@ import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class ReferralPresenter extends Presenter<ReferralPresenter.Display> {
+public class ReferralPresenter implements Presenter {
 
 	public interface Display extends EchartsDisplay, Referral {
 		void nextRecord();
@@ -33,11 +33,12 @@ public class ReferralPresenter extends Presenter<ReferralPresenter.Display> {
 
 	private ReferralServicesAsync rpcServices;
 	private EHR ehr;
+	private Display display;
 
 	public ReferralPresenter(Display display, HandlerManager eventBus, ReferralServicesAsync rpcServices, EHR ehr) {
-		super(display, eventBus);
 		this.rpcServices = rpcServices;
 		this.ehr = ehr;
+		this.display = display;
 	}
 
 	@Override
