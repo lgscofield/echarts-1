@@ -15,7 +15,6 @@
  */
 package org.eastway.echarts.client;
 
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.HandlerManager;
@@ -28,6 +27,7 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 
 public class Echarts implements EntryPoint {
 	private RootLayoutPanel root = RootLayoutPanel.get();
+	private HandlerManager eventBus = new HandlerManager(null);
 	interface GlobalResources extends ClientBundle {
 		@NotStrict
 		@Source("echarts.css")
@@ -53,7 +53,7 @@ public class Echarts implements EntryPoint {
 	}
 
 	public void go() {
-		AppController app = new AppController(new HandlerManager(null));
+		AppController app = new AppController(eventBus);
 		app.go(root);
 	}
 }

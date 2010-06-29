@@ -53,7 +53,7 @@ public class PatientListPresenter implements PatientListView.Presenter<LinkedHas
 				setData(data);
 			}
 		};
-		patientServices.getPatientList(Cookies.getCookie("sessionId"), Cookies.getCookie("staff_id"), callback);
+		patientServices.getPatientList(Cookies.getCookie("sessionId"), "5434", callback);
 	}
 
 	private void setData(LinkedHashMap<String, Long> data) {

@@ -18,23 +18,29 @@ package org.eastway.echarts.client.presenter;
 import java.util.LinkedHashSet;
 
 import org.eastway.echarts.client.EHRServicesAsync;
+import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.Patient;
 
 import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class PatientSummaryPresenter implements Presenter {
 
 	private EHR ehr;
 	private Display display;
+	private long ehrId;
+	private EHRServicesAsync ehrServices;
 
 	public PatientSummaryPresenter(Display display,
-			HandlerManager eventBus, EHRServicesAsync ehrServicesAsync,
-			EHR ehr) {
-		this.ehr = ehr;
+			HandlerManager eventBus, EHRServicesAsync ehrServices,
+			long ehrId) {
+		this.ehrId = ehrId;
 		this.display = display;
+		this.ehrServices = ehrServices;
 	}
 
 	public interface Display extends EchartsDisplay {
@@ -45,7 +51,23 @@ public class PatientSummaryPresenter implements Presenter {
 	public void go(HasWidgets container) {
 		container.clear();
 		container.add(display.asWidget());
-		setPersonalData();
+		fetchEhr();
+	}
+
+	private void fetchEhr() {
+		AsyncCallback<EHR> callback = new AsyncCallback<EHR>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				new HandleRpcException(caught);
+			}
+
+			@Override
+			public void onSuccess(EHR ehr) {
+				setEhr(ehr);
+				setPersonalData();
+			}
+		};
+		ehrServices.getEhr(ehrId, Cookies.getCookie("sessionId"), callback);
 	}
 
 	protected void setEhr(EHR ehr) {

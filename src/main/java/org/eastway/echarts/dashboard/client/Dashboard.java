@@ -23,13 +23,10 @@ import org.eastway.echarts.client.EHRServicesAsync;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.PatientServices;
 import org.eastway.echarts.client.PatientServicesAsync;
-import org.eastway.echarts.client.RpcServices;
-import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
-import org.eastway.echarts.client.events.OpenEhrEvent;
-import org.eastway.echarts.client.events.OpenEhrEventHandler;
 import org.eastway.echarts.client.presenter.PatientListPresenter;
 import org.eastway.echarts.client.presenter.TopPanelPresenter;
+import org.eastway.echarts.client.view.EHRViewImpl;
 import org.eastway.echarts.client.view.PatientListViewImpl;
 import org.eastway.echarts.client.view.TopPanelView;
 import org.eastway.echarts.shared.EHR;
@@ -46,14 +43,20 @@ import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -70,19 +73,22 @@ public class Dashboard extends Composite {
 		String green();
 		String yellow();
 		String red();
+		String button();
+		String searchbox();
 	}
 
-	//@UiField Style style;
+	private MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
+	private SuggestBox patientIdBox = new SuggestBox(oracle);
+	private Button patientSearchButton = new Button("Search");
 	@UiField DockLayoutPanel dockLayoutPanel;
 	@UiField TabLayoutPanel tabLayoutPanel;
 	@UiField ScrollPanel patientListPanel;
-	//@UiField FlowPanel alertsPanel;
-	@UiField TopPanelView top;
 	@UiField FlowPanel scheduler;
-	//@UiField SpanElement productivity;
-	//@UiField Anchor gmhIntake;
+	@UiField FlowPanel patientSearch;
+	@UiField Anchor logoutButton;
+	@UiField FlowPanel currentPatientData;
+	@UiField Style style;
 
-	private RpcServicesAsync rpcServices = GWT.<RpcServicesAsync>create(RpcServices.class);
 	private EHRServicesAsync ehrServices = GWT.<EHRServicesAsync>create(EHRServices.class);
 	private PatientServicesAsync patientServices = GWT.<PatientServicesAsync>create(PatientServices.class);
 	private HandlerManager eventBus;
@@ -90,15 +96,16 @@ public class Dashboard extends Composite {
 	public Dashboard(HandlerManager eventBus) {
 		this.eventBus = eventBus;
 		initWidget(uiBinder.createAndBindUi(this));
-		new TopPanelPresenter(top, eventBus, patientServices);
-		//AlertsPresenter ap = new AlertsPresenter(new AlertsView(), Rpc.singleton(), eventBus);
-		//ap.go(alertsPanel);
-		//setProductivity("92");
 		setScheduler(scheduler);
 		bind();
 		PatientListPresenter plp = new PatientListPresenter(
 				new PatientListViewImpl<LinkedHashMap<String, Long>>(), eventBus, patientServices);
 		plp.go(patientListPanel);
+		patientSearch.add(patientIdBox);
+		patientSearch.add(patientSearchButton);
+		patientSearchButton.addStyleName(style.button());
+		patientIdBox.addStyleName(style.searchbox());
+		logoutButton.setHref("http://ewsql.eastway.local/echarts/logout.aspx?continue=" + Window.Location.getHref());
 	}
 
 //	private void setProductivity(String credit) {
@@ -124,33 +131,21 @@ public class Dashboard extends Composite {
 	}
 
 	private void bind() {
-		eventBus.addHandler(OpenEhrEvent.TYPE,
-				new OpenEhrEventHandler() {
-					public void onOpenEhr(
-							OpenEhrEvent event) {
-						openEhr(event.getId());
-					}
-				});
-
-//		gmhIntake.addClickHandler(new ClickHandler() {
-//			@Override
-//			public void onClick(ClickEvent event) {
-//				openEditPatient();
-//			}
-//		});
 		tabLayoutPanel.addSelectionHandler(new SelectionHandler<Integer>() {
 			@Override
 			public void onSelection(SelectionEvent<Integer> event) {
 				Widget w = tabLayoutPanel.getWidget(event.getSelectedItem());
-				if (w instanceof EHRTab)
-					eventBus.fireEvent(new ChangeCurrentEhrEvent(((EHRTab) w).getEhr()));
-				else
+				if (w instanceof EHRViewImpl<?>) {
+					eventBus.fireEvent(new ChangeCurrentEhrEvent(((EHRViewImpl<?>) w).getPresenter().getEhr()));
+					History.newItem("list");
+				} else {
 					eventBus.fireEvent(new ChangeCurrentEhrEvent(null));
+				}
 			}
 		});
 	}
 
-	private void addTab(final Widget child, String tab) {
+	public void addTab(final Widget child, String tab) {
 		Label closeTab = new Label();
 		HorizontalPanel tabHeader = new HorizontalPanel();
 		closeTab.setTitle("Close");
@@ -216,11 +211,15 @@ public class Dashboard extends Composite {
 
 			@Override
 			public void onSuccess(EHR ehr) {
-				final EHRTab tb = new EHRTab(eventBus, rpcServices, ehr);
-				addTab(tb, ehr.getSubject().getName());
+				//final EHRTab tb = new EHRTab(eventBus, rpcServices, ehr);
+				//addTab(tb, ehr.getSubject().getName());
 			}
 		};
 		ehrServices.getEhr(ehrId, Cookies.getCookie("sessionId"),
 				callback);
+	}
+
+	public HasWidgets getTabLayoutPanel() {
+		return tabLayoutPanel;
 	}
 }

@@ -34,6 +34,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class PatientListViewImpl<T> extends Composite implements PatientListView<T> {
+	@SuppressWarnings("unchecked")
 	@UiTemplate("PatientListView.ui.xml")
 	interface PatientListViewUiBinder extends UiBinder<Widget, PatientListViewImpl> { }
 	private static PatientListViewUiBinder uiBinder = GWT.create(PatientListViewUiBinder.class);
