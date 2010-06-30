@@ -98,8 +98,7 @@ public class PatientListViewImpl<T> extends Composite implements PatientListView
 	}
 
 	@Override
-	public void setPresenter(
-			org.eastway.echarts.client.view.PatientListView.Presenter<T> presenter) {
+	public void setPresenter(Presenter<T> presenter) {
 		this.presenter = presenter;
 	}
 }

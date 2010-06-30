@@ -1,6 +1,9 @@
 package org.eastway.echarts.client.view;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.eastway.echarts.shared.EHR;
 
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.user.client.ui.Widget;
@@ -14,10 +17,15 @@ public interface DashboardView<T> {
 		String red();
 		String button();
 		String searchbox();
+		String label();
 	}
 
 	public interface Presenter<T> {
+		void onItemSelected(String row);
 
+		void changeCurrentEhr(EHR ehr);
+
+		void openEhr(String text);
 	}
 
 	void addTab(Widget widget, String string);
@@ -26,4 +34,5 @@ public interface DashboardView<T> {
 	void setPresenter(Presenter<T> presenter);
 	void setPatientSearchData(List<String> list);
 	void addPatientSearchData(String str);
+	void setCurrentEhrData(ArrayList<String[]> data);
 }

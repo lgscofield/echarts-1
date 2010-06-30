@@ -90,6 +90,12 @@
 		.top {
 			margin-top: 10px;
 		}
+
+		.label:hover {
+			cursor: pointer;
+			background-color: #dfeffc;
+			width: 100%;
+		}
 	</ui:style>
 	<ui:image field="logo" src="../../client/images/echarts-logo.gif"/>
 	<g:DockLayoutPanel unit="EM" ui:field="dockLayoutPanel">
@@ -114,7 +120,12 @@
 					</g:customHeader>
 					<g:SplitLayoutPanel>
 						<g:west size='250'>
-							<g:ScrollPanel ui:field='patientListPanel' />
+							<g:ScrollPanel>
+								<g:DisclosurePanel ui:field='patientListPanel'>
+									<g:header>Open Chart</g:header>
+									<g:FlexTable ui:field='table'/>
+								</g:DisclosurePanel>
+							</g:ScrollPanel>
 						</g:west>
 						<g:east size='250'>
 							<g:FlowPanel ui:field='scheduler' />
@@ -123,11 +134,5 @@
 				</g:tab>
 			</g:TabLayoutPanel>
 		</g:center>
-		<!--    <g:south size="8">-->
-		<!--      <g:HTMLPanel addStyleNames="{style.alerts}">-->
-		<!--        <b>Alerts</b>-->
-		<!--        <g:FlowPanel ui:field="alertsPanel" />-->
-		<!--      </g:HTMLPanel>-->
-		<!--    </g:south>-->
 	</g:DockLayoutPanel>
 </ui:UiBinder>
