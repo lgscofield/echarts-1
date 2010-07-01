@@ -15,14 +15,18 @@
  */
 package org.eastway.echarts.client.presenter;
 
+import net.customware.gwt.presenter.client.EventBus;
+
 import org.eastway.echarts.client.EHRServicesAsync;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
+import org.eastway.echarts.client.events.ViewMessagesEvent;
 import org.eastway.echarts.client.events.ViewPatientSummaryEvent;
 import org.eastway.echarts.client.view.EHRView;
 import org.eastway.echarts.shared.EHR;
 
-import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.requestfactory.shared.RequestEvent;
+import com.google.gwt.requestfactory.shared.RequestEvent.State;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -32,10 +36,10 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
 	private EHR ehr;
 	private EHRServicesAsync ehrServices;
 	private EHRView<EHR> view;
-	private HandlerManager eventBus;
+	private EventBus eventBus;
 	private long ehrId;
 
-	public EHRPresenter(EHRView<EHR> view, HandlerManager eventBus, EHRServicesAsync ehrServices, long ehrId) {
+	public EHRPresenter(EHRView<EHR> view, EventBus eventBus, EHRServicesAsync ehrServices, long ehrId) {
 		this.view = view;
 		this.view.setPresenter(this);
 		this.eventBus = eventBus;
@@ -52,10 +56,12 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
 
 			@Override
 			public void onSuccess(EHR ehr) {
+				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
 				setEhr(ehr);
 				eventBus.fireEvent(new ChangeCurrentEhrEvent(getEhr()));
 			}
 		};
+		eventBus.fireEvent(new RequestEvent(State.SENT));
 		ehrServices.getEhr(ehrId, Cookies.getCookie("sessionId"), callback);
 	}
 
@@ -69,14 +75,17 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
 	}
 
 	@Override
-	public void onItemSelected(String selected) {
-		if (selected == "patientSummary") {
-			eventBus.fireEvent(new ViewPatientSummaryEvent(ehrId));
-		}
+	public void viewPatientSummary() {
+		eventBus.fireEvent(new ViewPatientSummaryEvent(ehrId, view));
 	}
 
 	@Override
 	public EHR getEhr() {
 		return ehr;
+	}
+
+	@Override
+	public void viewMessages() {
+		eventBus.fireEvent(new ViewMessagesEvent(ehrId, view));
 	}
 }

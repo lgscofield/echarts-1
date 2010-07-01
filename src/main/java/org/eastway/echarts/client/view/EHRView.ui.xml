@@ -20,6 +20,15 @@
 		<g:west size='150'>
 			<g:Tree ui:field='menu'>
 				<g:Label ui:field='patientSummary'>Patient Summary</g:Label>
+				<g:Label ui:field='demographics'>Demographics</g:Label>
+				<g:Label ui:field='referral'>Referral</g:Label>
+				<g:Label ui:field='addresses'>Addresses</g:Label>
+				<g:Label ui:field='contacts'>Contacts</g:Label>
+				<g:Label ui:field='diagnoses'>Diagnoses</g:Label>
+				<g:Label ui:field='appointments'>Appointments</g:Label>
+				<g:Label ui:field='medications'>Medications</g:Label>
+				<g:Label ui:field='messages'>Messages</g:Label>
+				<g:Label ui:field='forms'>Forms</g:Label>
 			</g:Tree>
 		</g:west>
 		<g:center>

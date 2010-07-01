@@ -32,6 +32,7 @@ public class PatientListPresenter implements PatientListView.Presenter<LinkedHas
 	private PatientListView<LinkedHashMap<String, Long>> display;
 	private PatientServicesAsync patientServices;
 	private HandlerManager eventBus;
+	private String caseNumber;
 
 	public PatientListPresenter(PatientListView<LinkedHashMap<String, Long>> display, HandlerManager eventBus, PatientServicesAsync patientServices) {
 		this.patientServices = patientServices;
@@ -78,7 +79,7 @@ public class PatientListPresenter implements PatientListView.Presenter<LinkedHas
 	public void onItemSelected(String row) {
 		if (row != null) {
 			long ehrId = getData().get(row);
-			eventBus.fireEvent(new OpenEhrEvent(ehrId));
+			eventBus.fireEvent(new OpenEhrEvent(ehrId, row));
 		}
 	}
 }

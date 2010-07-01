@@ -21,6 +21,17 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath*:META-INF/spring/applicationContext*.xml</param-value>
     </context-param>
+    <filter>
+		<filter-name>guiceFilter</filter-name>
+		<filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>guiceFilter</filter-name>
+		<url-pattern>/echarts/dispatch</url-pattern>
+	</filter-mapping>
+	<listener>
+		<listener-class>org.eastway.echarts.server.EchartsServerConfig</listener-class>
+	</listener>
 	<!-- Servlets -->
 	<servlet>
 		<servlet-name>rpcServicesImpl</servlet-name>
@@ -70,6 +81,7 @@
 		<servlet-name>addressServicesImpl</servlet-name>
 		<url-pattern>/echarts/addressServices</url-pattern>
 	</servlet-mapping>
+
 	<!-- Default page to serve -->
 	<welcome-file-list>
 		<welcome-file>echarts.html</welcome-file>

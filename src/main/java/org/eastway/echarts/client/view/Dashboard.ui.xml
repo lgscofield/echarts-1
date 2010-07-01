@@ -13,7 +13,7 @@
 <!-- limitations under the License.                                         -->
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:e="urn:import:org.eastway.echarts.client.view">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:e="urn:import:org.eastway.echarts.client.view" xmlns:a='urn:import:com.google.gwt.app.client'>
 	<ui:style type="org.eastway.echarts.client.view.DashboardView.Style">
 		.alerts {
 			border-top: 1px solid SkyBlue;
@@ -100,6 +100,10 @@
 	<ui:image field="logo" src="../../client/images/echarts-logo.gif"/>
 	<g:DockLayoutPanel unit="EM" ui:field="dockLayoutPanel">
 		<g:north size="6">
+		<g:FlowPanel>
+			<g:FlowPanel>
+				<a:NotificationMole animationDuration='0' message='Loading ...' ui:field='mole'></a:NotificationMole>
+			</g:FlowPanel>
 			<g:FlowPanel>
 				<g:FlowPanel addStyleNames="{style.banner} {style.left}" />
 				<g:Anchor ui:field="logoutButton" addStyleNames="{style.right} {style.logout}">Logout</g:Anchor>
@@ -107,8 +111,10 @@
 					<g:SuggestBox ui:field='patientIdBox' addStyleNames='{style.searchbox}'/>
 					<g:Button ui:field='patientSearchButton' addStyleNames='{style.button}'>Search</g:Button>
 				</g:FlowPanel>
+
 				<g:FlowPanel ui:field='currentPatientData'
-					addStyleNames='{style.left} {style.margin} {style.italics}' />
+					addStyleNames='{style.left} {style.margin} {style.italics}'/>
+			</g:FlowPanel>
 			</g:FlowPanel>
 		</g:north>
 		<g:center>

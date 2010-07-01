@@ -138,7 +138,7 @@ public class EHRTab extends Composite implements SelectionHandler<TreeItem> {
 
 		TreeItem messageMenuItem = menu.addItem("Messages");
 		messageMenuItem.setUserObject(messagesPanel);
-		mp = new MessagesPresenter(new MessagesView(), eventBus, rpcServices, ehr);
+		//mp = new MessagesPresenter(new MessagesView(), eventBus, rpcServices, ehr);
 		mp.go(messagesPanel);
 
 		TreeItem formsMenuItem = menu.addItem("Forms");

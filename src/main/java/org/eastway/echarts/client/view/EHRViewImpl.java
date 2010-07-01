@@ -22,6 +22,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Tree;
@@ -59,11 +60,21 @@ public class EHRViewImpl<T> extends Composite implements EHRView<T> {
 
 	@UiHandler("patientSummary")
 	void onPatientSummarySelected(ClickEvent event) {
-		presenter.onItemSelected("patientSummary");
+		presenter.viewPatientSummary();
+	}
+
+	@UiHandler("messages")
+	void onMessagesSelected(ClickEvent event) {
+		presenter.viewMessages();
 	}
 
 	@Override
 	public Presenter<T> getPresenter() {
 		return presenter;
+	}
+
+	@Override
+	public HasWidgets getDisplayArea() {
+		return displayArea;
 	}
 }

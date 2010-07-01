@@ -19,16 +19,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import net.customware.gwt.presenter.client.EventBus;
+
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.shared.CodeDTO;
-import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.MessageDTO;
 
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.requestfactory.shared.RequestEvent;
+import com.google.gwt.requestfactory.shared.RequestEvent.State;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -62,15 +64,17 @@ public class MessagesPresenter implements Presenter {
 	private RpcServicesAsync rpcServices;
 	private List<MessageDTO> messages;
 	private ArrayList<String[]> data = new ArrayList<String[]>();
-	private EHR ehr;
+	private long ehrId;
 	private List<CodeDTO> types;
 	private Display display;
+	private EventBus eventBus;
 
-	public MessagesPresenter(final Display display, HandlerManager eventBus,
-			RpcServicesAsync rpcServices, EHR ehr) {
-		this.ehr = ehr;
+	public MessagesPresenter(final Display display, EventBus eventBus,
+			RpcServicesAsync rpcServices, long ehrId) {
+		this.ehrId = ehrId;
 		this.rpcServices = rpcServices;
 		this.display = display;
+		this.eventBus = eventBus;
 	}
 
 	@Override
@@ -92,7 +96,7 @@ public class MessagesPresenter implements Presenter {
 			@Override
 			public void onClick(ClickEvent event) {
 				MessageDTO m = new MessageDTO();
-				m.setEhrId(ehr.getId());
+				m.setEhrId(ehrId);
 				CodeDTO mtDto = findMessageType(display.getMessageType());
 				m.setMessageType(mtDto);
 				m.setMessage(display.getMessage());
@@ -166,11 +170,13 @@ public class MessagesPresenter implements Presenter {
 
 			@Override
 			public void onSuccess(List<MessageDTO> data) {
+				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
 				setData(data);
 				display.setData(getData());
 			}
 		};
-		rpcServices.getMessages(ehr.getId(), Cookies.getCookie("sessionId"),
+		eventBus.fireEvent(new RequestEvent(State.SENT));
+		rpcServices.getMessages(ehrId, Cookies.getCookie("sessionId"),
 				callback);
 	}
 
@@ -200,7 +206,7 @@ public class MessagesPresenter implements Presenter {
 
 	private void showAddMessage() {
 		loadMessageType();
-		display.setText(ehr.getSubject().getCaseNumber());
+		display.setText("New Message");
 		display.show();
 	}
 

@@ -17,18 +17,22 @@ package org.eastway.echarts.client.view;
 
 import org.eastway.echarts.shared.EHR;
 
+import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 
 public interface EHRView<T> {
 
 	public interface Presenter<T> {
-		void onItemSelected(String string);
+		void viewPatientSummary();
 
 		EHR getEhr();
+
+		void viewMessages();
 	}
 
 	Widget asWidget();
 	void setTreeItemWidth();
 	void setPresenter(Presenter<T> presenter);
 	Presenter<T> getPresenter();
+	HasWidgets getDisplayArea();
 }

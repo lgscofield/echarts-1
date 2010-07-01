@@ -5,8 +5,10 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import net.customware.gwt.presenter.client.EventBus;
+
+import org.eastway.echarts.client.CachingDispatchAsync;
 import org.eastway.echarts.client.HandleRpcException;
-import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEventHandler;
 import org.eastway.echarts.client.events.OpenEhrEvent;
@@ -15,33 +17,32 @@ import org.eastway.echarts.shared.Assignment;
 import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.Patient;
+import org.eastway.echarts.shared.GetAssignments;
+import org.eastway.echarts.shared.GetAssignmentsResult;
 
-import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.Cookies;
+import com.google.gwt.requestfactory.shared.RequestEvent;
+import com.google.gwt.requestfactory.shared.RequestEvent.State;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.inject.Inject;
 
 public class DashboardPresenter implements Presenter, DashboardView.Presenter<LinkedHashMap<String, Long>> {
 
 	private DashboardView<LinkedHashMap<String, Long>> view;
-	private HandlerManager eventBus;
-	private PatientServicesAsync patientServices;
+	private EventBus eventBus;
 	private LinkedHashMap<String, Long> data;
+	private CachingDispatchAsync dispatch;
+	private GetAssignments assignments = new GetAssignments();
+	private String caseNumber;
 
+	@Inject
 	public DashboardPresenter(DashboardView<LinkedHashMap<String, Long>> view,
-			HandlerManager eventBus, PatientServicesAsync patientServices) {
+			EventBus eventBus, final CachingDispatchAsync dispatch) {
 		this.view = view;
 		this.view.setPresenter(this);
 		this.eventBus = eventBus;
-		this.patientServices = patientServices;
-	}
-
-	@Override
-	public void go(HasWidgets container) {
-		container.clear();
-		container.add(view.asWidget());
-		fetchData();
+		this.dispatch = dispatch;
 		bind();
 	}
 
@@ -52,6 +53,17 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 				setCurrentEhrData(event.getEhr());
 			}
 		});
+	}
+
+	public DashboardView<LinkedHashMap<String, Long>> getDisplay() {
+		return view;
+	}
+
+	@Override
+	public void go(HasWidgets container) {
+		container.clear();
+		container.add(view.asWidget());
+		fetchData();
 	}
 
 	private void setCurrentEhrData(EHR ehr) {
@@ -88,20 +100,21 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 	}
 
 	private void fetchData() {
-		AsyncCallback<LinkedHashMap<String, Long>> callback = new AsyncCallback<LinkedHashMap<String, Long>>() {
+		eventBus.fireEvent(new RequestEvent(State.SENT));
+		dispatch.executeWithCache(assignments, new AsyncCallback<GetAssignmentsResult>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				new HandleRpcException(caught);
 			}
 
 			@Override
-			public void onSuccess(LinkedHashMap<String, Long> data) {
+			public void onSuccess(GetAssignmentsResult data) {
+				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
 				for (String str : data.keySet())
 					view.addPatientSearchData(str);
-				setData(data);
+				setData(data.getList());
 			}
-		};
-		patientServices.getPatientList(Cookies.getCookie("sessionId"), "5434", callback);
+		});
 	}
 
 	private void setData(LinkedHashMap<String, Long> data) {
@@ -112,7 +125,7 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 	public void onItemSelected(String row) {
 		if (row != null) {
 			long ehrId = getData().get(row);
-			eventBus.fireEvent(new OpenEhrEvent(ehrId));
+			eventBus.fireEvent(new OpenEhrEvent(ehrId, caseNumber));
 		}
 	}
 
@@ -132,6 +145,11 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 
 	@Override
 	public void openEhr(String text) {
-		eventBus.fireEvent(new OpenEhrEvent(data.get(text)));
+		eventBus.fireEvent(new OpenEhrEvent(data.get(text), text));
+	}
+
+	@Override
+	public void patientListOpen() {
+		fetchData();
 	}
 }

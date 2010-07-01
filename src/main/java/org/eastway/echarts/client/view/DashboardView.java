@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.eastway.echarts.shared.EHR;
 
+import com.google.gwt.app.client.NotificationMole;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -26,6 +27,8 @@ public interface DashboardView<T> {
 		void changeCurrentEhr(EHR ehr);
 
 		void openEhr(String text);
+
+		void patientListOpen();
 	}
 
 	void addTab(Widget widget, String string);
@@ -35,4 +38,5 @@ public interface DashboardView<T> {
 	void setPatientSearchData(List<String> list);
 	void addPatientSearchData(String str);
 	void setCurrentEhrData(ArrayList<String[]> data);
+	NotificationMole getMole();
 }

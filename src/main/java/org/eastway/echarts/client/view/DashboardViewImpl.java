@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.google.gwt.app.client.NotificationMole;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.OpenEvent;
+import com.google.gwt.event.logical.shared.OpenHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -19,6 +22,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -41,6 +45,8 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 	@UiField FlowPanel currentPatientData;
 	@UiField Button patientSearchButton;
 	@UiField SuggestBox patientIdBox;
+	@UiField NotificationMole mole;
+	@UiField DisclosurePanel patientListPanel;
 
 	private MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
 	private int record = 0;
@@ -151,7 +157,7 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 		}
 		String row = table.getText(selected, 0);
 		if (row != null)
-			presenter.onItemSelected(row);
+			presenter.openEhr(row);
 	}
 
 	private void bind() {
@@ -166,6 +172,14 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 				}
 			}
 		});
+		patientListPanel.addOpenHandler(new OpenHandler<DisclosurePanel> () {
+
+			@Override
+			public void onOpen(OpenEvent<DisclosurePanel> event) {
+				presenter.patientListOpen();
+			}
+			
+		});
 	}
 
 	@UiHandler("patientSearchButton")
@@ -175,5 +189,10 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 			return;
 		presenter.openEhr(str);
 		patientIdBox.setText("");
+	}
+
+	@Override
+	public NotificationMole getMole() {
+		return mole;
 	}
 }
