@@ -21,17 +21,21 @@ import net.customware.gwt.presenter.client.EventBus;
 
 import org.eastway.echarts.client.events.OpenEhrEvent;
 import org.eastway.echarts.client.events.OpenEhrEventHandler;
+import org.eastway.echarts.client.events.ViewDemographicsEvent;
+import org.eastway.echarts.client.events.ViewDemographicsEventHandler;
 import org.eastway.echarts.client.events.ViewMessagesEvent;
 import org.eastway.echarts.client.events.ViewMessagesEventHandler;
 import org.eastway.echarts.client.events.ViewPatientSummaryEvent;
 import org.eastway.echarts.client.events.ViewPatientSummaryEventHandler;
 import org.eastway.echarts.client.presenter.DashboardPresenter;
+import org.eastway.echarts.client.presenter.DemographicsPresenter;
 import org.eastway.echarts.client.presenter.EHRPresenter;
 import org.eastway.echarts.client.presenter.MessagesPresenter;
 import org.eastway.echarts.client.presenter.PatientSummaryPresenter;
 import org.eastway.echarts.client.presenter.Presenter;
 import org.eastway.echarts.client.view.DashboardView;
 import org.eastway.echarts.client.view.DashboardViewImpl;
+import org.eastway.echarts.client.view.DemographicsView;
 import org.eastway.echarts.client.view.EHRView;
 import org.eastway.echarts.client.view.EHRViewImpl;
 import org.eastway.echarts.client.view.MessagesView;
@@ -56,6 +60,7 @@ public class AppController {
 	protected MessagesView messagesView;
 	protected CachingDispatchAsync dispatch;
 	private DashboardPresenter dashboardPresenter;
+	protected DemographicsPresenter demographicsPresenter;
 
 	@Inject
 	public AppController(EventBus eventBus, CachingDispatchAsync dispatch) {
@@ -94,6 +99,12 @@ public class AppController {
 				}
 			}
 		});
+		eventBus.addHandler(ViewDemographicsEvent.TYPE, new ViewDemographicsEventHandler() {
+			@Override
+			public void onViewDemographics(ViewDemographicsEvent event) {
+				doViewDemographics(event.getId(), event.getView());
+			}
+		});
 	}
 
 	public void doViewMessages(long ehrId, EHRView<EHR> view) {
@@ -114,6 +125,12 @@ public class AppController {
 		this.ehrId = ehrId;
 		Presenter presenter = new PatientSummaryPresenter(new PatientSummaryView(), eventBus, ehrServices, ehrId);
 		presenter.go(view.getDisplayArea());
+	}
+
+	public void doViewDemographics(final long ehrId, final EHRView<EHR> view) {
+		this.ehrId = ehrId;
+		demographicsPresenter = new DemographicsPresenter(new DemographicsView(), eventBus, dispatch, ehrId);
+		demographicsPresenter.go(view.getDisplayArea());
 	}
 
 	public void go(final HasWidgets container) {

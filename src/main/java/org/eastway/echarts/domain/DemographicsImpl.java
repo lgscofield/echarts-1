@@ -41,6 +41,7 @@ public class DemographicsImpl implements Demographics {
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "tg")
 	@Column(name = "Demographics_Id")
 	private long id;
+	private String caseNumber;
 	@OneToOne(mappedBy = "subject")
 	private EHRImpl ehr;
 	@Column(name = "Patient_Id")
@@ -605,6 +606,17 @@ public class DemographicsImpl implements Demographics {
 		demographicsDto.setSuicidal(this.isSuicidal());
 		demographicsDto.setVeteran(this.isVeteran());
 		demographicsDto.setVisuallyImpaired(this.isVisuallyImpaired());
+		demographicsDto.setCaseNumber(caseNumber);
 		return demographicsDto;
+	}
+
+	@Override
+	public String getCaseNumber() {
+		return caseNumber;
+	}
+
+	@Override
+	public void setCaseNumber(String caseNumber) {
+		this.caseNumber = caseNumber;
 	}
 }

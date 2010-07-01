@@ -62,6 +62,7 @@ public class DemographicsDTO implements Serializable, Demographics {
 	private Date lastEdit;
 	private String lastEditBy;
 	private long patientId;
+	private String caseNumber;
 
 	public DemographicsDTO() { }
 
@@ -556,5 +557,15 @@ public class DemographicsDTO implements Serializable, Demographics {
 	@Override
 	public DemographicsDTO toDto() {
 		return this;
+	}
+
+	@Override
+	public String getCaseNumber() {
+		return caseNumber;
+	}
+
+	@Override
+	public void setCaseNumber(String caseNumber) {
+		this.caseNumber = caseNumber;
 	}
 }

@@ -68,6 +68,11 @@ public class EHRViewImpl<T> extends Composite implements EHRView<T> {
 		presenter.viewMessages();
 	}
 
+	@UiHandler("demographics")
+	void onDemographicsSelected(ClickEvent event) {
+		presenter.viewDemographics();
+	}
+
 	@Override
 	public Presenter<T> getPresenter() {
 		return presenter;

@@ -20,6 +20,7 @@ import net.customware.gwt.presenter.client.EventBus;
 import org.eastway.echarts.client.EHRServicesAsync;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
+import org.eastway.echarts.client.events.ViewDemographicsEvent;
 import org.eastway.echarts.client.events.ViewMessagesEvent;
 import org.eastway.echarts.client.events.ViewPatientSummaryEvent;
 import org.eastway.echarts.client.view.EHRView;
@@ -87,5 +88,10 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
 	@Override
 	public void viewMessages() {
 		eventBus.fireEvent(new ViewMessagesEvent(ehrId, view));
+	}
+
+	@Override
+	public void viewDemographics() {
+		eventBus.fireEvent(new ViewDemographicsEvent(ehrId, view));
 	}
 }

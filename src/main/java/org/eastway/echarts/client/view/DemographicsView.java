@@ -542,4 +542,16 @@ public class DemographicsView extends Composite implements DemographicsPresenter
 	public DemographicsDTO toDto() {
 		return null;
 	}
+
+	@Override
+	public String getCaseNumber() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setCaseNumber(String caseNumber) {
+		// TODO Auto-generated method stub
+		
+	}
 }

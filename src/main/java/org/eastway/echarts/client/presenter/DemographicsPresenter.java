@@ -15,35 +15,63 @@
  */
 package org.eastway.echarts.client.presenter;
 
-import org.eastway.echarts.client.EHRServicesAsync;
-import org.eastway.echarts.shared.EHR;
-import org.eastway.echarts.shared.Demographics;
+import net.customware.gwt.presenter.client.EventBus;
 
-import com.google.gwt.event.shared.HandlerManager;
+import org.eastway.echarts.client.CachingDispatchAsync;
+import org.eastway.echarts.client.HandleRpcException;
+import org.eastway.echarts.shared.Demographics;
+import org.eastway.echarts.shared.GetDemographics;
+import org.eastway.echarts.shared.GetDemographicsResult;
+
+import com.google.gwt.requestfactory.shared.RequestEvent;
+import com.google.gwt.requestfactory.shared.RequestEvent.State;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class DemographicsPresenter implements Presenter {
 
 	public interface Display extends EchartsDisplay, Demographics { }
 
-	private EHR ehr;
 	private Display display;
+	private EventBus eventBus;
+	private CachingDispatchAsync dispatch;
+	private GetDemographics action;
+	private long ehrId;
 
 	public DemographicsPresenter(Display display,
-			HandlerManager eventBus, EHRServicesAsync rpcServices, EHR ehr) {
-		this.ehr = ehr;
+			EventBus eventBus, CachingDispatchAsync dispatch, long ehrId) {
+		this.ehrId = ehrId;
 		this.display = display;
+		this.eventBus = eventBus;
+		this.dispatch = dispatch;
+		action = new GetDemographics(new Long(ehrId).toString());
 	}
 
 	@Override
 	public void go(HasWidgets container) {
 		container.clear();
 		container.add(display.asWidget());
-		setData();
+		fetchData();
 	}
 
-	public void setData() {
-		Demographics demographics = ehr.getDemographics();
+	private void fetchData() {
+		eventBus.fireEvent(new RequestEvent(State.SENT));
+		dispatch.executeWithCache(action, new AsyncCallback<GetDemographicsResult>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				new HandleRpcException(caught);
+			}
+
+			@Override
+			public void onSuccess(GetDemographicsResult result) {
+				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
+				setData(result.getDemographics());
+			}
+			
+		});
+	}
+
+	public void setData(Demographics demographics) {
 		display.setAllergies(demographics.getAllergies());
 		display.setReligion(demographics.getReligion());
 		display.setAlcoholDrug(demographics.isAlcoholDrug());

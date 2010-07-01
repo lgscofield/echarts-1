@@ -28,6 +28,8 @@ public interface EHRView<T> {
 		EHR getEhr();
 
 		void viewMessages();
+
+		void viewDemographics();
 	}
 
 	Widget asWidget();

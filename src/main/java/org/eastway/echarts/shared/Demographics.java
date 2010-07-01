@@ -28,6 +28,10 @@ public interface Demographics {
 
 	public long getId();
 
+	public String getCaseNumber();
+
+	public void setCaseNumber(String caseNumber);
+
 	public void setPatientId(long patientId);
 
 	public long getPatientId();
