@@ -22,7 +22,6 @@ import org.eastway.echarts.shared.GetAssignmentsResult;
 
 import com.google.gwt.requestfactory.shared.RequestEvent;
 import com.google.gwt.requestfactory.shared.RequestEvent.State;
-import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
@@ -135,12 +134,7 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 
 	@Override
 	public void changeCurrentEhr(EHR ehr) {
-		if (ehr != null) {
 			eventBus.fireEvent(new ChangeCurrentEhrEvent(ehr));
-			History.newItem("list", false);
-		} else {
-			eventBus.fireEvent(new ChangeCurrentEhrEvent(ehr));
-		}
 	}
 
 	@Override

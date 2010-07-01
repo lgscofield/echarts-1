@@ -39,16 +39,12 @@ import org.eastway.echarts.client.view.PatientSummaryView;
 import org.eastway.echarts.shared.EHR;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.requestfactory.shared.RequestEvent;
 import com.google.gwt.requestfactory.shared.RequestEvent.State;
-import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
-public class AppController implements ValueChangeHandler<String> {
+public class AppController {
 	private final EventBus eventBus;
 	private HasWidgets container;
 	private EHRServicesAsync ehrServices = GWT.<EHRServicesAsync>create(EHRServices.class);
@@ -69,8 +65,6 @@ public class AppController implements ValueChangeHandler<String> {
 	}
 
 	public void bind() {
-		History.addValueChangeHandler(this);
-
 		eventBus.addHandler(OpenEhrEvent.TYPE, new OpenEhrEventHandler() {
 			@Override
 			public void onOpenEhr(OpenEhrEvent event) {
@@ -104,7 +98,6 @@ public class AppController implements ValueChangeHandler<String> {
 
 	public void doViewMessages(long ehrId, EHRView<EHR> view) {
 		this.ehrId = ehrId;
-		History.newItem("messages", false);
 		Presenter presenter = new MessagesPresenter(new MessagesView(), eventBus, rpcServices, ehrId);
 		presenter.go(view.getDisplayArea());
 	}
@@ -119,7 +112,6 @@ public class AppController implements ValueChangeHandler<String> {
 
 	public void doViewPatientSummary(long ehrId, EHRView<EHR> view) {
 		this.ehrId = ehrId;
-		History.newItem("summary", false);
 		Presenter presenter = new PatientSummaryPresenter(new PatientSummaryView(), eventBus, ehrServices, ehrId);
 		presenter.go(view.getDisplayArea());
 	}
@@ -129,73 +121,5 @@ public class AppController implements ValueChangeHandler<String> {
 		dashboard = new DashboardViewImpl<LinkedHashMap<String, Long>>();
 		dashboardPresenter = new DashboardPresenter(dashboard, eventBus, dispatch);
 		dashboardPresenter.go(container);
-	}
-
-	@Override
-	public void onValueChange(ValueChangeEvent<String> event) {
-		final String token = event.getValue();
-		if (token != null) {
-			if (token.equals("dashboard")) {
-				GWT.runAsync(new RunAsyncCallback() {
-					@Override
-					public void onFailure(Throwable caught) {
-					}
-
-					@Override
-					public void onSuccess() {
-						if (dashboard == null) {
-							dashboard = new DashboardViewImpl<LinkedHashMap<String, Long>>();
-							new DashboardPresenter(dashboard, eventBus, dispatch)
-								.go(container);
-						} else {
-							dashboard.setSelectedTab(0);
-						}
-					}
-				});
-			} else if (token.equals("list")) {
-				GWT.runAsync(new RunAsyncCallback() {
-					@Override
-					public void onFailure(Throwable caught) {
-					}
-
-					@Override
-					public void onSuccess() {
-						if (ehrView == null)
-							ehrView = new EHRViewImpl<EHR>();
-						new EHRPresenter(ehrView, eventBus, ehrServices, ehrId)
-							.go(null);
-						dashboard.addTab(ehrView.asWidget(), new Long(ehrId).toString());
-					}
-				});
-			} else if (token.equals("summary")) {
-				GWT.runAsync(new RunAsyncCallback() {
-					@Override
-					public void onFailure(Throwable caught) {
-					}
-
-					@Override
-					public void onSuccess() {
-						if (patientSummaryView == null)
-							patientSummaryView = new PatientSummaryView();
-						new PatientSummaryPresenter(patientSummaryView, eventBus, ehrServices, ehrId)
-							.go(ehrView.getDisplayArea());
-					}
-				});
-			} else if (token.equals("messages")) {
-				GWT.runAsync(new RunAsyncCallback() {
-					@Override
-					public void onFailure(Throwable arg0) {
-					}
-
-					@Override
-					public void onSuccess() {
-						if (messagesView == null)
-							messagesView = new MessagesView();
-						new MessagesPresenter(messagesView, eventBus, rpcServices, ehrId)
-							.go(ehrView.getDisplayArea());
-					}
-				});
-			}
-		}
 	}
 }

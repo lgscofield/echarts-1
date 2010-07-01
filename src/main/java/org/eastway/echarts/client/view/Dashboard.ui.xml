@@ -121,9 +121,9 @@
 			<g:TabLayoutPanel ui:field="tabLayoutPanel" barUnit="EM"
 				barHeight="2.6">
 				<g:tab>
-					<g:customHeader>
-						<g:Hyperlink targetHistoryToken="dashboard">Dashboard</g:Hyperlink>
-					</g:customHeader>
+					<g:header>
+						Dashboard
+					</g:header>
 					<g:SplitLayoutPanel>
 						<g:west size='250'>
 							<g:ScrollPanel>
