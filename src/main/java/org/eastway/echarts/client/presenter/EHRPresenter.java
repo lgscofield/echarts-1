@@ -18,6 +18,7 @@ package org.eastway.echarts.client.presenter;
 import net.customware.gwt.presenter.client.EventBus;
 
 import org.eastway.echarts.client.EHRServicesAsync;
+import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
 import org.eastway.echarts.client.events.ViewDemographicsEvent;
@@ -28,7 +29,6 @@ import org.eastway.echarts.shared.EHR;
 
 import com.google.gwt.requestfactory.shared.RequestEvent;
 import com.google.gwt.requestfactory.shared.RequestEvent.State;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
@@ -63,7 +63,7 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
 			}
 		};
 		eventBus.fireEvent(new RequestEvent(State.SENT));
-		ehrServices.getEhr(ehrId, Cookies.getCookie("sessionId"), callback);
+		ehrServices.getEhr(ehrId, EchartsUser.sessionId, callback);
 	}
 
 	private void setEhr(EHR ehr) {

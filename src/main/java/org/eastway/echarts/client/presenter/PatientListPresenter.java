@@ -17,13 +17,13 @@ package org.eastway.echarts.client.presenter;
 
 import java.util.LinkedHashMap;
 
+import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.events.OpenEhrEvent;
 import org.eastway.echarts.client.view.PatientListView;
 
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
@@ -54,7 +54,7 @@ public class PatientListPresenter implements PatientListView.Presenter<LinkedHas
 				setData(data);
 			}
 		};
-		patientServices.getPatientList(Cookies.getCookie("sessionId"), "5434", callback);
+		patientServices.getPatientList(EchartsUser.sessionId, "5434", callback);
 	}
 
 	private void setData(LinkedHashMap<String, Long> data) {

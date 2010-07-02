@@ -17,12 +17,12 @@ package org.eastway.echarts.client.presenter;
 
 import java.util.Vector;
 
+import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.RpcServicesAsync;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
@@ -55,7 +55,7 @@ public class AlertsPresenter implements Presenter {
 				display.setData(data);
 			}
 		};
-		rpcServices.getAlerts(Cookies.getCookie("sessionId"), callback);
+		rpcServices.getAlerts(EchartsUser.sessionId, callback);
 	}
 
 	@Override

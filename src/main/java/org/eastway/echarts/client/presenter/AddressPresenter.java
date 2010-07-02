@@ -18,12 +18,12 @@ package org.eastway.echarts.client.presenter;
 import java.util.List;
 
 import org.eastway.echarts.client.AddressServicesAsync;
+import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.shared.Address;
 import org.eastway.echarts.shared.EHR;
 
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
@@ -65,6 +65,6 @@ public class AddressPresenter implements Presenter {
 				}
 			}
 		};
-		rpcServices.findByCaseNumber(ehr.getSubject().getCaseNumber(), Cookies.getCookie("sessionId"), callback);
+		rpcServices.findByCaseNumber(ehr.getSubject().getCaseNumber(), EchartsUser.sessionId, callback);
 	}
 }

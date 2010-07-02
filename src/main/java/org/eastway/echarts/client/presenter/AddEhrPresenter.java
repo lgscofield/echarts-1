@@ -18,6 +18,7 @@ package org.eastway.echarts.client.presenter;
 import java.util.Date;
 
 import org.eastway.echarts.client.EHRServicesAsync;
+import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.EHRDTO;
@@ -28,7 +29,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.HasValue;
@@ -290,7 +290,7 @@ public class AddEhrPresenter implements Presenter {
 		patient.setSsn(display.getSsn().getText());
 		//patient.setCaseStatus(display.getCaseStatus().getText());
 		patient.setLastEdit(new Date());
-		patient.setLastEditBy(Cookies.getCookie("echarts_user"));
+		patient.setLastEditBy(EchartsUser.userName);
 
 		AsyncCallback<Void> callback = new AsyncCallback<Void>() {
 			@Override
@@ -303,6 +303,6 @@ public class AddEhrPresenter implements Presenter {
 				;
 			}
 		};
-		rpcServices.addEhr(ehrDto, Cookies.getCookie("sessionId"), callback);
+		rpcServices.addEhr(ehrDto, EchartsUser.sessionId, callback);
 	}
 }

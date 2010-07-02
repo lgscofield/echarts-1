@@ -20,6 +20,7 @@ import java.util.LinkedHashSet;
 import net.customware.gwt.presenter.client.EventBus;
 
 import org.eastway.echarts.client.EHRServicesAsync;
+import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.EHR;
@@ -27,7 +28,6 @@ import org.eastway.echarts.shared.Patient;
 
 import com.google.gwt.requestfactory.shared.RequestEvent;
 import com.google.gwt.requestfactory.shared.RequestEvent.State;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
@@ -74,7 +74,7 @@ public class PatientSummaryPresenter implements Presenter {
 			}
 		};
 		eventBus.fireEvent(new RequestEvent(State.SENT));
-		ehrServices.getEhr(ehrId, Cookies.getCookie("sessionId"), callback);
+		ehrServices.getEhr(ehrId, EchartsUser.sessionId, callback);
 	}
 
 	protected void setEhr(EHR ehr) {

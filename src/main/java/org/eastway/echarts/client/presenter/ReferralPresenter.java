@@ -15,13 +15,13 @@
  */
 package org.eastway.echarts.client.presenter;
 
+import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.ReferralServicesAsync;
 import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.Referral;
 
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
@@ -74,6 +74,6 @@ public class ReferralPresenter implements Presenter {
 				display.setUPId(referral.getUPId());
 			}
 		};
-		rpcServices.findByEhr(ehr.getId(), Cookies.getCookie("sessionId"), callback);
+		rpcServices.findByEhr(ehr.getId(), EchartsUser.sessionId, callback);
 	}
 }

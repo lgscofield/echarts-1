@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
@@ -35,7 +36,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -137,7 +137,7 @@ public class TopPanelPresenter implements Presenter {
 				setData(data);
 			}
 		};
-		patientServices.getPatientList(Cookies.getCookie("sessionId"), Cookies.getCookie("staff_id"), callback);
+		patientServices.getPatientList(EchartsUser.sessionId, EchartsUser.staffId, callback);
 	}
 
 	protected void setData(LinkedHashMap<String, Long> data) {
