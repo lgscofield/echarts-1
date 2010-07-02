@@ -9,8 +9,10 @@ import javax.persistence.Persistence;
 
 import org.eastway.echarts.domain.AssignmentImpl;
 import org.eastway.echarts.shared.Assignment;
+import org.eastway.echarts.shared.DbException;
 import org.eastway.echarts.shared.GetAssignments;
 import org.eastway.echarts.shared.GetAssignmentsResult;
+import org.eastway.echarts.shared.SessionExpiredException;
 
 import net.customware.gwt.dispatch.server.ActionHandler;
 import net.customware.gwt.dispatch.server.ExecutionContext;
@@ -19,14 +21,23 @@ import net.customware.gwt.dispatch.shared.ActionException;
 public class GetAssignmentsHandler implements ActionHandler<GetAssignments, GetAssignmentsResult> {
 
 	@Override
-	public GetAssignmentsResult execute(GetAssignments list, ExecutionContext context)
+	public GetAssignmentsResult execute(GetAssignments action, ExecutionContext context)
 			throws ActionException {
+		ServiceUtil util = new ServiceUtil();
+		try {
+			util.checkSessionExpire(action.getSessionId());
+		} catch (SessionExpiredException e) {
+			throw new ActionException(e.getMessage());
+		} catch (DbException e) {
+			throw new ActionException("Database error");
+		}
+
 		LinkedHashMap<String, Long> pl = new LinkedHashMap<String, Long>();
 		EntityManagerFactory emf = Persistence
 				.createEntityManagerFactory("EchartsPersistence");
 		EntityManager em = emf.createEntityManager();
 		List<AssignmentImpl> assignments = em.createQuery(
-				"SELECT a From AssignmentImpl a Where a.staff = '" + "5434" + "' And a.disposition = 'Open' Order By a.ehr.subject.lastName ASC, a.ehr.subject.firstName ASC", AssignmentImpl.class).getResultList();
+				"SELECT a From AssignmentImpl a Where a.staff = '" + action.getStaffId() + "' And a.disposition = 'Open' Order By a.ehr.subject.lastName ASC, a.ehr.subject.firstName ASC", AssignmentImpl.class).getResultList();
 
 		for (Assignment assignment : assignments)
 			if (assignment != null)

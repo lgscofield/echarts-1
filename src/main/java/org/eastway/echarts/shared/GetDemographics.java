@@ -8,12 +8,18 @@ public class GetDemographics implements Action<GetDemographicsResult> {
 	GetDemographics() { }
 
 	private String caseNumber;
+	private String sessionId;
 
-	public GetDemographics(String caseNumber) {
+	public GetDemographics(String sessionId, String caseNumber) {
+		this.sessionId = sessionId;
 		this.caseNumber = caseNumber;
 	}
 
 	public String getCaseNumber() {
 		return caseNumber;
+	}
+
+	public String getSessionId() {
+		return sessionId;
 	}
 }

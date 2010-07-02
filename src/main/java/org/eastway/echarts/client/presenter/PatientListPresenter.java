@@ -54,7 +54,7 @@ public class PatientListPresenter implements PatientListView.Presenter<LinkedHas
 				setData(data);
 			}
 		};
-		patientServices.getPatientList(EchartsUser.sessionId, "5434", callback);
+		patientServices.getPatientList(EchartsUser.sessionId, EchartsUser.staffId, callback);
 	}
 
 	private void setData(LinkedHashMap<String, Long> data) {

@@ -6,8 +6,10 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 import org.eastway.echarts.domain.DemographicsImpl;
+import org.eastway.echarts.shared.DbException;
 import org.eastway.echarts.shared.GetDemographics;
 import org.eastway.echarts.shared.GetDemographicsResult;
+import org.eastway.echarts.shared.SessionExpiredException;
 
 import net.customware.gwt.dispatch.server.ActionHandler;
 import net.customware.gwt.dispatch.server.ExecutionContext;
@@ -18,6 +20,15 @@ public class GetDemographicsHandler implements
 	@Override
 	public GetDemographicsResult execute(GetDemographics action,
 			ExecutionContext context) throws ActionException {
+		ServiceUtil util = new ServiceUtil();
+		try {
+			util.checkSessionExpire(action.getSessionId());
+		} catch (SessionExpiredException e) {
+			throw new ActionException(e.getMessage());
+		} catch (DbException e) {
+			throw new ActionException("Database error");
+		}
+
 		EntityManagerFactory emf = Persistence
 				.createEntityManagerFactory("EchartsPersistence");
 		EntityManager em = emf.createEntityManager();

@@ -8,6 +8,7 @@ import java.util.List;
 import net.customware.gwt.presenter.client.EventBus;
 
 import org.eastway.echarts.client.CachingDispatchAsync;
+import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEventHandler;
@@ -32,7 +33,7 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 	private EventBus eventBus;
 	private LinkedHashMap<String, Long> data;
 	private CachingDispatchAsync dispatch;
-	private GetAssignments assignments = new GetAssignments();
+	private GetAssignments assignments = new GetAssignments(EchartsUser.sessionId, EchartsUser.staffId);
 	private String caseNumber;
 
 	@Inject

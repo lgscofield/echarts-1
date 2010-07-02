@@ -18,6 +18,7 @@ package org.eastway.echarts.client.presenter;
 import net.customware.gwt.presenter.client.EventBus;
 
 import org.eastway.echarts.client.CachingDispatchAsync;
+import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.GetDemographics;
@@ -44,7 +45,7 @@ public class DemographicsPresenter implements Presenter {
 		this.display = display;
 		this.eventBus = eventBus;
 		this.dispatch = dispatch;
-		action = new GetDemographics(new Long(ehrId).toString());
+		action = new GetDemographics(EchartsUser.sessionId, new Long(ehrId).toString());
 	}
 
 	@Override
