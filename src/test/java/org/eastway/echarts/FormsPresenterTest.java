@@ -20,8 +20,8 @@ import static org.junit.Assert.*;
 
 import java.util.LinkedHashSet;
 
+import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.RpcServicesAsync;
-import org.eastway.echarts.client.UserImpl;
 import org.eastway.echarts.client.presenter.LinkPresenter;
 import org.junit.Test;
 
@@ -43,7 +43,7 @@ public class FormsPresenterTest {
 	}
 
 	@Test public void testSetData() {
-		UserImpl.setSessionId("12345");
+		EchartsUser.staffId = "12345";
 		data.add(new String[] { "title1","content1" } );
 		data.add(new String[] { "title2","content2" } );
 		data.add(new String[] { "title3","content3" } );
@@ -53,7 +53,7 @@ public class FormsPresenterTest {
 		LinkedHashSet<String[]> d = fp.getData();
 		for (String [] s : d) {
 			assertTrue(s[0].equals("title" + i));
-			assertTrue(s[1].equals("content" + i + "?staffid=" + UserImpl.getStaffId() + "&PATID=" + patientid));
+			assertTrue(s[1].equals("content" + i + "?staffid=" + EchartsUser.staffId + "&PATID=" + patientid));
 			i++;
 		}
 	}

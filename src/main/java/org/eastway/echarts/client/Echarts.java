@@ -44,6 +44,9 @@ public class Echarts implements EntryPoint {
 				(staffId == null || staffId == "null"))
 			Window.Location.assign("http://ewsql.eastway.local/echarts/logout.aspx?continue=" + Window.Location.getHref());
 		else {
+			EchartsUser.sessionId = sessionId;
+			EchartsUser.userName = username;
+			EchartsUser.staffId = staffId;
 			GWT.<GlobalResources>create(GlobalResources.class).css().ensureInjected();
 			Window.setMargin("0px");
 			//Window.enableScrolling(false);

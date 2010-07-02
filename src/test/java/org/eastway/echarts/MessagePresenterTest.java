@@ -19,16 +19,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import net.customware.gwt.presenter.client.DefaultEventBus;
+import net.customware.gwt.presenter.client.EventBus;
+
+import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.RpcServicesAsync;
-import org.eastway.echarts.client.UserImpl;
 import org.eastway.echarts.client.presenter.MessagesPresenter;
 import org.eastway.echarts.shared.CodeDTO;
-import org.eastway.echarts.shared.EHRDTO;
 import org.eastway.echarts.shared.MessageDTO;
 import org.eastway.echarts.shared.PatientDTO;
 import org.junit.Test;
 
-import com.google.gwt.event.shared.HandlerManager;
 
 import static org.easymock.EasyMock.createStrictMock;
 import static org.junit.Assert.*;
@@ -36,25 +37,24 @@ import static org.junit.Assert.*;
 public class MessagePresenterTest {
 	private MessagesPresenter messagesPresenter;
 	private RpcServicesAsync mockRpcService;
-	private HandlerManager eventBus;
+	private EventBus eventBus;
 	private MessagesPresenter.Display mockMessagesDisplay;
+	private long ehrId = 1L;
 
 	@Test public void testAddMessage() {
 		Date timestamp = new Date(1270717380123L);
-		UserImpl.setSessionId("12345");
+		EchartsUser.sessionId = "12345";
 		mockRpcService = createStrictMock(RpcServicesAsync.class);
-		eventBus = new HandlerManager(null);
+		eventBus = new DefaultEventBus();
 		mockMessagesDisplay = createStrictMock(MessagesPresenter.Display.class);
-		EHRDTO ehr = new EHRDTO(1);
 		PatientDTO patient = new PatientDTO();
 		patient.setCaseNumber("00000001");
-		ehr.setSubject(patient);
-		messagesPresenter = new MessagesPresenter(mockMessagesDisplay, eventBus, mockRpcService, ehr);
+		messagesPresenter = new MessagesPresenter(mockMessagesDisplay, eventBus, mockRpcService, ehrId);
 		MessageDTO m1 = new MessageDTO();
 		MessageDTO m2 = new MessageDTO();
 		MessageDTO m3 = new MessageDTO();
 
-		m1.setEhrId(ehr.getId());
+		m1.setEhrId(ehrId);
 
 		CodeDTO mtDto = new CodeDTO();
 		mtDto.setDescriptor("Referral Message");
@@ -66,7 +66,7 @@ public class MessagePresenterTest {
 		m1.setLastEditBy("johndoe");
 		m1.setParent(null);
 
-		m2.setEhrId(ehr.getId());
+		m2.setEhrId(ehrId);
 		m2.setMessageType(mtDto);
 		m2.setMessage("This is test 2");
 		m2.setCreationTimestamp(timestamp);
@@ -75,7 +75,7 @@ public class MessagePresenterTest {
 		m2.setLastEditBy("johndoe");
 		m2.setParent(m1);
 
-		m3.setEhrId(ehr.getId());
+		m3.setEhrId(ehrId);
 		m3.setMessageType(mtDto);
 		m3.setMessage("This is test 3");
 		m3.setCreationTimestamp(timestamp);
@@ -97,7 +97,7 @@ public class MessagePresenterTest {
 		assertTrue(messagesPresenter.getMessage(0).getMessage().equals("This is test 1"));
 		assertTrue(messagesPresenter.getMessage(0).getMessageType().equals(mtDto));
 		assertTrue(messagesPresenter.getMessage(0).getParent() == null);
-		assertTrue(new Long(messagesPresenter.getMessage(0).getEhrId()).equals(ehr.getId()));
+		assertTrue(new Long(messagesPresenter.getMessage(0).getEhrId()).equals(ehrId));
 
 		assertTrue(messagesPresenter.getMessage(1).getCreationTimestamp() == timestamp);
 		assertTrue(messagesPresenter.getMessage(1).getId() == 2);
@@ -106,7 +106,7 @@ public class MessagePresenterTest {
 		assertTrue(messagesPresenter.getMessage(1).getMessage().equals("This is test 2"));
 		assertTrue(messagesPresenter.getMessage(1).getMessageType().equals(mtDto));
 		assertTrue(messagesPresenter.getMessage(1).getParent().equals(m1));
-		assertTrue(new Long(messagesPresenter.getMessage(1).getEhrId()).equals(ehr.getId()));
+		assertTrue(new Long(messagesPresenter.getMessage(1).getEhrId()).equals(ehrId));
 
 		assertTrue(messagesPresenter.getMessage(2).getCreationTimestamp() == timestamp);
 		assertTrue(messagesPresenter.getMessage(2).getId() == 3);
@@ -115,7 +115,7 @@ public class MessagePresenterTest {
 		assertTrue(messagesPresenter.getMessage(2).getMessage().equals("This is test 3"));
 		assertTrue(messagesPresenter.getMessage(2).getMessageType().equals(mtDto));
 		assertTrue(messagesPresenter.getMessage(2).getParent().equals(m2));
-		assertTrue(new Long(messagesPresenter.getMessage(2).getEhrId()).equals(ehr.getId()));
+		assertTrue(new Long(messagesPresenter.getMessage(2).getEhrId()).equals(ehrId));
 
 		ArrayList<String[]> data = messagesPresenter.getData();
 

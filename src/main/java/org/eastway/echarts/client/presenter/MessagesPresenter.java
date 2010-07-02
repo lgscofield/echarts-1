@@ -21,6 +21,7 @@ import java.util.List;
 
 import net.customware.gwt.presenter.client.EventBus;
 
+import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.shared.CodeDTO;
@@ -31,7 +32,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.requestfactory.shared.RequestEvent;
 import com.google.gwt.requestfactory.shared.RequestEvent.State;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
@@ -102,7 +102,7 @@ public class MessagesPresenter implements Presenter {
 				m.setMessage(display.getMessage());
 				m.setCreationTimestamp(new Date());
 				m.setLastEdit(new Date());
-				m.setLastEditBy(Cookies.getCookie("echarts_user"));
+				m.setLastEditBy(EchartsUser.userName);
 				save(m);
 			}
 		});
@@ -137,7 +137,7 @@ public class MessagesPresenter implements Presenter {
 				display.setData(getData());
 			}
 		};
-		rpcServices.addMessage(m, Cookies.getCookie("sessionId"),
+		rpcServices.addMessage(m, EchartsUser.sessionId,
 				callback);
 	}
 
@@ -157,7 +157,7 @@ public class MessagesPresenter implements Presenter {
 				display.setMessageTypes(data);
 			}
 		};
-		rpcServices.getMessageTypes(Cookies.getCookie("sessionId"),
+		rpcServices.getMessageTypes(EchartsUser.sessionId,
 				callback);
 	}
 
@@ -176,7 +176,7 @@ public class MessagesPresenter implements Presenter {
 			}
 		};
 		eventBus.fireEvent(new RequestEvent(State.SENT));
-		rpcServices.getMessages(ehrId, Cookies.getCookie("sessionId"),
+		rpcServices.getMessages(ehrId, EchartsUser.sessionId,
 				callback);
 	}
 

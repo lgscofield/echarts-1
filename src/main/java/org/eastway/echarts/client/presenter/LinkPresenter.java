@@ -17,11 +17,11 @@ package org.eastway.echarts.client.presenter;
 
 import java.util.LinkedHashSet;
 
+import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.RpcServicesAsync;
 
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
@@ -57,7 +57,7 @@ public class LinkPresenter implements Presenter {
 				display.setData(getData());
 			}
 		};
-		rpcServices.getFormsList(Cookies.getCookie("sessionId"), patientid, callback);
+		rpcServices.getFormsList(EchartsUser.sessionId, patientid, callback);
 	}
 
 	public LinkedHashSet<String[]> getData() {
@@ -67,7 +67,7 @@ public class LinkPresenter implements Presenter {
 	public void setData(LinkedHashSet<String[]> d) {
 		this.data = d;
 		for (String[] s : data) {
-			s[1] += "?staffid=" + Cookies.getCookie("staff_id") + "&PATID=" + patientid;
+			s[1] += "?staffid=" + EchartsUser.staffId + "&PATID=" + patientid;
 		}
 	}
 
