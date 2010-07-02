@@ -110,6 +110,7 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 			@Override
 			public void onSuccess(GetAssignmentsResult data) {
 				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
+				view.reset();
 				for (String str : data.keySet())
 					view.addPatientSearchData(str);
 				setData(data.getList());

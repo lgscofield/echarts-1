@@ -39,4 +39,5 @@ public interface DashboardView<T> {
 	void addPatientSearchData(String str);
 	void setCurrentEhrData(ArrayList<String[]> data);
 	NotificationMole getMole();
+	void reset();
 }

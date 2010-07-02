@@ -195,4 +195,11 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 	public NotificationMole getMole() {
 		return mole;
 	}
+
+	@Override
+	public void reset() {
+		record = 0;
+		table.clear();
+		oracle.clear();
+	}
 }
