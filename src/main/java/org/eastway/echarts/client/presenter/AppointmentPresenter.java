@@ -15,10 +15,18 @@
  */
 package org.eastway.echarts.client.presenter;
 
-import org.eastway.echarts.shared.Appointment;
-import org.eastway.echarts.shared.EHR;
+import net.customware.gwt.presenter.client.EventBus;
 
-import com.google.gwt.event.shared.HandlerManager;
+import org.eastway.echarts.client.CachingDispatchAsync;
+import org.eastway.echarts.client.EchartsUser;
+import org.eastway.echarts.client.HandleRpcException;
+import org.eastway.echarts.shared.Appointment;
+import org.eastway.echarts.shared.GetAppointments;
+import org.eastway.echarts.shared.GetAppointmentsResult;
+
+import com.google.gwt.requestfactory.shared.RequestEvent;
+import com.google.gwt.requestfactory.shared.RequestEvent.State;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class AppointmentPresenter implements Presenter {
@@ -27,23 +35,47 @@ public class AppointmentPresenter implements Presenter {
 		public void nextRecord();
 	}
 
-	private EHR ehr;
 	private Display display;
+	private EventBus eventBus;
+	private CachingDispatchAsync dispatch;
+	private GetAppointments appointments;
+	private String caseNumber;
 
-	public AppointmentPresenter(Display display, HandlerManager eventBus, EHR ehr) {
-		this.ehr = ehr;
+	public AppointmentPresenter(Display display, EventBus eventBus, CachingDispatchAsync dispatch, String caseNumber) {
 		this.display = display;
+		this.dispatch = dispatch;
+		this.eventBus = eventBus;
+		this.caseNumber = caseNumber;
 	}
 
 	@Override
 	public void go(HasWidgets container) {
 		container.clear();
 		container.add(display.asWidget());
-		setData();
+		appointments = new GetAppointments(EchartsUser.sessionId, caseNumber);
+		fetchData();
 	}
 
-	public void setData() {
-		for (Appointment a : ehr.getAppointments()) {
+	public void fetchData() {
+		eventBus.fireEvent(new RequestEvent(State.SENT));
+		dispatch.execute(appointments, new AsyncCallback<GetAppointmentsResult>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				new HandleRpcException(caught);
+			}
+
+			@Override
+			public void onSuccess(GetAppointmentsResult result) {
+				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
+				setData(result);
+			}
+			
+		});
+	}
+
+	public void setData(GetAppointmentsResult result) {
+		for (Appointment a : result.getAppointments()) {
 			display.setActivity(a.getActivity());
 			display.setAppointmentDate(a.getAppointmentDate());
 			//display.setCaseNumber(a.getCaseNumber());

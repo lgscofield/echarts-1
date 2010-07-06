@@ -32,6 +32,8 @@ public interface EHRView<T> {
 		void viewDemographics();
 
 		void viewReferral();
+
+		void viewAppointments();
 	}
 
 	Widget asWidget();

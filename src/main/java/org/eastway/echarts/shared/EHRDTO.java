@@ -28,7 +28,6 @@ public class EHRDTO implements Serializable, EHR {
 	private List<Assignment> assignments;
 	private List<Contact> contacts;
 	private List<Diagnosis> diagnoses;
-	private List<Appointment> appointments;
 	private List<Medication> medications;
 
 	public EHRDTO() { }
@@ -110,16 +109,6 @@ public class EHRDTO implements Serializable, EHR {
 	@Override
 	public void setDiagnoses(List<Diagnosis> diagnoses) {
 		this.diagnoses = diagnoses;
-	}
-
-	@Override
-	public List<Appointment> getAppointments() {
-		return appointments;
-	}
-
-	@Override
-	public void setAppointments(List<Appointment> appointments) {
-		this.appointments = appointments;
 	}
 
 	@Override

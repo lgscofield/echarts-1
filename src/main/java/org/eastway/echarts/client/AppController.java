@@ -21,6 +21,8 @@ import net.customware.gwt.presenter.client.EventBus;
 
 import org.eastway.echarts.client.events.OpenEhrEvent;
 import org.eastway.echarts.client.events.OpenEhrEventHandler;
+import org.eastway.echarts.client.events.ViewAppointmentsEvent;
+import org.eastway.echarts.client.events.ViewAppointmentsEventHandler;
 import org.eastway.echarts.client.events.ViewDemographicsEvent;
 import org.eastway.echarts.client.events.ViewDemographicsEventHandler;
 import org.eastway.echarts.client.events.ViewMessagesEvent;
@@ -29,6 +31,7 @@ import org.eastway.echarts.client.events.ViewPatientSummaryEvent;
 import org.eastway.echarts.client.events.ViewPatientSummaryEventHandler;
 import org.eastway.echarts.client.events.ViewReferralEvent;
 import org.eastway.echarts.client.events.ViewReferralEventHandler;
+import org.eastway.echarts.client.presenter.AppointmentPresenter;
 import org.eastway.echarts.client.presenter.DashboardPresenter;
 import org.eastway.echarts.client.presenter.DemographicsPresenter;
 import org.eastway.echarts.client.presenter.EHRPresenter;
@@ -36,6 +39,7 @@ import org.eastway.echarts.client.presenter.MessagesPresenter;
 import org.eastway.echarts.client.presenter.PatientSummaryPresenter;
 import org.eastway.echarts.client.presenter.Presenter;
 import org.eastway.echarts.client.presenter.ReferralPresenter;
+import org.eastway.echarts.client.view.AppointmentView;
 import org.eastway.echarts.client.view.DashboardView;
 import org.eastway.echarts.client.view.DashboardViewImpl;
 import org.eastway.echarts.client.view.DemographicsView;
@@ -99,6 +103,12 @@ public class AppController {
 				doViewReferral(event.getId(), event.getView());
 			}
 		});
+		eventBus.addHandler(ViewAppointmentsEvent.TYPE, new ViewAppointmentsEventHandler() {
+			@Override
+			public void onViewAppointments(ViewAppointmentsEvent event) {
+				doViewAppointments(event.getCaseNumber(), event.getView());
+			}
+		});
 		eventBus.addHandler(RequestEvent.TYPE, new RequestEvent.Handler() {
 			// Only show loading status if a request isn't serviced in 250ms.
 			private static final int LOADING_TIMEOUT = 250;
@@ -116,6 +126,11 @@ public class AppController {
 				doViewDemographics(event.getId(), event.getView());
 			}
 		});
+	}
+
+	public void doViewAppointments(String caseNumber, EHRView<EHR> view) {
+		Presenter presenter = new AppointmentPresenter(new AppointmentView(), eventBus, dispatch, caseNumber);
+		presenter.go(view.getDisplayArea());
 	}
 
 	public void doViewReferral(long ehrId, EHRView<EHR> view) {

@@ -26,11 +26,8 @@ public class ServiceHistoryPresenter implements Presenter {
 		void setName(String name);
 	}
 
-	private Display display;
-
 	public ServiceHistoryPresenter(Display display, HandlerManager eventBus,
 				PatientDTO patient) {
-		this.display = display;
 		display.setName(patient.getCaseNumber());
 	}
 

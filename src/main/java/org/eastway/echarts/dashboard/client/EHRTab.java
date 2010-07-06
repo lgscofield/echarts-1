@@ -126,10 +126,10 @@ public class EHRTab extends Composite implements SelectionHandler<TreeItem> {
 		diagp = new DiagnosisPresenter(new DiagnosisView(), eventBus, ehr);
 		diagp.go(diagnosisPanel);
 
-		TreeItem appointmentMenuItem = menu.addItem("Appointments");
-		appointmentMenuItem.setUserObject(appointmentPanel);
-		appointp = new AppointmentPresenter(new AppointmentView(), eventBus, ehr);
-		appointp.go(appointmentPanel);
+//		TreeItem appointmentMenuItem = menu.addItem("Appointments");
+//		appointmentMenuItem.setUserObject(appointmentPanel);
+//		appointp = new AppointmentPresenter(new AppointmentView(), eventBus, ehr);
+//		appointp.go(appointmentPanel);
 
 		TreeItem medicationMenuItem = menu.addItem("Medications");
 		medicationMenuItem.setUserObject(medicationPanel);

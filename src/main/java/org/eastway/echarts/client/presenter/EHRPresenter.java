@@ -21,6 +21,7 @@ import org.eastway.echarts.client.EHRServicesAsync;
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
+import org.eastway.echarts.client.events.ViewAppointmentsEvent;
 import org.eastway.echarts.client.events.ViewDemographicsEvent;
 import org.eastway.echarts.client.events.ViewMessagesEvent;
 import org.eastway.echarts.client.events.ViewPatientSummaryEvent;
@@ -99,5 +100,10 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
 	@Override
 	public void viewReferral() {
 		eventBus.fireEvent(new ViewReferralEvent(ehrId, view));
+	}
+
+	@Override
+	public void viewAppointments() {
+		eventBus.fireEvent(new ViewAppointmentsEvent(ehr.getSubject().getCaseNumber(), view));
 	}
 }
