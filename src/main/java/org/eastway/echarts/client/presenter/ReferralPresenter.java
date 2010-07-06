@@ -15,13 +15,15 @@
  */
 package org.eastway.echarts.client.presenter;
 
+import net.customware.gwt.presenter.client.EventBus;
+
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.ReferralServicesAsync;
-import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.Referral;
 
-import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.requestfactory.shared.RequestEvent;
+import com.google.gwt.requestfactory.shared.RequestEvent.State;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
@@ -32,13 +34,15 @@ public class ReferralPresenter implements Presenter {
 	}
 
 	private ReferralServicesAsync rpcServices;
-	private EHR ehr;
+	private long ehrId;
 	private Display display;
+	private EventBus eventBus;
 
-	public ReferralPresenter(Display display, HandlerManager eventBus, ReferralServicesAsync rpcServices, EHR ehr) {
+	public ReferralPresenter(Display display, EventBus eventBus, ReferralServicesAsync rpcServices, long ehrId) {
 		this.rpcServices = rpcServices;
-		this.ehr = ehr;
+		this.ehrId = ehrId;
 		this.display = display;
+		this.eventBus = eventBus;
 	}
 
 	@Override
@@ -49,6 +53,7 @@ public class ReferralPresenter implements Presenter {
 	}
 
 	private void fetchData() {
+		eventBus.fireEvent(new RequestEvent(State.SENT));
 		AsyncCallback<Referral> callback = new AsyncCallback<Referral>() {
 			@Override
 			public void onFailure(Throwable caught) {
@@ -57,6 +62,7 @@ public class ReferralPresenter implements Presenter {
 
 			@Override
 			public void onSuccess(Referral referral) {
+				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
 				display.setAdmissionDate(referral.getAdmissionDate());
 				display.setDischargeDate(referral.getDischargeDate());
 				display.setDisposition(referral.getDisposition());
@@ -74,6 +80,6 @@ public class ReferralPresenter implements Presenter {
 				display.setUPId(referral.getUPId());
 			}
 		};
-		rpcServices.findByEhr(ehr.getId(), EchartsUser.sessionId, callback);
+		rpcServices.findByEhr(ehrId, EchartsUser.sessionId, callback);
 	}
 }

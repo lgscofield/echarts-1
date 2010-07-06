@@ -73,6 +73,11 @@ public class EHRViewImpl<T> extends Composite implements EHRView<T> {
 		presenter.viewDemographics();
 	}
 
+	@UiHandler("referral")
+	void onReferralSelected(ClickEvent event) {
+		presenter.viewReferral();
+	}
+
 	@Override
 	public Presenter<T> getPresenter() {
 		return presenter;

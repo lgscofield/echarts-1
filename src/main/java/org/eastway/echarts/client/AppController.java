@@ -27,12 +27,15 @@ import org.eastway.echarts.client.events.ViewMessagesEvent;
 import org.eastway.echarts.client.events.ViewMessagesEventHandler;
 import org.eastway.echarts.client.events.ViewPatientSummaryEvent;
 import org.eastway.echarts.client.events.ViewPatientSummaryEventHandler;
+import org.eastway.echarts.client.events.ViewReferralEvent;
+import org.eastway.echarts.client.events.ViewReferralEventHandler;
 import org.eastway.echarts.client.presenter.DashboardPresenter;
 import org.eastway.echarts.client.presenter.DemographicsPresenter;
 import org.eastway.echarts.client.presenter.EHRPresenter;
 import org.eastway.echarts.client.presenter.MessagesPresenter;
 import org.eastway.echarts.client.presenter.PatientSummaryPresenter;
 import org.eastway.echarts.client.presenter.Presenter;
+import org.eastway.echarts.client.presenter.ReferralPresenter;
 import org.eastway.echarts.client.view.DashboardView;
 import org.eastway.echarts.client.view.DashboardViewImpl;
 import org.eastway.echarts.client.view.DemographicsView;
@@ -40,6 +43,7 @@ import org.eastway.echarts.client.view.EHRView;
 import org.eastway.echarts.client.view.EHRViewImpl;
 import org.eastway.echarts.client.view.MessagesView;
 import org.eastway.echarts.client.view.PatientSummaryView;
+import org.eastway.echarts.client.view.ReferralView;
 import org.eastway.echarts.shared.EHR;
 
 import com.google.gwt.core.client.GWT;
@@ -53,6 +57,7 @@ public class AppController {
 	private HasWidgets container;
 	private EHRServicesAsync ehrServices = GWT.<EHRServicesAsync>create(EHRServices.class);
 	private RpcServicesAsync rpcServices = GWT.<RpcServicesAsync>create(RpcServices.class);
+	private ReferralServicesAsync referralServices = GWT.<ReferralServicesAsync>create(ReferralServices.class);
 	private DashboardView<LinkedHashMap<String, Long>> dashboard = null;
 	private EHRView<EHR> ehrView;
 	private PatientSummaryView patientSummaryView;
@@ -88,6 +93,12 @@ public class AppController {
 				doViewMessages(event.getId(), event.getView());
 			}
 		});
+		eventBus.addHandler(ViewReferralEvent.TYPE, new ViewReferralEventHandler() {
+			@Override
+			public void onViewReferral(ViewReferralEvent event) {
+				doViewReferral(event.getId(), event.getView());
+			}
+		});
 		eventBus.addHandler(RequestEvent.TYPE, new RequestEvent.Handler() {
 			// Only show loading status if a request isn't serviced in 250ms.
 			private static final int LOADING_TIMEOUT = 250;
@@ -105,6 +116,12 @@ public class AppController {
 				doViewDemographics(event.getId(), event.getView());
 			}
 		});
+	}
+
+	public void doViewReferral(long ehrId, EHRView<EHR> view) {
+		this.ehrId = ehrId;
+		Presenter presenter = new ReferralPresenter(new ReferralView(), eventBus, referralServices, ehrId);
+		presenter.go(view.getDisplayArea());
 	}
 
 	public void doViewMessages(long ehrId, EHRView<EHR> view) {

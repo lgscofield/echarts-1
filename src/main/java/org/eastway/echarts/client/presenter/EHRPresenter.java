@@ -24,6 +24,7 @@ import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
 import org.eastway.echarts.client.events.ViewDemographicsEvent;
 import org.eastway.echarts.client.events.ViewMessagesEvent;
 import org.eastway.echarts.client.events.ViewPatientSummaryEvent;
+import org.eastway.echarts.client.events.ViewReferralEvent;
 import org.eastway.echarts.client.view.EHRView;
 import org.eastway.echarts.shared.EHR;
 
@@ -93,5 +94,10 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
 	@Override
 	public void viewDemographics() {
 		eventBus.fireEvent(new ViewDemographicsEvent(ehrId, view));
+	}
+
+	@Override
+	public void viewReferral() {
+		eventBus.fireEvent(new ViewReferralEvent(ehrId, view));
 	}
 }
