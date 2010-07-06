@@ -15,10 +15,19 @@
  */
 package org.eastway.echarts.client.presenter;
 
-import org.eastway.echarts.shared.EHR;
+import java.util.List;
+
+import net.customware.gwt.presenter.client.EventBus;
+
+import org.eastway.echarts.client.CachingDispatchAsync;
+import org.eastway.echarts.client.HandleRpcException;
+import org.eastway.echarts.shared.GetMedications;
+import org.eastway.echarts.shared.GetMedicationsResult;
 import org.eastway.echarts.shared.Medication;
 
-import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.requestfactory.shared.RequestEvent;
+import com.google.gwt.requestfactory.shared.RequestEvent.State;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class MedicationPresenter implements Presenter {
@@ -27,25 +36,48 @@ public class MedicationPresenter implements Presenter {
 		public void nextRecord();
 	}
 
-	private EHR ehr;
-	private Display display;
+	private Display view;
+	private EventBus eventBus;
+	private CachingDispatchAsync dispatch;
+	private GetMedications action;
 
-	public MedicationPresenter(Display display, HandlerManager eventBus, EHR ehr) {
-		this.ehr = ehr;
-		this.display = display;
+	public MedicationPresenter(Display view,
+			EventBus eventBus, CachingDispatchAsync dispatch,
+			GetMedications action) {
+		this.view = view;
+		this.eventBus = eventBus;
+		this.dispatch = dispatch;
+		this.action = action;
 	}
 
 	@Override
 	public void go(HasWidgets container) {
 		container.clear();
-		container.add(display.asWidget());
-		setData();
+		container.add(view.asWidget());
+		fetchData();
 	}
 
-	public void setData() {
-		for (Medication medication : ehr.getMedications()) {
-			display.setMedication(medication.getMedication());
-			display.nextRecord();
+	private void fetchData() {
+		eventBus.fireEvent(new RequestEvent(State.SENT));
+		dispatch.executeWithCache(action, new AsyncCallback<GetMedicationsResult>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				new HandleRpcException(caught);
+			}
+
+			@Override
+			public void onSuccess(GetMedicationsResult result) {
+				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
+				setData(result.getMedications());
+			}
+		});
+	}
+
+	public void setData(List<Medication> medications) {
+		for (Medication medication : medications) {
+			view.setMedication(medication.getMedication());
+			view.nextRecord();
 		}
 	}
 }

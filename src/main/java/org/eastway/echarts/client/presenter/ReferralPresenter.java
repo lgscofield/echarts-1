@@ -17,9 +17,10 @@ package org.eastway.echarts.client.presenter;
 
 import net.customware.gwt.presenter.client.EventBus;
 
-import org.eastway.echarts.client.EchartsUser;
+import org.eastway.echarts.client.CachingDispatchAsyncImpl;
 import org.eastway.echarts.client.HandleRpcException;
-import org.eastway.echarts.client.ReferralServicesAsync;
+import org.eastway.echarts.shared.GetReferral;
+import org.eastway.echarts.shared.GetReferralResult;
 import org.eastway.echarts.shared.Referral;
 
 import com.google.gwt.requestfactory.shared.RequestEvent;
@@ -33,16 +34,16 @@ public class ReferralPresenter implements Presenter {
 		void nextRecord();
 	}
 
-	private ReferralServicesAsync rpcServices;
-	private long ehrId;
 	private Display display;
 	private EventBus eventBus;
+	private CachingDispatchAsyncImpl dispatch;
+	private GetReferral action;
 
-	public ReferralPresenter(Display display, EventBus eventBus, ReferralServicesAsync rpcServices, long ehrId) {
-		this.rpcServices = rpcServices;
-		this.ehrId = ehrId;
+	public ReferralPresenter(Display display, EventBus eventBus, CachingDispatchAsyncImpl dispatch, GetReferral action) {
 		this.display = display;
 		this.eventBus = eventBus;
+		this.dispatch = dispatch;
+		this.action = action;
 	}
 
 	@Override
@@ -54,14 +55,16 @@ public class ReferralPresenter implements Presenter {
 
 	private void fetchData() {
 		eventBus.fireEvent(new RequestEvent(State.SENT));
-		AsyncCallback<Referral> callback = new AsyncCallback<Referral>() {
+		dispatch.executeWithCache(action, new AsyncCallback<GetReferralResult>() {
+
 			@Override
 			public void onFailure(Throwable caught) {
 				new HandleRpcException(caught);
 			}
 
 			@Override
-			public void onSuccess(Referral referral) {
+			public void onSuccess(GetReferralResult result) {
+				Referral referral = result.getReferral();
 				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
 				display.setAdmissionDate(referral.getAdmissionDate());
 				display.setDischargeDate(referral.getDischargeDate());
@@ -79,7 +82,6 @@ public class ReferralPresenter implements Presenter {
 				display.setUCI(referral.getUCI());
 				display.setUPId(referral.getUPId());
 			}
-		};
-		rpcServices.findByEhr(ehrId, EchartsUser.sessionId, callback);
+		});
 	}
 }

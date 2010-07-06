@@ -41,10 +41,6 @@ public interface EHR {
 
 	public EHRDTO toDto();
 
-	public void setContacts(List<Contact> contacts);
-
-	public List<Contact> getContacts();
-
 	public List<Diagnosis> getDiagnoses();
 
 	public void setDiagnoses(List<Diagnosis> diagnoses);

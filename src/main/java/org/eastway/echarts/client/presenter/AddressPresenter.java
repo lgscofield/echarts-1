@@ -15,15 +15,16 @@
  */
 package org.eastway.echarts.client.presenter;
 
-import java.util.List;
+import net.customware.gwt.presenter.client.EventBus;
 
-import org.eastway.echarts.client.AddressServicesAsync;
-import org.eastway.echarts.client.EchartsUser;
+import org.eastway.echarts.client.CachingDispatchAsync;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.shared.Address;
-import org.eastway.echarts.shared.EHR;
+import org.eastway.echarts.shared.GetAddresses;
+import org.eastway.echarts.shared.GetAddressesResult;
 
-import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.requestfactory.shared.RequestEvent;
+import com.google.gwt.requestfactory.shared.RequestEvent.State;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
@@ -33,38 +34,43 @@ public class AddressPresenter implements Presenter {
 		void nextRecord();
 	}
 
-	private AddressServicesAsync rpcServices;
-	private EHR ehr;
-	private Display display;
+	private Display view;
+	private EventBus eventBus;
+	private CachingDispatchAsync dispatch;
+	private GetAddresses action;
 
-	public AddressPresenter(Display display, HandlerManager eventBus, AddressServicesAsync rpcServices, EHR ehr) {
-		this.rpcServices = rpcServices;
-		this.ehr = ehr;
-		this.display = display;
+	public AddressPresenter(Display view, EventBus eventBus,
+			CachingDispatchAsync dispatch, GetAddresses action,
+			String caseNumber) {
+		this.view = view;
+		this.eventBus = eventBus;
+		this.dispatch = dispatch;
+		this.action = action;
 	}
 
 	@Override
 	public void go(HasWidgets container) {
 		container.clear();
-		container.add(display.asWidget());
+		container.add(view.asWidget());
 		fetchData();
 	}
 
 	private void fetchData() {
-		AsyncCallback<List<Address>> callback = new AsyncCallback<List<Address>>() {
+		eventBus.fireEvent(new RequestEvent(State.SENT));
+		dispatch.executeWithCache(action, new AsyncCallback<GetAddressesResult>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				new HandleRpcException(caught);
 			}
 
 			@Override
-			public void onSuccess(List<Address> addresses) {
-				for (Address address : addresses) {
-					display.setCaseNumber(address.getCaseNumber());
-					display.nextRecord();
+			public void onSuccess(GetAddressesResult result) {
+				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
+				for (Address address : result.getAddresses()) {
+					view.setCaseNumber(address.getCaseNumber());
+					view.nextRecord();
 				}
 			}
-		};
-		rpcServices.findByCaseNumber(ehr.getSubject().getCaseNumber(), EchartsUser.sessionId, callback);
+		});
 	}
 }

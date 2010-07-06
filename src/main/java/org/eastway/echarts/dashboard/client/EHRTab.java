@@ -111,40 +111,40 @@ public class EHRTab extends Composite implements SelectionHandler<TreeItem> {
 //		rp = new ReferralPresenter(new ReferralView(), eventBus, GWT.<ReferralServicesAsync>create(ReferralServices.class), ehr);
 //		rp.go(referralPanel);
 
-		TreeItem addressMenuItem = menu.addItem("Addresses");
-		addressMenuItem.setUserObject(addressPanel);
-		ap = new AddressPresenter(new AddressView(), eventBus, GWT.<AddressServicesAsync>create(AddressServices.class), ehr);
-		ap.go(addressPanel);
+//		TreeItem addressMenuItem = menu.addItem("Addresses");
+//		addressMenuItem.setUserObject(addressPanel);
+//		ap = new AddressPresenter(new AddressView(), eventBus, GWT.<AddressServicesAsync>create(AddressServices.class), ehr);
+//		ap.go(addressPanel);
 
-		TreeItem contactMenuItem = menu.addItem("Contacts");
-		contactMenuItem.setUserObject(contactPanel);
-		cp = new ContactPresenter(new ContactView(), eventBus, ehr);
-		cp.go(contactPanel);
+//		TreeItem contactMenuItem = menu.addItem("Contacts");
+//		contactMenuItem.setUserObject(contactPanel);
+//		cp = new ContactPresenter(new ContactView(), eventBus, ehr);
+//		cp.go(contactPanel);
 
-		TreeItem diagnosisMenuItem = menu.addItem("Diagnoses");
-		diagnosisMenuItem.setUserObject(diagnosisPanel);
-		diagp = new DiagnosisPresenter(new DiagnosisView(), eventBus, ehr);
-		diagp.go(diagnosisPanel);
+//		TreeItem diagnosisMenuItem = menu.addItem("Diagnoses");
+//		diagnosisMenuItem.setUserObject(diagnosisPanel);
+//		diagp = new DiagnosisPresenter(new DiagnosisView(), eventBus, ehr);
+//		diagp.go(diagnosisPanel);
 
 //		TreeItem appointmentMenuItem = menu.addItem("Appointments");
 //		appointmentMenuItem.setUserObject(appointmentPanel);
 //		appointp = new AppointmentPresenter(new AppointmentView(), eventBus, ehr);
 //		appointp.go(appointmentPanel);
 
-		TreeItem medicationMenuItem = menu.addItem("Medications");
-		medicationMenuItem.setUserObject(medicationPanel);
-		medp = new MedicationPresenter(new MedicationView(), eventBus, ehr);
-		medp.go(medicationPanel);
+//		TreeItem medicationMenuItem = menu.addItem("Medications");
+//		medicationMenuItem.setUserObject(medicationPanel);
+//		medp = new MedicationPresenter(new MedicationView(), eventBus, ehr);
+//		medp.go(medicationPanel);
 
 		TreeItem messageMenuItem = menu.addItem("Messages");
 		messageMenuItem.setUserObject(messagesPanel);
 		//mp = new MessagesPresenter(new MessagesView(), eventBus, rpcServices, ehr);
 		mp.go(messagesPanel);
 
-		TreeItem formsMenuItem = menu.addItem("Forms");
-		formsMenuItem.setUserObject(formsPanel);
-		fp = new LinkPresenter(new LinkView(), eventBus, rpcServices, ehr.getSubject().getCaseNumber());
-		fp.go(formsPanel);
+//		TreeItem formsMenuItem = menu.addItem("Forms");
+//		formsMenuItem.setUserObject(formsPanel);
+//		fp = new LinkPresenter(new LinkView(), eventBus, rpcServices, ehr.getSubject().getCaseNumber());
+//		fp.go(formsPanel);
 
 		menu.addSelectionHandler(this);
 		setTreeItemWidth();

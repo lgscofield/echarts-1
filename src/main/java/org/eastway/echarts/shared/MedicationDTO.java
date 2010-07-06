@@ -22,6 +22,7 @@ public class MedicationDTO implements Medication, Serializable {
 
 	private long id;
 	private String medication;
+	private String caseNumber;
 
 	@Override
 	public long getId() {
@@ -46,6 +47,16 @@ public class MedicationDTO implements Medication, Serializable {
 	@Override
 	public MedicationDTO toDto() {
 		return this;
+	}
+
+	@Override
+	public String getCaseNumber() {
+		return caseNumber;
+	}
+
+	@Override
+	public void setCaseNumber(String caseNumber) {
+		this.caseNumber = caseNumber;
 	}
 
 }

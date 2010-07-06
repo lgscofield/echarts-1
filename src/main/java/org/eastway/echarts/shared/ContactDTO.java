@@ -27,6 +27,7 @@ public class ContactDTO implements Serializable, Contact {
 	private String lastName;
 	private String type;
 	private String relationship;
+	private String caseNumber;
 
 	@Override
 	public void addAddress(Address address) {
@@ -96,6 +97,16 @@ public class ContactDTO implements Serializable, Contact {
 	@Override
 	public ContactDTO toDto() {
 		return this;
+	}
+
+	@Override
+	public String getCaseNumber() {
+		return caseNumber;
+	}
+
+	@Override
+	public void setCaseNumber(String caseNumber) {
+		this.caseNumber = caseNumber;
 	}
 
 }

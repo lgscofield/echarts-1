@@ -51,8 +51,7 @@ public class GetAssignmentsHandler implements ActionHandler<GetAssignments, GetA
 							new Long(assignment.getEhr().getId()));
 		em.close();
 		emf.close();
-		GetAssignmentsResult result = new GetAssignmentsResult(pl);
-		return result;
+		return new GetAssignmentsResult(pl);
 	}
 
 	@Override

@@ -17,11 +17,16 @@ package org.eastway.echarts.client.presenter;
 
 import java.util.LinkedHashSet;
 
+import net.customware.gwt.presenter.client.EventBus;
+
+import org.eastway.echarts.client.CachingDispatchAsync;
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.HandleRpcException;
-import org.eastway.echarts.client.RpcServicesAsync;
+import org.eastway.echarts.shared.GetLinks;
+import org.eastway.echarts.shared.GetLinksResult;
 
-import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.requestfactory.shared.RequestEvent;
+import com.google.gwt.requestfactory.shared.RequestEvent.State;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
@@ -31,33 +36,36 @@ public class LinkPresenter implements Presenter {
 		void setData(LinkedHashSet<String[]> data);
 	}
 
-	private String patientid;
 	private LinkedHashSet<String[]> data;
-	private RpcServicesAsync rpcServices;
 	private Display display;
+	private GetLinks action;
+	private CachingDispatchAsync dispatch;
+	private EventBus eventBus;
+	private String caseNumber;
 
-	public LinkPresenter(Display display, HandlerManager eventBus,
-			RpcServicesAsync rpcServices, String patientid) {
-		this.patientid = patientid;
-		this.rpcServices = rpcServices;
+	public LinkPresenter(Display display, EventBus eventBus, CachingDispatchAsync dispatch, GetLinks action, String caseNumber) {
+		this.action = action;
+		this.eventBus = eventBus;
+		this.caseNumber = caseNumber;
+		this.dispatch = dispatch;
 		this.display = display;
 	}
 
 	private void fetchData() {
-		AsyncCallback<LinkedHashSet<String[]>> callback = new AsyncCallback<LinkedHashSet<String[]>>() {
-
+		eventBus.fireEvent(new RequestEvent(State.SENT));
+		dispatch.executeWithCache(action, new AsyncCallback<GetLinksResult>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				new HandleRpcException(caught);
 			}
 
 			@Override
-			public void onSuccess(LinkedHashSet<String[]> data) {
-				setData(data);
-				display.setData(getData());
+			public void onSuccess(GetLinksResult result) {
+				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
+				setData(result.getLinks());
+				display.setData(result.getLinks());
 			}
-		};
-		rpcServices.getFormsList(EchartsUser.sessionId, patientid, callback);
+		});
 	}
 
 	public LinkedHashSet<String[]> getData() {
@@ -67,7 +75,7 @@ public class LinkPresenter implements Presenter {
 	public void setData(LinkedHashSet<String[]> d) {
 		this.data = d;
 		for (String[] s : data) {
-			s[1] += "?staffid=" + EchartsUser.staffId + "&PATID=" + patientid;
+			s[1] += "?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber;
 		}
 	}
 

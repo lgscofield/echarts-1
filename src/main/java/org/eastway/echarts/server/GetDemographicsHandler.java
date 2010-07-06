@@ -3,10 +3,10 @@ package org.eastway.echarts.server;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
 
 import org.eastway.echarts.domain.DemographicsImpl;
 import org.eastway.echarts.shared.DbException;
+import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.GetDemographics;
 import org.eastway.echarts.shared.GetDemographicsResult;
 import org.eastway.echarts.shared.SessionExpiredException;
@@ -32,12 +32,12 @@ public class GetDemographicsHandler implements
 		EntityManagerFactory emf = Persistence
 				.createEntityManagerFactory("EchartsPersistence");
 		EntityManager em = emf.createEntityManager();
-		TypedQuery<DemographicsImpl> query = em.createQuery(
-				"SELECT d FROM DemographicsImpl d WHERE d.id = " + action.getCaseNumber(), DemographicsImpl.class);
-		GetDemographicsResult result = new GetDemographicsResult(query.getSingleResult().toDto());
+		Demographics demographics = em.createQuery(
+				"SELECT d FROM DemographicsImpl d WHERE d.id = " + action.getCaseNumber(), DemographicsImpl.class)
+				.getSingleResult().toDto();
 		em.close();
 		emf.close();
-		return result;
+		return new GetDemographicsResult(demographics);
 	}
 
 	@Override

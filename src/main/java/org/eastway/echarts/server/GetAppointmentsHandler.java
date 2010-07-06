@@ -41,8 +41,7 @@ public class GetAppointmentsHandler implements ActionHandler<GetAppointments, Ge
 		}
 		em.close();
 		emf.close();
-		GetAppointmentsResult result = new GetAppointmentsResult(appointmentsDto);
-		return result;
+		return new GetAppointmentsResult(appointmentsDto);
 	}
 
 	@Override

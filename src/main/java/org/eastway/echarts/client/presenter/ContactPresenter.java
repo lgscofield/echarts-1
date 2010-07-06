@@ -15,10 +15,19 @@
  */
 package org.eastway.echarts.client.presenter;
 
-import org.eastway.echarts.shared.Contact;
-import org.eastway.echarts.shared.EHR;
+import java.util.List;
 
-import com.google.gwt.event.shared.HandlerManager;
+import net.customware.gwt.presenter.client.EventBus;
+
+import org.eastway.echarts.client.CachingDispatchAsync;
+import org.eastway.echarts.client.HandleRpcException;
+import org.eastway.echarts.shared.Contact;
+import org.eastway.echarts.shared.GetContacts;
+import org.eastway.echarts.shared.GetContactsResult;
+
+import com.google.gwt.requestfactory.shared.RequestEvent;
+import com.google.gwt.requestfactory.shared.RequestEvent.State;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class ContactPresenter implements Presenter {
@@ -27,29 +36,51 @@ public class ContactPresenter implements Presenter {
 		public void nextRecord();
 	}
 
-	private EHR ehr;
-	private Display display;
+	private Display view;
+	private EventBus eventBus;
+	private CachingDispatchAsync dispatch;
+	private GetContacts action;
 
-	public ContactPresenter(Display display, HandlerManager eventBus, EHR ehr) {
-		this.ehr = ehr;
-		this.display = display;
+	public ContactPresenter(Display view, EventBus eventBus,
+			CachingDispatchAsync dispatch, GetContacts action) {
+		this.view = view;
+		this.eventBus = eventBus;
+		this.dispatch = dispatch;
+		this.action = action;
 	}
 
 
 	@Override
 	public void go(HasWidgets container) {
 		container.clear();
-		container.add(display.asWidget());
-		setData();
+		container.add(view.asWidget());
+		fetchData();
 	}
 
-	public void setData() {
-		for (Contact contact : ehr.getContacts()) {
-			display.setFirstName(contact.getFirstName());
-			display.setRelationship(contact.getRelationship());
-			display.setType(contact.getType());
-			display.setAddresses(contact.getAddresses());
-			display.nextRecord();
+	private void fetchData() {
+		eventBus.fireEvent(new RequestEvent(State.SENT));
+		dispatch.executeWithCache(action, new AsyncCallback<GetContactsResult>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				new HandleRpcException(caught);
+			}
+
+			@Override
+			public void onSuccess(GetContactsResult result) {
+				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
+				setData(result.getContacts());
+			}
+		});
+	}
+
+	public void setData(List<Contact> contacts) {
+		for (Contact contact : contacts) {
+			view.setFirstName(contact.getFirstName());
+			view.setRelationship(contact.getRelationship());
+			view.setType(contact.getType());
+			view.setAddresses(contact.getAddresses());
+			view.nextRecord();
 		}
 	}
 }

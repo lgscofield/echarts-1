@@ -41,6 +41,7 @@ public class ContactImpl implements Contact {
 	private String lastName;
 	private String type;
 	private String relationship;
+	private String caseNumber;
 
 	@Override
 	public void addAddress(Address address) {
@@ -83,6 +84,16 @@ public class ContactImpl implements Contact {
 	@Override
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	@Override
+	public void setCaseNumber(String caseNumber) {
+		this.caseNumber = caseNumber;
+	}
+
+	@Override
+	public String getCaseNumber() {
+		return caseNumber;
 	}
 
 	@Override

@@ -36,6 +36,7 @@ public class Message {
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "tg")
 	@Column(name = "Message_Id")
 	private long id;
+	private String caseNumber;
 	@Column(name = "ehr_id")
 	private long ehrId;
 	@ManyToOne
@@ -61,6 +62,14 @@ public class Message {
 
 	public long getId() {
 		return id;
+	}
+
+	public void setCaseNumber(String caseNumber) {
+		this.caseNumber = caseNumber;
+	}
+
+	public String getCaseNumber() {
+		return caseNumber;
 	}
 
 	public void setEhrId(long ehrId) {
@@ -123,6 +132,7 @@ public class Message {
 		MessageDTO dto = new MessageDTO();
 		dto.setCreationTimestamp(this.getCreationTimestamp());
 		dto.setId(this.getId());
+		dto.setCaseNumber(caseNumber);
 		dto.setLastEdit(this.getLastEdit());
 		dto.setLastEditBy(this.getLastEditBy());
 		dto.setMessage(this.getMessage().toString());

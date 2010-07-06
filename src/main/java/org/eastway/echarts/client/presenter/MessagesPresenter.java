@@ -21,11 +21,15 @@ import java.util.List;
 
 import net.customware.gwt.presenter.client.EventBus;
 
+import org.eastway.echarts.client.CachingDispatchAsync;
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.HandleRpcException;
-import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.shared.CodeDTO;
+import org.eastway.echarts.shared.GetMessages;
+import org.eastway.echarts.shared.GetMessagesResult;
 import org.eastway.echarts.shared.MessageDTO;
+import org.eastway.echarts.shared.SaveMessage;
+import org.eastway.echarts.shared.SaveMessageResult;
 
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -61,55 +65,58 @@ public class MessagesPresenter implements Presenter {
 		void setMessageTypes(ArrayList<String> types);
 	}
 
-	private RpcServicesAsync rpcServices;
 	private List<MessageDTO> messages;
 	private ArrayList<String[]> data = new ArrayList<String[]>();
-	private long ehrId;
 	private List<CodeDTO> types;
-	private Display display;
+	private Display view;
 	private EventBus eventBus;
+	private CachingDispatchAsync dispatch;
+	private String caseNumber;
+	private GetMessages action;
 
-	public MessagesPresenter(final Display display, EventBus eventBus,
-			RpcServicesAsync rpcServices, long ehrId) {
-		this.ehrId = ehrId;
-		this.rpcServices = rpcServices;
-		this.display = display;
+	public MessagesPresenter(Display view, EventBus eventBus,
+			CachingDispatchAsync dispatch, String caseNumber,
+			GetMessages action) {
+		this.view = view;
 		this.eventBus = eventBus;
+		this.dispatch = dispatch;
+		this.caseNumber = caseNumber;
+		this.action = action;
 	}
 
 	@Override
 	public void go(final HasWidgets container) {
 		container.clear();
-		container.add(display.asWidget());
+		container.add(view.asWidget());
 		fetchData();
 		bind();
 	}
 
 	private void bind() {
-		display.getAddButton().addClickHandler(new ClickHandler() {
+		view.getAddButton().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				showAddMessage();
 			}
 		});
-		display.getSaveButton().addClickHandler(new ClickHandler() {
+		view.getSaveButton().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				MessageDTO m = new MessageDTO();
-				m.setEhrId(ehrId);
-				CodeDTO mtDto = findMessageType(display.getMessageType());
+				m.setCaseNumber(caseNumber);
+				CodeDTO mtDto = findMessageType(view.getMessageType());
 				m.setMessageType(mtDto);
-				m.setMessage(display.getMessage());
+				m.setMessage(view.getMessage());
 				m.setCreationTimestamp(new Date());
 				m.setLastEdit(new Date());
 				m.setLastEditBy(EchartsUser.userName);
 				save(m);
 			}
 		});
-		display.getCloseButton().addClickHandler(new ClickHandler() {
+		view.getCloseButton().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				display.close();
+				view.close();
 			}
 		});
 	}
@@ -123,61 +130,64 @@ public class MessagesPresenter implements Presenter {
 	}
 
 	public void save(MessageDTO m) {
-		AsyncCallback<MessageDTO> callback = new AsyncCallback<MessageDTO>() {
+		dispatch.execute(new SaveMessage(EchartsUser.sessionId, m), new AsyncCallback<SaveMessageResult>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				new HandleRpcException(caught);
 			}
 
 			@Override
-			public void onSuccess(MessageDTO result) {
-				display.saved();
-				messages.add(result);
+			public void onSuccess(SaveMessageResult result) {
+				view.saved();
+				messages.add(result.getMessage());
 				setData(messages);
-				display.setData(getData());
+				view.setData(getData());
 			}
-		};
-		rpcServices.addMessage(m, EchartsUser.sessionId,
-				callback);
+		});
 	}
 
 	private void loadMessageType() {
-		AsyncCallback<List<CodeDTO>> callback = new AsyncCallback<List<CodeDTO>>() {
-			@Override
-			public void onFailure(Throwable caught) {
-				new HandleRpcException(caught);
-			}
-
-			@Override
-			public void onSuccess(List<CodeDTO> types) {
-				setTypes(types);
-				ArrayList<String> data = new ArrayList<String>();
-				for (CodeDTO type : types)
-					data.add(type.getDescriptor());
-				display.setMessageTypes(data);
-			}
-		};
-		rpcServices.getMessageTypes(EchartsUser.sessionId,
-				callback);
+//		AsyncCallback<List<CodeDTO>> callback = new AsyncCallback<List<CodeDTO>>() {
+//			@Override
+//			public void onFailure(Throwable caught) {
+//				new HandleRpcException(caught);
+//			}
+//
+//			@Override
+//			public void onSuccess(List<CodeDTO> types) {
+//				setTypes(types);
+//				ArrayList<String> data = new ArrayList<String>();
+//				for (CodeDTO type : types)
+//					data.add(type.getDescriptor());
+//				view.setMessageTypes(data);
+//			}
+//		};
+//		rpcServices.getMessageTypes(EchartsUser.sessionId,
+//				callback);
 	}
 
 	private void fetchData() {
-		AsyncCallback<List<MessageDTO>> callback = new AsyncCallback<List<MessageDTO>>() {
+		eventBus.fireEvent(new RequestEvent(State.SENT));
+		dispatch.executeWithCache(action, new AsyncCallback<GetMessagesResult>() {
+
 			@Override
 			public void onFailure(Throwable caught) {
 				new HandleRpcException(caught);
 			}
 
 			@Override
-			public void onSuccess(List<MessageDTO> data) {
+			public void onSuccess(GetMessagesResult result) {
 				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
-				setData(data);
-				display.setData(getData());
+				setData(result.getMessages());
+				view.setData(getData());
+				setTypes(result.getTypes());
+				ArrayList<String> typesData = new ArrayList<String>();
+				for (CodeDTO type : types)
+					typesData.add(type.getDescriptor());
+				view.setMessageTypes(typesData);
 			}
-		};
-		eventBus.fireEvent(new RequestEvent(State.SENT));
-		rpcServices.getMessages(ehrId, EchartsUser.sessionId,
-				callback);
+			
+		});
 	}
 
 	public ArrayList<String[]> getData() {
@@ -206,8 +216,8 @@ public class MessagesPresenter implements Presenter {
 
 	private void showAddMessage() {
 		loadMessageType();
-		display.setText("New Message");
-		display.show();
+		view.setText("New Message");
+		view.show();
 	}
 
 	public void setTypes(List<CodeDTO> types) {

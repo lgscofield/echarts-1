@@ -35,6 +35,7 @@ public class MessageDTO implements Serializable {
 	private long ehrId;
 	private CodeDTO messageType;
 	private MessageDTO parent;
+	private String caseNumber;
 
 	public MessageDTO() { }
 
@@ -98,5 +99,13 @@ public class MessageDTO implements Serializable {
 
 	public MessageDTO getParent() {
 		return parent;
+	}
+
+	public void setCaseNumber(String caseNumber) {
+		this.caseNumber = caseNumber;
+	}
+
+	public String getCaseNumber() {
+		return caseNumber;
 	}
 }

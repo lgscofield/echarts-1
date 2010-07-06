@@ -20,26 +20,29 @@ import static org.junit.Assert.*;
 
 import java.util.LinkedHashSet;
 
+import net.customware.gwt.presenter.client.EventBus;
+
+import org.eastway.echarts.client.CachingDispatchAsync;
 import org.eastway.echarts.client.EchartsUser;
-import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.presenter.LinkPresenter;
+import org.eastway.echarts.shared.GetLinks;
 import org.junit.Test;
 
-import com.google.gwt.event.shared.HandlerManager;
-
-public class FormsPresenterTest {
+public class LinksPresenterTest {
 	private LinkPresenter fp;
-	private RpcServicesAsync mockRpc;
+	private CachingDispatchAsync mockRpc;
 	private LinkPresenter.Display mockView;
-	private HandlerManager eventBus;
+	private EventBus eventBus;
 	private LinkedHashSet<String[]> data = new LinkedHashSet<String[]>();
 	private String patientid = "000000008";
+	private GetLinks action = null;
 
-	public FormsPresenterTest() {
+	public LinksPresenterTest() {
 		mockView = createStrictMock(LinkPresenter.Display.class);
-		mockRpc = createStrictMock(RpcServicesAsync.class);
-		eventBus = new HandlerManager(null);
-		fp = new LinkPresenter(mockView, eventBus, mockRpc, patientid);
+		mockRpc = createStrictMock(CachingDispatchAsync.class);
+		eventBus = createStrictMock(EventBus.class);
+		action = new GetLinks("12345");
+		fp = new LinkPresenter(mockView, eventBus, mockRpc, action, patientid);
 	}
 
 	@Test public void testSetData() {

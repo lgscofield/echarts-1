@@ -18,15 +18,6 @@ package org.eastway.echarts.shared;
 import java.util.Date;
 
 public interface Referral {
-
-	public void setId(long id);
-
-	public long getId();
-
-	public void setEhr(EHR ehr);
-
-	public EHR getEhr();
-
 	public void setProgram(String program);
 
 	public String getProgram();
@@ -88,4 +79,8 @@ public interface Referral {
 	public String getLastEditBy();
 
 	public ReferralDTO toDto();
+
+	void setCaseNumber(String caseNumber);
+
+	String getCaseNumber();
 }

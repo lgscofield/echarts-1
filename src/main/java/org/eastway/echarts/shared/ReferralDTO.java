@@ -24,8 +24,6 @@ public class ReferralDTO implements Serializable, Referral {
 	private Date admissionDate;
 	private Date dischargeDate;
 	private String disposition;
-	private EHR ehr;
-	private long id;
 	private Date lastEdit;
 	private String lastEditBy;
 	private Date lastService;
@@ -38,6 +36,7 @@ public class ReferralDTO implements Serializable, Referral {
 	private String takenByStaff;
 	private String UCI;
 	private String UPId;
+	private String caseNumber;
 
 	@Override
 	public Date getAdmissionDate() {
@@ -52,16 +51,6 @@ public class ReferralDTO implements Serializable, Referral {
 	@Override
 	public String getDisposition() {
 		return disposition;
-	}
-
-	@Override
-	public EHR getEhr() {
-		return ehr;
-	}
-
-	@Override
-	public long getId() {
-		return id;
 	}
 
 	@Override
@@ -135,16 +124,6 @@ public class ReferralDTO implements Serializable, Referral {
 	}
 
 	@Override
-	public void setEhr(EHR ehr) {
-		this.ehr = ehr;
-	}
-
-	@Override
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	@Override
 	public void setLastEdit(Date lastEdit) {
 		this.lastEdit = lastEdit;
 	}
@@ -212,5 +191,15 @@ public class ReferralDTO implements Serializable, Referral {
 	@Override
 	public ReferralDTO toDto() {
 		return this;
+	}
+
+	@Override
+	public String getCaseNumber() {
+		return caseNumber;
+	}
+
+	@Override
+	public void setCaseNumber(String caseNumber) {
+		this.caseNumber = caseNumber;
 	}
 }

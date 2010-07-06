@@ -98,7 +98,7 @@ public class RpcServicesImpl extends RemoteServiceServlet implements RpcServices
 		if (msg.getParent() != null)
 			parent = ms.find(msg.getParent().getId());
 		em.getTransaction().begin();
-		Message newMessage = ms.create(msg.getCreationTimestamp(), msg.getEhrId(), msg.getLastEdit(),
+		Message newMessage = ms.create(msg.getCreationTimestamp(), msg.getCaseNumber(), msg.getLastEdit(),
 				msg.getLastEditBy(), msg.getMessage(), mType, parent);
 		em.getTransaction().commit();
 		em.close();

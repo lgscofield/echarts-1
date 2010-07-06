@@ -14,7 +14,7 @@ public class EchartsClientModule extends AbstractGinModule {
 		bind(EventBus.class).to(DefaultEventBus.class).in(Singleton.class);
 		bind(PlaceManager.class).in(Singleton.class);
 		bind(AppController.class).in(Singleton.class);
-		bind(CachingDispatchAsync.class);
+		bind(CachingDispatchAsyncImpl.class);
 	}
 
 }

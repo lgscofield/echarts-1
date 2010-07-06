@@ -19,12 +19,10 @@ import java.util.LinkedHashSet;
 
 import net.customware.gwt.presenter.client.EventBus;
 
-import org.eastway.echarts.client.EHRServicesAsync;
-import org.eastway.echarts.client.EchartsUser;
+import org.eastway.echarts.client.CachingDispatchAsyncImpl;
 import org.eastway.echarts.client.HandleRpcException;
-import org.eastway.echarts.shared.Demographics;
-import org.eastway.echarts.shared.EHR;
-import org.eastway.echarts.shared.Patient;
+import org.eastway.echarts.shared.GetPatientSummary;
+import org.eastway.echarts.shared.GetPatientSummaryResult;
 
 import com.google.gwt.requestfactory.shared.RequestEvent;
 import com.google.gwt.requestfactory.shared.RequestEvent.State;
@@ -33,19 +31,18 @@ import com.google.gwt.user.client.ui.HasWidgets;
 
 public class PatientSummaryPresenter implements Presenter {
 
-	private EHR ehr;
 	private Display display;
-	private long ehrId;
-	private EHRServicesAsync ehrServices;
 	private EventBus eventBus;
+	private CachingDispatchAsyncImpl dispatch;
+	private GetPatientSummary action;
 
 	public PatientSummaryPresenter(Display display,
-			EventBus eventBus, EHRServicesAsync ehrServices,
+			EventBus eventBus, CachingDispatchAsyncImpl dispatch, GetPatientSummary action,
 			long ehrId) {
-		this.ehrId = ehrId;
 		this.display = display;
-		this.ehrServices = ehrServices;
 		this.eventBus = eventBus;
+		this.dispatch = dispatch;
+		this.action = action;
 	}
 
 	public interface Display extends EchartsDisplay {
@@ -56,47 +53,41 @@ public class PatientSummaryPresenter implements Presenter {
 	public void go(HasWidgets container) {
 		container.clear();
 		container.add(display.asWidget());
-		fetchEhr();
+		fetchData();
 	}
 
-	private void fetchEhr() {
-		AsyncCallback<EHR> callback = new AsyncCallback<EHR>() {
+	private void fetchData() {
+		eventBus.fireEvent(new RequestEvent(State.SENT));
+		dispatch.executeWithCache(action, new AsyncCallback<GetPatientSummaryResult>() {
+
 			@Override
 			public void onFailure(Throwable caught) {
 				new HandleRpcException(caught);
 			}
 
 			@Override
-			public void onSuccess(EHR ehr) {
+			public void onSuccess(GetPatientSummaryResult result) {
 				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
-				setEhr(ehr);
-				setPersonalData();
+				setData(result);
 			}
-		};
-		eventBus.fireEvent(new RequestEvent(State.SENT));
-		ehrServices.getEhr(ehrId, EchartsUser.sessionId, callback);
+			
+		});
 	}
 
-	protected void setEhr(EHR ehr) {
-		this.ehr = ehr;
-	}
-
-	void setPersonalData() {
+	void setData(GetPatientSummaryResult result) {
 		LinkedHashSet<String[]> data = new LinkedHashSet<String[]>();
 		// TODO: the first value here could easily be set by
 		// patient.getPatientIdTitle() or some such.  This way it could
 		// be retrieved from the database.
-		Patient patient = ehr.getSubject();
-		Demographics demographics = ehr.getDemographics();
-		data.add(new String[] { "Case Number : ", patient.getCaseNumber() });
-		data.add(new String[] { "Name : ", patient.getName() });
-		data.add(new String[] { "Gender : ", demographics.getGender().getDescriptor() });
-		data.add(new String[] { "DOB : ", demographics.getDob().toString() });
-		data.add(new String[] { "Ethnicity : ", demographics.getEthnicity().getDescriptor() });
-		data.add(new String[] { "Preferred Language : ", demographics.getPreferredLanguage() });
-		data.add(new String[] { "Race : ", demographics.getRace().getDescriptor() });
-		data.add(new String[] { "Insurance Type : ", demographics.getInsuranceType() });
-		data.add(new String[] { "SSN : ", patient.getSsn() });
+		data.add(new String[] { "Case Number : ", result.getCaseNumber() });
+		data.add(new String[] { "Name : ", result.getName() });
+		data.add(new String[] { "Gender : ", result.getGender() });
+		data.add(new String[] { "DOB : ", result.getDob().toString() });
+		data.add(new String[] { "Ethnicity : ", result.getEthnicity() });
+		data.add(new String[] { "Preferred Language : ", result.getPreferredLanguage() });
+		data.add(new String[] { "Race : ", result.getRace() });
+		data.add(new String[] { "Insurance Type : ", result.getInsuranceType() });
+		data.add(new String[] { "SSN : ", result.getSsn() });
 		display.setData(data);
 	}
 }

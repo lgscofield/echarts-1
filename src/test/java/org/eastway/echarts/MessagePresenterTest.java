@@ -22,10 +22,11 @@ import java.util.List;
 import net.customware.gwt.presenter.client.DefaultEventBus;
 import net.customware.gwt.presenter.client.EventBus;
 
+import org.eastway.echarts.client.CachingDispatchAsync;
 import org.eastway.echarts.client.EchartsUser;
-import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.presenter.MessagesPresenter;
 import org.eastway.echarts.shared.CodeDTO;
+import org.eastway.echarts.shared.GetMessages;
 import org.eastway.echarts.shared.MessageDTO;
 import org.eastway.echarts.shared.PatientDTO;
 import org.junit.Test;
@@ -36,25 +37,27 @@ import static org.junit.Assert.*;
 
 public class MessagePresenterTest {
 	private MessagesPresenter messagesPresenter;
-	private RpcServicesAsync mockRpcService;
+	private CachingDispatchAsync mockRpcService;
 	private EventBus eventBus;
 	private MessagesPresenter.Display mockMessagesDisplay;
-	private long ehrId = 1L;
+	private GetMessages action = null;
+	private String caseNumber = "0000008";
 
 	@Test public void testAddMessage() {
+		action = new GetMessages("12345", caseNumber);
 		Date timestamp = new Date(1270717380123L);
 		EchartsUser.sessionId = "12345";
-		mockRpcService = createStrictMock(RpcServicesAsync.class);
+		mockRpcService = createStrictMock(CachingDispatchAsync.class);
 		eventBus = new DefaultEventBus();
 		mockMessagesDisplay = createStrictMock(MessagesPresenter.Display.class);
 		PatientDTO patient = new PatientDTO();
 		patient.setCaseNumber("00000001");
-		messagesPresenter = new MessagesPresenter(mockMessagesDisplay, eventBus, mockRpcService, ehrId);
+		messagesPresenter = new MessagesPresenter(mockMessagesDisplay, eventBus, mockRpcService, caseNumber, action);
 		MessageDTO m1 = new MessageDTO();
 		MessageDTO m2 = new MessageDTO();
 		MessageDTO m3 = new MessageDTO();
 
-		m1.setEhrId(ehrId);
+		m1.setCaseNumber(caseNumber);
 
 		CodeDTO mtDto = new CodeDTO();
 		mtDto.setDescriptor("Referral Message");
@@ -66,7 +69,7 @@ public class MessagePresenterTest {
 		m1.setLastEditBy("johndoe");
 		m1.setParent(null);
 
-		m2.setEhrId(ehrId);
+		m2.setCaseNumber(caseNumber);
 		m2.setMessageType(mtDto);
 		m2.setMessage("This is test 2");
 		m2.setCreationTimestamp(timestamp);
@@ -75,7 +78,7 @@ public class MessagePresenterTest {
 		m2.setLastEditBy("johndoe");
 		m2.setParent(m1);
 
-		m3.setEhrId(ehrId);
+		m3.setCaseNumber(caseNumber);
 		m3.setMessageType(mtDto);
 		m3.setMessage("This is test 3");
 		m3.setCreationTimestamp(timestamp);
@@ -97,7 +100,7 @@ public class MessagePresenterTest {
 		assertTrue(messagesPresenter.getMessage(0).getMessage().equals("This is test 1"));
 		assertTrue(messagesPresenter.getMessage(0).getMessageType().equals(mtDto));
 		assertTrue(messagesPresenter.getMessage(0).getParent() == null);
-		assertTrue(new Long(messagesPresenter.getMessage(0).getEhrId()).equals(ehrId));
+		assertTrue(messagesPresenter.getMessage(0).getCaseNumber().equals(caseNumber));
 
 		assertTrue(messagesPresenter.getMessage(1).getCreationTimestamp() == timestamp);
 		assertTrue(messagesPresenter.getMessage(1).getId() == 2);
@@ -106,7 +109,7 @@ public class MessagePresenterTest {
 		assertTrue(messagesPresenter.getMessage(1).getMessage().equals("This is test 2"));
 		assertTrue(messagesPresenter.getMessage(1).getMessageType().equals(mtDto));
 		assertTrue(messagesPresenter.getMessage(1).getParent().equals(m1));
-		assertTrue(new Long(messagesPresenter.getMessage(1).getEhrId()).equals(ehrId));
+		assertTrue(messagesPresenter.getMessage(1).getCaseNumber().equals(caseNumber));
 
 		assertTrue(messagesPresenter.getMessage(2).getCreationTimestamp() == timestamp);
 		assertTrue(messagesPresenter.getMessage(2).getId() == 3);
@@ -115,7 +118,7 @@ public class MessagePresenterTest {
 		assertTrue(messagesPresenter.getMessage(2).getMessage().equals("This is test 3"));
 		assertTrue(messagesPresenter.getMessage(2).getMessageType().equals(mtDto));
 		assertTrue(messagesPresenter.getMessage(2).getParent().equals(m2));
-		assertTrue(new Long(messagesPresenter.getMessage(2).getEhrId()).equals(ehrId));
+		assertTrue(messagesPresenter.getMessage(2).getCaseNumber().equals(caseNumber));
 
 		ArrayList<String[]> data = messagesPresenter.getData();
 

@@ -169,4 +169,16 @@ public class ContactView extends Composite implements ContactPresenter.Display {
 			nextRecord();
 		}
 	}
+
+	@Override
+	public String getCaseNumber() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setCaseNumber(String caseNumber) {
+		// TODO Auto-generated method stub
+		
+	}
 }

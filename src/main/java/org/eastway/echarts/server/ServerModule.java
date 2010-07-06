@@ -10,6 +10,15 @@ public class ServerModule extends ActionHandlerModule {
 		bindHandler(GetAssignmentsHandler.class);
 		bindHandler(GetDemographicsHandler.class);
 		bindHandler(GetAppointmentsHandler.class);
+		bindHandler(GetPatientSummaryHandler.class);
+		bindHandler(GetReferralHandler.class);
+		bindHandler(GetDiagnosesHandler.class);
+		bindHandler(GetLinksHandler.class);
+		bindHandler(GetMessagesHandler.class);
+		bindHandler(SaveMessageHandler.class);
+		bindHandler(GetAddressesHandler.class);
+		bindHandler(GetContactsHandler.class);
+		bindHandler(GetMedicationsHandler.class);
 	}
 
 }

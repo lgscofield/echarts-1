@@ -26,7 +26,6 @@ public class EHRDTO implements Serializable, EHR {
 	private Demographics demographics;
 	private Date timeCreated;
 	private List<Assignment> assignments;
-	private List<Contact> contacts;
 	private List<Diagnosis> diagnoses;
 	private List<Medication> medications;
 
@@ -89,16 +88,6 @@ public class EHRDTO implements Serializable, EHR {
 	@Override
 	public Demographics getDemographics() {
 		return this.demographics;
-	}
-
-	@Override
-	public List<Contact> getContacts() {
-		return contacts;
-	}
-
-	@Override
-	public void setContacts(List<Contact> contacts) {
-		this.contacts = contacts;
 	}
 
 	@Override

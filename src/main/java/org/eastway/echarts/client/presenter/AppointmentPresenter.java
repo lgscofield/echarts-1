@@ -17,8 +17,7 @@ package org.eastway.echarts.client.presenter;
 
 import net.customware.gwt.presenter.client.EventBus;
 
-import org.eastway.echarts.client.CachingDispatchAsync;
-import org.eastway.echarts.client.EchartsUser;
+import org.eastway.echarts.client.CachingDispatchAsyncImpl;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.shared.Appointment;
 import org.eastway.echarts.shared.GetAppointments;
@@ -33,32 +32,34 @@ public class AppointmentPresenter implements Presenter {
 
 	public interface Display extends EchartsDisplay, Appointment {
 		public void nextRecord();
+
+		public void reset();
+
+		public void setHeader();
 	}
 
 	private Display display;
 	private EventBus eventBus;
-	private CachingDispatchAsync dispatch;
-	private GetAppointments appointments;
-	private String caseNumber;
+	private CachingDispatchAsyncImpl dispatch;
+	private GetAppointments action;
 
-	public AppointmentPresenter(Display display, EventBus eventBus, CachingDispatchAsync dispatch, String caseNumber) {
+	public AppointmentPresenter(Display display, EventBus eventBus, CachingDispatchAsyncImpl dispatch, GetAppointments action, String caseNumber) {
 		this.display = display;
 		this.dispatch = dispatch;
 		this.eventBus = eventBus;
-		this.caseNumber = caseNumber;
+		this.action = action;
 	}
 
 	@Override
 	public void go(HasWidgets container) {
 		container.clear();
 		container.add(display.asWidget());
-		appointments = new GetAppointments(EchartsUser.sessionId, caseNumber);
 		fetchData();
 	}
 
 	public void fetchData() {
 		eventBus.fireEvent(new RequestEvent(State.SENT));
-		dispatch.execute(appointments, new AsyncCallback<GetAppointmentsResult>() {
+		dispatch.executeWithCache(action, new AsyncCallback<GetAppointmentsResult>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -68,6 +69,7 @@ public class AppointmentPresenter implements Presenter {
 			@Override
 			public void onSuccess(GetAppointmentsResult result) {
 				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
+				display.reset();
 				setData(result);
 			}
 			
@@ -75,10 +77,11 @@ public class AppointmentPresenter implements Presenter {
 	}
 
 	public void setData(GetAppointmentsResult result) {
+		display.setHeader();
 		for (Appointment a : result.getAppointments()) {
 			display.setActivity(a.getActivity());
 			display.setAppointmentDate(a.getAppointmentDate());
-			//display.setCaseNumber(a.getCaseNumber());
+			display.setCaseNumber(a.getCaseNumber());
 			display.setEndTime(a.getEndTime());
 			display.setId(a.getId());
 			display.setLocation(a.getLocation());

@@ -17,27 +17,18 @@ package org.eastway.echarts.domain;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.Referral;
 import org.eastway.echarts.shared.ReferralDTO;
 
 @Entity
 @Table(name = "Referral")
 public class ReferralImpl implements Referral {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="referral_id")
-	private long id;
-    @ManyToOne
-    private EHRImpl ehr;
+    @Id
+    private String caseNumber;
 	private String program;
 	private String UCI;
 	private String UPId;
@@ -57,23 +48,13 @@ public class ReferralImpl implements Referral {
 	public ReferralImpl() { }
 
 	@Override
-	public void setId(long id) {
-		this.id = id;
+	public void setCaseNumber(String caseNumber) {
+		this.caseNumber = caseNumber;
 	}
 
 	@Override
-	public long getId() {
-		return id;
-	}
-
-	@Override
-	public void setEhr(EHR ehr) {
-		this.ehr = (EHRImpl) ehr;
-	}
-
-	@Override
-	public EHR getEhr() {
-		return ehr;
+	public String getCaseNumber() {
+		return caseNumber;
 	}
 
 	@Override
@@ -232,8 +213,6 @@ public class ReferralImpl implements Referral {
 		dto.setAdmissionDate(admissionDate);
 		dto.setDischargeDate(dischargeDate);
 		dto.setDisposition(disposition);
-		dto.setEhr(ehr.toDto());
-		dto.setId(id);
 		dto.setLastEdit(lastEdit);
 		dto.setLastEditBy(lastEditBy);
 		dto.setLastService(lastService);

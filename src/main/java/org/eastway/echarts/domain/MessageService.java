@@ -46,7 +46,7 @@ public class MessageService {
 		return getEntityManager().find(Message.class, id);
 	}
 
-	public Message create(Date creationTimestamp, long ehrId,
+	public Message create(Date creationTimestamp, String caseNumber,
 			Date lastEdit,
 			String lastEditBy,
 			String content,
@@ -54,7 +54,7 @@ public class MessageService {
 			Message parent) {
 		Message message = new Message();
 		message.setCreationTimestamp(creationTimestamp);
-		message.setEhrId(ehrId);
+		message.setCaseNumber(caseNumber);
 		message.setLastEdit(lastEdit);
 		message.setLastEditBy(lastEditBy);
 		message.setMessage(content);

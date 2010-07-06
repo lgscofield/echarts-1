@@ -42,7 +42,7 @@ public class AppointmentView extends Composite implements AppointmentPresenter.D
 	enum Column {
 		ACTIVITY,
 		APPOINTMENT_DATE,
-		//CASE_NUMBER,
+		CASE_NUMBER,
 		START_TIME,
 		END_TIME,
 		LOCATION,
@@ -53,18 +53,6 @@ public class AppointmentView extends Composite implements AppointmentPresenter.D
 
 	public AppointmentView() {
 		initWidget(uiBinder.createAndBindUi(this));
-		appointments.setHTML(record, Column.ACTIVITY.ordinal(), "<b>ACTIVITY</b>");
-		appointments.setHTML(record, Column.APPOINTMENT_DATE.ordinal(), "<b>APPOINTMENT DATE</b>");
-		//appointments.setHTML(record, Column.CASE_NUMBER.ordinal(), "<b>CASE NUMBER</b>");
-		appointments.setHTML(record, Column.END_TIME.ordinal(), "<b>END TIME</b>");
-		appointments.setHTML(record, Column.LOCATION.ordinal(), "<b>LOCATION</b>");
-		appointments.setHTML(record, Column.NOTES.ordinal(), "<b>NOTES</b>");
-		appointments.setHTML(record, Column.PRIORITY.ordinal(), "<b>PRIORITY</b>");
-		appointments.setHTML(record, Column.STAFF.ordinal(), "<b>STAFF</b>");
-		appointments.setHTML(record, Column.START_TIME.ordinal(), "<b>START TIME</b>");
-		appointments.setBorderWidth(1);
-		nextRecord();
-		
 	}
 
 	@Override
@@ -151,10 +139,10 @@ public class AppointmentView extends Composite implements AppointmentPresenter.D
 
 	@Override
 	public void setCaseNumber(String caseNumber) {
-		//if (caseNumber == null || caseNumber.matches(""))
-		//	appointments.setHTML(record, Column.CASE_NUMBER.ordinal(), emptyCellFiller);
-		//else
-		//	appointments.setText(record, Column.CASE_NUMBER.ordinal(), caseNumber);
+		if (caseNumber == null || caseNumber.matches(""))
+			appointments.setHTML(record, Column.CASE_NUMBER.ordinal(), emptyCellFiller);
+		else
+			appointments.setText(record, Column.CASE_NUMBER.ordinal(), caseNumber);
 	}
 
 	@Override
@@ -203,9 +191,29 @@ public class AppointmentView extends Composite implements AppointmentPresenter.D
 	}
 
 	@Override
+	public void reset() {
+		appointments.clear();
+		record = 0;
+	}
+
+	@Override
 	public AppointmentDTO toDto() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
+	public void setHeader() {
+		appointments.setHTML(record, Column.ACTIVITY.ordinal(), "<b>ACTIVITY</b>");
+		appointments.setHTML(record, Column.APPOINTMENT_DATE.ordinal(), "<b>APPOINTMENT DATE</b>");
+		appointments.setHTML(record, Column.CASE_NUMBER.ordinal(), "<b>CASE NUMBER</b>");
+		appointments.setHTML(record, Column.END_TIME.ordinal(), "<b>END TIME</b>");
+		appointments.setHTML(record, Column.LOCATION.ordinal(), "<b>LOCATION</b>");
+		appointments.setHTML(record, Column.NOTES.ordinal(), "<b>NOTES</b>");
+		appointments.setHTML(record, Column.PRIORITY.ordinal(), "<b>PRIORITY</b>");
+		appointments.setHTML(record, Column.STAFF.ordinal(), "<b>STAFF</b>");
+		appointments.setHTML(record, Column.START_TIME.ordinal(), "<b>START TIME</b>");
+		appointments.setBorderWidth(1);
+		nextRecord();
+	}
 }

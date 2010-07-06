@@ -28,7 +28,7 @@
 				<g:Label ui:field='appointments'>Appointments</g:Label>
 				<g:Label ui:field='medications'>Medications</g:Label>
 				<g:Label ui:field='messages'>Messages</g:Label>
-				<g:Label ui:field='forms'>Forms</g:Label>
+				<g:Label ui:field='links'>Forms</g:Label>
 			</g:Tree>
 		</g:west>
 		<g:center>

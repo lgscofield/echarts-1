@@ -25,7 +25,6 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Widget;
 
 import org.eastway.echarts.client.presenter.ReferralPresenter;
-import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.ReferralDTO;
 
 public class ReferralView extends Composite implements ReferralPresenter.Display {
@@ -99,18 +98,6 @@ public class ReferralView extends Composite implements ReferralPresenter.Display
 	public String getDisposition() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public EHR getEhr() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public long getId() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	@Override
@@ -207,18 +194,6 @@ public class ReferralView extends Composite implements ReferralPresenter.Display
 			referrals.setHTML(record, Column.DISPOSITION.ordinal(), emptyCellFiller);
 		else
 			referrals.setText(record, Column.DISPOSITION.ordinal(), disposition);
-	}
-
-	@Override
-	public void setEhr(EHR ehr) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setId(long id) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -326,5 +301,17 @@ public class ReferralView extends Composite implements ReferralPresenter.Display
 	@Override
 	public void nextRecord() {
 		record++;
+	}
+
+	@Override
+	public String getCaseNumber() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setCaseNumber(String caseNumber) {
+		// TODO Auto-generated method stub
+		
 	}
 }

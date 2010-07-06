@@ -29,6 +29,7 @@ public class MedicationImpl implements Medication {
 	@Id
 	private long id;
 	private String medication;
+	private String caseNumber;
 
 	@Override
 	public long getId() {
@@ -45,6 +46,14 @@ public class MedicationImpl implements Medication {
 		this.id = id;
 	}
 
+	public void setCaseNumber(String caseNumber) {
+		this.caseNumber = caseNumber;
+	}
+
+	public String getCaseNumber() {
+		return caseNumber;
+	}
+
 	@Override
 	public void setMedication(String medication) {
 		this.medication = medication;
@@ -55,6 +64,7 @@ public class MedicationImpl implements Medication {
 		MedicationDTO dto = new MedicationDTO();
 		dto.setId(id);
 		dto.setMedication(medication);
+		dto.setCaseNumber(caseNumber);
 		return dto;
 	}
 

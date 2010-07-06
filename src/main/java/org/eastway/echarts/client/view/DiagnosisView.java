@@ -56,21 +56,6 @@ public class DiagnosisView extends Composite implements DiagnosisPresenter.Displ
 
 	public DiagnosisView() {
 		initWidget(uiBinder.createAndBindUi(this));
-		diagnoses.setHTML(record, Column.AXIS1A.ordinal(), "<b>AXIS 1A</b>");
-		diagnoses.setHTML(record, Column.AXIS1B.ordinal(), "<b>AXIS 1B</b>");
-		diagnoses.setHTML(record, Column.AXIS1C.ordinal(), "<b>AXIS 1C</b>");
-		diagnoses.setHTML(record, Column.AXIS1D.ordinal(), "<b>AXIS 1D</b>");
-		diagnoses.setHTML(record, Column.AXIS1E.ordinal(), "<b>AXIS 1E</b>");
-		diagnoses.setHTML(record, Column.AXIS2A.ordinal(), "<b>AXIS 2A</b>");
-		diagnoses.setHTML(record, Column.AXIS2B.ordinal(), "<b>AXIS 2B</b>");
-		diagnoses.setHTML(record, Column.AXIS2C.ordinal(), "<b>AXIS 2C</b>");
-		diagnoses.setHTML(record, Column.AXIS3.ordinal(), "<b>AXIS 3</b>");
-		diagnoses.setHTML(record, Column.AXIS4.ordinal(), "<b>AXIS 4</b>");
-		diagnoses.setHTML(record, Column.CURRENTGAF.ordinal(), "<b>CURRENT GAF</b>");
-		diagnoses.setHTML(record, Column.HIGHESTGAF.ordinal(), "<b>HIGHEST GAF</b>");
-		diagnoses.setHTML(record, Column.DATE.ordinal(), "<b>DATE</b>");
-		diagnoses.setBorderWidth(1);
-		nextRecord();
 	}
 
 	@Override
@@ -310,4 +295,28 @@ public class DiagnosisView extends Composite implements DiagnosisPresenter.Displ
 		return null;
 	}
 
+	@Override
+	public void reset() {
+		diagnoses.clear();
+		record = 0;
+	}
+
+	@Override
+	public void setHeader() {
+		diagnoses.setHTML(record, Column.AXIS1A.ordinal(), "<b>AXIS 1A</b>");
+		diagnoses.setHTML(record, Column.AXIS1B.ordinal(), "<b>AXIS 1B</b>");
+		diagnoses.setHTML(record, Column.AXIS1C.ordinal(), "<b>AXIS 1C</b>");
+		diagnoses.setHTML(record, Column.AXIS1D.ordinal(), "<b>AXIS 1D</b>");
+		diagnoses.setHTML(record, Column.AXIS1E.ordinal(), "<b>AXIS 1E</b>");
+		diagnoses.setHTML(record, Column.AXIS2A.ordinal(), "<b>AXIS 2A</b>");
+		diagnoses.setHTML(record, Column.AXIS2B.ordinal(), "<b>AXIS 2B</b>");
+		diagnoses.setHTML(record, Column.AXIS2C.ordinal(), "<b>AXIS 2C</b>");
+		diagnoses.setHTML(record, Column.AXIS3.ordinal(), "<b>AXIS 3</b>");
+		diagnoses.setHTML(record, Column.AXIS4.ordinal(), "<b>AXIS 4</b>");
+		diagnoses.setHTML(record, Column.CURRENTGAF.ordinal(), "<b>CURRENT GAF</b>");
+		diagnoses.setHTML(record, Column.HIGHESTGAF.ordinal(), "<b>HIGHEST GAF</b>");
+		diagnoses.setHTML(record, Column.DATE.ordinal(), "<b>DATE</b>");
+		diagnoses.setBorderWidth(1);
+		nextRecord();
+	}
 }

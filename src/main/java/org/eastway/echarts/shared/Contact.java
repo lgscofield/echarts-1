@@ -47,4 +47,8 @@ public interface Contact {
 
 	public ContactDTO toDto();
 
+	public void setCaseNumber(String caseNumber);
+
+	public String getCaseNumber();
+
 }

@@ -15,35 +15,70 @@
  */
 package org.eastway.echarts.client.presenter;
 
-import org.eastway.echarts.shared.Diagnosis;
-import org.eastway.echarts.shared.EHR;
+import net.customware.gwt.presenter.client.EventBus;
 
-import com.google.gwt.event.shared.HandlerManager;
+import org.eastway.echarts.client.CachingDispatchAsyncImpl;
+import org.eastway.echarts.client.HandleRpcException;
+import org.eastway.echarts.client.view.DiagnosisView;
+import org.eastway.echarts.shared.Diagnosis;
+import org.eastway.echarts.shared.GetDiagnoses;
+import org.eastway.echarts.shared.GetDiagnosesResult;
+
+import com.google.gwt.requestfactory.shared.RequestEvent;
+import com.google.gwt.requestfactory.shared.RequestEvent.State;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class DiagnosisPresenter implements Presenter {
 
 	public interface Display extends EchartsDisplay, Diagnosis {
 		public void nextRecord();
+
+		public void reset();
+
+		public void setHeader();
 	}
 
-	private EHR ehr;
 	private Display display;
+	private EventBus eventBus;
+	private CachingDispatchAsyncImpl dispatch;
+	private GetDiagnoses action;
 
-	public DiagnosisPresenter(Display display, HandlerManager eventBus, EHR ehr) {
-		this.ehr = ehr;
+	public DiagnosisPresenter(DiagnosisView display, EventBus eventBus,
+			CachingDispatchAsyncImpl dispatch, GetDiagnoses action) {
 		this.display = display;
+		this.eventBus = eventBus;
+		this.dispatch = dispatch;
+		this.action = action;
 	}
 
 	@Override
 	public void go(HasWidgets container) {
 		container.clear();
 		container.add(display.asWidget());
-		setData();
+		fetchData();
 	}
 
-	public void setData() {
-		for (Diagnosis diagnosis : ehr.getDiagnoses()) {
+	public void fetchData() {
+		eventBus.fireEvent(new RequestEvent(State.SENT));
+		dispatch.executeWithCache(action, new AsyncCallback<GetDiagnosesResult>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				new HandleRpcException(caught);
+			}
+
+			@Override
+			public void onSuccess(GetDiagnosesResult result) {
+				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
+				display.reset();
+				setData(result);
+			}
+		});
+	}
+
+	public void setData(GetDiagnosesResult result) {
+		display.setHeader();
+		for (Diagnosis diagnosis : result.getDiagnoses()) {
 			display.setAxis1A(diagnosis.getAxis1A());
 			display.setAxis1B(diagnosis.getAxis1B());
 			display.setAxis1C(diagnosis.getAxis1C());

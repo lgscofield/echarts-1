@@ -21,6 +21,10 @@ public interface Medication {
 
 	public long getId();
 
+	public void setCaseNumber(String caseNumber);
+
+	public String getCaseNumber();
+
 	public void setMedication(String medication);
 
 	public String getMedication();
