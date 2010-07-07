@@ -37,8 +37,7 @@ public class PatientSummaryPresenter implements Presenter {
 	private GetPatientSummary action;
 
 	public PatientSummaryPresenter(Display display,
-			EventBus eventBus, CachingDispatchAsyncImpl dispatch, GetPatientSummary action,
-			long ehrId) {
+			EventBus eventBus, CachingDispatchAsyncImpl dispatch, GetPatientSummary action) {
 		this.display = display;
 		this.eventBus = eventBus;
 		this.dispatch = dispatch;

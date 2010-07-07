@@ -23,12 +23,10 @@ import com.google.gwt.event.shared.GwtEvent;
 
 public class ViewPatientSummaryEvent extends GwtEvent<ViewPatientSummaryEventHandler> {
 	public static Type<ViewPatientSummaryEventHandler> TYPE = new Type<ViewPatientSummaryEventHandler>();
-	private long id;
 	private EHRView<EHR> view;
-	private GetPatientSummary action; 
+	private GetPatientSummary action;
 
-	public ViewPatientSummaryEvent(long id, EHRView<EHR> view, GetPatientSummary action) {
-		this.id = id;
+	public ViewPatientSummaryEvent(EHRView<EHR> view, GetPatientSummary action) {
 		this.view = view;
 		this.action = action;
 	}
@@ -41,10 +39,6 @@ public class ViewPatientSummaryEvent extends GwtEvent<ViewPatientSummaryEventHan
 	@Override
 	public Type<ViewPatientSummaryEventHandler> getAssociatedType() {
 		return TYPE;
-	}
-
-	public long getId() {
-		return id;
 	}
 
 	public EHRView<EHR> getView() {

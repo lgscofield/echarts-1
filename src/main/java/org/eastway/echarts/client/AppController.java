@@ -80,7 +80,6 @@ import org.eastway.echarts.shared.GetMessages;
 import org.eastway.echarts.shared.GetPatientSummary;
 import org.eastway.echarts.shared.GetReferral;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.requestfactory.shared.RequestEvent;
 import com.google.gwt.requestfactory.shared.RequestEvent.State;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -88,13 +87,11 @@ import com.google.inject.Inject;
 
 public class AppController {
 	private final EventBus eventBus;
-	private EHRServicesAsync ehrServices = GWT.<EHRServicesAsync>create(EHRServices.class);
 	private DashboardView<LinkedHashMap<String, Long>> dashboard = null;
 	private EHRView<EHR> ehrView;
 	protected MessagesView messagesView;
 	protected CachingDispatchAsyncImpl dispatch;
 	private DashboardPresenter dashboardPresenter;
-	protected DemographicsPresenter demographicsPresenter;
 
 	@Inject
 	public AppController(EventBus eventBus, CachingDispatchAsyncImpl dispatch) {
@@ -107,49 +104,49 @@ public class AppController {
 		eventBus.addHandler(OpenEhrEvent.TYPE, new OpenEhrEventHandler() {
 			@Override
 			public void onOpenEhr(OpenEhrEvent event) {
-				doViewEhr(event.getId(), event.getCaseNumber());
+				doViewEhr(event.getCaseNumber());
 			}
 		});
 		eventBus.addHandler(ViewPatientSummaryEvent.TYPE, new ViewPatientSummaryEventHandler() {
 			@Override
 			public void onViewPatientSummary(ViewPatientSummaryEvent event) {
-				doViewPatientSummary(event.getId(), event.getView(), event.getAction());
+				doViewPatientSummary(event.getView(), event.getAction());
 			}
 		});
 		eventBus.addHandler(ViewMessagesEvent.TYPE, new ViewMessagesEventHandler() {
 			@Override
 			public void onViewMessages(ViewMessagesEvent event) {
-				doViewMessages(event.getView(), event.getAction(), event.getCaseNumber());
+				doViewMessages(event.getView(), event.getAction());
 			}
 		});
 		eventBus.addHandler(ViewReferralEvent.TYPE, new ViewReferralEventHandler() {
 			@Override
 			public void onViewReferral(ViewReferralEvent event) {
-				doViewReferral(event.getId(), event.getView(), event.getAction());
+				doViewReferral(event.getView(), event.getAction());
 			}
 		});
 		eventBus.addHandler(ViewAppointmentsEvent.TYPE, new ViewAppointmentsEventHandler() {
 			@Override
 			public void onViewAppointments(ViewAppointmentsEvent event) {
-				doViewAppointments(event.getCaseNumber(), event.getView(), event.getAction());
+				doViewAppointments(event.getView(), event.getAction());
 			}
 		});
 		eventBus.addHandler(ViewDiagnosesEvent.TYPE, new ViewDiagnosesEventHandler() {
 			@Override
 			public void onViewDiagnoses(ViewDiagnosesEvent event) {
-				doViewDiagnoses(event.getCaseNumber(), event.getView(), event.getAction());
+				doViewDiagnoses(event.getView(), event.getAction());
 			}
 		});
 		eventBus.addHandler(ViewLinksEvent.TYPE, new ViewLinksEventHandler() {
 			@Override
 			public void onViewLinks(ViewLinksEvent event) {
-				doViewLinksEvent(event.getView(), event.getAction(), event.getCaseNumber());
+				doViewLinksEvent(event.getView(), event.getAction());
 			}
 		});
 		eventBus.addHandler(ViewAddressesEvent.TYPE, new ViewAddressesEventHandler() {
 			@Override
 			public void onViewAddresses(ViewAddressesEvent event) {
-				doViewAddresses(event.getView(), event.getAction(), event.getCaseNumber());
+				doViewAddresses(event.getView(), event.getAction());
 			}
 		});
 		eventBus.addHandler(ViewContactsEvent.TYPE, new ViewContactsEventHandler() {
@@ -178,7 +175,7 @@ public class AppController {
 		eventBus.addHandler(ViewDemographicsEvent.TYPE, new ViewDemographicsEventHandler() {
 			@Override
 			public void onViewDemographics(ViewDemographicsEvent event) {
-				doViewDemographics(event.getId(), event.getView(), event.getAction());
+				doViewDemographics(event.getView(), event.getAction());
 			}
 		});
 	}
@@ -193,51 +190,51 @@ public class AppController {
 		presenter.go(view.getDisplayArea());
 	}
 
-	public void doViewAddresses(EHRView<EHR> view, GetAddresses action, String caseNumber) {
-		Presenter presenter = new AddressPresenter(new AddressView(), eventBus, dispatch, action, caseNumber);
+	public void doViewAddresses(EHRView<EHR> view, GetAddresses action) {
+		Presenter presenter = new AddressPresenter(new AddressView(), eventBus, dispatch, action);
 		presenter.go(view.getDisplayArea());
 	}
 
-	public void doViewLinksEvent(EHRView<EHR> view, GetLinks action, String caseNumber) {
-		Presenter presenter = new LinkPresenter(new LinkView(), eventBus, dispatch, action, caseNumber);
+	public void doViewLinksEvent(EHRView<EHR> view, GetLinks action) {
+		Presenter presenter = new LinkPresenter(new LinkView(), eventBus, dispatch, action);
 		presenter.go(view.getDisplayArea());
 	}
 
-	public void doViewDiagnoses(String caseNumber, EHRView<EHR> view, GetDiagnoses action) {
+	public void doViewDiagnoses(EHRView<EHR> view, GetDiagnoses action) {
 		Presenter presenter = new DiagnosisPresenter(new DiagnosisView(), eventBus, dispatch, action);
 		presenter.go(view.getDisplayArea());
 	}
 
-	public void doViewAppointments(String caseNumber, EHRView<EHR> view, GetAppointments action) {
-		Presenter presenter = new AppointmentPresenter(new AppointmentView(), eventBus, dispatch, action, caseNumber);
+	public void doViewAppointments(EHRView<EHR> view, GetAppointments action) {
+		Presenter presenter = new AppointmentPresenter(new AppointmentView(), eventBus, dispatch, action);
 		presenter.go(view.getDisplayArea());
 	}
 
-	public void doViewReferral(long ehrId, EHRView<EHR> view, GetReferral action) {
+	public void doViewReferral(EHRView<EHR> view, GetReferral action) {
 		Presenter presenter = new ReferralPresenter(new ReferralView(), eventBus, dispatch, action);
 		presenter.go(view.getDisplayArea());
 	}
 
-	public void doViewMessages(EHRView<EHR> view, GetMessages action, String caseNumber) {
-		Presenter presenter = new MessagesPresenter(new MessagesView(), eventBus, dispatch, caseNumber, action);
+	public void doViewMessages(EHRView<EHR> view, GetMessages action) {
+		Presenter presenter = new MessagesPresenter(new MessagesView(), eventBus, dispatch, action);
 		presenter.go(view.getDisplayArea());
 	}
 
-	public void doViewEhr(long ehrId, String caseNumber) {
+	public void doViewEhr(String caseNumber) {
 		ehrView = new EHRViewImpl<EHR>();
-		Presenter presenter = new EHRPresenter(ehrView, eventBus, ehrServices, ehrId);
+		Presenter presenter = new EHRPresenter(ehrView, eventBus, dispatch, caseNumber);
 		presenter.go(null);
 		dashboard.addTab(ehrView.asWidget(), caseNumber);
 	}
 
-	public void doViewPatientSummary(long ehrId, EHRView<EHR> view, GetPatientSummary action) {
-		Presenter presenter = new PatientSummaryPresenter(new PatientSummaryView(), eventBus, dispatch, action, ehrId);
+	public void doViewPatientSummary(EHRView<EHR> view, GetPatientSummary action) {
+		Presenter presenter = new PatientSummaryPresenter(new PatientSummaryView(), eventBus, dispatch, action);
 		presenter.go(view.getDisplayArea());
 	}
 
-	public void doViewDemographics(final long ehrId, final EHRView<EHR> view, GetDemographics action) {
-		demographicsPresenter = new DemographicsPresenter(new DemographicsView(), eventBus, dispatch, action, ehrId);
-		demographicsPresenter.go(view.getDisplayArea());
+	public void doViewDemographics(final EHRView<EHR> view, GetDemographics action) {
+		Presenter presenter = new DemographicsPresenter(new DemographicsView(), eventBus, dispatch, action);
+		presenter.go(view.getDisplayArea());
 	}
 
 	public void go(final HasWidgets container) {

@@ -71,16 +71,13 @@ public class MessagesPresenter implements Presenter {
 	private Display view;
 	private EventBus eventBus;
 	private CachingDispatchAsync dispatch;
-	private String caseNumber;
 	private GetMessages action;
 
 	public MessagesPresenter(Display view, EventBus eventBus,
-			CachingDispatchAsync dispatch, String caseNumber,
-			GetMessages action) {
+			CachingDispatchAsync dispatch, GetMessages action) {
 		this.view = view;
 		this.eventBus = eventBus;
 		this.dispatch = dispatch;
-		this.caseNumber = caseNumber;
 		this.action = action;
 	}
 
@@ -103,7 +100,7 @@ public class MessagesPresenter implements Presenter {
 			@Override
 			public void onClick(ClickEvent event) {
 				MessageDTO m = new MessageDTO();
-				m.setCaseNumber(caseNumber);
+				m.setCaseNumber(action.getCaseNumber());
 				CodeDTO mtDto = findMessageType(view.getMessageType());
 				m.setMessageType(mtDto);
 				m.setMessage(view.getMessage());

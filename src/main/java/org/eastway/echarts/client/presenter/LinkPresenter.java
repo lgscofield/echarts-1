@@ -41,12 +41,10 @@ public class LinkPresenter implements Presenter {
 	private GetLinks action;
 	private CachingDispatchAsync dispatch;
 	private EventBus eventBus;
-	private String caseNumber;
 
-	public LinkPresenter(Display display, EventBus eventBus, CachingDispatchAsync dispatch, GetLinks action, String caseNumber) {
+	public LinkPresenter(Display display, EventBus eventBus, CachingDispatchAsync dispatch, GetLinks action) {
 		this.action = action;
 		this.eventBus = eventBus;
-		this.caseNumber = caseNumber;
 		this.dispatch = dispatch;
 		this.display = display;
 	}
@@ -75,7 +73,7 @@ public class LinkPresenter implements Presenter {
 	public void setData(LinkedHashSet<String[]> d) {
 		this.data = d;
 		for (String[] s : data) {
-			s[1] += "?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber;
+			s[1] += "?staffid=" + EchartsUser.staffId + "&PATID=" + action.getCaseNumber();
 		}
 	}
 

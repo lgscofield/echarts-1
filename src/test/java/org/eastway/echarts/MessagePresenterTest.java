@@ -52,7 +52,7 @@ public class MessagePresenterTest {
 		mockMessagesDisplay = createStrictMock(MessagesPresenter.Display.class);
 		PatientDTO patient = new PatientDTO();
 		patient.setCaseNumber("00000001");
-		messagesPresenter = new MessagesPresenter(mockMessagesDisplay, eventBus, mockRpcService, caseNumber, action);
+		messagesPresenter = new MessagesPresenter(mockMessagesDisplay, eventBus, mockRpcService, action);
 		MessageDTO m1 = new MessageDTO();
 		MessageDTO m2 = new MessageDTO();
 		MessageDTO m3 = new MessageDTO();

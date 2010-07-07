@@ -21,7 +21,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.eastway.echarts.client.EchartsUser;
-import org.eastway.echarts.client.PatientServicesAsync;
+//import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEventHandler;
@@ -54,17 +54,17 @@ public class TopPanelPresenter implements Presenter {
 	}
 
 	private LinkedHashMap<String, Long> data;
-	private PatientServicesAsync patientServices;
+	//private PatientServicesAsync patientServices;
 	private Display display;
 	private HandlerManager eventBus;
 
-	public TopPanelPresenter(Display display, HandlerManager eventBus, PatientServicesAsync patientServices) {
-		this.display = display;
-		this.eventBus = eventBus;
-		this.patientServices = patientServices;
-		fetchData();
-		bind();
-	}
+//	public TopPanelPresenter(Display display, HandlerManager eventBus, PatientServicesAsync patientServices) {
+//		this.display = display;
+//		this.eventBus = eventBus;
+//		this.patientServices = patientServices;
+//		fetchData();
+//		bind();
+//	}
 
 	private void bind() {
 		display.getSearchButton().addClickHandler(new ClickHandler() {
@@ -137,7 +137,7 @@ public class TopPanelPresenter implements Presenter {
 				setData(data);
 			}
 		};
-		patientServices.getPatientList(EchartsUser.sessionId, EchartsUser.staffId, callback);
+		//patientServices.getPatientList(EchartsUser.sessionId, EchartsUser.staffId, callback);
 	}
 
 	protected void setData(LinkedHashMap<String, Long> data) {

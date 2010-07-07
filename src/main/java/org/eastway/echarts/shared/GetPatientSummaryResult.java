@@ -9,6 +9,8 @@ public class GetPatientSummaryResult implements Result {
 
 	private String caseNumber;
 	private String name;
+	private String firstName;
+	private String lastName;
 	private String gender;
 	private Date dob;
 	private String ethnicity;
@@ -16,6 +18,7 @@ public class GetPatientSummaryResult implements Result {
 	private String race;
 	private String insuranceType;
 	private String ssn;
+	private String caseStatus;
 
 	public GetPatientSummaryResult() { }
 
@@ -89,5 +92,29 @@ public class GetPatientSummaryResult implements Result {
 
 	public String getSsn() {
 		return ssn;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setCaseStatus(String caseStatus) {
+		this.caseStatus = caseStatus;
+	}
+
+	public String getCaseStatus() {
+		return caseStatus;
 	}
 }

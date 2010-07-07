@@ -18,11 +18,11 @@ package org.eastway.echarts.dashboard.client;
 import java.util.Date;
 import java.util.LinkedHashMap;
 
-import org.eastway.echarts.client.EHRServices;
-import org.eastway.echarts.client.EHRServicesAsync;
+//import org.eastway.echarts.client.EHRServices;
+//import org.eastway.echarts.client.EHRServicesAsync;
 import org.eastway.echarts.client.HandleRpcException;
-import org.eastway.echarts.client.PatientServices;
-import org.eastway.echarts.client.PatientServicesAsync;
+//import org.eastway.echarts.client.PatientServices;
+//import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
 import org.eastway.echarts.client.presenter.PatientListPresenter;
 import org.eastway.echarts.client.presenter.TopPanelPresenter;
@@ -61,12 +61,12 @@ import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class Dashboard extends Composite {
-	private static DashboardViewUiBinder uiBinder = GWT
-			.create(DashboardViewUiBinder.class);
+//	private static DashboardViewUiBinder uiBinder = GWT
+//			.create(DashboardViewUiBinder.class);
 
-	interface DashboardViewUiBinder extends
-			UiBinder<Widget, Dashboard> {
-	}
+//	interface DashboardViewUiBinder extends
+//			UiBinder<Widget, Dashboard> {
+//	}
 
 	interface Style extends CssResource {
 		String alerts();
@@ -89,18 +89,18 @@ public class Dashboard extends Composite {
 	@UiField FlowPanel currentPatientData;
 	@UiField Style style;
 
-	private EHRServicesAsync ehrServices = GWT.<EHRServicesAsync>create(EHRServices.class);
-	private PatientServicesAsync patientServices = GWT.<PatientServicesAsync>create(PatientServices.class);
+//	private EHRServicesAsync ehrServices = GWT.<EHRServicesAsync>create(EHRServices.class);
+//	private PatientServicesAsync patientServices = GWT.<PatientServicesAsync>create(PatientServices.class);
 	private HandlerManager eventBus;
 
 	public Dashboard(HandlerManager eventBus) {
 		this.eventBus = eventBus;
-		initWidget(uiBinder.createAndBindUi(this));
+		//initWidget(uiBinder.createAndBindUi(this));
 		setScheduler(scheduler);
 		bind();
-		PatientListPresenter plp = new PatientListPresenter(
-				new PatientListViewImpl<LinkedHashMap<String, Long>>(), eventBus, patientServices);
-		plp.go(patientListPanel);
+//		PatientListPresenter plp = new PatientListPresenter(
+//				new PatientListViewImpl<LinkedHashMap<String, Long>>(), eventBus, patientServices);
+//		plp.go(patientListPanel);
 		patientSearch.add(patientIdBox);
 		patientSearch.add(patientSearchButton);
 		patientSearchButton.addStyleName(style.button());
@@ -215,8 +215,8 @@ public class Dashboard extends Composite {
 				//addTab(tb, ehr.getSubject().getName());
 			}
 		};
-		ehrServices.getEhr(ehrId, Cookies.getCookie("sessionId"),
-				callback);
+		//ehrServices.getEhr(ehrId, Cookies.getCookie("sessionId"),
+		//		callback);
 	}
 
 	public HasWidgets getTabLayoutPanel() {

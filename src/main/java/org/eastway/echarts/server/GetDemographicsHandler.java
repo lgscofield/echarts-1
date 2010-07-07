@@ -33,7 +33,7 @@ public class GetDemographicsHandler implements
 				.createEntityManagerFactory("EchartsPersistence");
 		EntityManager em = emf.createEntityManager();
 		Demographics demographics = em.createQuery(
-				"SELECT d FROM DemographicsImpl d WHERE d.id = " + action.getCaseNumber(), DemographicsImpl.class)
+				"SELECT d FROM DemographicsImpl d WHERE d.caseNumber = '" + action.getCaseNumber() + "'", DemographicsImpl.class)
 				.getSingleResult().toDto();
 		em.close();
 		emf.close();

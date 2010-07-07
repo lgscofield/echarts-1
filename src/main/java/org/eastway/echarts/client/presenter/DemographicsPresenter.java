@@ -37,7 +37,7 @@ public class DemographicsPresenter implements Presenter {
 	private CachingDispatchAsyncImpl dispatch;
 	private GetDemographics action;
 	public DemographicsPresenter(Display display,
-			EventBus eventBus, CachingDispatchAsyncImpl dispatch, GetDemographics action, long ehrId) {
+			EventBus eventBus, CachingDispatchAsyncImpl dispatch, GetDemographics action) {
 		this.display = display;
 		this.eventBus = eventBus;
 		this.dispatch = dispatch;

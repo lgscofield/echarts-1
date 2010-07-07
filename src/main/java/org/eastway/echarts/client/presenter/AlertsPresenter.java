@@ -19,7 +19,7 @@ import java.util.Vector;
 
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.HandleRpcException;
-import org.eastway.echarts.client.RpcServicesAsync;
+//import org.eastway.echarts.client.RpcServicesAsync;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerManager;
@@ -34,13 +34,13 @@ public class AlertsPresenter implements Presenter {
 		void setData(Vector<String> data);
 	}
 
-	private RpcServicesAsync rpcServices;
+	//private RpcServicesAsync rpcServices;
 	private Display display;
 
-	public AlertsPresenter(Display display, RpcServicesAsync rpcServices, HandlerManager eventBus) {
-		this.rpcServices = rpcServices;
-		this.display = display;
-	}
+//	public AlertsPresenter(Display display, RpcServicesAsync rpcServices, HandlerManager eventBus) {
+//		this.rpcServices = rpcServices;
+//		this.display = display;
+//	}
 
 	public void fetchAlerts() {
 		AsyncCallback<Vector<String>> callback = new AsyncCallback<Vector<String>>() {
@@ -55,7 +55,7 @@ public class AlertsPresenter implements Presenter {
 				display.setData(data);
 			}
 		};
-		rpcServices.getAlerts(EchartsUser.sessionId, callback);
+		//rpcServices.getAlerts(EchartsUser.sessionId, callback);
 	}
 
 	@Override

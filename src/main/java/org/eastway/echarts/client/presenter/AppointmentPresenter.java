@@ -43,7 +43,7 @@ public class AppointmentPresenter implements Presenter {
 	private CachingDispatchAsyncImpl dispatch;
 	private GetAppointments action;
 
-	public AppointmentPresenter(Display display, EventBus eventBus, CachingDispatchAsyncImpl dispatch, GetAppointments action, String caseNumber) {
+	public AppointmentPresenter(Display display, EventBus eventBus, CachingDispatchAsyncImpl dispatch, GetAppointments action) {
 		this.display = display;
 		this.dispatch = dispatch;
 		this.eventBus = eventBus;

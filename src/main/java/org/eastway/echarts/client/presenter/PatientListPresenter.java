@@ -18,7 +18,7 @@ package org.eastway.echarts.client.presenter;
 import java.util.LinkedHashMap;
 
 import org.eastway.echarts.client.EchartsUser;
-import org.eastway.echarts.client.PatientServicesAsync;
+//import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.events.OpenEhrEvent;
 import org.eastway.echarts.client.view.PatientListView;
@@ -30,15 +30,15 @@ import com.google.gwt.user.client.ui.HasWidgets;
 public class PatientListPresenter implements PatientListView.Presenter<LinkedHashMap<String, Long>> {
 	private LinkedHashMap<String, Long> data;
 	private PatientListView<LinkedHashMap<String, Long>> display;
-	private PatientServicesAsync patientServices;
+	//private PatientServicesAsync patientServices;
 	private HandlerManager eventBus;
 
-	public PatientListPresenter(PatientListView<LinkedHashMap<String, Long>> display, HandlerManager eventBus, PatientServicesAsync patientServices) {
-		this.patientServices = patientServices;
-		this.display = display;
-		this.display.setPresenter(this);
-		this.eventBus = eventBus;
-	}
+//	public PatientListPresenter(PatientListView<LinkedHashMap<String, Long>> display, HandlerManager eventBus, PatientServicesAsync patientServices) {
+//		this.patientServices = patientServices;
+//		this.display = display;
+//		this.display.setPresenter(this);
+//		this.eventBus = eventBus;
+//	}
 
 	public void fetchPatientList() {
 		AsyncCallback<LinkedHashMap<String, Long>> callback = new AsyncCallback<LinkedHashMap<String, Long>>() {
@@ -53,7 +53,7 @@ public class PatientListPresenter implements PatientListView.Presenter<LinkedHas
 				setData(data);
 			}
 		};
-		patientServices.getPatientList(EchartsUser.sessionId, EchartsUser.staffId, callback);
+		//patientServices.getPatientList(EchartsUser.sessionId, EchartsUser.staffId, callback);
 	}
 
 	private void setData(LinkedHashMap<String, Long> data) {

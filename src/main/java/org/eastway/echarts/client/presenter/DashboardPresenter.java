@@ -43,7 +43,6 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 		this.view.setPresenter(this);
 		this.eventBus = eventBus;
 		this.dispatch = dispatch;
-		bind();
 	}
 
 	private void bind() {
@@ -63,6 +62,7 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 	public void go(HasWidgets container) {
 		container.clear();
 		container.add(view.asWidget());
+		bind();
 		fetchData();
 	}
 
@@ -81,7 +81,8 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 
 		data.add(new String[] {"Age",  age.toString() });
 		data.add(new String[] {"Case Status",patient.getCaseStatus().getDescriptor() });
-		data.add(new String[] {"Provider", getProvider(ehr.getAssignments()) });
+		//data.add(new String[] {"Provider", getProvider(ehr.getAssignments()) });
+		data.add(new String[] {"Provider", "" });
 		data.add(new String[] {"SSN",patient.getSsn()});
 		view.setCurrentEhrData(data);
 	}
@@ -141,7 +142,7 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 
 	@Override
 	public void openEhr(String text) {
-		eventBus.fireEvent(new OpenEhrEvent(data.get(text), text));
+		eventBus.fireEvent(new OpenEhrEvent(data.get(text), text.replaceAll("(.*) - .*", "$1")));
 	}
 
 	@Override

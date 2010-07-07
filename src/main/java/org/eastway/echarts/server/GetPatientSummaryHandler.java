@@ -46,6 +46,9 @@ public class GetPatientSummaryHandler implements ActionHandler<GetPatientSummary
 				.append((patient.getSuffix() == null ? ", " : " " + patient.getSuffix() + ", "))
 				.append(patient.getFirstName())
 				.append((patient.getMiddleInitial() == null ? "" : ", " + patient.getMiddleInitial())).toString());
+		result.setFirstName(patient.getFirstName());
+		result.setLastName(patient.getLastName());
+		result.setCaseStatus(patient.getCaseStatus().getDescriptor());
 		result.setPreferredLanguage(demographics.getPreferredLanguage());
 		result.setRace(demographics.getRace().getDescriptor());
 		result.setSsn(patient.getSsn());

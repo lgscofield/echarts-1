@@ -41,8 +41,8 @@ public class LinksPresenterTest {
 		mockView = createStrictMock(LinkPresenter.Display.class);
 		mockRpc = createStrictMock(CachingDispatchAsync.class);
 		eventBus = createStrictMock(EventBus.class);
-		action = new GetLinks("12345");
-		fp = new LinkPresenter(mockView, eventBus, mockRpc, action, patientid);
+		action = new GetLinks("12345", patientid);
+		fp = new LinkPresenter(mockView, eventBus, mockRpc, action);
 	}
 
 	@Test public void testSetData() {

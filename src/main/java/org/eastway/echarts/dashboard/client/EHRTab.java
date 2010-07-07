@@ -15,14 +15,14 @@
  */
 package org.eastway.echarts.dashboard.client;
 
-import org.eastway.echarts.client.AddressServices;
-import org.eastway.echarts.client.AddressServicesAsync;
-import org.eastway.echarts.client.EHRServices;
-import org.eastway.echarts.client.EHRServicesAsync;
+//import org.eastway.echarts.client.AddressServices;
+//import org.eastway.echarts.client.AddressServicesAsync;
+//import org.eastway.echarts.client.EHRServices;
+//import org.eastway.echarts.client.EHRServicesAsync;
 import org.eastway.echarts.client.HandleRpcException;
-import org.eastway.echarts.client.ReferralServices;
-import org.eastway.echarts.client.ReferralServicesAsync;
-import org.eastway.echarts.client.RpcServicesAsync;
+//import org.eastway.echarts.client.ReferralServices;
+//import org.eastway.echarts.client.ReferralServicesAsync;
+//import org.eastway.echarts.client.RpcServicesAsync;
 import org.eastway.echarts.client.presenter.AddressPresenter;
 import org.eastway.echarts.client.presenter.AppointmentPresenter;
 import org.eastway.echarts.client.presenter.ContactPresenter;
@@ -83,72 +83,72 @@ public class EHRTab extends Composite implements SelectionHandler<TreeItem> {
 	private LinkPresenter fp;
 	private Tree menu = new Tree();
 	private EHR ehr;
-	private EHRServicesAsync ehrServices = GWT.<EHRServicesAsync>create(EHRServices.class);
+	//private EHRServicesAsync ehrServices = GWT.<EHRServicesAsync>create(EHRServices.class);
 
-	public EHRTab(HandlerManager eventBus, RpcServicesAsync rpcServices, long ehrId) {
-		fetchEhr(ehrId);
-		initWidget(body);
-		body.addWest(menu, 150);
-		body.add(displayarea);
-
+//	public EHRTab(HandlerManager eventBus, RpcServicesAsync rpcServices, long ehrId) {
+//		fetchEhr(ehrId);
+//		initWidget(body);
+//		body.addWest(menu, 150);
+//		body.add(displayarea);
+//
 //		TreeItem patientMenuItem = menu.addItem("Patient Summary");
 //		patientMenuItem.setUserObject(patientPanel);
 //		pp = new PatientSummaryPresenter(new PatientSummaryView(), eventBus, ehrServices, ehr.toDto());
 //		pp.go(patientPanel);
-
-		//TreeItem editPatientMenuItem = patientMenuItem.addItem("Edit");
-		//editPatientMenuItem.setUserObject(editPatientPanel);
-		//ep = new EditPatientSummaryPresenter(new EditPatientSummaryView(), eventBus, GWT.<EHRServicesAsync>create(EHRServices.class), ehr.getSubject());
-		//ep.go(editPatientPanel);
-
+//
+//		TreeItem editPatientMenuItem = patientMenuItem.addItem("Edit");
+//		editPatientMenuItem.setUserObject(editPatientPanel);
+//		ep = new EditPatientSummaryPresenter(new EditPatientSummaryView(), eventBus, GWT.<EHRServicesAsync>create(EHRServices.class), ehr.getSubject());
+//		ep.go(editPatientPanel);
+//
 //		TreeItem demographicsMenuItem = menu.addItem("Demographics");
 //		demographicsMenuItem.setUserObject(demographicsPanel);
 //		dp = new DemographicsPresenter(new DemographicsView(), eventBus, ehrServices, ehr);
 //		dp.go(demographicsPanel);
-
+//
 //		TreeItem referralMenuItem = menu.addItem("Referral");
 //		referralMenuItem.setUserObject(referralPanel);
 //		rp = new ReferralPresenter(new ReferralView(), eventBus, GWT.<ReferralServicesAsync>create(ReferralServices.class), ehr);
 //		rp.go(referralPanel);
-
+//
 //		TreeItem addressMenuItem = menu.addItem("Addresses");
 //		addressMenuItem.setUserObject(addressPanel);
 //		ap = new AddressPresenter(new AddressView(), eventBus, GWT.<AddressServicesAsync>create(AddressServices.class), ehr);
 //		ap.go(addressPanel);
-
+//
 //		TreeItem contactMenuItem = menu.addItem("Contacts");
 //		contactMenuItem.setUserObject(contactPanel);
 //		cp = new ContactPresenter(new ContactView(), eventBus, ehr);
 //		cp.go(contactPanel);
-
+//
 //		TreeItem diagnosisMenuItem = menu.addItem("Diagnoses");
 //		diagnosisMenuItem.setUserObject(diagnosisPanel);
 //		diagp = new DiagnosisPresenter(new DiagnosisView(), eventBus, ehr);
 //		diagp.go(diagnosisPanel);
-
+//
 //		TreeItem appointmentMenuItem = menu.addItem("Appointments");
 //		appointmentMenuItem.setUserObject(appointmentPanel);
 //		appointp = new AppointmentPresenter(new AppointmentView(), eventBus, ehr);
 //		appointp.go(appointmentPanel);
-
+//
 //		TreeItem medicationMenuItem = menu.addItem("Medications");
 //		medicationMenuItem.setUserObject(medicationPanel);
 //		medp = new MedicationPresenter(new MedicationView(), eventBus, ehr);
 //		medp.go(medicationPanel);
-
-		TreeItem messageMenuItem = menu.addItem("Messages");
-		messageMenuItem.setUserObject(messagesPanel);
-		//mp = new MessagesPresenter(new MessagesView(), eventBus, rpcServices, ehr);
-		mp.go(messagesPanel);
-
+//
+//		TreeItem messageMenuItem = menu.addItem("Messages");
+//		messageMenuItem.setUserObject(messagesPanel);
+//		mp = new MessagesPresenter(new MessagesView(), eventBus, rpcServices, ehr);
+//		mp.go(messagesPanel);
+//
 //		TreeItem formsMenuItem = menu.addItem("Forms");
 //		formsMenuItem.setUserObject(formsPanel);
 //		fp = new LinkPresenter(new LinkView(), eventBus, rpcServices, ehr.getSubject().getCaseNumber());
 //		fp.go(formsPanel);
-
-		menu.addSelectionHandler(this);
-		setTreeItemWidth();
-	}
+//
+//		menu.addSelectionHandler(this);
+//		setTreeItemWidth();
+//	}
 
 	private void fetchEhr(long ehrId) {
 		AsyncCallback<EHR> callback = new AsyncCallback<EHR>() {
@@ -162,7 +162,7 @@ public class EHRTab extends Composite implements SelectionHandler<TreeItem> {
 				setEhr(ehr);
 			}
 		};
-		ehrServices.getEhr(ehrId, Cookies.getCookie("sessionId"), callback);
+		//ehrServices.getEhr(ehrId, Cookies.getCookie("sessionId"), callback);
 	}
 
 	@Override

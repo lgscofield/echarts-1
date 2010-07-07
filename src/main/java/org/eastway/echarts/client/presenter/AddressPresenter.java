@@ -40,8 +40,7 @@ public class AddressPresenter implements Presenter {
 	private GetAddresses action;
 
 	public AddressPresenter(Display view, EventBus eventBus,
-			CachingDispatchAsync dispatch, GetAddresses action,
-			String caseNumber) {
+			CachingDispatchAsync dispatch, GetAddresses action) {
 		this.view = view;
 		this.eventBus = eventBus;
 		this.dispatch = dispatch;
