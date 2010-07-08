@@ -23,13 +23,13 @@ public interface EHR {
 
 	public long getId();
 
+	public void setSubject(Patient patient);
+
+	public Patient getSubject();
+
 	public void setTimeCreated(Date timeCreated);
 
 	public Date getTimeCreated();
-
-	public void setSubject(Patient subject);
-
-	public Patient getSubject();
 
 	public void setAssignments(List<Assignment> assignments);
 

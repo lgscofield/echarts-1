@@ -61,10 +61,6 @@ public class EHRImpl implements EHR {
 	@Column(name="time_created")
 	private Date timeCreated;
 
-	@OneToOne(targetEntity = DemographicsImpl.class)
-	@JoinColumn
-	private DemographicsImpl demographics;
-
 	@OneToMany(targetEntity = DiagnosisImpl.class)
 	@JoinColumn
 	@OrderBy(value="date DESC")
@@ -126,16 +122,6 @@ public class EHRImpl implements EHR {
 	}
 
 	@Override
-	public Demographics getDemographics() {
-		return demographics;
-	}
-
-	@Override
-	public void setDemographics(Demographics demographics) {
-		this.demographics = (DemographicsImpl) demographics;
-	}
-
-	@Override
 	public List<Diagnosis> getDiagnoses() {
 		List<Diagnosis> diagnoses = new ArrayList<Diagnosis>();
 		for (DiagnosisImpl diagnosis : this.diagnoses)
@@ -171,7 +157,6 @@ public class EHRImpl implements EHR {
 		ehrDto.setId(this.getId());
 		ehrDto.setSubject((PatientDTO) this.getSubject().toDto());
 		ehrDto.setTimeCreated(this.getTimeCreated());
-		ehrDto.setDemographics(demographics.toDto());
 
 		List<Assignment> assignments = new ArrayList<Assignment>();
 		for (Assignment a : this.assignments)
@@ -189,6 +174,18 @@ public class EHRImpl implements EHR {
 		ehrDto.setMedications(medications);
 
 		return ehrDto;
+	}
+
+	@Override
+	public Demographics getDemographics() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setDemographics(Demographics demographics) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

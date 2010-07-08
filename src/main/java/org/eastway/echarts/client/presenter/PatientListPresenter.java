@@ -78,7 +78,7 @@ public class PatientListPresenter implements PatientListView.Presenter<LinkedHas
 	public void onItemSelected(String row) {
 		if (row != null) {
 			long ehrId = getData().get(row);
-			eventBus.fireEvent(new OpenEhrEvent(ehrId, row));
+			eventBus.fireEvent(new OpenEhrEvent(row));
 		}
 	}
 }

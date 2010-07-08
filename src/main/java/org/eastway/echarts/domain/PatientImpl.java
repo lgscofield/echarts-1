@@ -19,34 +19,22 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotNull;
 
 import org.eastway.echarts.shared.Code;
-import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.Patient;
 import org.eastway.echarts.shared.PatientDTO;
 
 @Entity
 @Table(name = "Patient")
 public class PatientImpl implements Patient {
-	@Id
-	@TableGenerator(name = "tg", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.TABLE, generator = "tg")
-	@Column(name = "Patient_Id")
+	@Column(name = "patient_id")
 	private long id;
 
-	@OneToOne(mappedBy = "subject")
-	private EHRImpl ehr;
-
-	@Column(name = "ehr_id")
-	private long ehrId;
+	@Id
 	private String caseNumber;
 	private String firstName;
 	private String lastName;
@@ -64,26 +52,6 @@ public class PatientImpl implements Patient {
 
 	public PatientImpl(long id) {
 		this.setId(id);
-	}
-
-	@Override
-	public void setEhr(EHR ehr) {
-		this.ehr = (EHRImpl) ehr;
-	}
-
-	@Override
-	public EHR getEhr() {
-		return ehr;
-	}
-
-	@Override
-	public void setEhrId(long ehrId) {
-		this.ehrId = ehrId;
-	}
-
-	@Override
-	public long getEhrId() {
-		return ehrId;
 	}
 
 	@Override
@@ -213,7 +181,6 @@ public class PatientImpl implements Patient {
 		patientDto.setLastName(this.getLastName());
 		patientDto.setMiddleInitial(this.getMiddleInitial());
 		patientDto.setId(this.getId());
-		patientDto.setEhrId(this.getEhrId());
 		patientDto.setSsn(this.getSsn());
 		patientDto.setSuffix(this.getSuffix());
 		return patientDto;
@@ -223,7 +190,6 @@ public class PatientImpl implements Patient {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Id: ").append(getId()).append(", ")
-			.append("Ehr Id: ").append(getEhrId()).append(", ")
 			.append("CaseNumber: ").append(getCaseNumber()).append(", ")
 			.append("FirstName: ").append(getFirstName()).append(", ")
 			.append("LastName: ").append(getLastName()).append(", ")

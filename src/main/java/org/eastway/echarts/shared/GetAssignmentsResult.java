@@ -1,25 +1,20 @@
 package org.eastway.echarts.shared;
 
-import java.util.LinkedHashMap;
-import java.util.Set;
+import java.util.List;
 
 import net.customware.gwt.dispatch.shared.Result;
 
 @SuppressWarnings("serial")
 public class GetAssignmentsResult implements Result {
-	private LinkedHashMap<String, Long> list = new LinkedHashMap<String, Long>();
+	private List<Assignment> assignments;
 
 	GetAssignmentsResult() { }
 
-	public GetAssignmentsResult(LinkedHashMap<String, Long> list) {
-		this.list = list;
+	public GetAssignmentsResult(List<Assignment> assignments) {
+		this.assignments = assignments;
 	}
 
-	public Set<String> keySet() {
-		return list.keySet();
-	}
-
-	public LinkedHashMap<String, Long> getList() {
-		return list;
+	public List<Assignment> getAssignments() {
+		return assignments;
 	}
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.customware.gwt.presenter.client.EventBus;
 
@@ -31,9 +32,9 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 
 	private DashboardView<LinkedHashMap<String, Long>> view;
 	private EventBus eventBus;
-	private LinkedHashMap<String, Long> data;
+	private GetAssignmentsResult data;
 	private CachingDispatchAsyncImpl dispatch;
-	private GetAssignments assignments = new GetAssignments(EchartsUser.sessionId, EchartsUser.staffId);
+	private GetAssignments action = new GetAssignments(EchartsUser.sessionId, EchartsUser.staffId);
 	private String caseNumber;
 
 	@Inject
@@ -81,13 +82,13 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 
 		data.add(new String[] {"Age",  age.toString() });
 		data.add(new String[] {"Case Status",patient.getCaseStatus().getDescriptor() });
-		//data.add(new String[] {"Provider", getProvider(ehr.getAssignments()) });
-		data.add(new String[] {"Provider", "" });
+		data.add(new String[] {"Provider", getProvider() });
 		data.add(new String[] {"SSN",patient.getSsn()});
 		view.setCurrentEhrData(data);
 	}
 
-	private String getProvider(List<Assignment> assignments) {
+	private String getProvider() {
+		List<Assignment> assignments = data.getAssignments();
 		for (Assignment assignment : assignments) {
 			if (!assignment.getService().matches("S CS"))
 				continue;
@@ -102,7 +103,7 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 
 	private void fetchData() {
 		eventBus.fireEvent(new RequestEvent(State.SENT));
-		dispatch.executeWithCache(assignments, new AsyncCallback<GetAssignmentsResult>() {
+		dispatch.executeWithCache(action, new AsyncCallback<GetAssignmentsResult>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				new HandleRpcException(caught);
@@ -110,30 +111,40 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 
 			@Override
 			public void onSuccess(GetAssignmentsResult data) {
+				Map<String, Long> pl = new LinkedHashMap<String, Long>();
+				for (Assignment assignment : data.getAssignments())
+					if (assignment != null)
+						pl.put(new StringBuilder()
+									.append(assignment.getPatient().getCaseNumber())
+									.append(" - ")
+									.append( assignment.getPatient().getLastName())
+									.append((assignment.getPatient().getSuffix() == null ? ", " : " " + assignment.getPatient().getSuffix() + ", "))
+									.append(assignment.getPatient().getFirstName())
+									.append((assignment.getPatient().getMiddleInitial() == null ? "" : ", " + assignment.getPatient().getMiddleInitial())).toString(),
+									new Long(assignment.getId()));
 				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
 				view.reset();
-				for (String str : data.keySet())
+				for (String str : pl.keySet())
 					view.addPatientSearchData(str);
-				setData(data.getList());
+				setData(data);
 			}
 		});
 	}
 
-	private void setData(LinkedHashMap<String, Long> data) {
+	private void setData(GetAssignmentsResult data) {
 		this.data = data;
 	}
 
 	@Override
 	public void onItemSelected(String row) {
 		if (row != null) {
-			long ehrId = getData().get(row);
-			eventBus.fireEvent(new OpenEhrEvent(ehrId, caseNumber));
+			eventBus.fireEvent(new OpenEhrEvent(caseNumber));
 		}
 	}
 
-	private LinkedHashMap<String, Long> getData() {
-		return this.data;
-	}
+//	private Map<String, Long> getData() {
+//		return data.getAssignments();
+//	}
 
 	@Override
 	public void changeCurrentEhr(EHR ehr) {
@@ -142,7 +153,7 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 
 	@Override
 	public void openEhr(String text) {
-		eventBus.fireEvent(new OpenEhrEvent(data.get(text), text.replaceAll("(.*) - .*", "$1")));
+		eventBus.fireEvent(new OpenEhrEvent(text.replaceAll("(.*) - .*", "$1")));
 	}
 
 	@Override

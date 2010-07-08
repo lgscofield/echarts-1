@@ -17,12 +17,15 @@ package org.eastway.echarts.shared;
 
 import java.util.Date;
 
-
 public interface Assignment {
 
 	public void setId(Integer id);
 
 	public Integer getId();
+
+	public void setCaseNumber(String caseNumber);
+
+	public String getCaseNumber();
 
 	public void setAssignmentDate(Date assignmentDate);
 
@@ -72,9 +75,9 @@ public interface Assignment {
 
 	public String getLastEditBy();
 
-	public void setEhr(EHR ehr);
-
-	public EHR getEhr();
-
 	public AssignmentDTO toDto();
+
+	public void setPatient(Patient patient);
+
+	public Patient getPatient();
 }

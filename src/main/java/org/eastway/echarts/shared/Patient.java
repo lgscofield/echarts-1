@@ -19,14 +19,6 @@ import java.util.Date;
 
 public interface Patient {
 
-	public void setEhr(EHR ehr);
-
-	public EHR getEhr();
-
-	public void setEhrId(long ehrId);
-
-	public long getEhrId();
-
 	public void setId(long id);
 
 	public long getId();

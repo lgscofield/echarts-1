@@ -19,11 +19,9 @@ import com.google.gwt.event.shared.GwtEvent;
 
 public class OpenEhrEvent extends GwtEvent<OpenEhrEventHandler> {
 	public static Type<OpenEhrEventHandler> TYPE = new Type<OpenEhrEventHandler>();
-	private long ehrId;
 	private String caseNumber;
 
-	public OpenEhrEvent(long ehrId, String caseNumber) {
-		this.ehrId = ehrId;
+	public OpenEhrEvent(String caseNumber) {
 		this.caseNumber = caseNumber;
 	}
 
@@ -35,10 +33,6 @@ public class OpenEhrEvent extends GwtEvent<OpenEhrEventHandler> {
 	@Override
 	public Type<OpenEhrEventHandler> getAssociatedType() {
 		return TYPE;
-	}
-
-	public long getId() {
-		return ehrId;
 	}
 
 	public String getCaseNumber() {

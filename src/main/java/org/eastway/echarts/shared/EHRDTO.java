@@ -22,12 +22,12 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class EHRDTO implements Serializable, EHR {
 	private long id;
-	private Patient subject;
 	private Demographics demographics;
 	private Date timeCreated;
 	private List<Assignment> assignments;
 	private List<Diagnosis> diagnoses;
 	private List<Medication> medications;
+	private Patient patient;
 
 	public EHRDTO() { }
 
@@ -53,16 +53,6 @@ public class EHRDTO implements Serializable, EHR {
 	@Override
 	public Date getTimeCreated() {
 		return timeCreated;
-	}
-
-	@Override
-	public void setSubject(Patient subject) {
-		this.subject = subject;
-	}
-
-	@Override
-	public Patient getSubject() {
-		return subject;
 	}
 
 	@Override
@@ -108,5 +98,15 @@ public class EHRDTO implements Serializable, EHR {
 	@Override
 	public void setMedications(List<Medication> medications) {
 		this.medications = medications;
+	}
+
+	@Override
+	public Patient getSubject() {
+		return patient;
+	}
+
+	@Override
+	public void setSubject(Patient patient) {
+		this.patient = patient;
 	}
 }

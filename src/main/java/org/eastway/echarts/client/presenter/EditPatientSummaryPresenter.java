@@ -134,8 +134,8 @@ public class EditPatientSummaryPresenter implements Presenter {
 		//patient.setPhone(display.getPhone().getText());
 		//patient.setAltPhone(display.getAltPhone().getText());
 
-		EHR ehr = new EHRDTO(patient.getEhrId());
-		ehr.setSubject(patient);
+		//EHR ehr = new EHRDTO(patient.getEhrId());
+		//ehr.setSubject(patient);
 
 		AsyncCallback<EHR> callback = new AsyncCallback<EHR>() {
 			@Override

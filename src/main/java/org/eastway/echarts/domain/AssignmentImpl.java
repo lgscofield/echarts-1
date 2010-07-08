@@ -17,6 +17,7 @@ package org.eastway.echarts.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Column;
@@ -32,7 +33,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import org.eastway.echarts.shared.Assignment;
 import org.eastway.echarts.shared.AssignmentDTO;
-import org.eastway.echarts.shared.EHR;
+import org.eastway.echarts.shared.Patient;
 
 @SuppressWarnings("serial")
 @Entity
@@ -43,8 +44,9 @@ public class AssignmentImpl implements Serializable, Assignment {
     @Column(name = "order_id")
     private Integer id;
 
-    @ManyToOne
-    private EHRImpl ehr;
+    @ManyToOne(targetEntity = PatientImpl.class)
+    @JoinColumn(name = "caseNumber", insertable = false, updatable = false)
+    private PatientImpl patient;
 
     @Column(name = "Date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -79,6 +81,8 @@ public class AssignmentImpl implements Serializable, Assignment {
     private Date lastEdit;
 
     private String lastEditBy;
+
+	private String caseNumber;
 
     public AssignmentImpl() { }
 
@@ -212,21 +216,31 @@ public class AssignmentImpl implements Serializable, Assignment {
 		return lastEditBy;
 	}
 
-    @Override
-	public void setEhr(EHR ehr) {
-		this.ehr = (EHRImpl) ehr;
+	@Override
+	public String getCaseNumber() {
+		return caseNumber;
 	}
 
-    @Override
-	public EHR getEhr() {
-		return ehr;
+	@Override
+	public void setCaseNumber(String caseNumber) {
+		this.caseNumber = caseNumber;
+	}
+
+	@Override
+	public void setPatient(Patient patient) {
+		this.patient = (PatientImpl) patient;
+	}
+
+	@Override
+	public PatientImpl getPatient() {
+		return patient;
 	}
 
 	@Override
 	public AssignmentDTO toDto() {
 		AssignmentDTO dto = new AssignmentDTO();
 		dto.setId(this.id);
-		//dto.setEhr(this.ehr.toDto());
+		dto.setCaseNumber(caseNumber);
 		dto.setAssignmentDate(this.assignmentDate);
 		dto.setService(this.service);
 		dto.setStaff(this.staff);
@@ -236,6 +250,7 @@ public class AssignmentImpl implements Serializable, Assignment {
 		dto.setTermDate(this.termDate);
 		dto.setPlanId(this.planId == null ? 0 : this.planId);
 		dto.setTrtEpisode(this.trtEpisode);
+		dto.setPatient(patient.toDto());
 		dto.setProgram(this.program);
 		dto.setLastEdit(this.lastEdit);
 		dto.setLastEditBy(this.lastEditBy);

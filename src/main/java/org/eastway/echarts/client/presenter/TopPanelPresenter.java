@@ -72,7 +72,7 @@ public class TopPanelPresenter implements Presenter {
 			public void onClick(ClickEvent event) {
 				if (display.getSuggestBox().getText().isEmpty())
 					return;
-				eventBus.fireEvent(new OpenEhrEvent(data.get(display.getSuggestBox().getText()), display.getSuggestBox().getText()));
+				eventBus.fireEvent(new OpenEhrEvent(display.getSuggestBox().getText()));
 				display.getSuggestBox().setText("");
 			}
 		});

@@ -21,7 +21,6 @@ import java.util.Date;
 @SuppressWarnings("serial")
 public class AssignmentDTO implements Serializable, Assignment {
 	private Integer id;
-	private EHR ehr;
 	private Date assignmentDate;
 	private String service;
 	private String staff;
@@ -34,6 +33,8 @@ public class AssignmentDTO implements Serializable, Assignment {
 	private String program;
 	private Date lastEdit;
 	private String lastEditBy;
+	private String caseNumber;
+	private Patient patient;
 
 	public AssignmentDTO() { }
 
@@ -45,16 +46,6 @@ public class AssignmentDTO implements Serializable, Assignment {
 	@Override
 	public Integer getId() {
 		return this.id;
-	}
-
-	@Override
-	public void setEhr(EHR ehr) {
-		this.ehr = ehr;
-	}
-
-	@Override
-	public EHR getEhr() {
-		return this.ehr;
 	}
 
 	@Override
@@ -180,5 +171,25 @@ public class AssignmentDTO implements Serializable, Assignment {
 	@Override
 	public AssignmentDTO toDto() {
 		return this;
+	}
+
+	@Override
+	public String getCaseNumber() {
+		return caseNumber;
+	}
+
+	@Override
+	public void setCaseNumber(String caseNumber) {
+		this.caseNumber = caseNumber;
+	}
+
+	@Override
+	public Patient getPatient() {
+		return patient;
+	}
+
+	@Override
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 }

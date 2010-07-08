@@ -52,7 +52,6 @@ public class PatientService {
 		patient.setAlias(alias);
 		patient.setCaseNumber(caseNumber);
 		patient.setCaseStatus(caseStatus);
-		patient.setEhrId(ehrId);
 		patient.setFirstName(firstName);
 		patient.setLastEdit(lastEdit);
 		patient.setLastEditBy(lastEditBy);

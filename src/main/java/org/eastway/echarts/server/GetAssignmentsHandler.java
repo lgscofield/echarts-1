@@ -1,6 +1,6 @@
 package org.eastway.echarts.server;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -32,26 +32,20 @@ public class GetAssignmentsHandler implements ActionHandler<GetAssignments, GetA
 			throw new ActionException("Database error");
 		}
 
-		LinkedHashMap<String, Long> pl = new LinkedHashMap<String, Long>();
 		EntityManagerFactory emf = Persistence
 				.createEntityManagerFactory("EchartsPersistence");
 		EntityManager em = emf.createEntityManager();
 		List<AssignmentImpl> assignments = em.createQuery(
-				"SELECT a From AssignmentImpl a Where a.staff = '" + action.getStaffId() + "' And a.disposition = 'Open' Order By a.ehr.subject.lastName ASC, a.ehr.subject.firstName ASC", AssignmentImpl.class).getResultList();
-
+				"SELECT a From AssignmentImpl a Where a.staff = '" + action.getStaffId() + "' And a.disposition = 'Open' Order By a.patient.lastName ASC, a.patient.firstName ASC", AssignmentImpl.class)
+				.getResultList();
+		List<Assignment> assignmentsDto = new ArrayList<Assignment>();
 		for (Assignment assignment : assignments)
-			if (assignment != null)
-				pl.put(new StringBuilder()
-							.append(assignment.getEhr().getSubject().getCaseNumber())
-							.append(" - ")
-							.append( assignment.getEhr().getSubject().getLastName())
-							.append((assignment.getEhr().getSubject().getSuffix() == null ? ", " : " " + assignment.getEhr().getSubject().getSuffix() + ", "))
-							.append(assignment.getEhr().getSubject().getFirstName())
-							.append((assignment.getEhr().getSubject().getMiddleInitial() == null ? "" : ", " + assignment.getEhr().getSubject().getMiddleInitial())).toString(),
-							new Long(assignment.getEhr().getId()));
+			if (assignment != null) {
+				assignmentsDto.add(assignment.toDto());
+			}
 		em.close();
 		emf.close();
-		return new GetAssignmentsResult(pl);
+		return new GetAssignmentsResult(assignmentsDto);
 	}
 
 	@Override
