@@ -36,19 +36,25 @@ public class GetProductivityHandler implements ActionHandler<GetProductivity, Ge
 		int month = Calendar.getInstance().get(Calendar.MONTH) + 1;
 		int year = Calendar.getInstance().get(Calendar.YEAR);
 		String monthYear = month + "-" + year;
-		Productivity productivity = em.createQuery(
-				"SELECT p FROM Productivity p WHERE p.staff = '" + action.getStaffId() + "' AND p.month = '" + monthYear + "' GROUP BY p.staff, p.staffName, p.staffType, p.program, p.month ORDER BY p.total", Productivity.class)
-				.getSingleResult();
-		BigDecimal individual = productivity.getIndividualService().divide(new BigDecimal(4.00)).add(productivity.getDoctorService());
-		BigDecimal group = productivity.getGroupService().divide(new BigDecimal(4.00));
-		BigDecimal total = individual.add(group);
+		List<Productivity> productivity = em.createQuery(
+				"SELECT p FROM Productivity p WHERE p.staff = '5168' AND p.month = '" + monthYear + "'", Productivity.class)
+				.getResultList();
+		BigDecimal individual = new BigDecimal(0.00);
+		BigDecimal group = new BigDecimal(0.00);
+		for (Productivity p : productivity) {
+			individual = individual.add(p.getIndividualService()
+					.divide(new BigDecimal(4.00))
+					.add(p.getDoctorService()));
+			group = group.add(p.getGroupService()
+					.divide(new BigDecimal(4.00)));
+		}
+		BigDecimal total = new BigDecimal(0.00);
+		total = group.add(individual);
 		GetProductivityResult result = new GetProductivityResult();
 		result.setGroup(group);
 		result.setIndividual(individual);
 		result.setMonth(monthYear);
 		result.setStaffId(action.getStaffId());
-		result.setStaffName(productivity.getStaffName());
-		result.setStaffType(productivity.getStaffType());
 		result.setTotal(total);
 		return result;
 	}

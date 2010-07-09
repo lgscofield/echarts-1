@@ -19,6 +19,7 @@ public class ServerModule extends ActionHandlerModule {
 		bindHandler(GetAddressesHandler.class);
 		bindHandler(GetContactsHandler.class);
 		bindHandler(GetMedicationsHandler.class);
+		bindHandler(GetProductivityHandler.class);
 	}
 
 }
