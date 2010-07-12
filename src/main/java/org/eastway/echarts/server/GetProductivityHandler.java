@@ -33,11 +33,12 @@ public class GetProductivityHandler implements ActionHandler<GetProductivity, Ge
 		}
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
 		EntityManager em = emf.createEntityManager();
-		int month = Calendar.getInstance().get(Calendar.MONTH) + 1;
-		int year = Calendar.getInstance().get(Calendar.YEAR);
+		Calendar calendar = Calendar.getInstance();
+		int month = calendar.get(Calendar.MONTH) + 1;
+		int year = calendar.get(Calendar.YEAR);
 		String monthYear = month + "-" + year;
 		List<Productivity> productivity = em.createQuery(
-				"SELECT p FROM Productivity p WHERE p.staff = '5168' AND p.month = '" + monthYear + "'", Productivity.class)
+				"SELECT p FROM Productivity p WHERE p.staff = '5262' AND p.month = '" + monthYear + "'", Productivity.class)
 				.getResultList();
 		BigDecimal individual = new BigDecimal(0.00);
 		BigDecimal group = new BigDecimal(0.00);
@@ -56,7 +57,21 @@ public class GetProductivityHandler implements ActionHandler<GetProductivity, Ge
 		result.setMonth(monthYear);
 		result.setStaffId(action.getStaffId());
 		result.setTotal(total);
+		long monthlyWorkDays = getMonthlyWorkDays(calendar);
+		long currentWorkDays = getCurrentWorkDays(calendar);
+		result.setGreenNumber(getGreenNumber(monthlyWorkDays, currentWorkDays));
+		result.setYellowNumber(getYellowNumber(monthlyWorkDays, currentWorkDays));
+		em.close();
+		emf.close();
 		return result;
+	}
+
+	private double getYellowNumber(double m, double c) {
+		return Math.round((92.0/m) * c);
+	}
+
+	private double getGreenNumber(double m, double c) {
+		return Math.round((100.0/m) * c);
 	}
 
 	@Override
@@ -71,4 +86,53 @@ public class GetProductivityHandler implements ActionHandler<GetProductivity, Ge
 		
 	}
 
+	private long getMonthlyWorkDays(Calendar calendar) {
+		long workDays = 0;
+		int month = calendar.get(Calendar.MONTH);
+		Calendar monthlyWorkDaysCalendar = Calendar.getInstance();
+
+		monthlyWorkDaysCalendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH));
+		monthlyWorkDaysCalendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
+		monthlyWorkDaysCalendar.set(Calendar.DAY_OF_MONTH, 1);
+
+		while (monthlyWorkDaysCalendar.get(Calendar.MONTH) == month) {
+			if (monthlyWorkDaysCalendar.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY &&
+					monthlyWorkDaysCalendar.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY)
+				workDays++;
+			monthlyWorkDaysCalendar.add(Calendar.DAY_OF_MONTH, 1);
+		}
+		monthlyWorkDaysCalendar.add(Calendar.MONTH, -1);
+		long holidays = getHolidays(monthlyWorkDaysCalendar);
+		return workDays - holidays;
+	}
+
+	private long getHolidays(Calendar calendar) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
+		EntityManager em = emf.createEntityManager();
+		Long holidays = em.createQuery(
+			"SELECT COUNT(h) FROM Holiday h WHERE h.month = '" + (calendar.get(Calendar.MONTH)+1) + "' "
+			+ "AND h.year = '" + calendar.get(Calendar.YEAR) + "' "
+			+ "AND h.day > '"	+ calendar.get(Calendar.DAY_OF_MONTH) + "'" , Long.class)
+			.getSingleResult();
+		em.close();
+		emf.close();
+		return holidays;
+	}
+
+	private long getCurrentWorkDays(Calendar calendar) {
+		long holidays = getHolidays(calendar);
+		long workDays = 0;
+		int today = calendar.get(Calendar.DAY_OF_MONTH);
+		Calendar currentWorkDays = Calendar.getInstance();
+		currentWorkDays.set(Calendar.MONTH, calendar.get(Calendar.MONTH));
+		currentWorkDays.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
+		currentWorkDays.set(Calendar.DAY_OF_MONTH, 1);
+		while (currentWorkDays.get(Calendar.DAY_OF_MONTH) != today) {
+			if (currentWorkDays.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY &&
+					currentWorkDays.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY)
+				workDays++;
+			currentWorkDays.add(Calendar.DAY_OF_MONTH, 1);
+		}
+		return workDays - holidays;
+	}
 }

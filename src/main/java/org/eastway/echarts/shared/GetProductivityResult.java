@@ -14,6 +14,8 @@ public class GetProductivityResult implements Result {
 	private BigDecimal group;
 	private BigDecimal individual;
 	private BigDecimal total;
+	private double greenNumber;
+	private double yellowNumber;
 	
 	public GetProductivityResult() { }
 
@@ -73,5 +75,19 @@ public class GetProductivityResult implements Result {
 		return total;
 	}
 
-	
+	public void setGreenNumber(double d) {
+		this.greenNumber = d;
+	}
+
+	public double getGreenNumber() {
+		return greenNumber;
+	}
+
+	public void setYellowNumber(double d) {
+		this.yellowNumber = d;
+	}
+
+	public double getYellowNumber() {
+		return yellowNumber;
+	}
 }
