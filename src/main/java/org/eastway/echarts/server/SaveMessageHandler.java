@@ -1,8 +1,6 @@
 package org.eastway.echarts.server;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.eastway.echarts.domain.CodeService;
 import org.eastway.echarts.domain.Message;
@@ -29,8 +27,7 @@ public class SaveMessageHandler implements ActionHandler<SaveMessage, SaveMessag
 		} catch (DbException e) {
 			throw new ActionException("Database error");
 		}
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 		MessageService ms = new MessageService(em);
 		CodeService cs = new CodeService(em);
 		Code mType = cs.find(action.getMessage().getMessageType().getCodeId());
@@ -44,7 +41,6 @@ public class SaveMessageHandler implements ActionHandler<SaveMessage, SaveMessag
 				mType, parent);
 		em.getTransaction().commit();
 		em.close();
-		emf.close();
 		return new SaveMessageResult(newMessage.toDto());
 	}
 

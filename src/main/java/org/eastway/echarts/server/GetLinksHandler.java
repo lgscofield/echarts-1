@@ -4,8 +4,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 import org.eastway.echarts.domain.Link;
@@ -31,8 +29,7 @@ public class GetLinksHandler implements ActionHandler<GetLinks, GetLinksResult> 
 		} catch (DbException e) {
 			throw new ActionException("Database error");
 		}
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 
 		TypedQuery<Link> query = em.createQuery(
 				"SELECT link FROM Link link", Link.class);
@@ -46,7 +43,6 @@ public class GetLinksHandler implements ActionHandler<GetLinks, GetLinksResult> 
 			linkDto.add(s);
 		}
 		em.close();
-		emf.close();
 		return new GetLinksResult(linkDto);
 	}
 

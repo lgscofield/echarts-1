@@ -1,8 +1,6 @@
 package org.eastway.echarts.server;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.eastway.echarts.domain.DemographicsImpl;
 import org.eastway.echarts.domain.PatientImpl;
@@ -27,8 +25,7 @@ public class GetPatientSummaryHandler implements ActionHandler<GetPatientSummary
 		} catch (DbException e) {
 			throw new ActionException("Database error");
 		}
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 		PatientImpl patient = em.createQuery(
 				"SELECT p FROM PatientImpl p WHERE p.caseNumber = '" + action.getCaseNumber() + "'", PatientImpl.class)
 				.getSingleResult();
@@ -53,7 +50,6 @@ public class GetPatientSummaryHandler implements ActionHandler<GetPatientSummary
 		result.setRace(demographics.getRace().getDescriptor());
 		result.setSsn(patient.getSsn());
 		em.close();
-		emf.close();
 		return result;
 	}
 

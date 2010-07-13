@@ -1,8 +1,6 @@
 package org.eastway.echarts.server;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.eastway.echarts.domain.DemographicsImpl;
 import org.eastway.echarts.shared.DbException;
@@ -29,14 +27,11 @@ public class GetDemographicsHandler implements
 			throw new ActionException("Database error");
 		}
 
-		EntityManagerFactory emf = Persistence
-				.createEntityManagerFactory("EchartsPersistence");
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 		Demographics demographics = em.createQuery(
 				"SELECT d FROM DemographicsImpl d WHERE d.caseNumber = '" + action.getCaseNumber() + "'", DemographicsImpl.class)
 				.getSingleResult().toDto();
 		em.close();
-		emf.close();
 		return new GetDemographicsResult(demographics);
 	}
 

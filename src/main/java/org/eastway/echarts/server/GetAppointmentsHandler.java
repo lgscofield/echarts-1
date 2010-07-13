@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.eastway.echarts.domain.AppointmentImpl;
 import org.eastway.echarts.shared.Appointment;
@@ -30,8 +28,7 @@ public class GetAppointmentsHandler implements ActionHandler<GetAppointments, Ge
 		} catch (DbException e) {
 			throw new ActionException("Database error");
 		}
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 		List<AppointmentImpl> appointments = em.createQuery(
 				"SELECT a From AppointmentImpl a WHERE a.caseNumber = '" + action.getCaseNumber() + "' Order By appointmentDate DESC", AppointmentImpl.class)
 				.getResultList();
@@ -40,7 +37,6 @@ public class GetAppointmentsHandler implements ActionHandler<GetAppointments, Ge
 			appointmentsDto.add(appointment.toDto());
 		}
 		em.close();
-		emf.close();
 		return new GetAppointmentsResult(appointmentsDto);
 	}
 

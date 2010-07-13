@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.eastway.echarts.domain.AssignmentImpl;
 import org.eastway.echarts.shared.Assignment;
@@ -32,9 +30,7 @@ public class GetAssignmentsHandler implements ActionHandler<GetAssignments, GetA
 			throw new ActionException("Database error");
 		}
 
-		EntityManagerFactory emf = Persistence
-				.createEntityManagerFactory("EchartsPersistence");
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 		List<AssignmentImpl> assignments = em.createQuery(
 				"SELECT a From AssignmentImpl a Where a.staff = '" + action.getStaffId() + "' And a.disposition = 'Open' Order By a.patient.lastName ASC, a.patient.firstName ASC", AssignmentImpl.class)
 				.getResultList();
@@ -44,7 +40,6 @@ public class GetAssignmentsHandler implements ActionHandler<GetAssignments, GetA
 				assignmentsDto.add(assignment.toDto());
 			}
 		em.close();
-		emf.close();
 		return new GetAssignmentsResult(assignmentsDto);
 	}
 

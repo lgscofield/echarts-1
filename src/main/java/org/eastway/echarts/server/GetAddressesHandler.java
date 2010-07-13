@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 import org.eastway.echarts.domain.AddressImpl;
@@ -32,8 +30,7 @@ public class GetAddressesHandler implements ActionHandler<GetAddresses, GetAddre
 		} catch (DbException e) {
 			throw new ActionException("Database error");
 		}
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 		TypedQuery<AddressImpl> query = em.createQuery(
 				"SELECT a FROM AddressImpl a where a.caseNumber = '" + action.getCaseNumber() + "'", AddressImpl.class);
 		List<AddressImpl> addresses = query.getResultList();
@@ -41,7 +38,6 @@ public class GetAddressesHandler implements ActionHandler<GetAddresses, GetAddre
 		for (AddressImpl address : addresses)
 			dtos.add(address.toDto());
 		em.close();
-		emf.close();
 		return new GetAddressesResult(dtos);
 	}
 

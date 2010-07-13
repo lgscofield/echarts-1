@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.eastway.echarts.domain.ContactImpl;
 import org.eastway.echarts.shared.Contact;
@@ -32,8 +30,7 @@ public class GetContactsHandler implements
 		} catch (DbException e) {
 			throw new ActionException("Database error");
 		}
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 		List<ContactImpl> contacts = em.createQuery(
 				"SELECT c FROM ContactImpl c WHERE c.caseNumber = '" + action.getCaseNumber() + "'", ContactImpl.class)
 				.getResultList();
@@ -41,7 +38,6 @@ public class GetContactsHandler implements
 		for (ContactImpl contact : contacts)
 			dto.add(contact.toDto());
 		em.close();
-		emf.close();
 		return new GetContactsResult(dto);
 	}
 

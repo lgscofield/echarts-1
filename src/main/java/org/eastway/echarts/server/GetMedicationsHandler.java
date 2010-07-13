@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.eastway.echarts.domain.MedicationImpl;
 import org.eastway.echarts.shared.DbException;
@@ -32,15 +30,14 @@ public class GetMedicationsHandler implements ActionHandler<GetMedications, GetM
 			throw new ActionException("Database error");
 		}
 
-		EntityManagerFactory emf = Persistence
-				.createEntityManagerFactory("EchartsPersistence");
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 		List<MedicationImpl> medications = em.createQuery(
 				"SELECT m FROM MedicationImpl m WHERE m.caseNumber = '" + action.getCaseNumber() + "'", MedicationImpl.class)
 				.getResultList();
 		List<Medication> medicationsDto = new ArrayList<Medication>();
 		for (MedicationImpl medication : medications)
 			medicationsDto.add(medication.toDto());
+		em.close();
 		return new GetMedicationsResult(medicationsDto);
 	}
 

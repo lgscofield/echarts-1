@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.eastway.echarts.domain.DiagnosisImpl;
 import org.eastway.echarts.shared.DbException;
@@ -31,8 +29,7 @@ public class GetDiagnosesHandler implements ActionHandler<GetDiagnoses, GetDiagn
 		} catch (DbException e) {
 			throw new ActionException("Database error");
 		}
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 		List<DiagnosisImpl> diagnoses = em.createQuery(
 				"SELECT d FROM DiagnosisImpl d WHERE d.caseNumber = '" + action.getCaseNumber() + "' ORDER BY d.date DESC", DiagnosisImpl.class)
 				.getResultList();
@@ -40,7 +37,6 @@ public class GetDiagnosesHandler implements ActionHandler<GetDiagnoses, GetDiagn
 		for (DiagnosisImpl diagnosis : diagnoses)
 			diagnosesDto.add(diagnosis.toDto());
 		em.close();
-		emf.close();
 		return new GetDiagnosesResult(diagnosesDto);
 	}
 
