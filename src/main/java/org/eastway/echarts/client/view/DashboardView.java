@@ -28,7 +28,7 @@ public interface DashboardView<T> {
 
 		void openEhr(String text);
 
-		void patientListOpen();
+		void getPatientList();
 	}
 
 	void addTab(Widget widget, String string);
@@ -40,4 +40,6 @@ public interface DashboardView<T> {
 	void setCurrentEhrData(ArrayList<String[]> data);
 	NotificationMole getMole();
 	void reset();
+	void setProductivity(String productivity, String color);
+	void setBonusProjection(String bonusProjection);
 }

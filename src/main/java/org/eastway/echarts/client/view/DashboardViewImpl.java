@@ -6,6 +6,9 @@ import java.util.List;
 
 import com.google.gwt.app.client.NotificationMole;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.SpanElement;
+import com.google.gwt.dom.client.TableCellElement;
+import com.google.gwt.dom.client.TableElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.OpenEvent;
@@ -47,9 +50,14 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 	@UiField SuggestBox patientIdBox;
 	@UiField NotificationMole mole;
 	@UiField DisclosurePanel patientListPanel;
+	@UiField SpanElement productivity;
+	@UiField SpanElement bonusProjection;
+	@UiField TableCellElement graphColor;
+	@UiField TableElement graph;
 
 	private MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
 	private int record = 0;
+	private double productivityUnit = 0.83;
 
 	public DashboardViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -176,7 +184,7 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 
 			@Override
 			public void onOpen(OpenEvent<DisclosurePanel> event) {
-				presenter.patientListOpen();
+				presenter.getPatientList();
 			}
 			
 		});
@@ -201,5 +209,22 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 		record = 0;
 		table.clear();
 		oracle.clear();
+	}
+
+	@Override
+	public void setBonusProjection(String greenNumber) {
+		bonusProjection.setInnerText(greenNumber);
+	}
+
+	@Override
+	public void setProductivity(String productivity, String color) {
+		this.productivity.setInnerText(productivity);
+		if (color.equals("red"))
+			graph.addClassName(style.red());
+		else if (color.equals("yellow"))
+			graph.addClassName(style.yellow());
+		else
+			graph.addClassName(style.green());
+		graph.setWidth(new Double(new Double(productivity) * productivityUnit).toString() + "%");
 	}
 }

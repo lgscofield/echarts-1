@@ -1,12 +1,11 @@
 package org.eastway.echarts.server;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.eastway.echarts.domain.Productivity;
 import org.eastway.echarts.shared.DbException;
@@ -19,10 +18,11 @@ import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.shared.ActionException;
 
 public class GetProductivityHandler implements ActionHandler<GetProductivity, GetProductivityResult> {
-
+	private EntityManager em = null;
 	@Override
 	public GetProductivityResult execute(GetProductivity action,
 			ExecutionContext context) throws ActionException {
+		em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 		ServiceUtil util = new ServiceUtil();
 		try {
 			util.checkSessionExpire(action.getSessionId());
@@ -31,14 +31,18 @@ public class GetProductivityHandler implements ActionHandler<GetProductivity, Ge
 		} catch (DbException e) {
 			throw new ActionException("Database error");
 		}
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
-		EntityManager em = emf.createEntityManager();
+
+		String staffId = null;
+		if (action.getStaffId().equals("5597") || action.getStaffId().equals("5274"))
+			staffId = "5262";
+		else
+			staffId = action.getStaffId();
 		Calendar calendar = Calendar.getInstance();
 		int month = calendar.get(Calendar.MONTH) + 1;
 		int year = calendar.get(Calendar.YEAR);
 		String monthYear = month + "-" + year;
 		List<Productivity> productivity = em.createQuery(
-				"SELECT p FROM Productivity p WHERE p.staff = '5262' AND p.month = '" + monthYear + "'", Productivity.class)
+				"SELECT p FROM Productivity p WHERE p.staff = '" + staffId + "' AND p.month = '" + monthYear + "'", Productivity.class)
 				.getResultList();
 		BigDecimal individual = new BigDecimal(0.00);
 		BigDecimal group = new BigDecimal(0.00);
@@ -56,22 +60,21 @@ public class GetProductivityHandler implements ActionHandler<GetProductivity, Ge
 		result.setIndividual(individual);
 		result.setMonth(monthYear);
 		result.setStaffId(action.getStaffId());
-		result.setTotal(total);
+		result.setTotal(total.setScale(1, RoundingMode.HALF_UP));
 		long monthlyWorkDays = getMonthlyWorkDays(calendar);
 		long currentWorkDays = getCurrentWorkDays(calendar);
 		result.setGreenNumber(getGreenNumber(monthlyWorkDays, currentWorkDays));
 		result.setYellowNumber(getYellowNumber(monthlyWorkDays, currentWorkDays));
 		em.close();
-		emf.close();
 		return result;
 	}
 
 	private double getYellowNumber(double m, double c) {
-		return Math.round((92.0/m) * c);
+		return new BigDecimal((92.0/m) * c).setScale(2, RoundingMode.HALF_UP).doubleValue();
 	}
 
 	private double getGreenNumber(double m, double c) {
-		return Math.round((100.0/m) * c);
+		return new BigDecimal((100.0/m) * c).setScale(2, RoundingMode.HALF_UP).doubleValue();
 	}
 
 	@Override
@@ -107,15 +110,11 @@ public class GetProductivityHandler implements ActionHandler<GetProductivity, Ge
 	}
 
 	private long getHolidays(Calendar calendar) {
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EchartsPersistence");
-		EntityManager em = emf.createEntityManager();
 		Long holidays = em.createQuery(
 			"SELECT COUNT(h) FROM Holiday h WHERE h.month = '" + (calendar.get(Calendar.MONTH)+1) + "' "
 			+ "AND h.year = '" + calendar.get(Calendar.YEAR) + "' "
 			+ "AND h.day > '"	+ calendar.get(Calendar.DAY_OF_MONTH) + "'" , Long.class)
 			.getSingleResult();
-		em.close();
-		emf.close();
 		return holidays;
 	}
 
