@@ -35,6 +35,7 @@ public class AssignmentDTO implements Serializable, Assignment {
 	private String lastEditBy;
 	private String caseNumber;
 	private Patient patient;
+	private Demographics demographics;
 
 	public AssignmentDTO() { }
 
@@ -191,5 +192,15 @@ public class AssignmentDTO implements Serializable, Assignment {
 	@Override
 	public void setPatient(Patient patient) {
 		this.patient = patient;
+	}
+
+	@Override
+	public void setDemographics(Demographics demographics) {
+		this.demographics = demographics;
+	}
+
+	@Override
+	public Demographics getDemographics() {
+		return demographics;
 	}
 }

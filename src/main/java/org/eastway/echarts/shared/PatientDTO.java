@@ -31,6 +31,20 @@ public class PatientDTO implements Serializable, Patient {
 	private String ssn;
 	private String lastEditBy;
 	private Date lastEdit;
+	private Date aodGoal;
+	private Date dateStamp;
+	private Date diagnosticAssessmentDateCompleted;
+	private Date financialDateCompleted;
+	private Date healthHistoryDateCompleted;
+	private Date hipaaDateCompleted;
+	private Date ispDateCompleted;
+	private Date ispReviewDateCompleted;
+	private Date levelOfCareAdmissionDate;
+	private Date levelOfCareCs;
+	private Date outcomesAgencyDateCompleted;
+	private Date outcomesConsumerDateCompleted;
+	private Date outcomesProviderDateCompleted;
+	private boolean isTitleTwenty;
 
 	public PatientDTO() { }
 
@@ -72,7 +86,11 @@ public class PatientDTO implements Serializable, Patient {
 
 	@Override
 	public String getName() {
-		return getLastName() + ", " + getFirstName();
+		return new StringBuilder()
+			.append(getLastName())
+			.append((getSuffix() == null ? ", " : " " + getSuffix() + ", "))
+			.append(getFirstName())
+			.append((getMiddleInitial() == null ? "" : ", " + getMiddleInitial())).toString();
 	}
 
 	@Override
@@ -173,6 +191,146 @@ public class PatientDTO implements Serializable, Patient {
 	@Override
 	public String getMiddleInitial() {
 		return middleInitial;
+	}
+
+	@Override
+	public Date getAodGoal() {
+		return aodGoal;
+	}
+
+	@Override
+	public Date getDateStamp() {
+		return dateStamp;
+	}
+
+	@Override
+	public Date getDiagnosticAssessmentDateCompleted() {
+		return diagnosticAssessmentDateCompleted;
+	}
+
+	@Override
+	public Date getFinancialDateCompleted() {
+		return financialDateCompleted;
+	}
+
+	@Override
+	public Date getHealthHistoryDateCompleted() {
+		return healthHistoryDateCompleted;
+	}
+
+	@Override
+	public Date getHipaaDateCompleted() {
+		return hipaaDateCompleted;
+	}
+
+	@Override
+	public Date getIspDateCompleted() {
+		return ispDateCompleted;
+	}
+
+	@Override
+	public Date getIspReviewDateCompleted() {
+		return ispReviewDateCompleted;
+	}
+
+	@Override
+	public Date getLevelOfCareAdmissionDate() {
+		return levelOfCareAdmissionDate;
+	}
+
+	@Override
+	public Date getLevelOfCareCs() {
+		return levelOfCareCs;
+	}
+
+	@Override
+	public Date getOutcomesAgencyDateCompleted() {
+		return outcomesAgencyDateCompleted;
+	}
+
+	@Override
+	public Date getOutcomesConsumerDateCompleted() {
+		return outcomesConsumerDateCompleted;
+	}
+
+	@Override
+	public Date getOutcomesProviderDateCompleted() {
+		return outcomesProviderDateCompleted;
+	}
+
+	@Override
+	public boolean isTitleTwenty() {
+		return isTitleTwenty;
+	}
+
+	@Override
+	public void setAodGoal(Date aodGoal) {
+		this.aodGoal = aodGoal;
+	}
+
+	@Override
+	public void setDateStamp(Date dateStamp) {
+		this.dateStamp = dateStamp;
+	}
+
+	@Override
+	public void setDiagnosticAssessmentDateCompleted(Date diagnosticAssessmentDateCompleted) {
+		this.diagnosticAssessmentDateCompleted = diagnosticAssessmentDateCompleted;
+	}
+
+	@Override
+	public void setFinancialDateCompleted(Date financialDateCompleted) {
+		this.financialDateCompleted = financialDateCompleted;
+	}
+
+	@Override
+	public void setHealthHistoryDateCompleted(Date healthHistoryDateCompleted) {
+		this.healthHistoryDateCompleted = healthHistoryDateCompleted;
+	}
+
+	@Override
+	public void setHipaaDateCompleted(Date hipaaDateCompleted) {
+		this.hipaaDateCompleted = hipaaDateCompleted;
+	}
+
+	@Override
+	public void setIsTitleTwenty(boolean isTitleTwenty) {
+		this.isTitleTwenty = isTitleTwenty;
+	}
+
+	@Override
+	public void setIspDateCompleted(Date ispDateCompleted) {
+		this.ispDateCompleted = ispDateCompleted;
+	}
+
+	@Override
+	public void setIspReviewDateCompleted(Date ispReviewDateCompleted) {
+		this.ispReviewDateCompleted = ispReviewDateCompleted;
+	}
+
+	@Override
+	public void setLevelOfCareAdmissionDate(Date levelOfCareAdmissionDate) {
+		this.levelOfCareAdmissionDate = levelOfCareAdmissionDate;
+	}
+
+	@Override
+	public void setLevelOfCareCs(Date levelOfCareCs) {
+		this.levelOfCareCs = levelOfCareCs;
+	}
+
+	@Override
+	public void setOutcomesAgencyDateCompleted(Date outcomesAgencyDateCompleted) {
+		this.outcomesAgencyDateCompleted = outcomesAgencyDateCompleted;
+	}
+
+	@Override
+	public void setOutcomesConsumerDateCompleted(Date outcomesConsumerDateCompleted) {
+		this.outcomesConsumerDateCompleted = outcomesConsumerDateCompleted;
+	}
+
+	@Override
+	public void setOutcomesProviderDateCompleted(Date outcomesProviderDateCompleted) {
+		this.outcomesProviderDateCompleted = outcomesProviderDateCompleted;
 	}
 
 	@Override

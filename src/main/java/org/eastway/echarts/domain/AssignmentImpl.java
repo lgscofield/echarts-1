@@ -33,6 +33,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import org.eastway.echarts.shared.Assignment;
 import org.eastway.echarts.shared.AssignmentDTO;
+import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.Patient;
 
 @SuppressWarnings("serial")
@@ -41,12 +42,16 @@ import org.eastway.echarts.shared.Patient;
 public class AssignmentImpl implements Serializable, Assignment {
 
 	@Id
-    @Column(name = "order_id")
+	@Column(name = "orderid")
     private Integer id;
 
-    @ManyToOne(targetEntity = PatientImpl.class)
-    @JoinColumn(name = "caseNumber", insertable = false, updatable = false)
-    private PatientImpl patient;
+	@ManyToOne(targetEntity = PatientImpl.class)
+	@JoinColumn(name = "Case#", insertable = false, updatable = false)
+	private PatientImpl patient;
+
+	@ManyToOne(targetEntity = DemographicsImpl.class)
+	@JoinColumn(name = "Case#", insertable = false, updatable = false)
+	private DemographicsImpl demographics;
 
     @Column(name = "Date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -59,29 +64,38 @@ public class AssignmentImpl implements Serializable, Assignment {
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "S-")
+    @Column(name="orderdate")
     private Date orderDate;
 
     private String disposition;
 
+    @Column(name="staffname")
     private String staffName;
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "S-")
+    @Column(name="termdate")
     private Date termDate;
 
+    @Null
+    @Column(name="planid")
     private Integer planId;
 
     @Null
+    @Column(name="trtepisode")
     private short trtEpisode;
 
     private String program;
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "S-")
+    @Column(name="lastedit")
     private Date lastEdit;
 
+    @Column(name="lasteditby")
     private String lastEditBy;
 
+    @Column(name="Case#")
 	private String caseNumber;
 
     public AssignmentImpl() { }
@@ -232,8 +246,18 @@ public class AssignmentImpl implements Serializable, Assignment {
 	}
 
 	@Override
-	public PatientImpl getPatient() {
+	public Patient getPatient() {
 		return patient;
+	}
+
+	@Override
+	public void setDemographics(Demographics demographics) {
+		this.demographics = (DemographicsImpl) demographics;
+	}
+
+	@Override
+	public Demographics getDemographics() {
+		return demographics;
 	}
 
 	@Override
@@ -251,6 +275,7 @@ public class AssignmentImpl implements Serializable, Assignment {
 		dto.setPlanId(this.planId == null ? 0 : this.planId);
 		dto.setTrtEpisode(this.trtEpisode);
 		dto.setPatient(patient.toDto());
+		dto.setDemographics(demographics.toDto());
 		dto.setProgram(this.program);
 		dto.setLastEdit(this.lastEdit);
 		dto.setLastEditBy(this.lastEditBy);

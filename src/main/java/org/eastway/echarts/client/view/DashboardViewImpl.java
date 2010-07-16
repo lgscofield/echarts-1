@@ -11,8 +11,6 @@ import com.google.gwt.dom.client.TableCellElement;
 import com.google.gwt.dom.client.TableElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.logical.shared.OpenEvent;
-import com.google.gwt.event.logical.shared.OpenHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -25,10 +23,10 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.SuggestBox;
@@ -43,20 +41,18 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 	private static DashboardViewUiBinder uiBinder = GWT.create(DashboardViewUiBinder.class);
 
 	@UiField Anchor logoutButton;
-	@UiField FlexTable table;
 	@UiField Style style;
 	@UiField FlowPanel currentPatientData;
 	@UiField Button patientSearchButton;
 	@UiField SuggestBox patientIdBox;
 	@UiField NotificationMole mole;
-	@UiField DisclosurePanel patientListPanel;
 	@UiField SpanElement productivity;
 	@UiField SpanElement bonusProjection;
 	@UiField TableCellElement graphColor;
 	@UiField TableElement graph;
+	@UiField Hyperlink tickler;
 
 	private MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
-	private int record = 0;
 	private double productivityUnit = 0.83;
 
 	public DashboardViewImpl() {
@@ -110,20 +106,13 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 
 	@Override
 	public void setPatientSearchData(List<String> list) {
-		for (String s : list) {
+		for (String s : list)
 			oracle.add(s);
-			Label lbl = new Label(s);
-			table.setWidget(record++, 0, lbl);
-			lbl.addStyleName(style.label());
-		}
 	}
 
 	@Override
 	public void addPatientSearchData(String str) {
 		oracle.add(str);
-		Label lbl = new Label(str);
-		table.setWidget(record++, 0, lbl);
-		lbl.addStyleName(style.label());
 	}
 
 	@Override
@@ -152,22 +141,6 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 		currentPatientData.add(cpd);
 	}
 
-	@UiHandler("table")
-	void handleItemSelected(ClickEvent event) {
-		int selected = -1;
-
-		FlexTable.Cell cell = table.getCellForEvent(event);
-
-		if (cell != null) {
-			if (cell.getCellIndex() >= 0) {
-				selected = cell.getRowIndex();
-			}
-		}
-		String row = table.getText(selected, 0);
-		if (row != null)
-			presenter.openEhr(row);
-	}
-
 	private void bind() {
 		tabLayoutPanel.addSelectionHandler(new SelectionHandler<Integer>() {
 			@Override
@@ -179,14 +152,6 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 					presenter.changeCurrentEhr(null);
 				}
 			}
-		});
-		patientListPanel.addOpenHandler(new OpenHandler<DisclosurePanel> () {
-
-			@Override
-			public void onOpen(OpenEvent<DisclosurePanel> event) {
-				presenter.getPatientList();
-			}
-			
 		});
 	}
 
@@ -206,8 +171,6 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 
 	@Override
 	public void reset() {
-		record = 0;
-		table.clear();
 		oracle.clear();
 	}
 
@@ -226,5 +189,10 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 		else
 			graph.addClassName(style.green());
 		graph.setWidth(new Double(new Double(productivity) * productivityUnit).toString() + "%");
+	}
+
+	@UiHandler(value="tickler")
+	public void onTicklerClicked(ClickEvent event) {
+		presenter.openTickler();
 	}
 }

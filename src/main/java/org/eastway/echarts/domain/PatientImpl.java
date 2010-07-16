@@ -21,6 +21,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -30,6 +32,8 @@ import org.eastway.echarts.shared.PatientDTO;
 
 @Entity
 @Table(name = "Patient")
+@SecondaryTable(name = "Tickler",
+		pkJoinColumns=@PrimaryKeyJoinColumn(name="PATID"))
 public class PatientImpl implements Patient {
 	@Column(name = "patient_id")
 	private long id;
@@ -47,6 +51,34 @@ public class PatientImpl implements Patient {
 	private String lastEditBy;
 	@NotNull
 	private Date lastEdit;
+	@Column(name="HIPAA", table="tickler")
+	private Date hipaaDateCompleted;
+	@Column(name="ISP", table="tickler")
+	private Date ispDateCompleted;
+	@Column(name="AoD_Goal", table="tickler")
+	private Date aodGoal;
+	@Column(name="ISP6", table="tickler")
+	private Date ispReviewDateCompleted;
+	@Column(name="LOC_Ad", table="tickler")
+	private Date levelOfCareAdmissionDate;
+	@Column(name="LOC_CS", table="tickler")
+	private Date levelOfCareCs;
+	@Column(name="HTH_HX", table="tickler")
+	private Date healthHistoryDateCompleted;
+	@Column(name="FAF", table="tickler")
+	private Date financialDateCompleted;
+	@Column(name="FAF_XX", table="tickler", scale=18, precision=0)
+	private long isTitleTwenty;
+	@Column(name="DA", table="tickler")
+	private Date diagnosticAssessmentDateCompleted;
+	@Column(name="OOCi", table="tickler")
+	private Date outcomesConsumerDateCompleted;
+	@Column(name="OOCW", table="tickler")
+	private Date outcomesProviderDateCompleted;
+	@Column(name="OOCP", table="tickler")
+	private Date outcomesAgencyDateCompleted;
+	@Column(name="Date_Stamp", table="tickler")
+	private Date dateStamp;
 
 	public PatientImpl() {}
 
@@ -66,7 +98,11 @@ public class PatientImpl implements Patient {
 
 	@Override
 	public String getName() {
-		return getLastName() + ", " + getFirstName();
+		return new StringBuilder()
+			.append(getLastName())
+			.append((getSuffix() == null ? ", " : " " + getSuffix() + ", "))
+			.append(getFirstName())
+			.append((getMiddleInitial() == null ? "" : ", " + getMiddleInitial())).toString();
 	}
 
 	@Override
@@ -170,20 +206,174 @@ public class PatientImpl implements Patient {
 	}
 
 	@Override
+	public Date getAodGoal() {
+		return aodGoal;
+	}
+
+	@Override
+	public Date getDateStamp() {
+		return dateStamp;
+	}
+
+	@Override
+	public Date getDiagnosticAssessmentDateCompleted() {
+		return diagnosticAssessmentDateCompleted;
+	}
+
+	@Override
+	public Date getFinancialDateCompleted() {
+		return financialDateCompleted;
+	}
+
+	@Override
+	public Date getHealthHistoryDateCompleted() {
+		return healthHistoryDateCompleted;
+	}
+
+	@Override
+	public Date getHipaaDateCompleted() {
+		return hipaaDateCompleted;
+	}
+
+	@Override
+	public Date getIspDateCompleted() {
+		return ispDateCompleted;
+	}
+
+	@Override
+	public Date getIspReviewDateCompleted() {
+		return ispReviewDateCompleted;
+	}
+
+	@Override
+	public Date getLevelOfCareAdmissionDate() {
+		return levelOfCareAdmissionDate;
+	}
+
+	@Override
+	public Date getLevelOfCareCs() {
+		return levelOfCareCs;
+	}
+
+	@Override
+	public Date getOutcomesAgencyDateCompleted() {
+		return outcomesAgencyDateCompleted;
+	}
+
+	@Override
+	public Date getOutcomesConsumerDateCompleted() {
+		return outcomesConsumerDateCompleted;
+	}
+
+	@Override
+	public Date getOutcomesProviderDateCompleted() {
+		return outcomesProviderDateCompleted;
+	}
+
+	@Override
+	public boolean isTitleTwenty() {
+		return (isTitleTwenty == 1L) ? true : false;
+	}
+
+	@Override
+	public void setAodGoal(Date aodGoal) {
+		this.aodGoal = aodGoal;
+	}
+
+	@Override
+	public void setDateStamp(Date dateStamp) {
+		this.dateStamp = dateStamp;
+	}
+
+	@Override
+	public void setDiagnosticAssessmentDateCompleted(Date diagnosticAssessmentDateCompleted) {
+		this.diagnosticAssessmentDateCompleted = diagnosticAssessmentDateCompleted;
+	}
+
+	@Override
+	public void setFinancialDateCompleted(Date financialDateCompleted) {
+		this.financialDateCompleted = financialDateCompleted;
+	}
+
+	@Override
+	public void setHealthHistoryDateCompleted(Date healthHistoryDateCompleted) {
+		this.healthHistoryDateCompleted = healthHistoryDateCompleted;
+	}
+
+	@Override
+	public void setHipaaDateCompleted(Date hipaaDateCompleted) {
+		this.hipaaDateCompleted = hipaaDateCompleted;
+	}
+
+	@Override
+	public void setIsTitleTwenty(boolean isTitleTwenty) {
+		this.isTitleTwenty = (isTitleTwenty) ? 1L : 0L;
+	}
+
+	@Override
+	public void setIspDateCompleted(Date ispDateCompleted) {
+		this.ispDateCompleted = ispDateCompleted;
+	}
+
+	@Override
+	public void setIspReviewDateCompleted(Date ispReviewDateCompleted) {
+		this.ispReviewDateCompleted = ispReviewDateCompleted;
+	}
+
+	@Override
+	public void setLevelOfCareAdmissionDate(Date levelOfCareAdmissionDate) {
+		this.levelOfCareAdmissionDate = levelOfCareAdmissionDate;
+	}
+
+	@Override
+	public void setLevelOfCareCs(Date levelOfCareCs) {
+		this.levelOfCareCs = levelOfCareCs;
+	}
+
+	@Override
+	public void setOutcomesAgencyDateCompleted(Date outcomesAgencyDateCompleted) {
+		this.outcomesAgencyDateCompleted = outcomesAgencyDateCompleted;
+	}
+
+	@Override
+	public void setOutcomesConsumerDateCompleted(Date outcomesConsumerDateCompleted) {
+		this.outcomesConsumerDateCompleted = outcomesConsumerDateCompleted;
+	}
+
+	@Override
+	public void setOutcomesProviderDateCompleted(Date outcomesProviderDateCompleted) {
+		this.outcomesProviderDateCompleted = outcomesProviderDateCompleted;
+	}
+
+	@Override
 	public PatientDTO toDto() {
-		PatientDTO patientDto = new PatientDTO();
-		patientDto.setAlias(this.getAlias());
-		patientDto.setCaseNumber(this.getCaseNumber());
-		patientDto.setCaseStatus(this.getCaseStatus().toDto());
-		patientDto.setFirstName(this.getFirstName());
-		patientDto.setLastEdit(this.getLastEdit());
-		patientDto.setLastEditBy(this.getLastEditBy());
-		patientDto.setLastName(this.getLastName());
-		patientDto.setMiddleInitial(this.getMiddleInitial());
-		patientDto.setId(this.getId());
-		patientDto.setSsn(this.getSsn());
-		patientDto.setSuffix(this.getSuffix());
-		return patientDto;
+		PatientDTO dto = new PatientDTO();
+		dto.setAlias(alias);
+		dto.setAodGoal(aodGoal);
+		dto.setCaseNumber(caseNumber);
+		dto.setCaseStatus(caseStatus.toDto());
+		dto.setDateStamp(dateStamp);
+		dto.setDiagnosticAssessmentDateCompleted(diagnosticAssessmentDateCompleted);
+		dto.setFinancialDateCompleted(financialDateCompleted);
+		dto.setFirstName(firstName);
+		dto.setHealthHistoryDateCompleted(healthHistoryDateCompleted);
+		dto.setHipaaDateCompleted(hipaaDateCompleted);
+		dto.setId(id);
+		dto.setIspDateCompleted(ispDateCompleted);
+		dto.setIspReviewDateCompleted(ispReviewDateCompleted);
+		dto.setIsTitleTwenty(isTitleTwenty());
+		dto.setLastEdit(lastEdit);
+		dto.setLastEditBy(lastEditBy);
+		dto.setLastName(lastName);
+		dto.setLevelOfCareAdmissionDate(levelOfCareAdmissionDate);
+		dto.setLevelOfCareCs(levelOfCareCs);
+		dto.setMiddleInitial(middleInitial);
+		dto.setOutcomesAgencyDateCompleted(outcomesAgencyDateCompleted);
+		dto.setOutcomesConsumerDateCompleted(outcomesConsumerDateCompleted);
+		dto.setOutcomesProviderDateCompleted(outcomesProviderDateCompleted);
+		dto.setSsn(ssn);
+		dto.setSuffix(suffix);
+		return dto;
 	}
 
 	@Override

@@ -75,9 +75,13 @@ public interface Assignment {
 
 	public String getLastEditBy();
 
-	public AssignmentDTO toDto();
-
 	public void setPatient(Patient patient);
 
 	public Patient getPatient();
+
+	void setDemographics(Demographics demographics);
+
+	Demographics getDemographics();
+
+	public AssignmentDTO toDto();
 }

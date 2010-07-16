@@ -7,7 +7,7 @@ public class ServerModule extends ActionHandlerModule {
 
 	@Override
 	protected void configureHandlers() {
-		bindHandler(GetAssignmentsHandler.class);
+		bindHandler(GetTicklerHandler.class);
 		bindHandler(GetDemographicsHandler.class);
 		bindHandler(GetAppointmentsHandler.class);
 		bindHandler(GetPatientSummaryHandler.class);

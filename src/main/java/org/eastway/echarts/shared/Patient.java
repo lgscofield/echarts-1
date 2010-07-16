@@ -65,5 +65,62 @@ public interface Patient {
 
 	public String getMiddleInitial();
 
+	public void setHipaaDateCompleted(Date hipaaDateCompleted);
+
+	public Date getHipaaDateCompleted();
+
+	public void setIspDateCompleted(Date ispDateCompleted);
+
+	public Date getIspDateCompleted();
+
+	public void setAodGoal(Date aodGoal);
+
+	public Date getAodGoal();
+
+	public void setIspReviewDateCompleted(Date ispReviewDateCompleted);
+
+	public Date getIspReviewDateCompleted();
+
+	public void setLevelOfCareAdmissionDate(Date levelOfCareAdmissionDate);
+
+	public Date getLevelOfCareAdmissionDate();
+
+	public void setLevelOfCareCs(Date levelOfCareCs);
+
+	public Date getLevelOfCareCs();
+
+	public void setHealthHistoryDateCompleted(Date healthHistoryDateCompleted);
+
+	public Date getHealthHistoryDateCompleted();
+
+	public void setFinancialDateCompleted(Date financialDateCompleted);
+
+	public Date getFinancialDateCompleted();
+
+	public void setIsTitleTwenty(boolean isTitleTwenty);
+
+	public boolean isTitleTwenty();
+
+	public void setDiagnosticAssessmentDateCompleted(Date diagnosticAssessmentDateCompleted);
+
+	public Date getDiagnosticAssessmentDateCompleted();
+
+	public void setOutcomesConsumerDateCompleted(Date outcomesConsumerDateCompleted);
+
+	public Date getOutcomesConsumerDateCompleted();
+
+	public void setOutcomesProviderDateCompleted(Date outcomesProviderDateCompleted);
+
+	public Date getOutcomesProviderDateCompleted();
+
+	public void setOutcomesAgencyDateCompleted(Date outcomesAgencyDateCompleted);
+
+	public Date getOutcomesAgencyDateCompleted();
+
+	public void setDateStamp(Date dateStamp);
+
+	public Date getDateStamp();
+
 	public PatientDTO toDto();
+
 }

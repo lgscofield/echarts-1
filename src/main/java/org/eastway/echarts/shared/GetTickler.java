@@ -3,14 +3,14 @@ package org.eastway.echarts.shared;
 import net.customware.gwt.dispatch.shared.Action;
 
 @SuppressWarnings("serial")
-public class GetAssignments implements Action<GetAssignmentsResult> {
+public class GetTickler implements Action<GetTicklerResult> {
 
 	private String staffId;
 	private String sessionId;
 
-	GetAssignments() { }
+	GetTickler() { }
 
-	public GetAssignments(String sessionId, String staffId) {
+	public GetTickler(String sessionId, String staffId) {
 		this.sessionId = sessionId;
 		this.staffId = staffId;
 	}

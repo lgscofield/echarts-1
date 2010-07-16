@@ -24,10 +24,10 @@ import org.eastway.echarts.client.HandleRpcException;
 //import org.eastway.echarts.client.PatientServices;
 //import org.eastway.echarts.client.PatientServicesAsync;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
-import org.eastway.echarts.client.presenter.PatientListPresenter;
+import org.eastway.echarts.client.presenter.TicklerPresenter;
 import org.eastway.echarts.client.presenter.TopPanelPresenter;
 import org.eastway.echarts.client.view.EHRViewImpl;
-import org.eastway.echarts.client.view.PatientListViewImpl;
+import org.eastway.echarts.client.view.TicklerViewImpl;
 import org.eastway.echarts.client.view.TopPanelView;
 import org.eastway.echarts.shared.EHR;
 

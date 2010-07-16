@@ -41,6 +41,8 @@ import org.eastway.echarts.client.events.ViewPatientSummaryEvent;
 import org.eastway.echarts.client.events.ViewPatientSummaryEventHandler;
 import org.eastway.echarts.client.events.ViewReferralEvent;
 import org.eastway.echarts.client.events.ViewReferralEventHandler;
+import org.eastway.echarts.client.events.ViewTicklerEvent;
+import org.eastway.echarts.client.events.ViewTicklerEventHandler;
 import org.eastway.echarts.client.presenter.AddressPresenter;
 import org.eastway.echarts.client.presenter.AppointmentPresenter;
 import org.eastway.echarts.client.presenter.ContactPresenter;
@@ -54,6 +56,7 @@ import org.eastway.echarts.client.presenter.MessagesPresenter;
 import org.eastway.echarts.client.presenter.PatientSummaryPresenter;
 import org.eastway.echarts.client.presenter.Presenter;
 import org.eastway.echarts.client.presenter.ReferralPresenter;
+import org.eastway.echarts.client.presenter.TicklerPresenter;
 import org.eastway.echarts.client.view.AddressView;
 import org.eastway.echarts.client.view.AppointmentView;
 import org.eastway.echarts.client.view.ContactView;
@@ -68,6 +71,8 @@ import org.eastway.echarts.client.view.MedicationView;
 import org.eastway.echarts.client.view.MessagesView;
 import org.eastway.echarts.client.view.PatientSummaryView;
 import org.eastway.echarts.client.view.ReferralView;
+import org.eastway.echarts.client.view.TicklerView;
+import org.eastway.echarts.client.view.TicklerViewImpl;
 import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.GetAddresses;
 import org.eastway.echarts.shared.GetAppointments;
@@ -79,6 +84,7 @@ import org.eastway.echarts.shared.GetMedications;
 import org.eastway.echarts.shared.GetMessages;
 import org.eastway.echarts.shared.GetPatientSummary;
 import org.eastway.echarts.shared.GetReferral;
+import org.eastway.echarts.shared.GetTickler;
 
 import com.google.gwt.requestfactory.shared.RequestEvent;
 import com.google.gwt.requestfactory.shared.RequestEvent.State;
@@ -161,6 +167,12 @@ public class AppController {
 				doViewMedications(event.getView(), event.getAction());
 			}
 		});
+		eventBus.addHandler(ViewTicklerEvent.TYPE, new ViewTicklerEventHandler() {
+			@Override
+			public void onOpenTickler(ViewTicklerEvent event) {
+				doViewTickler(event.getAction());
+			}
+		});
 		eventBus.addHandler(RequestEvent.TYPE, new RequestEvent.Handler() {
 			// Only show loading status if a request isn't serviced in 250ms.
 			private static final int LOADING_TIMEOUT = 250;
@@ -178,6 +190,13 @@ public class AppController {
 				doViewDemographics(event.getView(), event.getAction());
 			}
 		});
+	}
+
+	protected void doViewTickler(GetTickler action) {
+		TicklerView<LinkedHashMap<String, Long>> ticklerView = new TicklerViewImpl<LinkedHashMap<String, Long>>();
+		Presenter presenter = new TicklerPresenter(ticklerView, eventBus, dispatch, action);
+		presenter.go(null);
+		dashboard.addTab(ticklerView.asWidget(), "Tickler");
 	}
 
 	protected void doViewMedications(EHRView<EHR> view, GetMedications action) {

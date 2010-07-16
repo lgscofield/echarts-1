@@ -15,27 +15,44 @@
  */
 package org.eastway.echarts.client.view;
 
-import java.util.LinkedHashMap;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.user.client.ui.Widget;
 
-public interface PatientListView<T> {
+public interface TicklerView<T> {
 	public interface Presenter<T> {
-		void onOpenChartClicked();
+		void openEhr(String text);
+	}
 
-		void onItemSelected(String row);
+	enum DueDateStatus {
+		COMPLIANT,
+		DUE_IN_THIRTY_DAYS,
+		OVERDUE,
+		NO_DATA
 	}
 
 	interface Style extends CssResource {
-		String label();
+		String pointer();
+		String compliant();
+		String dueInThirtyDays();
+		String overDue();
 	}
 
 	void setPresenter(Presenter<T> presenter);
 	Widget asWidget();
 	HasClickHandlers getTable();
-	void setData(LinkedHashMap<String, Long> data);
 	String getClickedRow(ClickEvent event);
+	void reset();
+	void addData(String str);
+	void nextRecord();
+	void setName(String name);
+	void setCaseNumber(String caseNumber);
+	void setIspDueDate(String dueDate, DueDateStatus status);
+	void setIspReviewDueDate(String dueDate, DueDateStatus status);
+	void setHealthHistoryDueDate(String dueDate, DueDateStatus status);
+	void setDiagnosticAssessmentUpdate(String dueDate, DueDateStatus status);
+	void setFinancialDueDate(String dueDate, DueDateStatus status);
+	void setOoc(String dueDate, DueDateStatus status);
+	void setHipaaDateCompleted(String hipaaDateCompleted);
 }

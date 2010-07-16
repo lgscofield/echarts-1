@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import net.customware.gwt.presenter.client.EventBus;
 
@@ -14,15 +13,16 @@ import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEventHandler;
 import org.eastway.echarts.client.events.OpenEhrEvent;
+import org.eastway.echarts.client.events.ViewTicklerEvent;
 import org.eastway.echarts.client.view.DashboardView;
 import org.eastway.echarts.shared.Assignment;
 import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.GetProductivity;
 import org.eastway.echarts.shared.GetProductivityResult;
+import org.eastway.echarts.shared.GetTickler;
+import org.eastway.echarts.shared.GetTicklerResult;
 import org.eastway.echarts.shared.Patient;
-import org.eastway.echarts.shared.GetAssignments;
-import org.eastway.echarts.shared.GetAssignmentsResult;
 
 import com.google.gwt.requestfactory.shared.RequestEvent;
 import com.google.gwt.requestfactory.shared.RequestEvent.State;
@@ -34,9 +34,9 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 
 	private DashboardView<LinkedHashMap<String, Long>> view;
 	private EventBus eventBus;
-	private GetAssignmentsResult data;
+	private GetTicklerResult data;
 	private CachingDispatchAsyncImpl dispatch;
-	private GetAssignments action = new GetAssignments(EchartsUser.sessionId, EchartsUser.staffId);
+	private GetTickler action = new GetTickler(EchartsUser.sessionId, EchartsUser.staffId);
 	private String caseNumber;
 
 	@Inject
@@ -104,31 +104,11 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 	}
 
 	private void fetchData() {
-		eventBus.fireEvent(new RequestEvent(State.SENT));
-		dispatch.execute(new GetProductivity(EchartsUser.sessionId, EchartsUser.staffId), new AsyncCallback<GetProductivityResult>() {
-			@Override
-			public void onFailure(Throwable caught) {
-				new HandleRpcException(caught);
-			}
-
-			@Override
-			public void onSuccess(GetProductivityResult result) {
-				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
-				getPatientList();
-				String color = null;
-				if (result.getTotal().doubleValue() < result.getYellowNumber())
-					color = "red";
-				else if (result.getTotal().doubleValue() < result.getGreenNumber())
-					color = "yellow";
-				else
-					color = "green";
-				view.setProductivity(result.getTotal().toPlainString(), color);
-				view.setBonusProjection(new Double(result.getGreenNumber()).toString());
-			}
-		});
+		getPatientList();
+		getProductivityData();
 	}
 
-	private void setData(GetAssignmentsResult data) {
+	private void setData(GetTicklerResult data) {
 		this.data = data;
 	}
 
@@ -149,35 +129,54 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 		eventBus.fireEvent(new OpenEhrEvent(text.replaceAll("(.*) - .*", "$1")));
 	}
 
-	@Override
-	public void getPatientList() {
+	private void getProductivityData() {
 		eventBus.fireEvent(new RequestEvent(State.SENT));
-		dispatch.executeWithCache(action, new AsyncCallback<GetAssignmentsResult>() {
+		dispatch.execute(new GetProductivity(EchartsUser.sessionId, EchartsUser.staffId), new AsyncCallback<GetProductivityResult>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				new HandleRpcException(caught);
 			}
 
 			@Override
-			public void onSuccess(GetAssignmentsResult data) {
+			public void onSuccess(GetProductivityResult result) {
 				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
-				Map<String, Long> pl = new LinkedHashMap<String, Long>();
-				for (Assignment assignment : data.getAssignments())
-					if (assignment != null)
-						pl.put(new StringBuilder()
-									.append(assignment.getPatient().getCaseNumber())
-									.append(" - ")
-									.append( assignment.getPatient().getLastName())
-									.append((assignment.getPatient().getSuffix() == null ? ", " : " " + assignment.getPatient().getSuffix() + ", "))
-									.append(assignment.getPatient().getFirstName())
-									.append((assignment.getPatient().getMiddleInitial() == null ? "" : ", " + assignment.getPatient().getMiddleInitial())).toString(),
-									new Long(assignment.getId()));
-				
-				view.reset();
-				for (String str : pl.keySet())
-					view.addPatientSearchData(str);
-				setData(data);
+				String color = null;
+				if (result.getTotal().doubleValue() < result.getYellowNumber())
+					color = "red";
+				else if (result.getTotal().doubleValue() < result.getGreenNumber())
+					color = "yellow";
+				else
+					color = "green";
+				view.setProductivity(result.getTotal().toPlainString(), color);
+				view.setBonusProjection(new Double(result.getGreenNumber()).toString());
 			}
 		});
+	}
+
+	public void getPatientList() {
+		eventBus.fireEvent(new RequestEvent(State.SENT));
+		dispatch.executeWithCache(action, new AsyncCallback<GetTicklerResult>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				new HandleRpcException(caught);
+			}
+
+			@Override
+			public void onSuccess(GetTicklerResult result) {
+				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
+				for (Assignment assignment : result.getAssignments())
+					if (assignment != null)
+						view.addPatientSearchData(new StringBuilder()
+									.append(assignment.getPatient().getCaseNumber())
+									.append(" - ")
+									.append(assignment.getPatient().getName()).toString());
+				setData(result);
+			}
+		});
+	}
+
+	@Override
+	public void openTickler() {
+		eventBus.fireEvent(new ViewTicklerEvent(action));
 	}
 }

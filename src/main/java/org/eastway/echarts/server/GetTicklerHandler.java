@@ -8,18 +8,18 @@ import javax.persistence.EntityManager;
 import org.eastway.echarts.domain.AssignmentImpl;
 import org.eastway.echarts.shared.Assignment;
 import org.eastway.echarts.shared.DbException;
-import org.eastway.echarts.shared.GetAssignments;
-import org.eastway.echarts.shared.GetAssignmentsResult;
+import org.eastway.echarts.shared.GetTickler;
+import org.eastway.echarts.shared.GetTicklerResult;
 import org.eastway.echarts.shared.SessionExpiredException;
 
 import net.customware.gwt.dispatch.server.ActionHandler;
 import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.shared.ActionException;
 
-public class GetAssignmentsHandler implements ActionHandler<GetAssignments, GetAssignmentsResult> {
+public class GetTicklerHandler implements ActionHandler<GetTickler, GetTicklerResult> {
 
 	@Override
-	public GetAssignmentsResult execute(GetAssignments action, ExecutionContext context)
+	public GetTicklerResult execute(GetTickler action, ExecutionContext context)
 			throws ActionException {
 		ServiceUtil util = new ServiceUtil();
 		try {
@@ -32,7 +32,7 @@ public class GetAssignmentsHandler implements ActionHandler<GetAssignments, GetA
 
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 		List<AssignmentImpl> assignments = em.createQuery(
-				"SELECT a From AssignmentImpl a Where a.staff = '" + action.getStaffId() + "' And a.disposition = 'Open' Order By a.patient.lastName ASC, a.patient.firstName ASC", AssignmentImpl.class)
+				"SELECT a From AssignmentImpl a Where a.staff = '" + action.getStaffId() + "' And a.disposition = 'Open' And a.service Like 'S%' Order By a.patient.lastName ASC, a.patient.firstName ASC, a.orderDate DESC", AssignmentImpl.class)
 				.getResultList();
 		List<Assignment> assignmentsDto = new ArrayList<Assignment>();
 		for (Assignment assignment : assignments)
@@ -40,16 +40,16 @@ public class GetAssignmentsHandler implements ActionHandler<GetAssignments, GetA
 				assignmentsDto.add(assignment.toDto());
 			}
 		em.close();
-		return new GetAssignmentsResult(assignmentsDto);
+		return new GetTicklerResult(assignmentsDto);
 	}
 
 	@Override
-	public Class<GetAssignments> getActionType() {
-		return GetAssignments.class;
+	public Class<GetTickler> getActionType() {
+		return GetTickler.class;
 	}
 
 	@Override
-	public synchronized void rollback(GetAssignments list, GetAssignmentsResult result, ExecutionContext context) throws ActionException {
+	public synchronized void rollback(GetTickler list, GetTicklerResult result, ExecutionContext context) throws ActionException {
 		
 	}
 }

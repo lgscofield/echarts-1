@@ -28,7 +28,7 @@ public interface DashboardView<T> {
 
 		void openEhr(String text);
 
-		void getPatientList();
+		void openTickler();
 	}
 
 	void addTab(Widget widget, String string);

@@ -125,13 +125,14 @@
 						Dashboard
 					</g:header>
 					<g:SplitLayoutPanel>
-						<g:west size='250'>
-							<g:ScrollPanel>
-								<g:DisclosurePanel ui:field='patientListPanel'>
-									<g:header>Open Chart</g:header>
-									<g:FlexTable ui:field='table'/>
-								</g:DisclosurePanel>
-							</g:ScrollPanel>
+						<g:west size='115'>
+							<g:HTMLPanel>
+								<ul>
+									<li>
+										<g:Hyperlink ui:field='tickler' targetHistoryToken=''>Tickler</g:Hyperlink>
+									</li>
+								</ul>
+							</g:HTMLPanel>
 						</g:west>
 						<g:center>
 							<g:HTMLPanel>
