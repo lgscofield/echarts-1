@@ -213,7 +213,7 @@ public class MessagesPresenter implements Presenter {
 
 	private void showAddMessage() {
 		loadMessageType();
-		view.setText("New Message");
+		view.setText(action.getCaseNumber());
 		view.show();
 	}
 
