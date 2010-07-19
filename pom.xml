@@ -11,11 +11,10 @@
 		</dependencies>
 	</dependencyManagement>
 	<properties>
-		<roo.version>1.1.0.M1</roo.version>
-		<spring.version>3.0.2.RELEASE</spring.version>
-		<aspectj.version>1.6.9.M2</aspectj.version>
-		<slf4j.version>1.6.0</slf4j.version>
-	<datanucleus.version>1.1.6</datanucleus.version>
+		<roo.version>1.1.0.M2</roo.version>
+		<spring.version>3.0.3.RELEASE</spring.version>
+		<aspectj.version>1.6.10.M1</aspectj.version>
+		<slf4j.version>1.6.1</slf4j.version>
     </properties>
 	<repositories>
 		<repository>
@@ -95,7 +94,7 @@
         <dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<version>1.2.15</version>
+			<version>1.2.16</version>
 			<!-- Exclusions only required for version 1.2.15 of log4j -->
 			<exclusions>
 				<exclusion>
@@ -371,18 +370,13 @@
         </dependency>
         <dependency>
             <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-bikeshed</artifactId>
-            <version>2.1.0.M1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.gwt</groupId>
             <artifactId>gwt-servlet</artifactId>
-            <version>2.1.0.M1</version>
+            <version>2.1.0.M2</version>
         </dependency>
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-user</artifactId>
-            <version>2.1.0.M1</version>
+            <version>2.1.0.M2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -393,7 +387,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>3.5.0-Final</version>
+            <version>3.5.1-Final</version>
             <exclusions>
                 <exclusion>
                     <groupId>cglib</groupId>
@@ -420,7 +414,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>3.5.0-Final</version>
+            <version>3.5.1-Final</version>
             <exclusions>
                 <exclusion>
                     <groupId>cglib</groupId>
@@ -448,15 +442,10 @@
             <version>3.0</version>
         </dependency>
     <dependency>
-            <groupId>com.allen_sauer.gwt.dnd</groupId>
-            <artifactId>gwt-dnd</artifactId>
-            <version>3.0.1</version>
-        </dependency>
-    <dependency>
             <groupId>com.bradrydzewski</groupId>
             <artifactId>gwt-cal</artifactId>
-            <version>0.9-SNAPSHOT</version>
-        </dependency>
+            <version> 0.9.1-SNAPSHOT</version>
+    </dependency>
     <dependency>
     	<groupId>net.customware.gwt.dispatch</groupId>
     	<artifactId>gwt-dispatch</artifactId>
@@ -486,6 +475,11 @@
     	<groupId>com.google.inject</groupId>
     	<artifactId>guice</artifactId>
     	<version>2.0</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.allen_sauer.gwt.dnd</groupId>
+    	<artifactId>gwt-dnd</artifactId>
+    	<version>3.0.1</version>
     </dependency>
 	</dependencies>
 	<build>
