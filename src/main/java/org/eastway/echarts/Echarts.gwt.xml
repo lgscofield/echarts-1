@@ -15,9 +15,9 @@
   <inherits name='com.google.gwt.user.theme.standard.Standard'/>
   <inherits name='com.google.gwt.app.App' />
   <inherits name='com.google.gwt.requestfactory.RequestFactory'/>
-  <inherits name='com.bradrydzewski.gwt.calendar.Calendar' />
-  <inherits name='com.bradrydzewski.gwt.calendar.theme.google.Google' />
-  <inherits name='com.allen_sauer.gwt.dnd.gwt-dnd'/>
+<!--  <inherits name='com.bradrydzewski.gwt.calendar.Calendar' />-->
+<!--  <inherits name='com.bradrydzewski.gwt.calendar.theme.google.Google' />-->
+<!--  <inherits name='com.allen_sauer.gwt.dnd.gwt-dnd'/>-->
   <inherits name='net.customware.gwt.dispatch.Dispatch' />
   <inherits name='net.customware.gwt.presenter.Presenter' />
   <inherits name="com.google.gwt.inject.Inject"/>

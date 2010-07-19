@@ -31,7 +31,7 @@ import org.eastway.echarts.client.view.PatientListViewImpl;
 import org.eastway.echarts.client.view.TopPanelView;
 import org.eastway.echarts.shared.EHR;
 
-import com.bradrydzewski.gwt.calendar.client.Calendar;
+//import com.bradrydzewski.gwt.calendar.client.Calendar;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -96,7 +96,7 @@ public class Dashboard extends Composite {
 	public Dashboard(HandlerManager eventBus) {
 		this.eventBus = eventBus;
 		//initWidget(uiBinder.createAndBindUi(this));
-		setScheduler(scheduler);
+		//setScheduler(scheduler);
 		bind();
 //		PatientListPresenter plp = new PatientListPresenter(
 //				new PatientListViewImpl<LinkedHashMap<String, Long>>(), eventBus, patientServices);
@@ -120,15 +120,15 @@ public class Dashboard extends Composite {
 //			productivity.getParentElement().addClassName(style.red());
 //	}
 
-	private void setScheduler(HasWidgets container) {
-		Calendar calendar = new Calendar();
-		calendar.setDate(new Date()); //calendar date, not required
-		calendar.setDays(1); //number of days displayed at a time, not required
-		calendar.setWidth("100%");
-		calendar.setHeight("400px");
-		container.clear();
-		container.add(calendar);
-	}
+//	private void setScheduler(HasWidgets container) {
+//		Calendar calendar = new Calendar();
+//		calendar.setDate(new Date()); //calendar date, not required
+//		calendar.setDays(1); //number of days displayed at a time, not required
+//		calendar.setWidth("100%");
+//		calendar.setHeight("400px");
+//		container.clear();
+//		container.add(calendar);
+//	}
 
 	private void bind() {
 		tabLayoutPanel.addSelectionHandler(new SelectionHandler<Integer>() {
