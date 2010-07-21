@@ -82,9 +82,8 @@
 	padding-right: 5px;
 	padding-top: 5px;
 	margin-left: 5px;
-	border-bottom-width: 0 !important;
+	border-bottom-width: 0px !important;
 	color: #2E6E9E;
-	border: 1px solid #C5DBEC;
 	cursor: pointer;
 	height: 16px;
 }
@@ -102,10 +101,29 @@
 	color: #637937;
 	margin-bottom: 0px;
 	padding-bottom: 7px;
-	border-bottom-width: 0 !important;
+	border-bottom-width: 0px !important;
 }
 
 .gwt-TabLayoutPanel .gwt-TabLayoutPanelContent {
-	border: 0 none transparent;
-	padding: 0;
+	border: 0px none transparent;
+	padding: 0px;
+}
+
+@if user.agent ie8 {
+	.gwt-Tree .gwt-TreeItem {
+		padding-top: 0px;
+		padding-bottom: 0px;
+	}
+}
+
+@if !user.agent ie6 {
+	.gwt-Tree .gwt-TreeItem-selected * {
+		background: #dfeffc url('css/images/ui-bg_glass_75_d0e5f5_1x400.png')
+		repeat-x scroll 50% 50%;
+	}
+} @else {
+	.gwt-Tree .gwt-TreeItem-selected {
+		background: #dfeffc url('css/images/ui-bg_glass_75_d0e5f5_1x400.png')
+			repeat-x scroll 50% 50%;
+	}
 }
