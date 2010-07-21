@@ -49,8 +49,6 @@ public class Echarts implements EntryPoint {
 			EchartsUser.staffId = staffId;
 			//EchartsUser.staffId = "5434"; // for testing
 			GWT.<GlobalResources>create(GlobalResources.class).css().ensureInjected();
-			Window.setMargin("0px");
-			//Window.enableScrolling(false);
 			go();
 		}
 	}
