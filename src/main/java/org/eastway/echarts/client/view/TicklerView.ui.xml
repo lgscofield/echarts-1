@@ -29,8 +29,15 @@
 	  	color: red;
 	  	font-weight: 700;
 	  }
+	  .table {
+	  	border: 1px solid black;
+	  	width: 100%;
+	  }
+	  .table td {
+	  	border: 1px solid black;
+	  }
 	</ui:style>
 	<g:ScrollPanel>
-		<g:FlexTable ui:field='table'/>
+		<g:FlexTable addStyleNames='{style.table}' ui:field='table'/>
 	</g:ScrollPanel>
 </ui:UiBinder>
