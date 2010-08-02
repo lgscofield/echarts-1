@@ -15,8 +15,6 @@
  */
 package org.eastway.echarts.client.view;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.google.gwt.app.client.NotificationMole;
@@ -28,7 +26,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
@@ -39,7 +36,6 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
@@ -57,7 +53,7 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 
 	@UiField Anchor logoutButton;
 	@UiField Style style;
-	@UiField FlowPanel currentPatientData;
+	@UiField FlexTable currentPatientData;
 	@UiField Button patientSearchButton;
 	@UiField SuggestBox patientIdBox;
 	@UiField NotificationMole mole;
@@ -131,29 +127,8 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 	}
 
 	@Override
-	public void setCurrentEhrData(ArrayList<String[]> data) {
-		if (data == null) {
-			currentPatientData.clear();
-			return;
-		}
-		currentPatientData.clear();
-		int i = 0;
-		FlexTable cpd = new FlexTable();
-		cpd.setText(0,0,data.get(i)[0] + ":");
-		cpd.setText(0,1,data.get(i++)[1]);
-		cpd.setText(0,2,data.get(i)[0] + ":");
-		String dob = DateTimeFormat.getFormat("M/d/y").format(new Date(new Long(data.get(i++)[1]))).toString();
-		String age = "(" + data.get(i++)[1] + ")";
-		cpd.setText(0,3,dob + " " + age);
-
-		cpd.setText(1,0,data.get(i)[0] + ":");
-		cpd.setText(1,1,data.get(i++)[1]);
-		cpd.setText(1,2,data.get(i)[0] + ":");
-		cpd.setText(1,3,data.get(i++)[1]);
-
-		cpd.setText(2,0,data.get(i)[0] + ":");
-		cpd.setText(2,1,data.get(i++)[1]);
-		currentPatientData.add(cpd);
+	public void showEhrStub(boolean visible) {
+		currentPatientData.setVisible(visible);
 	}
 
 	private void bind() {
@@ -209,5 +184,36 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 	@UiHandler(value="tickler")
 	public void onTicklerClicked(ClickEvent event) {
 		presenter.openTickler();
+	}
+
+	@Override
+	public void setName(String name) {
+		currentPatientData.setText(0, 0, "Name: " + name);
+		currentPatientData.getFlexCellFormatter().setColSpan(0, 0, 2);
+	}
+
+	@Override
+	public void setCaseStatus(String descriptor) {
+		currentPatientData.setText(2, 1, "Case Status: " + descriptor);
+	}
+
+	@Override
+	public void setAge(String age) {
+		currentPatientData.setText(1, 1, "Age: " + age);
+	}
+
+	@Override
+	public void setDob(String dob) {
+		currentPatientData.setText(1, 0, "DOB: " + dob);
+	}
+
+	@Override
+	public void setProvider(String provider) {
+		currentPatientData.setText(2, 0, "Provider: " + provider);
+	}
+
+	@Override
+	public void setSsn(String ssn) {
+		currentPatientData.setText(1, 1, "SSN: " + ssn);
 	}
 }

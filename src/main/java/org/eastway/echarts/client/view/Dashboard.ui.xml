@@ -112,7 +112,7 @@
 					<g:Button ui:field='patientSearchButton' addStyleNames='{style.button}'>Search</g:Button>
 				</g:FlowPanel>
 
-				<g:FlowPanel ui:field='currentPatientData'
+				<g:FlexTable ui:field='currentPatientData'
 					addStyleNames='{style.left} {style.margin} {style.italics}'/>
 			</g:FlowPanel>
 			</g:FlowPanel>

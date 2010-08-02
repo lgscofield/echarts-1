@@ -52,9 +52,15 @@ public interface DashboardView<T> {
 	void setPresenter(Presenter<T> presenter);
 	void setPatientSearchData(List<String> list);
 	void addPatientSearchData(String str);
-	void setCurrentEhrData(ArrayList<String[]> data);
+	void showEhrStub(boolean visible);
 	NotificationMole getMole();
 	void reset();
 	void setProductivity(String productivity, String color);
 	void setBonusProjection(String bonusProjection);
+	void setName(String name);
+	void setCaseStatus(String descriptor);
+	void setAge(String string);
+	void setDob(String string);
+	void setProvider(String provider);
+	void setSsn(String ssn);
 }

@@ -15,7 +15,6 @@
  */
 package org.eastway.echarts.client.presenter;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -39,6 +38,7 @@ import org.eastway.echarts.shared.GetTickler;
 import org.eastway.echarts.shared.GetTicklerResult;
 import org.eastway.echarts.shared.Patient;
 
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.requestfactory.shared.RequestEvent;
 import com.google.gwt.requestfactory.shared.RequestEvent.State;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -86,22 +86,21 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 
 	private void setCurrentEhrData(EHR ehr) {
 		if (ehr == null) {
-			view.setCurrentEhrData(null);
+			view.showEhrStub(false);
 			return;
 		}
-		ArrayList<String[]> data = new ArrayList<String[]>();
 		Patient patient = ehr.getSubject();
 		Demographics demographics = ehr.getDemographics();
-		data.add(new String[] {"Name",patient.getName()});
-		data.add(new String[] {"DOB",new Long(demographics.getDob().getTime()).toString()});
+		view.setName(patient.getName());
+		view.setCaseStatus(patient.getCaseStatus().getDescriptor());
 
 		Long age = (new Date().getTime() - demographics.getDob().getTime()) / (3600*24*365) / 1000;
 
-		data.add(new String[] {"Age",  age.toString() });
-		data.add(new String[] {"Case Status",patient.getCaseStatus().getDescriptor() });
-		data.add(new String[] {"Provider", getProvider() });
-		data.add(new String[] {"SSN",patient.getSsn()});
-		view.setCurrentEhrData(data);
+		//view.setAge(age.toString());
+		view.setDob(DateTimeFormat.getFormat("M/d/y").format(new Date(new Long(demographics.getDob().getTime()))).toString() + " (" + age.toString() + ")");
+		view.setProvider(getProvider());
+		view.setSsn(patient.getSsn());
+		view.showEhrStub(true);
 	}
 
 	private String getProvider() {
