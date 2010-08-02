@@ -125,21 +125,12 @@
 						Dashboard
 					</g:header>
 					<g:SplitLayoutPanel>
-						<g:west size='115'>
-							<g:HTMLPanel>
-								<ul>
-									<li>
-										<g:Hyperlink ui:field='tickler' targetHistoryToken=''>Tickler</g:Hyperlink>
-									</li>
-								</ul>
-							</g:HTMLPanel>
-						</g:west>
-						<g:center>
+						<g:north size="80">
 							<g:HTMLPanel>
 								<table width="100%" style="border:1px solid black;" cellspacing="0" cellpadding="0">
 									<tr>
-										<td style="border-bottom:1px solid black;">&nbsp;</td>
-										<td style="border-bottom:1px solid black; text-align:right;">Productivity: &nbsp;<span ui:field='productivity'/></td>
+										<td style="border-bottom:1px solid black; text-align:left;"><b>Productivity:</b> &nbsp;<span ui:field='productivity'/></td>
+										<td style="border-bottom:1px solid black;text-align:right;"> Current projection for bonus:&nbsp;<span ui:field='bonusProjection'/></td>
 									</tr>
 									<tr>
 										<td height="40px" colspan="2">
@@ -172,9 +163,18 @@
 										<td></td>
 									</tr>
 								</table>
-								Current projection for bonus:&nbsp;<span ui:field='bonusProjection'/>
 							</g:HTMLPanel>
-						</g:center>
+						</g:north>
+						<g:west size='115'>
+							<g:HTMLPanel>
+								<b>Links</b>
+								<ul style='margin-top:0px;'>
+									<li>
+										<g:Hyperlink ui:field='tickler' targetHistoryToken=''>Tickler</g:Hyperlink>
+									</li>
+								</ul>
+							</g:HTMLPanel>
+						</g:west>
 					</g:SplitLayoutPanel>
 				</g:tab>
 			</g:TabLayoutPanel>
