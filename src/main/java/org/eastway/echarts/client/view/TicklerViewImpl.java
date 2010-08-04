@@ -149,6 +149,7 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 		if (cell != null) {
 			if (cell.getCellIndex() == Column.CASE_NUMBER.ordinal()) {
 				selected = cell.getRowIndex();
+				if (selected < 1) return;
 				String row = table.getText(selected, Column.CASE_NUMBER.ordinal());
 				if (row != null)
 					presenter.openEhr(row);
