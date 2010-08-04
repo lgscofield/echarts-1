@@ -15,16 +15,24 @@
  */
 package org.eastway.echarts.client.view;
 
+import org.eastway.echarts.client.EchartsUser;
+import org.eastway.echarts.client.ui.ContextMenuLabel;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ContextMenuEvent;
+import com.google.gwt.event.dom.client.ContextMenuHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.MenuBar;
+import com.google.gwt.user.client.ui.MenuItem;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
@@ -38,6 +46,12 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 	Presenter<T> presenter;
 	private int record = 0;
 	private String noData = "<b>NO DATA</b>";
+
+	private MenuBar menuBar = new MenuBar(true);
+	private PopupPanel menuPopup = new PopupPanel();
+
+	private Command openIsp;
+	private Command openEhr;
 
 	enum Column {
 		NAME,
@@ -62,6 +76,34 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 		table.setHTML(record, Column.OOC.ordinal(), "<b>OOC</b>");
 		record++;
 		table.setBorderWidth(1);
+		menuPopup.setAutoHideEnabled(true);
+		menuPopup.add(menuBar);
+	}
+
+	public void openMenu(final String caseNumber, int x, int y) {
+		menuBar.clearItems();
+		openEhr = new Command() {
+			@Override
+			public void execute() {
+				presenter.openEhr(caseNumber);
+				menuPopup.hide();
+			}
+		};
+		MenuItem openEhrMenuItem = new MenuItem("View Patient Tab", true, openEhr);
+		menuBar.addItem(openEhrMenuItem);
+		menuBar.addSeparator();
+		openIsp = new Command() {
+			@Override
+			public void execute() {
+				com.google.gwt.user.client.Window.open("http://ewsql.eastway.local/echarts-asp/Forms/GandO.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber, "ISP", "");
+				menuPopup.hide();
+			}
+		};
+		MenuItem openIspMenuItem = new MenuItem("New ISP", true, openIsp);
+		menuBar.addItem(openIspMenuItem);
+
+		menuPopup.setPopupPosition(x, y);
+		menuPopup.show();
 	}
 
 	@Override
@@ -130,8 +172,16 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 	}
 
 	@Override
-	public void setCaseNumber(String caseNumber) {
-		Label caseNumberLabel = new Label(caseNumber);
+	public void setCaseNumber(final String caseNumber) {
+		ContextMenuLabel caseNumberLabel = new ContextMenuLabel(caseNumber);
+		caseNumberLabel.addContextMenuHandler(new ContextMenuHandler() {
+			@Override
+			public void onContextMenu(ContextMenuEvent event) {
+				event.stopPropagation();
+				event.preventDefault();
+				openMenu(caseNumber, event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
+			}
+		});
 		caseNumberLabel.addStyleName(style.pointer());
 		table.setWidget(record, Column.CASE_NUMBER.ordinal(), caseNumberLabel);
 	}
