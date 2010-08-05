@@ -15,7 +15,6 @@
  */
 package org.eastway.echarts.client.view;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eastway.echarts.shared.EHR;
