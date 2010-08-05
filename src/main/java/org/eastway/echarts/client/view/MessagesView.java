@@ -85,7 +85,7 @@ public class MessagesView extends Composite implements MessagesPresenter.Display
 
 	@Override
 	public void close() {
-		db.hide();
+		db.setVisible(false);
 	}
 
 	@Override
@@ -112,7 +112,7 @@ public class MessagesView extends Composite implements MessagesPresenter.Display
 	@Override
 	public void saved() {
 		com.google.gwt.user.client.Window.alert("Message saved");
-		db.hide();
+		close();
 	}
 
 	@Override
@@ -132,7 +132,6 @@ public class MessagesView extends Composite implements MessagesPresenter.Display
 	@Override
 	public void show() {
 		db.setVisible(true);
-		db.show();
 		db.center();
 	}
 }
