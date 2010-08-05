@@ -21,15 +21,20 @@ import net.customware.gwt.dispatch.shared.Result;
 
 @SuppressWarnings("serial")
 public class GetTicklerResult implements Result {
-	private List<Assignment> assignments;
+	private List<Tickler> ticklers;
 
-	GetTicklerResult() { }
+	public GetTicklerResult() { }
 
-	public GetTicklerResult(List<Assignment> assignments) {
-		this.assignments = assignments;
+	public GetTicklerResult(List<Tickler> ticklers) {
+		this.setTicklers(ticklers);
 	}
 
-	public List<Assignment> getAssignments() {
-		return assignments;
+	public void setTicklers(List<Tickler> ticklers) {
+		this.ticklers = ticklers;
 	}
+
+	public List<Tickler> getTicklers() {
+		return ticklers;
+	}
+
 }

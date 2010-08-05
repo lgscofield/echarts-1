@@ -15,14 +15,17 @@
  */
 package org.eastway.echarts.client.view;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eastway.echarts.client.EchartsUser;
+import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.ui.ContextMenuLabel;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ContextMenuEvent;
 import com.google.gwt.event.dom.client.ContextMenuHandler;
-import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -36,7 +39,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	@UiTemplate("TicklerView.ui.xml")
 	interface TicklerViewUiBinder extends UiBinder<Widget, TicklerViewImpl> { }
 	private static TicklerViewUiBinder uiBinder = GWT.create(TicklerViewUiBinder.class);
@@ -44,14 +47,15 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 	@UiField Style style;
 	@UiField FlexTable table;
 	Presenter<T> presenter;
-	private int record = 0;
-	private String noData = "<b>NO DATA</b>";
+	private List<T> rowData = new ArrayList<T>();
 
 	private MenuBar menuBar = new MenuBar(true);
 	private PopupPanel menuPopup = new PopupPanel();
 
 	private Command openIsp;
 	private Command openEhr;
+
+	private List<ColumnDefinition<T>> columnDefinitions;
 
 	enum Column {
 		NAME,
@@ -66,26 +70,25 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 
 	public TicklerViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
-		table.setHTML(record, Column.NAME.ordinal(), "<b>Name</b>");
-		table.setHTML(record, Column.CASE_NUMBER.ordinal(), "<b>Case Number</b>");
-		table.setHTML(record, Column.ISP.ordinal(), "<b>ISP</b>");
-		table.setHTML(record, Column.ISP_REVIEW.ordinal(), "<b>ISP Review</b>");
-		table.setHTML(record, Column.HEALTH_HISTORY.ordinal(), "<b>Health History</b>");
-		table.setHTML(record, Column.DIAGNOSTIC_ASSESSMENT_UPDATE.ordinal(), "<b>DA Update</b>");
-		table.setHTML(record, Column.FINANCIAL.ordinal(), "<b>Financial</b>");
-		table.setHTML(record, Column.OOC.ordinal(), "<b>OOC</b>");
-		record++;
+		table.setHTML(0, Column.NAME.ordinal(), "<b>Name</b>");
+		table.setHTML(0, Column.CASE_NUMBER.ordinal(), "<b>Case Number</b>");
+		table.setHTML(0, Column.ISP.ordinal(), "<b>ISP</b>");
+		table.setHTML(0, Column.ISP_REVIEW.ordinal(), "<b>ISP Review</b>");
+		table.setHTML(0, Column.HEALTH_HISTORY.ordinal(), "<b>Health History</b>");
+		table.setHTML(0, Column.DIAGNOSTIC_ASSESSMENT_UPDATE.ordinal(), "<b>DA Update</b>");
+		table.setHTML(0, Column.FINANCIAL.ordinal(), "<b>Financial</b>");
+		table.setHTML(0, Column.OOC.ordinal(), "<b>OOC</b>");
 		table.setBorderWidth(1);
 		menuPopup.setAutoHideEnabled(true);
 		menuPopup.add(menuBar);
 	}
 
-	public void openMenu(final String caseNumber, int x, int y) {
+	public void openMenu(final T t, int x, int y) {
 		menuBar.clearItems();
 		openEhr = new Command() {
 			@Override
 			public void execute() {
-				presenter.openEhr(caseNumber);
+				presenter.openEhr(t);
 				menuPopup.hide();
 			}
 		};
@@ -95,7 +98,8 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 		openIsp = new Command() {
 			@Override
 			public void execute() {
-				com.google.gwt.user.client.Window.open("http://ewsql.eastway.local/echarts-asp/Forms/GandO.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber, "ISP", "");
+				// TODO: appending caseNumber doesn't work
+				com.google.gwt.user.client.Window.open("http://ewsql.eastway.local/echarts-asp/Forms/GandO.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t, "ISP", "");
 				menuPopup.hide();
 			}
 		};
@@ -112,32 +116,8 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 	}
 
 	@Override
-	public HasClickHandlers getTable() {
-		return table;
-	}
-
-	@Override
-	public String getClickedRow(ClickEvent event) {
-		int selected = -1;
-
-		FlexTable.Cell cell = table.getCellForEvent(event);
-
-		if (cell != null) {
-			if (cell.getCellIndex() >= 0) {
-				selected = cell.getRowIndex();
-			}
-		}
-		return table.getText(selected, 0);
-	}
-
-	@Override
 	public void setPresenter(Presenter<T> presenter) {
 		this.presenter = presenter;
-	}
-
-	@Override
-	public void reset() {
-		
 	}
 
 	@UiHandler("table")
@@ -149,144 +129,48 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 		if (cell != null) {
 			if (cell.getCellIndex() == Column.CASE_NUMBER.ordinal()) {
 				selected = cell.getRowIndex();
-				if (selected < 1) return;
-				String row = table.getText(selected, Column.CASE_NUMBER.ordinal());
-				if (row != null)
-					presenter.openEhr(row);
+				if (selected < 1)
+					return;
+				presenter.openEhr(rowData.get(selected - 1));
 			}
 		}
 	}
 
 	@Override
-	public void addData(String str) {
-		table.setText(record++, 0, str);
-	}
+	public void setRowData(List<T> rowData) {
+		this.rowData = rowData;
 
-	@Override
-	public void nextRecord() {
-		record++;
-	}
+		for (int i = 0; i < rowData.size(); ++i) {
+			final T t = rowData.get(i);
 
-	@Override
-	public void setName(String name) {
-		table.setHTML(record, Column.NAME.ordinal(), record + ". " + name);
-	}
-
-	@Override
-	public void setCaseNumber(final String caseNumber) {
-		ContextMenuLabel caseNumberLabel = new ContextMenuLabel(caseNumber);
-		caseNumberLabel.addContextMenuHandler(new ContextMenuHandler() {
-			@Override
-			public void onContextMenu(ContextMenuEvent event) {
-				event.stopPropagation();
-				event.preventDefault();
-				openMenu(caseNumber, event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
+			for (int j = 0; j < columnDefinitions.size(); ++j) {
+				final StringBuilder sb = new StringBuilder();
+				if (j == 0)
+					columnDefinitions.get(j).render(t, sb.append((i+1) + ". "));
+				else
+					columnDefinitions.get(j).render(t, sb);
+				if (columnDefinitions.get(j).isContextMenu()) {
+					ContextMenuLabel label = new ContextMenuLabel(sb.toString());
+					label.addContextMenuHandler(new ContextMenuHandler() {
+						@Override
+						public void onContextMenu(ContextMenuEvent event) {
+							event.stopPropagation();
+							event.preventDefault();
+							openMenu(t, event.getNativeEvent().getClientX(),
+									event.getNativeEvent().getClientY());
+						}
+					});
+					label.addStyleName(style.pointer());
+					table.setWidget(i + 1, j, label);
+				} else {
+					table.setHTML(i + 1, j, sb.toString());
+				}
 			}
-		});
-		caseNumberLabel.addStyleName(style.pointer());
-		table.setWidget(record, Column.CASE_NUMBER.ordinal(), caseNumberLabel);
-	}
-
-	@Override
-	public void setIspDueDate(String ispDateCompleted, DueDateStatus status) {
-		if (status == DueDateStatus.NO_DATA) {
-			table.setHTML(record, Column.ISP.ordinal(), noData);
-			return;
 		}
-		if (status == DueDateStatus.COMPLIANT)
-			table.getCellFormatter().addStyleName(record, Column.ISP.ordinal(), style.compliant());
-		else if (status == DueDateStatus.DUE_IN_THIRTY_DAYS)
-			table.getCellFormatter().addStyleName(record, Column.ISP.ordinal(), style.dueInThirtyDays());
-		else
-			table.getCellFormatter().addStyleName(record, Column.ISP.ordinal(), style.overDue());
-		table.setHTML(record, Column.ISP.ordinal(),
-					(ispDateCompleted == null) ? noData : ispDateCompleted);
 	}
 
 	@Override
-	public void setIspReviewDueDate(String ispReviewDateCompleted, DueDateStatus status) {
-		if (status == DueDateStatus.NO_DATA) {
-			table.setHTML(record, Column.ISP_REVIEW.ordinal(), noData);
-			return;
-		}
-		if (status == DueDateStatus.COMPLIANT)
-			table.getCellFormatter().addStyleName(record, Column.ISP_REVIEW.ordinal(), style.compliant());
-		else if (status == DueDateStatus.DUE_IN_THIRTY_DAYS)
-			table.getCellFormatter().addStyleName(record, Column.ISP_REVIEW.ordinal(), style.dueInThirtyDays());
-		else
-			table.getCellFormatter().addStyleName(record, Column.ISP_REVIEW.ordinal(), style.overDue());
-		table.setHTML(record, Column.ISP_REVIEW.ordinal(),
-				(ispReviewDateCompleted == null) ? noData : ispReviewDateCompleted.toString());
-	}
-
-	@Override
-	public void setHealthHistoryDueDate(String healthHistoryDateCompleted, DueDateStatus status) {
-		if (status == DueDateStatus.NO_DATA) {
-			table.setHTML(record, Column.HEALTH_HISTORY.ordinal(), noData);
-			return;
-		}
-		if (status == DueDateStatus.COMPLIANT)
-			table.getCellFormatter().addStyleName(record, Column.HEALTH_HISTORY.ordinal(), style.compliant());
-		else if (status == DueDateStatus.DUE_IN_THIRTY_DAYS)
-			table.getCellFormatter().addStyleName(record, Column.HEALTH_HISTORY.ordinal(), style.dueInThirtyDays());
-		else
-			table.getCellFormatter().addStyleName(record, Column.HEALTH_HISTORY.ordinal(), style.overDue());
-		table.setHTML(record, Column.HEALTH_HISTORY.ordinal(),
-				(healthHistoryDateCompleted == null) ? noData : healthHistoryDateCompleted.toString());
-	}
-
-	@Override
-	public void setDiagnosticAssessmentUpdate(String diagnosticAssessmentDateCompleted, DueDateStatus status) {
-		if (status == DueDateStatus.NO_DATA) {
-			table.setHTML(record, Column.DIAGNOSTIC_ASSESSMENT_UPDATE.ordinal(), noData);
-			return;
-		}
-		if (status == DueDateStatus.COMPLIANT)
-			table.getCellFormatter().addStyleName(record, Column.DIAGNOSTIC_ASSESSMENT_UPDATE.ordinal(), style.compliant());
-		else if (status == DueDateStatus.DUE_IN_THIRTY_DAYS)
-			table.getCellFormatter().addStyleName(record, Column.DIAGNOSTIC_ASSESSMENT_UPDATE.ordinal(), style.dueInThirtyDays());
-		else
-			table.getCellFormatter().addStyleName(record, Column.DIAGNOSTIC_ASSESSMENT_UPDATE.ordinal(), style.overDue());
-		table.setHTML(record, Column.DIAGNOSTIC_ASSESSMENT_UPDATE.ordinal(),
-				(diagnosticAssessmentDateCompleted == null) ? noData : diagnosticAssessmentDateCompleted.toString());
-	}
-
-	@Override
-	public void setFinancialDueDate(String financialDateCompleted, DueDateStatus status) {
-		if (status == DueDateStatus.NO_DATA) {
-			table.setHTML(record, Column.FINANCIAL.ordinal(), noData);
-			return;
-		}
-		if (status == DueDateStatus.COMPLIANT)
-			table.getCellFormatter().addStyleName(record, Column.FINANCIAL.ordinal(), style.compliant());
-		else if (status == DueDateStatus.DUE_IN_THIRTY_DAYS)
-			table.getCellFormatter().addStyleName(record, Column.FINANCIAL.ordinal(), style.dueInThirtyDays());
-		else
-			table.getCellFormatter().addStyleName(record, Column.FINANCIAL.ordinal(), style.overDue());
-		table.setHTML(record, Column.FINANCIAL.ordinal(),
-				(financialDateCompleted == null) ? noData : financialDateCompleted.toString());
-	}
-
-	@Override
-	public void setOoc(String outcomesConsumerDateCompleted, DueDateStatus status) {
-		if (status == DueDateStatus.NO_DATA) {
-			table.setHTML(record, Column.OOC.ordinal(), noData);
-			return;
-		}
-		if (status == DueDateStatus.COMPLIANT)
-			table.getCellFormatter().addStyleName(record, Column.OOC.ordinal(), style.compliant());
-		else if (status == DueDateStatus.DUE_IN_THIRTY_DAYS)
-			table.getCellFormatter().addStyleName(record, Column.OOC.ordinal(), style.dueInThirtyDays());
-		else
-			table.getCellFormatter().addStyleName(record, Column.OOC.ordinal(), style.overDue());
-		table.setHTML(record, Column.OOC.ordinal(),
-				(outcomesConsumerDateCompleted == null) ? noData : outcomesConsumerDateCompleted.toString());
-	}
-
-	@Override
-	public void setHipaaDateCompleted(String hipaaDateCompleted) {
-		table.getCellFormatter()
-			.getElement(record, Column.CASE_NUMBER.ordinal())
-			.setAttribute("title", "HIPAA completed " + hipaaDateCompleted);
+	public void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions) {
+		this.columnDefinitions = columnDefinitions;
 	}
 }

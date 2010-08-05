@@ -29,7 +29,6 @@ import org.eastway.echarts.client.events.ChangeCurrentEhrEventHandler;
 import org.eastway.echarts.client.events.OpenEhrEvent;
 import org.eastway.echarts.client.events.ViewTicklerEvent;
 import org.eastway.echarts.client.view.DashboardView;
-import org.eastway.echarts.shared.Assignment;
 import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.GetProductivity;
@@ -37,6 +36,7 @@ import org.eastway.echarts.shared.GetProductivityResult;
 import org.eastway.echarts.shared.GetTickler;
 import org.eastway.echarts.shared.GetTicklerResult;
 import org.eastway.echarts.shared.Patient;
+import org.eastway.echarts.shared.Tickler;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.requestfactory.shared.RequestEvent;
@@ -104,15 +104,15 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 	}
 
 	private String getProvider() {
-		List<Assignment> assignments = data.getAssignments();
-		for (Assignment assignment : assignments) {
+		List<Tickler> assignments = data.getTicklers();
+		for (Tickler assignment : assignments) {
 			if (!assignment.getService().matches("S CS"))
 				continue;
 			else
 				return assignment.getStaffName();
 		}
 
-		for (Assignment assignment : assignments)
+		for (Tickler assignment : assignments)
 			return assignment.getStaffName();
 		return null;
 	}
@@ -178,12 +178,12 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 			@Override
 			public void onSuccess(GetTicklerResult result) {
 				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
-				for (Assignment assignment : result.getAssignments())
+				for (Tickler assignment : result.getTicklers())
 					if (assignment != null)
 						view.addPatientSearchData(new StringBuilder()
-									.append(assignment.getPatient().getCaseNumber())
+									.append(assignment.getCaseNumber())
 									.append(" - ")
-									.append(assignment.getPatient().getName()).toString());
+									.append(assignment.getName()).toString());
 				setData(result);
 			}
 		});

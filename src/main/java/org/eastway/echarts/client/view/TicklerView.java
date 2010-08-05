@@ -15,14 +15,16 @@
  */
 package org.eastway.echarts.client.view;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.HasClickHandlers;
+import java.util.List;
+
+import org.eastway.echarts.client.common.ColumnDefinition;
+
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.user.client.ui.Widget;
 
 public interface TicklerView<T> {
 	public interface Presenter<T> {
-		void openEhr(String text);
+		void openEhr(T caseNumber);
 	}
 
 	enum DueDateStatus {
@@ -41,18 +43,6 @@ public interface TicklerView<T> {
 
 	void setPresenter(Presenter<T> presenter);
 	Widget asWidget();
-	HasClickHandlers getTable();
-	String getClickedRow(ClickEvent event);
-	void reset();
-	void addData(String str);
-	void nextRecord();
-	void setName(String name);
-	void setCaseNumber(String caseNumber);
-	void setIspDueDate(String dueDate, DueDateStatus status);
-	void setIspReviewDueDate(String dueDate, DueDateStatus status);
-	void setHealthHistoryDueDate(String dueDate, DueDateStatus status);
-	void setDiagnosticAssessmentUpdate(String dueDate, DueDateStatus status);
-	void setFinancialDueDate(String dueDate, DueDateStatus status);
-	void setOoc(String dueDate, DueDateStatus status);
-	void setHipaaDateCompleted(String hipaaDateCompleted);
+	void setRowData(List<T> ticklers);
+	void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions);
 }

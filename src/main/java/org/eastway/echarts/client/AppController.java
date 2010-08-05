@@ -19,6 +19,7 @@ import java.util.LinkedHashMap;
 
 import net.customware.gwt.presenter.client.EventBus;
 
+import org.eastway.echarts.client.common.TicklerColumnDefinitionsFactory;
 import org.eastway.echarts.client.events.OpenEhrEvent;
 import org.eastway.echarts.client.events.OpenEhrEventHandler;
 import org.eastway.echarts.client.events.ViewAddressesEvent;
@@ -85,6 +86,7 @@ import org.eastway.echarts.shared.GetMessages;
 import org.eastway.echarts.shared.GetPatientSummary;
 import org.eastway.echarts.shared.GetReferral;
 import org.eastway.echarts.shared.GetTickler;
+import org.eastway.echarts.shared.Tickler;
 
 import com.google.gwt.requestfactory.shared.RequestEvent;
 import com.google.gwt.requestfactory.shared.RequestEvent.State;
@@ -193,8 +195,8 @@ public class AppController {
 	}
 
 	protected void doViewTickler(GetTickler action) {
-		TicklerView<LinkedHashMap<String, Long>> ticklerView = new TicklerViewImpl<LinkedHashMap<String, Long>>();
-		Presenter presenter = new TicklerPresenter(ticklerView, eventBus, dispatch, action);
+		TicklerView<Tickler> ticklerView = new TicklerViewImpl<Tickler>();
+		Presenter presenter = new TicklerPresenter(ticklerView, TicklerColumnDefinitionsFactory.getTicklerColumnDefinitions(), eventBus, dispatch, action);
 		presenter.go(null);
 		dashboard.addTab(ticklerView.asWidget(), "Tickler");
 	}
