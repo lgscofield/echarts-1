@@ -216,4 +216,9 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 	public void setSsn(String ssn) {
 		currentPatientData.setText(1, 1, "SSN: " + ssn);
 	}
+
+	@UiHandler("logoutButton")
+	public void handleLogoutButton(ClickEvent event) {
+		presenter.logout();
+	}
 }

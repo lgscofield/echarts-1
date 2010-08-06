@@ -43,6 +43,8 @@ public interface DashboardView<T> {
 		void openEhr(String text);
 
 		void openTickler();
+
+		void logout();
 	}
 
 	void addTab(Widget widget, String string);

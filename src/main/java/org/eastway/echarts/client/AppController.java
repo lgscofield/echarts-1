@@ -20,6 +20,8 @@ import java.util.LinkedHashMap;
 import net.customware.gwt.presenter.client.EventBus;
 
 import org.eastway.echarts.client.common.TicklerColumnDefinitionsFactory;
+import org.eastway.echarts.client.events.LogoutEvent;
+import org.eastway.echarts.client.events.LogoutEventHandler;
 import org.eastway.echarts.client.events.OpenEhrEvent;
 import org.eastway.echarts.client.events.OpenEhrEventHandler;
 import org.eastway.echarts.client.events.OpenIspEvent;
@@ -92,6 +94,7 @@ import org.eastway.echarts.shared.Tickler;
 
 import com.google.gwt.requestfactory.shared.RequestEvent;
 import com.google.gwt.requestfactory.shared.RequestEvent.State;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
@@ -206,10 +209,20 @@ public class AppController {
 				doOpenIsp(event.getCaseNumber());
 			}
 		});
+		eventBus.addHandler(LogoutEvent.TYPE, new LogoutEventHandler() {
+			@Override
+			public void onLogout(LogoutEvent event) {
+				doLogout();
+			}
+		});
+	}
+
+	private void doLogout() {
+		Window.Location.assign("http://ewsql.eastway.local/echarts/logout.aspx?continue=" + Window.Location.getHref());
 	}
 
 	private void doOpenIsp(String caseNumber) {
-		com.google.gwt.user.client.Window.open("http://ewsql.eastway.local/echarts-asp/Forms/GandO.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber, "ISP", "");
+		Window.open("http://ewsql.eastway.local/echarts-asp/Forms/GandO.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber, "ISP", "");
 	}
 
 	protected void doViewTickler(GetTickler action) {

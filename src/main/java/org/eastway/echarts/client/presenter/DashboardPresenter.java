@@ -26,6 +26,7 @@ import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEventHandler;
+import org.eastway.echarts.client.events.LogoutEvent;
 import org.eastway.echarts.client.events.OpenEhrEvent;
 import org.eastway.echarts.client.events.ViewTicklerEvent;
 import org.eastway.echarts.client.view.DashboardView;
@@ -192,5 +193,10 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 	@Override
 	public void openTickler() {
 		eventBus.fireEvent(new ViewTicklerEvent(action));
+	}
+
+	@Override
+	public void logout() {
+		eventBus.fireEvent(new LogoutEvent());
 	}
 }
