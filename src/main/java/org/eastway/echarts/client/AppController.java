@@ -180,10 +180,16 @@ public class AppController {
 		eventBus.addHandler(RequestEvent.TYPE, new RequestEvent.Handler() {
 			// Only show loading status if a request isn't serviced in 250ms.
 			private static final int LOADING_TIMEOUT = 250;
+			private int REQUEST_EVENT_COUNT = 0;
+			@Override
 			public void onRequestEvent(RequestEvent requestEvent) {
 				if (requestEvent.getState() == State.SENT) {
 					dashboard.getMole().showDelayed(LOADING_TIMEOUT);
+					REQUEST_EVENT_COUNT++;
+				} else if (REQUEST_EVENT_COUNT > 1) {
+					REQUEST_EVENT_COUNT--;
 				} else {
+					REQUEST_EVENT_COUNT--;
 					dashboard.getMole().hide();
 				}
 			}
