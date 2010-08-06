@@ -18,7 +18,6 @@ package org.eastway.echarts.client.view;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.ui.ContextMenuLabel;
 
@@ -98,8 +97,7 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 		openIsp = new Command() {
 			@Override
 			public void execute() {
-				// TODO: appending caseNumber doesn't work
-				com.google.gwt.user.client.Window.open("http://ewsql.eastway.local/echarts-asp/Forms/GandO.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t, "ISP", "");
+				presenter.openIsp(t);
 				menuPopup.hide();
 			}
 		};

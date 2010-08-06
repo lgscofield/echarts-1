@@ -22,6 +22,8 @@ import net.customware.gwt.presenter.client.EventBus;
 import org.eastway.echarts.client.common.TicklerColumnDefinitionsFactory;
 import org.eastway.echarts.client.events.OpenEhrEvent;
 import org.eastway.echarts.client.events.OpenEhrEventHandler;
+import org.eastway.echarts.client.events.OpenIspEvent;
+import org.eastway.echarts.client.events.OpenIspEventHandler;
 import org.eastway.echarts.client.events.ViewAddressesEvent;
 import org.eastway.echarts.client.events.ViewAddressesEventHandler;
 import org.eastway.echarts.client.events.ViewAppointmentsEvent;
@@ -192,6 +194,16 @@ public class AppController {
 				doViewDemographics(event.getView(), event.getAction());
 			}
 		});
+		eventBus.addHandler(OpenIspEvent.TYPE, new OpenIspEventHandler() {
+			@Override
+			public void onOpenIsp(OpenIspEvent event) {
+				doOpenIsp(event.getCaseNumber());
+			}
+		});
+	}
+
+	private void doOpenIsp(String caseNumber) {
+		com.google.gwt.user.client.Window.open("http://ewsql.eastway.local/echarts-asp/Forms/GandO.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber, "ISP", "");
 	}
 
 	protected void doViewTickler(GetTickler action) {

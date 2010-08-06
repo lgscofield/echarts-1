@@ -25,6 +25,7 @@ import com.google.gwt.user.client.ui.Widget;
 public interface TicklerView<T> {
 	public interface Presenter<T> {
 		void openEhr(T caseNumber);
+		void openIsp(T t);
 	}
 
 	enum DueDateStatus {

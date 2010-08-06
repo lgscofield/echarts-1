@@ -23,6 +23,7 @@ import org.eastway.echarts.client.CachingDispatchAsync;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.events.OpenEhrEvent;
+import org.eastway.echarts.client.events.OpenIspEvent;
 import org.eastway.echarts.client.view.TicklerView;
 import org.eastway.echarts.shared.GetTickler;
 import org.eastway.echarts.shared.GetTicklerResult;
@@ -72,5 +73,10 @@ public class TicklerPresenter implements Presenter, TicklerView.Presenter<Tickle
 	@Override
 	public void openEhr(Tickler tickler) {
 		eventBus.fireEvent(new OpenEhrEvent(tickler.getCaseNumber()));
+	}
+
+	@Override
+	public void openIsp(Tickler tickler) {
+		eventBus.fireEvent(new OpenIspEvent(tickler.getCaseNumber()));
 	}
 }
