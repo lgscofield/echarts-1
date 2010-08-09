@@ -17,7 +17,7 @@ package org.eastway.echarts.client.presenter;
 
 import net.customware.gwt.presenter.client.EventBus;
 
-import org.eastway.echarts.client.CachingDispatchAsyncImpl;
+import org.eastway.echarts.client.CachingDispatchAsync;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.shared.GetReferral;
 import org.eastway.echarts.shared.GetReferralResult;
@@ -36,10 +36,10 @@ public class ReferralPresenter implements Presenter {
 
 	private Display display;
 	private EventBus eventBus;
-	private CachingDispatchAsyncImpl dispatch;
+	private CachingDispatchAsync dispatch;
 	private GetReferral action;
 
-	public ReferralPresenter(Display display, EventBus eventBus, CachingDispatchAsyncImpl dispatch, GetReferral action) {
+	public ReferralPresenter(Display display, EventBus eventBus, CachingDispatchAsync dispatch, GetReferral action) {
 		this.display = display;
 		this.eventBus = eventBus;
 		this.dispatch = dispatch;

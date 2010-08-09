@@ -21,7 +21,7 @@ import java.util.List;
 
 import net.customware.gwt.presenter.client.EventBus;
 
-import org.eastway.echarts.client.CachingDispatchAsyncImpl;
+import org.eastway.echarts.client.CachingDispatchAsync;
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
@@ -51,13 +51,13 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 	private DashboardView<LinkedHashMap<String, Long>> view;
 	private EventBus eventBus;
 	private GetTicklerResult data;
-	private CachingDispatchAsyncImpl dispatch;
+	private CachingDispatchAsync dispatch;
 	private GetTickler action = new GetTickler(EchartsUser.sessionId, EchartsUser.staffId);
 	private String caseNumber;
 
 	@Inject
 	public DashboardPresenter(DashboardView<LinkedHashMap<String, Long>> view,
-			EventBus eventBus, final CachingDispatchAsyncImpl dispatch) {
+			EventBus eventBus, final CachingDispatchAsync dispatch) {
 		this.view = view;
 		this.view.setPresenter(this);
 		this.eventBus = eventBus;

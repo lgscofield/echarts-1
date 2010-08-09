@@ -17,7 +17,7 @@ package org.eastway.echarts.client.presenter;
 
 import net.customware.gwt.presenter.client.EventBus;
 
-import org.eastway.echarts.client.CachingDispatchAsyncImpl;
+import org.eastway.echarts.client.CachingDispatchAsync;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.shared.Appointment;
 import org.eastway.echarts.shared.GetAppointments;
@@ -40,10 +40,10 @@ public class AppointmentPresenter implements Presenter {
 
 	private Display display;
 	private EventBus eventBus;
-	private CachingDispatchAsyncImpl dispatch;
+	private CachingDispatchAsync dispatch;
 	private GetAppointments action;
 
-	public AppointmentPresenter(Display display, EventBus eventBus, CachingDispatchAsyncImpl dispatch, GetAppointments action) {
+	public AppointmentPresenter(Display display, EventBus eventBus, CachingDispatchAsync dispatch, GetAppointments action) {
 		this.display = display;
 		this.dispatch = dispatch;
 		this.eventBus = eventBus;

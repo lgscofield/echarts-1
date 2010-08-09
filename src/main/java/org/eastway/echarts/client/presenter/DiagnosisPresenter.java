@@ -17,7 +17,7 @@ package org.eastway.echarts.client.presenter;
 
 import net.customware.gwt.presenter.client.EventBus;
 
-import org.eastway.echarts.client.CachingDispatchAsyncImpl;
+import org.eastway.echarts.client.CachingDispatchAsync;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.view.DiagnosisView;
 import org.eastway.echarts.shared.Diagnosis;
@@ -41,11 +41,11 @@ public class DiagnosisPresenter implements Presenter {
 
 	private Display display;
 	private EventBus eventBus;
-	private CachingDispatchAsyncImpl dispatch;
+	private CachingDispatchAsync dispatch;
 	private GetDiagnoses action;
 
 	public DiagnosisPresenter(DiagnosisView display, EventBus eventBus,
-			CachingDispatchAsyncImpl dispatch, GetDiagnoses action) {
+			CachingDispatchAsync dispatch, GetDiagnoses action) {
 		this.display = display;
 		this.eventBus = eventBus;
 		this.dispatch = dispatch;

@@ -19,7 +19,7 @@ import java.util.LinkedHashSet;
 
 import net.customware.gwt.presenter.client.EventBus;
 
-import org.eastway.echarts.client.CachingDispatchAsyncImpl;
+import org.eastway.echarts.client.CachingDispatchAsync;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.shared.GetPatientSummary;
 import org.eastway.echarts.shared.GetPatientSummaryResult;
@@ -33,11 +33,11 @@ public class PatientSummaryPresenter implements Presenter {
 
 	private Display display;
 	private EventBus eventBus;
-	private CachingDispatchAsyncImpl dispatch;
+	private CachingDispatchAsync dispatch;
 	private GetPatientSummary action;
 
 	public PatientSummaryPresenter(Display display,
-			EventBus eventBus, CachingDispatchAsyncImpl dispatch, GetPatientSummary action) {
+			EventBus eventBus, CachingDispatchAsync dispatch, GetPatientSummary action) {
 		this.display = display;
 		this.eventBus = eventBus;
 		this.dispatch = dispatch;

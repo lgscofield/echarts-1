@@ -98,12 +98,11 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
-public class AppController {
+public class AppController implements Presenter {
 	private final EventBus eventBus;
 	private DashboardView<LinkedHashMap<String, Long>> dashboard = null;
 	private EHRView<EHR> ehrView;
-	protected MessagesView messagesView;
-	protected CachingDispatchAsyncImpl dispatch;
+	private CachingDispatchAsync dispatch;
 	private DashboardPresenter dashboardPresenter;
 
 	@Inject
@@ -113,7 +112,7 @@ public class AppController {
 		bind();
 	}
 
-	public void bind() {
+	private void bind() {
 		eventBus.addHandler(OpenEhrEvent.TYPE, new OpenEhrEventHandler() {
 			@Override
 			public void onOpenEhr(OpenEhrEvent event) {
@@ -225,70 +224,71 @@ public class AppController {
 		Window.open("http://ewsql.eastway.local/echarts-asp/Forms/GandO.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber, "ISP", "");
 	}
 
-	protected void doViewTickler(GetTickler action) {
+	private void doViewTickler(GetTickler action) {
 		TicklerView<Tickler> ticklerView = new TicklerViewImpl<Tickler>();
 		Presenter presenter = new TicklerPresenter(ticklerView, TicklerColumnDefinitionsFactory.getTicklerColumnDefinitions(), eventBus, dispatch, action);
 		presenter.go(null);
 		dashboard.addTab(ticklerView.asWidget(), "Tickler");
 	}
 
-	protected void doViewMedications(EHRView<EHR> view, GetMedications action) {
+	private void doViewMedications(EHRView<EHR> view, GetMedications action) {
 		Presenter presenter = new MedicationPresenter(new MedicationView(), eventBus, dispatch, action);
 		presenter.go(view.getDisplayArea());
 	}
 
-	public void doViewContacts(EHRView<EHR> view, GetContacts action) {
+	private void doViewContacts(EHRView<EHR> view, GetContacts action) {
 		Presenter presenter = new ContactPresenter(new ContactView(), eventBus, dispatch, action);
 		presenter.go(view.getDisplayArea());
 	}
 
-	public void doViewAddresses(EHRView<EHR> view, GetAddresses action) {
+	private void doViewAddresses(EHRView<EHR> view, GetAddresses action) {
 		Presenter presenter = new AddressPresenter(new AddressView(), eventBus, dispatch, action);
 		presenter.go(view.getDisplayArea());
 	}
 
-	public void doViewLinksEvent(EHRView<EHR> view, GetLinks action) {
+	private void doViewLinksEvent(EHRView<EHR> view, GetLinks action) {
 		Presenter presenter = new LinkPresenter(new LinkView(), eventBus, dispatch, action);
 		presenter.go(view.getDisplayArea());
 	}
 
-	public void doViewDiagnoses(EHRView<EHR> view, GetDiagnoses action) {
+	private void doViewDiagnoses(EHRView<EHR> view, GetDiagnoses action) {
 		Presenter presenter = new DiagnosisPresenter(new DiagnosisView(), eventBus, dispatch, action);
 		presenter.go(view.getDisplayArea());
 	}
 
-	public void doViewAppointments(EHRView<EHR> view, GetAppointments action) {
+	private void doViewAppointments(EHRView<EHR> view, GetAppointments action) {
 		Presenter presenter = new AppointmentPresenter(new AppointmentView(), eventBus, dispatch, action);
 		presenter.go(view.getDisplayArea());
 	}
 
-	public void doViewReferral(EHRView<EHR> view, GetReferral action) {
+	private void doViewReferral(EHRView<EHR> view, GetReferral action) {
 		Presenter presenter = new ReferralPresenter(new ReferralView(), eventBus, dispatch, action);
 		presenter.go(view.getDisplayArea());
 	}
 
-	public void doViewMessages(EHRView<EHR> view, GetMessages action) {
+	private void doViewMessages(EHRView<EHR> view, GetMessages action) {
 		Presenter presenter = new MessagesPresenter(new MessagesView(), eventBus, dispatch, action);
 		presenter.go(view.getDisplayArea());
 	}
 
-	public void doViewEhr(String caseNumber) {
+	private void doViewEhr(String caseNumber) {
 		ehrView = new EHRViewImpl<EHR>();
 		Presenter presenter = new EHRPresenter(ehrView, eventBus, dispatch, caseNumber);
 		presenter.go(null);
 		dashboard.addTab(ehrView.asWidget(), caseNumber);
 	}
 
-	public void doViewPatientSummary(EHRView<EHR> view, GetPatientSummary action) {
+	private void doViewPatientSummary(EHRView<EHR> view, GetPatientSummary action) {
 		Presenter presenter = new PatientSummaryPresenter(new PatientSummaryView(), eventBus, dispatch, action);
 		presenter.go(view.getDisplayArea());
 	}
 
-	public void doViewDemographics(final EHRView<EHR> view, GetDemographics action) {
+	private void doViewDemographics(final EHRView<EHR> view, GetDemographics action) {
 		Presenter presenter = new DemographicsPresenter(new DemographicsView(), eventBus, dispatch, action);
 		presenter.go(view.getDisplayArea());
 	}
 
+	@Override
 	public void go(final HasWidgets container) {
 		container.clear();
 		dashboard = new DashboardViewImpl<LinkedHashMap<String, Long>>();
