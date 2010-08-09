@@ -106,7 +106,7 @@ public class AppController implements Presenter {
 	private DashboardPresenter dashboardPresenter;
 
 	@Inject
-	public AppController(EventBus eventBus, CachingDispatchAsyncImpl dispatch) {
+	public AppController(EventBus eventBus, CachingDispatchAsync dispatch) {
 		this.eventBus = eventBus;
 		this.dispatch = dispatch;
 		bind();
