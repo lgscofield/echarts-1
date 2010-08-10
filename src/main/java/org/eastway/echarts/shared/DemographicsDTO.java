@@ -20,8 +20,6 @@ import java.util.Date;
 
 @SuppressWarnings("serial")
 public class DemographicsDTO implements Serializable, Demographics {
-	private long id;
-	private EHR ehr;
 	private Code gender;
 	private Code race;
 	private Code maritalStatus;
@@ -61,88 +59,9 @@ public class DemographicsDTO implements Serializable, Demographics {
 	private Date dob;
 	private Date lastEdit;
 	private String lastEditBy;
-	private long patientId;
 	private String caseNumber;
 
 	public DemographicsDTO() { }
-
-	public DemographicsDTO(Code gender,
-			Code race,
-			Code maritalStatus,
-			Code livingArrangement,
-			Code employment,
-			String[] incomeSources,
-			Code educationLevel,
-			Code educationType,
-			String[] allergies,
-			String insuranceType,
-			String preferredLanguage,
-			Code ethnicity,
-			String religion,
-			boolean isVeteran,
-			boolean isSmd,
-			boolean isAlcoholDrug,
-			boolean isForensic,
-			boolean isDd,
-			boolean isMimr,
-			boolean isDuidwi,
-			boolean isDeaf,
-			boolean isHearingImpaired,
-			boolean isBlind,
-			boolean isVisuallyImpaired,
-			boolean isPhyDisabled,
-			boolean isSpeechImpaired,
-			boolean isPhysicalAbuse,
-			boolean isSexualAbuse,
-			boolean isDomesticViolence,
-			boolean isChildAlcDrug,
-			boolean isHivAids,
-			boolean isSuicidal,
-			boolean isSchoolDropout,
-			boolean isProbationParole,
-			boolean isGeneralPopulation,
-			Date dob,
-			Date lastEdit,
-			String lastEditBy) {
-		setGender(gender);
-		setRace(race);
-		setMaritalStatus(maritalStatus);
-		setLivingArrangement(livingArrangement);
-		setEmployment(employment);
-		setIncomeSources(incomeSources);
-		setEducationLevel(educationLevel);
-		setEducationType(educationType);
-		setAllergies(allergies);
-		setInsuranceType(insuranceType);
-		setPreferredLanguage(preferredLanguage);
-		setEthnicity(ethnicity);
-		setReligion(religion);
-		setVeteran(isVeteran);
-		setSmd(isSmd);
-		setAlcoholDrug(isAlcoholDrug);
-		setForensic(isForensic);
-		setDd(isDd);
-		setMimr(isMimr);
-		setDuidwi(isDuidwi);
-		setDeaf(isDeaf);
-		setHearingImpaired(isHearingImpaired);
-		setBlind(isBlind);
-		setVisuallyImpaired(isVisuallyImpaired);
-		setPhyDisabled(isPhyDisabled);
-		setSpeechImpaired(isSpeechImpaired);
-		setPhysicalAbuse(isPhysicalAbuse);
-		setSexualAbuse(isSexualAbuse);
-		setDomesticViolence(isDomesticViolence);
-		setChildAlcDrug(isChildAlcDrug);
-		setHivAids(isHivAids);
-		setSuicidal(isSuicidal);
-		setSchoolDropout(isSchoolDropout);
-		setProbationParole(isProbationParole);
-		setGeneralPopulation(isGeneralPopulation);
-		setDob(dob);
-		setLastEdit(lastEdit);
-		setLastEditBy(lastEditBy);
-	}
 
 	@Override
 	public void setGender(Code gender) {
@@ -522,36 +441,6 @@ public class DemographicsDTO implements Serializable, Demographics {
 	@Override
 	public String getReligion() {
 		return religion;
-	}
-
-	@Override
-	public EHR getEhr() {
-		return ehr;
-	}
-
-	@Override
-	public long getId() {
-		return id;
-	}
-
-	@Override
-	public void setEhr(EHR ehr) {
-		this.ehr = ehr;
-	}
-
-	@Override
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	@Override
-	public void setPatientId(long patientId) {
-		this.patientId = patientId;
-	}
-
-	@Override
-	public long getPatientId() {
-		return patientId;
 	}
 
 	@Override

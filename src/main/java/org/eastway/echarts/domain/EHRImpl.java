@@ -15,9 +15,7 @@
  */
 package org.eastway.echarts.domain;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,18 +23,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
-import org.eastway.echarts.shared.Assignment;
 import org.eastway.echarts.shared.Demographics;
-import org.eastway.echarts.shared.Diagnosis;
 import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.EHRDTO;
-import org.eastway.echarts.shared.Medication;
 import org.eastway.echarts.shared.Patient;
 import org.eastway.echarts.shared.PatientDTO;
 
@@ -49,11 +42,6 @@ public class EHRImpl implements EHR {
 	@Column(name="ehr_id")
 	private long id;
 
-	@OneToMany(targetEntity = AssignmentImpl.class)
-	@JoinColumn
-	@OrderBy(value="orderDate DESC")
-	private List<AssignmentImpl> assignments;
-
 	@OneToOne(targetEntity = PatientImpl.class)
 	@JoinColumn(name="subject_id")
 	private PatientImpl subject;
@@ -61,20 +49,7 @@ public class EHRImpl implements EHR {
 	@Column(name="time_created")
 	private Date timeCreated;
 
-	@OneToMany(targetEntity = DiagnosisImpl.class)
-	@JoinColumn
-	@OrderBy(value="date DESC")
-	private List<DiagnosisImpl> diagnoses;
-
-	@OneToMany(targetEntity = MedicationImpl.class)
-	@JoinColumn
-	private List<MedicationImpl> medications;
-
 	public EHRImpl() { }
-
-	public EHRImpl(long id) {
-		this.id = id;
-	}
 
 	@Override
 	public void setId(long id) {
@@ -107,73 +82,9 @@ public class EHRImpl implements EHR {
 	}
 
 	@Override
-	public void setAssignments(List<Assignment> assignments) {
-		this.assignments.clear();
-		for (Assignment assignment : assignments)
-			this.assignments.add((AssignmentImpl) assignment);
-	}
-
-	@Override
-	public List<Assignment> getAssignments() {
-		List<Assignment> assignments = new ArrayList<Assignment>();
-		for (AssignmentImpl assignment : this.assignments)
-			assignments.add(assignment);
-		return assignments;
-	}
-
-	@Override
-	public List<Diagnosis> getDiagnoses() {
-		List<Diagnosis> diagnoses = new ArrayList<Diagnosis>();
-		for (DiagnosisImpl diagnosis : this.diagnoses)
-			diagnoses.add(diagnosis);
-		return diagnoses;
-	}
-
-	@Override
-	public void setDiagnoses(List<Diagnosis> diagnoses) {
-		this.diagnoses.clear();
-		for (Diagnosis diagnosis : diagnoses)
-			this.diagnoses.add((DiagnosisImpl) diagnosis);
-	}
-
-	@Override
-	public List<Medication> getMedications() {
-		List<Medication> medications = new ArrayList<Medication>();
-		for (MedicationImpl medication : this.medications)
-			medications.add(medication);
-		return medications;
-	}
-
-	@Override
-	public void setMedications(List<Medication> medications) {
-		this.medications.clear();
-		for (Medication medication : medications)
-			this.medications.add((MedicationImpl) medication);
-	}
-
-	@Override
-	public EHRDTO toDto() {
-		EHRDTO ehrDto = new EHRDTO();
-		ehrDto.setId(this.getId());
-		ehrDto.setSubject((PatientDTO) this.getSubject().toDto());
-		ehrDto.setTimeCreated(this.getTimeCreated());
-
-		List<Assignment> assignments = new ArrayList<Assignment>();
-		for (Assignment a : this.assignments)
-			assignments.add(a.toDto());
-		ehrDto.setAssignments(assignments);
-
-		List<Diagnosis> diagnoses = new ArrayList<Diagnosis>();
-		for (Diagnosis d : this.diagnoses)
-			diagnoses.add(d.toDto());
-		ehrDto.setDiagnoses(diagnoses);
-
-		List<Medication> medications = new ArrayList<Medication>();
-		for (Medication m : this.medications)
-			medications.add(m.toDto());
-		ehrDto.setMedications(medications);
-
-		return ehrDto;
+	public void setDemographics(Demographics demographics) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
@@ -183,9 +94,12 @@ public class EHRImpl implements EHR {
 	}
 
 	@Override
-	public void setDemographics(Demographics demographics) {
-		// TODO Auto-generated method stub
-		
-	}
+	public EHRDTO toDto() {
+		EHRDTO ehrDto = new EHRDTO();
+		ehrDto.setId(this.getId());
+		ehrDto.setSubject((PatientDTO) this.getSubject().toDto());
+		ehrDto.setTimeCreated(this.getTimeCreated());
 
+		return ehrDto;
+	}
 }

@@ -35,9 +35,6 @@ import org.eastway.echarts.shared.PatientDTO;
 @SecondaryTable(name = "Tickler",
 		pkJoinColumns=@PrimaryKeyJoinColumn(name="PATID"))
 public class PatientImpl implements Patient {
-	@Column(name = "patient_id")
-	private long id;
-
 	@Id
 	private String caseNumber;
 	private String firstName;
@@ -81,20 +78,6 @@ public class PatientImpl implements Patient {
 	private Date dateStamp;
 
 	public PatientImpl() {}
-
-	public PatientImpl(long id) {
-		this.setId(id);
-	}
-
-	@Override
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	@Override
-	public long getId() {
-		return id;
-	}
 
 	@Override
 	public String getName() {
@@ -358,7 +341,6 @@ public class PatientImpl implements Patient {
 		dto.setFirstName(firstName);
 		dto.setHealthHistoryDateCompleted(healthHistoryDateCompleted);
 		dto.setHipaaDateCompleted(hipaaDateCompleted);
-		dto.setId(id);
 		dto.setIspDateCompleted(ispDateCompleted);
 		dto.setIspReviewDateCompleted(ispReviewDateCompleted);
 		dto.setIsTitleTwenty(isTitleTwenty());
@@ -379,8 +361,7 @@ public class PatientImpl implements Patient {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Id: ").append(getId()).append(", ")
-			.append("CaseNumber: ").append(getCaseNumber()).append(", ")
+		sb.append("CaseNumber: ").append(getCaseNumber()).append(", ")
 			.append("FirstName: ").append(getFirstName()).append(", ")
 			.append("LastName: ").append(getLastName()).append(", ")
 			.append("MiddleInitial: ").append(getMiddleInitial()).append(", ")

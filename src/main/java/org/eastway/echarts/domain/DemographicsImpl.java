@@ -17,30 +17,21 @@ package org.eastway.echarts.domain;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.eastway.echarts.shared.Code;
 import org.eastway.echarts.shared.DemographicsDTO;
 import org.eastway.echarts.shared.Demographics;
-import org.eastway.echarts.shared.EHR;
 
 @Entity
 @Table(name = "Demographics")
 public class DemographicsImpl implements Demographics {
-	@Column(name = "Demographics_Id")
-	private long id;
 	@Id
 	private String caseNumber;
-	@OneToOne(mappedBy = "subject")
-	private EHRImpl ehr;
-	@Column(name = "Patient_Id")
-	private long patientId;
 	@ManyToOne
 	private CodeImpl gender;
 	@ManyToOne
@@ -146,36 +137,6 @@ public class DemographicsImpl implements Demographics {
 		setDob(dob);
 		setLastEdit(lastEdit);
 		setLastEditBy(lastEditBy);
-	}
-
-	@Override
-	public void setEhr(EHR ehr) {
-		this.ehr = (EHRImpl) ehr;
-	}
-
-	@Override
-	public EHR getEhr() {
-		return ehr;
-	}
-
-	@Override
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	@Override
-	public long getId() {
-		return id;
-	}
-
-	@Override
-	public void setPatientId(long patientId) {
-		this.patientId = patientId;
-	}
-
-	@Override
-	public long getPatientId() {
-		return patientId;
 	}
 
 	@Override

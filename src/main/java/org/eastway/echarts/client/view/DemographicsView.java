@@ -20,7 +20,6 @@ import java.util.Date;
 import org.eastway.echarts.client.presenter.DemographicsPresenter;
 import org.eastway.echarts.shared.Code;
 import org.eastway.echarts.shared.DemographicsDTO;
-import org.eastway.echarts.shared.EHR;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SpanElement;
@@ -77,12 +76,6 @@ public class DemographicsView extends Composite implements DemographicsPresenter
 	}
 
 	@Override
-	public EHR getEhr() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Code getEmployment() {
 		// TODO Auto-generated method stub
 		return null;
@@ -98,12 +91,6 @@ public class DemographicsView extends Composite implements DemographicsPresenter
 	public Code getGender() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public long getId() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	@Override
@@ -140,12 +127,6 @@ public class DemographicsView extends Composite implements DemographicsPresenter
 	public Code getMaritalStatus() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public long getPatientId() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	@Override
@@ -361,12 +342,6 @@ public class DemographicsView extends Composite implements DemographicsPresenter
 	}
 
 	@Override
-	public void setEhr(EHR ehr) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void setEmployment(Code employment) {
 		// TODO Auto-generated method stub
 		
@@ -403,12 +378,6 @@ public class DemographicsView extends Composite implements DemographicsPresenter
 
 	@Override
 	public void setHivAids(boolean isHivAids) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setId(long id) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -451,12 +420,6 @@ public class DemographicsView extends Composite implements DemographicsPresenter
 
 	@Override
 	public void setMimr(boolean isMimr) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setPatientId(long patientId) {
 		// TODO Auto-generated method stub
 		
 	}

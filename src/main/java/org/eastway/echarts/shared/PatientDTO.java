@@ -20,7 +20,6 @@ import java.util.Date;
 
 @SuppressWarnings("serial")
 public class PatientDTO implements Serializable, Patient {
-	private long id;
 	private String caseNumber;
 	private String firstName;
 	private String lastName;
@@ -47,42 +46,6 @@ public class PatientDTO implements Serializable, Patient {
 	private boolean isTitleTwenty;
 
 	public PatientDTO() { }
-
-	public PatientDTO(String alias,
-			String caseNumber,
-			Code caseStatus,
-			String firstName,
-			Date lastEdit,
-			String lastEditBy,
-			String lastName,
-			String middleInitial,
-			long id,
-			long ehrId,
-			String ssn,
-			String suffix,
-			Demographics demographics) {
-		setAlias(alias);
-		setCaseNumber(caseNumber);
-		setCaseStatus(caseStatus);
-		setFirstName(firstName);
-		setLastEdit(lastEdit);
-		setLastEditBy(lastEditBy);
-		setLastName(lastName);
-		setMiddleInitial(middleInitial);
-		setId(id);
-		setSsn(ssn);
-		setSuffix(suffix);
-	}
-
-	@Override
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	@Override
-	public long getId() {
-		return id;
-	}
 
 	@Override
 	public String getName() {

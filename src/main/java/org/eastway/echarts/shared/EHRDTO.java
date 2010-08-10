@@ -17,17 +17,13 @@ package org.eastway.echarts.shared;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 @SuppressWarnings("serial")
 public class EHRDTO implements Serializable, EHR {
 	private long id;
-	private Demographics demographics;
 	private Date timeCreated;
-	private List<Assignment> assignments;
-	private List<Diagnosis> diagnoses;
-	private List<Medication> medications;
 	private Patient patient;
+	private Demographics demographics;
 
 	public EHRDTO() { }
 
@@ -56,48 +52,8 @@ public class EHRDTO implements Serializable, EHR {
 	}
 
 	@Override
-	public List<Assignment> getAssignments() {
-		return this.assignments;
-	}
-
-	@Override
-	public void setAssignments(List<Assignment> assignments) {
-		this.assignments = assignments;
-	}
-
-	@Override
 	public EHRDTO toDto() {
 		return this;
-	}
-
-	@Override
-	public void setDemographics(Demographics demographics) {
-		this.demographics = demographics;
-	}
-
-	@Override
-	public Demographics getDemographics() {
-		return this.demographics;
-	}
-
-	@Override
-	public List<Diagnosis> getDiagnoses() {
-		return diagnoses;
-	}
-
-	@Override
-	public void setDiagnoses(List<Diagnosis> diagnoses) {
-		this.diagnoses = diagnoses;
-	}
-
-	@Override
-	public List<Medication> getMedications() {
-		return medications;
-	}
-
-	@Override
-	public void setMedications(List<Medication> medications) {
-		this.medications = medications;
 	}
 
 	@Override
@@ -108,5 +64,15 @@ public class EHRDTO implements Serializable, EHR {
 	@Override
 	public void setSubject(Patient patient) {
 		this.patient = patient;
+	}
+
+	@Override
+	public void setDemographics(Demographics demographics) {
+		this.demographics = demographics;
+	}
+
+	@Override
+	public Demographics getDemographics() {
+		return demographics;
 	}
 }

@@ -20,21 +20,9 @@ import java.util.Date;
 
 public interface Demographics {
 
-	public void setEhr(EHR ehr);
-
-	public EHR getEhr();
-
-	public void setId(long id);
-
-	public long getId();
-
 	public String getCaseNumber();
 
 	public void setCaseNumber(String caseNumber);
-
-	public void setPatientId(long patientId);
-
-	public long getPatientId();
 
 	public void setGender(Code gender);
 

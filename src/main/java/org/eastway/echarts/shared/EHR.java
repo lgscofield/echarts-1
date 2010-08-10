@@ -16,7 +16,6 @@
 package org.eastway.echarts.shared;
 
 import java.util.Date;
-import java.util.List;
 
 public interface EHR {
 	public void setId(long id);
@@ -31,21 +30,9 @@ public interface EHR {
 
 	public Date getTimeCreated();
 
-	public void setAssignments(List<Assignment> assignments);
-
-	public List<Assignment> getAssignments();
-
-	public void setDemographics(Demographics demographics);
-
-	public Demographics getDemographics();
-
 	public EHRDTO toDto();
 
-	public List<Diagnosis> getDiagnoses();
+	void setDemographics(Demographics demographics);
 
-	public void setDiagnoses(List<Diagnosis> diagnoses);
-
-	public void setMedications(List<Medication> medications);
-
-	public List<Medication> getMedications();
+	Demographics getDemographics();
 }

@@ -37,8 +37,6 @@ public class Message {
 	@Column(name = "Message_Id")
 	private long id;
 	private String caseNumber;
-	@Column(name = "ehr_id")
-	private long ehrId;
 	@ManyToOne
 	@JoinColumn(name = "MessageType_Id")
 	private CodeImpl messageType;
@@ -70,14 +68,6 @@ public class Message {
 
 	public String getCaseNumber() {
 		return caseNumber;
-	}
-
-	public void setEhrId(long ehrId) {
-		this.ehrId = ehrId;
-	}
-
-	public long getEhrId() {
-		return ehrId;
 	}
 
 	public void setMessageType(Code messageType) {
@@ -139,7 +129,6 @@ public class Message {
 		dto.setMessageType(this.getMessageType().toDto());
 		if (dto.getParent() != null)
 			dto.setParent(this.getParent().toDto());
-		dto.setEhrId(this.getEhrId());
 		return dto;
 	}
 }

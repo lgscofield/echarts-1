@@ -19,10 +19,6 @@ import java.util.Date;
 
 public interface Patient {
 
-	public void setId(long id);
-
-	public long getId();
-
 	public String getName();
 
 	public void setFirstName(String firstName);
