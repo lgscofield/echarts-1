@@ -15,8 +15,6 @@
  */
 package org.eastway.echarts.client;
 
-import java.util.LinkedHashMap;
-
 import net.customware.gwt.presenter.client.EventBus;
 
 import org.eastway.echarts.client.common.TicklerColumnDefinitionsFactory;
@@ -65,8 +63,6 @@ import org.eastway.echarts.client.presenter.TicklerPresenter;
 import org.eastway.echarts.client.view.AddressView;
 import org.eastway.echarts.client.view.AppointmentView;
 import org.eastway.echarts.client.view.ContactView;
-import org.eastway.echarts.client.view.DashboardView;
-import org.eastway.echarts.client.view.DashboardViewImpl;
 import org.eastway.echarts.client.view.DemographicsView;
 import org.eastway.echarts.client.view.DiagnosisView;
 import org.eastway.echarts.client.view.EHRView;
@@ -100,13 +96,13 @@ import com.google.inject.Inject;
 
 public class AppController implements Presenter {
 	private final EventBus eventBus;
-	private DashboardView<LinkedHashMap<String, Long>> dashboard = null;
 	private EHRView<EHR> ehrView;
 	private CachingDispatchAsync dispatch;
 	private DashboardPresenter dashboardPresenter;
 
 	@Inject
-	public AppController(EventBus eventBus, CachingDispatchAsync dispatch) {
+	public AppController(DashboardPresenter dashboardPresenter, EventBus eventBus, CachingDispatchAsync dispatch) {
+		this.dashboardPresenter = dashboardPresenter;
 		this.eventBus = eventBus;
 		this.dispatch = dispatch;
 		bind();
@@ -186,13 +182,13 @@ public class AppController implements Presenter {
 			@Override
 			public void onRequestEvent(RequestEvent requestEvent) {
 				if (requestEvent.getState() == State.SENT) {
-					dashboard.getMole().showDelayed(LOADING_TIMEOUT);
+					dashboardPresenter.getDisplay().getMole().showDelayed(LOADING_TIMEOUT);
 					REQUEST_EVENT_COUNT++;
 				} else if (REQUEST_EVENT_COUNT > 1) {
 					REQUEST_EVENT_COUNT--;
 				} else {
 					REQUEST_EVENT_COUNT--;
-					dashboard.getMole().hide();
+					dashboardPresenter.getDisplay().getMole().hide();
 				}
 			}
 		});
@@ -228,7 +224,7 @@ public class AppController implements Presenter {
 		TicklerView<Tickler> ticklerView = new TicklerViewImpl<Tickler>();
 		Presenter presenter = new TicklerPresenter(ticklerView, TicklerColumnDefinitionsFactory.getTicklerColumnDefinitions(), eventBus, dispatch, action);
 		presenter.go(null);
-		dashboard.addTab(ticklerView.asWidget(), "Tickler");
+		dashboardPresenter.getDisplay().addTab(ticklerView.asWidget(), "Tickler");
 	}
 
 	private void doViewMedications(EHRView<EHR> view, GetMedications action) {
@@ -275,7 +271,7 @@ public class AppController implements Presenter {
 		ehrView = new EHRViewImpl<EHR>();
 		Presenter presenter = new EHRPresenter(ehrView, eventBus, dispatch, caseNumber);
 		presenter.go(null);
-		dashboard.addTab(ehrView.asWidget(), caseNumber);
+		dashboardPresenter.getDisplay().addTab(ehrView.asWidget(), caseNumber);
 	}
 
 	private void doViewPatientSummary(EHRView<EHR> view, GetPatientSummary action) {
@@ -291,8 +287,6 @@ public class AppController implements Presenter {
 	@Override
 	public void go(final HasWidgets container) {
 		container.clear();
-		dashboard = new DashboardViewImpl<LinkedHashMap<String, Long>>();
-		dashboardPresenter = new DashboardPresenter(dashboard, eventBus, dispatch);
 		dashboardPresenter.go(container);
 	}
 }

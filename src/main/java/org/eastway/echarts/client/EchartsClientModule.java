@@ -15,8 +15,15 @@
  */
 package org.eastway.echarts.client;
 
+import java.util.LinkedHashMap;
+
+import org.eastway.echarts.client.presenter.DashboardPresenter;
+import org.eastway.echarts.client.view.DashboardView;
+import org.eastway.echarts.client.view.DashboardViewImpl;
+
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Singleton;
+import com.google.inject.TypeLiteral;
 
 import net.customware.gwt.presenter.client.DefaultEventBus;
 import net.customware.gwt.presenter.client.EventBus;
@@ -24,12 +31,16 @@ import net.customware.gwt.presenter.client.place.PlaceManager;
 
 public class EchartsClientModule extends AbstractGinModule {
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void configure() {
 		bind(EventBus.class).to(DefaultEventBus.class).in(Singleton.class);
 		bind(PlaceManager.class).in(Singleton.class);
 		bind(AppController.class).in(Singleton.class);
 		bind(CachingDispatchAsync.class).to(CachingDispatchAsyncImpl.class).in(Singleton.class);
+
+		bind(DashboardPresenter.class).in(Singleton.class);
+		bind(new TypeLiteral<DashboardView<LinkedHashMap<String, Long>>>() {}).to(DashboardViewImpl.class);
 	}
 
 }
