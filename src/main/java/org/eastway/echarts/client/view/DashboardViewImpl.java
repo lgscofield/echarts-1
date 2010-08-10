@@ -31,7 +31,6 @@ import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -68,7 +67,6 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 
 	public DashboardViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
-		logoutButton.setHref("http://ewsql.eastway.local/echarts/logout.aspx?continue=" + Window.Location.getHref());
 		bind();
 	}
 
