@@ -176,7 +176,11 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 			graph.addClassName(style.yellow());
 		else
 			graph.addClassName(style.green());
-		graph.setWidth(new Double(new Double(productivity) * productivityUnit).toString() + "%");
+		Double width = new Double(new Double(productivity) * productivityUnit);
+		if (width < 1.0 && width > 0.0)
+			graph.setWidth("1%");
+		else if (width >= 1.0)
+			graph.setWidth(width.toString() + "%");
 	}
 
 	@UiHandler(value="tickler")
