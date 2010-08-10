@@ -20,6 +20,7 @@ import java.util.List;
 import net.customware.gwt.presenter.client.EventBus;
 
 import org.eastway.echarts.client.CachingDispatchAsync;
+import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.events.OpenEhrEvent;
@@ -33,6 +34,7 @@ import com.google.gwt.requestfactory.shared.RequestEvent;
 import com.google.gwt.requestfactory.shared.RequestEvent.State;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.inject.Inject;
 
 public class TicklerPresenter implements Presenter, TicklerView.Presenter<Tickler> {
 	private TicklerView<Tickler> view;
@@ -40,16 +42,19 @@ public class TicklerPresenter implements Presenter, TicklerView.Presenter<Tickle
 	private CachingDispatchAsync dispatch;
 	private GetTickler action;
 
+	@Inject
 	public TicklerPresenter(TicklerView<Tickler> view, List<ColumnDefinition<Tickler>> columnDefinitions, EventBus eventBus, CachingDispatchAsync dispatch, GetTickler action) {
 		this.view = view;
 		this.eventBus = eventBus;
 		this.dispatch = dispatch;
 		this.view.setPresenter(this);
-		this.action = action;
 		this.view.setColumnDefinitions(columnDefinitions);
+		this.action = action;
 	}
 
 	public void fetchData() {
+		action.setSessionId(EchartsUser.sessionId);
+		action.setStaffId(EchartsUser.staffId);
 		eventBus.fireEvent(new RequestEvent(State.SENT));
 		dispatch.executeWithCache(action, new AsyncCallback<GetTicklerResult>() {
 			@Override
@@ -78,5 +83,9 @@ public class TicklerPresenter implements Presenter, TicklerView.Presenter<Tickle
 	@Override
 	public void openIsp(Tickler tickler) {
 		eventBus.fireEvent(new OpenIspEvent(tickler.getCaseNumber()));
+	}
+
+	public TicklerView<Tickler> getDisplay() {
+		return view;
 	}
 }

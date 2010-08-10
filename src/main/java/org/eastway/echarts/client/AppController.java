@@ -17,7 +17,6 @@ package org.eastway.echarts.client;
 
 import net.customware.gwt.presenter.client.EventBus;
 
-import org.eastway.echarts.client.common.TicklerColumnDefinitionsFactory;
 import org.eastway.echarts.client.events.LogoutEvent;
 import org.eastway.echarts.client.events.LogoutEventHandler;
 import org.eastway.echarts.client.events.OpenEhrEvent;
@@ -72,8 +71,6 @@ import org.eastway.echarts.client.view.MedicationView;
 import org.eastway.echarts.client.view.MessagesView;
 import org.eastway.echarts.client.view.PatientSummaryView;
 import org.eastway.echarts.client.view.ReferralView;
-import org.eastway.echarts.client.view.TicklerView;
-import org.eastway.echarts.client.view.TicklerViewImpl;
 import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.GetAddresses;
 import org.eastway.echarts.shared.GetAppointments;
@@ -85,8 +82,6 @@ import org.eastway.echarts.shared.GetMedications;
 import org.eastway.echarts.shared.GetMessages;
 import org.eastway.echarts.shared.GetPatientSummary;
 import org.eastway.echarts.shared.GetReferral;
-import org.eastway.echarts.shared.GetTickler;
-import org.eastway.echarts.shared.Tickler;
 
 import com.google.gwt.requestfactory.shared.RequestEvent;
 import com.google.gwt.requestfactory.shared.RequestEvent.State;
@@ -99,6 +94,7 @@ public class AppController implements Presenter {
 	private EHRView<EHR> ehrView;
 	private CachingDispatchAsync dispatch;
 	private DashboardPresenter dashboardPresenter;
+	@Inject TicklerPresenter ticklerPresenter;
 
 	@Inject
 	public AppController(DashboardPresenter dashboardPresenter, EventBus eventBus, CachingDispatchAsync dispatch) {
@@ -172,7 +168,7 @@ public class AppController implements Presenter {
 		eventBus.addHandler(ViewTicklerEvent.TYPE, new ViewTicklerEventHandler() {
 			@Override
 			public void onOpenTickler(ViewTicklerEvent event) {
-				doViewTickler(event.getAction());
+				doViewTickler();
 			}
 		});
 		eventBus.addHandler(RequestEvent.TYPE, new RequestEvent.Handler() {
@@ -220,11 +216,12 @@ public class AppController implements Presenter {
 		Window.open("http://ewsql.eastway.local/echarts-asp/Forms/GandO.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber, "ISP", "");
 	}
 
-	private void doViewTickler(GetTickler action) {
-		TicklerView<Tickler> ticklerView = new TicklerViewImpl<Tickler>();
-		Presenter presenter = new TicklerPresenter(ticklerView, TicklerColumnDefinitionsFactory.getTicklerColumnDefinitions(), eventBus, dispatch, action);
-		presenter.go(null);
-		dashboardPresenter.getDisplay().addTab(ticklerView.asWidget(), "Tickler");
+	private void doViewTickler() {
+		dashboardPresenter.getDisplay().addTab(
+				ticklerPresenter
+					.getDisplay()
+					.asWidget(), "Tickler");
+		ticklerPresenter.go(null);
 	}
 
 	private void doViewMedications(EHRView<EHR> view, GetMedications action) {

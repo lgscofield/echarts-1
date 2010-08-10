@@ -16,10 +16,18 @@
 package org.eastway.echarts.client;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
+import org.eastway.echarts.client.common.ColumnDefinition;
+import org.eastway.echarts.client.common.TicklerColumnDefinitionsImpl;
 import org.eastway.echarts.client.presenter.DashboardPresenter;
+import org.eastway.echarts.client.presenter.TicklerPresenter;
 import org.eastway.echarts.client.view.DashboardView;
 import org.eastway.echarts.client.view.DashboardViewImpl;
+import org.eastway.echarts.client.view.TicklerView;
+import org.eastway.echarts.client.view.TicklerViewImpl;
+import org.eastway.echarts.shared.GetTickler;
+import org.eastway.echarts.shared.Tickler;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Singleton;
@@ -39,8 +47,13 @@ public class EchartsClientModule extends AbstractGinModule {
 		bind(AppController.class).in(Singleton.class);
 		bind(CachingDispatchAsync.class).to(CachingDispatchAsyncImpl.class).in(Singleton.class);
 
+		bind(GetTickler.class).in(Singleton.class);
 		bind(DashboardPresenter.class).in(Singleton.class);
 		bind(new TypeLiteral<DashboardView<LinkedHashMap<String, Long>>>() {}).to(DashboardViewImpl.class);
+
+		bind(TicklerPresenter.class).in(Singleton.class);
+		bind(new TypeLiteral<TicklerView<Tickler>>() {}).to(TicklerViewImpl.class);
+		bind(new TypeLiteral<List<ColumnDefinition<Tickler>>>() {}).to(TicklerColumnDefinitionsImpl.class).in(Singleton.class);
 	}
 
 }

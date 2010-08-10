@@ -52,16 +52,17 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 	private EventBus eventBus;
 	private GetTicklerResult data;
 	private CachingDispatchAsync dispatch;
-	private GetTickler action = new GetTickler(EchartsUser.sessionId, EchartsUser.staffId);
+	private GetTickler action;
 	private String caseNumber;
 
 	@Inject
 	public DashboardPresenter(DashboardView<LinkedHashMap<String, Long>> view,
-			EventBus eventBus, final CachingDispatchAsync dispatch) {
+			EventBus eventBus, final CachingDispatchAsync dispatch, GetTickler action) {
 		this.view = view;
 		this.view.setPresenter(this);
 		this.eventBus = eventBus;
 		this.dispatch = dispatch;
+		this.action = action;
 	}
 
 	private void bind() {
@@ -169,6 +170,8 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 	}
 
 	public void getPatientList() {
+		action.setStaffId(EchartsUser.staffId);
+		action.setSessionId(EchartsUser.sessionId);
 		eventBus.fireEvent(new RequestEvent(State.SENT));
 		dispatch.executeWithCache(action, new AsyncCallback<GetTicklerResult>() {
 			@Override
@@ -192,7 +195,7 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 
 	@Override
 	public void openTickler() {
-		eventBus.fireEvent(new ViewTicklerEvent(action));
+		eventBus.fireEvent(new ViewTicklerEvent());
 	}
 
 	@Override

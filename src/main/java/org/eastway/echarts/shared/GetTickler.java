@@ -30,8 +30,16 @@ public class GetTickler implements Action<GetTicklerResult> {
 		this.staffId = staffId;
 	}
 
+	public void setStaffId(String staffId) {
+		this.staffId = staffId;
+	}
+
 	public String getStaffId() {
 		return staffId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
 	}
 
 	public String getSessionId() {
