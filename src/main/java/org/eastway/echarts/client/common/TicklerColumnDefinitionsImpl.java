@@ -9,14 +9,6 @@ import org.eastway.echarts.shared.Tickler;
 public class TicklerColumnDefinitionsImpl extends
 		ArrayList<ColumnDefinition<Tickler>> {
 
-	private static TicklerColumnDefinitionsImpl instance = null;
-
-	public static TicklerColumnDefinitionsImpl getInstance() {
-		if (instance == null) {
-			instance = new TicklerColumnDefinitionsImpl();
-		}
-		return instance;
-	}
 	private String noData = "<b>NO DATA</b>";
 	protected TicklerColumnDefinitionsImpl() {
 		this.add(new ColumnDefinition<Tickler>() {
