@@ -34,6 +34,8 @@ public class GetPatientSummaryResult implements Result {
 	private String insuranceType;
 	private String ssn;
 	private String caseStatus;
+	private String middleInitial;
+	private String suffix;
 
 	public GetPatientSummaryResult() { }
 
@@ -131,5 +133,21 @@ public class GetPatientSummaryResult implements Result {
 
 	public String getCaseStatus() {
 		return caseStatus;
+	}
+
+	public void setMiddleInitial(String middleInitial) {
+		this.middleInitial = middleInitial;
+	}
+
+	public String getMiddleInitial() {
+		return middleInitial;
+	}
+
+	public void setSuffix(String suffix) {
+		this.suffix = suffix;
+	}
+
+	public String getSuffix() {
+		return suffix;
 	}
 }

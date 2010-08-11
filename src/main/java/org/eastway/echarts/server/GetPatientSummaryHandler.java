@@ -53,13 +53,11 @@ public class GetPatientSummaryHandler implements ActionHandler<GetPatientSummary
 		result.setEthnicity(demographics.getEthnicity().getDescriptor());
 		result.setGender(demographics.getGender().getDescriptor());
 		result.setInsuranceType(demographics.getInsuranceType());
-		result.setName(new StringBuilder()
-				.append(patient.getLastName())
-				.append((patient.getSuffix() == null ? ", " : " " + patient.getSuffix() + ", "))
-				.append(patient.getFirstName())
-				.append((patient.getMiddleInitial() == null ? "" : ", " + patient.getMiddleInitial())).toString());
+		result.setName(patient.getName());
 		result.setFirstName(patient.getFirstName());
 		result.setLastName(patient.getLastName());
+		result.setMiddleInitial(patient.getMiddleInitial());
+		result.setSuffix(patient.getSuffix());
 		result.setCaseStatus(patient.getCaseStatus().getDescriptor());
 		result.setPreferredLanguage(demographics.getPreferredLanguage());
 		result.setRace(demographics.getRace().getDescriptor());
