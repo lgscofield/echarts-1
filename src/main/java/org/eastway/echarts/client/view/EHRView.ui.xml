@@ -33,8 +33,8 @@
 			</g:Tree>
 		</g:west>
 		<g:center>
-			<g:ScrollPanel ui:field='displayArea'>
-			</g:ScrollPanel>
+			<g:LayoutPanel ui:field='displayArea'>
+			</g:LayoutPanel>
 		</g:center>
 	</g:SplitLayoutPanel>
 </ui:UiBinder> 

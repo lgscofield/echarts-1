@@ -16,7 +16,7 @@
 	<ui:style>
 
 	</ui:style>
-	<g:HTMLPanel>
+	<g:ScrollPanel>
 		<g:FlexTable ui:field='appointments' />
-	</g:HTMLPanel>
+	</g:ScrollPanel>
 </ui:UiBinder> 

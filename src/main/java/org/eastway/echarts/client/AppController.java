@@ -63,7 +63,6 @@ import org.eastway.echarts.client.view.AddressView;
 import org.eastway.echarts.client.view.AppointmentView;
 import org.eastway.echarts.client.view.ContactView;
 import org.eastway.echarts.client.view.DemographicsView;
-import org.eastway.echarts.client.view.DiagnosisView;
 import org.eastway.echarts.client.view.EHRView;
 import org.eastway.echarts.client.view.EHRViewImpl;
 import org.eastway.echarts.client.view.LinkView;
@@ -76,7 +75,6 @@ import org.eastway.echarts.shared.GetAddresses;
 import org.eastway.echarts.shared.GetAppointments;
 import org.eastway.echarts.shared.GetContacts;
 import org.eastway.echarts.shared.GetDemographics;
-import org.eastway.echarts.shared.GetDiagnoses;
 import org.eastway.echarts.shared.GetLinks;
 import org.eastway.echarts.shared.GetMedications;
 import org.eastway.echarts.shared.GetMessages;
@@ -94,7 +92,8 @@ public class AppController implements Presenter {
 	private EHRView<EHR> ehrView;
 	private CachingDispatchAsync dispatch;
 	private DashboardPresenter dashboardPresenter;
-	@Inject TicklerPresenter ticklerPresenter;
+	@Inject private TicklerPresenter ticklerPresenter;
+	@Inject private DiagnosisPresenter diagnosisPresenter;
 
 	@Inject
 	public AppController(DashboardPresenter dashboardPresenter, EventBus eventBus, CachingDispatchAsync dispatch) {
@@ -138,7 +137,7 @@ public class AppController implements Presenter {
 		eventBus.addHandler(ViewDiagnosesEvent.TYPE, new ViewDiagnosesEventHandler() {
 			@Override
 			public void onViewDiagnoses(ViewDiagnosesEvent event) {
-				doViewDiagnoses(event.getView(), event.getAction());
+				doViewDiagnoses(event.getView(), event.getCaseNumber());
 			}
 		});
 		eventBus.addHandler(ViewLinksEvent.TYPE, new ViewLinksEventHandler() {
@@ -244,9 +243,9 @@ public class AppController implements Presenter {
 		presenter.go(view.getDisplayArea());
 	}
 
-	private void doViewDiagnoses(EHRView<EHR> view, GetDiagnoses action) {
-		Presenter presenter = new DiagnosisPresenter(new DiagnosisView(), eventBus, dispatch, action);
-		presenter.go(view.getDisplayArea());
+	private void doViewDiagnoses(EHRView<EHR> view, String caseNumber) {
+		diagnosisPresenter.setData(caseNumber);
+		diagnosisPresenter.go(view.getDisplayArea());
 	}
 
 	private void doViewAppointments(EHRView<EHR> view, GetAppointments action) {

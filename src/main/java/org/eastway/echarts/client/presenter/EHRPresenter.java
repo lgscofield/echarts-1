@@ -68,7 +68,7 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
 	private GetDemographics demographics = null;
 	private GetPatientSummary patientSummary = null;
 	private GetReferral referral = null;
-	private GetDiagnoses diagnoses = null;
+	private GetDiagnoses diagnoses;
 	private GetLinks links = null;
 	private GetMessages messages = null;
 	private GetAddresses addresses = null;
@@ -125,7 +125,6 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
 		demographics = new GetDemographics(EchartsUser.sessionId, caseNumber);
 		patientSummary = new GetPatientSummary(EchartsUser.sessionId, caseNumber);
 		referral = new GetReferral(EchartsUser.sessionId, caseNumber);
-		diagnoses = new GetDiagnoses(EchartsUser.sessionId, caseNumber);
 		links = new GetLinks(EchartsUser.sessionId, caseNumber);
 		messages = new GetMessages(EchartsUser.sessionId, caseNumber);
 		addresses = new GetAddresses(EchartsUser.sessionId, caseNumber);

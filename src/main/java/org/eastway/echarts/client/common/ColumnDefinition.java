@@ -14,4 +14,8 @@ public abstract class ColumnDefinition<T> {
 	public boolean isContextMenu() {
 		return false;
 	}
+
+	public String getHeader(T t) {
+		return null;
+	}
 }

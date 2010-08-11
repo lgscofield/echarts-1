@@ -15,7 +15,5 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style>
 	</ui:style>
-	<g:HTMLPanel>
-		<g:FlexTable ui:field='diagnoses' />
-	</g:HTMLPanel>
+	<g:StackLayoutPanel unit='PX' ui:field='diagnoses' />
 </ui:UiBinder> 

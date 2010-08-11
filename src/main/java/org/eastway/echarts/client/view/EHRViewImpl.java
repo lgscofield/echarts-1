@@ -24,7 +24,7 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -36,7 +36,7 @@ public class EHRViewImpl<T> extends Composite implements EHRView<T> {
 	private Presenter<T> presenter;
 	@UiField Tree menu;
 	@UiField Label patientSummary;
-	@UiField ScrollPanel displayArea;
+	@UiField LayoutPanel displayArea;
 
 	public EHRViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));

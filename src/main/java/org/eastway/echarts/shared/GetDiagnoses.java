@@ -37,4 +37,12 @@ public class GetDiagnoses implements Action<GetDiagnosesResult> {
 	public String getCaseNumber() {
 		return caseNumber;
 	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+
+	public void setCaseNumber(String caseNumber) {
+		this.caseNumber = caseNumber;
+	}
 }

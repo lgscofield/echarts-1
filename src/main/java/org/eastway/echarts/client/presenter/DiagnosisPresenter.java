@@ -15,10 +15,14 @@
  */
 package org.eastway.echarts.client.presenter;
 
+import java.util.List;
+
 import net.customware.gwt.presenter.client.EventBus;
 
 import org.eastway.echarts.client.CachingDispatchAsync;
+import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.HandleRpcException;
+import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.view.DiagnosisView;
 import org.eastway.echarts.shared.Diagnosis;
 import org.eastway.echarts.shared.GetDiagnoses;
@@ -28,38 +32,37 @@ import com.google.gwt.requestfactory.shared.RequestEvent;
 import com.google.gwt.requestfactory.shared.RequestEvent.State;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.inject.Inject;
 
-public class DiagnosisPresenter implements Presenter {
+public class DiagnosisPresenter implements Presenter, DiagnosisView.Presenter<Diagnosis> {
 
-	public interface Display extends EchartsDisplay, Diagnosis {
-		public void nextRecord();
-
-		public void reset();
-
-		public void setHeader();
-	}
-
-	private Display display;
+	private DiagnosisView<Diagnosis> view;
 	private EventBus eventBus;
 	private CachingDispatchAsync dispatch;
 	private GetDiagnoses action;
+	private String caseNumber;
 
-	public DiagnosisPresenter(DiagnosisView display, EventBus eventBus,
+	@Inject
+	public DiagnosisPresenter(DiagnosisView<Diagnosis> view, List<ColumnDefinition<Diagnosis>> columnDefinitions, EventBus eventBus,
 			CachingDispatchAsync dispatch, GetDiagnoses action) {
-		this.display = display;
+		this.view = view;
 		this.eventBus = eventBus;
 		this.dispatch = dispatch;
 		this.action = action;
+		this.view.setPresenter(this);
+		this.view.setColumnDefinitions(columnDefinitions);
 	}
 
 	@Override
 	public void go(HasWidgets container) {
 		container.clear();
-		container.add(display.asWidget());
+		container.add(view.asWidget());
 		fetchData();
 	}
 
 	public void fetchData() {
+		action.setCaseNumber(caseNumber);
+		action.setSessionId(EchartsUser.sessionId);
 		eventBus.fireEvent(new RequestEvent(State.SENT));
 		dispatch.executeWithCache(action, new AsyncCallback<GetDiagnosesResult>() {
 			@Override
@@ -70,29 +73,16 @@ public class DiagnosisPresenter implements Presenter {
 			@Override
 			public void onSuccess(GetDiagnosesResult result) {
 				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
-				display.reset();
 				setData(result);
 			}
 		});
 	}
 
-	public void setData(GetDiagnosesResult result) {
-		display.setHeader();
-		for (Diagnosis diagnosis : result.getDiagnoses()) {
-			display.setAxis1A(diagnosis.getAxis1A());
-			display.setAxis1B(diagnosis.getAxis1B());
-			display.setAxis1C(diagnosis.getAxis1C());
-			display.setAxis1D(diagnosis.getAxis1D());
-			display.setAxis1E(diagnosis.getAxis1E());
-			display.setAxis2A(diagnosis.getAxis2A());
-			display.setAxis2B(diagnosis.getAxis2B());
-			display.setAxis2C(diagnosis.getAxis2C());
-			display.setAxis3(diagnosis.getAxis3());
-			display.setAxis4(diagnosis.getAxis4());
-			display.setCurrentGAF(diagnosis.getCurrentGAF());
-			display.setHighestGAF(diagnosis.getHighestGAF());
-			display.setDate(diagnosis.getDate());
-			display.nextRecord();
-		}
+	public void setData(String caseNumber) {
+		this.caseNumber = caseNumber;
+	}
+
+	private void setData(GetDiagnosesResult result) {
+		view.setRowData(result.getDiagnoses());
 	}
 }
