@@ -19,7 +19,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @SuppressWarnings("serial")
-public class PatientDTO implements Serializable, Patient {
+public class PatientDTO extends Patient implements Serializable {
 	private String caseNumber;
 	private String firstName;
 	private String lastName;
@@ -46,15 +46,6 @@ public class PatientDTO implements Serializable, Patient {
 	private boolean isTitleTwenty;
 
 	public PatientDTO() { }
-
-	@Override
-	public String getName() {
-		return new StringBuilder()
-			.append(getLastName())
-			.append((getSuffix() == null ? ", " : " " + getSuffix() + ", "))
-			.append(getFirstName())
-			.append((getMiddleInitial() == null ? "" : ", " + getMiddleInitial())).toString();
-	}
 
 	@Override
 	public void setFirstName(String firstName) {

@@ -34,7 +34,7 @@ import org.eastway.echarts.shared.PatientDTO;
 @Table(name = "Patient")
 @SecondaryTable(name = "Tickler",
 		pkJoinColumns=@PrimaryKeyJoinColumn(name="case_number"))
-public class PatientImpl implements Patient {
+public class PatientImpl extends Patient {
 	@Id
 	private String caseNumber;
 	private String firstName;
@@ -78,15 +78,6 @@ public class PatientImpl implements Patient {
 	private Date dateStamp;
 
 	public PatientImpl() {}
-
-	@Override
-	public String getName() {
-		return new StringBuilder()
-			.append(getLastName())
-			.append((getSuffix() == null ? ", " : " " + getSuffix() + ", "))
-			.append(getFirstName())
-			.append((getMiddleInitial() == null ? "" : ", " + getMiddleInitial())).toString();
-	}
 
 	@Override
 	public void setFirstName(String firstName) {

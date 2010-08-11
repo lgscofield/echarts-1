@@ -17,106 +17,112 @@ package org.eastway.echarts.shared;
 
 import java.util.Date;
 
-public interface Patient {
+public abstract class Patient {
 
-	public String getName();
+	public String getName() {
+		return new StringBuilder()
+			.append(getLastName())
+			.append((getSuffix() == null ? ", " : " " + getSuffix() + ", "))
+			.append(getFirstName())
+			.append((getMiddleInitial() == null ? "" : " " + getMiddleInitial())).toString();
+	}
 
-	public void setFirstName(String firstName);
+	public abstract void setFirstName(String firstName);
 
-	public String getFirstName();
+	public abstract String getFirstName();
 
-	public void setLastName(String lastName);
+	public abstract void setLastName(String lastName);
 
-	public String getLastName();
+	public abstract String getLastName();
 
-	public void setSuffix(String suffix);
+	public abstract void setSuffix(String suffix);
 
-	public String getSuffix();
+	public abstract String getSuffix();
 
-	public void setAlias(String alias);
+	public abstract void setAlias(String alias);
 
-	public String getAlias();
+	public abstract String getAlias();
 
-	public void setCaseStatus(Code caseStatus);
+	public abstract void setCaseStatus(Code caseStatus);
 
-	public Code getCaseStatus();
+	public abstract Code getCaseStatus();
 
-	public void setSsn(String ssn);
+	public abstract void setSsn(String ssn);
 
-	public String getSsn();
+	public abstract String getSsn();
 
-	public void setLastEditBy(String lastEditBy);
+	public abstract void setLastEditBy(String lastEditBy);
 
-	public String getLastEditBy();
+	public abstract String getLastEditBy();
 
-	public void setLastEdit(Date lastEdit);
+	public abstract void setLastEdit(Date lastEdit);
 
-	public Date getLastEdit();
+	public abstract Date getLastEdit();
 
-	public void setCaseNumber(String caseNumber);
+	public abstract void setCaseNumber(String caseNumber);
 
-	public String getCaseNumber();
+	public abstract String getCaseNumber();
 
-	public void setMiddleInitial(String middleInitial);
+	public abstract void setMiddleInitial(String middleInitial);
 
-	public String getMiddleInitial();
+	public abstract String getMiddleInitial();
 
-	public void setHipaaDateCompleted(Date hipaaDateCompleted);
+	public abstract void setHipaaDateCompleted(Date hipaaDateCompleted);
 
-	public Date getHipaaDateCompleted();
+	public abstract Date getHipaaDateCompleted();
 
-	public void setIspDateCompleted(Date ispDateCompleted);
+	public abstract void setIspDateCompleted(Date ispDateCompleted);
 
-	public Date getIspDateCompleted();
+	public abstract Date getIspDateCompleted();
 
-	public void setAodGoal(Date aodGoal);
+	public abstract void setAodGoal(Date aodGoal);
 
-	public Date getAodGoal();
+	public abstract Date getAodGoal();
 
-	public void setIspReviewDateCompleted(Date ispReviewDateCompleted);
+	public abstract void setIspReviewDateCompleted(Date ispReviewDateCompleted);
 
-	public Date getIspReviewDateCompleted();
+	public abstract Date getIspReviewDateCompleted();
 
-	public void setLevelOfCareAdmissionDate(Date levelOfCareAdmissionDate);
+	public abstract void setLevelOfCareAdmissionDate(Date levelOfCareAdmissionDate);
 
-	public Date getLevelOfCareAdmissionDate();
+	public abstract Date getLevelOfCareAdmissionDate();
 
-	public void setLevelOfCareCs(Date levelOfCareCs);
+	public abstract void setLevelOfCareCs(Date levelOfCareCs);
 
-	public Date getLevelOfCareCs();
+	public abstract Date getLevelOfCareCs();
 
-	public void setHealthHistoryDateCompleted(Date healthHistoryDateCompleted);
+	public abstract void setHealthHistoryDateCompleted(Date healthHistoryDateCompleted);
 
-	public Date getHealthHistoryDateCompleted();
+	public abstract Date getHealthHistoryDateCompleted();
 
-	public void setFinancialDateCompleted(Date financialDateCompleted);
+	public abstract void setFinancialDateCompleted(Date financialDateCompleted);
 
-	public Date getFinancialDateCompleted();
+	public abstract Date getFinancialDateCompleted();
 
-	public void setIsTitleTwenty(boolean isTitleTwenty);
+	public abstract void setIsTitleTwenty(boolean isTitleTwenty);
 
-	public boolean isTitleTwenty();
+	public abstract boolean isTitleTwenty();
 
-	public void setDiagnosticAssessmentDateCompleted(Date diagnosticAssessmentDateCompleted);
+	public abstract void setDiagnosticAssessmentDateCompleted(Date diagnosticAssessmentDateCompleted);
 
-	public Date getDiagnosticAssessmentDateCompleted();
+	public abstract Date getDiagnosticAssessmentDateCompleted();
 
-	public void setOutcomesConsumerDateCompleted(Date outcomesConsumerDateCompleted);
+	public abstract void setOutcomesConsumerDateCompleted(Date outcomesConsumerDateCompleted);
 
-	public Date getOutcomesConsumerDateCompleted();
+	public abstract Date getOutcomesConsumerDateCompleted();
 
-	public void setOutcomesProviderDateCompleted(Date outcomesProviderDateCompleted);
+	public abstract void setOutcomesProviderDateCompleted(Date outcomesProviderDateCompleted);
 
-	public Date getOutcomesProviderDateCompleted();
+	public abstract Date getOutcomesProviderDateCompleted();
 
-	public void setOutcomesAgencyDateCompleted(Date outcomesAgencyDateCompleted);
+	public abstract void setOutcomesAgencyDateCompleted(Date outcomesAgencyDateCompleted);
 
-	public Date getOutcomesAgencyDateCompleted();
+	public abstract Date getOutcomesAgencyDateCompleted();
 
-	public void setDateStamp(Date dateStamp);
+	public abstract void setDateStamp(Date dateStamp);
 
-	public Date getDateStamp();
+	public abstract Date getDateStamp();
 
-	public PatientDTO toDto();
+	public abstract PatientDTO toDto();
 
 }
