@@ -29,7 +29,6 @@ public class Productivity {
 	@Id
 	private long id;
 
-	@Column(name = "Case#")
 	private String caseNumber;
 
 	private String staff;

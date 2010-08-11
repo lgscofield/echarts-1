@@ -46,11 +46,11 @@ public class AssignmentImpl implements Serializable, Assignment {
     private Integer id;
 
 	@ManyToOne(targetEntity = PatientImpl.class)
-	@JoinColumn(name = "Case#", insertable = false, updatable = false)
+	@JoinColumn(name = "caseNumber", insertable = false, updatable = false)
 	private PatientImpl patient;
 
 	@ManyToOne(targetEntity = DemographicsImpl.class)
-	@JoinColumn(name = "Case#", insertable = false, updatable = false)
+	@JoinColumn(name = "caseNumber", insertable = false, updatable = false)
 	private DemographicsImpl demographics;
 
     @Column(name = "Date")
@@ -95,7 +95,6 @@ public class AssignmentImpl implements Serializable, Assignment {
     @Column(name="lasteditby")
     private String lastEditBy;
 
-    @Column(name="Case#")
 	private String caseNumber;
 
     public AssignmentImpl() { }

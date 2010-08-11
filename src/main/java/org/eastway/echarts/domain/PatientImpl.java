@@ -33,7 +33,7 @@ import org.eastway.echarts.shared.PatientDTO;
 @Entity
 @Table(name = "Patient")
 @SecondaryTable(name = "Tickler",
-		pkJoinColumns=@PrimaryKeyJoinColumn(name="PATID"))
+		pkJoinColumns=@PrimaryKeyJoinColumn(name="case_number"))
 public class PatientImpl implements Patient {
 	@Id
 	private String caseNumber;
