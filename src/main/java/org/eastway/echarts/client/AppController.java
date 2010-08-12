@@ -17,6 +17,7 @@ package org.eastway.echarts.client;
 
 import net.customware.gwt.presenter.client.EventBus;
 
+import org.eastway.echarts.client.common.DiagnosisColumnDefinitionsImpl;
 import org.eastway.echarts.client.events.LogoutEvent;
 import org.eastway.echarts.client.events.LogoutEventHandler;
 import org.eastway.echarts.client.events.OpenEhrEvent;
@@ -63,6 +64,7 @@ import org.eastway.echarts.client.view.AddressView;
 import org.eastway.echarts.client.view.AppointmentView;
 import org.eastway.echarts.client.view.ContactView;
 import org.eastway.echarts.client.view.DemographicsView;
+import org.eastway.echarts.client.view.DiagnosisViewImpl;
 import org.eastway.echarts.client.view.EHRView;
 import org.eastway.echarts.client.view.EHRViewImpl;
 import org.eastway.echarts.client.view.LinkView;
@@ -70,11 +72,13 @@ import org.eastway.echarts.client.view.MedicationView;
 import org.eastway.echarts.client.view.MessagesView;
 import org.eastway.echarts.client.view.PatientSummaryView;
 import org.eastway.echarts.client.view.ReferralView;
+import org.eastway.echarts.shared.Diagnosis;
 import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.GetAddresses;
 import org.eastway.echarts.shared.GetAppointments;
 import org.eastway.echarts.shared.GetContacts;
 import org.eastway.echarts.shared.GetDemographics;
+import org.eastway.echarts.shared.GetDiagnoses;
 import org.eastway.echarts.shared.GetLinks;
 import org.eastway.echarts.shared.GetMedications;
 import org.eastway.echarts.shared.GetMessages;
@@ -93,7 +97,7 @@ public class AppController implements Presenter {
 	private CachingDispatchAsync dispatch;
 	private DashboardPresenter dashboardPresenter;
 	@Inject private TicklerPresenter ticklerPresenter;
-	@Inject private DiagnosisPresenter diagnosisPresenter;
+	@Inject private DiagnosisColumnDefinitionsImpl diagnosisColumnDefinitions;
 
 	@Inject
 	public AppController(DashboardPresenter dashboardPresenter, EventBus eventBus, CachingDispatchAsync dispatch) {
@@ -137,7 +141,7 @@ public class AppController implements Presenter {
 		eventBus.addHandler(ViewDiagnosesEvent.TYPE, new ViewDiagnosesEventHandler() {
 			@Override
 			public void onViewDiagnoses(ViewDiagnosesEvent event) {
-				doViewDiagnoses(event.getView(), event.getCaseNumber());
+				doViewDiagnoses(event.getView(), event.getCaseNumber(), event.getAction());
 			}
 		});
 		eventBus.addHandler(ViewLinksEvent.TYPE, new ViewLinksEventHandler() {
@@ -243,8 +247,8 @@ public class AppController implements Presenter {
 		presenter.go(view.getDisplayArea());
 	}
 
-	private void doViewDiagnoses(EHRView<EHR> view, String caseNumber) {
-		diagnosisPresenter.setData(caseNumber);
+	private void doViewDiagnoses(EHRView<EHR> view, String caseNumber, GetDiagnoses action) {
+		DiagnosisPresenter diagnosisPresenter = new DiagnosisPresenter(new DiagnosisViewImpl<Diagnosis>(), diagnosisColumnDefinitions, eventBus, dispatch, action);
 		diagnosisPresenter.go(view.getDisplayArea());
 	}
 

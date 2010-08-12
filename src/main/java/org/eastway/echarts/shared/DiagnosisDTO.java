@@ -18,17 +18,18 @@ package org.eastway.echarts.shared;
 import java.io.Serializable;
 import java.util.Date;
 
+
 @SuppressWarnings("serial")
 public class DiagnosisDTO implements Diagnosis, Serializable {
 
-	private String axis1A;
-	private String axis1B;
-	private String axis1C;
-	private String axis1D;
-	private String axis1E;
-	private String axis2A;
-	private String axis2B;
-	private String axis2C;
+	private DiagnosisCode axis1A;
+	private DiagnosisCode axis1B;
+	private DiagnosisCode axis1C;
+	private DiagnosisCode axis1D;
+	private DiagnosisCode axis1E;
+	private DiagnosisCode axis2A;
+	private DiagnosisCode axis2B;
+	private DiagnosisCode axis2C;
 	private String axis3;
 	private String axis4;
 	private String caseNumber;
@@ -40,42 +41,42 @@ public class DiagnosisDTO implements Diagnosis, Serializable {
 	private String lastEditBy;
 
 	@Override
-	public String getAxis1A() {
+	public DiagnosisCode getAxis1A() {
 		return axis1A;
 	}
 
 	@Override
-	public String getAxis1B() {
+	public DiagnosisCode getAxis1B() {
 		return axis1B;
 	}
 
 	@Override
-	public String getAxis1C() {
+	public DiagnosisCode getAxis1C() {
 		return axis1C;
 	}
 
 	@Override
-	public String getAxis1D() {
+	public DiagnosisCode getAxis1D() {
 		return axis1D;
 	}
 
 	@Override
-	public String getAxis1E() {
+	public DiagnosisCode getAxis1E() {
 		return axis1E;
 	}
 
 	@Override
-	public String getAxis2A() {
+	public DiagnosisCode getAxis2A() {
 		return axis2A;
 	}
 
 	@Override
-	public String getAxis2B() {
+	public DiagnosisCode getAxis2B() {
 		return axis2B;
 	}
 
 	@Override
-	public String getAxis2C() {
+	public DiagnosisCode getAxis2C() {
 		return axis2C;
 	}
 
@@ -125,42 +126,42 @@ public class DiagnosisDTO implements Diagnosis, Serializable {
 	}
 
 	@Override
-	public void setAxis1A(String axis1A) {
+	public void setAxis1A(DiagnosisCode axis1A) {
 		this.axis1A = axis1A;
 	}
 
 	@Override
-	public void setAxis1B(String axis1B) {
+	public void setAxis1B(DiagnosisCode axis1B) {
 		this.axis1B = axis1B;
 	}
 
 	@Override
-	public void setAxis1C(String axis1C) {
+	public void setAxis1C(DiagnosisCode axis1C) {
 		this.axis1C = axis1C;
 	}
 
 	@Override
-	public void setAxis1D(String axis1D) {
+	public void setAxis1D(DiagnosisCode axis1D) {
 		this.axis1D = axis1D;
 	}
 
 	@Override
-	public void setAxis1E(String axis1E) {
+	public void setAxis1E(DiagnosisCode axis1E) {
 		this.axis1E = axis1E;
 	}
 
 	@Override
-	public void setAxis2A(String axis2A) {
+	public void setAxis2A(DiagnosisCode axis2A) {
 		this.axis2A = axis2A;
 	}
 
 	@Override
-	public void setAxis2B(String axis2B) {
+	public void setAxis2B(DiagnosisCode axis2B) {
 		this.axis2B = axis2B;
 	}
 
 	@Override
-	public void setAxis2C(String axis2C) {
+	public void setAxis2C(DiagnosisCode axis2C) {
 		this.axis2C = axis2C;
 	}
 

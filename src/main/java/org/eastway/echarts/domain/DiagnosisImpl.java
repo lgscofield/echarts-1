@@ -19,23 +19,43 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.eastway.echarts.shared.Diagnosis;
+import org.eastway.echarts.shared.DiagnosisCode;
+import org.eastway.echarts.shared.DiagnosisCodeDTO;
 import org.eastway.echarts.shared.DiagnosisDTO;
 
 @Entity
 @Table(name = "Diagnosis")
 public class DiagnosisImpl implements Diagnosis {
 
-	private String axis1A;
-	private String axis1B;
-	private String axis1C;
-	private String axis1D;
-	private String axis1E;
-	private String axis2A;
-	private String axis2B;
-	private String axis2C;
+	@ManyToOne
+	@JoinColumn(name = "axis1a")
+	private DiagnosisCodeImpl axis1A;
+	@ManyToOne
+	@JoinColumn(name = "axis1b")
+	private DiagnosisCodeImpl axis1B;
+	@ManyToOne
+	@JoinColumn(name = "axis1c")
+	private DiagnosisCodeImpl axis1C;
+	@ManyToOne
+	@JoinColumn(name = "axis1d")
+	private DiagnosisCodeImpl axis1D;
+	@ManyToOne
+	@JoinColumn(name = "axis1e")
+	private DiagnosisCodeImpl axis1E;
+	@ManyToOne
+	@JoinColumn(name = "axis2a")
+	private DiagnosisCodeImpl axis2A;
+	@ManyToOne
+	@JoinColumn(name = "axis2b")
+	private DiagnosisCodeImpl axis2B;
+	@ManyToOne
+	@JoinColumn(name = "axis2c")
+	private DiagnosisCodeImpl axis2C;
 	private String axis3;
 	private String axis4;
 	private String caseNumber;
@@ -48,42 +68,42 @@ public class DiagnosisImpl implements Diagnosis {
 	private String lastEditBy;
 
 	@Override
-	public String getAxis1A() {
+	public DiagnosisCode getAxis1A() {
 		return axis1A;
 	}
 
 	@Override
-	public String getAxis1B() {
+	public DiagnosisCode getAxis1B() {
 		return axis1B;
 	}
 
 	@Override
-	public String getAxis1C() {
+	public DiagnosisCode getAxis1C() {
 		return axis1C;
 	}
 
 	@Override
-	public String getAxis1D() {
+	public DiagnosisCode getAxis1D() {
 		return axis1D;
 	}
 
 	@Override
-	public String getAxis1E() {
+	public DiagnosisCode getAxis1E() {
 		return axis1E;
 	}
 
 	@Override
-	public String getAxis2A() {
+	public DiagnosisCode getAxis2A() {
 		return axis2A;
 	}
 
 	@Override
-	public String getAxis2B() {
+	public DiagnosisCode getAxis2B() {
 		return axis2B;
 	}
 
 	@Override
-	public String getAxis2C() {
+	public DiagnosisCode getAxis2C() {
 		return axis2C;
 	}
 
@@ -133,43 +153,43 @@ public class DiagnosisImpl implements Diagnosis {
 	}
 
 	@Override
-	public void setAxis1A(String axis1A) {
-		this.axis1A = axis1A;
+	public void setAxis1A(DiagnosisCode axis1A) {
+		this.axis1A = (DiagnosisCodeImpl) axis1A;
 	}
 
 	@Override
-	public void setAxis1B(String axis1B) {
-		this.axis1B = axis1B;
+	public void setAxis1B(DiagnosisCode axis1B) {
+		this.axis1B = (DiagnosisCodeImpl) axis1B;
 	}
 
 	@Override
-	public void setAxis1C(String axis1C) {
-		this.axis1C = axis1C;
+	public void setAxis1C(DiagnosisCode axis1C) {
+		this.axis1C = (DiagnosisCodeImpl) axis1C;
 	}
 
 	@Override
-	public void setAxis1D(String axis1D) {
-		this.axis1D = axis1D;
+	public void setAxis1D(DiagnosisCode axis1D) {
+		this.axis1D = (DiagnosisCodeImpl) axis1D;
 	}
 
 	@Override
-	public void setAxis1E(String axis1E) {
-		this.axis1E = axis1E;
+	public void setAxis1E(DiagnosisCode axis1E) {
+		this.axis1E = (DiagnosisCodeImpl) axis1E;
 	}
 
 	@Override
-	public void setAxis2A(String axis2A) {
-		this.axis2A = axis2A;
+	public void setAxis2A(DiagnosisCode axis2A) {
+		this.axis2A = (DiagnosisCodeImpl) axis2A;
 	}
 
 	@Override
-	public void setAxis2B(String axis2B) {
-		this.axis2B = axis2B;
+	public void setAxis2B(DiagnosisCode axis2B) {
+		this.axis2B = (DiagnosisCodeImpl) axis2B;
 	}
 
 	@Override
-	public void setAxis2C(String axis2C) {
-		this.axis2C = axis2C;
+	public void setAxis2C(DiagnosisCode axis2C) {
+		this.axis2C = (DiagnosisCodeImpl) axis2C;
 	}
 
 	@Override
@@ -220,14 +240,14 @@ public class DiagnosisImpl implements Diagnosis {
 	@Override
 	public DiagnosisDTO toDto() {
 		DiagnosisDTO dto = new DiagnosisDTO();
-		dto.setAxis1A(axis1A);
-		dto.setAxis1B(axis1B);
-		dto.setAxis1C(axis1C);
-		dto.setAxis1D(axis1D);
-		dto.setAxis1E(axis1E);
-		dto.setAxis2A(axis2A);
-		dto.setAxis2B(axis2B);
-		dto.setAxis2C(axis2C);
+		dto.setAxis1A((axis1A == null) ? new DiagnosisCodeDTO() : axis1A.toDto());
+		dto.setAxis1B((axis1B == null) ? new DiagnosisCodeDTO() : axis1B.toDto());
+		dto.setAxis1C((axis1C == null) ? new DiagnosisCodeDTO() : axis1C.toDto());
+		dto.setAxis1D((axis1D == null) ? new DiagnosisCodeDTO() : axis1D.toDto());
+		dto.setAxis1E((axis1E == null) ? new DiagnosisCodeDTO() : axis1E.toDto());
+		dto.setAxis2A((axis2A == null) ? new DiagnosisCodeDTO() : axis2A.toDto());
+		dto.setAxis2B((axis2B == null) ? new DiagnosisCodeDTO() : axis2B.toDto());
+		dto.setAxis2C((axis2C == null) ? new DiagnosisCodeDTO() : axis2C.toDto());
 		dto.setAxis3(axis3);
 		dto.setAxis4(axis4);
 		dto.setCaseNumber(caseNumber);

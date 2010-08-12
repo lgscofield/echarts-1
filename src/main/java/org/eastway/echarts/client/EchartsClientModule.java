@@ -22,7 +22,6 @@ import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.common.DiagnosisColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.TicklerColumnDefinitionsImpl;
 import org.eastway.echarts.client.presenter.DashboardPresenter;
-import org.eastway.echarts.client.presenter.DiagnosisPresenter;
 import org.eastway.echarts.client.presenter.TicklerPresenter;
 import org.eastway.echarts.client.view.DashboardView;
 import org.eastway.echarts.client.view.DashboardViewImpl;
@@ -31,7 +30,6 @@ import org.eastway.echarts.client.view.DiagnosisViewImpl;
 import org.eastway.echarts.client.view.TicklerView;
 import org.eastway.echarts.client.view.TicklerViewImpl;
 import org.eastway.echarts.shared.Diagnosis;
-import org.eastway.echarts.shared.GetDiagnoses;
 import org.eastway.echarts.shared.GetTickler;
 import org.eastway.echarts.shared.Tickler;
 
@@ -61,8 +59,6 @@ public class EchartsClientModule extends AbstractGinModule {
 		bind(new TypeLiteral<TicklerView<Tickler>>() {}).to(TicklerViewImpl.class);
 		bind(new TypeLiteral<List<ColumnDefinition<Tickler>>>() {}).to(TicklerColumnDefinitionsImpl.class).in(Singleton.class);
 
-		bind(GetDiagnoses.class).in(Singleton.class);
-		bind(DiagnosisPresenter.class).in(Singleton.class);
 		bind(new TypeLiteral<DiagnosisView<Diagnosis>>() {}).to(DiagnosisViewImpl.class);
 		bind(new TypeLiteral<List<ColumnDefinition<Diagnosis>>>() {}).to(DiagnosisColumnDefinitionsImpl.class).in(Singleton.class);
 	}

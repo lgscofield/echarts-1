@@ -125,6 +125,7 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
 		demographics = new GetDemographics(EchartsUser.sessionId, caseNumber);
 		patientSummary = new GetPatientSummary(EchartsUser.sessionId, caseNumber);
 		referral = new GetReferral(EchartsUser.sessionId, caseNumber);
+		diagnoses = new GetDiagnoses(EchartsUser.sessionId, caseNumber);
 		links = new GetLinks(EchartsUser.sessionId, caseNumber);
 		messages = new GetMessages(EchartsUser.sessionId, caseNumber);
 		addresses = new GetAddresses(EchartsUser.sessionId, caseNumber);

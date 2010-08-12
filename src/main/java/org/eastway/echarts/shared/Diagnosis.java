@@ -17,6 +17,7 @@ package org.eastway.echarts.shared;
 
 import java.util.Date;
 
+
 public interface Diagnosis {
 
 	public void setId(long id);
@@ -31,37 +32,37 @@ public interface Diagnosis {
 
 	public Date getDate();
 
-	public void setAxis1A(String axis1A);
+	public void setAxis1A(DiagnosisCode axis1A);
 
-	public String getAxis1A();
+	public DiagnosisCode getAxis1A();
 
-	public void setAxis1B(String axis1B);
+	public void setAxis1B(DiagnosisCode axis1B);
 
-	public String getAxis1B();
+	public DiagnosisCode getAxis1B();
 
-	public void setAxis1C(String axis1C);
+	public void setAxis1C(DiagnosisCode axis1C);
 
-	public String getAxis1C();
+	public DiagnosisCode getAxis1C();
 
-	public void setAxis1D(String axis1D);
+	public void setAxis1D(DiagnosisCode axis1D);
 
-	public String getAxis1D();
+	public DiagnosisCode getAxis1D();
 
-	public void setAxis1E(String axis1E);
+	public void setAxis1E(DiagnosisCode axis1E);
 
-	public String getAxis1E();
+	public DiagnosisCode getAxis1E();
 
-	public void setAxis2A(String axis2A);
+	public void setAxis2A(DiagnosisCode axis2A);
 
-	public String getAxis2A();
+	public DiagnosisCode getAxis2A();
 
-	public void setAxis2B(String axis2B);
+	public void setAxis2B(DiagnosisCode axis2B);
 
-	public String getAxis2B();
+	public DiagnosisCode getAxis2B();
 
-	public void setAxis2C(String axis2C);
+	public void setAxis2C(DiagnosisCode axis2C);
 
-	public String getAxis2C();
+	public DiagnosisCode getAxis2C();
 
 	public void setAxis3(String axis3);
 
