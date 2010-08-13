@@ -121,10 +121,11 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 		this.presenter = presenter;
 	}
 
+	private int headerRepeat = 10;
+
 	@UiHandler("table")
 	void handleItemSelected(ClickEvent event) {
 		int selected = -1;
-
 		FlexTable.Cell cell = table.getCellForEvent(event);
 
 		if (cell != null) {
@@ -132,9 +133,13 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 				selected = cell.getRowIndex();
 				if (selected < 1)
 					return;
-				presenter.openEhr(rowData.get(selected - 1));
+				presenter.openEhr(rowData.get(getRow(selected)));
 			}
 		}
+	}
+
+	private int getRow(int selected) {
+		return selected - ((selected < headerRepeat ? selected : selected - 1) / headerRepeat) - 1;
 	}
 
 	@Override
@@ -142,7 +147,7 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 		this.rowData = rowData;
 
 		for (int i = 0, row = 0; i < rowData.size(); ++i, ++row) {
-			if (i % 10 == 0)
+			if (i % headerRepeat == 0)
 				setHeader(row++);
 			final T t = rowData.get(i);
 
