@@ -59,9 +59,9 @@ public class DiagnosisImpl implements Diagnosis {
 	private String axis3;
 	private String axis4;
 	private String caseNumber;
-	private int currentGAF;
+	private Integer currentGAF;
 	private Date date;
-	private int highestGAF;
+	private Integer highestGAF;
 	@Id
 	private long id;
 	private Date lastEdit;

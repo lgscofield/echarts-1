@@ -65,7 +65,7 @@ public class PatientImpl extends Patient {
 	@Column(name="FAF", table="tickler")
 	private Date financialDateCompleted;
 	@Column(name="FAF_XX", table="tickler", scale=18, precision=0)
-	private long isTitleTwenty;
+	private Long isTitleTwenty;
 	@Column(name="DA", table="tickler")
 	private Date diagnosticAssessmentDateCompleted;
 	@Column(name="OOCi", table="tickler")

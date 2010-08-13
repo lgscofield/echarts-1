@@ -50,7 +50,7 @@ public class UserImpl implements User {
 	@ManyToOne
 	@JoinColumn(name = "Role_Id")
 	private RoleImpl role;
-	private byte[] extendedPermissions;
+	private Byte[] extendedPermissions;
 	private String staffName;
 	private String program;
 	private Date hireDate;
@@ -230,7 +230,7 @@ public class UserImpl implements User {
 	}
 
 	@Override
-	public byte[] getExtendedPermissions() {
+	public Byte[] getExtendedPermissions() {
 		return extendedPermissions;
 	}
 
@@ -240,7 +240,7 @@ public class UserImpl implements User {
 	}
 
 	@Override
-	public void setExtendedPermissions(byte[] extendedPermissions) {
+	public void setExtendedPermissions(Byte[] extendedPermissions) {
 		this.extendedPermissions = extendedPermissions;
 	}
 

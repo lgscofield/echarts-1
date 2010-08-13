@@ -24,7 +24,7 @@ public class Link {
 	private String name;
 	private String url;
 	private String header;
-	private int sortOrder;
+	private Integer sortOrder;
 
 	public Link() { }
 

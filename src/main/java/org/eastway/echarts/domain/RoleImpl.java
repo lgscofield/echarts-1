@@ -35,7 +35,7 @@ public class RoleImpl implements Role {
 	@Column(name = "Role_Id")
 	private int id;
 	private String roleName;
-	private byte[] permission;
+	private Byte[] permission;
 
 	public RoleImpl() { }
 
@@ -64,12 +64,12 @@ public class RoleImpl implements Role {
 	}
 
 	@Override
-	public void setPermission(byte[] permission) {
+	public void setPermission(Byte[] permission) {
 		this.permission = permission;
 	}
 
 	@Override
-	public byte[] getPermission() {
+	public Byte[] getPermission() {
 		return permission;
 	}
 

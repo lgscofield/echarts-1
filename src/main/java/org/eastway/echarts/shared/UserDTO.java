@@ -30,7 +30,7 @@ public class UserDTO implements User, Serializable {
 	private String officeExt;
 	private String staffDescription;
 	private String staffNpi;
-	byte[] extendedPermissions;
+	Byte[] extendedPermissions;
 	private Date hireDate, termDate;
 	private long id;
 	private Role role;
@@ -40,7 +40,7 @@ public class UserDTO implements User, Serializable {
 	public UserDTO() { };
 
 	@Override
-	public byte[] getExtendedPermissions() {
+	public Byte[] getExtendedPermissions() {
 		return extendedPermissions;
 	}
 
@@ -105,7 +105,7 @@ public class UserDTO implements User, Serializable {
 	}
 
 	@Override
-	public void setExtendedPermissions(byte[] permissions) {
+	public void setExtendedPermissions(Byte[] permissions) {
 		this.extendedPermissions = permissions;
 	}
 

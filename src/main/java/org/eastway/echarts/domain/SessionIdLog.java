@@ -26,7 +26,7 @@ public class SessionIdLog {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	private String sessionId;
-	private long sessionIdExpire;
+	private Long sessionIdExpire;
 
 	public SessionIdLog() { }
 

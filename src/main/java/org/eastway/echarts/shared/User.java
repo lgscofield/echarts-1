@@ -48,8 +48,8 @@ public interface User {
 	void setStaffNpi(String staffNpi);
 	String getStaffNpi();
 
-	void setExtendedPermissions(byte[] extendedPermissions);
-	byte[] getExtendedPermissions();
+	void setExtendedPermissions(Byte[] extendedPermissions);
+	Byte[] getExtendedPermissions();
 
 	void setHireDate(Date hireDate);
 	Date getHireDate();

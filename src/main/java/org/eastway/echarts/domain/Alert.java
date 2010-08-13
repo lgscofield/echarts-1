@@ -24,7 +24,7 @@ import javax.persistence.Id;
 public class Alert {
 	@Id
 	private int id;
-	private long patientId;
+	private Long patientId;
 	private String name;
 	private String itemName;
 	private Date date;

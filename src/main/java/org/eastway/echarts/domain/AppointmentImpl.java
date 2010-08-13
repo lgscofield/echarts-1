@@ -32,15 +32,15 @@ public class AppointmentImpl implements Appointment {
 	private String activity;
 	private Date appointmentDate;
 	private String caseNumber;
-	private float endTime;
+	private Float endTime;
 	@Id
 	private int id;
 	private String location;
 	@Type(type = "text")
 	private String notes;
-	private float priority;
+	private Float priority;
 	private String staff;
-	private float startTime;
+	private Float startTime;
 
 	@Override
 	public String getActivity() {

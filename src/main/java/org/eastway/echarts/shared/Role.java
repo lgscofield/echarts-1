@@ -26,9 +26,9 @@ public interface Role {
 
 	public String getRoleName();
 
-	public void setPermission(byte[] permission);
+	public void setPermission(Byte[] permission);
 
-	public byte[] getPermission();
+	public Byte[] getPermission();
 
 	public RoleDTO toDto();
 

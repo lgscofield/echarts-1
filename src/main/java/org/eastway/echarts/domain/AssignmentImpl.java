@@ -83,7 +83,7 @@ public class AssignmentImpl implements Serializable, Assignment {
 
     @Null
     @Column(name="trtepisode")
-    private short trtEpisode;
+    private Short trtEpisode;
 
     private String program;
 
