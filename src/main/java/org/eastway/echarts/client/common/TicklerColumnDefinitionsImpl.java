@@ -13,7 +13,11 @@ public class TicklerColumnDefinitionsImpl extends
 	protected TicklerColumnDefinitionsImpl() {
 		this.add(new ColumnDefinition<Tickler>() {
 			public void render(Tickler t, StringBuilder sb) {
-				sb.append("<span title=\"HIPAA completed " + t.getHipaaDateCompleted() + "\">" + t.getName() + "</span>");
+				if (t.getHipaaDateCompleted() == null) {
+					sb.append("<span style=\"color: red;\" title=\"HIPAA NOT completed\">" + t.getName() + "</span>");
+				} else {
+					sb.append("<span title=\"HIPAA completed " + t.getHipaaDateCompleted() + "\">" + t.getName() + "</span>");
+				}
 			}
 		});
 		this.add(new ColumnDefinition<Tickler>() {
