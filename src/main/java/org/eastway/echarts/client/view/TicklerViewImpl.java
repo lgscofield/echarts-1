@@ -69,17 +69,20 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 
 	public TicklerViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
-		table.setHTML(0, Column.NAME.ordinal(), "<b>Name</b>");
-		table.setHTML(0, Column.CASE_NUMBER.ordinal(), "<b>Case Number</b>");
-		table.setHTML(0, Column.ISP.ordinal(), "<b>ISP</b>");
-		table.setHTML(0, Column.ISP_REVIEW.ordinal(), "<b>ISP Review</b>");
-		table.setHTML(0, Column.HEALTH_HISTORY.ordinal(), "<b>Health History</b>");
-		table.setHTML(0, Column.DIAGNOSTIC_ASSESSMENT_UPDATE.ordinal(), "<b>DA Update</b>");
-		table.setHTML(0, Column.FINANCIAL.ordinal(), "<b>Financial</b>");
-		table.setHTML(0, Column.OOC.ordinal(), "<b>OOC</b>");
 		table.setBorderWidth(1);
 		menuPopup.setAutoHideEnabled(true);
 		menuPopup.add(menuBar);
+	}
+
+	private void setHeader(int row) {
+		table.setHTML(row, Column.NAME.ordinal(), "<b>Name</b>");
+		table.setHTML(row, Column.CASE_NUMBER.ordinal(), "<b>Case Number</b>");
+		table.setHTML(row, Column.ISP.ordinal(), "<b>ISP</b>");
+		table.setHTML(row, Column.ISP_REVIEW.ordinal(), "<b>ISP Review</b>");
+		table.setHTML(row, Column.HEALTH_HISTORY.ordinal(), "<b>Health History</b>");
+		table.setHTML(row, Column.DIAGNOSTIC_ASSESSMENT_UPDATE.ordinal(), "<b>DA Update</b>");
+		table.setHTML(row, Column.FINANCIAL.ordinal(), "<b>Financial</b>");
+		table.setHTML(row, Column.OOC.ordinal(), "<b>OOC</b>");
 	}
 
 	public void openMenu(final T t, int x, int y) {
@@ -138,7 +141,9 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 	public void setRowData(List<T> rowData) {
 		this.rowData = rowData;
 
-		for (int i = 0; i < rowData.size(); ++i) {
+		for (int i = 0, row = 0; i < rowData.size(); ++i, ++row) {
+			if (i % 10 == 0)
+				setHeader(row++);
 			final T t = rowData.get(i);
 
 			for (int j = 0; j < columnDefinitions.size(); ++j) {
@@ -159,9 +164,9 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 						}
 					});
 					label.addStyleName(style.pointer());
-					table.setWidget(i + 1, j, label);
+					table.setWidget(row, j, label);
 				} else {
-					table.setHTML(i + 1, j, sb.toString());
+					table.setHTML(row, j, sb.toString());
 				}
 			}
 		}
