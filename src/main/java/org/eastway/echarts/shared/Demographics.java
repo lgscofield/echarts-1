@@ -44,9 +44,9 @@ public interface Demographics {
 
 	public Code getEmployment();
 
-	public void setIncomeSources(String[] incomeSources);
+	public void setIncomeSources(String incomeSources);
 
-	public String[] getIncomeSources();
+	public String getIncomeSources();
 
 	public void setEducationLevel(Code educationLevel);
 
@@ -56,9 +56,9 @@ public interface Demographics {
 
 	public Code getEducationType();
 
-	public void setAllergies(String[] allergies);
+	public void setAllergies(String allergies);
 
-	public String[] getAllergies();
+	public String getAllergies();
 
 	public void setInsuranceType(String insuranceType);
 

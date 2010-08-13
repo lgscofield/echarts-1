@@ -21,6 +21,7 @@ import org.eastway.echarts.domain.ReferralImpl;
 import org.eastway.echarts.shared.DbException;
 import org.eastway.echarts.shared.GetReferral;
 import org.eastway.echarts.shared.GetReferralResult;
+import org.eastway.echarts.shared.ReferralDTO;
 import org.eastway.echarts.shared.SessionExpiredException;
 
 import net.customware.gwt.dispatch.server.ActionHandler;
@@ -43,7 +44,7 @@ public class GetReferralHandler implements ActionHandler<GetReferral, GetReferra
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 		ReferralImpl referral = em.find(ReferralImpl.class, action.getCaseNumber());
 		em.close();
-		return new GetReferralResult(referral.toDto());
+		return new GetReferralResult(referral == null ? new ReferralDTO() : referral.toDto());
 	}
 
 	@Override

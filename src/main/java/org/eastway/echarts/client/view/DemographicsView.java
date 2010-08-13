@@ -52,7 +52,7 @@ public class DemographicsView extends Composite implements DemographicsPresenter
 	}
 
 	@Override
-	public String[] getAllergies() {
+	public String getAllergies() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -94,7 +94,7 @@ public class DemographicsView extends Composite implements DemographicsPresenter
 	}
 
 	@Override
-	public String[] getIncomeSources() {
+	public String getIncomeSources() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -285,7 +285,7 @@ public class DemographicsView extends Composite implements DemographicsPresenter
 	}
 
 	@Override
-	public void setAllergies(String[] allergies) {
+	public void setAllergies(String allergies) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -383,7 +383,7 @@ public class DemographicsView extends Composite implements DemographicsPresenter
 	}
 
 	@Override
-	public void setIncomeSources(String[] incomeSources) {
+	public void setIncomeSources(String incomeSources) {
 		// TODO Auto-generated method stub
 		
 	}

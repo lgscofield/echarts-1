@@ -25,10 +25,10 @@ public class DemographicsDTO implements Serializable, Demographics {
 	private Code maritalStatus;
 	private Code livingArrangement;
 	private Code employment;
-	private String[] incomeSources;
+	private String incomeSources;
 	private Code educationLevel;
 	private Code educationType;
-	private String[] allergies;
+	private String allergies;
 	private String religion;
 	private String insuranceType;
 	private String preferredLanguage;
@@ -114,12 +114,12 @@ public class DemographicsDTO implements Serializable, Demographics {
 	}
 
 	@Override
-	public void setIncomeSources(String[] incomeSources) {
+	public void setIncomeSources(String incomeSources) {
 		this.incomeSources = incomeSources;
 	}
 
 	@Override
-	public String[] getIncomeSources() {
+	public String getIncomeSources() {
 		return incomeSources;
 	}
 
@@ -144,12 +144,12 @@ public class DemographicsDTO implements Serializable, Demographics {
 	}
 
 	@Override
-	public void setAllergies(String[] allergies) {
+	public void setAllergies(String allergies) {
 		this.allergies = allergies;
 	}
 
 	@Override
-	public String[] getAllergies() {
+	public String getAllergies() {
 		return allergies;
 	}
 
