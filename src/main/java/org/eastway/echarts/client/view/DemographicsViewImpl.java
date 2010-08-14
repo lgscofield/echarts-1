@@ -18,14 +18,14 @@ package org.eastway.echarts.client.view;
 import java.util.List;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
+import org.eastway.echarts.style.client.GlobalResources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Widget;
 
 public class DemographicsViewImpl<T> extends Composite implements DemographicsView<T> {
@@ -39,10 +39,11 @@ public class DemographicsViewImpl<T> extends Composite implements DemographicsVi
 	private Presenter<T> presenter;
 	private T rowData;
 	private List<ColumnDefinition<T>> columnDefinitions;
-	@UiField FlowPanel panel;
+	@UiField FlexTable table;
 
 	public DemographicsViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
+		table.addStyleName(GlobalResources.styles().table());
 	}
 
 	@Override
@@ -58,10 +59,12 @@ public class DemographicsViewImpl<T> extends Composite implements DemographicsVi
 	@Override
 	public void setRowData(T rowData) {
 		this.rowData = rowData;
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < columnDefinitions.size(); i++)
+		for (int i = 0; i < columnDefinitions.size(); i++) {
+			StringBuilder sb = new StringBuilder();
+			table.setHTML(i, 0, columnDefinitions.get(i).getHeader(rowData));
 			columnDefinitions.get(i).render(rowData, sb);
-		panel.add(new HTML(sb.toString()));
+			table.setHTML(i, 1, sb.toString());
+		}
 	}
 
 	@Override
