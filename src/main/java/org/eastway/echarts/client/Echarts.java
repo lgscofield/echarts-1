@@ -15,11 +15,10 @@
  */
 package org.eastway.echarts.client;
 
+import org.eastway.echarts.client.style.GlobalResources;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.CssResource;
-import com.google.gwt.resources.client.CssResource.NotStrict;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
@@ -27,11 +26,6 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 public class Echarts implements EntryPoint {
 	private final EchartsGinjector injector = GWT.create(EchartsGinjector.class);
 	private RootLayoutPanel root = RootLayoutPanel.get();
-	interface GlobalResources extends ClientBundle {
-		@NotStrict
-		@Source("echarts.css")
-		CssResource css();
-	}
 
 	@Override
 	public void onModuleLoad() {
