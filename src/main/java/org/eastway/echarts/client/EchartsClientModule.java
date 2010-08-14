@@ -19,6 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
+import org.eastway.echarts.client.common.DemographicsColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.DiagnosisColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.TicklerColumnDefinitionsImpl;
 import org.eastway.echarts.client.presenter.DashboardPresenter;
@@ -29,6 +30,7 @@ import org.eastway.echarts.client.view.DiagnosisView;
 import org.eastway.echarts.client.view.DiagnosisViewImpl;
 import org.eastway.echarts.client.view.TicklerView;
 import org.eastway.echarts.client.view.TicklerViewImpl;
+import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.Diagnosis;
 import org.eastway.echarts.shared.GetTickler;
 import org.eastway.echarts.shared.Tickler;
@@ -61,6 +63,8 @@ public class EchartsClientModule extends AbstractGinModule {
 
 		bind(new TypeLiteral<DiagnosisView<Diagnosis>>() {}).to(DiagnosisViewImpl.class);
 		bind(new TypeLiteral<List<ColumnDefinition<Diagnosis>>>() {}).to(DiagnosisColumnDefinitionsImpl.class).in(Singleton.class);
+
+		bind(new TypeLiteral<List<ColumnDefinition<Demographics>>>() {}).to(DemographicsColumnDefinitionsImpl.class).in(Singleton.class);
 	}
 
 }

@@ -17,6 +17,7 @@ package org.eastway.echarts.client;
 
 import net.customware.gwt.presenter.client.EventBus;
 
+import org.eastway.echarts.client.common.DemographicsColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.DiagnosisColumnDefinitionsImpl;
 import org.eastway.echarts.client.events.LogoutEvent;
 import org.eastway.echarts.client.events.LogoutEventHandler;
@@ -63,7 +64,7 @@ import org.eastway.echarts.client.presenter.TicklerPresenter;
 import org.eastway.echarts.client.view.AddressView;
 import org.eastway.echarts.client.view.AppointmentView;
 import org.eastway.echarts.client.view.ContactView;
-import org.eastway.echarts.client.view.DemographicsView;
+import org.eastway.echarts.client.view.DemographicsViewImpl;
 import org.eastway.echarts.client.view.DiagnosisViewImpl;
 import org.eastway.echarts.client.view.EHRView;
 import org.eastway.echarts.client.view.EHRViewImpl;
@@ -72,6 +73,7 @@ import org.eastway.echarts.client.view.MedicationView;
 import org.eastway.echarts.client.view.MessagesView;
 import org.eastway.echarts.client.view.PatientSummaryView;
 import org.eastway.echarts.client.view.ReferralView;
+import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.Diagnosis;
 import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.GetAddresses;
@@ -98,6 +100,7 @@ public class AppController implements Presenter {
 	private DashboardPresenter dashboardPresenter;
 	@Inject private TicklerPresenter ticklerPresenter;
 	@Inject private DiagnosisColumnDefinitionsImpl diagnosisColumnDefinitions;
+	@Inject private DemographicsColumnDefinitionsImpl demographicsColumnDefinitions;
 
 	@Inject
 	public AppController(DashboardPresenter dashboardPresenter, EventBus eventBus, CachingDispatchAsync dispatch) {
@@ -280,7 +283,7 @@ public class AppController implements Presenter {
 	}
 
 	private void doViewDemographics(final EHRView<EHR> view, GetDemographics action) {
-		Presenter presenter = new DemographicsPresenter(new DemographicsView(), eventBus, dispatch, action);
+		Presenter presenter = new DemographicsPresenter(new DemographicsViewImpl<Demographics>(), demographicsColumnDefinitions, eventBus, dispatch, action);
 		presenter.go(view.getDisplayArea());
 	}
 

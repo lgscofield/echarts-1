@@ -15,10 +15,14 @@
  */
 package org.eastway.echarts.client.presenter;
 
+import java.util.List;
+
 import net.customware.gwt.presenter.client.EventBus;
 
 import org.eastway.echarts.client.CachingDispatchAsync;
 import org.eastway.echarts.client.HandleRpcException;
+import org.eastway.echarts.client.common.ColumnDefinition;
+import org.eastway.echarts.client.view.DemographicsView;
 import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.GetDemographics;
 import org.eastway.echarts.shared.GetDemographicsResult;
@@ -28,26 +32,26 @@ import com.google.gwt.requestfactory.shared.RequestEvent.State;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class DemographicsPresenter implements Presenter {
+public class DemographicsPresenter implements Presenter, DemographicsView.Presenter<Demographics> {
 
-	public interface Display extends EchartsDisplay, Demographics { }
-
-	private Display display;
+	private DemographicsView<Demographics> view;
 	private EventBus eventBus;
 	private CachingDispatchAsync dispatch;
 	private GetDemographics action;
-	public DemographicsPresenter(Display display,
-			EventBus eventBus, CachingDispatchAsync dispatch, GetDemographics action) {
-		this.display = display;
+	public DemographicsPresenter(DemographicsView<Demographics> view,
+			List<ColumnDefinition<Demographics>> columnDefinitions, EventBus eventBus, CachingDispatchAsync dispatch, GetDemographics action) {
+		this.view = view;
 		this.eventBus = eventBus;
 		this.dispatch = dispatch;
 		this.action = action;
+		this.view.setPresenter(this);
+		this.view.setColumnDefinitions(columnDefinitions);
 	}
 
 	@Override
 	public void go(HasWidgets container) {
 		container.clear();
-		container.add(display.asWidget());
+		container.add(view.asWidget());
 		fetchData();
 	}
 
@@ -69,45 +73,6 @@ public class DemographicsPresenter implements Presenter {
 	}
 
 	public void setData(Demographics demographics) {
-		display.setAllergies(demographics.getAllergies());
-		display.setReligion(demographics.getReligion());
-		display.setAlcoholDrug(demographics.isAlcoholDrug());
-		display.setAllergies(demographics.getAllergies());
-		display.setBlind(demographics.isBlind());
-		display.setChildAlcDrug(demographics.isAlcoholDrug());
-		display.setDd(demographics.isDd());
-		display.setDeaf(demographics.isDeaf());
-		display.setDob(demographics.getDob());
-		display.setDomesticViolence(demographics.isDomesticViolence());
-		display.setDuidwi(demographics.isDuidwi());
-		display.setEducationLevel(demographics.getEducationLevel());
-		display.setEducationType(demographics.getEducationType());
-		display.setEmployment(demographics.getEmployment());
-		display.setEthnicity(demographics.getEthnicity());
-		display.setForensic(demographics.isForensic());
-		display.setGender(demographics.getGender());
-		display.setGeneralPopulation(demographics.isGeneralPopulation());
-		display.setHearingImpaired(demographics.isHearingImpaired());
-		display.setHivAids(demographics.isHivAids());
-		display.setIncomeSources(demographics.getIncomeSources());
-		display.setInsuranceType(demographics.getInsuranceType());
-		display.setLastEdit(demographics.getLastEdit());
-		display.setLastEditBy(demographics.getLastEditBy());
-		display.setLivingArrangement(demographics.getLivingArrangement());
-		display.setMaritalStatus(demographics.getMaritalStatus());
-		display.setMimr(demographics.isMimr());
-		display.setPhyDisabled(demographics.isPhyDisabled());
-		display.setPhysicalAbuse(demographics.isPhysicalAbuse());
-		display.setPreferredLanguage(demographics.getPreferredLanguage());
-		display.setProbationParole(demographics.isProbationParole());
-		display.setRace(demographics.getRace());
-		display.setReligion(demographics.getReligion());
-		display.setSchoolDropout(demographics.isSchoolDropout());
-		display.setSexualAbuse(demographics.isSexualAbuse());
-		display.setSmd(demographics.isSmd());
-		display.setSpeechImpaired(demographics.isSpeechImpaired());
-		display.setSuicidal(demographics.isSuicidal());
-		display.setVeteran(demographics.isVeteran());
-		display.setVisuallyImpaired(demographics.isVisuallyImpaired());
+		view.setRowData(demographics);
 	}
 }

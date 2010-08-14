@@ -15,7 +15,7 @@
  */
 package org.eastway.echarts.client;
 
-import org.eastway.echarts.client.style.GlobalResources;
+import org.eastway.echarts.style.client.GlobalResources;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -42,7 +42,7 @@ public class Echarts implements EntryPoint {
 			EchartsUser.userName = username;
 			EchartsUser.staffId = staffId;
 			//EchartsUser.staffId = "5434"; // for testing
-			GWT.<GlobalResources>create(GlobalResources.class).css().ensureInjected();
+			GlobalResources.resources().css().ensureInjected();
 			go();
 		}
 	}
