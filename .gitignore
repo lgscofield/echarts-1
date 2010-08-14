@@ -10,3 +10,6 @@ log.roo
 
 # Directory created by DevMode
 src/main/webapp/echarts
+
+# Ignore .settings
+.settings
