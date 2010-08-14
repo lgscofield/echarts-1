@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.ui.ContextMenuLabel;
+import org.eastway.echarts.style.client.GlobalResources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -69,7 +70,7 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 
 	public TicklerViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
-		table.setBorderWidth(1);
+		table.addStyleName(GlobalResources.styles().table());
 		menuPopup.setAutoHideEnabled(true);
 		menuPopup.add(menuBar);
 	}

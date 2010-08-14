@@ -135,5 +135,8 @@
 
 .table, .table td {
 	border: 1px solid LightGray;
-	margin: 15px;
+}
+
+.table td {
+	padding: 5px;
 }
