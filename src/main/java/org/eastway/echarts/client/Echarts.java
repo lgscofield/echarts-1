@@ -29,7 +29,7 @@ public class Echarts implements EntryPoint {
 
 	@Override
 	public void onModuleLoad() {
-		String sessionId = Cookies.getCookie("sessionId");
+		String sessionId = Cookies.getCookie("session_id");
 		String username = Cookies.getCookie("echarts_user");
 		String staffId = Cookies.getCookie("staff_id");
 
