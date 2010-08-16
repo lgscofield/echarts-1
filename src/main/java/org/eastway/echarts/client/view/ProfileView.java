@@ -13,46 +13,25 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.client.common;
+package org.eastway.echarts.client.view;
 
 import java.util.List;
 
-public abstract class ColumnDefinition<T> {
-	public abstract void render(T t, StringBuilder sb);
+import org.eastway.echarts.client.common.ColumnDefinition;
 
-	public String getData(T t) {
-		return null;
+import com.google.gwt.user.client.ui.Widget;
+
+public interface ProfileView<T> {
+
+	public interface Presenter<T> {
+		void save(T data);
 	}
 
-	public List<String> getList(T t) {
-		return null;
-	}
+	void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions);
 
-	public void setData(T t, String data) {
-		
-	}
+	void setPresenter(Presenter<T> presenter);
 
-	public boolean isClickable() {
-		return false;
-	}
+	Widget asWidget();
 
-	public boolean isSelectable() {
-		return false;
-	}
-
-	public boolean isList() {
-		return false;
-	}
-
-	public boolean isEditable() {
-		return false;
-	}
-
-	public boolean isContextMenu() {
-		return false;
-	}
-
-	public String getHeader(T t) {
-		return null;
-	}
+	void setRowData(T t);
 }

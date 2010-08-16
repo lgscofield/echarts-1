@@ -13,46 +13,25 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.client.common;
+package org.eastway.echarts.shared;
 
-import java.util.List;
+import net.customware.gwt.dispatch.shared.Result;
 
-public abstract class ColumnDefinition<T> {
-	public abstract void render(T t, StringBuilder sb);
+public class GetProfileResult implements Result {
 
-	public String getData(T t) {
-		return null;
+	private User user;
+
+	public GetProfileResult() { }
+
+	public GetProfileResult(User user) {
+		this.setUser(user);
 	}
 
-	public List<String> getList(T t) {
-		return null;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public void setData(T t, String data) {
-		
-	}
-
-	public boolean isClickable() {
-		return false;
-	}
-
-	public boolean isSelectable() {
-		return false;
-	}
-
-	public boolean isList() {
-		return false;
-	}
-
-	public boolean isEditable() {
-		return false;
-	}
-
-	public boolean isContextMenu() {
-		return false;
-	}
-
-	public String getHeader(T t) {
-		return null;
+	public User getUser() {
+		return user;
 	}
 }

@@ -18,6 +18,12 @@ package org.eastway.echarts.shared;
 import java.util.Date;
 
 public interface User {
+	void setCred1(String cred1);
+	String getCred1();
+
+	void setCred2(String cred2);
+	String getCred2();
+
 	void setStaffId(String staffId);
 	String getStaffId();
 

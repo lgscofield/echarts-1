@@ -36,6 +36,8 @@ public class UserDTO implements User, Serializable {
 	private Role role;
 	private String supervisor;
 	private String sessionId;
+	private String cred1;
+	private String cred2;
 
 	public UserDTO() { };
 
@@ -212,5 +214,25 @@ public class UserDTO implements User, Serializable {
 	@Override
 	public void setSessionId(String sessionId) {
 		this.sessionId = sessionId;
+	}
+
+	@Override
+	public void setCred1(String cred1) {
+		this.cred1 = cred1;
+	}
+
+	@Override
+	public String getCred1() {
+		return cred1;
+	}
+
+	@Override
+	public void setCred2(String cred2) {
+		this.cred2 = cred2;
+	}
+
+	@Override
+	public String getCred2() {
+		return cred2;
 	}
 }

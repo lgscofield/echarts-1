@@ -19,15 +19,12 @@ import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.TableGenerator;
 
 import org.eastway.echarts.shared.Role;
 import org.eastway.echarts.shared.User;
@@ -36,15 +33,13 @@ import org.eastway.echarts.shared.UserDTO;
 @Entity
 @Table(name="Echarts_User")
 public class UserImpl implements User {
-	@Id
-	@TableGenerator(name = "tg", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.TABLE, generator = "tg")
 	private long id;
 	@ManyToMany
 	@JoinTable(name="user_session_map",
 			joinColumns=@JoinColumn(name="user_id"),
 			inverseJoinColumns=@JoinColumn(name="session_id"))
 	private Collection<SessionIdLog> sessionIds;
+	@Id
 	private String username;
 	private String staffId;
 	@ManyToOne
@@ -62,6 +57,8 @@ public class UserImpl implements User {
 	private String staffDescription;
 	private String staffNpi;
 	private String supervisor;
+	private String cred1;
+	private String cred2;
 
 	public UserImpl() {	}
 
@@ -218,7 +215,7 @@ public class UserImpl implements User {
 		userDto.setOfficeExt(this.getOfficeExt());
 		userDto.setOfficePhone(this.getOfficePhone());
 		userDto.setProgram(this.getProgram());
-		userDto.setRole(role);
+		userDto.setRole(role.toDto());
 		userDto.setStaffDescription(this.getStaffDescription());
 		userDto.setStaffId(this.getStaffId());
 		userDto.setStaffName(this.getStaffName());
@@ -226,6 +223,8 @@ public class UserImpl implements User {
 		userDto.setStatus(this.getStatus());
 		userDto.setTermDate(this.getTermDate());
 		userDto.setUsername(this.getUsername());
+		userDto.setCred1(cred1);
+		userDto.setCred2(cred2);
 		return userDto;
 	}
 
@@ -260,5 +259,25 @@ public class UserImpl implements User {
 	public void setSessionId(String sessionId) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void setCred1(String cred1) {
+		this.cred1 = cred1;
+	}
+
+	@Override
+	public String getCred1() {
+		return cred1;
+	}
+
+	@Override
+	public void setCred2(String cred2) {
+		this.cred2 = cred2;
+	}
+
+	@Override
+	public String getCred2() {
+		return cred2;
 	}
 }

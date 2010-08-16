@@ -45,6 +45,8 @@ public interface DashboardView<T> {
 		void openTickler();
 
 		void logout();
+
+		void openProfile();
 	}
 
 	void addTab(Widget widget, String string);

@@ -77,16 +77,6 @@
 			width: 220px;
 		}
 		
-		.logout {
-			text-decoration: none;
-			margin-left: 5px;
-		}
-		
-		.logout:hover {
-			cursor: pointer;
-			border-bottom: 1px dotted black;
-		}
-		
 		.top {
 			margin-top: 10px;
 		}
@@ -100,21 +90,25 @@
 	<ui:image field="logo" src="../../style/client/echarts-logo.gif"/>
 	<g:DockLayoutPanel unit="EM" ui:field="dockLayoutPanel">
 		<g:north size="6">
-		<g:FlowPanel>
 			<g:FlowPanel>
-				<a:NotificationMole animationDuration='0' message='Loading ...' ui:field='mole'></a:NotificationMole>
-			</g:FlowPanel>
-			<g:FlowPanel>
-				<g:FlowPanel addStyleNames="{style.banner} {style.left}" />
-				<g:Anchor ui:field="logoutButton" addStyleNames="{style.right} {style.logout}">Logout</g:Anchor>
-				<g:FlowPanel ui:field="patientSearch" addStyleNames="{style.right} {style.top}">
-					<g:SuggestBox ui:field='patientIdBox' addStyleNames='{style.searchbox}'/>
-					<g:Button ui:field='patientSearchButton' addStyleNames='{style.button}'>Search</g:Button>
+				<g:FlowPanel>
+					<a:NotificationMole animationDuration='0' message='Loading ...' ui:field='mole'></a:NotificationMole>
 				</g:FlowPanel>
-
-				<g:FlexTable ui:field='currentPatientData'
-					addStyleNames='{style.left} {style.margin} {style.italics}'/>
-			</g:FlowPanel>
+				<g:FlowPanel>
+					<g:FlowPanel addStyleNames="{style.banner} {style.left}" />
+					<g:HorizontalPanel addStyleNames="{style.right}">
+						<g:Hyperlink title='Edit your settings' targetHistoryToken='' ui:field="username" />
+						<g:HTML>&nbsp;&mdash;&nbsp;</g:HTML>
+						<g:Hyperlink ui:field="logoutButton" targetHistoryToken=''>Logout</g:Hyperlink>
+					</g:HorizontalPanel>
+					<g:FlowPanel ui:field="patientSearch" addStyleNames="{style.right} {style.top}">
+						<g:SuggestBox ui:field='patientIdBox' addStyleNames='{style.searchbox}'/>
+						<g:Button ui:field='patientSearchButton' addStyleNames='{style.button}'>Search</g:Button>
+					</g:FlowPanel>
+	
+					<g:FlexTable ui:field='currentPatientData'
+						addStyleNames='{style.left} {style.margin} {style.italics}'/>
+				</g:FlowPanel>
 			</g:FlowPanel>
 		</g:north>
 		<g:center>

@@ -25,9 +25,11 @@ import org.eastway.echarts.shared.GetMedications;
 import org.eastway.echarts.shared.GetMessages;
 import org.eastway.echarts.shared.GetPatientSummary;
 import org.eastway.echarts.shared.GetProductivity;
+import org.eastway.echarts.shared.GetProfile;
 import org.eastway.echarts.shared.GetReferral;
 import org.eastway.echarts.shared.GetTickler;
 import org.eastway.echarts.shared.SaveMessage;
+import org.eastway.echarts.shared.SaveProfile;
 
 import net.customware.gwt.dispatch.server.guice.ActionHandlerModule;
 
@@ -48,6 +50,8 @@ public class ServerModule extends ActionHandlerModule {
 		bindHandler(GetContacts.class, GetContactsHandler.class);
 		bindHandler(GetMedications.class, GetMedicationsHandler.class);
 		bindHandler(GetProductivity.class, GetProductivityHandler.class);
+		bindHandler(GetProfile.class, GetProfileHandler.class);
+		bindHandler(SaveProfile.class, SaveProfileHandler.class);
 	}
 
 }

@@ -43,6 +43,8 @@ import org.eastway.echarts.client.events.ViewMessagesEvent;
 import org.eastway.echarts.client.events.ViewMessagesEventHandler;
 import org.eastway.echarts.client.events.ViewPatientSummaryEvent;
 import org.eastway.echarts.client.events.ViewPatientSummaryEventHandler;
+import org.eastway.echarts.client.events.ViewProfileEvent;
+import org.eastway.echarts.client.events.ViewProfileEventHandler;
 import org.eastway.echarts.client.events.ViewReferralEvent;
 import org.eastway.echarts.client.events.ViewReferralEventHandler;
 import org.eastway.echarts.client.events.ViewTicklerEvent;
@@ -59,6 +61,7 @@ import org.eastway.echarts.client.presenter.MedicationPresenter;
 import org.eastway.echarts.client.presenter.MessagesPresenter;
 import org.eastway.echarts.client.presenter.PatientSummaryPresenter;
 import org.eastway.echarts.client.presenter.Presenter;
+import org.eastway.echarts.client.presenter.ProfilePresenter;
 import org.eastway.echarts.client.presenter.ReferralPresenter;
 import org.eastway.echarts.client.presenter.TicklerPresenter;
 import org.eastway.echarts.client.rpc.CachingDispatchAsync;
@@ -100,6 +103,7 @@ public class AppController implements Presenter {
 	private CachingDispatchAsync dispatch;
 	private DashboardPresenter dashboardPresenter;
 	@Inject private TicklerPresenter ticklerPresenter;
+	@Inject private ProfilePresenter profilePresenter;
 	@Inject private DiagnosisColumnDefinitionsImpl diagnosisColumnDefinitions;
 	@Inject private DemographicsColumnDefinitionsImpl demographicsColumnDefinitions;
 
@@ -178,6 +182,12 @@ public class AppController implements Presenter {
 				doViewTickler();
 			}
 		});
+		eventBus.addHandler(ViewProfileEvent.TYPE, new ViewProfileEventHandler() {
+			@Override
+			public void onViewProfile(ViewProfileEvent event) {
+				doViewProfile();
+			}
+		});
 		eventBus.addHandler(RequestEvent.TYPE, new RequestEvent.Handler() {
 			// Only show loading status if a request isn't serviced in 250ms.
 			private static final int LOADING_TIMEOUT = 250;
@@ -229,6 +239,11 @@ public class AppController implements Presenter {
 					.getDisplay()
 					.asWidget(), "Tickler");
 		ticklerPresenter.go(null);
+	}
+
+	private void doViewProfile() {
+		dashboardPresenter.getDisplay().addTab(profilePresenter.getDisplay().asWidget(), "Profile");
+		profilePresenter.go(null);
 	}
 
 	private void doViewMedications(EHRView<EHR> view, GetMedications action) {

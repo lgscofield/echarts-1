@@ -17,6 +17,8 @@ package org.eastway.echarts.client.view;
 
 import java.util.List;
 
+import org.eastway.echarts.client.EchartsUser;
+
 import com.google.gwt.app.client.NotificationMole;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SpanElement;
@@ -31,7 +33,6 @@ import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -50,7 +51,8 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 
 	private static DashboardViewUiBinder uiBinder = GWT.create(DashboardViewUiBinder.class);
 
-	@UiField Anchor logoutButton;
+	@UiField Hyperlink logoutButton;
+	@UiField Hyperlink username;
 	@UiField Style style;
 	@UiField FlexTable currentPatientData;
 	@UiField Button patientSearchButton;
@@ -67,6 +69,7 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 
 	public DashboardViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
+		username.setHTML(EchartsUser.userName);
 		bind();
 	}
 
@@ -222,5 +225,10 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 	@UiHandler("logoutButton")
 	public void handleLogoutButton(ClickEvent event) {
 		presenter.logout();
+	}
+
+	@UiHandler("username")
+	public void handleUserNameClick(ClickEvent event) {
+		presenter.openProfile();
 	}
 }
