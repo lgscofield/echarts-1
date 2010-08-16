@@ -18,14 +18,11 @@ package org.eastway.echarts.client.presenter;
 import net.customware.gwt.presenter.client.EventBus;
 
 import org.eastway.echarts.client.CachingDispatchAsync;
-import org.eastway.echarts.client.HandleRpcException;
+import org.eastway.echarts.client.rpc.EchartsCallback;
 import org.eastway.echarts.shared.GetReferral;
 import org.eastway.echarts.shared.GetReferralResult;
 import org.eastway.echarts.shared.Referral;
 
-import com.google.gwt.requestfactory.shared.RequestEvent;
-import com.google.gwt.requestfactory.shared.RequestEvent.State;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class ReferralPresenter implements Presenter {
@@ -54,18 +51,14 @@ public class ReferralPresenter implements Presenter {
 	}
 
 	private void fetchData() {
-		eventBus.fireEvent(new RequestEvent(State.SENT));
-		dispatch.executeWithCache(action, new AsyncCallback<GetReferralResult>() {
-
+		dispatch.executeWithCache(action, new EchartsCallback<GetReferralResult>(eventBus) {
 			@Override
-			public void onFailure(Throwable caught) {
-				new HandleRpcException(caught);
+			protected void handleFailure(Throwable caught) {
 			}
 
 			@Override
-			public void onSuccess(GetReferralResult result) {
+			protected void handleSuccess(GetReferralResult result) {
 				Referral referral = result.getReferral();
-				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
 				display.setAdmissionDate(referral.getAdmissionDate());
 				display.setDischargeDate(referral.getDischargeDate());
 				display.setDisposition(referral.getDisposition());

@@ -20,14 +20,11 @@ import java.util.List;
 import net.customware.gwt.presenter.client.EventBus;
 
 import org.eastway.echarts.client.CachingDispatchAsync;
-import org.eastway.echarts.client.HandleRpcException;
+import org.eastway.echarts.client.rpc.EchartsCallback;
 import org.eastway.echarts.shared.GetMedications;
 import org.eastway.echarts.shared.GetMedicationsResult;
 import org.eastway.echarts.shared.Medication;
 
-import com.google.gwt.requestfactory.shared.RequestEvent;
-import com.google.gwt.requestfactory.shared.RequestEvent.State;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class MedicationPresenter implements Presenter {
@@ -58,17 +55,13 @@ public class MedicationPresenter implements Presenter {
 	}
 
 	private void fetchData() {
-		eventBus.fireEvent(new RequestEvent(State.SENT));
-		dispatch.executeWithCache(action, new AsyncCallback<GetMedicationsResult>() {
-
+		dispatch.executeWithCache(action, new EchartsCallback<GetMedicationsResult>(eventBus) {
 			@Override
-			public void onFailure(Throwable caught) {
-				new HandleRpcException(caught);
+			protected void handleFailure(Throwable caught) {
 			}
 
 			@Override
-			public void onSuccess(GetMedicationsResult result) {
-				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
+			protected void handleSuccess(GetMedicationsResult result) {
 				setData(result.getMedications());
 			}
 		});

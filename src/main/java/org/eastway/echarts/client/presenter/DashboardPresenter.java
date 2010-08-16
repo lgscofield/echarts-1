@@ -23,12 +23,12 @@ import net.customware.gwt.presenter.client.EventBus;
 
 import org.eastway.echarts.client.CachingDispatchAsync;
 import org.eastway.echarts.client.EchartsUser;
-import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEventHandler;
 import org.eastway.echarts.client.events.LogoutEvent;
 import org.eastway.echarts.client.events.OpenEhrEvent;
 import org.eastway.echarts.client.events.ViewTicklerEvent;
+import org.eastway.echarts.client.rpc.EchartsCallback;
 import org.eastway.echarts.client.view.DashboardView;
 import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.EHR;
@@ -40,9 +40,6 @@ import org.eastway.echarts.shared.Patient;
 import org.eastway.echarts.shared.Tickler;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.requestfactory.shared.RequestEvent;
-import com.google.gwt.requestfactory.shared.RequestEvent.State;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
@@ -146,16 +143,13 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 	}
 
 	private void getProductivityData() {
-		eventBus.fireEvent(new RequestEvent(State.SENT));
-		dispatch.execute(new GetProductivity(EchartsUser.sessionId, EchartsUser.staffId), new AsyncCallback<GetProductivityResult>() {
+		dispatch.execute(new GetProductivity(EchartsUser.sessionId, EchartsUser.staffId), new EchartsCallback<GetProductivityResult>(eventBus) {
 			@Override
-			public void onFailure(Throwable caught) {
-				new HandleRpcException(caught);
+			protected void handleFailure(Throwable caught) {
 			}
 
 			@Override
-			public void onSuccess(GetProductivityResult result) {
-				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
+			protected void handleSuccess(GetProductivityResult result) {
 				String color = null;
 				if (result.getTotal().doubleValue() < result.getYellowNumber())
 					color = "red";
@@ -172,16 +166,13 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 	public void getPatientList() {
 		action.setStaffId(EchartsUser.staffId);
 		action.setSessionId(EchartsUser.sessionId);
-		eventBus.fireEvent(new RequestEvent(State.SENT));
-		dispatch.executeWithCache(action, new AsyncCallback<GetTicklerResult>() {
+		dispatch.executeWithCache(action, new EchartsCallback<GetTicklerResult>(eventBus) {
 			@Override
-			public void onFailure(Throwable caught) {
-				new HandleRpcException(caught);
+			protected void handleFailure(Throwable caught) {
 			}
 
 			@Override
-			public void onSuccess(GetTicklerResult result) {
-				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
+			protected void handleSuccess(GetTicklerResult result) {
 				for (Tickler assignment : result.getTicklers())
 					if (assignment != null)
 						view.addPatientSearchData(new StringBuilder()

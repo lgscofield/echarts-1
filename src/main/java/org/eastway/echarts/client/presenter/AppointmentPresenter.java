@@ -18,14 +18,11 @@ package org.eastway.echarts.client.presenter;
 import net.customware.gwt.presenter.client.EventBus;
 
 import org.eastway.echarts.client.CachingDispatchAsync;
-import org.eastway.echarts.client.HandleRpcException;
+import org.eastway.echarts.client.rpc.EchartsCallback;
 import org.eastway.echarts.shared.Appointment;
 import org.eastway.echarts.shared.GetAppointments;
 import org.eastway.echarts.shared.GetAppointmentsResult;
 
-import com.google.gwt.requestfactory.shared.RequestEvent;
-import com.google.gwt.requestfactory.shared.RequestEvent.State;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class AppointmentPresenter implements Presenter {
@@ -58,21 +55,16 @@ public class AppointmentPresenter implements Presenter {
 	}
 
 	public void fetchData() {
-		eventBus.fireEvent(new RequestEvent(State.SENT));
-		dispatch.executeWithCache(action, new AsyncCallback<GetAppointmentsResult>() {
-
+		dispatch.executeWithCache(action, new EchartsCallback<GetAppointmentsResult>(eventBus) {
 			@Override
-			public void onFailure(Throwable caught) {
-				new HandleRpcException(caught);
+			protected void handleFailure(Throwable caught) {
 			}
 
 			@Override
-			public void onSuccess(GetAppointmentsResult result) {
-				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
+			protected void handleSuccess(GetAppointmentsResult result) {
 				display.reset();
 				setData(result);
 			}
-			
 		});
 	}
 

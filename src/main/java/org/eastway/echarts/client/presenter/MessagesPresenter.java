@@ -23,7 +23,7 @@ import net.customware.gwt.presenter.client.EventBus;
 
 import org.eastway.echarts.client.CachingDispatchAsync;
 import org.eastway.echarts.client.EchartsUser;
-import org.eastway.echarts.client.HandleRpcException;
+import org.eastway.echarts.client.rpc.EchartsCallback;
 import org.eastway.echarts.shared.CodeDTO;
 import org.eastway.echarts.shared.GetMessages;
 import org.eastway.echarts.shared.GetMessagesResult;
@@ -34,9 +34,6 @@ import org.eastway.echarts.shared.SaveMessageResult;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.requestfactory.shared.RequestEvent;
-import com.google.gwt.requestfactory.shared.RequestEvent.State;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class MessagesPresenter implements Presenter {
@@ -127,14 +124,13 @@ public class MessagesPresenter implements Presenter {
 	}
 
 	public void save(MessageDTO m) {
-		dispatch.execute(new SaveMessage(EchartsUser.sessionId, m), new AsyncCallback<SaveMessageResult>() {
+		dispatch.execute(new SaveMessage(EchartsUser.sessionId, m), new EchartsCallback<SaveMessageResult>(eventBus) {
 			@Override
-			public void onFailure(Throwable caught) {
-				new HandleRpcException(caught);
+			protected void handleFailure(Throwable caught) {
 			}
 
 			@Override
-			public void onSuccess(SaveMessageResult result) {
+			protected void handleSuccess(SaveMessageResult result) {
 				view.saved();
 				messages.add(result.getMessage());
 				setData(messages);
@@ -143,38 +139,14 @@ public class MessagesPresenter implements Presenter {
 		});
 	}
 
-	private void loadMessageType() {
-//		AsyncCallback<List<CodeDTO>> callback = new AsyncCallback<List<CodeDTO>>() {
-//			@Override
-//			public void onFailure(Throwable caught) {
-//				new HandleRpcException(caught);
-//			}
-//
-//			@Override
-//			public void onSuccess(List<CodeDTO> types) {
-//				setTypes(types);
-//				ArrayList<String> data = new ArrayList<String>();
-//				for (CodeDTO type : types)
-//					data.add(type.getDescriptor());
-//				view.setMessageTypes(data);
-//			}
-//		};
-//		rpcServices.getMessageTypes(EchartsUser.sessionId,
-//				callback);
-	}
-
 	private void fetchData() {
-		eventBus.fireEvent(new RequestEvent(State.SENT));
-		dispatch.executeWithCache(action, new AsyncCallback<GetMessagesResult>() {
-
+		dispatch.executeWithCache(action, new EchartsCallback<GetMessagesResult>(eventBus) {
 			@Override
-			public void onFailure(Throwable caught) {
-				new HandleRpcException(caught);
+			public void handleFailure(Throwable caught) {
 			}
 
 			@Override
-			public void onSuccess(GetMessagesResult result) {
-				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
+			public void handleSuccess(GetMessagesResult result) {
 				setData(result.getMessages());
 				view.setData(getData());
 				setTypes(result.getTypes());
@@ -183,7 +155,6 @@ public class MessagesPresenter implements Presenter {
 					typesData.add(type.getDescriptor());
 				view.setMessageTypes(typesData);
 			}
-			
 		});
 	}
 
@@ -212,7 +183,6 @@ public class MessagesPresenter implements Presenter {
 	}
 
 	private void showAddMessage() {
-		loadMessageType();
 		view.setText(action.getCaseNumber());
 		view.show();
 	}

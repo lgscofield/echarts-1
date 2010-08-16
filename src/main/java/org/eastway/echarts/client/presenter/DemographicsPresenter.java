@@ -20,16 +20,13 @@ import java.util.List;
 import net.customware.gwt.presenter.client.EventBus;
 
 import org.eastway.echarts.client.CachingDispatchAsync;
-import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.common.ColumnDefinition;
+import org.eastway.echarts.client.rpc.EchartsCallback;
 import org.eastway.echarts.client.view.DemographicsView;
 import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.GetDemographics;
 import org.eastway.echarts.shared.GetDemographicsResult;
 
-import com.google.gwt.requestfactory.shared.RequestEvent;
-import com.google.gwt.requestfactory.shared.RequestEvent.State;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class DemographicsPresenter implements Presenter, DemographicsView.Presenter<Demographics> {
@@ -56,16 +53,13 @@ public class DemographicsPresenter implements Presenter, DemographicsView.Presen
 	}
 
 	private void fetchData() {
-		eventBus.fireEvent(new RequestEvent(State.SENT));
-		dispatch.executeWithCache(action, new AsyncCallback<GetDemographicsResult>() {
+		dispatch.executeWithCache(action, new EchartsCallback<GetDemographicsResult>(eventBus) {
 			@Override
-			public void onFailure(Throwable caught) {
-				new HandleRpcException(caught);
+			protected void handleFailure(Throwable caught) {
 			}
 
 			@Override
-			public void onSuccess(GetDemographicsResult result) {
-				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
+			protected void handleSuccess(GetDemographicsResult result) {
 				setData(result.getDemographics());
 			}
 			

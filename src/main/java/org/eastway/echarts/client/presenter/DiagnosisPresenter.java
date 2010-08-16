@@ -20,16 +20,13 @@ import java.util.List;
 import net.customware.gwt.presenter.client.EventBus;
 
 import org.eastway.echarts.client.CachingDispatchAsync;
-import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.common.ColumnDefinition;
+import org.eastway.echarts.client.rpc.EchartsCallback;
 import org.eastway.echarts.client.view.DiagnosisView;
 import org.eastway.echarts.shared.Diagnosis;
 import org.eastway.echarts.shared.GetDiagnoses;
 import org.eastway.echarts.shared.GetDiagnosesResult;
 
-import com.google.gwt.requestfactory.shared.RequestEvent;
-import com.google.gwt.requestfactory.shared.RequestEvent.State;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class DiagnosisPresenter implements Presenter, DiagnosisView.Presenter<Diagnosis> {
@@ -57,17 +54,14 @@ public class DiagnosisPresenter implements Presenter, DiagnosisView.Presenter<Di
 	}
 
 	public void fetchData() {
-		eventBus.fireEvent(new RequestEvent(State.SENT));
-		dispatch.executeWithCache(action, new AsyncCallback<GetDiagnosesResult>() {
+		dispatch.executeWithCache(action, new EchartsCallback<GetDiagnosesResult>(eventBus) {
 			@Override
-			public void onFailure(Throwable caught) {
-				new HandleRpcException(caught);
+			protected void handleFailure(Throwable caught) {
 			}
 
 			@Override
-			public void onSuccess(GetDiagnosesResult result) {
-				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
-				setData(result);
+			protected void handleSuccess(GetDiagnosesResult result) {
+				setData(result);				
 			}
 		});
 	}

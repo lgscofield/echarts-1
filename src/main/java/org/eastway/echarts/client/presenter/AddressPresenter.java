@@ -18,14 +18,11 @@ package org.eastway.echarts.client.presenter;
 import net.customware.gwt.presenter.client.EventBus;
 
 import org.eastway.echarts.client.CachingDispatchAsync;
-import org.eastway.echarts.client.HandleRpcException;
+import org.eastway.echarts.client.rpc.EchartsCallback;
 import org.eastway.echarts.shared.Address;
 import org.eastway.echarts.shared.GetAddresses;
 import org.eastway.echarts.shared.GetAddressesResult;
 
-import com.google.gwt.requestfactory.shared.RequestEvent;
-import com.google.gwt.requestfactory.shared.RequestEvent.State;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class AddressPresenter implements Presenter {
@@ -55,16 +52,13 @@ public class AddressPresenter implements Presenter {
 	}
 
 	private void fetchData() {
-		eventBus.fireEvent(new RequestEvent(State.SENT));
-		dispatch.executeWithCache(action, new AsyncCallback<GetAddressesResult>() {
+		dispatch.executeWithCache(action, new EchartsCallback<GetAddressesResult>(eventBus) {
 			@Override
-			public void onFailure(Throwable caught) {
-				new HandleRpcException(caught);
+			protected void handleFailure(Throwable caught) {
 			}
 
 			@Override
-			public void onSuccess(GetAddressesResult result) {
-				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
+			protected void handleSuccess(GetAddressesResult result) {
 				for (Address address : result.getAddresses()) {
 					view.setCaseNumber(address.getCaseNumber());
 					view.nextRecord();

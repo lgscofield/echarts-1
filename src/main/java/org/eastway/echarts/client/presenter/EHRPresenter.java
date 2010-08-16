@@ -19,7 +19,6 @@ import net.customware.gwt.presenter.client.EventBus;
 
 import org.eastway.echarts.client.CachingDispatchAsync;
 import org.eastway.echarts.client.EchartsUser;
-import org.eastway.echarts.client.HandleRpcException;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
 import org.eastway.echarts.client.events.ViewAddressesEvent;
 import org.eastway.echarts.client.events.ViewAppointmentsEvent;
@@ -31,6 +30,7 @@ import org.eastway.echarts.client.events.ViewMedicationsEvent;
 import org.eastway.echarts.client.events.ViewMessagesEvent;
 import org.eastway.echarts.client.events.ViewPatientSummaryEvent;
 import org.eastway.echarts.client.events.ViewReferralEvent;
+import org.eastway.echarts.client.rpc.EchartsCallback;
 import org.eastway.echarts.client.view.EHRView;
 import org.eastway.echarts.shared.Code;
 import org.eastway.echarts.shared.CodeDTO;
@@ -52,9 +52,6 @@ import org.eastway.echarts.shared.GetReferral;
 import org.eastway.echarts.shared.Patient;
 import org.eastway.echarts.shared.PatientDTO;
 
-import com.google.gwt.requestfactory.shared.RequestEvent;
-import com.google.gwt.requestfactory.shared.RequestEvent.State;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
@@ -85,17 +82,13 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
 	}
 
 	private void fetchData() {
-		eventBus.fireEvent(new RequestEvent(State.SENT));
-		dispatch.executeWithCache(patientSummary, new AsyncCallback<GetPatientSummaryResult>() {
-
+		dispatch.executeWithCache(patientSummary, new EchartsCallback<GetPatientSummaryResult>(eventBus) {
 			@Override
-			public void onFailure(Throwable caught) {
-				new HandleRpcException(caught);
+			protected void handleFailure(Throwable caught) {
 			}
 
 			@Override
-			public void onSuccess(GetPatientSummaryResult result) {
-				eventBus.fireEvent(new RequestEvent(State.RECEIVED));
+			protected void handleSuccess(GetPatientSummaryResult result) {
 				setData(result);
 			}
 		});
