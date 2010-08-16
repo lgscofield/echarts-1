@@ -18,7 +18,7 @@ package org.eastway.echarts.client.presenter;
 import java.util.Vector;
 
 import org.eastway.echarts.client.EchartsUser;
-import org.eastway.echarts.client.HandleRpcException;
+import org.eastway.echarts.client.rpc.HandleRpcException;
 //import org.eastway.echarts.client.RpcServicesAsync;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;

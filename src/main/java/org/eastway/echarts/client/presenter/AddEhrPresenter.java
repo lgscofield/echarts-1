@@ -18,7 +18,7 @@ package org.eastway.echarts.client.presenter;
 import java.util.Date;
 
 import org.eastway.echarts.client.EchartsUser;
-import org.eastway.echarts.client.HandleRpcException;
+import org.eastway.echarts.client.rpc.HandleRpcException;
 import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.EHRDTO;
 import org.eastway.echarts.shared.Patient;
