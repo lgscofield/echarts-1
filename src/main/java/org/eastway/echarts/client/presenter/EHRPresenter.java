@@ -17,7 +17,6 @@ package org.eastway.echarts.client.presenter;
 
 import net.customware.gwt.presenter.client.EventBus;
 
-import org.eastway.echarts.client.CachingDispatchAsync;
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
 import org.eastway.echarts.client.events.ViewAddressesEvent;
@@ -30,6 +29,7 @@ import org.eastway.echarts.client.events.ViewMedicationsEvent;
 import org.eastway.echarts.client.events.ViewMessagesEvent;
 import org.eastway.echarts.client.events.ViewPatientSummaryEvent;
 import org.eastway.echarts.client.events.ViewReferralEvent;
+import org.eastway.echarts.client.rpc.CachingDispatchAsync;
 import org.eastway.echarts.client.rpc.EchartsCallback;
 import org.eastway.echarts.client.view.EHRView;
 import org.eastway.echarts.shared.Code;

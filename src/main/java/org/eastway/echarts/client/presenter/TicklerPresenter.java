@@ -19,11 +19,11 @@ import java.util.List;
 
 import net.customware.gwt.presenter.client.EventBus;
 
-import org.eastway.echarts.client.CachingDispatchAsync;
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.events.OpenEhrEvent;
 import org.eastway.echarts.client.events.OpenIspEvent;
+import org.eastway.echarts.client.rpc.CachingDispatchAsync;
 import org.eastway.echarts.client.rpc.EchartsCallback;
 import org.eastway.echarts.client.view.TicklerView;
 import org.eastway.echarts.shared.GetTickler;

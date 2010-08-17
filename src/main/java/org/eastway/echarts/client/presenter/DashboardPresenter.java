@@ -21,13 +21,13 @@ import java.util.List;
 
 import net.customware.gwt.presenter.client.EventBus;
 
-import org.eastway.echarts.client.CachingDispatchAsync;
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEventHandler;
 import org.eastway.echarts.client.events.LogoutEvent;
 import org.eastway.echarts.client.events.OpenEhrEvent;
 import org.eastway.echarts.client.events.ViewTicklerEvent;
+import org.eastway.echarts.client.rpc.CachingDispatchAsync;
 import org.eastway.echarts.client.rpc.EchartsCallback;
 import org.eastway.echarts.client.view.DashboardView;
 import org.eastway.echarts.shared.Demographics;

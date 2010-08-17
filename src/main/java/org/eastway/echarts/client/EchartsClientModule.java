@@ -24,6 +24,8 @@ import org.eastway.echarts.client.common.DiagnosisColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.TicklerColumnDefinitionsImpl;
 import org.eastway.echarts.client.presenter.DashboardPresenter;
 import org.eastway.echarts.client.presenter.TicklerPresenter;
+import org.eastway.echarts.client.rpc.CachingDispatchAsync;
+import org.eastway.echarts.client.rpc.CachingDispatchAsyncImpl;
 import org.eastway.echarts.client.view.DashboardView;
 import org.eastway.echarts.client.view.DashboardViewImpl;
 import org.eastway.echarts.client.view.TicklerView;

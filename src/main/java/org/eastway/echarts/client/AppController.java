@@ -61,6 +61,7 @@ import org.eastway.echarts.client.presenter.PatientSummaryPresenter;
 import org.eastway.echarts.client.presenter.Presenter;
 import org.eastway.echarts.client.presenter.ReferralPresenter;
 import org.eastway.echarts.client.presenter.TicklerPresenter;
+import org.eastway.echarts.client.rpc.CachingDispatchAsync;
 import org.eastway.echarts.client.view.AddressView;
 import org.eastway.echarts.client.view.AppointmentView;
 import org.eastway.echarts.client.view.ContactView;

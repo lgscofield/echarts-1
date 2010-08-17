@@ -21,8 +21,8 @@ import java.util.List;
 
 import net.customware.gwt.presenter.client.EventBus;
 
-import org.eastway.echarts.client.CachingDispatchAsync;
 import org.eastway.echarts.client.EchartsUser;
+import org.eastway.echarts.client.rpc.CachingDispatchAsync;
 import org.eastway.echarts.client.rpc.EchartsCallback;
 import org.eastway.echarts.shared.CodeDTO;
 import org.eastway.echarts.shared.GetMessages;
