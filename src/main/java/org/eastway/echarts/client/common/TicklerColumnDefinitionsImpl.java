@@ -17,6 +17,7 @@ package org.eastway.echarts.client.common;
 
 import java.util.ArrayList;
 
+import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.shared.DueDateStatus;
 import org.eastway.echarts.shared.Tickler;
 
@@ -54,45 +55,80 @@ public class TicklerColumnDefinitionsImpl extends
 		this.add(new ColumnDefinition<Tickler>() {
 			@Override
 			public void render(Tickler t, StringBuilder sb) {
-				sb.append(formatColumn(t.getIspDueDate().getStatus(), t.getIspDueDate().getDueDate()));
+				String dueDate = t.getIspDueDate().getDueDate();
+				int status = t.getIspDueDate().getStatus();
+				if (status == DueDateStatus.NO_DATA)
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://ewsql.eastway.local/echarts-asp/forms/GandO.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + noData + "</a>";
+				else if (status != DueDateStatus.COMPLIANT)
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://ewsql.eastway.local/echarts-asp/forms/GandO.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + dueDate + "</a>";
+				sb.append(formatColumn(status, dueDate));
 			}
 		});
 		this.add(new ColumnDefinition<Tickler>() {
 			@Override
 			public void render(Tickler t, StringBuilder sb) {
-				sb.append(formatColumn(t.getIspReviewDueDate().getStatus(), t.getIspReviewDueDate().getDueDate()));
+				String dueDate = t.getIspReviewDueDate().getDueDate();
+				int status = t.getIspReviewDueDate().getStatus();
+				if (status == DueDateStatus.NO_DATA)
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://ewsql.eastway.local/echarts-asp/forms/GandOReview.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + noData + "</a>";
+				else if (status != DueDateStatus.COMPLIANT)
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://ewsql.eastway.local/echarts-asp/forms/GandOReview.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + dueDate + "</a>";
+				sb.append(formatColumn(status, dueDate));
 			}
 		});
 		this.add(new ColumnDefinition<Tickler>() {
 			@Override
 			public void render(Tickler t, StringBuilder sb) {
-				sb.append(formatColumn(t.getHealthHistoryDueDate().getStatus(), t.getHealthHistoryDueDate().getDueDate()));
+				String dueDate = t.getHealthHistoryDueDate().getDueDate();
+				int status = t.getHealthHistoryDueDate().getStatus();
+				if (status == DueDateStatus.NO_DATA)
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://ewsql.eastway.local/echarts-asp/forms/107HealthHxEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + noData + "</a>";
+				else if (status != DueDateStatus.COMPLIANT)
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://ewsql.eastway.local/echarts-asp/forms/107HealthHxEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + dueDate + "</a>";
+				sb.append(formatColumn(status, dueDate));
 			}
 		});
 		this.add(new ColumnDefinition<Tickler>() {
 			@Override
 			public void render(Tickler t, StringBuilder sb) {
-				sb.append(formatColumn(t.getDiagnosticAssessmentUpdate().getStatus(), t.getDiagnosticAssessmentUpdate().getDueDate()));
+				String dueDate = t.getDiagnosticAssessmentUpdate().getDueDate();
+				int status = t.getDiagnosticAssessmentUpdate().getStatus();
+				if (status == DueDateStatus.NO_DATA)
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://ewsql.eastway.local/echarts-asp/forms/110ADAUpdateEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + noData + "</a>";
+				else if (status != DueDateStatus.COMPLIANT)
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://ewsql.eastway.local/echarts-asp/forms/110ADAUpdateEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + dueDate + "</a>";
+				sb.append(formatColumn(status, dueDate));
 			}
 		});
 		this.add(new ColumnDefinition<Tickler>() {
 			@Override
 			public void render(Tickler t, StringBuilder sb) {
-				sb.append(formatColumn(t.getFinancialDueDate().getStatus(), t.getFinancialDueDate().getDueDate()));
+				String dueDate = t.getFinancialDueDate().getDueDate();
+				int status = t.getFinancialDueDate().getStatus();
+				if (status == DueDateStatus.NO_DATA)
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://ewsql.eastway.local/echarts-asp/forms/109FinancialAuthEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + noData + "</a>";
+				else if (status != DueDateStatus.COMPLIANT)
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://ewsql.eastway.local/echarts-asp/forms/109FinancialAuthEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + dueDate + "</a>";
+				sb.append(formatColumn(status, dueDate));
 			}
 		});
 		this.add(new ColumnDefinition<Tickler>() {
 			@Override
 			public void render(Tickler t, StringBuilder sb) {
-				sb.append(formatColumn(t.getOoc().getStatus(), t.getOoc().getDueDate()));
+				String dueDate = t.getOoc().getDueDate();
+				int status = t.getOoc().getStatus();
+				if (status == DueDateStatus.NO_DATA)
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://home.eastway.local/outcomes/\">" + noData + "</a>";
+				else if (status != DueDateStatus.COMPLIANT)
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://home.eastway.local/outcomes/\">" + dueDate + "</a>";
+				sb.append(formatColumn(status, dueDate));
 			}
 		});
 	}
 
 	private String formatColumn(int status, String dueDate) {
-		if (status == DueDateStatus.NO_DATA) {
-			return noData;
-		}
+		if (status == DueDateStatus.NO_DATA)
+			return dueDate;
 		if (status == DueDateStatus.COMPLIANT)
 			return "<span style=\"color:green;\">" + dueDate + "</span>";
 		else if (status == DueDateStatus.DUE_IN_THIRTY_DAYS)
