@@ -140,3 +140,15 @@
 .table td {
 	padding: 5px;
 }
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	background-color: #dfeffc;
+	width: 100%;
+}
+.gwt-Frame {
+	border-width: 0px;
+}
