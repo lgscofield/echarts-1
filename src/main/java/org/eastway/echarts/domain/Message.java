@@ -43,7 +43,6 @@ public class Message {
 	private Date creationTimestamp;
 	private String message;
 	@ManyToOne
-	@JoinColumn(name = "Message_Id", insertable = false, updatable = false)
 	private Message parent;
 	private Date lastEdit;
 	private String lastEditBy;
