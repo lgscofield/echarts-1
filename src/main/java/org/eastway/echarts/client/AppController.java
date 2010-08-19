@@ -17,6 +17,7 @@ package org.eastway.echarts.client;
 
 import net.customware.gwt.presenter.client.EventBus;
 
+import org.eastway.echarts.client.common.AddressColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.DemographicsColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.DiagnosisColumnDefinitionsImpl;
 import org.eastway.echarts.client.events.LogoutEvent;
@@ -77,7 +78,7 @@ import org.eastway.echarts.client.presenter.ProfilePresenter;
 import org.eastway.echarts.client.presenter.ReferralPresenter;
 import org.eastway.echarts.client.presenter.TicklerPresenter;
 import org.eastway.echarts.client.rpc.CachingDispatchAsync;
-import org.eastway.echarts.client.view.AddressView;
+import org.eastway.echarts.client.view.AddressViewImpl;
 import org.eastway.echarts.client.view.AppointmentView;
 import org.eastway.echarts.client.view.ContactView;
 import org.eastway.echarts.client.view.DemographicsViewImpl;
@@ -89,6 +90,7 @@ import org.eastway.echarts.client.view.MedicationView;
 import org.eastway.echarts.client.view.MessagesView;
 import org.eastway.echarts.client.view.PatientSummaryView;
 import org.eastway.echarts.client.view.ReferralView;
+import org.eastway.echarts.shared.Address;
 import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.Diagnosis;
 import org.eastway.echarts.shared.EHR;
@@ -119,6 +121,7 @@ public class AppController implements Presenter {
 	@Inject private ProfilePresenter profilePresenter;
 	@Inject private DiagnosisColumnDefinitionsImpl diagnosisColumnDefinitions;
 	@Inject private DemographicsColumnDefinitionsImpl demographicsColumnDefinitions;
+	@Inject private AddressColumnDefinitionsImpl addressColumnDefinitions;
 
 	@Inject
 	public AppController(DashboardPresenter dashboardPresenter, EventBus eventBus, CachingDispatchAsync dispatch) {
@@ -338,7 +341,7 @@ public class AppController implements Presenter {
 	}
 
 	private void doViewAddresses(EHRView<EHR> view, GetAddresses action) {
-		Presenter presenter = new AddressPresenter(new AddressView(), eventBus, dispatch, action);
+		Presenter presenter = new AddressPresenter(new AddressViewImpl<Address>(), addressColumnDefinitions, eventBus, dispatch, action);
 		presenter.go(view.getDisplayArea());
 	}
 

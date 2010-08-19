@@ -15,33 +15,34 @@
  */
 package org.eastway.echarts.client.presenter;
 
+import java.util.List;
+
 import net.customware.gwt.presenter.client.EventBus;
 
+import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.rpc.CachingDispatchAsync;
 import org.eastway.echarts.client.rpc.EchartsCallback;
+import org.eastway.echarts.client.view.AddressView;
 import org.eastway.echarts.shared.Address;
 import org.eastway.echarts.shared.GetAddresses;
 import org.eastway.echarts.shared.GetAddressesResult;
 
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class AddressPresenter implements Presenter {
+public class AddressPresenter implements Presenter, AddressView.Presenter<Address> {
 
-	public interface Display extends EchartsDisplay, Address {
-		void nextRecord();
-	}
-
-	private Display view;
+	private AddressView<Address> view;
 	private EventBus eventBus;
 	private CachingDispatchAsync dispatch;
 	private GetAddresses action;
 
-	public AddressPresenter(Display view, EventBus eventBus,
-			CachingDispatchAsync dispatch, GetAddresses action) {
+	public AddressPresenter(AddressView<Address> view, List<ColumnDefinition<Address>> columnDefinitions, EventBus eventBus, CachingDispatchAsync dispatch, GetAddresses action) {
 		this.view = view;
 		this.eventBus = eventBus;
 		this.dispatch = dispatch;
 		this.action = action;
+		this.view.setPresenter(this);
+		this.view.setColumnDefinitions(columnDefinitions);
 	}
 
 	@Override
@@ -59,9 +60,10 @@ public class AddressPresenter implements Presenter {
 
 			@Override
 			protected void handleSuccess(GetAddressesResult result) {
-				for (Address address : result.getAddresses()) {
-					view.setCaseNumber(address.getCaseNumber());
-					view.nextRecord();
+				try {
+					view.setRowData(result.getAddresses());
+				} catch (NullPointerException e) {
+					view.setRowData(null);
 				}
 			}
 		});
