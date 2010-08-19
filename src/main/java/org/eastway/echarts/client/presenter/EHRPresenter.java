@@ -29,6 +29,7 @@ import org.eastway.echarts.client.events.ViewMedicationsEvent;
 import org.eastway.echarts.client.events.ViewMessagesEvent;
 import org.eastway.echarts.client.events.ViewPatientSummaryEvent;
 import org.eastway.echarts.client.events.ViewReferralEvent;
+import org.eastway.echarts.client.events.ViewTreatmentPlanEvent;
 import org.eastway.echarts.client.rpc.CachingDispatchAsync;
 import org.eastway.echarts.client.rpc.EchartsCallback;
 import org.eastway.echarts.client.view.EHRView;
@@ -185,5 +186,10 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
 	@Override
 	public void viewMedications() {
 		eventBus.fireEvent(new ViewMedicationsEvent(caseNumber, view, medications));
+	}
+
+	@Override
+	public void viewTreatmentPlan() {
+		eventBus.fireEvent(new ViewTreatmentPlanEvent(caseNumber));
 	}
 }

@@ -44,6 +44,8 @@ public interface EHRView<T> {
 		void viewContacts();
 
 		void viewMedications();
+
+		void viewTreatmentPlan();
 	}
 
 	Widget asWidget();

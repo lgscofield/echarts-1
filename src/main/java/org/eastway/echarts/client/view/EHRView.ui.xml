@@ -23,13 +23,13 @@
 				<g:Label ui:field='demographics'>Demographics</g:Label>
 				<g:Label ui:field='referral'>Referral</g:Label>
 				<g:Label ui:field='addresses'>Addresses</g:Label>
-				<g:Label ui:field='contacts'>Contacts</g:Label>
+				<!-- <g:Label ui:field='contacts'>Contacts</g:Label> -->
 				<g:Label ui:field='diagnoses'>Diagnoses</g:Label>
 				<g:Label ui:field='appointments'>Appointments</g:Label>
 				<g:Label ui:field='medications'>Medications</g:Label>
 				<g:Label ui:field='messages'>Messages</g:Label>
 				<g:Label ui:field='links'>Forms</g:Label>
-				<g:Label ui:field='isp'>ISP</g:Label>
+				<g:Label ui:field='treatmentPlan'>Treatment Plan</g:Label>
 			</g:Tree>
 		</g:west>
 		<g:center>

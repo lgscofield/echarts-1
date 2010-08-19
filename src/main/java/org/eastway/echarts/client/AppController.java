@@ -49,6 +49,8 @@ import org.eastway.echarts.client.events.ViewReferralEvent;
 import org.eastway.echarts.client.events.ViewReferralEventHandler;
 import org.eastway.echarts.client.events.ViewTicklerEvent;
 import org.eastway.echarts.client.events.ViewTicklerEventHandler;
+import org.eastway.echarts.client.events.ViewTreatmentPlanEvent;
+import org.eastway.echarts.client.events.ViewTreatmentPlanEventHandler;
 import org.eastway.echarts.client.presenter.AddressPresenter;
 import org.eastway.echarts.client.presenter.AppointmentPresenter;
 import org.eastway.echarts.client.presenter.ContactPresenter;
@@ -217,6 +219,12 @@ public class AppController implements Presenter {
 				doOpenIsp(event.getCaseNumber());
 			}
 		});
+		eventBus.addHandler(ViewTreatmentPlanEvent.TYPE, new ViewTreatmentPlanEventHandler() {
+			@Override
+			public void onViewTreatmentPlan(ViewTreatmentPlanEvent event) {
+				doViewTreatmentPlan(event.getCaseNumber());
+			}
+		});
 		eventBus.addHandler(LogoutEvent.TYPE, new LogoutEventHandler() {
 			@Override
 			public void onLogout(LogoutEvent event) {
@@ -229,8 +237,12 @@ public class AppController implements Presenter {
 		Window.Location.assign("http://ewsql.eastway.local/echarts/logout.aspx?continue=" + Window.Location.getHref());
 	}
 
+	private void doViewTreatmentPlan(String caseNumber) {
+		Window.open("http://ewsql.eastway.local/echarts-asp/client/treatmentplan.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber, "_blank", "");
+	}
+
 	private void doOpenIsp(String caseNumber) {
-		Window.open("http://ewsql.eastway.local/echarts-asp/Forms/GandO.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber, "ISP", "");
+		Window.open("http://ewsql.eastway.local/echarts-asp/Forms/GandO.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber, "_blank", "");
 	}
 
 	private void doViewTickler() {

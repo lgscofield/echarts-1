@@ -18,7 +18,7 @@ package org.eastway.echarts.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Entity;
+//import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -28,7 +28,7 @@ import org.eastway.echarts.shared.Address;
 import org.eastway.echarts.shared.Contact;
 import org.eastway.echarts.shared.ContactDTO;
 
-@Entity
+//@Entity
 @Table(name = "Contact")
 public class ContactImpl implements Contact {
 
