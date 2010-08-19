@@ -53,6 +53,10 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 	private PopupPanel menuPopup = new PopupPanel();
 
 	private Command openIsp;
+	private Command openCpstNote;
+	private Command openIndividualProgressNote;
+	private Command openDoctorProgressNote;
+	private Command openNurseProgressNote;
 	private Command openEhr;
 
 	private List<ColumnDefinition<T>> columnDefinitions;
@@ -107,7 +111,42 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 		};
 		MenuItem openIspMenuItem = new MenuItem("New ISP", true, openIsp);
 		menuBar.addItem(openIspMenuItem);
-
+		openIndividualProgressNote = new Command() {
+			@Override
+			public void execute() {
+				presenter.openIndividualProgressNote(t);
+				menuPopup.hide();
+			}
+		};
+		MenuItem openIndividualProgressNoteMenuItem = new MenuItem("New Individual Progress Note", true, openIndividualProgressNote);
+		menuBar.addItem(openIndividualProgressNoteMenuItem);
+		openCpstNote = new Command() {
+			@Override
+			public void execute() {
+				presenter.openCpstNote(t);
+				menuPopup.hide();
+			}
+		};
+		MenuItem openCpstNoteMenuItem = new MenuItem("New CPST Note", true, openCpstNote);
+		menuBar.addItem(openCpstNoteMenuItem);
+		openDoctorProgressNote = new Command() {
+			@Override
+			public void execute() {
+				presenter.openDoctorProgressNote(t);
+				menuPopup.hide();
+			}
+		};
+		MenuItem openDoctorProgressNoteMenuItem = new MenuItem("New Doctor Progress Note", true, openDoctorProgressNote);
+		menuBar.addItem(openDoctorProgressNoteMenuItem);
+		openNurseProgressNote = new Command() {
+			@Override
+			public void execute() {
+				presenter.openNurseProgressNote(t);
+				menuPopup.hide();
+			}
+		};
+		MenuItem openNurseProgressNoteMenuItem = new MenuItem("New Nurse Progress Note", true, openNurseProgressNote);
+		menuBar.addItem(openNurseProgressNoteMenuItem);
 		menuPopup.setPopupPosition(x, y);
 		menuPopup.show();
 	}

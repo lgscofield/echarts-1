@@ -26,6 +26,10 @@ public interface TicklerView<T> {
 	public interface Presenter<T> {
 		void openEhr(T caseNumber);
 		void openIsp(T t);
+		void openCpstNote(T t);
+		void openIndividualProgressNote(T t);
+		void openDoctorProgressNote(T t);
+		void openNurseProgressNote(T t);
 	}
 
 	enum DueDateStatus {

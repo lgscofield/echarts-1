@@ -21,8 +21,12 @@ import net.customware.gwt.presenter.client.EventBus;
 
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.common.ColumnDefinition;
+import org.eastway.echarts.client.events.OpenCpstNoteEvent;
+import org.eastway.echarts.client.events.OpenDoctorProgressNoteEvent;
 import org.eastway.echarts.client.events.OpenEhrEvent;
+import org.eastway.echarts.client.events.OpenIndividualProgressNoteEvent;
 import org.eastway.echarts.client.events.OpenIspEvent;
+import org.eastway.echarts.client.events.OpenNurseProgressNoteEvent;
 import org.eastway.echarts.client.rpc.CachingDispatchAsync;
 import org.eastway.echarts.client.rpc.EchartsCallback;
 import org.eastway.echarts.client.view.TicklerView;
@@ -81,5 +85,25 @@ public class TicklerPresenter implements Presenter, TicklerView.Presenter<Tickle
 
 	public TicklerView<Tickler> getDisplay() {
 		return view;
+	}
+
+	@Override
+	public void openCpstNote(Tickler tickler) {
+		eventBus.fireEvent(new OpenCpstNoteEvent(tickler.getCaseNumber()));
+	}
+
+	@Override
+	public void openIndividualProgressNote(Tickler tickler) {
+		eventBus.fireEvent(new OpenIndividualProgressNoteEvent(tickler.getCaseNumber()));
+	}
+
+	@Override
+	public void openDoctorProgressNote(Tickler tickler) {
+		eventBus.fireEvent(new OpenDoctorProgressNoteEvent(tickler.getCaseNumber()));
+	}
+
+	@Override
+	public void openNurseProgressNote(Tickler tickler) {
+		eventBus.fireEvent(new OpenNurseProgressNoteEvent(tickler.getCaseNumber()));
 	}
 }

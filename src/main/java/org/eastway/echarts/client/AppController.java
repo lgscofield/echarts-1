@@ -21,10 +21,18 @@ import org.eastway.echarts.client.common.DemographicsColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.DiagnosisColumnDefinitionsImpl;
 import org.eastway.echarts.client.events.LogoutEvent;
 import org.eastway.echarts.client.events.LogoutEventHandler;
+import org.eastway.echarts.client.events.OpenCpstNoteEvent;
+import org.eastway.echarts.client.events.OpenCpstNoteEventHandler;
+import org.eastway.echarts.client.events.OpenDoctorProgressNoteEvent;
+import org.eastway.echarts.client.events.OpenDoctorProgressNoteEventHandler;
 import org.eastway.echarts.client.events.OpenEhrEvent;
 import org.eastway.echarts.client.events.OpenEhrEventHandler;
+import org.eastway.echarts.client.events.OpenIndividualProgressNoteEvent;
+import org.eastway.echarts.client.events.OpenIndividualProgressNoteEventHandler;
 import org.eastway.echarts.client.events.OpenIspEvent;
 import org.eastway.echarts.client.events.OpenIspEventHandler;
+import org.eastway.echarts.client.events.OpenNurseProgressNoteEvent;
+import org.eastway.echarts.client.events.OpenNurseProgressNoteEventHandler;
 import org.eastway.echarts.client.events.ViewAddressesEvent;
 import org.eastway.echarts.client.events.ViewAddressesEventHandler;
 import org.eastway.echarts.client.events.ViewAppointmentsEvent;
@@ -240,6 +248,48 @@ public class AppController implements Presenter {
 				doLogout();
 			}
 		});
+		eventBus.addHandler(OpenCpstNoteEvent.TYPE, new OpenCpstNoteEventHandler() {
+			@Override
+			public void onOpenCpstNote(OpenCpstNoteEvent event) {
+				doOpenCpstNote(event.getCaseNumber());
+			}
+		});
+		eventBus.addHandler(OpenIndividualProgressNoteEvent.TYPE, new OpenIndividualProgressNoteEventHandler() {
+			@Override
+			public void onOpenIndividualProgressNote(
+					OpenIndividualProgressNoteEvent event) {
+				doOpenIndividualProgressNote(event.getCaseNumber());
+			}
+		});
+		eventBus.addHandler(OpenDoctorProgressNoteEvent.TYPE, new OpenDoctorProgressNoteEventHandler() {
+			@Override
+			public void onOpenDoctorProgressNote(
+					OpenDoctorProgressNoteEvent event) {
+				doOpenDoctorProgressNote(event.getCaseNumber());
+			}
+		});
+		eventBus.addHandler(OpenNurseProgressNoteEvent.TYPE, new OpenNurseProgressNoteEventHandler() {
+			@Override
+			public void onOpenNurseProgressNote(OpenNurseProgressNoteEvent event) {
+				doOpenNurseProgressNote(event.getCaseNumber());
+			}
+		});
+	}
+
+	private void doOpenNurseProgressNote(String caseNumber) {
+		Window.open("http://ewsql.eastway.local/echarts-asp/Forms/103PM-NPNEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber, "_blank", "");
+	}
+
+	private void doOpenDoctorProgressNote(String caseNumber) {
+		Window.open("http://ewsql.eastway.local/echarts-asp/Forms/104PharmEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber, "_blank", "");
+	}
+
+	private void doOpenIndividualProgressNote(String caseNumber) {
+		Window.open("http://ewsql.eastway.local/echarts-asp/Forms/102IPNEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber, "_blank", "");
+	}
+
+	private void doOpenCpstNote(String caseNumber) {
+		Window.open("http://ewsql.eastway.local/echarts-asp/Forms/101CPSTEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber, "_blank", "");
 	}
 
 	private void doLogout() {
