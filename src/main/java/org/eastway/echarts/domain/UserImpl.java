@@ -56,7 +56,8 @@ public class UserImpl implements User {
 	private String officeExt;
 	private String staffDescription;
 	private String staffNpi;
-	private String supervisor;
+	@ManyToOne
+	private UserImpl supervisor;
 	private String cred1;
 	private String cred2;
 
@@ -221,6 +222,7 @@ public class UserImpl implements User {
 		userDto.setStaffName(this.getStaffName());
 		userDto.setStaffNpi(this.getStaffNpi());
 		userDto.setStatus(this.getStatus());
+		userDto.setSupervisor(supervisor.getStaffName());
 		userDto.setTermDate(this.getTermDate());
 		userDto.setUsername(this.getUsername());
 		userDto.setCred1(cred1);
@@ -235,7 +237,7 @@ public class UserImpl implements User {
 
 	@Override
 	public String getSupervisor() {
-		return supervisor;
+		return supervisor.getStaffName();
 	}
 
 	@Override
@@ -245,7 +247,7 @@ public class UserImpl implements User {
 
 	@Override
 	public void setSupervisor(String supervisor) {
-		this.supervisor = supervisor;
+		
 	}
 
 	@Override

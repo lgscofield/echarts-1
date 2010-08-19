@@ -58,6 +58,51 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 		this.add(new ColumnDefinition<User>() {
 			@Override
 			public void render(User t, StringBuilder sb) {
+				try {
+					sb.append(t.getStaffId().isEmpty() ? "" : t.getStaffId());
+				} catch (NullPointerException e) {
+					sb.append("");
+				}
+			}
+
+			@Override
+			public String getHeader(User t) {
+				return "MIS Number";
+			}
+		});
+		this.add(new ColumnDefinition<User>() {
+			@Override
+			public void render(User t, StringBuilder sb) {
+				try {
+					sb.append(t.getStaffDescription().isEmpty() ? "" : t.getStaffDescription());
+				} catch (NullPointerException e) {
+					sb.append("");
+				}
+			}
+
+			@Override
+			public String getHeader(User t) {
+				return "Staff Description";
+			}
+		});
+		this.add(new ColumnDefinition<User>() {
+			@Override
+			public void render(User t, StringBuilder sb) {
+				try {
+					sb.append(t.getRole().getRoleName().isEmpty() ? "" : t.getRole().getRoleName());
+				} catch (NullPointerException e) {
+					sb.append("");
+				}
+			}
+
+			@Override
+			public String getHeader(User t) {
+				return "Role";
+			}
+		});
+		this.add(new ColumnDefinition<User>() {
+			@Override
+			public void render(User t, StringBuilder sb) {
 			}
 
 			@Override
@@ -148,6 +193,51 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 			@Override
 			public boolean isEditable() {
 				return true;
+			}
+		});
+		this.add(new ColumnDefinition<User>() {
+			@Override
+			public void render(User t, StringBuilder sb) {
+				try {
+					sb.append(t.getOffice().isEmpty() ? "" : t.getOffice());
+				} catch (NullPointerException e) {
+					sb.append("");
+				}
+			}
+
+			@Override
+			public String getHeader(User t) {
+				return "Office";
+			}
+		});
+		this.add(new ColumnDefinition<User>() {
+			@Override
+			public void render(User t, StringBuilder sb) {
+				try {
+					sb.append(t.getOfficePhone().isEmpty() ? "" : t.getOfficePhone());
+				} catch (NullPointerException e) {
+					sb.append("");
+				}
+			}
+
+			@Override
+			public String getHeader(User t) {
+				return "Office Phone";
+			}
+		});
+		this.add(new ColumnDefinition<User>() {
+			@Override
+			public void render(User t, StringBuilder sb) {
+				try {
+					sb.append(t.getSupervisor().isEmpty() ? "" : t.getSupervisor());
+				} catch (NullPointerException e) {
+					sb.append("");
+				}
+			}
+
+			@Override
+			public String getHeader(User t) {
+				return "Supervisor";
 			}
 		});
 	}
