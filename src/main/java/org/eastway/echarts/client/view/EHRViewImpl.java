@@ -113,6 +113,11 @@ public class EHRViewImpl<T> extends Composite implements EHRView<T> {
 		presenter.viewTreatmentPlan();
 	}
 
+	@UiHandler("serviceHistory")
+	void onServiceHistorySelected(ClickEvent event) {
+		presenter.viewServiceHistory();
+	}
+
 	@Override
 	public Presenter<T> getPresenter() {
 		return presenter;

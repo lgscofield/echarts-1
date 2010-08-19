@@ -47,6 +47,8 @@ import org.eastway.echarts.client.events.ViewProfileEvent;
 import org.eastway.echarts.client.events.ViewProfileEventHandler;
 import org.eastway.echarts.client.events.ViewReferralEvent;
 import org.eastway.echarts.client.events.ViewReferralEventHandler;
+import org.eastway.echarts.client.events.ViewServiceHistoryEvent;
+import org.eastway.echarts.client.events.ViewServiceHistoryEventHandler;
 import org.eastway.echarts.client.events.ViewTicklerEvent;
 import org.eastway.echarts.client.events.ViewTicklerEventHandler;
 import org.eastway.echarts.client.events.ViewTreatmentPlanEvent;
@@ -96,6 +98,7 @@ import org.eastway.echarts.shared.GetReferral;
 import com.google.gwt.requestfactory.shared.RequestEvent;
 import com.google.gwt.requestfactory.shared.RequestEvent.State;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
@@ -222,7 +225,13 @@ public class AppController implements Presenter {
 		eventBus.addHandler(ViewTreatmentPlanEvent.TYPE, new ViewTreatmentPlanEventHandler() {
 			@Override
 			public void onViewTreatmentPlan(ViewTreatmentPlanEvent event) {
-				doViewTreatmentPlan(event.getCaseNumber());
+				doViewTreatmentPlan(event.getCaseNumber(), event.getView());
+			}
+		});
+		eventBus.addHandler(ViewServiceHistoryEvent.TYPE, new ViewServiceHistoryEventHandler() {
+			@Override
+			public void onViewServiceHistory(ViewServiceHistoryEvent event) {
+				doViewServiceHistory(event.getCaseNumber(), event.getView());
 			}
 		});
 		eventBus.addHandler(LogoutEvent.TYPE, new LogoutEventHandler() {
@@ -237,8 +246,18 @@ public class AppController implements Presenter {
 		Window.Location.assign("http://ewsql.eastway.local/echarts/logout.aspx?continue=" + Window.Location.getHref());
 	}
 
-	private void doViewTreatmentPlan(String caseNumber) {
-		Window.open("http://ewsql.eastway.local/echarts-asp/client/treatmentplan.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber, "_blank", "");
+	private void doViewServiceHistory(String caseNumber, EHRView<EHR> view) {
+		Frame frame = new Frame("http://ewsql.eastway.local/echarts-asp/client/clienthistory.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber);
+		view.getDisplayArea().clear();
+		view.getDisplayArea().add(frame);
+		frame.setSize("100%", "100%");
+	}
+
+	private void doViewTreatmentPlan(String caseNumber, EHRView<EHR> view) {
+		Frame frame = new Frame("http://ewsql.eastway.local/echarts-asp/client/treatmentplan.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber);
+		view.getDisplayArea().clear();
+		view.getDisplayArea().add(frame);
+		frame.setSize("100%", "100%");
 	}
 
 	private void doOpenIsp(String caseNumber) {
