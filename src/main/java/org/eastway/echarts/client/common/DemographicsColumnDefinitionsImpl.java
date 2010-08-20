@@ -18,8 +18,7 @@ package org.eastway.echarts.client.common;
 import java.util.ArrayList;
 
 import org.eastway.echarts.shared.Demographics;
-
-import com.google.gwt.i18n.client.DateTimeFormat;
+import org.eastway.echarts.style.client.GlobalResources;
 
 @SuppressWarnings("serial")
 public class DemographicsColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Demographics>> {
@@ -51,7 +50,7 @@ public class DemographicsColumnDefinitionsImpl extends ArrayList<ColumnDefinitio
 		this.add(new ColumnDefinition<Demographics>() {
 			@Override
 			public void render(Demographics t, StringBuilder sb) {
-				sb.append(DateTimeFormat.getFormat("M/d/y").format(t.getDob()));
+				sb.append(GlobalResources.getDateFormat().format(t.getDob()));
 			}
 
 			@Override

@@ -15,6 +15,7 @@
  */
 package org.eastway.echarts.client.view;
 
+import java.util.Date;
 import java.util.List;
 
 import org.eastway.echarts.shared.EHR;
@@ -63,7 +64,7 @@ public interface DashboardView<T> {
 	void setName(String name);
 	void setCaseStatus(String descriptor);
 	void setAge(String string);
-	void setDob(String string);
+	void setDob(Date date);
 	void setProvider(String provider);
 	void setSsn(String ssn);
 }

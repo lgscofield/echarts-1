@@ -15,9 +15,11 @@
  */
 package org.eastway.echarts.client.view;
 
+import java.util.Date;
 import java.util.List;
 
 import org.eastway.echarts.client.EchartsUser;
+import org.eastway.echarts.style.client.GlobalResources;
 
 import com.google.gwt.app.client.NotificationMole;
 import com.google.gwt.core.client.GWT;
@@ -204,12 +206,16 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 
 	@Override
 	public void setAge(String age) {
-		currentPatientData.setText(1, 1, "Age: " + age);
+		String dob = currentPatientData.getText(1, 0);
+		StringBuilder sb = new StringBuilder();
+		sb.append(dob)
+			.append(age);
+		currentPatientData.setText(1, 0, sb.toString());
 	}
 
 	@Override
-	public void setDob(String dob) {
-		currentPatientData.setText(1, 0, "DOB: " + dob);
+	public void setDob(Date dob) {
+		currentPatientData.setText(1, 0, "DOB: " + GlobalResources.getDateFormat().format(dob));
 	}
 
 	@Override

@@ -16,6 +16,7 @@
 package org.eastway.echarts.style.client;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.CssResource.NotStrict;
@@ -45,5 +46,21 @@ public class GlobalResources {
 
 	public static Styles styles() {
 		return resources.css();
+	}
+
+	public static DateTimeFormat getDateFormat() {
+		return DateTimeFormat.getFormat("M/d/y");
+	}
+
+	public static DateTimeFormat getExtendedISODateTimeFormat() {
+		return DateTimeFormat.getFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZZ");
+	}
+
+	public static DateTimeFormat getBasicISODateTimeFormat() {
+		return DateTimeFormat.getFormat("yyyyMMdd'T'HHmmss.SSSZ");
+	}
+
+	public static DateTimeFormat getDateTimeFormat() {
+		return DateTimeFormat.getFormat("h:mm a M/d/y");
 	}
 }

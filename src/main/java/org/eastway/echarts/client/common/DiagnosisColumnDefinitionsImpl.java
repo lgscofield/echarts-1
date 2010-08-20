@@ -18,8 +18,7 @@ package org.eastway.echarts.client.common;
 import java.util.ArrayList;
 
 import org.eastway.echarts.shared.Diagnosis;
-
-import com.google.gwt.i18n.client.DateTimeFormat;
+import org.eastway.echarts.style.client.GlobalResources;
 
 @SuppressWarnings("serial")
 public class DiagnosisColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Diagnosis>> {
@@ -36,7 +35,7 @@ public class DiagnosisColumnDefinitionsImpl extends ArrayList<ColumnDefinition<D
 
 			@Override
 			public String getHeader(Diagnosis t) {
-				return DateTimeFormat.getFormat("M/d/y").format(t.getDate());
+				return GlobalResources.getDateFormat().format(t.getDate());
 			}
 		});
 		this.add(new ColumnDefinition<Diagnosis>() {

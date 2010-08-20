@@ -19,10 +19,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import org.eastway.echarts.client.presenter.MessagesPresenter;
+import org.eastway.echarts.style.client.GlobalResources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
@@ -69,8 +69,7 @@ public class MessagesView extends Composite implements MessagesPresenter.Display
 	public HTML formatMessage(String[] m) {
 		HTML message = new HTML(m[3]);
 		return new HTML("<strong>"
-				+ DateTimeFormat
-					.getFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZZ")
+				+ GlobalResources.getDateTimeFormat()
 					.format(new Date(new Long(m[0])))
 				+ "</strong>&mdash;"
 				+ m[1] + "&mdash;"

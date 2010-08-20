@@ -40,7 +40,6 @@ import org.eastway.echarts.shared.GetTicklerResult;
 import org.eastway.echarts.shared.Patient;
 import org.eastway.echarts.shared.Tickler;
 
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
@@ -96,8 +95,8 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 
 		Long age = (new Date().getTime() - demographics.getDob().getTime()) / (3600*24*365) / 1000;
 
-		//view.setAge(age.toString());
-		view.setDob(DateTimeFormat.getFormat("M/d/y").format(new Date(new Long(demographics.getDob().getTime()))).toString() + " (" + age.toString() + ")");
+		view.setDob(demographics.getDob());
+		view.setAge(" (" + age.toString() + ")");
 		view.setProvider(getProvider());
 		view.setSsn(patient.getSsn());
 		view.showEhrStub(true);
