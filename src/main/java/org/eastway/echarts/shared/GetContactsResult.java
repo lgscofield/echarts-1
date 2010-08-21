@@ -19,7 +19,6 @@ import java.util.List;
 
 import net.customware.gwt.dispatch.shared.Result;
 
-@SuppressWarnings("serial")
 public class GetContactsResult implements Result {
 
 	private List<Contact> contacts;

@@ -17,7 +17,6 @@ package org.eastway.echarts.shared;
 
 import net.customware.gwt.dispatch.shared.Action;
 
-@SuppressWarnings("serial")
 public class GetProductivity implements Action<GetProductivityResult> {
 
 	private String sessionId;

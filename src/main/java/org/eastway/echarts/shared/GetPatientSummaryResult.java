@@ -19,7 +19,6 @@ import java.util.Date;
 
 import net.customware.gwt.dispatch.shared.Result;
 
-@SuppressWarnings("serial")
 public class GetPatientSummaryResult implements Result {
 
 	private String caseNumber;

@@ -19,7 +19,6 @@ import java.util.LinkedHashSet;
 
 import net.customware.gwt.dispatch.shared.Result;
 
-@SuppressWarnings("serial")
 public class GetLinksResult implements Result {
 
 	private LinkedHashSet<String[]> links;

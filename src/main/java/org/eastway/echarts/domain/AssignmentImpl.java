@@ -22,7 +22,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Column;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Temporal;
@@ -36,10 +35,9 @@ import org.eastway.echarts.shared.AssignmentDTO;
 import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.Patient;
 
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "Orders")
-public class AssignmentImpl implements Serializable, Assignment {
+public class AssignmentImpl implements Assignment {
 
 	@Id
 	@Column(name = "orderid")

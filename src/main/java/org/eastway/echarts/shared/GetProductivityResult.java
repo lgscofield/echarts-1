@@ -19,7 +19,6 @@ import java.math.BigDecimal;
 
 import net.customware.gwt.dispatch.shared.Result;
 
-@SuppressWarnings("serial")
 public class GetProductivityResult implements Result {
 
 	private String staffId;

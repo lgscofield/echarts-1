@@ -17,7 +17,6 @@ package org.eastway.echarts.shared;
 
 import net.customware.gwt.dispatch.shared.Action;
 
-@SuppressWarnings("serial")
 public class GetPatientSummary implements Action<GetPatientSummaryResult> {
 
 	private String sessionId;
