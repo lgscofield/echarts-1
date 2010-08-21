@@ -16,14 +16,45 @@
 package org.eastway.echarts.client.common;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
+import net.customware.gwt.presenter.client.EventBus;
+
+import org.eastway.echarts.client.EchartsUser;
+import org.eastway.echarts.client.rpc.CachingDispatchAsync;
+import org.eastway.echarts.client.rpc.EchartsCallback;
+import org.eastway.echarts.shared.GetProfileViewData;
+import org.eastway.echarts.shared.GetProfileViewDataResult;
 import org.eastway.echarts.shared.User;
+
+import com.google.inject.Inject;
 
 @SuppressWarnings("serial")
 public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<User>> {
 
-	public ProfileColumnDefinitionsImpl() {
+	private Map<String, String> costCenters;
+
+	@Inject
+	public ProfileColumnDefinitionsImpl(EventBus eventBus, CachingDispatchAsync dispatch) {
+		dispatch.execute(new GetProfileViewData(EchartsUser.sessionId), new EchartsCallback<GetProfileViewDataResult>(eventBus) {
+			@Override
+			protected void handleFailure(Throwable caught) {
+			}
+
+			@Override
+			protected void handleSuccess(GetProfileViewDataResult result) {
+				setCostCenters(result.getCostCenters());
+				setColumnDefinitions();
+			}
+		});
+
+	}
+
+	private void setCostCenters(Map<String, String> costCenters) {
+		this.costCenters = costCenters;
+	}
+
+	private void setColumnDefinitions() {
 		this.add(new ColumnDefinition<User>() {
 			@Override
 			public void render(User t, StringBuilder sb) {
@@ -120,11 +151,8 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 			}
 
 			@Override
-			public List<String> getList(User t) {
-				ArrayList<String> list = new ArrayList<String>();
-				list.add("Information Systems");
-				list.add("ACT");
-				return list;
+			public Map<String, String> getMap(User t) {
+				return costCenters;
 			}
 
 			@Override
@@ -133,7 +161,7 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 			}
 
 			@Override
-			public boolean isList() {
+			public boolean isMap() {
 				return true;
 			}
 		});

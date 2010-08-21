@@ -26,6 +26,7 @@ import org.eastway.echarts.shared.GetMessages;
 import org.eastway.echarts.shared.GetPatientSummary;
 import org.eastway.echarts.shared.GetProductivity;
 import org.eastway.echarts.shared.GetProfile;
+import org.eastway.echarts.shared.GetProfileViewData;
 import org.eastway.echarts.shared.GetReferral;
 import org.eastway.echarts.shared.GetTickler;
 import org.eastway.echarts.shared.SaveMessage;
@@ -52,6 +53,7 @@ public class ServerModule extends ActionHandlerModule {
 		bindHandler(GetProductivity.class, GetProductivityHandler.class);
 		bindHandler(GetProfile.class, GetProfileHandler.class);
 		bindHandler(SaveProfile.class, SaveProfileHandler.class);
+		bindHandler(GetProfileViewData.class, GetProfileViewDataHandler.class);
 	}
 
 }

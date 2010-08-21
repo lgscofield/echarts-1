@@ -71,13 +71,16 @@ public class ProfileViewImpl<T> extends Composite implements ProfileView<T> {
 		for (int i = 0; i < columnDefinitions.size(); i++) {
 			table.setHTML(i, 0, columnDefinitions.get(i).getHeader(rowData));
 			ColumnDefinition<T> data = columnDefinitions.get(i);
-			if (data.isList()) {
+			if (data.isMap()) {
 				ListBox listBox = new ListBox();
-				for (int j = 0; j < data.getList(rowData).size(); j++) {
-					String s = data.getList(rowData).get(j);
+				int j = 0;
+				for (String key : data.getMap(rowData).keySet()) {
+					String s = data.getMap(rowData).get(key);
 					listBox.addItem(s);
-					if (s.matches(data.getData(rowData)))
+					listBox.setValue(j, key);
+					if (key.matches(data.getData(rowData)))
 						listBox.setSelectedIndex(j);
+					j++;
 				}
 				table.setWidget(i, 1, listBox);
 			} else if (data.isEditable()) {
@@ -96,9 +99,9 @@ public class ProfileViewImpl<T> extends Composite implements ProfileView<T> {
 	public void handleSave(ClickEvent event) {
 		for (int i = 0; i < columnDefinitions.size(); i++) {
 			try {
-				if (columnDefinitions.get(i).isList()) {
+				if (columnDefinitions.get(i).isMap()) {
 					int selected = ((ListBox) table.getWidget(i, 1)).getSelectedIndex();
-					columnDefinitions.get(i).setData(rowData, ((ListBox) table.getWidget(i, 1)).getItemText(selected));
+					columnDefinitions.get(i).setData(rowData, ((ListBox) table.getWidget(i, 1)).getValue(selected));
 				} else if (columnDefinitions.get(i).isEditable()) {
 					columnDefinitions.get(i).setData(rowData, ((TextBox) table.getWidget(i, 1)).getValue());
 				} else {

@@ -16,6 +16,7 @@
 package org.eastway.echarts.client.common;
 
 import java.util.List;
+import java.util.Map;
 
 public abstract class ColumnDefinition<T> {
 	public abstract void render(T t, StringBuilder sb);
@@ -54,5 +55,13 @@ public abstract class ColumnDefinition<T> {
 
 	public String getHeader(T t) {
 		return null;
+	}
+
+	public Map<String, String> getMap(T t) {
+		return null;
+	}
+
+	public boolean isMap() {
+		return false;
 	}
 }
