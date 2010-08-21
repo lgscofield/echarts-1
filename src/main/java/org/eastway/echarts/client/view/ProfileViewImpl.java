@@ -30,7 +30,6 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.ValueBoxBase;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ProfileViewImpl<T> extends Composite implements ProfileView<T> {
@@ -93,7 +92,6 @@ public class ProfileViewImpl<T> extends Composite implements ProfileView<T> {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@UiHandler("save")
 	public void handleSave(ClickEvent event) {
 		for (int i = 0; i < columnDefinitions.size(); i++) {
@@ -101,8 +99,10 @@ public class ProfileViewImpl<T> extends Composite implements ProfileView<T> {
 				if (columnDefinitions.get(i).isList()) {
 					int selected = ((ListBox) table.getWidget(i, 1)).getSelectedIndex();
 					columnDefinitions.get(i).setData(rowData, ((ListBox) table.getWidget(i, 1)).getItemText(selected));
+				} else if (columnDefinitions.get(i).isEditable()) {
+					columnDefinitions.get(i).setData(rowData, ((TextBox) table.getWidget(i, 1)).getValue());
 				} else {
-					columnDefinitions.get(i).setData(rowData, ((ValueBoxBase<String>) table.getWidget(i, 1)).getValue());
+					columnDefinitions.get(i).setData(rowData, table.getText(i, 1));
 				}
 			} catch (NullPointerException e) {
 				columnDefinitions.get(i).setData(rowData, "");
