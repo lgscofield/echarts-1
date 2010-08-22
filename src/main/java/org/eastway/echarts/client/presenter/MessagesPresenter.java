@@ -62,7 +62,7 @@ public class MessagesPresenter implements Presenter {
 		void setMessageTypes(ArrayList<String> types);
 	}
 
-	private List<MessageDTO> messages;
+	private List<MessageDTO> messages = new ArrayList<MessageDTO>();
 	private ArrayList<String[]> data = new ArrayList<String[]>();
 	private List<CodeDTO> types;
 	private Display view;

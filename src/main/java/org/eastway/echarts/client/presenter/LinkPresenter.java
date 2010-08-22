@@ -46,7 +46,7 @@ public class LinkPresenter implements Presenter {
 		this.display = display;
 	}
 
-	private void fetchData() {
+	public void fetchData() {
 		dispatch.executeWithCache(action, new EchartsCallback<GetLinksResult>(eventBus) {
 			@Override
 			protected void handleFailure(Throwable caught) {

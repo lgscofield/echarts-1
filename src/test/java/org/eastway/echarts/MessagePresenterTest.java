@@ -19,112 +19,100 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import net.customware.gwt.presenter.client.DefaultEventBus;
+import junit.framework.TestCase;
+
 import net.customware.gwt.presenter.client.EventBus;
 
-import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.presenter.MessagesPresenter;
 import org.eastway.echarts.client.rpc.CachingDispatchAsync;
+import org.eastway.echarts.client.rpc.EchartsCallback;
 import org.eastway.echarts.shared.CodeDTO;
 import org.eastway.echarts.shared.GetMessages;
 import org.eastway.echarts.shared.MessageDTO;
 import org.eastway.echarts.shared.PatientDTO;
+import org.eastway.echarts.shared.SaveMessage;
+import org.eastway.echarts.shared.SaveMessageResult;
+import org.easymock.IAnswer;
+import org.junit.Before;
 import org.junit.Test;
 
+import static org.easymock.EasyMock.*;
 
-import static org.easymock.EasyMock.createStrictMock;
-import static org.junit.Assert.*;
-
-public class MessagePresenterTest {
+public class MessagePresenterTest extends TestCase {
 	private MessagesPresenter messagesPresenter;
-	private CachingDispatchAsync mockRpcService;
+	private CachingDispatchAsync dispatch;
 	private EventBus eventBus;
 	private MessagesPresenter.Display mockMessagesDisplay;
-	private GetMessages action = null;
-	private String caseNumber = "0000008";
+	private GetMessages action;
+	private String caseNumber;
+	private Date timestamp;
+	private PatientDTO patient;
+	private MessageDTO message;
+	private List<MessageDTO> msgs;
+	private CodeDTO mtDto;
 
-	@Test public void testAddMessage() {
+	@Before
+	@Override
+	public void setUp() {
+		timestamp = new Date(1270717380123L);
+		caseNumber = "0000008";
 		action = new GetMessages("12345", caseNumber);
-		Date timestamp = new Date(1270717380123L);
-		EchartsUser.sessionId = "12345";
-		mockRpcService = createStrictMock(CachingDispatchAsync.class);
-		eventBus = new DefaultEventBus();
+		dispatch = createStrictMock(CachingDispatchAsync.class);
 		mockMessagesDisplay = createStrictMock(MessagesPresenter.Display.class);
-		PatientDTO patient = new PatientDTO();
-		patient.setCaseNumber("00000001");
-		messagesPresenter = new MessagesPresenter(mockMessagesDisplay, eventBus, mockRpcService, action);
-		MessageDTO m1 = new MessageDTO();
-		MessageDTO m2 = new MessageDTO();
-		MessageDTO m3 = new MessageDTO();
+		eventBus = createStrictMock(EventBus.class);
+		messagesPresenter = new MessagesPresenter(mockMessagesDisplay, eventBus, dispatch, action);
+		patient = new PatientDTO();
+		patient.setCaseNumber(caseNumber);
 
-		m1.setCaseNumber(caseNumber);
+		message = new MessageDTO();
 
-		CodeDTO mtDto = new CodeDTO();
+		message.setCaseNumber(caseNumber);
+
+		mtDto = new CodeDTO();
+
 		mtDto.setDescriptor("Referral Message");
-		m1.setMessageType(mtDto);
-		m1.setMessage("This is test 1");
-		m1.setCreationTimestamp(timestamp);
-		m1.setId(1);
-		m1.setLastEdit(timestamp);
-		m1.setLastEditBy("johndoe");
-		m1.setParent(null);
+		message.setMessageType(mtDto);
+		message.setMessage("This is test 1");
+		message.setCreationTimestamp(timestamp);
+		message.setId(1);
+		message.setLastEdit(timestamp);
+		message.setLastEditBy("johndoe");
+		message.setParent(null);
 
-		m2.setCaseNumber(caseNumber);
-		m2.setMessageType(mtDto);
-		m2.setMessage("This is test 2");
-		m2.setCreationTimestamp(timestamp);
-		m2.setId(2);
-		m2.setLastEdit(timestamp);
-		m2.setLastEditBy("johndoe");
-		m2.setParent(m1);
+		msgs = new ArrayList<MessageDTO>();
+		msgs.add(message);
+	}
 
-		m3.setCaseNumber(caseNumber);
-		m3.setMessageType(mtDto);
-		m3.setMessage("This is test 3");
-		m3.setCreationTimestamp(timestamp);
-		m3.setId(3);
-		m3.setLastEdit(timestamp);
-		m3.setLastEditBy("johndoe");
-		m3.setParent(m2);
+	@SuppressWarnings("unchecked")
+	@Test public void testAddMessage() {
+		dispatch.execute(isA(SaveMessage.class), isA(EchartsCallback.class));
+		expectLastCall().andAnswer(new IAnswer<Object>() {
+			@Override
+			public Object answer() throws Throwable {
+				final Object[] arguments = getCurrentArguments();
+				EchartsCallback<SaveMessageResult> callback = (EchartsCallback<SaveMessageResult>) arguments[arguments.length - 1];
+				callback.onSuccess(new SaveMessageResult(message));
+				return null;
+			}
+		});
+		replay(dispatch);
+		messagesPresenter.save(message);
+		verify(dispatch);
 
-		List<MessageDTO> msgs = new ArrayList<MessageDTO>();
-		msgs.add(m1);
-		msgs.add(m2);
-		msgs.add(m3);
-		messagesPresenter.setData(msgs);
-
-		assertTrue(messagesPresenter.getMessage(0).getCreationTimestamp() == timestamp);
-		assertTrue(messagesPresenter.getMessage(0).getId() == 1);
-		assertTrue(messagesPresenter.getMessage(0).getLastEdit().equals(timestamp));
-		assertTrue(messagesPresenter.getMessage(0).getLastEditBy().equals("johndoe"));
-		assertTrue(messagesPresenter.getMessage(0).getMessage().equals("This is test 1"));
-		assertTrue(messagesPresenter.getMessage(0).getMessageType().equals(mtDto));
-		assertTrue(messagesPresenter.getMessage(0).getParent() == null);
-		assertTrue(messagesPresenter.getMessage(0).getCaseNumber().equals(caseNumber));
-
-		assertTrue(messagesPresenter.getMessage(1).getCreationTimestamp() == timestamp);
-		assertTrue(messagesPresenter.getMessage(1).getId() == 2);
-		assertTrue(messagesPresenter.getMessage(1).getLastEdit().equals(timestamp));
-		assertTrue(messagesPresenter.getMessage(1).getLastEditBy().equals("johndoe"));
-		assertTrue(messagesPresenter.getMessage(1).getMessage().equals("This is test 2"));
-		assertTrue(messagesPresenter.getMessage(1).getMessageType().equals(mtDto));
-		assertTrue(messagesPresenter.getMessage(1).getParent().equals(m1));
-		assertTrue(messagesPresenter.getMessage(1).getCaseNumber().equals(caseNumber));
-
-		assertTrue(messagesPresenter.getMessage(2).getCreationTimestamp() == timestamp);
-		assertTrue(messagesPresenter.getMessage(2).getId() == 3);
-		assertTrue(messagesPresenter.getMessage(2).getLastEdit().equals(timestamp));
-		assertTrue(messagesPresenter.getMessage(2).getLastEditBy().equals("johndoe"));
-		assertTrue(messagesPresenter.getMessage(2).getMessage().equals("This is test 3"));
-		assertTrue(messagesPresenter.getMessage(2).getMessageType().equals(mtDto));
-		assertTrue(messagesPresenter.getMessage(2).getParent().equals(m2));
-		assertTrue(messagesPresenter.getMessage(2).getCaseNumber().equals(caseNumber));
+		assertEquals(messagesPresenter.getMessage(0).getCreationTimestamp(), timestamp);
+		assertEquals(messagesPresenter.getMessage(0).getId(), 1);
+		assertEquals(messagesPresenter.getMessage(0).getLastEdit(), timestamp);
+		assertEquals(messagesPresenter.getMessage(0).getLastEditBy(), "johndoe");
+		assertEquals(messagesPresenter.getMessage(0).getMessage(), "This is test 1");
+		assertEquals(messagesPresenter.getMessage(0).getMessageType(), mtDto);
+		assertEquals(messagesPresenter.getMessage(0).getParent(), null);
+		assertEquals(messagesPresenter.getMessage(0).getCaseNumber(), caseNumber);
 
 		ArrayList<String[]> data = messagesPresenter.getData();
 
-		assertTrue(new Date(new Long(data.get(0)[0])).equals(timestamp));
-		assertTrue(data.get(0)[1].equals(mtDto.getDescriptor()));
-		assertTrue(data.get(0)[2].equals("johndoe"));
-		assertTrue(data.get(0)[3].equals("This is test 1"));
+		assertEquals(new Date(new Long(data.get(0)[0])), timestamp);
+		assertEquals(data.get(0)[1], mtDto.getDescriptor());
+		assertEquals(data.get(0)[2], "johndoe");
+		assertEquals(data.get(0)[3], "This is test 1");
 	}
 }
