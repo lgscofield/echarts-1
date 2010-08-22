@@ -26,6 +26,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.ListBox;
@@ -112,5 +113,10 @@ public class ProfileViewImpl<T> extends Composite implements ProfileView<T> {
 			}
 		}
 		presenter.save(rowData);
+	}
+
+	@Override
+	public void setStatus(String string) {
+		Window.alert(string);
 	}
 }

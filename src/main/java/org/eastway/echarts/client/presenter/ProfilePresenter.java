@@ -30,7 +30,6 @@ import org.eastway.echarts.shared.SaveProfile;
 import org.eastway.echarts.shared.SaveProfileResult;
 import org.eastway.echarts.shared.User;
 
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
@@ -39,6 +38,7 @@ public class ProfilePresenter implements Presenter, ProfileView.Presenter<User> 
 	private ProfileView<User> view;
 	private EventBus eventBus;
 	private CachingDispatchAsync dispatch;
+	private User user;
 
 	@Inject
 	public ProfilePresenter(ProfileView<User> view, List<ColumnDefinition<User>> columnDefinitions, EventBus eventBus, CachingDispatchAsync dispatch) {
@@ -62,7 +62,11 @@ public class ProfilePresenter implements Presenter, ProfileView.Presenter<User> 
 
 			@Override
 			protected void handleSuccess(GetProfileResult result) {
-				setData(result);
+				try {
+					setData(result.getUser());
+				} catch (NullPointerException e) {
+					setData(null);
+				}
 			}
 		});
 	}
@@ -71,12 +75,13 @@ public class ProfilePresenter implements Presenter, ProfileView.Presenter<User> 
 		return view;
 	}
 
-	private void setData(GetProfileResult result) {
-		try {
-			view.setRowData(result.getUser());
-		} catch (NullPointerException e) {
-			view.setRowData(null);
-		}
+	public void setData(User user) {
+		this.user = user;
+		view.setRowData(user);
+	}
+
+	public User getData() {
+		return user;
 	}
 
 	@Override
@@ -90,11 +95,11 @@ public class ProfilePresenter implements Presenter, ProfileView.Presenter<User> 
 
 			@Override
 			protected void handleSuccess(SaveProfileResult t) {
-				Window.alert("Settings saved");
+				view.setStatus("Settings saved");
 				try {
-					view.setRowData(t.getUser());
-				} catch(NullPointerException e) {
-					view.setRowData(null);
+					setData(t.getUser());
+				} catch (NullPointerException e) {
+					setData(null);
 				}
 			}
 		});

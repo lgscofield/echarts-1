@@ -34,4 +34,6 @@ public interface ProfileView<T> {
 	Widget asWidget();
 
 	void setRowData(T t);
+
+	void setStatus(String string);
 }
