@@ -23,6 +23,9 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.StackLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
@@ -36,14 +39,13 @@ public class AddressViewImpl<T> extends Composite implements AddressView<T> {
 	@UiTemplate("AddressView.ui.xml")
 	interface AddressViewUiBinder extends UiBinder<Widget, AddressViewImpl> { }
 
-	@UiField FlexTable table;
+	@UiField StackLayoutPanel panel;
 	private Presenter<T> presenter;
 	private List<ColumnDefinition<T>> columnDefinitions;
 	private List<T> rowData;
 
 	public AddressViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
-		table.addStyleName(GlobalResources.styles().table());
 	}
 
 	@Override
@@ -63,19 +65,27 @@ public class AddressViewImpl<T> extends Composite implements AddressView<T> {
 
 	@Override
 	public void setRowData(List<T> rowData) {
+		panel.clear();
 		this.rowData = rowData;
-		for (int i = 0; i < rowData.size(); ++i) {
+
+		for(int i = 0; i < rowData.size(); i++) {
 			final T t = rowData.get(i);
-			if (i == 0) {
-				for (int k = 0; k < columnDefinitions.size(); k++)
-					table.setHTML(0, k, columnDefinitions.get(k).getHeader(t));
-				i++;
+			StringBuilder header = new StringBuilder();
+			ScrollPanel scroll = new ScrollPanel();
+			FlexTable table = new FlexTable();
+			table.addStyleName(GlobalResources.styles().table());
+			for (int j = 0; j < columnDefinitions.size(); j++) {
+				if (j == 0) {
+					columnDefinitions.get(j).render(t, header);
+				} else {
+					StringBuilder sb = new StringBuilder();
+					table.setHTML(j - 1, 0, columnDefinitions.get(j).getHeader(t));
+					columnDefinitions.get(j).render(t, sb);
+					table.setHTML(j - 1, 1, sb.toString());
+				}
 			}
-			for (int j = 0; j < columnDefinitions.size(); ++j) {
-				final StringBuilder sb = new StringBuilder();
-				columnDefinitions.get(j).render(t, sb);
-				table.setHTML(i, j, sb.toString());
-			}
+			scroll.add(table);
+			panel.add(scroll, header.toString(), 30);
 		}
 	}
 }

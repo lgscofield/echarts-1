@@ -14,11 +14,6 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style>
-		.table {
-			width: 0px;
-			height: 0px;
-			margin: 5px;
-		}
 	</ui:style>
-	<g:FlexTable addStyleNames='{style.table}' ui:field='table'/>
+	<g:StackLayoutPanel unit='PX' ui:field='panel' />
 </ui:UiBinder> 
