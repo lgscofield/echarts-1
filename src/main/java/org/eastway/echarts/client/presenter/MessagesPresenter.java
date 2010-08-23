@@ -132,7 +132,7 @@ public class MessagesPresenter implements Presenter {
 			@Override
 			protected void handleSuccess(SaveMessageResult result) {
 				view.saved();
-				messages.add(result.getMessage());
+				messages.add(0, result.getMessage());
 				setData(messages);
 				view.setData(getData());
 			}

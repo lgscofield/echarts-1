@@ -50,7 +50,7 @@ public class GetMessagesHandler implements ActionHandler<GetMessages, GetMessage
 		}
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 		List<Message> messages = em.createQuery(
-				"SELECT m FROM Message m WHERE m.caseNumber = '" + action.getCaseNumber() + "'", Message.class)
+				"SELECT m FROM Message m WHERE m.caseNumber = '" + action.getCaseNumber() + "' ORDER BY m.creationTimestamp DESC", Message.class)
 				.getResultList();
 		List<MessageDTO> messagesDto = new ArrayList<MessageDTO>();
 		for (Message m : messages)
