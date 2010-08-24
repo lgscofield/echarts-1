@@ -47,7 +47,7 @@ public class GetLinksHandler implements ActionHandler<GetLinks, GetLinksResult> 
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 
 		TypedQuery<Link> query = em.createQuery(
-				"SELECT link FROM Link link", Link.class);
+				"SELECT link FROM Link link ORDER BY link.header, link.sortOrder", Link.class);
 		List<Link> linkList = query.getResultList();
 		LinkedHashSet<String[]> linkDto = new LinkedHashSet<String[]>();
 		for (Link link : linkList) {
