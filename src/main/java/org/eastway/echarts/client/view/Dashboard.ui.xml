@@ -167,7 +167,7 @@
 										<g:Hyperlink ui:field='tickler' targetHistoryToken=''>Tickler</g:Hyperlink>
 									</li>
 									<li>
-										<g:Hyperlink ui:field='signature' targetHistoryToken=''>Signature</g:Hyperlink>
+										<g:Hyperlink ui:field='signature' targetHistoryToken=''>Signatures</g:Hyperlink>
 									</li>
 								</ul>
 							</g:HTMLPanel>

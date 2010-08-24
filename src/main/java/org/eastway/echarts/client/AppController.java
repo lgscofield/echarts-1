@@ -288,7 +288,7 @@ public class AppController implements Presenter {
 	}
 
 	private void doViewSignature() {
-		Window.open("http://ewsql.eastway.local/echarts-asp/signature/sign.asp", "_blank", "");
+		Window.open("http://ewsql.eastway.local/echarts-asp/signatures/sign.asp", "_blank", "");
 	}
 
 	private void doOpenNurseProgressNote(String caseNumber) {
