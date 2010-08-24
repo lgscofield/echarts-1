@@ -58,6 +58,8 @@ import org.eastway.echarts.client.events.ViewReferralEvent;
 import org.eastway.echarts.client.events.ViewReferralEventHandler;
 import org.eastway.echarts.client.events.ViewServiceHistoryEvent;
 import org.eastway.echarts.client.events.ViewServiceHistoryEventHandler;
+import org.eastway.echarts.client.events.ViewSignatureEvent;
+import org.eastway.echarts.client.events.ViewSignatureEventHandler;
 import org.eastway.echarts.client.events.ViewTicklerEvent;
 import org.eastway.echarts.client.events.ViewTicklerEventHandler;
 import org.eastway.echarts.client.events.ViewTreatmentPlanEvent;
@@ -277,6 +279,16 @@ public class AppController implements Presenter {
 				doOpenNurseProgressNote(event.getCaseNumber());
 			}
 		});
+		eventBus.addHandler(ViewSignatureEvent.TYPE, new ViewSignatureEventHandler() {
+			@Override
+			public void onViewSignature(ViewSignatureEvent event) {
+				doViewSignature();
+			}
+		});
+	}
+
+	private void doViewSignature() {
+		Window.open("http://ewsql.eastway.local/echarts-asp/signature/sign.asp", "_blank", "");
 	}
 
 	private void doOpenNurseProgressNote(String caseNumber) {

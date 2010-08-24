@@ -47,6 +47,8 @@ public interface DashboardView<T> {
 		void logout();
 
 		void openProfile();
+
+		void openSignature();
 	}
 
 	void addTab(Widget widget, String string);

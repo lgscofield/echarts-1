@@ -26,6 +26,7 @@ import org.eastway.echarts.client.events.ChangeCurrentEhrEventHandler;
 import org.eastway.echarts.client.events.LogoutEvent;
 import org.eastway.echarts.client.events.OpenEhrEvent;
 import org.eastway.echarts.client.events.ViewProfileEvent;
+import org.eastway.echarts.client.events.ViewSignatureEvent;
 import org.eastway.echarts.client.events.ViewTicklerEvent;
 import org.eastway.echarts.client.rpc.CachingDispatchAsync;
 import org.eastway.echarts.client.rpc.EchartsCallback;
@@ -161,5 +162,10 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 	@Override
 	public void openProfile() {
 		eventBus.fireEvent(new ViewProfileEvent());
+	}
+
+	@Override
+	public void openSignature() {
+		eventBus.fireEvent(new ViewSignatureEvent());
 	}
 }
