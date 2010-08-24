@@ -27,6 +27,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.eastway.echarts.shared.Role;
+import org.eastway.echarts.shared.RoleDTO;
 import org.eastway.echarts.shared.User;
 import org.eastway.echarts.shared.UserDTO;
 
@@ -200,13 +201,13 @@ public class UserImpl implements User {
 		userDto.setOfficeExt(this.getOfficeExt());
 		userDto.setOfficePhone(this.getOfficePhone());
 		userDto.setProgram(this.getProgram());
-		userDto.setRole(role.toDto());
+		userDto.setRole(role == null ? new RoleDTO() : role.toDto());
 		userDto.setStaffDescription(this.getStaffDescription());
 		userDto.setStaffId(this.getStaffId());
 		userDto.setStaffName(this.getStaffName());
 		userDto.setStaffNpi(this.getStaffNpi());
 		userDto.setStatus(this.getStatus());
-		userDto.setSupervisor(supervisor.getStaffName());
+		userDto.setSupervisor(supervisor == null ? "" : supervisor.getStaffName());
 		userDto.setTermDate(this.getTermDate());
 		userDto.setUsername(this.getUsername());
 		userDto.setCred1(cred1);
