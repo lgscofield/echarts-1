@@ -133,6 +133,7 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
 	public void go(final HasWidgets container) {
 		setActions();
 		fetchData();
+		viewPatientSummary();
 	}
 
 	@Override
