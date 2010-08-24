@@ -20,6 +20,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.CssResource.NotStrict;
+import com.google.gwt.resources.client.ImageResource;
 
 public class GlobalResources {
 
@@ -30,6 +31,8 @@ public class GlobalResources {
 		@NotStrict
 		@Source("echarts.css")
 		Styles css();
+		@Source("default_photo.jpg")
+		ImageResource defaultPhoto();
 	}
 
 	public interface Styles extends CssResource {
