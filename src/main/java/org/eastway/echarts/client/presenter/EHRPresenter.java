@@ -107,6 +107,7 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
 		patient.setMiddleInitial(result.getMiddleInitial());
 		patient.setLastName(result.getLastName());
 		patient.setSuffix(result.getSuffix());
+		patient.setCaseNumber(result.getCaseNumber());
 		demographics.setDob(result.getDob());
 		caseStatus.setDescriptor(result.getCaseStatus());
 		patient.setCaseStatus(caseStatus);

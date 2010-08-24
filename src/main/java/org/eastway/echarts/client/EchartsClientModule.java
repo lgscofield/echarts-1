@@ -29,6 +29,7 @@ import org.eastway.echarts.client.presenter.ProfilePresenter;
 import org.eastway.echarts.client.presenter.TicklerPresenter;
 import org.eastway.echarts.client.rpc.CachingDispatchAsync;
 import org.eastway.echarts.client.rpc.CachingDispatchAsyncImpl;
+import org.eastway.echarts.client.ui.EchartsOracle;
 import org.eastway.echarts.client.view.DashboardView;
 import org.eastway.echarts.client.view.DashboardViewImpl;
 import org.eastway.echarts.client.view.ProfileView;
@@ -77,6 +78,8 @@ public class EchartsClientModule extends AbstractGinModule {
 		bind(new TypeLiteral<ProfileView<User>>() {}).to(ProfileViewImpl.class);
 
 		bind(new TypeLiteral<List<ColumnDefinition<Address>>>() {}).to(AddressColumnDefinitionsImpl.class).in(Singleton.class);
+
+		bind(EchartsOracle.class).in(Singleton.class);
 	}
 
 }

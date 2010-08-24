@@ -72,7 +72,7 @@
 		}
 		
 		.searchbox {
-			margin-top: 6px;
+			margin-top: 2px;
 			padding: 6px;
 			width: 220px;
 		}
@@ -101,10 +101,10 @@
 						<g:HTML>&nbsp;&mdash;&nbsp;</g:HTML>
 						<g:Hyperlink ui:field="logoutButton" targetHistoryToken=''>Logout</g:Hyperlink>
 					</g:HorizontalPanel>
-					<g:FlowPanel ui:field="patientSearch" addStyleNames="{style.right} {style.top}">
-						<g:SuggestBox ui:field='patientIdBox' addStyleNames='{style.searchbox}'/>
+					<g:HorizontalPanel ui:field="patientSearch" addStyleNames="{style.right} {style.top}">
+						<g:FlowPanel ui:field='patientIdBox'/>
 						<g:Button ui:field='patientSearchButton' addStyleNames='{style.button}'>Search</g:Button>
-					</g:FlowPanel>
+					</g:HorizontalPanel>
 	
 					<g:FlexTable ui:field='currentPatientData'
 						addStyleNames='{style.left} {style.margin} {style.italics}'/>

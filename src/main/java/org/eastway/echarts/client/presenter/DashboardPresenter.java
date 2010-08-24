@@ -17,7 +17,6 @@ package org.eastway.echarts.client.presenter;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 import net.customware.gwt.presenter.client.EventBus;
 
@@ -35,10 +34,9 @@ import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.GetProductivity;
 import org.eastway.echarts.shared.GetProductivityResult;
-import org.eastway.echarts.shared.GetTickler;
-import org.eastway.echarts.shared.GetTicklerResult;
+import org.eastway.echarts.shared.GetProvider;
+import org.eastway.echarts.shared.GetProviderResult;
 import org.eastway.echarts.shared.Patient;
-import org.eastway.echarts.shared.Tickler;
 
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
@@ -47,19 +45,16 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 
 	private DashboardView<LinkedHashMap<String, Long>> view;
 	private EventBus eventBus;
-	private GetTicklerResult data;
 	private CachingDispatchAsync dispatch;
-	private GetTickler action;
 	private String caseNumber;
 
 	@Inject
 	public DashboardPresenter(DashboardView<LinkedHashMap<String, Long>> view,
-			EventBus eventBus, final CachingDispatchAsync dispatch, GetTickler action) {
+			EventBus eventBus, final CachingDispatchAsync dispatch) {
 		this.view = view;
 		this.view.setPresenter(this);
 		this.eventBus = eventBus;
 		this.dispatch = dispatch;
-		this.action = action;
 	}
 
 	private void bind() {
@@ -83,46 +78,36 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 		fetchData();
 	}
 
-	private void setCurrentEhrData(EHR ehr) {
+	private void setCurrentEhrData(final EHR ehr) {
 		if (ehr == null) {
 			view.showEhrStub(false);
 			return;
 		}
-		Patient patient = ehr.getSubject();
-		Demographics demographics = ehr.getDemographics();
-		view.setName(patient.getName());
-		view.setCaseStatus(patient.getCaseStatus().getDescriptor());
+		dispatch.execute(new GetProvider(EchartsUser.sessionId, ehr.getSubject().getCaseNumber(), EchartsUser.staffId), new EchartsCallback<GetProviderResult>(eventBus) {
+			@Override
+			protected void handleFailure(Throwable caught) {
+			}
 
-		Long age = (new Date().getTime() - demographics.getDob().getTime()) / (3600*24*365) / 1000;
+			@Override
+			protected void handleSuccess(GetProviderResult result) {
+				Patient patient = ehr.getSubject();
+				Demographics demographics = ehr.getDemographics();
+				view.setName(patient.getName());
+				view.setCaseStatus(patient.getCaseStatus().getDescriptor() == null ? "" : patient.getCaseStatus().getDescriptor());
 
-		view.setDob(demographics.getDob());
-		view.setAge(" (" + age.toString() + ")");
-		view.setProvider(getProvider());
-		view.setSsn(patient.getSsn());
-		view.showEhrStub(true);
-	}
+				Long age = (new Date().getTime() - demographics.getDob().getTime()) / (3600*24*365) / 1000;
 
-	private String getProvider() {
-		List<Tickler> assignments = data.getTicklers();
-		for (Tickler assignment : assignments) {
-			if (!assignment.getService().matches("S CS"))
-				continue;
-			else
-				return assignment.getStaffName();
-		}
-
-		for (Tickler assignment : assignments)
-			return assignment.getStaffName();
-		return null;
+				view.setDob(demographics.getDob());
+				view.setAge(" (" + age.toString() + ")");
+				view.setProvider(result.getProvider() == null ? "" : result.getProvider());
+				view.setSsn(patient.getSsn());
+				view.showEhrStub(true);
+			}
+		});
 	}
 
 	private void fetchData() {
-		getPatientList();
 		getProductivityData();
-	}
-
-	private void setData(GetTicklerResult data) {
-		this.data = data;
 	}
 
 	@Override
@@ -159,27 +144,6 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 					color = "green";
 				view.setProductivity(result.getTotal().toPlainString(), color);
 				view.setBonusProjection(new Double(result.getGreenNumber()).toString());
-			}
-		});
-	}
-
-	public void getPatientList() {
-		action.setStaffId(EchartsUser.staffId);
-		action.setSessionId(EchartsUser.sessionId);
-		dispatch.executeWithCache(action, new EchartsCallback<GetTicklerResult>(eventBus) {
-			@Override
-			protected void handleFailure(Throwable caught) {
-			}
-
-			@Override
-			protected void handleSuccess(GetTicklerResult result) {
-				for (Tickler assignment : result.getTicklers())
-					if (assignment != null)
-						view.addPatientSearchData(new StringBuilder()
-									.append(assignment.getCaseNumber())
-									.append(" - ")
-									.append(assignment.getName()).toString());
-				setData(result);
 			}
 		});
 	}

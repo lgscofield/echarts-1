@@ -16,9 +16,9 @@
 package org.eastway.echarts.client.view;
 
 import java.util.Date;
-import java.util.List;
 
 import org.eastway.echarts.client.EchartsUser;
+import org.eastway.echarts.client.ui.EchartsOracle;
 import org.eastway.echarts.style.client.GlobalResources;
 
 import com.google.gwt.app.client.NotificationMole;
@@ -31,20 +31,20 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
 
 public class DashboardViewImpl<T> extends Composite implements DashboardView<T> {
 	@SuppressWarnings("unchecked")
@@ -58,7 +58,7 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 	@UiField Style style;
 	@UiField FlexTable currentPatientData;
 	@UiField Button patientSearchButton;
-	@UiField SuggestBox patientIdBox;
+	@UiField FlowPanel patientIdBox;
 	@UiField NotificationMole mole;
 	@UiField SpanElement productivity;
 	@UiField SpanElement bonusProjection;
@@ -66,13 +66,17 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 	@UiField TableElement graph;
 	@UiField Hyperlink tickler;
 
-	private MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
 	private double productivityUnit = 0.83;
+	private SuggestBox suggestBox;
 
-	public DashboardViewImpl() {
+	@Inject
+	public DashboardViewImpl(EchartsOracle oracle) {
 		initWidget(uiBinder.createAndBindUi(this));
 		username.setHTML(EchartsUser.userName);
 		bind();
+		this.suggestBox = new SuggestBox(oracle);
+		suggestBox.addStyleName(style.searchbox());
+		patientIdBox.add(suggestBox);
 	}
 
 	private Presenter<T> presenter;
@@ -114,21 +118,6 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 		tabLayoutPanel.selectTab(idx);
 	}
 
-	@UiFactory SuggestBox initSuggestBox() {
-		return new SuggestBox(oracle);
-	}
-
-	@Override
-	public void setPatientSearchData(List<String> list) {
-		for (String s : list)
-			oracle.add(s);
-	}
-
-	@Override
-	public void addPatientSearchData(String str) {
-		oracle.add(str);
-	}
-
 	@Override
 	public void showEhrStub(boolean visible) {
 		currentPatientData.setVisible(visible);
@@ -150,21 +139,16 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 
 	@UiHandler("patientSearchButton")
 	void handleSearchButtonClicked(ClickEvent event) {
-		String str = patientIdBox.getText();
+		String str = suggestBox.getText();
 		if (str.isEmpty())
 			return;
 		presenter.openEhr(str);
-		patientIdBox.setText("");
+		suggestBox.setText("");
 	}
 
 	@Override
 	public NotificationMole getMole() {
 		return mole;
-	}
-
-	@Override
-	public void reset() {
-		oracle.clear();
 	}
 
 	@Override
