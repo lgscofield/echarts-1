@@ -59,7 +59,7 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 			@Override
 			public void render(User t, StringBuilder sb) {
 				try {
-					sb.append(t.getStaffName());
+					sb.append(t.getStaffName() == null ? "" : t.getStaffName());
 				} catch (NullPointerException e) {
 					sb.append("");
 				}
@@ -75,7 +75,7 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 			@Override
 			public void render(User t, StringBuilder sb) {
 				try {
-					sb.append(t.getUsername());
+					sb.append(t.getUsername() == null ? "" : t.getUsername());
 				} catch(NullPointerException e) {
 					sb.append("");
 				}
@@ -90,7 +90,7 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 			@Override
 			public void render(User t, StringBuilder sb) {
 				try {
-					sb.append(t.getStaffId().isEmpty() ? "" : t.getStaffId());
+					sb.append(t.getStaffId() == null ? "" : t.getStaffId());
 				} catch (NullPointerException e) {
 					sb.append("");
 				}
@@ -105,7 +105,7 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 			@Override
 			public void render(User t, StringBuilder sb) {
 				try {
-					sb.append(t.getStaffDescription().isEmpty() ? "" : t.getStaffDescription());
+					sb.append(t.getStaffDescription() == null ? "" : t.getStaffDescription());
 				} catch (NullPointerException e) {
 					sb.append("");
 				}
@@ -120,7 +120,7 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 			@Override
 			public void render(User t, StringBuilder sb) {
 				try {
-					sb.append(t.getRole().getRoleName().isEmpty() ? "" : t.getRole().getRoleName());
+					sb.append(t.getRole().getRoleName() == null ? "" : t.getRole().getRoleName());
 				} catch (NullPointerException e) {
 					sb.append("");
 				}
@@ -144,7 +144,7 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 			@Override
 			public String getData(User t) {
 				try {
-					return t.getProgram();
+					return t.getProgram() == null ? "" : t.getProgram();
 				} catch(NullPointerException e) {
 					return "";
 				}
@@ -178,7 +178,7 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 			@Override
 			public String getData(User t) {
 				try {
-					return t.getCred1();
+					return t.getCred1() == null ? "" : t.getCred1();
 				} catch (NullPointerException e) {
 					return "";
 				}
@@ -207,7 +207,7 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 			@Override
 			public String getData(User t) {
 				try {
-					return t.getCred2();
+					return t.getCred2() == null ? "" : t.getCred2();
 				} catch (NullPointerException e) {
 					return "";
 				}
@@ -227,7 +227,7 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 			@Override
 			public void render(User t, StringBuilder sb) {
 				try {
-					sb.append(t.getOffice().isEmpty() ? "" : t.getOffice());
+					sb.append(t.getOffice() == null ? "" : t.getOffice());
 				} catch (NullPointerException e) {
 					sb.append("");
 				}
@@ -242,7 +242,7 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 			@Override
 			public void render(User t, StringBuilder sb) {
 				try {
-					sb.append(t.getOfficePhone().isEmpty() ? "" : t.getOfficePhone());
+					sb.append(t.getOfficePhone() == null ? "" : t.getOfficePhone());
 				} catch (NullPointerException e) {
 					sb.append("");
 				}
@@ -257,7 +257,7 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 			@Override
 			public void render(User t, StringBuilder sb) {
 				try {
-					sb.append(t.getSupervisor().isEmpty() ? "" : t.getSupervisor());
+					sb.append(t.getSupervisor() == null ? "" : t.getSupervisor());
 				} catch (NullPointerException e) {
 					sb.append("");
 				}
