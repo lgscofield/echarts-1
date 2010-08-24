@@ -63,9 +63,6 @@ public interface User {
 	void setTermDate(Date termDate);
 	Date getTermDate();
 
-	void setId(long id);
-	long getId();
-
 	void setSupervisor(String supervisor);
 	String getSupervisor();
 

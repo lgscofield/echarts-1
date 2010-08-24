@@ -32,7 +32,6 @@ public class UserDTO implements User, Serializable {
 	private String staffNpi;
 	Byte[] extendedPermissions;
 	private Date hireDate, termDate;
-	private long id;
 	private Role role;
 	private String supervisor;
 	private String sessionId;
@@ -169,16 +168,6 @@ public class UserDTO implements User, Serializable {
 	@Override
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	@Override
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	@Override
-	public long getId() {
-		return id;
 	}
 
 	@Override

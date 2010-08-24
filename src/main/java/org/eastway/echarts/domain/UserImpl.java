@@ -33,7 +33,6 @@ import org.eastway.echarts.shared.UserDTO;
 @Entity
 @Table(name="Echarts_User")
 public class UserImpl implements User {
-	private long id;
 	@ManyToMany
 	@JoinTable(name="user_session_map",
 			joinColumns=@JoinColumn(name="user_id"),
@@ -62,20 +61,6 @@ public class UserImpl implements User {
 	private String cred2;
 
 	public UserImpl() {	}
-
-	public UserImpl(long id) {
-		this.id = id;
-	}
-
-	@Override
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	@Override
-	public long getId() {
-		return id;
-	}
 
 	@Override
 	public void setUsername(String username) {
@@ -211,7 +196,6 @@ public class UserImpl implements User {
 		UserDTO userDto = new UserDTO();
 		userDto.setExtendedPermissions(this.getExtendedPermissions());
 		userDto.setHireDate(this.getHireDate());
-		userDto.setId(this.getId());
 		userDto.setOffice(this.getOffice());
 		userDto.setOfficeExt(this.getOfficeExt());
 		userDto.setOfficePhone(this.getOfficePhone());
