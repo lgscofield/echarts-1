@@ -53,14 +53,14 @@ public class GetPatientSummaryHandler implements ActionHandler<GetPatientSummary
 		List<AssignmentImpl> assignments = em.createQuery(
 				"SELECT a From AssignmentImpl a Where a.disposition = 'Open' And a.service Like 'S%' And a.caseNumber = '" + action.getCaseNumber() + "' Order By a.patient.lastName ASC, a.patient.firstName ASC, a.orderDate DESC", AssignmentImpl.class)
 					.getResultList();
-		String provider;
+		String provider = null;
 		for (AssignmentImpl a : assignments) {
 			if (a.getStaff().matches(action.getStaffId()))
 				provider = a.getStaffName();
 		}
-		if (assignments.size() > 0)
+		if (provider == null && assignments.size() > 0)
 			provider = assignments.get(0).getStaffName();
-		else
+		else if (provider == null)
 			provider = "";
 		GetPatientSummaryResult result = new GetPatientSummaryResult();
 		result.setPatient(patient.toDto());
