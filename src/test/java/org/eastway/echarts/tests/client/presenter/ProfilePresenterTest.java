@@ -73,15 +73,15 @@ public class ProfilePresenterTest extends TestCase {
 			public Object answer() throws Throwable {
 				final Object[] arguments = getCurrentArguments();
 				EchartsCallback<SaveProfileResult> callback = (EchartsCallback<SaveProfileResult>) arguments[arguments.length - 1];
-				callback.onSuccess(new SaveProfileResult());
+				callback.onSuccess(new SaveProfileResult(user));
 				return null;
 			}
 		});
 		replay(dispatch);
 		profilePresenter.save(user);
 		verify(dispatch);
-		assertEquals("B.S", user.getCred1());
-		assertEquals("M.S", user.getCred2());
-		assertEquals("010", user.getProgram());
+		assertEquals("B.S", profilePresenter.getData().getCred1());
+		assertEquals("M.S", profilePresenter.getData().getCred2());
+		assertEquals("010", profilePresenter.getData().getProgram());
 	}
 }

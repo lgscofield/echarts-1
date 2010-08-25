@@ -36,4 +36,6 @@ public interface ProfileView<T> {
 	void setRowData(T t);
 
 	void setStatus(String string);
+
+	void clearFirstLogin();
 }

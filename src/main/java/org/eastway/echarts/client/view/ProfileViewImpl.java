@@ -15,6 +15,7 @@
  */
 package org.eastway.echarts.client.view;
 
+import java.util.Date;
 import java.util.List;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
@@ -26,6 +27,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -118,5 +120,10 @@ public class ProfileViewImpl<T> extends Composite implements ProfileView<T> {
 	@Override
 	public void setStatus(String string) {
 		Window.alert(string);
+	}
+
+	@Override
+	public void clearFirstLogin() {
+		Cookies.setCookie("first_login", "", new Date(-1), ".eastway.local", "/", false);
 	}
 }
