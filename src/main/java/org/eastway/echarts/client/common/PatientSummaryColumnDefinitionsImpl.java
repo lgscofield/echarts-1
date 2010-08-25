@@ -18,6 +18,7 @@ package org.eastway.echarts.client.common;
 import java.util.ArrayList;
 
 import org.eastway.echarts.shared.GetPatientSummaryResult;
+import org.eastway.echarts.style.client.GlobalResources;
 
 @SuppressWarnings("serial")
 public class PatientSummaryColumnDefinitionsImpl extends ArrayList<ColumnDefinition<GetPatientSummaryResult>> {
@@ -32,6 +33,62 @@ public class PatientSummaryColumnDefinitionsImpl extends ArrayList<ColumnDefinit
 			@Override
 			public String getHeader(GetPatientSummaryResult t) {
 				return "<b>Name</b>";
+			}
+		});
+		this.add(new ColumnDefinition<GetPatientSummaryResult>() {
+			@Override
+			public void render(GetPatientSummaryResult t, StringBuilder sb) {
+				sb.append("<img src=\"" + GlobalResources.resources().defaultPhoto().getURL() + "\" />");
+			}
+
+			@Override
+			public String getHeader(GetPatientSummaryResult t) {
+				return "<b>Picture</b>";
+			}
+		});
+		this.add(new ColumnDefinition<GetPatientSummaryResult>() {
+			@Override
+			public void render(GetPatientSummaryResult t, StringBuilder sb) {
+				sb.append(GlobalResources.getDateFormat().format(t.getDemographics().getDob()));
+			}
+
+			@Override
+			public String getHeader(GetPatientSummaryResult t) {
+				return "<b>Date&nbsp;of&nbsp;birth</b>";
+			}
+		});
+		this.add(new ColumnDefinition<GetPatientSummaryResult>() {
+			@Override
+			public void render(GetPatientSummaryResult t, StringBuilder sb) {
+				sb.append(t.getProvider());
+			}
+
+			@Override
+			public String getHeader(GetPatientSummaryResult t) {
+				return "<b>Provider</b>";
+			}
+		});
+		this.add(new ColumnDefinition<GetPatientSummaryResult>() {
+			@Override
+			public void render(GetPatientSummaryResult t, StringBuilder sb) {
+				sb.append(t.getPatient().getSsn() == null ? "" : t.getPatient().getSsn());
+			}
+
+			@Override
+			public String getHeader(GetPatientSummaryResult t) {
+				return "<b>SSN</b>";
+			}
+		});
+		this.add(new ColumnDefinition<GetPatientSummaryResult>() {
+			@Override
+			public void render(GetPatientSummaryResult t, StringBuilder sb) {
+				sb.append(t.getPatient().getCaseStatus().getDescriptor() == null ? "" :
+					t.getPatient().getCaseStatus().getDescriptor());
+			}
+
+			@Override
+			public String getHeader(GetPatientSummaryResult t) {
+				return "<b>Case Status</b>";
 			}
 		});
 	}
