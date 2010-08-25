@@ -23,6 +23,7 @@ import org.eastway.echarts.style.client.GlobalResources;
 @SuppressWarnings("serial")
 public class DiagnosisColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Diagnosis>> {
 
+	private String dash = "&nbsp;&mdash;&nbsp;";
 	protected DiagnosisColumnDefinitionsImpl() {
 		this.add(new ColumnDefinition<Diagnosis>() {
 			@Override
@@ -30,7 +31,7 @@ public class DiagnosisColumnDefinitionsImpl extends ArrayList<ColumnDefinition<D
 				if (t.getAxis1A().getDescription() == null)
 					sb.append("<p>Axis 1A: NO DATA</p>");
 				else
-					sb.append("<p>Axis 1A: " + t.getAxis1A().getDescription() + "</p>");
+					sb.append("<p>Axis 1A: " + t.getAxis1A().getIcd9() + dash + t.getAxis1A().getDescription() + "</p>");
 			}
 
 			@Override
@@ -44,7 +45,7 @@ public class DiagnosisColumnDefinitionsImpl extends ArrayList<ColumnDefinition<D
 				if (t.getAxis1B().getDescription() == null)
 					sb.append("<p>Axis 1B: NO DATA</p>");
 				else
-					sb.append("<p>Axis 1B: " + t.getAxis1B().getDescription() + "</p>");
+					sb.append("<p>Axis 1B: " + t.getAxis1B().getIcd9() + dash + t.getAxis1B().getDescription() + "</p>");
 			}
 		});
 		this.add(new ColumnDefinition<Diagnosis>() {
@@ -53,7 +54,7 @@ public class DiagnosisColumnDefinitionsImpl extends ArrayList<ColumnDefinition<D
 				if (t.getAxis1C().getDescription() == null)
 					sb.append("<p>Axis 1C: NO DATA</p>");
 				else
-					sb.append("<p>Axis 1C: " + t.getAxis1C().getDescription() + "</p>");
+					sb.append("<p>Axis 1C: " + t.getAxis1C().getIcd9() + dash + t.getAxis1C().getDescription() + "</p>");
 			}
 		});
 		this.add(new ColumnDefinition<Diagnosis>() {
@@ -62,7 +63,7 @@ public class DiagnosisColumnDefinitionsImpl extends ArrayList<ColumnDefinition<D
 				if (t.getAxis1D().getDescription() == null)
 					sb.append("<p>Axis 1D: NO DATA</p>");
 				else
-					sb.append("<p>Axis 1D: " + t.getAxis1D().getDescription() + "</p>");
+					sb.append("<p>Axis 1D: " + t.getAxis1D().getIcd9() + dash + t.getAxis1D().getDescription() + "</p>");
 			}
 		});
 		this.add(new ColumnDefinition<Diagnosis>() {
@@ -71,7 +72,7 @@ public class DiagnosisColumnDefinitionsImpl extends ArrayList<ColumnDefinition<D
 				if (t.getAxis1E().getDescription() == null)
 					sb.append("<p>Axis 1E: NO DATA</p>");
 				else
-					sb.append("<p>Axis 1E: " + t.getAxis1E().getDescription() + "</p>");
+					sb.append("<p>Axis 1E: " + t.getAxis1E().getIcd9() + dash + t.getAxis1E().getDescription() + "</p>");
 			}
 		});
 		this.add(new ColumnDefinition<Diagnosis>() {
@@ -80,7 +81,7 @@ public class DiagnosisColumnDefinitionsImpl extends ArrayList<ColumnDefinition<D
 				if (t.getAxis2A().getDescription() == null)
 					sb.append("<p>Axis 2A: NO DATA</p>");
 				else
-					sb.append("<p>Axis 2A: " + t.getAxis2A().getDescription() + "</p>");
+					sb.append("<p>Axis 2A: " + t.getAxis2A().getIcd9() + dash + t.getAxis2A().getDescription() + "</p>");
 			}
 		});
 		this.add(new ColumnDefinition<Diagnosis>() {
@@ -89,7 +90,7 @@ public class DiagnosisColumnDefinitionsImpl extends ArrayList<ColumnDefinition<D
 				if (t.getAxis2B().getDescription() == null)
 					sb.append("<p>Axis 2B: NO DATA</p>");
 				else
-					sb.append("<p>Axis 2B: " + t.getAxis2B().getDescription() + "</p>");
+					sb.append("<p>Axis 2B: " + t.getAxis2B().getIcd9() + dash + t.getAxis2B().getDescription() + "</p>");
 			}
 		});
 		this.add(new ColumnDefinition<Diagnosis>() {
@@ -98,7 +99,7 @@ public class DiagnosisColumnDefinitionsImpl extends ArrayList<ColumnDefinition<D
 				if (t.getAxis2C().getDescription() == null)
 					sb.append("<p>Axis 2C: NO DATA</p>");
 				else
-					sb.append("<p>Axis 2C: " + t.getAxis2C().getDescription() + "</p>");
+					sb.append("<p>Axis 2C: " + t.getAxis2C().getIcd9() + dash + t.getAxis2C().getDescription() + "</p>");
 			}
 		});
 		this.add(new ColumnDefinition<Diagnosis>() {
