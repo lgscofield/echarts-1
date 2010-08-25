@@ -30,12 +30,13 @@ import com.google.gwt.user.client.ui.StackLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class DiagnosisViewImpl<T> extends Composite implements DiagnosisView<T> {
+	@SuppressWarnings("unchecked")
 	@UiTemplate("DiagnosisView.ui.xml")
 	interface DiagnosisViewUiBinder extends UiBinder<Widget, DiagnosisViewImpl> { }
 	private static DiagnosisViewUiBinder uiBinder = GWT.create(DiagnosisViewUiBinder.class);
 
 	@UiField StackLayoutPanel diagnoses;
-	private Presenter<T> presenter;
+	//private Presenter<T> presenter;
 	private List<T> rowData;
 	private List<ColumnDefinition<T>> columnDefinitions;
 
@@ -66,7 +67,7 @@ public class DiagnosisViewImpl<T> extends Composite implements DiagnosisView<T> 
 
 	@Override
 	public void setPresenter(Presenter<T> presenter) {
-		this.presenter = presenter;
+		//this.presenter = presenter;
 	}
 
 	@Override
@@ -74,8 +75,8 @@ public class DiagnosisViewImpl<T> extends Composite implements DiagnosisView<T> 
 		diagnoses.clear();
 		this.rowData = rowData;
 
-		for(int i = 0; i < rowData.size(); i++) {
-			final T t = rowData.get(i);
+		for(int i = 0; i < this.rowData.size(); i++) {
+			final T t = this.rowData.get(i);
 			String header = columnDefinitions.get(0).getHeader(t);
 			ScrollPanel scroll = new ScrollPanel();
 			HTML vp = new HTML();

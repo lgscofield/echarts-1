@@ -39,7 +39,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings("unchecked")
 	@UiTemplate("TicklerView.ui.xml")
 	interface TicklerViewUiBinder extends UiBinder<Widget, TicklerViewImpl> { }
 	private static TicklerViewUiBinder uiBinder = GWT.create(TicklerViewUiBinder.class);

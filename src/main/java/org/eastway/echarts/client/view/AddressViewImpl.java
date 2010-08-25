@@ -31,15 +31,15 @@ import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.style.client.GlobalResources;
 
 public class AddressViewImpl<T> extends Composite implements AddressView<T> {
+	@SuppressWarnings("unchecked")
+	@UiTemplate("AddressView.ui.xml")
+	interface AddressViewUiBinder extends UiBinder<Widget, AddressViewImpl> { }
 
 	private static AddressViewUiBinder uiBinder = GWT
 			.create(AddressViewUiBinder.class);
 
-	@UiTemplate("AddressView.ui.xml")
-	interface AddressViewUiBinder extends UiBinder<Widget, AddressViewImpl> { }
-
 	@UiField StackLayoutPanel panel;
-	private Presenter<T> presenter;
+	//private Presenter<T> presenter;
 	private List<ColumnDefinition<T>> columnDefinitions;
 	private List<T> rowData;
 
@@ -49,7 +49,7 @@ public class AddressViewImpl<T> extends Composite implements AddressView<T> {
 
 	@Override
 	public void setPresenter(Presenter<T> presenter) {
-		this.presenter = presenter;
+		//this.presenter = presenter;
 	}
 
 	@Override
@@ -67,8 +67,8 @@ public class AddressViewImpl<T> extends Composite implements AddressView<T> {
 		panel.clear();
 		this.rowData = rowData;
 
-		for(int i = 0; i < rowData.size(); i++) {
-			final T t = rowData.get(i);
+		for(int i = 0; i < this.rowData.size(); i++) {
+			final T t = this.rowData.get(i);
 			StringBuilder header = new StringBuilder();
 			ScrollPanel scroll = new ScrollPanel();
 			FlexTable table = new FlexTable();

@@ -34,11 +34,11 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ProfileViewImpl<T> extends Composite implements ProfileView<T> {
-
-	private static ProfileViewUiBinder uiBinder = GWT.create(ProfileViewUiBinder.class);
-
+	@SuppressWarnings("unchecked")
 	@UiTemplate("ProfileView.ui.xml")
 	interface ProfileViewUiBinder extends UiBinder<Widget, ProfileViewImpl> { }
+
+	private static ProfileViewUiBinder uiBinder = GWT.create(ProfileViewUiBinder.class);
 
 	@UiField FlexTable table;
 	private List<ColumnDefinition<T>> columnDefinitions;

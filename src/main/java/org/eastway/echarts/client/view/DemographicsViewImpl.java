@@ -29,14 +29,14 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Widget;
 
 public class DemographicsViewImpl<T> extends Composite implements DemographicsView<T> {
+	@SuppressWarnings("unchecked")
+	@UiTemplate("DemographicsView.ui.xml")
+	interface DemographicsViewUiBinder extends UiBinder<Widget, DemographicsViewImpl> { }
 
 	private static DemographicsViewUiBinder uiBinder = GWT
 			.create(DemographicsViewUiBinder.class);
 
-	@UiTemplate("DemographicsView.ui.xml")
-	interface DemographicsViewUiBinder extends UiBinder<Widget, DemographicsViewImpl> { }
-
-	private Presenter<T> presenter;
+	//private Presenter<T> presenter;
 	private T rowData;
 	private List<ColumnDefinition<T>> columnDefinitions;
 	@UiField FlexTable table;
@@ -53,7 +53,7 @@ public class DemographicsViewImpl<T> extends Composite implements DemographicsVi
 
 	@Override
 	public void setPresenter(Presenter<T> presenter) {
-		this.presenter = presenter;
+		//this.presenter = presenter;
 	}
 
 	@Override
@@ -61,8 +61,8 @@ public class DemographicsViewImpl<T> extends Composite implements DemographicsVi
 		this.rowData = rowData;
 		for (int i = 0; i < columnDefinitions.size(); i++) {
 			StringBuilder sb = new StringBuilder();
-			table.setHTML(i, 0, columnDefinitions.get(i).getHeader(rowData));
-			columnDefinitions.get(i).render(rowData, sb);
+			table.setHTML(i, 0, columnDefinitions.get(i).getHeader(this.rowData));
+			columnDefinitions.get(i).render(this.rowData, sb);
 			table.setHTML(i, 1, sb.toString());
 		}
 	}
