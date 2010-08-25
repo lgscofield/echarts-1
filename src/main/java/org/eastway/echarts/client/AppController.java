@@ -18,6 +18,7 @@ package org.eastway.echarts.client;
 import net.customware.gwt.presenter.client.EventBus;
 
 import org.eastway.echarts.client.common.AddressColumnDefinitionsImpl;
+import org.eastway.echarts.client.common.AppointmentColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.DemographicsColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.DiagnosisColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.PatientSummaryColumnDefinitionsImpl;
@@ -82,7 +83,7 @@ import org.eastway.echarts.client.presenter.ReferralPresenter;
 import org.eastway.echarts.client.presenter.TicklerPresenter;
 import org.eastway.echarts.client.rpc.CachingDispatchAsync;
 import org.eastway.echarts.client.view.AddressViewImpl;
-import org.eastway.echarts.client.view.AppointmentView;
+import org.eastway.echarts.client.view.AppointmentViewImpl;
 import org.eastway.echarts.client.view.ContactView;
 import org.eastway.echarts.client.view.DemographicsViewImpl;
 import org.eastway.echarts.client.view.DiagnosisViewImpl;
@@ -94,6 +95,7 @@ import org.eastway.echarts.client.view.MessagesView;
 import org.eastway.echarts.client.view.PatientSummaryViewImpl;
 import org.eastway.echarts.client.view.ReferralView;
 import org.eastway.echarts.shared.Address;
+import org.eastway.echarts.shared.Appointment;
 import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.Diagnosis;
 import org.eastway.echarts.shared.EHR;
@@ -127,6 +129,7 @@ public class AppController implements Presenter {
 	@Inject private DemographicsColumnDefinitionsImpl demographicsColumnDefinitions;
 	@Inject private AddressColumnDefinitionsImpl addressColumnDefinitions;
 	@Inject private PatientSummaryColumnDefinitionsImpl patientSummaryColumnDefinitions;
+	@Inject private AppointmentColumnDefinitionsImpl appointmentColumnDefinitions;
 
 	@Inject
 	public AppController(DashboardPresenter dashboardPresenter, EventBus eventBus, CachingDispatchAsync dispatch) {
@@ -371,7 +374,7 @@ public class AppController implements Presenter {
 	}
 
 	private void doViewAppointments(EHRView<EHR> view, GetAppointments action) {
-		Presenter presenter = new AppointmentPresenter(new AppointmentView(), eventBus, dispatch, action);
+		Presenter presenter = new AppointmentPresenter(new AppointmentViewImpl<Appointment>(), appointmentColumnDefinitions, eventBus, dispatch, action);
 		presenter.go(view.getDisplayArea());
 	}
 

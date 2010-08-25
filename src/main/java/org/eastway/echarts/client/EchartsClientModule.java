@@ -19,6 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.eastway.echarts.client.common.AddressColumnDefinitionsImpl;
+import org.eastway.echarts.client.common.AppointmentColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.common.DemographicsColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.DiagnosisColumnDefinitionsImpl;
@@ -38,6 +39,7 @@ import org.eastway.echarts.client.view.ProfileViewImpl;
 import org.eastway.echarts.client.view.TicklerView;
 import org.eastway.echarts.client.view.TicklerViewImpl;
 import org.eastway.echarts.shared.Address;
+import org.eastway.echarts.shared.Appointment;
 import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.Diagnosis;
 import org.eastway.echarts.shared.GetPatientSummaryResult;
@@ -84,6 +86,7 @@ public class EchartsClientModule extends AbstractGinModule {
 		bind(EchartsOracle.class).in(Singleton.class);
 
 		bind(new TypeLiteral<List<ColumnDefinition<GetPatientSummaryResult>>>() {}).to(PatientSummaryColumnDefinitionsImpl.class).in(Singleton.class);
+		bind(new TypeLiteral<List<ColumnDefinition<Appointment>>>() {}).to(AppointmentColumnDefinitionsImpl.class).in(Singleton.class);
 	}
 
 }

@@ -15,33 +15,31 @@
  */
 package org.eastway.echarts.client.presenter;
 
+import java.util.List;
+
 import net.customware.gwt.presenter.client.EventBus;
 
+import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.rpc.CachingDispatchAsync;
 import org.eastway.echarts.client.rpc.EchartsCallback;
+import org.eastway.echarts.client.view.AppointmentView;
 import org.eastway.echarts.shared.Appointment;
 import org.eastway.echarts.shared.GetAppointments;
 import org.eastway.echarts.shared.GetAppointmentsResult;
 
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class AppointmentPresenter implements Presenter {
+public class AppointmentPresenter implements Presenter, AppointmentView.Presenter<Appointment> {
 
-	public interface Display extends EchartsDisplay, Appointment {
-		public void nextRecord();
-
-		public void reset();
-
-		public void setHeader();
-	}
-
-	private Display display;
 	private EventBus eventBus;
 	private CachingDispatchAsync dispatch;
 	private GetAppointments action;
+	private AppointmentView<Appointment> view;
 
-	public AppointmentPresenter(Display display, EventBus eventBus, CachingDispatchAsync dispatch, GetAppointments action) {
-		this.display = display;
+	public AppointmentPresenter(AppointmentView<Appointment> view, List<ColumnDefinition<Appointment>> columnDefinitions, EventBus eventBus, CachingDispatchAsync dispatch, GetAppointments action) {
+		this.view = view;
+		this.view.setPresenter(this);
+		this.view.setColumnDefinitions(columnDefinitions);
 		this.dispatch = dispatch;
 		this.eventBus = eventBus;
 		this.action = action;
@@ -50,38 +48,38 @@ public class AppointmentPresenter implements Presenter {
 	@Override
 	public void go(HasWidgets container) {
 		container.clear();
-		container.add(display.asWidget());
+		container.add(view.asWidget());
 		fetchData();
 	}
 
+	private int record = 0;
+
 	public void fetchData() {
-		dispatch.executeWithCache(action, new EchartsCallback<GetAppointmentsResult>(eventBus) {
+		dispatch.execute(action, new EchartsCallback<GetAppointmentsResult>(eventBus) {
 			@Override
 			protected void handleFailure(Throwable caught) {
 			}
 
 			@Override
 			protected void handleSuccess(GetAppointmentsResult result) {
-				display.reset();
-				setData(result);
+				view.setRowData(result.getAppointments());
 			}
 		});
 	}
 
-	public void setData(GetAppointmentsResult result) {
-		display.setHeader();
-		for (Appointment a : result.getAppointments()) {
-			display.setActivity(a.getActivity());
-			display.setAppointmentDate(a.getAppointmentDate());
-			display.setCaseNumber(a.getCaseNumber());
-			display.setEndTime(a.getEndTime());
-			display.setId(a.getId());
-			display.setLocation(a.getLocation());
-			display.setNotes(a.getNotes());
-			display.setPriority(a.getPriority());
-			display.setStaff(a.getStaff());
-			display.setStartTime(a.getStartTime());
-			display.nextRecord();
-		}
+	@Override
+	public void getNext() {
+		record += action.getMaxResults() + 1;
+		action.setStartRecord(record);
+		fetchData();
+	}
+
+	@Override
+	public void getPrevious() {
+		int firstRecord = record - action.getMaxResults();
+		if (firstRecord < 0)
+			firstRecord = 0;
+		action.setStartRecord(firstRecord);
+		fetchData();
 	}
 }

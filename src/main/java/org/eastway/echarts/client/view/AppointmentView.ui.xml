@@ -14,9 +14,17 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style>
-
+		.display {
+			display:none;
+		}
 	</ui:style>
 	<g:ScrollPanel>
-		<g:FlexTable ui:field='appointments' />
+		<g:VerticalPanel>
+			<g:HorizontalPanel styleName='{style.display}'>
+				<g:Button ui:field='next'>Next</g:Button>
+				<g:Button ui:field='previous'>Previous</g:Button>
+			</g:HorizontalPanel>
+			<g:FlexTable ui:field='table' />
+		</g:VerticalPanel>
 	</g:ScrollPanel>
 </ui:UiBinder> 

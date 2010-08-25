@@ -46,6 +46,8 @@ public class GetAppointmentsHandler implements ActionHandler<GetAppointments, Ge
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 		List<AppointmentImpl> appointments = em.createQuery(
 				"SELECT a From AppointmentImpl a WHERE a.caseNumber = '" + action.getCaseNumber() + "' Order By appointmentDate DESC", AppointmentImpl.class)
+				.setFirstResult(action.getStartRecord())
+				.setMaxResults(action.getMaxResults())
 				.getResultList();
 		List<Appointment> appointmentsDto = new ArrayList<Appointment>();
 		for (AppointmentImpl appointment : appointments) {

@@ -15,205 +15,21 @@
  */
 package org.eastway.echarts.client.view;
 
-import java.sql.Time;
-import java.util.Date;
+import java.util.List;
 
-import com.google.gwt.core.client.GWT;
+import org.eastway.echarts.client.common.ColumnDefinition;
 
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Widget;
 
-import org.eastway.echarts.client.presenter.AppointmentPresenter;
-import org.eastway.echarts.shared.AppointmentDTO;
-import org.eastway.echarts.style.client.GlobalResources;
+public interface AppointmentView<T> {
+	interface Presenter<T> {
+		void getNext();
 
-public class AppointmentView extends Composite implements AppointmentPresenter.Display {
-
-	private static AppointmentViewUiBinder uiBinder = GWT
-			.create(AppointmentViewUiBinder.class);
-
-	interface AppointmentViewUiBinder extends UiBinder<Widget, AppointmentView> { }
-
-	private int record = 0;
-	@UiField FlexTable appointments;
-	private String emptyCellFiller = "&nbsp;";
-
-	enum Column {
-		ACTIVITY,
-		APPOINTMENT_DATE,
-		START_TIME,
-		END_TIME,
-		LOCATION,
-		NOTES,
-		STAFF,
+		void getPrevious();
 	}
 
-	public AppointmentView() {
-		initWidget(uiBinder.createAndBindUi(this));
-	}
-
-	@Override
-	public void nextRecord() {
-		record++;
-	}
-
-	@Override
-	public Widget asWidget() {
-		return this;
-	}
-
-	@Override
-	public String getActivity() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Date getAppointmentDate() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getCaseNumber() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Time getEndTime() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public long getId() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public String getLocation() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getNotes() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public float getPriority() {
-		return 0;
-	}
-
-	@Override
-	public String getStaff() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Time getStartTime() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setActivity(String activity) {
-		if (activity == null || activity.matches(""))
-			appointments.setHTML(record, Column.ACTIVITY.ordinal(), emptyCellFiller);
-		else
-			appointments.setText(record, Column.ACTIVITY.ordinal(), activity);
-	}
-
-	@Override
-	public void setAppointmentDate(Date appointmentDate) {
-		appointments.setText(record, Column.APPOINTMENT_DATE.ordinal(), GlobalResources.getDateFormat().format(appointmentDate));
-	}
-
-	@Override
-	public void setCaseNumber(String caseNumber) {
-//		if (caseNumber == null || caseNumber.matches(""))
-//			appointments.setHTML(record, Column.CASE_NUMBER.ordinal(), emptyCellFiller);
-//		else
-//			appointments.setText(record, Column.CASE_NUMBER.ordinal(), caseNumber);
-	}
-
-	@Override
-	public void setEndTime(Time endTime) {
-		appointments.setText(record, Column.END_TIME.ordinal(), GlobalResources.getTimeFormat().format(endTime));
-	}
-
-	@Override
-	public void setId(long id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setLocation(String location) {
-		if (location == null || location.matches(""))
-			appointments.setHTML(record, Column.LOCATION.ordinal(), emptyCellFiller);
-		else
-			appointments.setText(record, Column.LOCATION.ordinal(), location);
-	}
-
-	@Override
-	public void setNotes(String notes) {
-		if (notes == null || notes.matches(""))
-			appointments.setHTML(record, Column.NOTES.ordinal(), emptyCellFiller);
-		else
-			appointments.setText(record, Column.NOTES.ordinal(), notes);
-	}
-
-	@Override
-	public void setPriority(float priority) {
-		//this.appointments.setText(record, Column.PRIORITY.ordinal(), new Float(priority).toString());
-	}
-
-	@Override
-	public void setStaff(String staff) {
-		if (staff == null || staff.matches(""))
-			appointments.setHTML(record, Column.STAFF.ordinal(), emptyCellFiller);
-		else
-			appointments.setText(record, Column.STAFF.ordinal(), staff);
-	}
-
-	@Override
-	public void setStartTime(Time startTime) {
-		appointments.setText(record, Column.START_TIME.ordinal(), GlobalResources.getTimeFormat().format(startTime));
-	}
-
-	@Override
-	public void reset() {
-		appointments.clear();
-		record = 0;
-	}
-
-	@Override
-	public AppointmentDTO toDto() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setHeader() {
-		appointments.setHTML(record, Column.ACTIVITY.ordinal(), "<b>ACTIVITY</b>");
-		appointments.setHTML(record, Column.APPOINTMENT_DATE.ordinal(), "<b>DATE</b>");
-		//appointments.setHTML(record, Column.CASE_NUMBER.ordinal(), "<b>CASE NUMBER</b>");
-		appointments.setHTML(record, Column.END_TIME.ordinal(), "<b>END TIME</b>");
-		appointments.setHTML(record, Column.LOCATION.ordinal(), "<b>LOCATION</b>");
-		appointments.setHTML(record, Column.NOTES.ordinal(), "<b>NOTES</b>");
-		//appointments.setHTML(record, Column.PRIORITY.ordinal(), "<b>PRIORITY</b>");
-		appointments.setHTML(record, Column.STAFF.ordinal(), "<b>STAFF</b>");
-		appointments.setHTML(record, Column.START_TIME.ordinal(), "<b>START TIME</b>");
-		appointments.setBorderWidth(1);
-		nextRecord();
-	}
+	void setPresenter(Presenter<T> presenter);
+	Widget asWidget();
+	void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions);
+	void setRowData(List<T> rowData);
 }

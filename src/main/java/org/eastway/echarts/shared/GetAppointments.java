@@ -21,12 +21,20 @@ public class GetAppointments implements Action<GetAppointmentsResult> {
 
 	private String sessionId;
 	private String caseNumber;
+	private int startRecord;
+	private int maxResults;
 
 	GetAppointments() { }
 
 	public GetAppointments(String sessionId, String caseNumber) {
+		this(sessionId, caseNumber, 0, 20);
+	}
+
+	public GetAppointments(String sessionId, String caseNumber, int startRecord, int maxResults) {
 		this.sessionId = sessionId;
 		this.caseNumber = caseNumber;
+		this.setStartRecord(startRecord);
+		this.setMaxResults(maxResults);
 	}
 
 	public String getSessionId() {
@@ -35,5 +43,21 @@ public class GetAppointments implements Action<GetAppointmentsResult> {
 
 	public String getCaseNumber() {
 		return caseNumber;
+	}
+
+	public void setStartRecord(int startRecord) {
+		this.startRecord = startRecord;
+	}
+
+	public int getStartRecord() {
+		return startRecord;
+	}
+
+	public void setMaxResults(int maxResults) {
+		this.maxResults = maxResults;
+	}
+
+	public int getMaxResults() {
+		return maxResults;
 	}
 }
