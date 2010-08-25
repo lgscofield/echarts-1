@@ -56,7 +56,7 @@ public class GetTicklerLiteHandler implements ActionHandler<GetTicklerLite, GetT
 		Response response = new Response();
 		String searchTerm = action.getRequest().getQuery();
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		List<String> ticklerLite = em.createNativeQuery("SELECT top 20 case_number + ' - ' + full_name as search FROM patient where case_number like '" + searchTerm + "%' OR last_name like '" + searchTerm + "%' OR first_name like '" + searchTerm + "%'").getResultList();
+		List<String> ticklerLite = em.createNativeQuery("SELECT top 20 case_number + ' - ' + full_name as search FROM patient inner join codes on patient.case_status = codes.code_id where column_name = 'CaseStatus' AND (descriptor = 'Active' OR descriptor = 'Pre-Admit') AND (case_number like '" + searchTerm + "%' OR last_name like '" + searchTerm + "%' OR first_name like '" + searchTerm + "%')").getResultList();
 		List<Suggestion> suggestions = new ArrayList<Suggestion>();
 		for (String s : ticklerLite)
 			suggestions.add(new PatientListSuggestion(s));
