@@ -294,7 +294,9 @@ public class AppController implements Presenter {
 	}
 
 	private void doViewSignature() {
-		Window.open("http://ewsql.eastway.local/echarts-asp/signatures/sign.asp?staffid=" + EchartsUser.staffId, "_blank", "");
+		Frame frame = new Frame("http://ewsql.eastway.local/echarts-asp/signatures/sign.asp?staffid=" + EchartsUser.staffId);
+		frame.setSize("100%", "100%");
+		dashboardPresenter.getDisplay().addTab(frame, "Signatures");
 	}
 
 	private void doOpenNurseProgressNote(String caseNumber) {
