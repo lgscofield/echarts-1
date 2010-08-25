@@ -65,4 +65,5 @@ public interface DashboardView<T> {
 	void setDob(Date date);
 	void setProvider(String provider);
 	void setSsn(String ssn);
+	void isFirstLogin();
 }

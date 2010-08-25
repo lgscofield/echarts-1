@@ -39,6 +39,7 @@ import org.eastway.echarts.shared.GetProvider;
 import org.eastway.echarts.shared.GetProviderResult;
 import org.eastway.echarts.shared.Patient;
 
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
@@ -77,6 +78,8 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 		container.add(view.asWidget());
 		bind();
 		fetchData();
+		if (Cookies.getCookie("first_login") != null)
+			view.isFirstLogin();
 	}
 
 	private void setCurrentEhrData(final EHR ehr) {

@@ -36,13 +36,16 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
@@ -225,5 +228,31 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 	@UiHandler("signature")
 	public void handleSignatureClick(ClickEvent event) {
 		presenter.openSignature();
+	}
+
+	@Override
+	public void isFirstLogin() {
+		final DialogBox dialogBox = new DialogBox();
+		dialogBox.setAnimationEnabled(true);
+		dialogBox.setGlassEnabled(true);
+		dialogBox.setText("Welcome to Echarts!");
+		VerticalPanel verticalPanel = new VerticalPanel();
+		verticalPanel.add(new HTML("This appears to be the first time you've logged into " +
+				"Echarts.  Please continue by closing this dialog box and clicking " +
+				"on your username in the upper right corner of the browser.  Please " +
+				"verify the information there, set any credentials you have and " +
+				"select your program from the drop down."));
+		Button closeButton = new Button("Close");
+		closeButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				dialogBox.hide();
+			}
+		});
+		verticalPanel.add(closeButton);
+		dialogBox.setWidget(verticalPanel);
+		dialogBox.setWidth("500px");
+		dialogBox.center();
+		dialogBox.show();
 	}
 }

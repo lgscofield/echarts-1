@@ -15,6 +15,7 @@
  */
 package org.eastway.echarts.client.presenter;
 
+import java.util.Date;
 import java.util.List;
 
 import net.customware.gwt.presenter.client.EventBus;
@@ -30,6 +31,7 @@ import org.eastway.echarts.shared.SaveProfile;
 import org.eastway.echarts.shared.SaveProfileResult;
 import org.eastway.echarts.shared.User;
 
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
@@ -96,11 +98,9 @@ public class ProfilePresenter implements Presenter, ProfileView.Presenter<User> 
 			@Override
 			protected void handleSuccess(SaveProfileResult t) {
 				view.setStatus("Settings saved");
-				try {
-					setData(t.getUser());
-				} catch (NullPointerException e) {
-					setData(null);
-				}
+				setData(t.getUser());
+				if (t.getUser().getProgram() != null)
+					Cookies.setCookie("first_login", "", new Date(-1), ".eastway.local", "/", false);
 			}
 		});
 	}
