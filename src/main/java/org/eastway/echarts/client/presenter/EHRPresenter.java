@@ -34,10 +34,6 @@ import org.eastway.echarts.client.events.ViewTreatmentPlanEvent;
 import org.eastway.echarts.client.rpc.CachingDispatchAsync;
 import org.eastway.echarts.client.rpc.EchartsCallback;
 import org.eastway.echarts.client.view.EHRView;
-import org.eastway.echarts.shared.Code;
-import org.eastway.echarts.shared.CodeDTO;
-import org.eastway.echarts.shared.Demographics;
-import org.eastway.echarts.shared.DemographicsDTO;
 import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.EHRDTO;
 import org.eastway.echarts.shared.GetAddresses;
@@ -51,8 +47,6 @@ import org.eastway.echarts.shared.GetMessages;
 import org.eastway.echarts.shared.GetPatientSummary;
 import org.eastway.echarts.shared.GetPatientSummaryResult;
 import org.eastway.echarts.shared.GetReferral;
-import org.eastway.echarts.shared.Patient;
-import org.eastway.echarts.shared.PatientDTO;
 
 import com.google.gwt.user.client.ui.HasWidgets;
 
@@ -98,20 +92,8 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
 
 	protected void setData(GetPatientSummaryResult result) {
 		EHR ehr = new EHRDTO();
-		Demographics demographics = new DemographicsDTO();
-		Patient patient = new PatientDTO();
-		Code caseStatus = new CodeDTO();
-		ehr.setDemographics(demographics);
-		ehr.setSubject(patient);
-		patient.setFirstName(result.getFirstName());
-		patient.setMiddleInitial(result.getMiddleInitial());
-		patient.setLastName(result.getLastName());
-		patient.setSuffix(result.getSuffix());
-		patient.setCaseNumber(result.getCaseNumber());
-		demographics.setDob(result.getDob());
-		caseStatus.setDescriptor(result.getCaseStatus());
-		patient.setCaseStatus(caseStatus);
-		patient.setSsn(result.getSsn());
+		ehr.setDemographics(result.getDemographics());
+		ehr.setSubject(result.getPatient());
 		this.ehr = ehr;
 		eventBus.fireEvent(new ChangeCurrentEhrEvent(ehr));
 	}
@@ -119,7 +101,7 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
 	private void setActions() {
 		appointments = new GetAppointments(EchartsUser.sessionId, caseNumber);
 		demographics = new GetDemographics(EchartsUser.sessionId, caseNumber);
-		patientSummary = new GetPatientSummary(EchartsUser.sessionId, caseNumber);
+		patientSummary = new GetPatientSummary(EchartsUser.sessionId, caseNumber, EchartsUser.staffId);
 		referral = new GetReferral(EchartsUser.sessionId, caseNumber);
 		diagnoses = new GetDiagnoses(EchartsUser.sessionId, caseNumber);
 		links = new GetLinks(EchartsUser.sessionId, caseNumber);

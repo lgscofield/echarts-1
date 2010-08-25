@@ -15,8 +15,11 @@
  */
 package org.eastway.echarts.server;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
+import org.eastway.echarts.domain.AssignmentImpl;
 import org.eastway.echarts.domain.DemographicsImpl;
 import org.eastway.echarts.domain.PatientImpl;
 import org.eastway.echarts.shared.DbException;
@@ -47,21 +50,22 @@ public class GetPatientSummaryHandler implements ActionHandler<GetPatientSummary
 		DemographicsImpl demographics = em.createQuery(
 				"SELECT d FROM DemographicsImpl d WHERE d.caseNumber = '" + action.getCaseNumber() + "'", DemographicsImpl.class)
 				.getSingleResult();
+		List<AssignmentImpl> assignments = em.createQuery(
+				"SELECT a From AssignmentImpl a Where a.disposition = 'Open' And a.service Like 'S%' And a.caseNumber = '" + action.getCaseNumber() + "' Order By a.patient.lastName ASC, a.patient.firstName ASC, a.orderDate DESC", AssignmentImpl.class)
+					.getResultList();
+		String provider;
+		for (AssignmentImpl a : assignments) {
+			if (a.getStaff().matches(action.getStaffId()))
+				provider = a.getStaffName();
+		}
+		if (assignments.size() > 0)
+			provider = assignments.get(0).getStaffName();
+		else
+			provider = "";
 		GetPatientSummaryResult result = new GetPatientSummaryResult();
-		result.setCaseNumber(patient.getCaseNumber());
-		result.setDob(demographics.getDob());
-		result.setEthnicity(demographics.getEthnicity() == null ? null : demographics.getEthnicity().getDescriptor());
-		result.setGender(demographics.getGender() == null ? null : demographics.getGender().getDescriptor());
-		result.setInsuranceType(demographics.getInsuranceType());
-		result.setName(patient.getName());
-		result.setFirstName(patient.getFirstName());
-		result.setLastName(patient.getLastName());
-		result.setMiddleInitial(patient.getMiddleInitial());
-		result.setSuffix(patient.getSuffix());
-		result.setCaseStatus(patient.getCaseStatus() == null ? null : patient.getCaseStatus().getDescriptor());
-		result.setPreferredLanguage(demographics.getPreferredLanguage());
-		result.setRace(demographics.getRace() == null ? null : demographics.getRace().getDescriptor());
-		result.setSsn(patient.getSsn());
+		result.setPatient(patient.toDto());
+		result.setDemographics(demographics.toDto());
+		result.setProvider(provider);
 		em.close();
 		return result;
 	}

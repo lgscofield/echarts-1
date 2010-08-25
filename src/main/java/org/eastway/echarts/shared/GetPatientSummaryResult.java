@@ -15,138 +15,37 @@
  */
 package org.eastway.echarts.shared;
 
-import java.util.Date;
-
 import net.customware.gwt.dispatch.shared.Result;
 
 public class GetPatientSummaryResult implements Result {
 
-	private String caseNumber;
-	private String name;
-	private String firstName;
-	private String lastName;
-	private String gender;
-	private Date dob;
-	private String ethnicity;
-	private String preferredLanguage;
-	private String race;
-	private String insuranceType;
-	private String ssn;
-	private String caseStatus;
-	private String middleInitial;
-	private String suffix;
+	private Patient patient;
+	private Demographics demographics;
+	private String provider;
 
 	public GetPatientSummaryResult() { }
 
-	public void setCaseNumber(String caseNumber) {
-		this.caseNumber = caseNumber;
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 
-	public String getCaseNumber() {
-		return caseNumber;
+	public Patient getPatient() {
+		return patient;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setDemographics(Demographics demographics) {
+		this.demographics = demographics;
 	}
 
-	public String getName() {
-		return name;
+	public Demographics getDemographics() {
+		return demographics;
 	}
 
-	public void setGender(String gender) {
-		this.gender = gender;
+	public void setProvider(String provider) {
+		this.provider = provider;
 	}
 
-	public String getGender() {
-		return gender;
-	}
-
-	public void setDob(Date dob) {
-		this.dob = dob;
-	}
-
-	public Date getDob() {
-		return dob;
-	}
-
-	public void setEthnicity(String ethnicity) {
-		this.ethnicity = ethnicity;
-	}
-
-	public String getEthnicity() {
-		return ethnicity;
-	}
-
-	public void setPreferredLanguage(String preferredLanguage) {
-		this.preferredLanguage = preferredLanguage;
-	}
-
-	public String getPreferredLanguage() {
-		return preferredLanguage;
-	}
-
-	public void setRace(String race) {
-		this.race = race;
-	}
-
-	public String getRace() {
-		return race;
-	}
-
-	public void setInsuranceType(String insuranceType) {
-		this.insuranceType = insuranceType;
-	}
-
-	public String getInsuranceType() {
-		return insuranceType;
-	}
-
-	public void setSsn(String ssn) {
-		this.ssn = ssn;
-	}
-
-	public String getSsn() {
-		return ssn;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setCaseStatus(String caseStatus) {
-		this.caseStatus = caseStatus;
-	}
-
-	public String getCaseStatus() {
-		return caseStatus;
-	}
-
-	public void setMiddleInitial(String middleInitial) {
-		this.middleInitial = middleInitial;
-	}
-
-	public String getMiddleInitial() {
-		return middleInitial;
-	}
-
-	public void setSuffix(String suffix) {
-		this.suffix = suffix;
-	}
-
-	public String getSuffix() {
-		return suffix;
+	public String getProvider() {
+		return provider;
 	}
 }

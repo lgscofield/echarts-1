@@ -27,6 +27,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.eastway.echarts.shared.Code;
+import org.eastway.echarts.shared.CodeDTO;
 import org.eastway.echarts.shared.Patient;
 import org.eastway.echarts.shared.PatientDTO;
 
@@ -246,7 +247,7 @@ public class PatientImpl extends Patient {
 
 	@Override
 	public boolean isTitleTwenty() {
-		return (isTitleTwenty == 1L) ? true : false;
+		return isTitleTwenty == null || isTitleTwenty == 0L ? false : true;
 	}
 
 	@Override
@@ -325,7 +326,7 @@ public class PatientImpl extends Patient {
 		dto.setAlias(alias);
 		dto.setAodGoal(aodGoal);
 		dto.setCaseNumber(caseNumber);
-		dto.setCaseStatus(caseStatus.toDto());
+		dto.setCaseStatus(caseStatus == null ? new CodeDTO() : caseStatus.toDto());
 		dto.setDateStamp(dateStamp);
 		dto.setDiagnosticAssessmentDateCompleted(diagnosticAssessmentDateCompleted);
 		dto.setFinancialDateCompleted(financialDateCompleted);

@@ -20,6 +20,7 @@ import net.customware.gwt.presenter.client.EventBus;
 import org.eastway.echarts.client.common.AddressColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.DemographicsColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.DiagnosisColumnDefinitionsImpl;
+import org.eastway.echarts.client.common.PatientSummaryColumnDefinitionsImpl;
 import org.eastway.echarts.client.events.LogoutEvent;
 import org.eastway.echarts.client.events.LogoutEventHandler;
 import org.eastway.echarts.client.events.OpenCpstNoteEvent;
@@ -90,7 +91,7 @@ import org.eastway.echarts.client.view.EHRViewImpl;
 import org.eastway.echarts.client.view.LinkView;
 import org.eastway.echarts.client.view.MedicationView;
 import org.eastway.echarts.client.view.MessagesView;
-import org.eastway.echarts.client.view.PatientSummaryView;
+import org.eastway.echarts.client.view.PatientSummaryViewImpl;
 import org.eastway.echarts.client.view.ReferralView;
 import org.eastway.echarts.shared.Address;
 import org.eastway.echarts.shared.Demographics;
@@ -105,6 +106,7 @@ import org.eastway.echarts.shared.GetLinks;
 import org.eastway.echarts.shared.GetMedications;
 import org.eastway.echarts.shared.GetMessages;
 import org.eastway.echarts.shared.GetPatientSummary;
+import org.eastway.echarts.shared.GetPatientSummaryResult;
 import org.eastway.echarts.shared.GetReferral;
 
 import com.google.gwt.requestfactory.shared.RequestEvent;
@@ -124,6 +126,7 @@ public class AppController implements Presenter {
 	@Inject private DiagnosisColumnDefinitionsImpl diagnosisColumnDefinitions;
 	@Inject private DemographicsColumnDefinitionsImpl demographicsColumnDefinitions;
 	@Inject private AddressColumnDefinitionsImpl addressColumnDefinitions;
+	@Inject private PatientSummaryColumnDefinitionsImpl patientSummaryColumnDefinitions;
 
 	@Inject
 	public AppController(DashboardPresenter dashboardPresenter, EventBus eventBus, CachingDispatchAsync dispatch) {
@@ -390,7 +393,7 @@ public class AppController implements Presenter {
 	}
 
 	private void doViewPatientSummary(EHRView<EHR> view, GetPatientSummary action) {
-		Presenter presenter = new PatientSummaryPresenter(new PatientSummaryView(), eventBus, dispatch, action);
+		Presenter presenter = new PatientSummaryPresenter(new PatientSummaryViewImpl<GetPatientSummaryResult>(), patientSummaryColumnDefinitions, eventBus, dispatch, action);
 		presenter.go(view.getDisplayArea());
 	}
 

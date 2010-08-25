@@ -21,12 +21,14 @@ public class GetPatientSummary implements Action<GetPatientSummaryResult> {
 
 	private String sessionId;
 	private String caseNumber;
+	private String staffId;
 
 	GetPatientSummary() { }
 
-	public GetPatientSummary(String sessionId, String caseNumber) {
+	public GetPatientSummary(String sessionId, String caseNumber, String staffId) {
 		this.sessionId = sessionId;
 		this.caseNumber = caseNumber;
+		this.setStaffId(staffId);
 	}
 
 	public String getSessionId() {
@@ -35,5 +37,13 @@ public class GetPatientSummary implements Action<GetPatientSummaryResult> {
 
 	public String getCaseNumber() {
 		return caseNumber;
+	}
+
+	public void setStaffId(String staffId) {
+		this.staffId = staffId;
+	}
+
+	public String getStaffId() {
+		return staffId;
 	}
 }
