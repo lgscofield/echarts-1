@@ -15,13 +15,14 @@
  */
 package org.eastway.echarts.shared;
 
+import java.sql.Time;
 import java.util.Date;
 
 public interface Appointment {
 
-	public void setId(int id);
+	public void setId(long id);
 
-	public int getId();
+	public long getId();
 
 	public void setAppointmentDate(Date appointmentDate);
 
@@ -31,13 +32,13 @@ public interface Appointment {
 
 	public String getCaseNumber();
 
-	public void setStartTime(float startTime);
+	public void setStartTime(Time startTime);
 
-	public float getStartTime();
+	public Time getStartTime();
 
-	public void setEndTime(float endTime);
+	public void setEndTime(Time endTime);
 
-	public float getEndTime();
+	public Time getEndTime();
 
 	public void setActivity(String activity);
 

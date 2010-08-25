@@ -66,4 +66,8 @@ public class GlobalResources {
 	public static DateTimeFormat getDateTimeFormat() {
 		return DateTimeFormat.getFormat("h:mm a M/d/y");
 	}
+
+	public static DateTimeFormat getTimeFormat() {
+		return DateTimeFormat.getFormat("h:mm a");
+	}
 }

@@ -16,6 +16,7 @@
 package org.eastway.echarts.shared;
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.Date;
 
 @SuppressWarnings("serial")
@@ -24,13 +25,13 @@ public class AppointmentDTO implements Appointment, Serializable {
 	private String activity;
 	private Date appointmentDate;
 	private String caseNumber;
-	private float endTime;
-	private int id;
+	private Time endTime;
+	private long id;
 	private String location;
 	private String notes;
 	private float priority;
 	private String staff;
-	private float startTime;
+	private Time startTime;
 
 	@Override
 	public String getActivity() {
@@ -48,12 +49,12 @@ public class AppointmentDTO implements Appointment, Serializable {
 	}
 
 	@Override
-	public float getEndTime() {
+	public Time getEndTime() {
 		return endTime;
 	}
 
 	@Override
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -78,7 +79,7 @@ public class AppointmentDTO implements Appointment, Serializable {
 	}
 
 	@Override
-	public float getStartTime() {
+	public Time getStartTime() {
 		return startTime;
 	}
 
@@ -98,12 +99,12 @@ public class AppointmentDTO implements Appointment, Serializable {
 	}
 
 	@Override
-	public void setEndTime(float endTime) {
+	public void setEndTime(Time endTime) {
 		this.endTime = endTime;
 	}
 
 	@Override
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -128,7 +129,7 @@ public class AppointmentDTO implements Appointment, Serializable {
 	}
 
 	@Override
-	public void setStartTime(float startTime) {
+	public void setStartTime(Time startTime) {
 		this.startTime = startTime;
 	}
 

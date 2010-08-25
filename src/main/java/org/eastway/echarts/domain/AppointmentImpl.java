@@ -15,32 +15,37 @@
  */
 package org.eastway.echarts.domain;
 
+import java.sql.Time;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.eastway.echarts.shared.Appointment;
 import org.eastway.echarts.shared.AppointmentDTO;
-import org.hibernate.annotations.Type;
 
 @Entity
-@Table(name = "Appointment")
+@Table(name = "apptscatt")
 public class AppointmentImpl implements Appointment {
 
 	private String activity;
+	@Column(name="apptdate")
 	private Date appointmentDate;
 	private String caseNumber;
-	private Float endTime;
+	@Column(name="endtime")
+	private Time endTime;
 	@Id
-	private int id;
+	@Column(name="apptid", scale=18, precision=0)
+	private long id;
 	private String location;
-	@Type(type = "text")
 	private String notes;
 	private Float priority;
+	@Column(name="staffname")
 	private String staff;
-	private Float startTime;
+	@Column(name="starttime")
+	private Time startTime;
 
 	@Override
 	public String getActivity() {
@@ -58,12 +63,12 @@ public class AppointmentImpl implements Appointment {
 	}
 
 	@Override
-	public float getEndTime() {
+	public Time getEndTime() {
 		return endTime;
 	}
 
 	@Override
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -88,7 +93,7 @@ public class AppointmentImpl implements Appointment {
 	}
 
 	@Override
-	public float getStartTime() {
+	public Time getStartTime() {
 		return startTime;
 	}
 
@@ -108,12 +113,12 @@ public class AppointmentImpl implements Appointment {
 	}
 
 	@Override
-	public void setEndTime(float endTime) {
+	public void setEndTime(Time endTime) {
 		this.endTime = endTime;
 	}
 
 	@Override
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -138,7 +143,7 @@ public class AppointmentImpl implements Appointment {
 	}
 
 	@Override
-	public void setStartTime(float startTime) {
+	public void setStartTime(Time startTime) {
 		this.startTime = startTime;
 	}
 
