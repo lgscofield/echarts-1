@@ -15,29 +15,33 @@
  */
 package org.eastway.echarts.client.presenter;
 
+import java.util.List;
+
 import net.customware.gwt.presenter.client.EventBus;
 
+import org.eastway.echarts.client.common.ColumnDefinition;
+import org.eastway.echarts.client.common.ReferralColumnDefinitionsImpl;
 import org.eastway.echarts.client.rpc.CachingDispatchAsync;
 import org.eastway.echarts.client.rpc.EchartsCallback;
+import org.eastway.echarts.client.view.ReferralView;
+import org.eastway.echarts.client.view.ReferralViewImpl;
 import org.eastway.echarts.shared.GetReferral;
 import org.eastway.echarts.shared.GetReferralResult;
 import org.eastway.echarts.shared.Referral;
 
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class ReferralPresenter implements Presenter {
+public class ReferralPresenter implements Presenter, ReferralView.Presenter<Referral> {
 
-	public interface Display extends EchartsDisplay, Referral {
-		void nextRecord();
-	}
-
-	private Display display;
 	private EventBus eventBus;
 	private CachingDispatchAsync dispatch;
 	private GetReferral action;
+	private ReferralView<Referral> view;
 
-	public ReferralPresenter(Display display, EventBus eventBus, CachingDispatchAsync dispatch, GetReferral action) {
-		this.display = display;
+	public ReferralPresenter(ReferralView<Referral> view, List<ColumnDefinition<Referral>> columnDefinitions, EventBus eventBus, CachingDispatchAsync dispatch, GetReferral action) {
+		this.view = view;
+		this.view.setPresenter(this);
+		this.view.setColumnDefinitions(columnDefinitions);
 		this.eventBus = eventBus;
 		this.dispatch = dispatch;
 		this.action = action;
@@ -46,7 +50,7 @@ public class ReferralPresenter implements Presenter {
 	@Override
 	public void go(HasWidgets container) {
 		container.clear();
-		container.add(display.asWidget());
+		container.add(view.asWidget());
 		fetchData();
 	}
 
@@ -58,22 +62,7 @@ public class ReferralPresenter implements Presenter {
 
 			@Override
 			protected void handleSuccess(GetReferralResult result) {
-				Referral referral = result.getReferral();
-				display.setAdmissionDate(referral.getAdmissionDate());
-				display.setDischargeDate(referral.getDischargeDate());
-				display.setDisposition(referral.getDisposition());
-				display.setLastEdit(referral.getLastEdit());
-				display.setLastEditBy(referral.getLastEditBy());
-				display.setLastService(referral.getLastService());
-				display.setLevelOfCare(referral.getLevelOfCare());
-				display.setPlanType(referral.getPlanType());
-				display.setProgram(referral.getPlanType());
-				display.setReferralDate(referral.getReferralDate());
-				display.setReferralSource(referral.getReferralSource());
-				display.setReferralType(referral.getReferralType());
-				display.setTakenByStaff(referral.getTakenByStaff());
-				display.setUCI(referral.getUCI());
-				display.setUPId(referral.getUPId());
+				view.setRowData(result.getReferral());
 			}
 		});
 	}

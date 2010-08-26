@@ -22,6 +22,7 @@ import org.eastway.echarts.client.common.AppointmentColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.DemographicsColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.DiagnosisColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.PatientSummaryColumnDefinitionsImpl;
+import org.eastway.echarts.client.common.ReferralColumnDefinitionsImpl;
 import org.eastway.echarts.client.events.LogoutEvent;
 import org.eastway.echarts.client.events.LogoutEventHandler;
 import org.eastway.echarts.client.events.OpenCpstNoteEvent;
@@ -93,7 +94,7 @@ import org.eastway.echarts.client.view.LinkView;
 import org.eastway.echarts.client.view.MedicationView;
 import org.eastway.echarts.client.view.MessagesView;
 import org.eastway.echarts.client.view.PatientSummaryViewImpl;
-import org.eastway.echarts.client.view.ReferralView;
+import org.eastway.echarts.client.view.ReferralViewImpl;
 import org.eastway.echarts.shared.Address;
 import org.eastway.echarts.shared.Appointment;
 import org.eastway.echarts.shared.Demographics;
@@ -110,6 +111,7 @@ import org.eastway.echarts.shared.GetMessages;
 import org.eastway.echarts.shared.GetPatientSummary;
 import org.eastway.echarts.shared.GetPatientSummaryResult;
 import org.eastway.echarts.shared.GetReferral;
+import org.eastway.echarts.shared.Referral;
 
 import com.google.gwt.requestfactory.shared.RequestEvent;
 import com.google.gwt.requestfactory.shared.RequestEvent.State;
@@ -130,6 +132,7 @@ public class AppController implements Presenter {
 	@Inject private AddressColumnDefinitionsImpl addressColumnDefinitions;
 	@Inject private PatientSummaryColumnDefinitionsImpl patientSummaryColumnDefinitions;
 	@Inject private AppointmentColumnDefinitionsImpl appointmentColumnDefinitions;
+	@Inject private ReferralColumnDefinitionsImpl referralColumnDefinitions;
 
 	@Inject
 	public AppController(DashboardPresenter dashboardPresenter, EventBus eventBus, CachingDispatchAsync dispatch) {
@@ -381,7 +384,7 @@ public class AppController implements Presenter {
 	}
 
 	private void doViewReferral(EHRView<EHR> view, GetReferral action) {
-		Presenter presenter = new ReferralPresenter(new ReferralView(), eventBus, dispatch, action);
+		Presenter presenter = new ReferralPresenter(new ReferralViewImpl<Referral>(), referralColumnDefinitions, eventBus, dispatch, action);
 		presenter.go(view.getDisplayArea());
 	}
 

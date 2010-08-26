@@ -25,6 +25,7 @@ import org.eastway.echarts.client.common.DemographicsColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.DiagnosisColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.PatientSummaryColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.ProfileColumnDefinitionsImpl;
+import org.eastway.echarts.client.common.ReferralColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.TicklerColumnDefinitionsImpl;
 import org.eastway.echarts.client.presenter.DashboardPresenter;
 import org.eastway.echarts.client.presenter.ProfilePresenter;
@@ -44,6 +45,7 @@ import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.Diagnosis;
 import org.eastway.echarts.shared.GetPatientSummaryResult;
 import org.eastway.echarts.shared.GetTickler;
+import org.eastway.echarts.shared.Referral;
 import org.eastway.echarts.shared.Tickler;
 import org.eastway.echarts.shared.User;
 
@@ -87,6 +89,7 @@ public class EchartsClientModule extends AbstractGinModule {
 
 		bind(new TypeLiteral<List<ColumnDefinition<GetPatientSummaryResult>>>() {}).to(PatientSummaryColumnDefinitionsImpl.class).in(Singleton.class);
 		bind(new TypeLiteral<List<ColumnDefinition<Appointment>>>() {}).to(AppointmentColumnDefinitionsImpl.class).in(Singleton.class);
+		bind(new TypeLiteral<List<ColumnDefinition<Referral>>>() {}).to(ReferralColumnDefinitionsImpl.class).in(Singleton.class);
 	}
 
 }
