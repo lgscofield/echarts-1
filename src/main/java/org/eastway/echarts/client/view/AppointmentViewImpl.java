@@ -29,7 +29,6 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Widget;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
-import org.eastway.echarts.client.view.AppointmentView.Presenter;
 import org.eastway.echarts.style.client.GlobalResources;
 
 public class AppointmentViewImpl<T> extends Composite implements AppointmentView<T> {
@@ -70,7 +69,8 @@ public class AppointmentViewImpl<T> extends Composite implements AppointmentView
 	private int headerRepeat = 10, row = 0;
 
 	@Override
-	public void setRowData(List<T> rowData) {
+	public void setRowData(List<T> rowData, int startRecord, int maxResults, long rowCount) {
+		table.removeAllRows();
 		this.rowData = rowData;
 		row = 0;
 		for (int i = 0; i < this.rowData.size(); ++i, ++row) {

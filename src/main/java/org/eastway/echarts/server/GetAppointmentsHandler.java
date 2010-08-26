@@ -44,17 +44,19 @@ public class GetAppointmentsHandler implements ActionHandler<GetAppointments, Ge
 			throw new ActionException("Database error");
 		}
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		List<AppointmentImpl> appointments = em.createQuery(
-				"SELECT a From AppointmentImpl a WHERE a.caseNumber = '" + action.getCaseNumber() + "' Order By appointmentDate DESC", AppointmentImpl.class)
+		String query = "SELECT a From AppointmentImpl a WHERE a.caseNumber = '" + action.getCaseNumber() + "' Order By a.appointmentDate DESC";
+		String count = "SELECT count(a) From AppointmentImpl a WHERE a.caseNumber = '" + action.getCaseNumber() + "'";
+		List<AppointmentImpl> appointments = em.createQuery(query, AppointmentImpl.class)
 				.setFirstResult(action.getStartRecord())
 				.setMaxResults(action.getMaxResults())
 				.getResultList();
+		Long rowCount = em.createQuery(count, Long.class).getSingleResult();
 		List<Appointment> appointmentsDto = new ArrayList<Appointment>();
 		for (AppointmentImpl appointment : appointments) {
 			appointmentsDto.add(appointment.toDto());
 		}
 		em.close();
-		return new GetAppointmentsResult(appointmentsDto);
+		return new GetAppointmentsResult(appointmentsDto, rowCount);
 	}
 
 	@Override

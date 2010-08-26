@@ -53,6 +53,7 @@ public class AppointmentPresenter implements Presenter, AppointmentView.Presente
 	}
 
 	private int record = 0;
+	private long rowCount = 0;
 
 	public void fetchData() {
 		dispatch.execute(action, new EchartsCallback<GetAppointmentsResult>(eventBus) {
@@ -62,24 +63,25 @@ public class AppointmentPresenter implements Presenter, AppointmentView.Presente
 
 			@Override
 			protected void handleSuccess(GetAppointmentsResult result) {
-				view.setRowData(result.getAppointments());
+				rowCount = result.getRowCount();
+				view.setRowData(result.getAppointments(), action.getStartRecord(), action.getMaxResults(), rowCount);
 			}
 		});
 	}
 
 	@Override
 	public void getNext() {
-		record += action.getMaxResults() + 1;
+		record += action.getMaxResults();
 		action.setStartRecord(record);
 		fetchData();
 	}
 
 	@Override
 	public void getPrevious() {
-		int firstRecord = record - action.getMaxResults();
-		if (firstRecord < 0)
-			firstRecord = 0;
-		action.setStartRecord(firstRecord);
+		record -= action.getMaxResults();
+		if (record < 0)
+			record = 0;
+		action.setStartRecord(record);
 		fetchData();
 	}
 }

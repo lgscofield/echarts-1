@@ -22,14 +22,24 @@ import net.customware.gwt.dispatch.shared.Result;
 public class GetAppointmentsResult implements Result {
 
 	private List<Appointment> appointments;
+	private Long rowCount;
 
 	GetAppointmentsResult() { }
 
-	public GetAppointmentsResult(List<Appointment> appointments) {
+	public GetAppointmentsResult(List<Appointment> appointments, Long rowCount) {
 		this.appointments = appointments;
+		this.setRowCount(rowCount);
 	}
 
 	public List<Appointment> getAppointments() {
 		return appointments;
+	}
+
+	public void setRowCount(Long rowCount) {
+		this.rowCount = rowCount;
+	}
+
+	public Long getRowCount() {
+		return rowCount;
 	}
 }

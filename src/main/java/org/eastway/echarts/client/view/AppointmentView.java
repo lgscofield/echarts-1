@@ -31,5 +31,5 @@ public interface AppointmentView<T> {
 	void setPresenter(Presenter<T> presenter);
 	Widget asWidget();
 	void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions);
-	void setRowData(List<T> rowData);
+	void setRowData(List<T> rowData, int startRecord, int maxResults, long rowCount);
 }
