@@ -60,7 +60,7 @@ public class LinksPresenterTest extends TestCase {
 
 	@SuppressWarnings("unchecked")
 	@Test public void testSetData() {
-		dispatch.executeWithCache(isA(GetLinks.class), isA(EchartsCallback.class));
+		dispatch.execute(isA(GetLinks.class), isA(EchartsCallback.class));
 		expectLastCall().andAnswer(new IAnswer<Object>() {
 			@Override
 			public Object answer() throws Throwable {
