@@ -17,17 +17,17 @@ package org.eastway.echarts.client.events;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-public class ViewSignatureEvent extends GwtEvent<ViewSignatureEventHandler> {
+public class ViewProviderSignaturesEvent extends GwtEvent<ViewProviderSignaturesEventHandler> {
 
-	public static final Type<ViewSignatureEventHandler> TYPE = new Type<ViewSignatureEventHandler>();
+	public static final Type<ViewProviderSignaturesEventHandler> TYPE = new Type<ViewProviderSignaturesEventHandler>();
 
 	@Override
-	public Type<ViewSignatureEventHandler> getAssociatedType() {
+	public Type<ViewProviderSignaturesEventHandler> getAssociatedType() {
 		return TYPE;
 	}
 
 	@Override
-	protected void dispatch(ViewSignatureEventHandler handler) {
+	protected void dispatch(ViewProviderSignaturesEventHandler handler) {
 		handler.onViewSignature(this);
 	}
 

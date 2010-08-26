@@ -54,6 +54,8 @@ import org.eastway.echarts.client.events.ViewLinksEvent;
 import org.eastway.echarts.client.events.ViewLinksEventHandler;
 import org.eastway.echarts.client.events.ViewMedicationsEvent;
 import org.eastway.echarts.client.events.ViewMedicationsEventHandler;
+import org.eastway.echarts.client.events.ViewMedsomSignaturesEvent;
+import org.eastway.echarts.client.events.ViewMedsomSignaturesEventHandler;
 import org.eastway.echarts.client.events.ViewMessagesEvent;
 import org.eastway.echarts.client.events.ViewMessagesEventHandler;
 import org.eastway.echarts.client.events.ViewPatientSummaryEvent;
@@ -64,8 +66,10 @@ import org.eastway.echarts.client.events.ViewReferralEvent;
 import org.eastway.echarts.client.events.ViewReferralEventHandler;
 import org.eastway.echarts.client.events.ViewServiceHistoryEvent;
 import org.eastway.echarts.client.events.ViewServiceHistoryEventHandler;
-import org.eastway.echarts.client.events.ViewSignatureEvent;
-import org.eastway.echarts.client.events.ViewSignatureEventHandler;
+import org.eastway.echarts.client.events.ViewProviderSignaturesEvent;
+import org.eastway.echarts.client.events.ViewProviderSignaturesEventHandler;
+import org.eastway.echarts.client.events.ViewSupervisorSignaturesEvent;
+import org.eastway.echarts.client.events.ViewSupervisorSignaturesEventHandler;
 import org.eastway.echarts.client.events.ViewTicklerEvent;
 import org.eastway.echarts.client.events.ViewTicklerEventHandler;
 import org.eastway.echarts.client.events.ViewTreatmentPlanEvent;
@@ -296,9 +300,9 @@ public class AppController implements Presenter {
 				doOpenNurseProgressNote(event.getCaseNumber());
 			}
 		});
-		eventBus.addHandler(ViewSignatureEvent.TYPE, new ViewSignatureEventHandler() {
+		eventBus.addHandler(ViewProviderSignaturesEvent.TYPE, new ViewProviderSignaturesEventHandler() {
 			@Override
-			public void onViewSignature(ViewSignatureEvent event) {
+			public void onViewSignature(ViewProviderSignaturesEvent event) {
 				doViewSignature();
 			}
 		});
@@ -308,6 +312,30 @@ public class AppController implements Presenter {
 				doViewARInfo(event.getCaseNumber(), event.getView(), event.getAction());
 			}
 		});
+		eventBus.addHandler(ViewSupervisorSignaturesEvent.TYPE, new ViewSupervisorSignaturesEventHandler() {
+			@Override
+			public void onViewSupervisorSignatures(ViewSupervisorSignaturesEvent event) {
+				doViewSupervisorSignatures();
+			}
+		});
+		eventBus.addHandler(ViewMedsomSignaturesEvent.TYPE, new ViewMedsomSignaturesEventHandler() {
+			@Override
+			public void onViewMedsomSignatures(ViewMedsomSignaturesEvent event) {
+				doViewMedsomSignatures();
+			}
+		});
+	}
+
+	protected void doViewMedsomSignatures() {
+		Frame frame = new Frame("http://ewsql.eastway.local/echarts-asp/signatures/medqueue.asp?staffid=" + EchartsUser.staffId);
+		frame.setSize("100%", "100%");
+		dashboardPresenter.getDisplay().addTab(frame, "Med-Som Signatures");
+	}
+
+	protected void doViewSupervisorSignatures() {
+		Frame frame = new Frame("http://ewsql.eastway.local/echarts-asp/signatures/supervisorqueue.asp?staffid=" + EchartsUser.staffId);
+		frame.setSize("100%", "100%");
+		dashboardPresenter.getDisplay().addTab(frame, "Supervisor Signatures");
 	}
 
 	private void doViewARInfo(String caseNumber, EHRView<EHR> view, GetARInfo action) {
@@ -318,7 +346,7 @@ public class AppController implements Presenter {
 	private void doViewSignature() {
 		Frame frame = new Frame("http://ewsql.eastway.local/echarts-asp/signatures/sign.asp?staffid=" + EchartsUser.staffId);
 		frame.setSize("100%", "100%");
-		dashboardPresenter.getDisplay().addTab(frame, "Signatures");
+		dashboardPresenter.getDisplay().addTab(frame, "Provider Signatures");
 	}
 
 	private void doOpenNurseProgressNote(String caseNumber) {

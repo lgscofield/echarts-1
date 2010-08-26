@@ -160,7 +160,7 @@
 								</table>
 							</g:HTMLPanel>
 						</g:north>
-						<g:west size='115'>
+						<g:west size='200'>
 							<g:HTMLPanel>
 								<b>Links</b>
 								<ul style='margin-top:0px;'>
@@ -168,7 +168,13 @@
 										<g:Hyperlink ui:field='tickler' targetHistoryToken=''>Tickler</g:Hyperlink>
 									</li>
 									<li>
-										<g:Hyperlink ui:field='signature' targetHistoryToken=''>Signatures</g:Hyperlink>
+										<g:Hyperlink ui:field='providerSignatures' targetHistoryToken=''>Provider Signatures</g:Hyperlink>
+									</li>
+									<li>
+										<g:Hyperlink ui:field='supervisorSignatures' targetHistoryToken=''>Supervisor Signatures</g:Hyperlink>
+									</li>
+									<li>
+										<g:Hyperlink ui:field='medsomSignatures' targetHistoryToken=''>Med-Som Signatures</g:Hyperlink>
 									</li>
 								</ul>
 							</g:HTMLPanel>

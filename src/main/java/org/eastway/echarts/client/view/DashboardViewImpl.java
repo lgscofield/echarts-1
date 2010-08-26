@@ -225,9 +225,19 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 		presenter.openProfile();
 	}
 
-	@UiHandler("signature")
-	public void handleSignatureClick(ClickEvent event) {
-		presenter.openSignature();
+	@UiHandler("providerSignatures")
+	public void handleProviderSignaturesClick(ClickEvent event) {
+		presenter.openProviderSignatures();
+	}
+
+	@UiHandler("supervisorSignatures")
+	public void handleSupervisorSignaturesClick(ClickEvent event) {
+		presenter.openSupervisorSignatures();
+	}
+
+	@UiHandler("medsomSignatures")
+	public void handleMedsomSignaturesClick(ClickEvent event) {
+		presenter.openMedsomSignatures();
 	}
 
 	@Override

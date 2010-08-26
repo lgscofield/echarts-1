@@ -48,7 +48,11 @@ public interface DashboardView<T> {
 
 		void openProfile();
 
-		void openSignature();
+		void openProviderSignatures();
+
+		void openSupervisorSignatures();
+
+		void openMedsomSignatures();
 	}
 
 	void addTab(Widget widget, String string);

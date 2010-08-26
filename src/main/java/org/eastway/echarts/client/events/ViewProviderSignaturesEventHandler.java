@@ -17,8 +17,8 @@ package org.eastway.echarts.client.events;
 
 import com.google.gwt.event.shared.EventHandler;
 
-public interface ViewSignatureEventHandler extends EventHandler {
+public interface ViewProviderSignaturesEventHandler extends EventHandler {
 
-	void onViewSignature(ViewSignatureEvent event);
+	void onViewSignature(ViewProviderSignaturesEvent event);
 
 }

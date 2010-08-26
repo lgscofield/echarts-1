@@ -25,8 +25,10 @@ import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEventHandler;
 import org.eastway.echarts.client.events.LogoutEvent;
 import org.eastway.echarts.client.events.OpenEhrEvent;
+import org.eastway.echarts.client.events.ViewMedsomSignaturesEvent;
 import org.eastway.echarts.client.events.ViewProfileEvent;
-import org.eastway.echarts.client.events.ViewSignatureEvent;
+import org.eastway.echarts.client.events.ViewProviderSignaturesEvent;
+import org.eastway.echarts.client.events.ViewSupervisorSignaturesEvent;
 import org.eastway.echarts.client.events.ViewTicklerEvent;
 import org.eastway.echarts.client.rpc.CachingDispatchAsync;
 import org.eastway.echarts.client.rpc.EchartsCallback;
@@ -168,7 +170,17 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 	}
 
 	@Override
-	public void openSignature() {
-		eventBus.fireEvent(new ViewSignatureEvent());
+	public void openProviderSignatures() {
+		eventBus.fireEvent(new ViewProviderSignaturesEvent());
+	}
+
+	@Override
+	public void openSupervisorSignatures() {
+		eventBus.fireEvent(new ViewSupervisorSignaturesEvent());
+	}
+
+	@Override
+	public void openMedsomSignatures() {
+		eventBus.fireEvent(new ViewMedsomSignaturesEvent());
 	}
 }
