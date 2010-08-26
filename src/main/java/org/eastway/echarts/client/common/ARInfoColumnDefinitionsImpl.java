@@ -27,12 +27,12 @@ public class ARInfoColumnDefinitionsImpl extends ArrayList<ColumnDefinition<ARIn
 		this.add(new ColumnDefinition<ARInfo>() {
 			@Override
 			public void render(ARInfo t, StringBuilder sb) {
-				sb.append(t.getSpendDown() == null ? "" : t.getSpendDown());
+				sb.append(t.getBillCode() == null ? "" : t.getBillCode());
 			}
 
 			@Override
 			public String getHeader(ARInfo t) {
-				return "<b>Spend&nbsp;Down</b>";
+				return "<b>Bill&nbsp;Code</b>";
 			}
 		});
 		this.add(new ColumnDefinition<ARInfo>() {
@@ -44,6 +44,61 @@ public class ARInfoColumnDefinitionsImpl extends ArrayList<ColumnDefinition<ARIn
 			@Override
 			public String getHeader(ARInfo t) {
 				return "<b>AR&nbsp;Status</b>";
+			}
+		});
+		this.add(new ColumnDefinition<ARInfo>() {
+			@Override
+			public void render(ARInfo t, StringBuilder sb) {
+				sb.append(t.getIncome() == null ? "" : t.getIncome());
+			}
+
+			@Override
+			public String getHeader(ARInfo t) {
+				return "<b>Income</b>";
+			}
+		});
+		this.add(new ColumnDefinition<ARInfo>() {
+			@Override
+			public void render(ARInfo t, StringBuilder sb) {
+				sb.append(t.getDependents() == null ? 0 : t.getDependents());
+			}
+
+			@Override
+			public String getHeader(ARInfo t) {
+				return "<b>Dependents</b>";
+			}
+		});
+		this.add(new ColumnDefinition<ARInfo>() {
+			@Override
+			public void render(ARInfo t, StringBuilder sb) {
+				sb.append(t.getSpendDown() == null ? "" : t.getSpendDown());
+			}
+
+			@Override
+			public String getHeader(ARInfo t) {
+				return "<b>Spend&nbsp;Down</b>";
+			}
+		});
+		this.add(new ColumnDefinition<ARInfo>() {
+			@Override
+			public void render(ARInfo t, StringBuilder sb) {
+				sb.append(t.getMacRegName() == null ? "" : t.getMacRegName());
+			}
+
+			@Override
+			public String getHeader(ARInfo t) {
+				return "<b>MACSIS&nbsp;Registered&nbsp;Name</b>";
+			}
+		});
+		this.add(new ColumnDefinition<ARInfo>() {
+			@Override
+			public void render(ARInfo t, StringBuilder sb) {
+				sb.append(t.getMacRegDate() == null ? "" : GlobalResources.getDateFormat().format(t.getMacRegDate()));
+			}
+
+			@Override
+			public String getHeader(ARInfo t) {
+				return "<b>MACSIS&nbsp;Effective&nbsp;Date</b>";
 			}
 		});
 		this.add(new ColumnDefinition<ARInfo>() {
@@ -71,17 +126,6 @@ public class ARInfoColumnDefinitionsImpl extends ArrayList<ColumnDefinition<ARIn
 		this.add(new ColumnDefinition<ARInfo>() {
 			@Override
 			public void render(ARInfo t, StringBuilder sb) {
-				sb.append(t.getTitleTwentyEligibilityCategory() == null ? "" : t.getTitleTwentyEligibilityCategory());
-			}
-
-			@Override
-			public String getHeader(ARInfo t) {
-				return "<b>Title&nbsp;XX&nbsp;Eligibility&nbsp;Category</b>";
-			}
-		});
-		this.add(new ColumnDefinition<ARInfo>() {
-			@Override
-			public void render(ARInfo t, StringBuilder sb) {
 				sb.append(t.getTitleTwentyAppDate() == null ? "" : GlobalResources.getDateFormat().format(t.getTitleTwentyAppDate()));
 			}
 
@@ -98,62 +142,18 @@ public class ARInfoColumnDefinitionsImpl extends ArrayList<ColumnDefinition<ARIn
 
 			@Override
 			public String getHeader(ARInfo t) {
-				return "<b>Title&nbsp;XX&nbsp;Redeterm&nbsp;Date</b>";
+				return "<b>Title&nbsp;XX&nbsp;Redetermine&nbsp;Date</b>";
 			}
 		});
 		this.add(new ColumnDefinition<ARInfo>() {
 			@Override
 			public void render(ARInfo t, StringBuilder sb) {
-				sb.append(t.getMacRegName() == null ? "" : t.getMacRegName());
+				sb.append(t.getTitleTwentyEligibilityCategory() == null ? "" : t.getTitleTwentyEligibilityCategory());
 			}
 
 			@Override
 			public String getHeader(ARInfo t) {
-				return "<b>Mac&nbsp;Reg&nbsp;Name</b>";
-			}
-		});
-		this.add(new ColumnDefinition<ARInfo>() {
-			@Override
-			public void render(ARInfo t, StringBuilder sb) {
-				sb.append(t.getMacRegDate() == null ? "" : GlobalResources.getDateFormat().format(t.getMacRegDate()));
-			}
-
-			@Override
-			public String getHeader(ARInfo t) {
-				return "<b>Mac&nbsp;Reg&nbsp;Date</b>";
-			}
-		});
-		this.add(new ColumnDefinition<ARInfo>() {
-			@Override
-			public void render(ARInfo t, StringBuilder sb) {
-				sb.append(t.getDependents() == null ? 0 : t.getDependents());
-			}
-
-			@Override
-			public String getHeader(ARInfo t) {
-				return "<b>Dependents</b>";
-			}
-		});
-		this.add(new ColumnDefinition<ARInfo>() {
-			@Override
-			public void render(ARInfo t, StringBuilder sb) {
-				sb.append(t.getIncome() == null ? "" : t.getIncome());
-			}
-
-			@Override
-			public String getHeader(ARInfo t) {
-				return "<b>Income</b>";
-			}
-		});
-		this.add(new ColumnDefinition<ARInfo>() {
-			@Override
-			public void render(ARInfo t, StringBuilder sb) {
-				sb.append(t.getBillCode() == null ? "" : t.getBillCode());
-			}
-
-			@Override
-			public String getHeader(ARInfo t) {
-				return "<b>Bill&nbsp;Code</b>";
+				return "<b>Title&nbsp;XX&nbsp;Eligibility&nbsp;Category</b>";
 			}
 		});
 	}
