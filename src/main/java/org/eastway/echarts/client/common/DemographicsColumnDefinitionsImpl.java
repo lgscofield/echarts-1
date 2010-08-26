@@ -33,7 +33,7 @@ public class DemographicsColumnDefinitionsImpl extends ArrayList<ColumnDefinitio
 
 			@Override
 			public String getHeader(Demographics t) {
-				return "Allergies";
+				return "<b>Allergies</b>";
 			}
 		});
 		this.add(new ColumnDefinition<Demographics>() {
@@ -44,7 +44,7 @@ public class DemographicsColumnDefinitionsImpl extends ArrayList<ColumnDefinitio
 
 			@Override
 			public String getHeader(Demographics t) {
-				return "Employment";
+				return "<b>Employment</b>";
 			}
 		});
 		this.add(new ColumnDefinition<Demographics>() {
@@ -55,7 +55,7 @@ public class DemographicsColumnDefinitionsImpl extends ArrayList<ColumnDefinitio
 
 			@Override
 			public String getHeader(Demographics t) {
-				return "DOB";
+				return "<b>DOB</b>";
 			}
 		});
 		this.add(new ColumnDefinition<Demographics>() {
@@ -66,7 +66,7 @@ public class DemographicsColumnDefinitionsImpl extends ArrayList<ColumnDefinitio
 
 			@Override
 			public String getHeader(Demographics t) {
-				return "Marital Status";
+				return "<b>Marital&nbsp;Status</b>";
 			}
 		});
 		this.add(new ColumnDefinition<Demographics>() {
@@ -77,7 +77,7 @@ public class DemographicsColumnDefinitionsImpl extends ArrayList<ColumnDefinitio
 
 			@Override
 			public String getHeader(Demographics t) {
-				return "Education Level";
+				return "<b>Education&nbsp;Level</b>";
 			}
 		});
 		this.add(new ColumnDefinition<Demographics>() {
@@ -88,7 +88,7 @@ public class DemographicsColumnDefinitionsImpl extends ArrayList<ColumnDefinitio
 
 			@Override
 			public String getHeader(Demographics t) {
-				return "Education Type";
+				return "<b>Education&nbsp;Type</b>";
 			}
 		});
 		this.add(new ColumnDefinition<Demographics>() {
@@ -99,7 +99,7 @@ public class DemographicsColumnDefinitionsImpl extends ArrayList<ColumnDefinitio
 
 			@Override
 			public String getHeader(Demographics t) {
-				return "Race";
+				return "<b>Race</b>";
 			}
 		});
 	}
