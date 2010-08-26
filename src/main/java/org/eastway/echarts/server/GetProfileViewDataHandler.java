@@ -15,7 +15,7 @@
  */
 package org.eastway.echarts.server;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -52,8 +52,8 @@ public class GetProfileViewDataHandler implements
 			throw new ActionException("Database error");
 		}
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		Map<String, String> costCenters = new HashMap<String, String>();
-		List<CodeImpl> codes = em.createQuery("SELECT c FROM CodeImpl c WHERE c.columnName = 'CostCenter'", CodeImpl.class)
+		Map<String, String> costCenters = new LinkedHashMap<String, String>();
+		List<CodeImpl> codes = em.createQuery("SELECT c FROM CodeImpl c WHERE c.columnName = 'CostCenter' ORDER BY c.descriptor", CodeImpl.class)
 							.getResultList();
 		for (CodeImpl c : codes)
 			costCenters.put(c.getValue(), c.getDescriptor());
