@@ -15,6 +15,7 @@
  */
 package org.eastway.echarts.server;
 
+import org.eastway.echarts.shared.GetARInfo;
 import org.eastway.echarts.shared.GetAddresses;
 import org.eastway.echarts.shared.GetAppointments;
 import org.eastway.echarts.shared.GetContacts;
@@ -58,6 +59,7 @@ public class ServerModule extends ActionHandlerModule {
 		bindHandler(GetProfileViewData.class, GetProfileViewDataHandler.class);
 		bindHandler(GetTicklerLite.class, GetTicklerLiteHandler.class);
 		bindHandler(GetProvider.class, GetProviderHandler.class);
+		bindHandler(GetARInfo.class, GetARInfoHandler.class);
 	}
 
 }

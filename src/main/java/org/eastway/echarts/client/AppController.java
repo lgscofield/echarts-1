@@ -17,6 +17,7 @@ package org.eastway.echarts.client;
 
 import net.customware.gwt.presenter.client.EventBus;
 
+import org.eastway.echarts.client.common.ARInfoColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.AddressColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.AppointmentColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.DemographicsColumnDefinitionsImpl;
@@ -37,6 +38,8 @@ import org.eastway.echarts.client.events.OpenIspEvent;
 import org.eastway.echarts.client.events.OpenIspEventHandler;
 import org.eastway.echarts.client.events.OpenNurseProgressNoteEvent;
 import org.eastway.echarts.client.events.OpenNurseProgressNoteEventHandler;
+import org.eastway.echarts.client.events.ViewARInfoEvent;
+import org.eastway.echarts.client.events.ViewARInfoEventHandler;
 import org.eastway.echarts.client.events.ViewAddressesEvent;
 import org.eastway.echarts.client.events.ViewAddressesEventHandler;
 import org.eastway.echarts.client.events.ViewAppointmentsEvent;
@@ -67,6 +70,7 @@ import org.eastway.echarts.client.events.ViewTicklerEvent;
 import org.eastway.echarts.client.events.ViewTicklerEventHandler;
 import org.eastway.echarts.client.events.ViewTreatmentPlanEvent;
 import org.eastway.echarts.client.events.ViewTreatmentPlanEventHandler;
+import org.eastway.echarts.client.presenter.ARInfoPresenter;
 import org.eastway.echarts.client.presenter.AddressPresenter;
 import org.eastway.echarts.client.presenter.AppointmentPresenter;
 import org.eastway.echarts.client.presenter.ContactPresenter;
@@ -83,6 +87,7 @@ import org.eastway.echarts.client.presenter.ProfilePresenter;
 import org.eastway.echarts.client.presenter.ReferralPresenter;
 import org.eastway.echarts.client.presenter.TicklerPresenter;
 import org.eastway.echarts.client.rpc.CachingDispatchAsync;
+import org.eastway.echarts.client.view.ARInfoViewImpl;
 import org.eastway.echarts.client.view.AddressViewImpl;
 import org.eastway.echarts.client.view.AppointmentViewImpl;
 import org.eastway.echarts.client.view.ContactView;
@@ -95,11 +100,13 @@ import org.eastway.echarts.client.view.MedicationView;
 import org.eastway.echarts.client.view.MessagesView;
 import org.eastway.echarts.client.view.PatientSummaryViewImpl;
 import org.eastway.echarts.client.view.ReferralViewImpl;
+import org.eastway.echarts.shared.ARInfo;
 import org.eastway.echarts.shared.Address;
 import org.eastway.echarts.shared.Appointment;
 import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.Diagnosis;
 import org.eastway.echarts.shared.EHR;
+import org.eastway.echarts.shared.GetARInfo;
 import org.eastway.echarts.shared.GetAddresses;
 import org.eastway.echarts.shared.GetAppointments;
 import org.eastway.echarts.shared.GetContacts;
@@ -133,6 +140,7 @@ public class AppController implements Presenter {
 	@Inject private PatientSummaryColumnDefinitionsImpl patientSummaryColumnDefinitions;
 	@Inject private AppointmentColumnDefinitionsImpl appointmentColumnDefinitions;
 	@Inject private ReferralColumnDefinitionsImpl referralColumnDefinitions;
+	@Inject private ARInfoColumnDefinitionsImpl aRInfoColumnDefinitions;
 
 	@Inject
 	public AppController(DashboardPresenter dashboardPresenter, EventBus eventBus, CachingDispatchAsync dispatch) {
@@ -294,6 +302,17 @@ public class AppController implements Presenter {
 				doViewSignature();
 			}
 		});
+		eventBus.addHandler(ViewARInfoEvent.TYPE, new ViewARInfoEventHandler() {
+			@Override
+			public void onViewARInfo(ViewARInfoEvent event) {
+				doViewARInfo(event.getCaseNumber(), event.getView(), event.getAction());
+			}
+		});
+	}
+
+	private void doViewARInfo(String caseNumber, EHRView<EHR> view, GetARInfo action) {
+		Presenter presenter = new ARInfoPresenter(new ARInfoViewImpl<ARInfo>(), aRInfoColumnDefinitions, eventBus, dispatch, action);
+		presenter.go(view.getDisplayArea());
 	}
 
 	private void doViewSignature() {

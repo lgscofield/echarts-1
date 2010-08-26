@@ -15,46 +15,17 @@
  */
 package org.eastway.echarts.client.view;
 
-import org.eastway.echarts.shared.EHR;
+import java.util.List;
 
-import com.google.gwt.user.client.ui.HasWidgets;
+import org.eastway.echarts.client.common.ColumnDefinition;
+
 import com.google.gwt.user.client.ui.Widget;
 
-public interface EHRView<T> {
-
-	public interface Presenter<T> {
-		void viewPatientSummary();
-
-		EHR getEhr();
-
-		void viewMessages();
-
-		void viewDemographics();
-
-		void viewReferral();
-
-		void viewAppointments();
-
-		void viewDiagnoses();
-
-		void viewLinks();
-
-		void viewAddresses();
-
-		void viewContacts();
-
-		void viewMedications();
-
-		void viewTreatmentPlan();
-
-		void viewServiceHistory();
-
-		void viewARInfo();
-	}
+public interface ARInfoView<T> {
+	interface Presenter<T> { }
 
 	Widget asWidget();
-	void setTreeItemWidth();
 	void setPresenter(Presenter<T> presenter);
-	Presenter<T> getPresenter();
-	HasWidgets getDisplayArea();
+	void setRowData(T rowData);
+	void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions);
 }

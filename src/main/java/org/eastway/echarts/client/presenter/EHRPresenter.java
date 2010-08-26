@@ -19,6 +19,7 @@ import net.customware.gwt.presenter.client.EventBus;
 
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
+import org.eastway.echarts.client.events.ViewARInfoEvent;
 import org.eastway.echarts.client.events.ViewAddressesEvent;
 import org.eastway.echarts.client.events.ViewAppointmentsEvent;
 import org.eastway.echarts.client.events.ViewContactsEvent;
@@ -36,6 +37,7 @@ import org.eastway.echarts.client.rpc.EchartsCallback;
 import org.eastway.echarts.client.view.EHRView;
 import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.EHRDTO;
+import org.eastway.echarts.shared.GetARInfo;
 import org.eastway.echarts.shared.GetAddresses;
 import org.eastway.echarts.shared.GetAppointments;
 import org.eastway.echarts.shared.GetContacts;
@@ -67,6 +69,7 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
 	private GetAddresses addresses = null;
 	private GetContacts contacts = null;
 	private GetMedications medications = null;
+	private GetARInfo aRInfo = null;
 	private CachingDispatchAsync dispatch = null;
 
 	public EHRPresenter(EHRView<EHR> view, EventBus eventBus, CachingDispatchAsync dispatch, String caseNumber) {
@@ -109,6 +112,7 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
 		addresses = new GetAddresses(EchartsUser.sessionId, caseNumber);
 		contacts = new GetContacts(EchartsUser.sessionId, caseNumber);
 		medications = new GetMedications(EchartsUser.sessionId, caseNumber);
+		aRInfo = new GetARInfo(EchartsUser.sessionId, caseNumber);
 	}
 
 	@Override
@@ -181,5 +185,10 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
 	@Override
 	public void viewServiceHistory() {
 		eventBus.fireEvent(new ViewServiceHistoryEvent(caseNumber, view));
+	}
+
+	@Override
+	public void viewARInfo() {
+		eventBus.fireEvent(new ViewARInfoEvent(caseNumber, view, aRInfo));
 	}
 }
