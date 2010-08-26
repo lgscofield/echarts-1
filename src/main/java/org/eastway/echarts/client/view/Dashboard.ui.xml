@@ -94,21 +94,22 @@
 				<g:FlowPanel>
 					<a:NotificationMole animationDuration='0' message='Loading ...' ui:field='mole'></a:NotificationMole>
 				</g:FlowPanel>
-				<g:FlowPanel>
+				<g:HorizontalPanel width="100%">
 					<g:FlowPanel addStyleNames="{style.banner} {style.left}" />
-					<g:HorizontalPanel addStyleNames="{style.right}">
-						<g:Hyperlink title='Edit your settings' targetHistoryToken='' ui:field="username" />
-						<g:HTML>&nbsp;&mdash;&nbsp;</g:HTML>
-						<g:Hyperlink ui:field="logoutButton" targetHistoryToken=''>Logout</g:Hyperlink>
-					</g:HorizontalPanel>
-					<g:HorizontalPanel ui:field="patientSearch" addStyleNames="{style.right} {style.top}">
-						<g:FlowPanel ui:field='patientIdBox'/>
-						<g:Button ui:field='patientSearchButton' addStyleNames='{style.button}'>Search</g:Button>
-					</g:HorizontalPanel>
-	
 					<g:FlexTable ui:field='currentPatientData'
 						addStyleNames='{style.left} {style.margin} {style.italics}'/>
-				</g:FlowPanel>
+					<g:VerticalPanel addStyleNames="{style.right}">
+						<g:HorizontalPanel addStyleNames="{style.right}">
+							<g:Hyperlink title='Edit your settings' targetHistoryToken='' ui:field="username" />
+							<g:HTML>&nbsp;&mdash;&nbsp;</g:HTML>
+							<g:Hyperlink ui:field="logoutButton" targetHistoryToken=''>Logout</g:Hyperlink>
+						</g:HorizontalPanel>
+						<g:HorizontalPanel ui:field="patientSearch" addStyleNames="{style.right} {style.top}">
+							<g:FlowPanel ui:field='patientIdBox'/>
+							<g:Button ui:field='patientSearchButton' addStyleNames='{style.button}'>Search</g:Button>
+						</g:HorizontalPanel>
+					</g:VerticalPanel>
+				</g:HorizontalPanel>
 			</g:FlowPanel>
 		</g:north>
 		<g:center>
