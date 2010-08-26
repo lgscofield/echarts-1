@@ -188,7 +188,7 @@ public class AssignmentImpl implements Assignment {
 	}
 
     @Override
-	public void setTrtEpisode(short trtEpisode) {
+	public void setTrtEpisode(Short trtEpisode) {
 		this.trtEpisode = trtEpisode;
 	}
 

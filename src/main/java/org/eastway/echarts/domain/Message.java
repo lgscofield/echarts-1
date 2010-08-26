@@ -35,7 +35,7 @@ public class Message {
 	@TableGenerator(name = "tg", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "tg")
 	@Column(name = "Message_Id")
-	private long id;
+	private Long id;
 	private String caseNumber;
 	@ManyToOne
 	@JoinColumn(name = "MessageType_Id")
@@ -49,15 +49,15 @@ public class Message {
 
 	public Message() { }
 
-	public Message(long id) {
+	public Message(Long id) {
 		this.id = id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 

@@ -63,7 +63,7 @@ public class DiagnosisImpl implements Diagnosis {
 	private Date date;
 	private Integer highestGAF;
 	@Id
-	private long id;
+	private Long id;
 	private Date lastEdit;
 	private String lastEditBy;
 
@@ -208,7 +208,7 @@ public class DiagnosisImpl implements Diagnosis {
 	}
 
 	@Override
-	public void setCurrentGAF(int currentGAF) {
+	public void setCurrentGAF(Integer currentGAF) {
 		this.currentGAF = currentGAF;
 	}
 
@@ -218,12 +218,12 @@ public class DiagnosisImpl implements Diagnosis {
 	}
 
 	@Override
-	public void setHighestGAF(int highestGAF) {
+	public void setHighestGAF(Integer highestGAF) {
 		this.highestGAF = highestGAF;
 	}
 
 	@Override
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

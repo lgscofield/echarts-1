@@ -22,17 +22,17 @@ import javax.persistence.Id;
 public class Holiday {
 
 	@Id
-	private int id;
+	private Integer id;
 
 	private String day;
 	private String month;
 	private String year;
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 

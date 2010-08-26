@@ -28,8 +28,8 @@ public class AssignmentDTO implements Serializable, Assignment {
 	private String disposition;
 	private String staffName;
 	private Date termDate;
-	private int planId;
-	private short trtEpisode;
+	private Integer planId;
+	private Short trtEpisode;
 	private String program;
 	private Date lastEdit;
 	private String lastEditBy;
@@ -165,7 +165,7 @@ public class AssignmentDTO implements Serializable, Assignment {
 	}
 
 	@Override
-	public void setTrtEpisode(short trtEpisode) {
+	public void setTrtEpisode(Short trtEpisode) {
 		this.trtEpisode = trtEpisode;
 	}
 

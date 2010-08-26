@@ -33,10 +33,10 @@ public class DiagnosisDTO implements Diagnosis, Serializable {
 	private String axis3;
 	private String axis4;
 	private String caseNumber;
-	private int currentGAF;
+	private Integer currentGAF;
 	private Date date;
-	private int highestGAF;
-	private long id;
+	private Integer highestGAF;
+	private Long id;
 	private Date lastEdit;
 	private String lastEditBy;
 
@@ -181,7 +181,7 @@ public class DiagnosisDTO implements Diagnosis, Serializable {
 	}
 
 	@Override
-	public void setCurrentGAF(int currentGAF) {
+	public void setCurrentGAF(Integer currentGAF) {
 		this.currentGAF = currentGAF;
 	}
 
@@ -191,12 +191,12 @@ public class DiagnosisDTO implements Diagnosis, Serializable {
 	}
 
 	@Override
-	public void setHighestGAF(int highestGAF) {
+	public void setHighestGAF(Integer highestGAF) {
 		this.highestGAF = highestGAF;
 	}
 
 	@Override
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

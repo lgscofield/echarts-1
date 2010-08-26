@@ -29,18 +29,18 @@ import org.eastway.echarts.shared.CodeDTO;
 public class CodeImpl implements Code {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long codeId;
+	private Long codeId;
 	private String columnName;
 	private String value;
 	private String descriptor;
 
 	public CodeImpl() { }
 
-	public void setCodeId(long codeId) {
+	public void setCodeId(Long codeId) {
 		this.codeId = codeId;
 	}
 
-	public long getCodeId() {
+	public Long getCodeId() {
 		return codeId;
 	}
 

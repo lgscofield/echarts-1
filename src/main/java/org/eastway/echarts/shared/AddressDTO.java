@@ -25,7 +25,7 @@ public class AddressDTO implements Serializable, Address {
 	private String city;
 	private String county;
 	private String descriptor;
-	private long id;
+	private Long id;
 	private Date lastEdit;
 	private String lastEditBy;
 	private String phone1;
@@ -61,7 +61,7 @@ public class AddressDTO implements Serializable, Address {
 	}
 
 	@Override
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -141,7 +141,7 @@ public class AddressDTO implements Serializable, Address {
 	}
 
 	@Override
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

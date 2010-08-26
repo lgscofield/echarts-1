@@ -20,9 +20,9 @@ import java.util.Date;
 
 public interface Appointment {
 
-	public void setId(long id);
+	public void setId(Long id);
 
-	public long getId();
+	public Long getId();
 
 	public void setAppointmentDate(Date appointmentDate);
 
@@ -44,9 +44,9 @@ public interface Appointment {
 
 	public String getActivity();
 
-	public void setPriority(float priority);
+	public void setPriority(Float priority);
 
-	public float getPriority();
+	public Float getPriority();
 
 	public void setStaff(String staff);
 

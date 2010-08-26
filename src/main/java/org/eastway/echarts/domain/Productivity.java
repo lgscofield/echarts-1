@@ -27,7 +27,7 @@ import javax.persistence.Table;
 public class Productivity {
 
 	@Id
-	private long id;
+	private Long id;
 
 	private String caseNumber;
 

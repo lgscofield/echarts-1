@@ -19,18 +19,18 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class CodeDTO implements Serializable, Code {
-	private long codeId;
+	private Long codeId;
 	private String columnName;
 	private String value;
 	private String descriptor;
 
 	public CodeDTO() { }
 
-	public void setCodeId(long codeId) {
+	public void setCodeId(Long codeId) {
 		this.codeId = codeId;
 	}
 
-	public long getCodeId() {
+	public Long getCodeId() {
 		return codeId;
 	}
 

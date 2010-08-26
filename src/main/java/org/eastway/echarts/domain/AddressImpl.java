@@ -33,7 +33,7 @@ public class AddressImpl implements Address {
 	@Id
 	@TableGenerator(name="tg", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.TABLE, generator="tg")
-	private long id;
+	private Long id;
 	private String caseNumber;
 	private String descriptor;
 	private String title;
@@ -52,11 +52,11 @@ public class AddressImpl implements Address {
 
 	public AddressImpl() { }
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 

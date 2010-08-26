@@ -59,7 +59,7 @@ public interface Assignment {
 
 	public Integer getPlanId();
 
-	public void setTrtEpisode(short trtEpisode);
+	public void setTrtEpisode(Short trtEpisode);
 
 	public short getTrtEpisode();
 

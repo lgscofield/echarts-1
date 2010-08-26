@@ -20,7 +20,7 @@ import java.util.Date;
 
 public interface Diagnosis {
 
-	public void setId(long id);
+	public void setId(Long id);
 
 	public long getId();
 
@@ -72,11 +72,11 @@ public interface Diagnosis {
 
 	public String getAxis4();
 
-	public void setCurrentGAF(int currentGAF);
+	public void setCurrentGAF(Integer currentGAF);
 
 	public int getCurrentGAF();
 
-	public void setHighestGAF(int highestGAF);
+	public void setHighestGAF(Integer highestGAF);
 
 	public int getHighestGAF();
 

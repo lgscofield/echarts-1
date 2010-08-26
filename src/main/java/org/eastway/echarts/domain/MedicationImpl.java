@@ -27,7 +27,7 @@ import org.eastway.echarts.shared.MedicationDTO;
 public class MedicationImpl implements Medication {
 
 	@Id
-	private long id;
+	private Long id;
 	private String medication;
 	private String caseNumber;
 

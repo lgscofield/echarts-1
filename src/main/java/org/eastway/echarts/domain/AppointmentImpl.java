@@ -38,7 +38,7 @@ public class AppointmentImpl implements Appointment {
 	private Time endTime;
 	@Id
 	@Column(name="apptid", scale=18, precision=0)
-	private long id;
+	private Long id;
 	private String location;
 	private String notes;
 	private Float priority;
@@ -68,7 +68,7 @@ public class AppointmentImpl implements Appointment {
 	}
 
 	@Override
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -83,7 +83,7 @@ public class AppointmentImpl implements Appointment {
 	}
 
 	@Override
-	public float getPriority() {
+	public Float getPriority() {
 		return priority;
 	}
 
@@ -118,7 +118,7 @@ public class AppointmentImpl implements Appointment {
 	}
 
 	@Override
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -133,7 +133,7 @@ public class AppointmentImpl implements Appointment {
 	}
 
 	@Override
-	public void setPriority(float priority) {
+	public void setPriority(Float priority) {
 		this.priority = priority;
 	}
 
