@@ -15,6 +15,7 @@
  */
 package org.eastway.echarts.server;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -53,19 +54,17 @@ public class GetPatientSummaryHandler implements ActionHandler<GetPatientSummary
 		List<AssignmentImpl> assignments = em.createQuery(
 				"SELECT a From AssignmentImpl a Where a.disposition = 'Open' And a.service Like 'S%' And a.caseNumber = '" + action.getCaseNumber() + "' Order By a.patient.lastName ASC, a.patient.firstName ASC, a.orderDate DESC", AssignmentImpl.class)
 					.getResultList();
-		String provider = null;
-		for (AssignmentImpl a : assignments) {
-			if (a.getStaff().matches(action.getStaffId()))
-				provider = a.getStaffName();
-		}
-		if (provider == null && assignments.size() > 0)
+		List<String> providers = new ArrayList<String>();
+		for (AssignmentImpl a : assignments)
+			providers.add(a.getStaffName());
+		/* if (provider == null && assignments.size() > 0)
 			provider = assignments.get(0).getStaffName();
 		else if (provider == null)
-			provider = "";
+			provider = ""; */
 		GetPatientSummaryResult result = new GetPatientSummaryResult();
 		result.setPatient(patient.toDto());
 		result.setDemographics(demographics.toDto());
-		result.setProvider(provider);
+		result.setProviders(providers);
 		em.close();
 		return result;
 	}

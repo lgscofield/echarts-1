@@ -15,6 +15,8 @@
  */
 package org.eastway.echarts.shared;
 
+import java.util.List;
+
 import net.customware.gwt.dispatch.shared.Result;
 
 public class GetPatientSummaryResult implements Result {
@@ -22,6 +24,7 @@ public class GetPatientSummaryResult implements Result {
 	private Patient patient;
 	private Demographics demographics;
 	private String provider;
+	private List<String> providers;
 
 	public GetPatientSummaryResult() { }
 
@@ -47,5 +50,13 @@ public class GetPatientSummaryResult implements Result {
 
 	public String getProvider() {
 		return provider;
+	}
+
+	public void setProviders(List<String> providers) {
+		this.providers = providers;
+	}
+
+	public List<String> getProviders() {
+		return providers;
 	}
 }

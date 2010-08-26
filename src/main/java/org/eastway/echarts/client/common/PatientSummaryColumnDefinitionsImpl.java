@@ -60,12 +60,13 @@ public class PatientSummaryColumnDefinitionsImpl extends ArrayList<ColumnDefinit
 		this.add(new ColumnDefinition<GetPatientSummaryResult>() {
 			@Override
 			public void render(GetPatientSummaryResult t, StringBuilder sb) {
-				sb.append(t.getProvider());
+				for (String provider : t.getProviders())
+					sb.append(provider + "<br />");
 			}
 
 			@Override
 			public String getHeader(GetPatientSummaryResult t) {
-				return "<b>Provider</b>";
+				return "<b>Providers</b>";
 			}
 		});
 		this.add(new ColumnDefinition<GetPatientSummaryResult>() {
