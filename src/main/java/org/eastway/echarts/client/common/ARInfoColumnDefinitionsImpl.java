@@ -18,6 +18,7 @@ package org.eastway.echarts.client.common;
 import java.util.ArrayList;
 
 import org.eastway.echarts.shared.ARInfo;
+import org.eastway.echarts.style.client.GlobalResources;
 
 @SuppressWarnings("serial")
 public class ARInfoColumnDefinitionsImpl extends ArrayList<ColumnDefinition<ARInfo>> {
@@ -54,6 +55,72 @@ public class ARInfoColumnDefinitionsImpl extends ArrayList<ColumnDefinition<ARIn
 			@Override
 			public String getHeader(ARInfo t) {
 				return "<b>UCI</b>";
+			}
+		});
+		this.add(new ColumnDefinition<ARInfo>() {
+			@Override
+			public void render(ARInfo t, StringBuilder sb) {
+				sb.append(t.getMedicaidId() == null ? "" : t.getMedicaidId());
+			}
+
+			@Override
+			public String getHeader(ARInfo t) {
+				return "<b>Medicaid&nbsp;Number</b>";
+			}
+		});
+		this.add(new ColumnDefinition<ARInfo>() {
+			@Override
+			public void render(ARInfo t, StringBuilder sb) {
+				sb.append(t.getTitleTwentyEligibilityCategory() == null ? "" : t.getTitleTwentyEligibilityCategory());
+			}
+
+			@Override
+			public String getHeader(ARInfo t) {
+				return "<b>Title&nbsp;XX&nbsp;Eligibility&nbsp;Category</b>";
+			}
+		});
+		this.add(new ColumnDefinition<ARInfo>() {
+			@Override
+			public void render(ARInfo t, StringBuilder sb) {
+				sb.append(t.getTitleTwentyAppDate() == null ? "" : GlobalResources.getDateFormat().format(t.getTitleTwentyAppDate()));
+			}
+
+			@Override
+			public String getHeader(ARInfo t) {
+				return "<b>Title&nbsp;XX&nbsp;Application&nbsp;Date</b>";
+			}
+		});
+		this.add(new ColumnDefinition<ARInfo>() {
+			@Override
+			public void render(ARInfo t, StringBuilder sb) {
+				sb.append(t.getTitleTwentyRedetermDate() == null ? "" : GlobalResources.getDateFormat().format(t.getTitleTwentyRedetermDate()));
+			}
+
+			@Override
+			public String getHeader(ARInfo t) {
+				return "<b>Title&nbsp;XX&nbsp;Redeterm&nbsp;Date</b>";
+			}
+		});
+		this.add(new ColumnDefinition<ARInfo>() {
+			@Override
+			public void render(ARInfo t, StringBuilder sb) {
+				sb.append(t.getMacRegName() == null ? "" : t.getMacRegName());
+			}
+
+			@Override
+			public String getHeader(ARInfo t) {
+				return "<b>Mac&nbsp;Reg&nbsp;Name</b>";
+			}
+		});
+		this.add(new ColumnDefinition<ARInfo>() {
+			@Override
+			public void render(ARInfo t, StringBuilder sb) {
+				sb.append(t.getMacRegDate() == null ? "" : GlobalResources.getDateFormat().format(t.getMacRegDate()));
+			}
+
+			@Override
+			public String getHeader(ARInfo t) {
+				return "<b>Mac&nbsp;Reg&nbsp;Date</b>";
 			}
 		});
 		this.add(new ColumnDefinition<ARInfo>() {
