@@ -17,6 +17,9 @@
 		.display {
 			display:none;
 		}
+		.table td {
+			border: 1px solid LightGray;
+		}
 	</ui:style>
 	<g:ScrollPanel>
 		<g:VerticalPanel>
@@ -24,7 +27,7 @@
 				<g:Button ui:field='next'>Next</g:Button>
 				<g:Button ui:field='previous'>Previous</g:Button>
 			</g:HorizontalPanel>
-			<g:FlexTable ui:field='table' />
+			<g:FlexTable addStyleNames='{style.table}' ui:field='table' />
 		</g:VerticalPanel>
 	</g:ScrollPanel>
 </ui:UiBinder> 

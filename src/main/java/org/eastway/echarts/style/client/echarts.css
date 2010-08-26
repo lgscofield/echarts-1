@@ -134,7 +134,7 @@
 }
 
 .table, .table td {
-	border: 1px solid LightGray;
+	border-bottom: 1px solid LightGray;
 }
 
 .table td {
