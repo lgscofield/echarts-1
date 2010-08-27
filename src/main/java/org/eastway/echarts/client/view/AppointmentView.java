@@ -23,9 +23,13 @@ import com.google.gwt.user.client.ui.Widget;
 
 public interface AppointmentView<T> {
 	interface Presenter<T> {
-		void getNext();
+		void getNewest();
 
-		void getPrevious();
+		void getNewer();
+
+		void getOlder();
+
+		void getOldest();
 	}
 
 	void setPresenter(Presenter<T> presenter);

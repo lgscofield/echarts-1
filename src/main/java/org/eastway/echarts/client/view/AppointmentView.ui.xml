@@ -24,8 +24,11 @@
 	<g:ScrollPanel>
 		<g:VerticalPanel>
 			<g:HorizontalPanel styleName='{style.display}'>
-				<g:Button ui:field='next'>Next</g:Button>
-				<g:Button ui:field='previous'>Previous</g:Button>
+				<g:Button ui:field='newest'>Newest</g:Button>
+				<g:Button ui:field='newer'>Newer</g:Button>
+				<g:Button ui:field='older'>Older</g:Button>
+				<g:Button ui:field='oldest'>Oldest</g:Button>
+				<g:HTML><span ui:field="counter" /></g:HTML>
 			</g:HorizontalPanel>
 			<g:FlexTable addStyleNames='{style.table}' ui:field='table' />
 		</g:VerticalPanel>

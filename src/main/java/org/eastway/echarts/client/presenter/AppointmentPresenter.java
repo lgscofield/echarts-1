@@ -70,18 +70,38 @@ public class AppointmentPresenter implements Presenter, AppointmentView.Presente
 	}
 
 	@Override
-	public void getNext() {
+	public void getOlder() {
 		record += action.getMaxResults();
+		if (record > rowCount) {
+			record -= action.getMaxResults();
+			return;				
+		}
 		action.setStartRecord(record);
 		fetchData();
 	}
 
 	@Override
-	public void getPrevious() {
+	public void getNewer() {
 		record -= action.getMaxResults();
-		if (record < 0)
+		if (record < 0) {
 			record = 0;
+			return;
+		}
 		action.setStartRecord(record);
+		fetchData();
+	}
+
+	@Override
+	public void getNewest() {
+		action.setStartRecord(0);
+		record = 0;
+		fetchData();
+	}
+
+	@Override
+	public void getOldest() {
+		action.setStartRecord((int)rowCount - (int)rowCount % action.getMaxResults());
+		record = action.getStartRecord();
 		fetchData();
 	}
 }

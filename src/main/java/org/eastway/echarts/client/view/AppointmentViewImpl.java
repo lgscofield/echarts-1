@@ -18,6 +18,7 @@ package org.eastway.echarts.client.view;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 
 import com.google.gwt.uibinder.client.UiBinder;
@@ -39,6 +40,7 @@ public class AppointmentViewImpl<T> extends Composite implements AppointmentView
 	private static AppointmentViewUiBinder uiBinder = GWT.create(AppointmentViewUiBinder.class);
 
 	@UiField FlexTable table;
+	@UiField SpanElement counter;
 
 	private List<ColumnDefinition<T>> columnDefinitions;
 
@@ -73,7 +75,7 @@ public class AppointmentViewImpl<T> extends Composite implements AppointmentView
 		table.removeAllRows();
 		this.rowData = rowData;
 		row = 0;
-		for (int i = 0; i < this.rowData.size(); ++i, ++row) {
+		for (int i = 0; i < this.rowData.size(); ++i, ++row, startRecord++) {
 			final T t = this.rowData.get(i);
 
 			if (i % headerRepeat == 0)
@@ -83,7 +85,7 @@ public class AppointmentViewImpl<T> extends Composite implements AppointmentView
 				final StringBuilder sb = new StringBuilder();
 				if (j == 0)
 					columnDefinitions.get(j).render(t,
-							sb.append((i + 1) + ". "));
+							sb.append((startRecord + 1) + ". "));
 				else
 					columnDefinitions.get(j).render(t, sb);
 				table.setHTML(row, j, sb.toString());
@@ -97,13 +99,23 @@ public class AppointmentViewImpl<T> extends Composite implements AppointmentView
 		row++;
 	}
 
-	@UiHandler("next")
-	public void handleNextClicked(ClickEvent event) {
-		presenter.getNext();
+	@UiHandler("newest")
+	public void handleNewestClicked(ClickEvent event) {
+		presenter.getNewest();
 	}
 
-	@UiHandler("previous")
-	public void handlePreviousClicked(ClickEvent event) {
-		presenter.getPrevious();
+	@UiHandler("newer")
+	public void handleNewerClicked(ClickEvent event) {
+		presenter.getNewer();
+	}
+
+	@UiHandler("older")
+	public void handleOlderClicked(ClickEvent event) {
+		presenter.getOlder();
+	}
+
+	@UiHandler("oldest")
+	public void handleOldestClicked(ClickEvent event) {
+		presenter.getOldest();
 	}
 }
