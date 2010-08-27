@@ -176,6 +176,9 @@
 									<li>
 										<g:Hyperlink ui:field='medsomSignatures' targetHistoryToken=''>Med-Som Signatures</g:Hyperlink>
 									</li>
+									<li>
+										<g:Hyperlink ui:field='staffHistory' targetHistoryToken=''>Staff History</g:Hyperlink>
+									</li>
 								</ul>
 							</g:HTMLPanel>
 						</g:west>

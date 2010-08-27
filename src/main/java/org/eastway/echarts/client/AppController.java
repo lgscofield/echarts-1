@@ -68,6 +68,8 @@ import org.eastway.echarts.client.events.ViewServiceHistoryEvent;
 import org.eastway.echarts.client.events.ViewServiceHistoryEventHandler;
 import org.eastway.echarts.client.events.ViewProviderSignaturesEvent;
 import org.eastway.echarts.client.events.ViewProviderSignaturesEventHandler;
+import org.eastway.echarts.client.events.ViewStaffHistoryEvent;
+import org.eastway.echarts.client.events.ViewStaffHistoryEventHandler;
 import org.eastway.echarts.client.events.ViewSupervisorSignaturesEvent;
 import org.eastway.echarts.client.events.ViewSupervisorSignaturesEventHandler;
 import org.eastway.echarts.client.events.ViewTicklerEvent;
@@ -324,15 +326,27 @@ public class AppController implements Presenter {
 				doViewMedsomSignatures();
 			}
 		});
+		eventBus.addHandler(ViewStaffHistoryEvent.TYPE, new ViewStaffHistoryEventHandler() {
+			@Override
+			public void onViewStaffHistory(ViewStaffHistoryEvent event) {
+				doViewStaffHistory();
+			}
+		});
 	}
 
-	protected void doViewMedsomSignatures() {
+	private void doViewStaffHistory() {
+		Frame frame = new Frame("http://ewsql.eastway.local/echarts-asp/staffhistory.asp?staffid=" + EchartsUser.staffId);
+		frame.setSize("100%", "100%");
+		dashboardPresenter.getDisplay().addTab(frame, "History");
+	}
+
+	private void doViewMedsomSignatures() {
 		Frame frame = new Frame("http://ewsql.eastway.local/echarts-asp/signatures/medqueue.asp?staffid=" + EchartsUser.staffId);
 		frame.setSize("100%", "100%");
 		dashboardPresenter.getDisplay().addTab(frame, "Med-Som Signatures");
 	}
 
-	protected void doViewSupervisorSignatures() {
+	private void doViewSupervisorSignatures() {
 		Frame frame = new Frame("http://ewsql.eastway.local/echarts-asp/signatures/supervisorqueue.asp?staffid=" + EchartsUser.staffId);
 		frame.setSize("100%", "100%");
 		dashboardPresenter.getDisplay().addTab(frame, "Supervisor Signatures");

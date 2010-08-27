@@ -240,6 +240,11 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 		presenter.openMedsomSignatures();
 	}
 
+	@UiHandler("staffHistory")
+	public void handleStaffHistoryClicked(ClickEvent event) {
+		presenter.openStaffHistory();
+	}
+
 	@Override
 	public void isFirstLogin() {
 		final DialogBox dialogBox = new DialogBox();

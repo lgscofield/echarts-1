@@ -28,6 +28,7 @@ import org.eastway.echarts.client.events.OpenEhrEvent;
 import org.eastway.echarts.client.events.ViewMedsomSignaturesEvent;
 import org.eastway.echarts.client.events.ViewProfileEvent;
 import org.eastway.echarts.client.events.ViewProviderSignaturesEvent;
+import org.eastway.echarts.client.events.ViewStaffHistoryEvent;
 import org.eastway.echarts.client.events.ViewSupervisorSignaturesEvent;
 import org.eastway.echarts.client.events.ViewTicklerEvent;
 import org.eastway.echarts.client.rpc.CachingDispatchAsync;
@@ -182,5 +183,10 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 	@Override
 	public void openMedsomSignatures() {
 		eventBus.fireEvent(new ViewMedsomSignaturesEvent());
+	}
+
+	@Override
+	public void openStaffHistory() {
+		eventBus.fireEvent(new ViewStaffHistoryEvent());
 	}
 }

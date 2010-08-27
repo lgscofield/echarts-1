@@ -53,6 +53,8 @@ public interface DashboardView<T> {
 		void openSupervisorSignatures();
 
 		void openMedsomSignatures();
+
+		void openStaffHistory();
 	}
 
 	void addTab(Widget widget, String string);
