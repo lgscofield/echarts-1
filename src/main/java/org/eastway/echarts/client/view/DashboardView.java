@@ -55,6 +55,8 @@ public interface DashboardView<T> {
 		void openMedsomSignatures();
 
 		void openStaffHistory();
+
+		void openGroupProgressNote();
 	}
 
 	void addTab(Widget widget, String string);

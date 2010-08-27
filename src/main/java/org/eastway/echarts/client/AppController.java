@@ -50,6 +50,8 @@ import org.eastway.echarts.client.events.ViewDemographicsEvent;
 import org.eastway.echarts.client.events.ViewDemographicsEventHandler;
 import org.eastway.echarts.client.events.ViewDiagnosesEvent;
 import org.eastway.echarts.client.events.ViewDiagnosesEventHandler;
+import org.eastway.echarts.client.events.ViewGroupProgressNoteEvent;
+import org.eastway.echarts.client.events.ViewGroupProgressNoteEventHandler;
 import org.eastway.echarts.client.events.ViewLinksEvent;
 import org.eastway.echarts.client.events.ViewLinksEventHandler;
 import org.eastway.echarts.client.events.ViewMedicationsEvent;
@@ -332,6 +334,16 @@ public class AppController implements Presenter {
 				doViewStaffHistory();
 			}
 		});
+		eventBus.addHandler(ViewGroupProgressNoteEvent.TYPE, new ViewGroupProgressNoteEventHandler() {
+			@Override
+			public void onViewGroupProgressNote(ViewGroupProgressNoteEvent event) {
+				doViewGroupProgressNote();
+			}
+		});
+	}
+
+	private void doViewGroupProgressNote() {
+		Window.open("http://ewsql.eastway.local/echarts-asp/Forms/108GroupSetup.asp?staffid=" + EchartsUser.staffId, "_blank", "");
 	}
 
 	private void doViewStaffHistory() {

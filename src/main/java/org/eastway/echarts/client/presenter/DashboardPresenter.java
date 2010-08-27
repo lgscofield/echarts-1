@@ -25,6 +25,7 @@ import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEventHandler;
 import org.eastway.echarts.client.events.LogoutEvent;
 import org.eastway.echarts.client.events.OpenEhrEvent;
+import org.eastway.echarts.client.events.ViewGroupProgressNoteEvent;
 import org.eastway.echarts.client.events.ViewMedsomSignaturesEvent;
 import org.eastway.echarts.client.events.ViewProfileEvent;
 import org.eastway.echarts.client.events.ViewProviderSignaturesEvent;
@@ -188,5 +189,10 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 	@Override
 	public void openStaffHistory() {
 		eventBus.fireEvent(new ViewStaffHistoryEvent());
+	}
+
+	@Override
+	public void openGroupProgressNote() {
+		eventBus.fireEvent(new ViewGroupProgressNoteEvent());
 	}
 }

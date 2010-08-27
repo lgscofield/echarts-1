@@ -179,6 +179,9 @@
 									<li>
 										<g:Hyperlink ui:field='staffHistory' targetHistoryToken=''>Staff History</g:Hyperlink>
 									</li>
+									<li>
+										<g:Hyperlink ui:field='groupProgressNote' targetHistoryToken=''>Group Progress Note</g:Hyperlink>
+									</li>
 								</ul>
 							</g:HTMLPanel>
 						</g:west>

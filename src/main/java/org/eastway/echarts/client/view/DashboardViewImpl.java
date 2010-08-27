@@ -245,6 +245,11 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 		presenter.openStaffHistory();
 	}
 
+	@UiHandler("groupProgressNote")
+	public void handleGroupProgressNoteClicked(ClickEvent event) {
+		presenter.openGroupProgressNote();
+	}
+
 	@Override
 	public void isFirstLogin() {
 		final DialogBox dialogBox = new DialogBox();
