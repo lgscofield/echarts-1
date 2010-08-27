@@ -179,7 +179,10 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 	}
 
 	private int getRow(int selected) {
-		return selected - ((selected < headerRepeat ? selected : selected - 1) / headerRepeat) - 1;
+		for (int i = 0; i < selected; i++)
+			if ((i % headerRepeat) == 0)
+				selected--;
+		return selected;
 	}
 
 	@Override
