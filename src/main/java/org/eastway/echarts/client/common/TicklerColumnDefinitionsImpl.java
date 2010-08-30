@@ -26,7 +26,7 @@ public class TicklerColumnDefinitionsImpl extends
 		ArrayList<ColumnDefinition<Tickler>> {
 
 	private String noData = "<b>NO DATA</b>";
-	protected TicklerColumnDefinitionsImpl() {
+	public TicklerColumnDefinitionsImpl() {
 		this.add(new ColumnDefinition<Tickler>() {
 			public void render(Tickler t, StringBuilder sb) {
 				if (t.getHipaaDateCompleted() == null) {

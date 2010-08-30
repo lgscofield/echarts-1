@@ -45,7 +45,7 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 	private static TicklerViewUiBinder uiBinder = GWT.create(TicklerViewUiBinder.class);
 
 	@UiField Style style;
-	@UiField FlexTable table;
+	@UiField public FlexTable table;
 	Presenter<T> presenter;
 	private List<T> rowData = new ArrayList<T>();
 
@@ -178,7 +178,7 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 		}
 	}
 
-	private int getRow(int selected) {
+	public int getRow(int selected) {
 		for (int i = 0; i < selected; i++)
 			if ((i % headerRepeat) == 0)
 				selected--;

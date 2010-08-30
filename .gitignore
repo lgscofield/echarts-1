@@ -13,3 +13,6 @@ src/main/webapp/echarts
 
 # Ignore .settings
 .settings
+
+# Ignore GwtTest created folder
+www-test

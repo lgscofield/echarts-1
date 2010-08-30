@@ -22,6 +22,7 @@
   <inherits name='net.customware.gwt.presenter.Presenter' />
   <inherits name="com.google.gwt.inject.Inject"/>
   <inherits name='org.eastway.echarts.style.Style'/>
+  <inherits name='com.google.gwt.junit.JUnit'/>
   <entry-point class='org.eastway.echarts.client.Echarts'/>
   <source path='client'/>
   <source path='shared'/>

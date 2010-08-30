@@ -32,7 +32,14 @@
 	<listener>
 		<listener-class>org.eastway.echarts.server.EchartsServerConfig</listener-class>
 	</listener>
-
+	<servlet>
+	  <servlet-name>jUnitHostImpl</servlet-name>
+	  <servlet-class>com.google.gwt.junit.server.JUnitHostImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	  <servlet-name>jUnitHostImpl</servlet-name>
+	  <url-pattern>/echarts/junithost/*</url-pattern>
+	</servlet-mapping>
 	<!-- Default page to serve -->
 	<welcome-file-list>
 		<welcome-file>echarts.html</welcome-file>
