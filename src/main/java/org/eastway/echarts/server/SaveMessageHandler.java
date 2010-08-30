@@ -43,20 +43,23 @@ public class SaveMessageHandler implements ActionHandler<SaveMessage, SaveMessag
 			throw new ActionException("Database error");
 		}
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		MessageService ms = new MessageService(em);
-		CodeService cs = new CodeService(em);
-		Code mType = cs.find(action.getMessage().getMessageType().getCodeId());
-		Message parent = null;
-		if (action.getMessage().getParent() != null)
-			parent = ms.find(action.getMessage().getParent().getId());
-		em.getTransaction().begin();
-		Message newMessage = ms.create(action.getMessage().getCreationTimestamp(),
-				action.getMessage().getCaseNumber(), action.getMessage().getLastEdit(),
-				action.getMessage().getLastEditBy(), action.getMessage().getMessage(),
-				mType, parent);
-		em.getTransaction().commit();
-		em.close();
-		return new SaveMessageResult(newMessage.toDto());
+		try {
+			MessageService ms = new MessageService(em);
+			CodeService cs = new CodeService(em);
+			Code mType = cs.find(action.getMessage().getMessageType().getCodeId());
+			Message parent = null;
+			if (action.getMessage().getParent() != null)
+				parent = ms.find(action.getMessage().getParent().getId());
+			em.getTransaction().begin();
+			Message newMessage = ms.create(action.getMessage().getCreationTimestamp(),
+					action.getMessage().getCaseNumber(), action.getMessage().getLastEdit(),
+					action.getMessage().getLastEditBy(), action.getMessage().getMessage(),
+					mType, parent);
+			em.getTransaction().commit();
+			return new SaveMessageResult(newMessage.toDto());
+		} finally {
+			em.close();
+		}
 	}
 
 	@Override

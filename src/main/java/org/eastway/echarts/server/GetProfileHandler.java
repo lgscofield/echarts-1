@@ -22,6 +22,7 @@ import org.eastway.echarts.shared.DbException;
 import org.eastway.echarts.shared.GetProfile;
 import org.eastway.echarts.shared.GetProfileResult;
 import org.eastway.echarts.shared.SessionExpiredException;
+import org.eastway.echarts.shared.UserDTO;
 
 import net.customware.gwt.dispatch.server.ActionHandler;
 import net.customware.gwt.dispatch.server.ExecutionContext;
@@ -46,17 +47,14 @@ public class GetProfileHandler implements ActionHandler<GetProfile, GetProfileRe
 		} catch (DbException e) {
 			throw new ActionException("Database error");
 		}
+
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		UserImpl user = em.find(UserImpl.class, action.getUsername());
-		GetProfileResult result;
 		try {
-			result = new GetProfileResult(user.toDto());
-		} catch (NullPointerException e) {
-			result = null;
+			UserImpl user = em.find(UserImpl.class, action.getUsername());
+			return new GetProfileResult(user == null ? new UserDTO() : user.toDto());
 		} finally {
 			em.close();
 		}
-		return result;
 	}
 
 	@Override

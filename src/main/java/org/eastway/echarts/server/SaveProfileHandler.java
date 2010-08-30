@@ -47,23 +47,20 @@ public class SaveProfileHandler implements ActionHandler<SaveProfile, SaveProfil
 			throw new ActionException("Database error");
 		}
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		User user = action.getUser();
-		em.getTransaction().begin();
-		UserImpl userImpl = em.find(UserImpl.class, user.getUsername());
-		userImpl.setProgram(user.getProgram());
-		userImpl.setStaffName(user.getStaffName());
-		userImpl.setCred1(user.getCred1());
-		userImpl.setCred2(user.getCred2());
-		em.persist(userImpl);
-		em.getTransaction().commit();
-		SaveProfileResult result;
 		try {
-			result = new SaveProfileResult(userImpl.toDto());
-		} catch(NullPointerException e) {
-			result = null;
+			User user = action.getUser();
+			em.getTransaction().begin();
+			UserImpl userImpl = em.find(UserImpl.class, user.getUsername());
+			userImpl.setProgram(user.getProgram());
+			userImpl.setStaffName(user.getStaffName());
+			userImpl.setCred1(user.getCred1());
+			userImpl.setCred2(user.getCred2());
+			em.persist(userImpl);
+			em.getTransaction().commit();
+			return userImpl == null ? new SaveProfileResult() : new SaveProfileResult(userImpl.toDto());
+		} finally {
+			em.close();
 		}
-		em.close();
-		return result;
 	}
 
 	@Override

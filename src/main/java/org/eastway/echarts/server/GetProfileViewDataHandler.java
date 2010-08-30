@@ -51,13 +51,18 @@ public class GetProfileViewDataHandler implements
 		} catch (DbException e) {
 			throw new ActionException("Database error");
 		}
+
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		Map<String, String> costCenters = new LinkedHashMap<String, String>();
-		List<CodeImpl> codes = em.createQuery("SELECT c FROM CodeImpl c WHERE c.columnName = 'CostCenter' ORDER BY c.descriptor", CodeImpl.class)
-							.getResultList();
-		for (CodeImpl c : codes)
-			costCenters.put(c.getValue(), c.getDescriptor());
-		return new GetProfileViewDataResult(costCenters);
+		try {
+			Map<String, String> costCenters = new LinkedHashMap<String, String>();
+			List<CodeImpl> codes = em.createQuery("SELECT c FROM CodeImpl c WHERE c.columnName = 'CostCenter' ORDER BY c.descriptor", CodeImpl.class)
+								.getResultList();
+			for (CodeImpl c : codes)
+				costCenters.put(c.getValue(), c.getDescriptor());
+			return new GetProfileViewDataResult(costCenters);
+		} finally {
+			em.close();
+		}
 	}
 
 	@Override

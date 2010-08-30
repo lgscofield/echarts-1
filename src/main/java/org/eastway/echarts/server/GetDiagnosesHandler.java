@@ -44,15 +44,19 @@ public class GetDiagnosesHandler implements ActionHandler<GetDiagnoses, GetDiagn
 		} catch (DbException e) {
 			throw new ActionException("Database error");
 		}
+
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		List<DiagnosisImpl> diagnoses = em.createQuery(
-				"SELECT d FROM DiagnosisImpl d WHERE d.caseNumber = '" + action.getCaseNumber() + "' ORDER BY d.date DESC", DiagnosisImpl.class)
-				.getResultList();
-		List<Diagnosis> diagnosesDto = new ArrayList<Diagnosis>();
-		for (DiagnosisImpl diagnosis : diagnoses)
-			diagnosesDto.add(diagnosis.toDto());
-		em.close();
-		return new GetDiagnosesResult(diagnosesDto);
+		try {
+			List<DiagnosisImpl> diagnoses = em.createQuery(
+					"SELECT d FROM DiagnosisImpl d WHERE d.caseNumber = '" + action.getCaseNumber() + "' ORDER BY d.date DESC", DiagnosisImpl.class)
+					.getResultList();
+			List<Diagnosis> diagnosesDto = new ArrayList<Diagnosis>();
+			for (DiagnosisImpl diagnosis : diagnoses)
+				diagnosesDto.add(diagnosis.toDto());
+			return new GetDiagnosesResult(diagnosesDto);
+		} finally {
+			em.close();
+		}
 	}
 
 	@Override

@@ -47,41 +47,44 @@ public class GetProductivityHandler implements ActionHandler<GetProductivity, Ge
 			throw new ActionException("Database error");
 		}
 
-		String staffId = null;
-		if (action.getStaffId().equals("5597") || action.getStaffId().equals("5274"))
-			staffId = "5262";
-		else
-			staffId = action.getStaffId();
-		Calendar calendar = Calendar.getInstance();
-		int month = calendar.get(Calendar.MONTH) + 1;
-		int year = calendar.get(Calendar.YEAR);
-		String monthYear = month + "-" + year;
-		List<Productivity> productivity = em.createQuery(
-				"SELECT p FROM Productivity p WHERE p.staff = '" + staffId + "' AND p.month = '" + monthYear + "'", Productivity.class)
-				.getResultList();
-		BigDecimal individual = new BigDecimal(0.00);
-		BigDecimal group = new BigDecimal(0.00);
-		for (Productivity p : productivity) {
-			individual = individual.add(p.getIndividualService()
-					.divide(new BigDecimal(4.00))
-					.add(p.getDoctorService()));
-			group = group.add(p.getGroupService()
-					.divide(new BigDecimal(4.00)));
+		try {
+			String staffId = null;
+			if (action.getStaffId().equals("5597") || action.getStaffId().equals("5274"))
+				staffId = "5262";
+			else
+				staffId = action.getStaffId();
+			Calendar calendar = Calendar.getInstance();
+			int month = calendar.get(Calendar.MONTH) + 1;
+			int year = calendar.get(Calendar.YEAR);
+			String monthYear = month + "-" + year;
+			List<Productivity> productivity = em.createQuery(
+					"SELECT p FROM Productivity p WHERE p.staff = '" + staffId + "' AND p.month = '" + monthYear + "'", Productivity.class)
+					.getResultList();
+			BigDecimal individual = new BigDecimal(0.00);
+			BigDecimal group = new BigDecimal(0.00);
+			for (Productivity p : productivity) {
+				individual = individual.add(p.getIndividualService()
+						.divide(new BigDecimal(4.00))
+						.add(p.getDoctorService()));
+				group = group.add(p.getGroupService()
+						.divide(new BigDecimal(4.00)));
+			}
+			BigDecimal total = new BigDecimal(0.00);
+			total = group.add(individual);
+			GetProductivityResult result = new GetProductivityResult();
+			result.setGroup(group);
+			result.setIndividual(individual);
+			result.setMonth(monthYear);
+			result.setStaffId(action.getStaffId());
+			result.setTotal(total.setScale(1, RoundingMode.HALF_UP));
+			long monthlyWorkDays = getMonthlyWorkDays(calendar);
+			long currentWorkDays = getCurrentWorkDays(calendar);
+			result.setGreenNumber(getGreenNumber(monthlyWorkDays, currentWorkDays));
+			result.setYellowNumber(getYellowNumber(monthlyWorkDays, currentWorkDays));
+			return result;
+		} finally {
+			em.close();
 		}
-		BigDecimal total = new BigDecimal(0.00);
-		total = group.add(individual);
-		GetProductivityResult result = new GetProductivityResult();
-		result.setGroup(group);
-		result.setIndividual(individual);
-		result.setMonth(monthYear);
-		result.setStaffId(action.getStaffId());
-		result.setTotal(total.setScale(1, RoundingMode.HALF_UP));
-		long monthlyWorkDays = getMonthlyWorkDays(calendar);
-		long currentWorkDays = getCurrentWorkDays(calendar);
-		result.setGreenNumber(getGreenNumber(monthlyWorkDays, currentWorkDays));
-		result.setYellowNumber(getYellowNumber(monthlyWorkDays, currentWorkDays));
-		em.close();
-		return result;
 	}
 
 	private double getYellowNumber(double m, double c) {

@@ -45,15 +45,19 @@ public class GetContactsHandler implements
 		} catch (DbException e) {
 			throw new ActionException("Database error");
 		}
+
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		List<ContactImpl> contacts = em.createQuery(
-				"SELECT c FROM ContactImpl c WHERE c.caseNumber = '" + action.getCaseNumber() + "'", ContactImpl.class)
-				.getResultList();
-		List<Contact> dto = new ArrayList<Contact>();
-		for (ContactImpl contact : contacts)
-			dto.add(contact.toDto());
-		em.close();
-		return new GetContactsResult(dto);
+		try {
+			List<ContactImpl> contacts = em.createQuery(
+					"SELECT c FROM ContactImpl c WHERE c.caseNumber = '" + action.getCaseNumber() + "'", ContactImpl.class)
+					.getResultList();
+			List<Contact> dto = new ArrayList<Contact>();
+			for (ContactImpl contact : contacts)
+				dto.add(contact.toDto());
+			return new GetContactsResult(dto);
+		} finally {
+			em.close();
+		}
 	}
 
 	@Override

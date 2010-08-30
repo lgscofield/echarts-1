@@ -48,20 +48,24 @@ public class GetMessagesHandler implements ActionHandler<GetMessages, GetMessage
 		} catch (DbException e) {
 			throw new ActionException("Database error");
 		}
+
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		List<Message> messages = em.createQuery(
-				"SELECT m FROM Message m WHERE m.caseNumber = '" + action.getCaseNumber() + "' ORDER BY m.creationTimestamp DESC", Message.class)
-				.getResultList();
-		List<MessageDTO> messagesDto = new ArrayList<MessageDTO>();
-		for (Message m : messages)
-			messagesDto.add(m.toDto());
-		CodeService cs = new CodeService(em);
-		List<CodeImpl> mtList = cs.findColumnName("MessageType");
-		List<CodeDTO> mtsl = new ArrayList<CodeDTO>();
-		for (Code mt : mtList)
-			mtsl.add(mt.toDto());
-		em.close();
-		return new GetMessagesResult(messagesDto, mtsl);
+		try {
+			List<Message> messages = em.createQuery(
+					"SELECT m FROM Message m WHERE m.caseNumber = '" + action.getCaseNumber() + "' ORDER BY m.creationTimestamp DESC", Message.class)
+					.getResultList();
+			List<MessageDTO> messagesDto = new ArrayList<MessageDTO>();
+			for (Message m : messages)
+				messagesDto.add(m.toDto());
+			CodeService cs = new CodeService(em);
+			List<CodeImpl> mtList = cs.findColumnName("MessageType");
+			List<CodeDTO> mtsl = new ArrayList<CodeDTO>();
+			for (Code mt : mtList)
+				mtsl.add(mt.toDto());
+			return new GetMessagesResult(messagesDto, mtsl);
+		} finally {
+			em.close();
+		}
 	}
 
 	@Override

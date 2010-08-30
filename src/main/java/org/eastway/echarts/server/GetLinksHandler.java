@@ -44,21 +44,24 @@ public class GetLinksHandler implements ActionHandler<GetLinks, GetLinksResult> 
 		} catch (DbException e) {
 			throw new ActionException("Database error");
 		}
-		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 
-		TypedQuery<Link> query = em.createQuery(
-				"SELECT link FROM Link link ORDER BY link.header, link.sortOrder", Link.class);
-		List<Link> linkList = query.getResultList();
-		LinkedHashSet<String[]> linkDto = new LinkedHashSet<String[]>();
-		for (Link link : linkList) {
-			String[] s = new String[3];
-			s[0] = link.getName();
-			s[1] = link.getUrl();
-			s[2] = link.getHeader();
-			linkDto.add(s);
+		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
+		try {
+			TypedQuery<Link> query = em.createQuery(
+					"SELECT link FROM Link link ORDER BY link.header, link.sortOrder", Link.class);
+			List<Link> linkList = query.getResultList();
+			LinkedHashSet<String[]> linkDto = new LinkedHashSet<String[]>();
+			for (Link link : linkList) {
+				String[] s = new String[3];
+				s[0] = link.getName();
+				s[1] = link.getUrl();
+				s[2] = link.getHeader();
+				linkDto.add(s);
+			}
+			return new GetLinksResult(linkDto);
+		} finally {
+			em.close();
 		}
-		em.close();
-		return new GetLinksResult(linkDto);
 	}
 
 	@Override

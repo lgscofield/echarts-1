@@ -20,6 +20,7 @@ import javax.persistence.EntityManager;
 import org.eastway.echarts.domain.DemographicsImpl;
 import org.eastway.echarts.shared.DbException;
 import org.eastway.echarts.shared.Demographics;
+import org.eastway.echarts.shared.DemographicsDTO;
 import org.eastway.echarts.shared.GetDemographics;
 import org.eastway.echarts.shared.GetDemographicsResult;
 import org.eastway.echarts.shared.SessionExpiredException;
@@ -43,11 +44,14 @@ public class GetDemographicsHandler implements
 		}
 
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		Demographics demographics = em.createQuery(
-				"SELECT d FROM DemographicsImpl d WHERE d.caseNumber = '" + action.getCaseNumber() + "'", DemographicsImpl.class)
-				.getSingleResult().toDto();
-		em.close();
-		return new GetDemographicsResult(demographics);
+		try {
+			Demographics demographics = em.createQuery(
+					"SELECT d FROM DemographicsImpl d WHERE d.caseNumber = '" + action.getCaseNumber() + "'", DemographicsImpl.class)
+					.getSingleResult();
+			return new GetDemographicsResult(demographics == null ? new DemographicsDTO() : demographics.toDto());
+		} finally {
+			em.close();
+		}
 	}
 
 	@Override

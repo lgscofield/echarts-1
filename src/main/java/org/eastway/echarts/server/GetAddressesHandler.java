@@ -45,15 +45,19 @@ public class GetAddressesHandler implements ActionHandler<GetAddresses, GetAddre
 		} catch (DbException e) {
 			throw new ActionException("Database error");
 		}
+
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		TypedQuery<AddressImpl> query = em.createQuery(
-				"SELECT a FROM AddressImpl a where a.caseNumber = '" + action.getCaseNumber() + "'", AddressImpl.class);
-		List<AddressImpl> addresses = query.getResultList();
-		List<Address> dtos = new ArrayList<Address>();
-		for (AddressImpl address : addresses)
-			dtos.add(address.toDto());
-		em.close();
-		return new GetAddressesResult(dtos);
+		try {
+			TypedQuery<AddressImpl> query = em.createQuery(
+					"SELECT a FROM AddressImpl a where a.caseNumber = '" + action.getCaseNumber() + "'", AddressImpl.class);
+			List<AddressImpl> addresses = query.getResultList();
+			List<Address> dtos = new ArrayList<Address>();
+			for (AddressImpl address : addresses)
+				dtos.add(address.toDto());
+			return new GetAddressesResult(dtos);
+		} finally {
+			em.close();
+		}
 	}
 
 	@Override

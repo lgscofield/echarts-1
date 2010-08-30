@@ -31,23 +31,21 @@ public class ServiceUtil {
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 		if (sessionId == null)
 			throw new IllegalArgumentException("Please login");
-
-		TypedQuery<SessionIdLog> query = em.createQuery(
-				"SELECT s FROM SessionIdLog s WHERE s.sessionId = '" + sessionId + "'",
-					SessionIdLog.class);
-		SessionIdLog sil = null;
 		try {
-			sil = query.getSingleResult();
+			TypedQuery<SessionIdLog> query = em.createQuery(
+					"SELECT s FROM SessionIdLog s WHERE s.sessionId = '" + sessionId + "'",
+						SessionIdLog.class);
+			SessionIdLog sil = query.getSingleResult();
+			Date now = new Date();
+			Date expire = new Date(sil.getSessionIdExpire());
+			if (now.after(expire))
+				throw new SessionExpiredException();
 		} catch (EmptyResultDataAccessException e) {
 			throw new SessionExpiredException("Please login");
 		} catch (NoResultException e) {
 			throw new SessionExpiredException("Please login");
+		} finally {
+			em.close();
 		}
-		Date now = new Date();
-		Date expire = new Date(sil.getSessionIdExpire());
-
-		if (now.after(expire))
-			throw new SessionExpiredException();
-		em.close();
 	}
 }

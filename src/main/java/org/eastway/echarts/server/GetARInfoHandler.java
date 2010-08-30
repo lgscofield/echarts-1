@@ -18,6 +18,8 @@ package org.eastway.echarts.server;
 import javax.persistence.EntityManager;
 
 import org.eastway.echarts.domain.ARInfoImpl;
+import org.eastway.echarts.shared.ARInfo;
+import org.eastway.echarts.shared.ARInfoDTO;
 import org.eastway.echarts.shared.DbException;
 import org.eastway.echarts.shared.GetARInfo;
 import org.eastway.echarts.shared.GetARInfoResult;
@@ -46,9 +48,14 @@ public class GetARInfoHandler implements ActionHandler<GetARInfo, GetARInfoResul
 		} catch (DbException e) {
 			throw new ActionException("Database error");
 		}
+
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		ARInfoImpl aRInfo = em.find(ARInfoImpl.class, action.getCaseNumber());
-		return new GetARInfoResult(aRInfo.toDto());
+		try {
+			ARInfo aRInfo = em.find(ARInfoImpl.class, action.getCaseNumber());
+			return new GetARInfoResult(aRInfo == null ? new ARInfoDTO() : aRInfo.toDto());
+		} finally {
+			em.close();
+		}
 	}
 
 	@Override

@@ -42,9 +42,12 @@ public class GetReferralHandler implements ActionHandler<GetReferral, GetReferra
 			throw new ActionException("Database error");
 		}
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		ReferralImpl referral = em.find(ReferralImpl.class, action.getCaseNumber());
-		em.close();
-		return new GetReferralResult(referral == null ? new ReferralDTO() : referral.toDto());
+		try {
+			ReferralImpl referral = em.find(ReferralImpl.class, action.getCaseNumber());
+			return new GetReferralResult(referral == null ? new ReferralDTO() : referral.toDto());
+		} finally {
+			em.close();
+		}
 	}
 
 	@Override

@@ -50,17 +50,21 @@ public class GetProviderHandler implements ActionHandler<GetProvider, GetProvide
 		}
 
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		List<AssignmentImpl> assignments = em.createQuery(
-				"SELECT a From AssignmentImpl a Where a.disposition = 'Open' And a.service Like 'S%' And a.caseNumber = '" + action.getCaseNumber() + "' Order By a.patient.lastName ASC, a.patient.firstName ASC, a.orderDate DESC", AssignmentImpl.class)
-					.getResultList();
-		for (AssignmentImpl a : assignments) {
-			if (a.getStaff().matches(action.getStaffId()))
-				return new GetProviderResult(a.getStaffName());
+		try {
+			List<AssignmentImpl> assignments = em.createQuery(
+					"SELECT a From AssignmentImpl a Where a.disposition = 'Open' And a.service Like 'S%' And a.caseNumber = '" + action.getCaseNumber() + "' Order By a.patient.lastName ASC, a.patient.firstName ASC, a.orderDate DESC", AssignmentImpl.class)
+						.getResultList();
+			for (AssignmentImpl a : assignments) {
+				if (a.getStaff().matches(action.getStaffId()))
+					return new GetProviderResult(a.getStaffName());
+			}
+			if (assignments.size() > 0)
+				return new GetProviderResult(assignments.get(0).getStaffName());
+			else
+				return new GetProviderResult();
+		} finally {
+			em.close();
 		}
-		if (assignments.size() > 0)
-			return new GetProviderResult(assignments.get(0).getStaffName());
-		else
-			return new GetProviderResult();
 	}
 
 	@Override

@@ -43,20 +43,24 @@ public class GetAppointmentsHandler implements ActionHandler<GetAppointments, Ge
 		} catch (DbException e) {
 			throw new ActionException("Database error");
 		}
+
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		String query = "SELECT a From AppointmentImpl a WHERE a.caseNumber = '" + action.getCaseNumber() + "' Order By a.appointmentDate DESC";
-		String count = "SELECT count(a) From AppointmentImpl a WHERE a.caseNumber = '" + action.getCaseNumber() + "'";
-		List<AppointmentImpl> appointments = em.createQuery(query, AppointmentImpl.class)
-				.setFirstResult(action.getStartRecord())
-				.setMaxResults(action.getMaxResults())
-				.getResultList();
-		Long rowCount = em.createQuery(count, Long.class).getSingleResult();
-		List<Appointment> appointmentsDto = new ArrayList<Appointment>();
-		for (AppointmentImpl appointment : appointments) {
-			appointmentsDto.add(appointment.toDto());
+		try {
+			String query = "SELECT a From AppointmentImpl a WHERE a.caseNumber = '" + action.getCaseNumber() + "' Order By a.appointmentDate DESC";
+			String count = "SELECT count(a) From AppointmentImpl a WHERE a.caseNumber = '" + action.getCaseNumber() + "'";
+			List<AppointmentImpl> appointments = em.createQuery(query, AppointmentImpl.class)
+					.setFirstResult(action.getStartRecord())
+					.setMaxResults(action.getMaxResults())
+					.getResultList();
+			Long rowCount = em.createQuery(count, Long.class).getSingleResult();
+			List<Appointment> appointmentsDto = new ArrayList<Appointment>();
+			for (AppointmentImpl appointment : appointments) {
+				appointmentsDto.add(appointment.toDto());
+			}
+			return new GetAppointmentsResult(appointmentsDto, rowCount);
+		} finally {
+			em.close();
 		}
-		em.close();
-		return new GetAppointmentsResult(appointmentsDto, rowCount);
 	}
 
 	@Override

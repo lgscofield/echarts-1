@@ -53,12 +53,14 @@ public class GetTicklerHandler implements ActionHandler<GetTickler, GetTicklerRe
 		}
 
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		List<AssignmentImpl> assignments = em.createQuery(
-				"SELECT a From AssignmentImpl a Where a.staff = '" + action.getStaffId() + "' And a.disposition = 'Open' And a.service Like 'S%' Order By a.patient.lastName ASC, a.patient.firstName ASC, a.orderDate DESC", AssignmentImpl.class)
-				.getResultList();
-		GetTicklerResult result = new GetTicklerResult(setDates(assignments));
-		em.close();
-		return result;
+		try {
+			List<AssignmentImpl> assignments = em.createQuery(
+					"SELECT a From AssignmentImpl a Where a.staff = '" + action.getStaffId() + "' And a.disposition = 'Open' And a.service Like 'S%' Order By a.patient.lastName ASC, a.patient.firstName ASC, a.orderDate DESC", AssignmentImpl.class)
+					.getResultList();
+			return new GetTicklerResult(setDates(assignments));
+		} finally {
+			em.close();
+		}
 	}
 
 	@Override

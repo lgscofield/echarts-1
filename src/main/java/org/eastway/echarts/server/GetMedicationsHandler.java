@@ -46,14 +46,17 @@ public class GetMedicationsHandler implements ActionHandler<GetMedications, GetM
 		}
 
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		List<MedicationImpl> medications = em.createQuery(
-				"SELECT m FROM MedicationImpl m WHERE m.caseNumber = '" + action.getCaseNumber() + "'", MedicationImpl.class)
-				.getResultList();
-		List<Medication> medicationsDto = new ArrayList<Medication>();
-		for (MedicationImpl medication : medications)
-			medicationsDto.add(medication.toDto());
-		em.close();
-		return new GetMedicationsResult(medicationsDto);
+		try {
+			List<MedicationImpl> medications = em.createQuery(
+					"SELECT m FROM MedicationImpl m WHERE m.caseNumber = '" + action.getCaseNumber() + "'", MedicationImpl.class)
+					.getResultList();
+			List<Medication> medicationsDto = new ArrayList<Medication>();
+			for (MedicationImpl medication : medications)
+				medicationsDto.add(medication.toDto());
+			return new GetMedicationsResult(medicationsDto);
+		} finally {
+			em.close();
+		}
 	}
 
 	@Override

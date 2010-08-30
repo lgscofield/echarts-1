@@ -24,8 +24,10 @@ import org.eastway.echarts.domain.AssignmentImpl;
 import org.eastway.echarts.domain.DemographicsImpl;
 import org.eastway.echarts.domain.PatientImpl;
 import org.eastway.echarts.shared.DbException;
+import org.eastway.echarts.shared.DemographicsDTO;
 import org.eastway.echarts.shared.GetPatientSummary;
 import org.eastway.echarts.shared.GetPatientSummaryResult;
+import org.eastway.echarts.shared.PatientDTO;
 import org.eastway.echarts.shared.SessionExpiredException;
 
 import net.customware.gwt.dispatch.server.ActionHandler;
@@ -44,29 +46,33 @@ public class GetPatientSummaryHandler implements ActionHandler<GetPatientSummary
 		} catch (DbException e) {
 			throw new ActionException("Database error");
 		}
+
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		PatientImpl patient = em.createQuery(
-				"SELECT p FROM PatientImpl p WHERE p.caseNumber = '" + action.getCaseNumber() + "'", PatientImpl.class)
-				.getSingleResult();
-		DemographicsImpl demographics = em.createQuery(
-				"SELECT d FROM DemographicsImpl d WHERE d.caseNumber = '" + action.getCaseNumber() + "'", DemographicsImpl.class)
-				.getSingleResult();
-		List<AssignmentImpl> assignments = em.createQuery(
-				"SELECT a From AssignmentImpl a Where a.disposition = 'Open' And a.service Like 'S%' And a.caseNumber = '" + action.getCaseNumber() + "' Order By a.patient.lastName ASC, a.patient.firstName ASC, a.orderDate DESC", AssignmentImpl.class)
-					.getResultList();
-		List<String> providers = new ArrayList<String>();
-		for (AssignmentImpl a : assignments)
-			providers.add(a.getStaffName());
-		/* if (provider == null && assignments.size() > 0)
-			provider = assignments.get(0).getStaffName();
-		else if (provider == null)
-			provider = ""; */
-		GetPatientSummaryResult result = new GetPatientSummaryResult();
-		result.setPatient(patient.toDto());
-		result.setDemographics(demographics.toDto());
-		result.setProviders(providers);
-		em.close();
-		return result;
+		try {
+			PatientImpl patient = em.createQuery(
+					"SELECT p FROM PatientImpl p WHERE p.caseNumber = '" + action.getCaseNumber() + "'", PatientImpl.class)
+					.getSingleResult();
+			DemographicsImpl demographics = em.createQuery(
+					"SELECT d FROM DemographicsImpl d WHERE d.caseNumber = '" + action.getCaseNumber() + "'", DemographicsImpl.class)
+					.getSingleResult();
+			List<AssignmentImpl> assignments = em.createQuery(
+					"SELECT a From AssignmentImpl a Where a.disposition = 'Open' And a.service Like 'S%' And a.caseNumber = '" + action.getCaseNumber() + "' Order By a.patient.lastName ASC, a.patient.firstName ASC, a.orderDate DESC", AssignmentImpl.class)
+						.getResultList();
+			List<String> providers = new ArrayList<String>();
+			for (AssignmentImpl a : assignments)
+				providers.add(a.getStaffName());
+			/* if (provider == null && assignments.size() > 0)
+				provider = assignments.get(0).getStaffName();
+			else if (provider == null)
+				provider = ""; */
+			GetPatientSummaryResult result = new GetPatientSummaryResult();
+			result.setPatient(patient == null ? new PatientDTO() : patient.toDto());
+			result.setDemographics(demographics == null ? new DemographicsDTO() : demographics.toDto());
+			result.setProviders(providers);
+			return result;
+		} finally {
+			em.close();
+		}
 	}
 
 	@Override
