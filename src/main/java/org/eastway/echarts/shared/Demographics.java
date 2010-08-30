@@ -72,93 +72,93 @@ public interface Demographics {
 
 	public Code getEthnicity();
 
-	public void setVeteran(boolean veteran);
+	public void setVeteran(Boolean veteran);
 
-	public boolean isVeteran();
+	public Boolean isVeteran();
 
-	public void setSmd(boolean isSmd);
+	public void setSmd(Boolean isSmd);
 
-	public boolean isSmd();
+	public Boolean isSmd();
 
-	public void setAlcoholDrug(boolean isAlcoholDrug);
+	public void setAlcoholDrug(Boolean isAlcoholDrug);
 
-	public boolean isAlcoholDrug();
+	public Boolean isAlcoholDrug();
 
-	public void setForensic(boolean isForensic);
+	public void setForensic(Boolean isForensic);
 
-	public boolean isForensic();
+	public Boolean isForensic();
 
-	public void setDd(boolean isDd);
+	public void setDd(Boolean isDd);
 
-	public boolean isDd();
+	public Boolean isDd();
 
-	public void setMimr(boolean isMimr);
+	public void setMimr(Boolean isMimr);
 
-	public boolean isMimr();
+	public Boolean isMimr();
 
-	public void setDuidwi(boolean isDuidwi);
+	public void setDuidwi(Boolean isDuidwi);
 
-	public boolean isDuidwi();
+	public Boolean isDuidwi();
 
-	public void setDeaf(boolean isDeaf);
+	public void setDeaf(Boolean isDeaf);
 
-	public boolean isDeaf();
+	public Boolean isDeaf();
 
-	public void setHearingImpaired(boolean isHearingImpaired);
+	public void setHearingImpaired(Boolean isHearingImpaired);
 
-	public boolean isHearingImpaired();
+	public Boolean isHearingImpaired();
 
-	public void setBlind(boolean isBlind);
+	public void setBlind(Boolean isBlind);
 
-	public boolean isBlind();
+	public Boolean isBlind();
 
-	public void setVisuallyImpaired(boolean isVisuallyImpaired);
+	public void setVisuallyImpaired(Boolean isVisuallyImpaired);
 
-	public boolean isVisuallyImpaired();
+	public Boolean isVisuallyImpaired();
 
-	public void setPhyDisabled(boolean isPhyDisabled);
+	public void setPhyDisabled(Boolean isPhyDisabled);
 
-	public boolean isPhyDisabled();
+	public Boolean isPhyDisabled();
 
-	public void setSpeechImpaired(boolean isSpeechImpaired);
+	public void setSpeechImpaired(Boolean isSpeechImpaired);
 
-	public boolean isSpeechImpaired();
+	public Boolean isSpeechImpaired();
 
-	public void setPhysicalAbuse(boolean isPhysicalAbuse);
+	public void setPhysicalAbuse(Boolean isPhysicalAbuse);
 
-	public boolean isPhysicalAbuse();
+	public Boolean isPhysicalAbuse();
 
-	public void setSexualAbuse(boolean isSexualAbuse);
+	public void setSexualAbuse(Boolean isSexualAbuse);
 
-	public boolean isSexualAbuse();
+	public Boolean isSexualAbuse();
 
-	public void setDomesticViolence(boolean isDomesticViolence);
+	public void setDomesticViolence(Boolean isDomesticViolence);
 
-	public boolean isDomesticViolence();
+	public Boolean isDomesticViolence();
 
-	public void setChildAlcDrug(boolean isChildAlcDrug);
+	public void setChildAlcDrug(Boolean isChildAlcDrug);
 
-	public boolean isChildAlcDrug();
+	public Boolean isChildAlcDrug();
 
-	public void setHivAids(boolean isHivAids);
+	public void setHivAids(Boolean isHivAids);
 
-	public boolean isHivAids();
+	public Boolean isHivAids();
 
-	public void setSuicidal(boolean isSuicidal);
+	public void setSuicidal(Boolean isSuicidal);
 
-	public boolean isSuicidal();
+	public Boolean isSuicidal();
 
-	public void setSchoolDropout(boolean isSchoolDropout);
+	public void setSchoolDropout(Boolean isSchoolDropout);
 
-	public boolean isSchoolDropout();
+	public Boolean isSchoolDropout();
 
-	public void setProbationParole(boolean isProbationParole);
+	public void setProbationParole(Boolean isProbationParole);
 
-	public boolean isProbationParole();
+	public Boolean isProbationParole();
 
-	public void setGeneralPopulation(boolean isGeneralPopulation);
+	public void setGeneralPopulation(Boolean isGeneralPopulation);
 
-	public boolean isGeneralPopulation();
+	public Boolean isGeneralPopulation();
 
 	public void setDob(Date dob);
 

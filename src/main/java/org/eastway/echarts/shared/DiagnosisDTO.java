@@ -96,7 +96,7 @@ public class DiagnosisDTO implements Diagnosis, Serializable {
 	}
 
 	@Override
-	public int getCurrentGAF() {
+	public Integer getCurrentGAF() {
 		return currentGAF;
 	}
 
@@ -106,7 +106,7 @@ public class DiagnosisDTO implements Diagnosis, Serializable {
 	}
 
 	@Override
-	public int getHighestGAF() {
+	public Integer getHighestGAF() {
 		return highestGAF;
 	}
 

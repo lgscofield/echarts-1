@@ -193,7 +193,7 @@ public class AssignmentImpl implements Assignment {
 	}
 
     @Override
-	public short getTrtEpisode() {
+	public Short getTrtEpisode() {
 		return trtEpisode;
 	}
 

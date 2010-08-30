@@ -52,11 +52,11 @@ public class Link {
 		return header;
 	}
 
-	public void setSortOrder(int sortOrder) {
+	public void setSortOrder(Integer sortOrder) {
 		this.sortOrder = sortOrder;
 	}
 
-	public int getSortOrder() {
+	public Integer getSortOrder() {
 		return sortOrder;
 	}
 }

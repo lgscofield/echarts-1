@@ -34,28 +34,28 @@ public class DemographicsDTO implements Serializable, Demographics {
 	private String preferredLanguage;
 	private Code ethnicity;
 
-	private boolean isVeteran;
-	private boolean isSmd;
-	private boolean isAlcoholDrug;
-	private boolean isForensic;
-	private boolean isDd;
-	private boolean isMimr;
-	private boolean isDuidwi;
-	private boolean isDeaf;
-	private boolean isHearingImpaired;
-	private boolean isBlind;
-	private boolean isVisuallyImpaired;
-	private boolean isPhyDisabled;
-	private boolean isSpeechImpaired;
-	private boolean isPhysicalAbuse;
-	private boolean isSexualAbuse;
-	private boolean isDomesticViolence;
-	private boolean isChildAlcDrug;
-	private boolean isHivAids;
-	private boolean isSuicidal;
-	private boolean isSchoolDropout;
-	private boolean isProbationParole;
-	private boolean isGeneralPopulation;
+	private Boolean isVeteran;
+	private Boolean isSmd;
+	private Boolean isAlcoholDrug;
+	private Boolean isForensic;
+	private Boolean isDd;
+	private Boolean isMimr;
+	private Boolean isDuidwi;
+	private Boolean isDeaf;
+	private Boolean isHearingImpaired;
+	private Boolean isBlind;
+	private Boolean isVisuallyImpaired;
+	private Boolean isPhyDisabled;
+	private Boolean isSpeechImpaired;
+	private Boolean isPhysicalAbuse;
+	private Boolean isSexualAbuse;
+	private Boolean isDomesticViolence;
+	private Boolean isChildAlcDrug;
+	private Boolean isHivAids;
+	private Boolean isSuicidal;
+	private Boolean isSchoolDropout;
+	private Boolean isProbationParole;
+	private Boolean isGeneralPopulation;
 	private Date dob;
 	private Date lastEdit;
 	private String lastEditBy;
@@ -184,222 +184,222 @@ public class DemographicsDTO implements Serializable, Demographics {
 	}
 
 	@Override
-	public void setVeteran(boolean veteran) {
+	public void setVeteran(Boolean veteran) {
 		this.isVeteran = veteran;
 	}
 
 	@Override
-	public boolean isVeteran() {
+	public Boolean isVeteran() {
 		return isVeteran;
 	}
 
 	@Override
-	public void setSmd(boolean isSmd) {
+	public void setSmd(Boolean isSmd) {
 		this.isSmd = isSmd;
 	}
 
 	@Override
-	public boolean isSmd() {
+	public Boolean isSmd() {
 		return isSmd;
 	}
 
 	@Override
-	public void setAlcoholDrug(boolean isAlcoholDrug) {
+	public void setAlcoholDrug(Boolean isAlcoholDrug) {
 		this.isAlcoholDrug = isAlcoholDrug;
 	}
 
 	@Override
-	public boolean isAlcoholDrug() {
+	public Boolean isAlcoholDrug() {
 		return isAlcoholDrug;
 	}
 
 	@Override
-	public void setForensic(boolean isForensic) {
+	public void setForensic(Boolean isForensic) {
 		this.isForensic = isForensic;
 	}
 
 	@Override
-	public boolean isForensic() {
+	public Boolean isForensic() {
 		return isForensic;
 	}
 
 	@Override
-	public void setDd(boolean isDd) {
+	public void setDd(Boolean isDd) {
 		this.isDd = isDd;
 	}
 
 	@Override
-	public boolean isDd() {
+	public Boolean isDd() {
 		return isDd;
 	}
 
 	@Override
-	public void setMimr(boolean isMimr) {
+	public void setMimr(Boolean isMimr) {
 		this.isMimr = isMimr;
 	}
 
 	@Override
-	public boolean isMimr() {
+	public Boolean isMimr() {
 		return isMimr;
 	}
 
 	@Override
-	public void setDuidwi(boolean isDuidwi) {
+	public void setDuidwi(Boolean isDuidwi) {
 		this.isDuidwi = isDuidwi;
 	}
 
 	@Override
-	public boolean isDuidwi() {
+	public Boolean isDuidwi() {
 		return isDuidwi;
 	}
 
 	@Override
-	public void setDeaf(boolean isDeaf) {
+	public void setDeaf(Boolean isDeaf) {
 		this.isDeaf = isDeaf;
 	}
 
 	@Override
-	public boolean isDeaf() {
+	public Boolean isDeaf() {
 		return isDeaf;
 	}
 
 	@Override
-	public void setHearingImpaired(boolean isHearingImpaired) {
+	public void setHearingImpaired(Boolean isHearingImpaired) {
 		this.isHearingImpaired = isHearingImpaired;
 	}
 
 	@Override
-	public boolean isHearingImpaired() {
+	public Boolean isHearingImpaired() {
 		return isHearingImpaired;
 	}
 
 	@Override
-	public void setBlind(boolean isBlind) {
+	public void setBlind(Boolean isBlind) {
 		this.isBlind = isBlind;
 	}
 
 	@Override
-	public boolean isBlind() {
+	public Boolean isBlind() {
 		return isBlind;
 	}
 
 	@Override
-	public void setVisuallyImpaired(boolean isVisuallyImpaired) {
+	public void setVisuallyImpaired(Boolean isVisuallyImpaired) {
 		this.isVisuallyImpaired = isVisuallyImpaired;
 	}
 
 	@Override
-	public boolean isVisuallyImpaired() {
+	public Boolean isVisuallyImpaired() {
 		return isVisuallyImpaired;
 	}
 
 	@Override
-	public void setPhyDisabled(boolean isPhyDisabled) {
+	public void setPhyDisabled(Boolean isPhyDisabled) {
 		this.isPhyDisabled = isPhyDisabled;
 	}
 
 	@Override
-	public boolean isPhyDisabled() {
+	public Boolean isPhyDisabled() {
 		return isPhyDisabled;
 	}
 
 	@Override
-	public void setSpeechImpaired(boolean isSpeechImpaired) {
+	public void setSpeechImpaired(Boolean isSpeechImpaired) {
 		this.isSpeechImpaired = isSpeechImpaired;
 	}
 
 	@Override
-	public boolean isSpeechImpaired() {
+	public Boolean isSpeechImpaired() {
 		return isSpeechImpaired;
 	}
 
 	@Override
-	public void setPhysicalAbuse(boolean isPhysicalAbuse) {
+	public void setPhysicalAbuse(Boolean isPhysicalAbuse) {
 		this.isPhysicalAbuse = isPhysicalAbuse;
 	}
 
 	@Override
-	public boolean isPhysicalAbuse() {
+	public Boolean isPhysicalAbuse() {
 		return isPhysicalAbuse;
 	}
 
 	@Override
-	public void setSexualAbuse(boolean isSexualAbuse) {
+	public void setSexualAbuse(Boolean isSexualAbuse) {
 		this.isSexualAbuse = isSexualAbuse;
 	}
 
 	@Override
-	public boolean isSexualAbuse() {
+	public Boolean isSexualAbuse() {
 		return isSexualAbuse;
 	}
 
 	@Override
-	public void setDomesticViolence(boolean isDomesticViolence) {
+	public void setDomesticViolence(Boolean isDomesticViolence) {
 		this.isDomesticViolence = isDomesticViolence;
 	}
 
 	@Override
-	public boolean isDomesticViolence() {
+	public Boolean isDomesticViolence() {
 		return isDomesticViolence;
 	}
 
 	@Override
-	public void setChildAlcDrug(boolean isChildAlcDrug) {
+	public void setChildAlcDrug(Boolean isChildAlcDrug) {
 		this.isChildAlcDrug = isChildAlcDrug;
 	}
 
 	@Override
-	public boolean isChildAlcDrug() {
+	public Boolean isChildAlcDrug() {
 		return isChildAlcDrug;
 	}
 
 	@Override
-	public void setHivAids(boolean isHivAids) {
+	public void setHivAids(Boolean isHivAids) {
 		this.isHivAids = isHivAids;
 	}
 
 	@Override
-	public boolean isHivAids() {
+	public Boolean isHivAids() {
 		return isHivAids;
 	}
 
 	@Override
-	public void setSuicidal(boolean isSuicidal) {
+	public void setSuicidal(Boolean isSuicidal) {
 		this.isSuicidal = isSuicidal;
 	}
 
 	@Override
-	public boolean isSuicidal() {
+	public Boolean isSuicidal() {
 		return isSuicidal;
 	}
 
 	@Override
-	public void setSchoolDropout(boolean isSchoolDropout) {
+	public void setSchoolDropout(Boolean isSchoolDropout) {
 		this.isSchoolDropout = isSchoolDropout;
 	}
 
 	@Override
-	public boolean isSchoolDropout() {
+	public Boolean isSchoolDropout() {
 		return isSchoolDropout;
 	}
 
 	@Override
-	public void setProbationParole(boolean isProbationParole) {
+	public void setProbationParole(Boolean isProbationParole) {
 		this.isProbationParole = isProbationParole;
 	}
 
 	@Override
-	public boolean isProbationParole() {
+	public Boolean isProbationParole() {
 		return isProbationParole;
 	}
 
 	@Override
-	public void setGeneralPopulation(boolean isGeneralPopulation) {
+	public void setGeneralPopulation(Boolean isGeneralPopulation) {
 		this.isGeneralPopulation = isGeneralPopulation;
 	}
 
 	@Override
-	public boolean isGeneralPopulation() {
+	public Boolean isGeneralPopulation() {
 		return isGeneralPopulation;
 	}
 

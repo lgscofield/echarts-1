@@ -23,7 +23,7 @@ import javax.persistence.Id;
 @Entity
 public class Alert {
 	@Id
-	private int id;
+	private Integer id;
 	private Long patientId;
 	private String name;
 	private String itemName;
@@ -31,7 +31,7 @@ public class Alert {
 
 	public Alert() { }
 
-	public Alert(int id) {
+	public Alert(Integer id) {
 		this.setId(id);
 	}
 
@@ -39,7 +39,7 @@ public class Alert {
 		this.id = id;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 

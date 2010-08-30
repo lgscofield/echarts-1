@@ -33,23 +33,23 @@ public class RoleImpl implements Role {
 	@TableGenerator(name = "tg", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "tg")
 	@Column(name = "Role_Id")
-	private int id;
+	private Integer id;
 	private String roleName;
 	private Byte[] permission;
 
 	public RoleImpl() { }
 
-	public RoleImpl(int id) {
+	public RoleImpl(Integer id) {
 		this.id = id;
 	}
 
 	@Override
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
 	@Override
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 

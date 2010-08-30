@@ -74,11 +74,11 @@ public interface Diagnosis {
 
 	public void setCurrentGAF(Integer currentGAF);
 
-	public int getCurrentGAF();
+	public Integer getCurrentGAF();
 
 	public void setHighestGAF(Integer highestGAF);
 
-	public int getHighestGAF();
+	public Integer getHighestGAF();
 
 	public void setLastEdit(Date lastEdit);
 

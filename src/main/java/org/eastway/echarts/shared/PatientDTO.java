@@ -43,7 +43,7 @@ public class PatientDTO extends Patient implements Serializable {
 	private Date outcomesAgencyDateCompleted;
 	private Date outcomesConsumerDateCompleted;
 	private Date outcomesProviderDateCompleted;
-	private boolean isTitleTwenty;
+	private Boolean isTitleTwenty;
 
 	public PatientDTO() { }
 
@@ -213,7 +213,7 @@ public class PatientDTO extends Patient implements Serializable {
 	}
 
 	@Override
-	public boolean isTitleTwenty() {
+	public Boolean isTitleTwenty() {
 		return isTitleTwenty;
 	}
 
@@ -248,7 +248,7 @@ public class PatientDTO extends Patient implements Serializable {
 	}
 
 	@Override
-	public void setIsTitleTwenty(boolean isTitleTwenty) {
+	public void setIsTitleTwenty(Boolean isTitleTwenty) {
 		this.isTitleTwenty = isTitleTwenty;
 	}
 

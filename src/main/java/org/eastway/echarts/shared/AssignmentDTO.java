@@ -125,7 +125,7 @@ public class AssignmentDTO implements Serializable, Assignment {
 	}
 
 	@Override
-	public short getTrtEpisode() {
+	public Short getTrtEpisode() {
 		return this.trtEpisode;
 	}
 

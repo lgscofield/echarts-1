@@ -61,7 +61,7 @@ public interface Assignment {
 
 	public void setTrtEpisode(Short trtEpisode);
 
-	public short getTrtEpisode();
+	public Short getTrtEpisode();
 
 	public void setProgram(String program);
 

@@ -123,7 +123,7 @@ public class DiagnosisImpl implements Diagnosis {
 	}
 
 	@Override
-	public int getCurrentGAF() {
+	public Integer getCurrentGAF() {
 		return currentGAF;
 	}
 
@@ -133,7 +133,7 @@ public class DiagnosisImpl implements Diagnosis {
 	}
 
 	@Override
-	public int getHighestGAF() {
+	public Integer getHighestGAF() {
 		return highestGAF;
 	}
 

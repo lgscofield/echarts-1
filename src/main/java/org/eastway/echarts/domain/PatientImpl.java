@@ -246,7 +246,7 @@ public class PatientImpl extends Patient {
 	}
 
 	@Override
-	public boolean isTitleTwenty() {
+	public Boolean isTitleTwenty() {
 		return isTitleTwenty == null || isTitleTwenty == 0L ? false : true;
 	}
 
@@ -281,7 +281,7 @@ public class PatientImpl extends Patient {
 	}
 
 	@Override
-	public void setIsTitleTwenty(boolean isTitleTwenty) {
+	public void setIsTitleTwenty(Boolean isTitleTwenty) {
 		this.isTitleTwenty = (isTitleTwenty) ? 1L : 0L;
 	}
 

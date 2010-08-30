@@ -19,18 +19,18 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class RoleDTO implements Serializable, Role {
-	private int id;
+	private Integer id;
 	private String roleName;
 	private Byte[] permission;
 
 	public RoleDTO() { }
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
 	@Override
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 

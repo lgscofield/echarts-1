@@ -99,9 +99,9 @@ public abstract class Patient {
 
 	public abstract Date getFinancialDateCompleted();
 
-	public abstract void setIsTitleTwenty(boolean isTitleTwenty);
+	public abstract void setIsTitleTwenty(Boolean isTitleTwenty);
 
-	public abstract boolean isTitleTwenty();
+	public abstract Boolean isTitleTwenty();
 
 	public abstract void setDiagnosticAssessmentDateCompleted(Date diagnosticAssessmentDateCompleted);
 
