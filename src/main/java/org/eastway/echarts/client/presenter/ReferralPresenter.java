@@ -20,11 +20,9 @@ import java.util.List;
 import net.customware.gwt.presenter.client.EventBus;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
-import org.eastway.echarts.client.common.ReferralColumnDefinitionsImpl;
 import org.eastway.echarts.client.rpc.CachingDispatchAsync;
 import org.eastway.echarts.client.rpc.EchartsCallback;
 import org.eastway.echarts.client.view.ReferralView;
-import org.eastway.echarts.client.view.ReferralViewImpl;
 import org.eastway.echarts.shared.GetReferral;
 import org.eastway.echarts.shared.GetReferralResult;
 import org.eastway.echarts.shared.Referral;
