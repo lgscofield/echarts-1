@@ -14,5 +14,5 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="output" path="target/echarts-1.0.1-SNAPSHOT/WEB-INF/classes"/>
+	<classpathentry kind="output" path="target/echarts-1.0.1.RELEASE/WEB-INF/classes"/>
 </classpath>
