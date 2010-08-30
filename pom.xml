@@ -4,7 +4,6 @@
 	<groupId>org.eastway.echarts</groupId>
 	<artifactId>echarts</artifactId>
 	<packaging>war</packaging>
-	<version>0.1.0.BUILD-SNAPSHOT</version>
 	<name>echarts</name>
 	<properties>
 		<roo.version>1.1.0.M2</roo.version>
@@ -406,6 +405,7 @@
     	<version>2.0</version>
     </dependency>
 	</dependencies>
+	<version>1.0.0.RELEASE</version>
 	<build>
 		<plugins>
 			<plugin>
