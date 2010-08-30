@@ -49,6 +49,17 @@ public class PatientSummaryColumnDefinitionsImpl extends ArrayList<ColumnDefinit
 		this.add(new ColumnDefinition<GetPatientSummaryResult>() {
 			@Override
 			public void render(GetPatientSummaryResult t, StringBuilder sb) {
+				sb.append(t.getDemographics().getGender().getDescriptor() == null ? "" : t.getDemographics().getGender().getDescriptor());
+			}
+
+			@Override
+			public String getHeader(GetPatientSummaryResult t) {
+				return "<b>Gender</b>";
+			}
+		});
+		this.add(new ColumnDefinition<GetPatientSummaryResult>() {
+			@Override
+			public void render(GetPatientSummaryResult t, StringBuilder sb) {
 				sb.append(GlobalResources.getDateFormat().format(t.getDemographics().getDob()));
 			}
 
