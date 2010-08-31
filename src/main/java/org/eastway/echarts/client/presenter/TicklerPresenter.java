@@ -30,6 +30,8 @@ import org.eastway.echarts.client.events.OpenNurseProgressNoteEvent;
 import org.eastway.echarts.client.rpc.CachingDispatchAsync;
 import org.eastway.echarts.client.rpc.EchartsCallback;
 import org.eastway.echarts.client.view.TicklerView;
+import org.eastway.echarts.shared.GetPatientSummary;
+import org.eastway.echarts.shared.GetPatientSummaryResult;
 import org.eastway.echarts.shared.GetTickler;
 import org.eastway.echarts.shared.GetTicklerResult;
 import org.eastway.echarts.shared.Tickler;
@@ -75,7 +77,17 @@ public class TicklerPresenter implements Presenter, TicklerView.Presenter<Tickle
 
 	@Override
 	public void openEhr(Tickler tickler) {
-		eventBus.fireEvent(new OpenEhrEvent(tickler.getCaseNumber()));
+		String caseNumber = tickler.getCaseNumber();
+		dispatch.execute(new GetPatientSummary(EchartsUser.sessionId, caseNumber, EchartsUser.staffId), new EchartsCallback<GetPatientSummaryResult>(eventBus) {
+			@Override
+			protected void handleFailure(Throwable caught) {
+			}
+
+			@Override
+			protected void handleSuccess(GetPatientSummaryResult t) {
+				eventBus.fireEvent(new OpenEhrEvent(t));	
+			}
+		});
 	}
 
 	@Override

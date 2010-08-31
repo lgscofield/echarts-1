@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 
 import org.eastway.echarts.domain.AssignmentImpl;
 import org.eastway.echarts.domain.DemographicsImpl;
@@ -29,6 +30,7 @@ import org.eastway.echarts.shared.GetPatientSummary;
 import org.eastway.echarts.shared.GetPatientSummaryResult;
 import org.eastway.echarts.shared.PatientDTO;
 import org.eastway.echarts.shared.SessionExpiredException;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import net.customware.gwt.dispatch.server.ActionHandler;
 import net.customware.gwt.dispatch.server.ExecutionContext;
@@ -70,6 +72,10 @@ public class GetPatientSummaryHandler implements ActionHandler<GetPatientSummary
 			result.setDemographics(demographics == null ? new DemographicsDTO() : demographics.toDto());
 			result.setProviders(providers);
 			return result;
+		} catch (NoResultException e) {
+			throw new ActionException("Patient not found");
+		} catch (EmptyResultDataAccessException e) {
+			throw new ActionException("Patient not found");
 		} finally {
 			em.close();
 		}

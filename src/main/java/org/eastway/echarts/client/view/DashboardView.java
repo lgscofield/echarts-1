@@ -36,8 +36,6 @@ public interface DashboardView<T> {
 	}
 
 	public interface Presenter<T> {
-		void onItemSelected(String row);
-
 		void changeCurrentEhr(EHR ehr);
 
 		void openEhr(String text);

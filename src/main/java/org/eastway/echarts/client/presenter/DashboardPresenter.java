@@ -37,6 +37,8 @@ import org.eastway.echarts.client.rpc.EchartsCallback;
 import org.eastway.echarts.client.view.DashboardView;
 import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.EHR;
+import org.eastway.echarts.shared.GetPatientSummary;
+import org.eastway.echarts.shared.GetPatientSummaryResult;
 import org.eastway.echarts.shared.GetProductivity;
 import org.eastway.echarts.shared.GetProductivityResult;
 import org.eastway.echarts.shared.GetProvider;
@@ -119,20 +121,23 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 	}
 
 	@Override
-	public void onItemSelected(String row) {
-		if (row != null) {
-			eventBus.fireEvent(new OpenEhrEvent(caseNumber));
-		}
-	}
-
-	@Override
 	public void changeCurrentEhr(EHR ehr) {
 			eventBus.fireEvent(new ChangeCurrentEhrEvent(ehr));
 	}
 
 	@Override
 	public void openEhr(String text) {
-		eventBus.fireEvent(new OpenEhrEvent(text.replaceAll("(.*) - .*", "$1")));
+		caseNumber = text.replaceAll("(.*) - .*", "$1");
+		dispatch.execute(new GetPatientSummary(EchartsUser.sessionId, caseNumber, EchartsUser.staffId), new EchartsCallback<GetPatientSummaryResult>(eventBus) {
+			@Override
+			protected void handleFailure(Throwable caught) {
+			}
+
+			@Override
+			protected void handleSuccess(GetPatientSummaryResult t) {
+				eventBus.fireEvent(new OpenEhrEvent(t));	
+			}
+		});
 	}
 
 	private void getProductivityData() {

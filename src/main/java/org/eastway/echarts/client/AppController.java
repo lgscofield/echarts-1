@@ -162,7 +162,7 @@ public class AppController implements Presenter {
 		eventBus.addHandler(OpenEhrEvent.TYPE, new OpenEhrEventHandler() {
 			@Override
 			public void onOpenEhr(OpenEhrEvent event) {
-				doViewEhr(event.getCaseNumber());
+				doViewEhr(event.getEhr());
 			}
 		});
 		eventBus.addHandler(ViewPatientSummaryEvent.TYPE, new ViewPatientSummaryEventHandler() {
@@ -466,11 +466,11 @@ public class AppController implements Presenter {
 		presenter.go(view.getDisplayArea());
 	}
 
-	private void doViewEhr(String caseNumber) {
+	private void doViewEhr(GetPatientSummaryResult ehr) {
 		ehrView = new EHRViewImpl<EHR>();
-		Presenter presenter = new EHRPresenter(ehrView, eventBus, dispatch, caseNumber);
+		Presenter presenter = new EHRPresenter(ehrView, eventBus, dispatch, ehr);
 		presenter.go(null);
-		dashboardPresenter.getDisplay().addTab(ehrView.asWidget(), caseNumber);
+		dashboardPresenter.getDisplay().addTab(ehrView.asWidget(), ehr.getPatient().getCaseNumber());
 	}
 
 	private void doViewPatientSummary(EHRView<EHR> view, GetPatientSummary action) {

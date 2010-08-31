@@ -33,7 +33,6 @@ import org.eastway.echarts.client.events.ViewReferralEvent;
 import org.eastway.echarts.client.events.ViewServiceHistoryEvent;
 import org.eastway.echarts.client.events.ViewTreatmentPlanEvent;
 import org.eastway.echarts.client.rpc.CachingDispatchAsync;
-import org.eastway.echarts.client.rpc.EchartsCallback;
 import org.eastway.echarts.client.view.EHRView;
 import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.EHRDTO;
@@ -55,7 +54,6 @@ import com.google.gwt.user.client.ui.HasWidgets;
 public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
 
 	private EHR ehr;
-	private String caseNumber;
 	private EHRView<EHR> view;
 	private EventBus eventBus;
 	private long ehrId;
@@ -70,27 +68,12 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
 	private GetContacts contacts = null;
 	private GetMedications medications = null;
 	private GetARInfo aRInfo = null;
-	private CachingDispatchAsync dispatch = null;
 
-	public EHRPresenter(EHRView<EHR> view, EventBus eventBus, CachingDispatchAsync dispatch, String caseNumber) {
+	public EHRPresenter(EHRView<EHR> view, EventBus eventBus, CachingDispatchAsync dispatch, GetPatientSummaryResult ehr) {
 		this.view = view;
 		this.view.setPresenter(this);
 		this.eventBus = eventBus;
-		this.dispatch = dispatch;
-		this.caseNumber = caseNumber;
-	}
-
-	private void fetchData() {
-		dispatch.executeWithCache(patientSummary, new EchartsCallback<GetPatientSummaryResult>(eventBus) {
-			@Override
-			protected void handleFailure(Throwable caught) {
-			}
-
-			@Override
-			protected void handleSuccess(GetPatientSummaryResult result) {
-				setData(result);
-			}
-		});
+		setData(ehr);
 	}
 
 	protected void setData(GetPatientSummaryResult result) {
@@ -102,23 +85,22 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
 	}
 
 	private void setActions() {
-		appointments = new GetAppointments(EchartsUser.sessionId, caseNumber);
-		demographics = new GetDemographics(EchartsUser.sessionId, caseNumber);
-		patientSummary = new GetPatientSummary(EchartsUser.sessionId, caseNumber, EchartsUser.staffId);
-		referral = new GetReferral(EchartsUser.sessionId, caseNumber);
-		diagnoses = new GetDiagnoses(EchartsUser.sessionId, caseNumber);
-		links = new GetLinks(EchartsUser.sessionId, caseNumber);
-		messages = new GetMessages(EchartsUser.sessionId, caseNumber);
-		addresses = new GetAddresses(EchartsUser.sessionId, caseNumber);
-		contacts = new GetContacts(EchartsUser.sessionId, caseNumber);
-		medications = new GetMedications(EchartsUser.sessionId, caseNumber);
-		aRInfo = new GetARInfo(EchartsUser.sessionId, caseNumber);
+		appointments = new GetAppointments(EchartsUser.sessionId, ehr.getSubject().getCaseNumber());
+		demographics = new GetDemographics(EchartsUser.sessionId, ehr.getSubject().getCaseNumber());
+		patientSummary = new GetPatientSummary(EchartsUser.sessionId, ehr.getSubject().getCaseNumber(), EchartsUser.staffId);
+		referral = new GetReferral(EchartsUser.sessionId, ehr.getSubject().getCaseNumber());
+		diagnoses = new GetDiagnoses(EchartsUser.sessionId, ehr.getSubject().getCaseNumber());
+		links = new GetLinks(EchartsUser.sessionId, ehr.getSubject().getCaseNumber());
+		messages = new GetMessages(EchartsUser.sessionId, ehr.getSubject().getCaseNumber());
+		addresses = new GetAddresses(EchartsUser.sessionId, ehr.getSubject().getCaseNumber());
+		contacts = new GetContacts(EchartsUser.sessionId, ehr.getSubject().getCaseNumber());
+		medications = new GetMedications(EchartsUser.sessionId, ehr.getSubject().getCaseNumber());
+		aRInfo = new GetARInfo(EchartsUser.sessionId, ehr.getSubject().getCaseNumber());
 	}
 
 	@Override
 	public void go(final HasWidgets container) {
 		setActions();
-		fetchData();
 		viewPatientSummary();
 	}
 
@@ -134,7 +116,7 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
 
 	@Override
 	public void viewMessages() {
-		eventBus.fireEvent(new ViewMessagesEvent(caseNumber, view, messages));
+		eventBus.fireEvent(new ViewMessagesEvent(ehr.getSubject().getCaseNumber(), view, messages));
 	}
 
 	@Override
@@ -149,46 +131,46 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
 
 	@Override
 	public void viewAppointments() {
-		eventBus.fireEvent(new ViewAppointmentsEvent(caseNumber, view, appointments));
+		eventBus.fireEvent(new ViewAppointmentsEvent(ehr.getSubject().getCaseNumber(), view, appointments));
 	}
 
 	@Override
 	public void viewDiagnoses() {
-		eventBus.fireEvent(new ViewDiagnosesEvent(caseNumber, view, diagnoses));
+		eventBus.fireEvent(new ViewDiagnosesEvent(ehr.getSubject().getCaseNumber(), view, diagnoses));
 	}
 
 	@Override
 	public void viewLinks() {
-		eventBus.fireEvent(new ViewLinksEvent(caseNumber, view, links));
+		eventBus.fireEvent(new ViewLinksEvent(ehr.getSubject().getCaseNumber(), view, links));
 	}
 
 	@Override
 	public void viewAddresses() {
-		eventBus.fireEvent(new ViewAddressesEvent(caseNumber, view, addresses));
+		eventBus.fireEvent(new ViewAddressesEvent(ehr.getSubject().getCaseNumber(), view, addresses));
 	}
 
 	@Override
 	public void viewContacts() {
-		eventBus.fireEvent(new ViewContactsEvent(caseNumber, view, contacts));
+		eventBus.fireEvent(new ViewContactsEvent(ehr.getSubject().getCaseNumber(), view, contacts));
 	}
 
 	@Override
 	public void viewMedications() {
-		eventBus.fireEvent(new ViewMedicationsEvent(caseNumber, view, medications));
+		eventBus.fireEvent(new ViewMedicationsEvent(ehr.getSubject().getCaseNumber(), view, medications));
 	}
 
 	@Override
 	public void viewTreatmentPlan() {
-		eventBus.fireEvent(new ViewTreatmentPlanEvent(caseNumber, view));
+		eventBus.fireEvent(new ViewTreatmentPlanEvent(ehr.getSubject().getCaseNumber(), view));
 	}
 
 	@Override
 	public void viewServiceHistory() {
-		eventBus.fireEvent(new ViewServiceHistoryEvent(caseNumber, view));
+		eventBus.fireEvent(new ViewServiceHistoryEvent(ehr.getSubject().getCaseNumber(), view));
 	}
 
 	@Override
 	public void viewARInfo() {
-		eventBus.fireEvent(new ViewARInfoEvent(caseNumber, view, aRInfo));
+		eventBus.fireEvent(new ViewARInfoEvent(ehr.getSubject().getCaseNumber(), view, aRInfo));
 	}
 }

@@ -16,6 +16,7 @@
 package org.eastway.echarts.server;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 
 import org.eastway.echarts.domain.DemographicsImpl;
 import org.eastway.echarts.shared.DbException;
@@ -24,6 +25,7 @@ import org.eastway.echarts.shared.DemographicsDTO;
 import org.eastway.echarts.shared.GetDemographics;
 import org.eastway.echarts.shared.GetDemographicsResult;
 import org.eastway.echarts.shared.SessionExpiredException;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import net.customware.gwt.dispatch.server.ActionHandler;
 import net.customware.gwt.dispatch.server.ExecutionContext;
@@ -49,6 +51,10 @@ public class GetDemographicsHandler implements
 					"SELECT d FROM DemographicsImpl d WHERE d.caseNumber = '" + action.getCaseNumber() + "'", DemographicsImpl.class)
 					.getSingleResult();
 			return new GetDemographicsResult(demographics == null ? new DemographicsDTO() : demographics.toDto());
+		} catch (NoResultException e) {
+			throw new ActionException(e);
+		} catch (EmptyResultDataAccessException e) {
+			throw new ActionException(e);
 		} finally {
 			em.close();
 		}
