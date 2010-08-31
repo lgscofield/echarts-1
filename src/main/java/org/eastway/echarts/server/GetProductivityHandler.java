@@ -33,11 +33,9 @@ import net.customware.gwt.dispatch.server.ExecutionContext;
 import net.customware.gwt.dispatch.shared.ActionException;
 
 public class GetProductivityHandler implements ActionHandler<GetProductivity, GetProductivityResult> {
-	private EntityManager em = null;
 	@Override
 	public GetProductivityResult execute(GetProductivity action,
 			ExecutionContext context) throws ActionException {
-		em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 		ServiceUtil util = new ServiceUtil();
 		try {
 			util.checkSessionExpire(action.getSessionId());
@@ -47,6 +45,7 @@ public class GetProductivityHandler implements ActionHandler<GetProductivity, Ge
 			throw new ActionException("Database error");
 		}
 
+		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 		try {
 			String staffId = null;
 			if (action.getStaffId().equals("5597") || action.getStaffId().equals("5274"))
@@ -128,12 +127,17 @@ public class GetProductivityHandler implements ActionHandler<GetProductivity, Ge
 	}
 
 	private long getHolidays(Calendar calendar) {
-		Long holidays = em.createQuery(
-			"SELECT COUNT(h) FROM Holiday h WHERE h.month = '" + (calendar.get(Calendar.MONTH)+1) + "' "
-			+ "AND h.year = '" + calendar.get(Calendar.YEAR) + "' "
-			+ "AND h.day > '"	+ calendar.get(Calendar.DAY_OF_MONTH) + "'" , Long.class)
-			.getSingleResult();
-		return holidays;
+		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
+		try {
+			Long holidays = em.createQuery(
+				"SELECT COUNT(h) FROM Holiday h WHERE h.month = '" + (calendar.get(Calendar.MONTH)+1) + "' "
+				+ "AND h.year = '" + calendar.get(Calendar.YEAR) + "' "
+				+ "AND h.day > '"	+ calendar.get(Calendar.DAY_OF_MONTH) + "'" , Long.class)
+				.getSingleResult();
+			return holidays;
+		} finally {
+			em.close();
+		}
 	}
 
 	private long getCurrentWorkDays(Calendar calendar) {
