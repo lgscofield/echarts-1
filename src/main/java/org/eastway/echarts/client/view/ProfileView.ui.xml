@@ -28,11 +28,13 @@
 			border-top: 1px solid LightGray;
 		}
 	</ui:style>
-	<g:HTMLPanel>
-		<h3 style="margin-left:20px;margin-top:20px;">Profile</h3>
-		<g:FlowPanel addStyleNames='{style.container}'>
-			<g:FlexTable addStyleNames='{style.table}' ui:field="table"/>
-			<g:Button ui:field="save">Save</g:Button>
-		</g:FlowPanel>
-	</g:HTMLPanel>
+	<g:ScrollPanel>
+		<g:HTMLPanel>
+			<h3 style="margin-left:20px;margin-top:20px;">Profile</h3>
+			<g:FlowPanel addStyleNames='{style.container}'>
+				<g:FlexTable addStyleNames='{style.table}' ui:field="table"/>
+				<g:Button ui:field="save">Save</g:Button>
+			</g:FlowPanel>
+		</g:HTMLPanel>
+	</g:ScrollPanel>
 </ui:UiBinder>
