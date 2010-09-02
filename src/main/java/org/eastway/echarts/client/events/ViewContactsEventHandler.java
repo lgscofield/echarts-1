@@ -19,6 +19,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface ViewContactsEventHandler extends EventHandler {
 
-	void onViewContacts(ViewContactsEvent event);
+	<T> void onViewContacts(ViewContactsEvent<T> event);
 
 }

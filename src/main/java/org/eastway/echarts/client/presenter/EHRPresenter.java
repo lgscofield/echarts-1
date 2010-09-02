@@ -34,8 +34,6 @@ import org.eastway.echarts.client.events.ViewServiceHistoryEvent;
 import org.eastway.echarts.client.events.ViewTreatmentPlanEvent;
 import org.eastway.echarts.client.rpc.CachingDispatchAsync;
 import org.eastway.echarts.client.view.EHRView;
-import org.eastway.echarts.shared.EHR;
-import org.eastway.echarts.shared.EHRDTO;
 import org.eastway.echarts.shared.GetARInfo;
 import org.eastway.echarts.shared.GetAddresses;
 import org.eastway.echarts.shared.GetAppointments;
@@ -51,10 +49,10 @@ import org.eastway.echarts.shared.GetReferral;
 
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
+public class EHRPresenter implements Presenter, EHRView.Presenter<GetPatientSummaryResult> {
 
-	private EHR ehr;
-	private EHRView<EHR> view;
+	private GetPatientSummaryResult ehr;
+	private EHRView<GetPatientSummaryResult> view;
 	private EventBus eventBus;
 	private long ehrId;
 	private GetAppointments appointments = null;
@@ -69,7 +67,7 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
 	private GetMedications medications = null;
 	private GetARInfo aRInfo = null;
 
-	public EHRPresenter(EHRView<EHR> view, EventBus eventBus, CachingDispatchAsync dispatch, GetPatientSummaryResult ehr) {
+	public EHRPresenter(EHRView<GetPatientSummaryResult> view, EventBus eventBus, CachingDispatchAsync dispatch, GetPatientSummaryResult ehr) {
 		this.view = view;
 		this.view.setPresenter(this);
 		this.eventBus = eventBus;
@@ -77,25 +75,22 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
 	}
 
 	protected void setData(GetPatientSummaryResult result) {
-		EHR ehr = new EHRDTO();
-		ehr.setDemographics(result.getDemographics());
-		ehr.setSubject(result.getPatient());
-		this.ehr = ehr;
-		eventBus.fireEvent(new ChangeCurrentEhrEvent(ehr));
+		this.ehr = result;
+		eventBus.fireEvent(new ChangeCurrentEhrEvent<GetPatientSummaryResult>(result));
 	}
 
 	private void setActions() {
-		appointments = new GetAppointments(EchartsUser.sessionId, ehr.getSubject().getCaseNumber());
-		demographics = new GetDemographics(EchartsUser.sessionId, ehr.getSubject().getCaseNumber());
-		patientSummary = new GetPatientSummary(EchartsUser.sessionId, ehr.getSubject().getCaseNumber(), EchartsUser.staffId);
-		referral = new GetReferral(EchartsUser.sessionId, ehr.getSubject().getCaseNumber());
-		diagnoses = new GetDiagnoses(EchartsUser.sessionId, ehr.getSubject().getCaseNumber());
-		links = new GetLinks(EchartsUser.sessionId, ehr.getSubject().getCaseNumber());
-		messages = new GetMessages(EchartsUser.sessionId, ehr.getSubject().getCaseNumber());
-		addresses = new GetAddresses(EchartsUser.sessionId, ehr.getSubject().getCaseNumber());
-		contacts = new GetContacts(EchartsUser.sessionId, ehr.getSubject().getCaseNumber());
-		medications = new GetMedications(EchartsUser.sessionId, ehr.getSubject().getCaseNumber());
-		aRInfo = new GetARInfo(EchartsUser.sessionId, ehr.getSubject().getCaseNumber());
+		appointments = new GetAppointments(EchartsUser.sessionId, ehr.getPatient().getCaseNumber());
+		demographics = new GetDemographics(EchartsUser.sessionId, ehr.getPatient().getCaseNumber());
+		patientSummary = new GetPatientSummary(EchartsUser.sessionId, ehr.getPatient().getCaseNumber(), EchartsUser.staffId);
+		referral = new GetReferral(EchartsUser.sessionId, ehr.getPatient().getCaseNumber());
+		diagnoses = new GetDiagnoses(EchartsUser.sessionId, ehr.getPatient().getCaseNumber());
+		links = new GetLinks(EchartsUser.sessionId, ehr.getPatient().getCaseNumber());
+		messages = new GetMessages(EchartsUser.sessionId, ehr.getPatient().getCaseNumber());
+		addresses = new GetAddresses(EchartsUser.sessionId, ehr.getPatient().getCaseNumber());
+		contacts = new GetContacts(EchartsUser.sessionId, ehr.getPatient().getCaseNumber());
+		medications = new GetMedications(EchartsUser.sessionId, ehr.getPatient().getCaseNumber());
+		aRInfo = new GetARInfo(EchartsUser.sessionId, ehr.getPatient().getCaseNumber());
 	}
 
 	@Override
@@ -106,71 +101,71 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHR> {
 
 	@Override
 	public void viewPatientSummary() {
-		eventBus.fireEvent(new ViewPatientSummaryEvent(view, patientSummary));
+		eventBus.fireEvent(new ViewPatientSummaryEvent<GetPatientSummaryResult>(view, patientSummary));
 	}
 
 	@Override
-	public EHR getEhr() {
+	public GetPatientSummaryResult getEhr() {
 		return ehr;
 	}
 
 	@Override
 	public void viewMessages() {
-		eventBus.fireEvent(new ViewMessagesEvent(ehr.getSubject().getCaseNumber(), view, messages));
+		eventBus.fireEvent(new ViewMessagesEvent<GetPatientSummaryResult>(ehr.getPatient().getCaseNumber(), view, messages));
 	}
 
 	@Override
 	public void viewDemographics() {
-		eventBus.fireEvent(new ViewDemographicsEvent(ehrId, view, demographics));
+		eventBus.fireEvent(new ViewDemographicsEvent<GetPatientSummaryResult>(ehrId, view, demographics));
 	}
 
 	@Override
 	public void viewReferral() {
-		eventBus.fireEvent(new ViewReferralEvent(ehrId, view, referral));
+		eventBus.fireEvent(new ViewReferralEvent<GetPatientSummaryResult>(ehrId, view, referral));
 	}
 
 	@Override
 	public void viewAppointments() {
-		eventBus.fireEvent(new ViewAppointmentsEvent(ehr.getSubject().getCaseNumber(), view, appointments));
+		eventBus.fireEvent(new ViewAppointmentsEvent<GetPatientSummaryResult>(ehr.getPatient().getCaseNumber(), view, appointments));
 	}
 
 	@Override
 	public void viewDiagnoses() {
-		eventBus.fireEvent(new ViewDiagnosesEvent(ehr.getSubject().getCaseNumber(), view, diagnoses));
+		eventBus.fireEvent(new ViewDiagnosesEvent<GetPatientSummaryResult>(ehr.getPatient().getCaseNumber(), view, diagnoses));
 	}
 
 	@Override
 	public void viewLinks() {
-		eventBus.fireEvent(new ViewLinksEvent(ehr.getSubject().getCaseNumber(), view, links));
+		eventBus.fireEvent(new ViewLinksEvent<GetPatientSummaryResult>(ehr.getPatient().getCaseNumber(), view, links));
 	}
 
 	@Override
 	public void viewAddresses() {
-		eventBus.fireEvent(new ViewAddressesEvent(ehr.getSubject().getCaseNumber(), view, addresses));
+		eventBus.fireEvent(new ViewAddressesEvent<GetPatientSummaryResult>(ehr.getPatient().getCaseNumber(), view, addresses));
 	}
 
 	@Override
 	public void viewContacts() {
-		eventBus.fireEvent(new ViewContactsEvent(ehr.getSubject().getCaseNumber(), view, contacts));
+		eventBus.fireEvent(new ViewContactsEvent<GetPatientSummaryResult>(ehr.getPatient().getCaseNumber(), view, contacts));
 	}
 
 	@Override
 	public void viewMedications() {
-		eventBus.fireEvent(new ViewMedicationsEvent(ehr.getSubject().getCaseNumber(), view, medications));
+		eventBus.fireEvent(new ViewMedicationsEvent<GetPatientSummaryResult>(ehr.getPatient().getCaseNumber(), view, medications));
 	}
 
 	@Override
 	public void viewTreatmentPlan() {
-		eventBus.fireEvent(new ViewTreatmentPlanEvent(ehr.getSubject().getCaseNumber(), view));
+		eventBus.fireEvent(new ViewTreatmentPlanEvent<GetPatientSummaryResult>(ehr.getPatient().getCaseNumber(), view));
 	}
 
 	@Override
 	public void viewServiceHistory() {
-		eventBus.fireEvent(new ViewServiceHistoryEvent(ehr.getSubject().getCaseNumber(), view));
+		eventBus.fireEvent(new ViewServiceHistoryEvent<GetPatientSummaryResult>(ehr.getPatient().getCaseNumber(), view));
 	}
 
 	@Override
 	public void viewARInfo() {
-		eventBus.fireEvent(new ViewARInfoEvent(ehr.getSubject().getCaseNumber(), view, aRInfo));
+		eventBus.fireEvent(new ViewARInfoEvent<GetPatientSummaryResult>(ehr.getPatient().getCaseNumber(), view, aRInfo));
 	}
 }

@@ -36,13 +36,10 @@ import org.eastway.echarts.client.rpc.CachingDispatchAsync;
 import org.eastway.echarts.client.rpc.EchartsCallback;
 import org.eastway.echarts.client.view.DashboardView;
 import org.eastway.echarts.shared.Demographics;
-import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.GetPatientSummary;
 import org.eastway.echarts.shared.GetPatientSummaryResult;
 import org.eastway.echarts.shared.GetProductivity;
 import org.eastway.echarts.shared.GetProductivityResult;
-import org.eastway.echarts.shared.GetProvider;
-import org.eastway.echarts.shared.GetProviderResult;
 import org.eastway.echarts.shared.Patient;
 
 import com.google.gwt.user.client.Cookies;
@@ -68,8 +65,8 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 	private void bind() {
 		eventBus.addHandler(ChangeCurrentEhrEvent.TYPE, new ChangeCurrentEhrEventHandler() {
 			@Override
-			public void onChangeCurrentEhr(ChangeCurrentEhrEvent event) {
-				setCurrentEhrData(event.getEhr());
+			public <T> void onChangeCurrentEhr(ChangeCurrentEhrEvent<T> event) {
+				setCurrentEhrData((GetPatientSummaryResult)event.getEhr());
 			}
 		});
 	}
@@ -88,32 +85,23 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 			view.isFirstLogin();
 	}
 
-	private void setCurrentEhrData(final EHR ehr) {
+	private void setCurrentEhrData(final GetPatientSummaryResult ehr) {
 		if (ehr == null) {
 			view.showEhrStub(false);
 			return;
 		}
-		dispatch.execute(new GetProvider(EchartsUser.sessionId, ehr.getSubject().getCaseNumber(), EchartsUser.staffId), new EchartsCallback<GetProviderResult>(eventBus) {
-			@Override
-			protected void handleFailure(Throwable caught) {
-			}
+		Patient patient = ehr.getPatient();
+		Demographics demographics = ehr.getDemographics();
+		view.setName(patient.getName());
+		view.setCaseStatus(patient.getCaseStatus().getDescriptor() == null ? "" : patient.getCaseStatus().getDescriptor());
 
-			@Override
-			protected void handleSuccess(GetProviderResult result) {
-				Patient patient = ehr.getSubject();
-				Demographics demographics = ehr.getDemographics();
-				view.setName(patient.getName());
-				view.setCaseStatus(patient.getCaseStatus().getDescriptor() == null ? "" : patient.getCaseStatus().getDescriptor());
+		Long age = (new Date().getTime() - demographics.getDob().getTime()) / (3600*24*365) / 1000;
 
-				Long age = (new Date().getTime() - demographics.getDob().getTime()) / (3600*24*365) / 1000;
-
-				view.setDob(demographics.getDob());
-				view.setAge(" (" + age.toString() + ")");
-				view.setProvider(result.getProvider() == null ? "" : result.getProvider());
-				view.setSsn(patient.getSsn());
-				view.showEhrStub(true);
-			}
-		});
+		view.setDob(demographics.getDob());
+		view.setAge(" (" + age.toString() + ")");
+		view.setProvider(ehr.getProvider() == null ? "" : ehr.getProvider());
+		view.setSsn(patient.getSsn());
+		view.showEhrStub(true);
 	}
 
 	private void fetchData() {
@@ -121,8 +109,8 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 	}
 
 	@Override
-	public void changeCurrentEhr(EHR ehr) {
-			eventBus.fireEvent(new ChangeCurrentEhrEvent(ehr));
+	public void changeCurrentEhr(Object ehr) {
+			eventBus.fireEvent(new ChangeCurrentEhrEvent<GetPatientSummaryResult>((GetPatientSummaryResult)ehr));
 	}
 
 	@Override

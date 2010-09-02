@@ -16,19 +16,18 @@
 package org.eastway.echarts.client.events;
 
 import org.eastway.echarts.client.view.EHRView;
-import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.GetARInfo;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-public class ViewARInfoEvent extends GwtEvent<ViewARInfoEventHandler> {
+public class ViewARInfoEvent<T> extends GwtEvent<ViewARInfoEventHandler> {
 
 	public static final Type<ViewARInfoEventHandler> TYPE = new Type<ViewARInfoEventHandler>();
 	private String caseNumber;
-	private EHRView<EHR> view;
+	private EHRView<T> view;
 	private GetARInfo action;
 
-	public ViewARInfoEvent(String caseNumber, EHRView<EHR> view, GetARInfo action) {
+	public ViewARInfoEvent(String caseNumber, EHRView<T> view, GetARInfo action) {
 		this.setCaseNumber(caseNumber);
 		this.setView(view);
 		this.setAction(action);
@@ -52,11 +51,11 @@ public class ViewARInfoEvent extends GwtEvent<ViewARInfoEventHandler> {
 		return caseNumber;
 	}
 
-	public void setView(EHRView<EHR> view) {
+	public void setView(EHRView<T> view) {
 		this.view = view;
 	}
 
-	public EHRView<EHR> getView() {
+	public EHRView<T> getView() {
 		return view;
 	}
 

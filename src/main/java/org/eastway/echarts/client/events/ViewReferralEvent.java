@@ -16,18 +16,17 @@
 package org.eastway.echarts.client.events;
 
 import org.eastway.echarts.client.view.EHRView;
-import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.GetReferral;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-public class ViewReferralEvent extends GwtEvent<ViewReferralEventHandler> {
+public class ViewReferralEvent<T> extends GwtEvent<ViewReferralEventHandler> {
 	public static Type<ViewReferralEventHandler> TYPE = new Type<ViewReferralEventHandler>();
 	private long id;
-	private EHRView<EHR> view;
+	private EHRView<T> view;
 	private GetReferral action;
 
-	public ViewReferralEvent(long id, EHRView<EHR> view, GetReferral action) {
+	public ViewReferralEvent(long id, EHRView<T> view, GetReferral action) {
 		this.id = id;
 		this.view = view;
 		this.action = action;
@@ -47,7 +46,7 @@ public class ViewReferralEvent extends GwtEvent<ViewReferralEventHandler> {
 		return id;
 	}
 
-	public EHRView<EHR> getView() {
+	public EHRView<T> getView() {
 		return view;
 	}
 

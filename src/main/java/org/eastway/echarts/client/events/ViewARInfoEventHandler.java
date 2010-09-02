@@ -19,6 +19,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface ViewARInfoEventHandler extends EventHandler {
 
-	void onViewARInfo(ViewARInfoEvent event);
+	<T> void onViewARInfo(ViewARInfoEvent<T> event);
 
 }

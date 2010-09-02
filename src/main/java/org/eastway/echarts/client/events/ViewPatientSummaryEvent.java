@@ -16,17 +16,16 @@
 package org.eastway.echarts.client.events;
 
 import org.eastway.echarts.client.view.EHRView;
-import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.GetPatientSummary;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-public class ViewPatientSummaryEvent extends GwtEvent<ViewPatientSummaryEventHandler> {
+public class ViewPatientSummaryEvent<T> extends GwtEvent<ViewPatientSummaryEventHandler> {
 	public static Type<ViewPatientSummaryEventHandler> TYPE = new Type<ViewPatientSummaryEventHandler>();
-	private EHRView<EHR> view;
+	private EHRView<T> view;
 	private GetPatientSummary action;
 
-	public ViewPatientSummaryEvent(EHRView<EHR> view, GetPatientSummary action) {
+	public ViewPatientSummaryEvent(EHRView<T> view, GetPatientSummary action) {
 		this.view = view;
 		this.action = action;
 	}
@@ -41,7 +40,7 @@ public class ViewPatientSummaryEvent extends GwtEvent<ViewPatientSummaryEventHan
 		return TYPE;
 	}
 
-	public EHRView<EHR> getView() {
+	public EHRView<T> getView() {
 		return view;
 	}
 

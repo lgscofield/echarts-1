@@ -19,6 +19,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface ViewLinksEventHandler extends EventHandler {
 
-	void onViewLinks(ViewLinksEvent event);
+	<T> void onViewLinks(ViewLinksEvent<T> event);
 
 }

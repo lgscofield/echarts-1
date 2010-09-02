@@ -19,6 +19,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface ViewAppointmentsEventHandler extends EventHandler {
 
-	void onViewAppointments(ViewAppointmentsEvent event);
+	<T> void onViewAppointments(ViewAppointmentsEvent<T> event);
 
 }

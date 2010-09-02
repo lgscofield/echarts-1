@@ -15,8 +15,6 @@
  */
 package org.eastway.echarts.client.view;
 
-import org.eastway.echarts.shared.EHR;
-
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -25,7 +23,7 @@ public interface EHRView<T> {
 	public interface Presenter<T> {
 		void viewPatientSummary();
 
-		EHR getEhr();
+		T getEhr();
 
 		void viewMessages();
 

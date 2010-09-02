@@ -131,8 +131,8 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 			@Override
 			public void onSelection(SelectionEvent<Integer> event) {
 				Widget w = tabLayoutPanel.getWidget(event.getSelectedItem());
-				if (w instanceof EHRViewImpl<?>) {
-					presenter.changeCurrentEhr(((EHRViewImpl<?>) w).getPresenter().getEhr());
+				if (w instanceof EHRView<?>) {
+					presenter.changeCurrentEhr(((EHRView<?>) w).getPresenter().getEhr());
 				} else {
 					presenter.changeCurrentEhr(null);
 				}

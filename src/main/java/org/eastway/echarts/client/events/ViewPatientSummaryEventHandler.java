@@ -18,5 +18,5 @@ package org.eastway.echarts.client.events;
 import com.google.gwt.event.shared.EventHandler;
 
 public interface ViewPatientSummaryEventHandler extends EventHandler {
-	void onViewPatientSummary(ViewPatientSummaryEvent event);
+	<T> void onViewPatientSummary(ViewPatientSummaryEvent<T> event);
 }

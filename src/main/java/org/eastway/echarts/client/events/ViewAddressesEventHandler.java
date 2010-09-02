@@ -19,6 +19,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface ViewAddressesEventHandler extends EventHandler {
 
-	void onViewAddresses(ViewAddressesEvent event);
+	<T> void onViewAddresses(ViewAddressesEvent<T> event);
 
 }

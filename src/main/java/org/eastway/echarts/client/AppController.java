@@ -113,7 +113,6 @@ import org.eastway.echarts.shared.Address;
 import org.eastway.echarts.shared.Appointment;
 import org.eastway.echarts.shared.Demographics;
 import org.eastway.echarts.shared.Diagnosis;
-import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.GetARInfo;
 import org.eastway.echarts.shared.GetAddresses;
 import org.eastway.echarts.shared.GetAppointments;
@@ -137,7 +136,7 @@ import com.google.inject.Inject;
 
 public class AppController implements Presenter {
 	private final EventBus eventBus;
-	private EHRView<EHR> ehrView;
+	private EHRViewImpl<GetPatientSummaryResult> ehrView;
 	private CachingDispatchAsync dispatch;
 	private DashboardPresenter dashboardPresenter;
 	@Inject private TicklerPresenter ticklerPresenter;
@@ -167,55 +166,55 @@ public class AppController implements Presenter {
 		});
 		eventBus.addHandler(ViewPatientSummaryEvent.TYPE, new ViewPatientSummaryEventHandler() {
 			@Override
-			public void onViewPatientSummary(ViewPatientSummaryEvent event) {
+			public <T> void onViewPatientSummary(ViewPatientSummaryEvent<T> event) {
 				doViewPatientSummary(event.getView(), event.getAction());
 			}
 		});
 		eventBus.addHandler(ViewMessagesEvent.TYPE, new ViewMessagesEventHandler() {
 			@Override
-			public void onViewMessages(ViewMessagesEvent event) {
+			public <T> void onViewMessages(ViewMessagesEvent<T> event) {
 				doViewMessages(event.getView(), event.getAction());
 			}
 		});
 		eventBus.addHandler(ViewReferralEvent.TYPE, new ViewReferralEventHandler() {
 			@Override
-			public void onViewReferral(ViewReferralEvent event) {
+			public <T> void onViewReferral(ViewReferralEvent<T> event) {
 				doViewReferral(event.getView(), event.getAction());
 			}
 		});
 		eventBus.addHandler(ViewAppointmentsEvent.TYPE, new ViewAppointmentsEventHandler() {
 			@Override
-			public void onViewAppointments(ViewAppointmentsEvent event) {
+			public <T> void onViewAppointments(ViewAppointmentsEvent<T> event) {
 				doViewAppointments(event.getView(), event.getAction());
 			}
 		});
 		eventBus.addHandler(ViewDiagnosesEvent.TYPE, new ViewDiagnosesEventHandler() {
 			@Override
-			public void onViewDiagnoses(ViewDiagnosesEvent event) {
+			public <T> void onViewDiagnoses(ViewDiagnosesEvent<T> event) {
 				doViewDiagnoses(event.getView(), event.getCaseNumber(), event.getAction());
 			}
 		});
 		eventBus.addHandler(ViewLinksEvent.TYPE, new ViewLinksEventHandler() {
 			@Override
-			public void onViewLinks(ViewLinksEvent event) {
+			public <T> void onViewLinks(ViewLinksEvent<T> event) {
 				doViewLinksEvent(event.getView(), event.getAction());
 			}
 		});
 		eventBus.addHandler(ViewAddressesEvent.TYPE, new ViewAddressesEventHandler() {
 			@Override
-			public void onViewAddresses(ViewAddressesEvent event) {
+			public <T> void onViewAddresses(ViewAddressesEvent<T> event) {
 				doViewAddresses(event.getView(), event.getAction());
 			}
 		});
 		eventBus.addHandler(ViewContactsEvent.TYPE, new ViewContactsEventHandler() {
 			@Override
-			public void onViewContacts(ViewContactsEvent event) {
+			public <T> void onViewContacts(ViewContactsEvent<T> event) {
 				doViewContacts(event.getView(), event.getAction());
 			}
 		});
 		eventBus.addHandler(ViewMedicationsEvent.TYPE, new ViewMedicationsEventHandler() {
 			@Override
-			public void onViewMedications(ViewMedicationsEvent event) {
+			public <T> void onViewMedications(ViewMedicationsEvent<T> event) {
 				doViewMedications(event.getView(), event.getAction());
 			}
 		});
@@ -250,7 +249,7 @@ public class AppController implements Presenter {
 		});
 		eventBus.addHandler(ViewDemographicsEvent.TYPE, new ViewDemographicsEventHandler() {
 			@Override
-			public void onViewDemographics(ViewDemographicsEvent event) {
+			public <T> void onViewDemographics(ViewDemographicsEvent<T> event) {
 				doViewDemographics(event.getView(), event.getAction());
 			}
 		});
@@ -262,13 +261,13 @@ public class AppController implements Presenter {
 		});
 		eventBus.addHandler(ViewTreatmentPlanEvent.TYPE, new ViewTreatmentPlanEventHandler() {
 			@Override
-			public void onViewTreatmentPlan(ViewTreatmentPlanEvent event) {
+			public <T> void onViewTreatmentPlan(ViewTreatmentPlanEvent<T> event) {
 				doViewTreatmentPlan(event.getCaseNumber(), event.getView());
 			}
 		});
 		eventBus.addHandler(ViewServiceHistoryEvent.TYPE, new ViewServiceHistoryEventHandler() {
 			@Override
-			public void onViewServiceHistory(ViewServiceHistoryEvent event) {
+			public <T> void onViewServiceHistory(ViewServiceHistoryEvent<T> event) {
 				doViewServiceHistory(event.getCaseNumber(), event.getView());
 			}
 		});
@@ -312,7 +311,7 @@ public class AppController implements Presenter {
 		});
 		eventBus.addHandler(ViewARInfoEvent.TYPE, new ViewARInfoEventHandler() {
 			@Override
-			public void onViewARInfo(ViewARInfoEvent event) {
+			public <T> void onViewARInfo(ViewARInfoEvent<T> event) {
 				doViewARInfo(event.getCaseNumber(), event.getView(), event.getAction());
 			}
 		});
@@ -364,9 +363,9 @@ public class AppController implements Presenter {
 		dashboardPresenter.getDisplay().addTab(frame, "Supervisor Signatures");
 	}
 
-	private void doViewARInfo(String caseNumber, EHRView<EHR> view, GetARInfo action) {
+	private <T> void doViewARInfo(String caseNumber, EHRView<T> ehrView, GetARInfo action) {
 		Presenter presenter = new ARInfoPresenter(new ARInfoViewImpl<ARInfo>(), aRInfoColumnDefinitions, eventBus, dispatch, action);
-		presenter.go(view.getDisplayArea());
+		presenter.go(ehrView.getDisplayArea());
 	}
 
 	private void doViewSignature() {
@@ -395,17 +394,17 @@ public class AppController implements Presenter {
 		Window.Location.assign("http://ewsql.eastway.local/echarts/logout.aspx?continue=" + Window.Location.getHref());
 	}
 
-	private void doViewServiceHistory(String caseNumber, EHRView<EHR> view) {
+	private <T> void doViewServiceHistory(String caseNumber, EHRView<T> ehrView) {
 		Frame frame = new Frame("http://ewsql.eastway.local/echarts-asp/client/clienthistory.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber);
-		view.getDisplayArea().clear();
-		view.getDisplayArea().add(frame);
+		ehrView.getDisplayArea().clear();
+		ehrView.getDisplayArea().add(frame);
 		frame.setSize("100%", "100%");
 	}
 
-	private void doViewTreatmentPlan(String caseNumber, EHRView<EHR> view) {
+	private <T> void doViewTreatmentPlan(String caseNumber, EHRView<T> ehrView) {
 		Frame frame = new Frame("http://ewsql.eastway.local/echarts-asp/client/treatmentplan.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber);
-		view.getDisplayArea().clear();
-		view.getDisplayArea().add(frame);
+		ehrView.getDisplayArea().clear();
+		ehrView.getDisplayArea().add(frame);
 		frame.setSize("100%", "100%");
 	}
 
@@ -426,61 +425,61 @@ public class AppController implements Presenter {
 		profilePresenter.go(null);
 	}
 
-	private void doViewMedications(EHRView<EHR> view, GetMedications action) {
+	private <T> void doViewMedications(EHRView<T> ehrView, GetMedications action) {
 		Presenter presenter = new MedicationPresenter(new MedicationView(), eventBus, dispatch, action);
-		presenter.go(view.getDisplayArea());
+		presenter.go(ehrView.getDisplayArea());
 	}
 
-	private void doViewContacts(EHRView<EHR> view, GetContacts action) {
+	private <T> void doViewContacts(EHRView<T> ehrView, GetContacts action) {
 		Presenter presenter = new ContactPresenter(new ContactView(), eventBus, dispatch, action);
-		presenter.go(view.getDisplayArea());
+		presenter.go(ehrView.getDisplayArea());
 	}
 
-	private void doViewAddresses(EHRView<EHR> view, GetAddresses action) {
+	private <T> void doViewAddresses(EHRView<T> ehrView, GetAddresses action) {
 		Presenter presenter = new AddressPresenter(new AddressViewImpl<Address>(), addressColumnDefinitions, eventBus, dispatch, action);
-		presenter.go(view.getDisplayArea());
+		presenter.go(ehrView.getDisplayArea());
 	}
 
-	private void doViewLinksEvent(EHRView<EHR> view, GetLinks action) {
+	private <T> void doViewLinksEvent(EHRView<T> ehrView, GetLinks action) {
 		Presenter presenter = new LinkPresenter(new LinkView(), eventBus, dispatch, action);
-		presenter.go(view.getDisplayArea());
+		presenter.go(ehrView.getDisplayArea());
 	}
 
-	private void doViewDiagnoses(EHRView<EHR> view, String caseNumber, GetDiagnoses action) {
+	private <T> void doViewDiagnoses(EHRView<T> ehrView, String caseNumber, GetDiagnoses action) {
 		DiagnosisPresenter diagnosisPresenter = new DiagnosisPresenter(new DiagnosisViewImpl<Diagnosis>(), diagnosisColumnDefinitions, eventBus, dispatch, action);
-		diagnosisPresenter.go(view.getDisplayArea());
+		diagnosisPresenter.go(ehrView.getDisplayArea());
 	}
 
-	private void doViewAppointments(EHRView<EHR> view, GetAppointments action) {
+	private <T> void doViewAppointments(EHRView<T> ehrView, GetAppointments action) {
 		Presenter presenter = new AppointmentPresenter(new AppointmentViewImpl<Appointment>(), appointmentColumnDefinitions, eventBus, dispatch, action);
-		presenter.go(view.getDisplayArea());
+		presenter.go(ehrView.getDisplayArea());
 	}
 
-	private void doViewReferral(EHRView<EHR> view, GetReferral action) {
+	private <T> void doViewReferral(EHRView<T> ehrView, GetReferral action) {
 		Presenter presenter = new ReferralPresenter(new ReferralViewImpl<Referral>(), referralColumnDefinitions, eventBus, dispatch, action);
-		presenter.go(view.getDisplayArea());
+		presenter.go(ehrView.getDisplayArea());
 	}
 
-	private void doViewMessages(EHRView<EHR> view, GetMessages action) {
+	private <T> void doViewMessages(EHRView<T> ehrView, GetMessages action) {
 		Presenter presenter = new MessagesPresenter(new MessagesView(), eventBus, dispatch, action);
-		presenter.go(view.getDisplayArea());
+		presenter.go(ehrView.getDisplayArea());
 	}
 
 	private void doViewEhr(GetPatientSummaryResult ehr) {
-		ehrView = new EHRViewImpl<EHR>();
+		ehrView = new EHRViewImpl<GetPatientSummaryResult>();
 		Presenter presenter = new EHRPresenter(ehrView, eventBus, dispatch, ehr);
 		presenter.go(null);
 		dashboardPresenter.getDisplay().addTab(ehrView.asWidget(), ehr.getPatient().getCaseNumber());
 	}
 
-	private void doViewPatientSummary(EHRView<EHR> view, GetPatientSummary action) {
+	private <T> void doViewPatientSummary(EHRView<T> ehrView, GetPatientSummary action) {
 		Presenter presenter = new PatientSummaryPresenter(new PatientSummaryViewImpl<GetPatientSummaryResult>(), patientSummaryColumnDefinitions, eventBus, dispatch, action);
-		presenter.go(view.getDisplayArea());
+		presenter.go(ehrView.getDisplayArea());
 	}
 
-	private void doViewDemographics(final EHRView<EHR> view, GetDemographics action) {
+	private <T> void doViewDemographics(final EHRView<T> ehrView, GetDemographics action) {
 		Presenter presenter = new DemographicsPresenter(new DemographicsViewImpl<Demographics>(), demographicsColumnDefinitions, eventBus, dispatch, action);
-		presenter.go(view.getDisplayArea());
+		presenter.go(ehrView.getDisplayArea());
 	}
 
 	@Override

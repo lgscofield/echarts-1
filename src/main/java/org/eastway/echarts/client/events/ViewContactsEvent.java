@@ -16,17 +16,16 @@
 package org.eastway.echarts.client.events;
 
 import org.eastway.echarts.client.view.EHRView;
-import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.GetContacts;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-public class ViewContactsEvent extends GwtEvent<ViewContactsEventHandler> {
+public class ViewContactsEvent<T> extends GwtEvent<ViewContactsEventHandler> {
 	public static Type<ViewContactsEventHandler> TYPE = new Type<ViewContactsEventHandler>();
-	private EHRView<EHR> view;
+	private EHRView<T> view;
 	private GetContacts action;
 
-	public ViewContactsEvent(String caseNumber, EHRView<EHR> view,
+	public ViewContactsEvent(String caseNumber, EHRView<T> view,
 			GetContacts action) {
 		this.view = view;
 		this.action = action;
@@ -42,7 +41,7 @@ public class ViewContactsEvent extends GwtEvent<ViewContactsEventHandler> {
 		return TYPE;
 	}
 
-	public EHRView<EHR> getView() {
+	public EHRView<T> getView() {
 		return view;
 	}
 

@@ -19,6 +19,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface ViewDiagnosesEventHandler extends EventHandler {
 
-	void onViewDiagnoses(ViewDiagnosesEvent event);
+	<T> void onViewDiagnoses(ViewDiagnosesEvent<T> event);
 
 }

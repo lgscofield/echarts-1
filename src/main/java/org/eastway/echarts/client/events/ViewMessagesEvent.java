@@ -16,18 +16,17 @@
 package org.eastway.echarts.client.events;
 
 import org.eastway.echarts.client.view.EHRView;
-import org.eastway.echarts.shared.EHR;
 import org.eastway.echarts.shared.GetMessages;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-public class ViewMessagesEvent extends GwtEvent<ViewMessagesEventHandler> {
+public class ViewMessagesEvent<T> extends GwtEvent<ViewMessagesEventHandler> {
 	public static Type<ViewMessagesEventHandler> TYPE = new Type<ViewMessagesEventHandler>();
-	private EHRView<EHR> view;
+	private EHRView<T> view;
 	private String caseNumber;
 	private GetMessages action;
 
-	public ViewMessagesEvent(String caseNumber, EHRView<EHR> view, GetMessages action) {
+	public ViewMessagesEvent(String caseNumber, EHRView<T> view, GetMessages action) {
 		this.view = view;
 		this.caseNumber = caseNumber;
 		this.action = action;
@@ -43,7 +42,7 @@ public class ViewMessagesEvent extends GwtEvent<ViewMessagesEventHandler> {
 		return TYPE;
 	}
 
-	public EHRView<EHR> getView() {
+	public EHRView<T> getView() {
 		return view;
 	}
 

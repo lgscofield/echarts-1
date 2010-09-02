@@ -17,8 +17,6 @@ package org.eastway.echarts.client.view;
 
 import java.util.Date;
 
-import org.eastway.echarts.shared.EHR;
-
 import com.google.gwt.app.client.NotificationMole;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.user.client.ui.Widget;
@@ -36,7 +34,7 @@ public interface DashboardView<T> {
 	}
 
 	public interface Presenter<T> {
-		void changeCurrentEhr(EHR ehr);
+		void changeCurrentEhr(Object object);
 
 		void openEhr(String text);
 

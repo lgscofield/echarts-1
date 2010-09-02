@@ -61,16 +61,19 @@ public class GetPatientSummaryHandler implements ActionHandler<GetPatientSummary
 					"SELECT a From AssignmentImpl a Where a.disposition = 'Open' And a.service Like 'S%' And a.caseNumber = '" + action.getCaseNumber() + "' Order By a.patient.lastName ASC, a.patient.firstName ASC, a.orderDate DESC", AssignmentImpl.class)
 						.getResultList();
 			List<String> providers = new ArrayList<String>();
-			for (AssignmentImpl a : assignments)
+			String provider = null;
+			for (AssignmentImpl a : assignments) {
 				providers.add(a.getStaffName());
-			/* if (provider == null && assignments.size() > 0)
+				if (a.getStaff() != null && a.getStaff().matches(action.getStaffId()))
+					provider = a.getStaffName();
+			}
+			if (provider == null && assignments.size() > 0)
 				provider = assignments.get(0).getStaffName();
-			else if (provider == null)
-				provider = ""; */
 			GetPatientSummaryResult result = new GetPatientSummaryResult();
 			result.setPatient(patient == null ? new PatientDTO() : patient.toDto());
 			result.setDemographics(demographics == null ? new DemographicsDTO() : demographics.toDto());
 			result.setProviders(providers);
+			result.setProvider(provider);
 			return result;
 		} catch (NoResultException e) {
 			throw new ActionException("Patient not found");

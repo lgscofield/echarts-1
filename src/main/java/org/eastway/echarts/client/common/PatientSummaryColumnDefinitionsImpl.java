@@ -72,7 +72,7 @@ public class PatientSummaryColumnDefinitionsImpl extends ArrayList<ColumnDefinit
 			@Override
 			public void render(GetPatientSummaryResult t, StringBuilder sb) {
 				for (String provider : t.getProviders())
-					sb.append(provider + "<br />");
+					sb.append(provider == null ? "" : provider + "<br />");
 			}
 
 			@Override
