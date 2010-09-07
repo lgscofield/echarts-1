@@ -7,7 +7,7 @@
             <!--value='create' to build a new database on each run; value='update' to modify an existing database; value='create-drop' means the same as 'create' but also drops tables when Hibernate closes; value='validate' makes no changes to the database-->
             <property name="hibernate.hbm2ddl.auto" value="validate"/>
             <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
-			<property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://192.168.201.18:1433;databaseName=echarts"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://localhost:1433;databaseName=echarts"/>
 			<property name="javax.persistence.jdbc.user" value="echarts"/>
 			<property name="javax.persistence.jdbc.password" value="echarts"/>
 			<property name="hibernate.c3p0.min_size" value="5"/>
