@@ -15,13 +15,13 @@
  */
 package org.eastway.echarts.client.rpc;
 
+import net.customware.gwt.dispatch.client.DispatchAsync;
 import net.customware.gwt.dispatch.shared.Action;
 import net.customware.gwt.dispatch.shared.Result;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public interface CachingDispatchAsync {
-	public <A extends Action<R>, R extends Result> void execute(A action, AsyncCallback<R> callback);
+public interface CachingDispatchAsync extends DispatchAsync {
 	public <A extends Action<R>, R extends Result> void executeWithCache(final A action, final AsyncCallback<R> callback);
 	public void clear();
 }
