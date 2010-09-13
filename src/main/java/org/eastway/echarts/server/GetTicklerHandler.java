@@ -146,7 +146,7 @@ public class GetTicklerHandler implements ActionHandler<GetTickler, GetTicklerRe
 		} else {
 			if (patient.getIspReviewDateCompleted() != null) {
 				if (assignment.getService().matches("Pgm076")
-						|| assignment.getDemographics().isAlcoholDrug()
+						|| (assignment.getDemographics().isAlcoholDrug() == null ? false : assignment.getDemographics().isAlcoholDrug())
 						|| assignment.getService().matches("Pgm021")
 						|| assignment.getService().matches("Pgm022")
 						|| assignment.getService().matches("Pgm023")
