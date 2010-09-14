@@ -19,6 +19,7 @@ import org.eastway.echarts.shared.GetARInfo;
 import org.eastway.echarts.shared.GetAddresses;
 import org.eastway.echarts.shared.GetAppointments;
 import org.eastway.echarts.shared.GetContacts;
+import org.eastway.echarts.shared.GetDbServerConfig;
 import org.eastway.echarts.shared.GetDemographics;
 import org.eastway.echarts.shared.GetDiagnoses;
 import org.eastway.echarts.shared.GetLinks;
@@ -58,6 +59,7 @@ public class ServerModule extends ActionHandlerModule {
 		bindHandler(GetProfileViewData.class, GetProfileViewDataHandler.class);
 		bindHandler(GetTicklerLite.class, GetTicklerLiteHandler.class);
 		bindHandler(GetARInfo.class, GetARInfoHandler.class);
+		bindHandler(GetDbServerConfig.class, GetDbServerConfigHandler.class);
 	}
 
 }
