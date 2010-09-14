@@ -19,4 +19,5 @@ public class EchartsUser {
 	public static String sessionId;
 	public static String staffId;
 	public static String userName;
+	public static String dbServerUrl;
 }
