@@ -405,7 +405,8 @@
     	<version>2.0</version>
     </dependency>
 	</dependencies>
-	<version>1.0.5.5</version>
+	<version>VERSION</version>
+	<description>An electronic health record for Ohio behavioral healthcare agencies.</description>
 	<build>
 		<plugins>
 			<plugin>

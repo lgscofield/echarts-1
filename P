@@ -1,0 +1,13 @@
+#!/bin/sh
+
+VERSION=$(git describe)
+
+mvn versions:set -DnewVersion=$VERSION -DgenerateBackupPoms=false &&
+sed -i s/ECharts\ -\ .*\<\\/title\>/ECharts\ -\ $VERSION\<\\/title\>/g src/main/webapp/echarts.html &&
+sed -i s/localhost/192.168.201.18/g src/main/resources/META-INF/persistence.xml &&
+sed -i s/echarts-.*/echarts-$VERSION/g .settings/com.google.gdt.eclipse.core.prefs &&
+sed -i s/echarts-.*\\/WEB-INF/echarts-$VERSION\\/WEB-INF/g .settings/org.eclipse.wst.common.component &&
+sed -i s/echarts-.*\\/WEB-INF/echarts-$VERSION\\/WEB-INF/g .classpath &&
+mvn package &&
+mv target/echarts-$VERSION.war target/echarts.war &&
+git checkout -- src/main/resources/META-INF/persistence.xml
