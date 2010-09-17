@@ -27,6 +27,8 @@ import org.eastway.echarts.shared.Diagnosis;
 import org.eastway.echarts.shared.DiagnosisCode;
 import org.eastway.echarts.shared.DiagnosisCodeDTO;
 import org.eastway.echarts.shared.DiagnosisDTO;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 @Entity
 @Table(name = "Diagnosis")
@@ -34,27 +36,35 @@ public class DiagnosisImpl implements Diagnosis {
 
 	@ManyToOne
 	@JoinColumn(name = "axis1a")
+	@NotFound(action=NotFoundAction.IGNORE)
 	private DiagnosisCodeImpl axis1A;
 	@ManyToOne
 	@JoinColumn(name = "axis1b")
+	@NotFound(action=NotFoundAction.IGNORE)
 	private DiagnosisCodeImpl axis1B;
 	@ManyToOne
 	@JoinColumn(name = "axis1c")
+	@NotFound(action=NotFoundAction.IGNORE)
 	private DiagnosisCodeImpl axis1C;
 	@ManyToOne
 	@JoinColumn(name = "axis1d")
+	@NotFound(action=NotFoundAction.IGNORE)
 	private DiagnosisCodeImpl axis1D;
 	@ManyToOne
 	@JoinColumn(name = "axis1e")
+	@NotFound(action=NotFoundAction.IGNORE)
 	private DiagnosisCodeImpl axis1E;
 	@ManyToOne
 	@JoinColumn(name = "axis2a")
+	@NotFound(action=NotFoundAction.IGNORE)
 	private DiagnosisCodeImpl axis2A;
 	@ManyToOne
 	@JoinColumn(name = "axis2b")
+	@NotFound(action=NotFoundAction.IGNORE)
 	private DiagnosisCodeImpl axis2B;
 	@ManyToOne
 	@JoinColumn(name = "axis2c")
+	@NotFound(action=NotFoundAction.IGNORE)
 	private DiagnosisCodeImpl axis2C;
 	private String axis3;
 	private String axis4;
