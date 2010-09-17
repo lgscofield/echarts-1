@@ -30,6 +30,8 @@ import org.eastway.echarts.shared.Role;
 import org.eastway.echarts.shared.RoleDTO;
 import org.eastway.echarts.shared.User;
 import org.eastway.echarts.shared.UserDTO;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 @Entity
 @Table(name="Echarts_User")
@@ -57,6 +59,7 @@ public class UserImpl implements User {
 	private String staffDescription;
 	private String staffNpi;
 	@ManyToOne
+	@NotFound(action=NotFoundAction.IGNORE)
 	private UserImpl supervisor;
 	private String cred1;
 	private String cred2;
