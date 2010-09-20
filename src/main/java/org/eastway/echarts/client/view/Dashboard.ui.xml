@@ -114,7 +114,7 @@
 		</g:north>
 		<g:center>
 			<g:TabLayoutPanel ui:field="tabLayoutPanel" barUnit="EM"
-				barHeight="2.6">
+				barHeight="3">
 				<g:tab>
 					<g:header>
 						Dashboard

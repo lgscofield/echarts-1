@@ -28,7 +28,7 @@
     <g:layer>
 	    <g:DialogBox ui:field="db" visible='false' modal="false">
 	      <g:FlowPanel>
-	        <g:RichTextArea ui:field="message" width="400px" height="400px" />
+	        <g:RichTextArea width="400px" height="400px" ui:field="message"/>
 	        <g:FlowPanel>
 	          <g:FlowPanel addStyleNames="{style.h}">
 	            <g:ListBox ui:field="messageTypes" />
@@ -38,14 +38,16 @@
 	        </g:FlowPanel>
 	      </g:FlowPanel>
 	    </g:DialogBox>
+	</g:layer>
+    <g:layer top='0px' height='45px' left='0px' width='100%'>
+    	<g:FlowPanel>
+    		<g:Button addStyleNames='{style.newMessage}' ui:field="add">New Message</g:Button>
+    	</g:FlowPanel>
     </g:layer>
-  	<g:layer top='0px' height='35px'>
-  		<g:Button addStyleNames='{style.newMessage}' width='100px' height='25px' ui:field="add">New Message</g:Button>
-  	</g:layer>
-  	<g:layer top='45px' bottom='20px'>
+  	<g:layer top='45px' bottom='0px'>
 		<g:ScrollPanel>
-	    	<g:VerticalPanel ui:field="messages" />
-	    </g:ScrollPanel>
+	    	<g:FlowPanel ui:field="messages" />
+    	</g:ScrollPanel>
 	</g:layer>
   </g:LayoutPanel>
 </ui:UiBinder>

@@ -54,10 +54,10 @@ public abstract class EchartsCallback<T> implements AsyncCallback<T> {
 	}
 
 	private void startProcessing() {
-		eventBus.fireEvent(new RequestEvent(State.SENT));
+		eventBus.fireEvent(new RequestEvent(State.SENT, null));
 	}
 
 	private void stopProcessing() {
-		eventBus.fireEvent(new RequestEvent(State.RECEIVED));
+		eventBus.fireEvent(new RequestEvent(State.RECEIVED, null));
 	}
 }
