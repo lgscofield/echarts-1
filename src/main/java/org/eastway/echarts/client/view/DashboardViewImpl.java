@@ -250,6 +250,11 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 		presenter.openGroupProgressNote();
 	}
 
+	@UiHandler("lastSeenReport")
+	public void handleLastSeenReportClicked(ClickEvent event) {
+		presenter.openLastSeenReport();
+	}
+
 	@Override
 	public void isFirstLogin() {
 		final DialogBox dialogBox = new DialogBox();

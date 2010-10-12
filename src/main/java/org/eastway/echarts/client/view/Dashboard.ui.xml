@@ -182,6 +182,9 @@
 									<li>
 										<g:Hyperlink ui:field='groupProgressNote' targetHistoryToken=''>Group Progress Note</g:Hyperlink>
 									</li>
+									<li>
+										<g:Hyperlink ui:field='lastSeenReport' targetHistoryToken=''>Last Seen Report</g:Hyperlink>
+									</li>
 								</ul>
 							</g:HTMLPanel>
 						</g:west>

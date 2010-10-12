@@ -53,6 +53,8 @@ public interface DashboardView<T> {
 		void openStaffHistory();
 
 		void openGroupProgressNote();
+
+		void openLastSeenReport();
 	}
 
 	void addTab(Widget widget, String string);
