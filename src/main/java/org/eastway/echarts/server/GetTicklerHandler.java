@@ -40,6 +40,8 @@ import net.customware.gwt.dispatch.shared.ActionException;
 
 public class GetTicklerHandler implements ActionHandler<GetTickler, GetTicklerResult> {
 
+	private String staffId = "";
+
 	@Override
 	public GetTicklerResult execute(GetTickler action, ExecutionContext context)
 			throws ActionException {
@@ -57,6 +59,7 @@ public class GetTicklerHandler implements ActionHandler<GetTickler, GetTicklerRe
 			List<AssignmentImpl> assignments = em.createQuery(
 					"SELECT a From AssignmentImpl a Where a.staff = '" + action.getStaffId() + "' And a.disposition = 'Open' And a.service Like 'S%' Order By a.patient.lastName ASC, a.patient.firstName ASC, a.orderDate DESC", AssignmentImpl.class)
 					.getResultList();
+			staffId = action.getStaffId();
 			return new GetTicklerResult(setDates(assignments));
 		} finally {
 			em.close();
@@ -144,9 +147,10 @@ public class GetTicklerHandler implements ActionHandler<GetTickler, GetTicklerRe
 		if (getDueDateStatus(ispDueDate) == DueDateStatus.OVERDUE) {
 			return ispDueDate;
 		} else {
+			boolean aodStatus = (assignment.getDemographics().isAlcoholDrug()==null?false:assignment.getDemographics().isAlcoholDrug())&&(staffId=="5542"||staffId=="5396");
 			if (patient.getIspReviewDateCompleted() != null) {
 				if (assignment.getService().matches("Pgm076")
-						|| (assignment.getDemographics().isAlcoholDrug() == null ? false : assignment.getDemographics().isAlcoholDrug())
+						|| aodStatus
 						|| assignment.getService().matches("Pgm021")
 						|| assignment.getService().matches("Pgm022")
 						|| assignment.getService().matches("Pgm023")
@@ -158,7 +162,7 @@ public class GetTicklerHandler implements ActionHandler<GetTickler, GetTicklerRe
 				if (ispReviewDueDate > ispDueDate)
 					return ispDueDate;
 			} else {
-				if (assignment.getService().matches("Pgm076")) {
+				if (assignment.getService().matches("Pgm076") || aodStatus) {
 					ispReviewDueDate = ispDateCompleted + NINETY_DAYS;
 				} else {
 					ispReviewDueDate = ispDateCompleted + ONE_HUNDRED_EIGHTY_DAYS;

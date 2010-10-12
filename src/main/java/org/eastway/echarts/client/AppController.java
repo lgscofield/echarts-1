@@ -52,6 +52,8 @@ import org.eastway.echarts.client.events.ViewDiagnosesEvent;
 import org.eastway.echarts.client.events.ViewDiagnosesEventHandler;
 import org.eastway.echarts.client.events.ViewGroupProgressNoteEvent;
 import org.eastway.echarts.client.events.ViewGroupProgressNoteEventHandler;
+import org.eastway.echarts.client.events.ViewLastSeenReportEvent;
+import org.eastway.echarts.client.events.ViewLastSeenReportEventHandler;
 import org.eastway.echarts.client.events.ViewLinksEvent;
 import org.eastway.echarts.client.events.ViewLinksEventHandler;
 import org.eastway.echarts.client.events.ViewMedicationsEvent;
@@ -339,6 +341,16 @@ public class AppController implements Presenter {
 				doViewGroupProgressNote();
 			}
 		});
+		eventBus.addHandler(ViewLastSeenReportEvent.TYPE, new ViewLastSeenReportEventHandler() {
+			@Override
+			public void onViewLastSeenReport(ViewLastSeenReportEvent viewLastSeenReportEvent) {
+				doViewLastSeenReport();
+			}
+		});
+	}
+
+	private void doViewLastSeenReport() {
+		Window.open("http://ewsql.eastway.local/echarts-asp/lastseen.asp", "_blank", "");
 	}
 
 	private void doViewGroupProgressNote() {
