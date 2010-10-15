@@ -23,7 +23,7 @@ then
 		exit 1
 	fi
 fi
-echo "remove old files? [Y/N]"
+echo -n "remove old files? [Y/N]"
 while :
 do
 	read RESPONSE 
