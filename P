@@ -6,9 +6,17 @@ mvn clean &&
 mvn versions:set -DnewVersion=$VERSION -DgenerateBackupPoms=false &&
 sed -i s/ECharts\ -\ .*\<\\/title\>/ECharts\ -\ $VERSION\<\\/title\>/g src/main/webapp/echarts.html &&
 sed -i s/localhost/192.168.201.18/g src/main/resources/META-INF/persistence.xml &&
-sed -i s/echarts-.*/echarts-$VERSION/g .settings/com.google.gdt.eclipse.core.prefs &&
-sed -i s/echarts-.*\\/WEB-INF/echarts-$VERSION\\/WEB-INF/g .settings/org.eclipse.wst.common.component &&
 sed -i s/echarts-.*\\/WEB-INF/echarts-$VERSION\\/WEB-INF/g .classpath &&
 mvn package &&
 mv target/echarts-$VERSION.war target/echarts.war &&
 git checkout -- src/main/resources/META-INF/persistence.xml
+
+if [ -f .settings/com.google.gdt.eclipse.core.prefs ]
+then
+    sed -i s/echarts-.*/echarts-$VERSION/g .settings/com.google.gdt.eclipse.core.prefs
+fi
+
+if [ -f .settings/org.eclipse.wst.common.component ]
+then
+    sed -i s/echarts-.*\\/WEB-INF/echarts-$VERSION\\/WEB-INF/g .settings/org.eclipse.wst.common.component
+fi
