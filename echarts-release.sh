@@ -1,6 +1,6 @@
 #!/bin/sh
 ROOT=/var/www/html
-WEBAPPS=/usr/share/tomcat5/webapps/echarts
+WEBAPPS=/usr/share/tomcat5/webapps
 if [ ! -d ${ROOT}/echarts ]
 then
 	mkdir ${ROOT}/echarts
@@ -30,7 +30,7 @@ do
 	case $RESPONSE in
 		Y)
 			echo "removing old files"
-			rm -rf ${ROOT}/echarts ${WEBAPPS}
+			rm -rf ${ROOT}/echarts ${WEBAPPS}/echarts*
 			if [ $? != 0 ]; then
 				echo "error removing old files"
 				exit 1
@@ -58,17 +58,23 @@ if [ $? != 0 ]; then
 	echo "error unzipping ${ROOT}/echarts.war to ${ROOT}/echarts/"
 	exit 1
 fi
-echo "mkdir ${WEBAPPS}"
-mkdir "${WEBAPPS}"
+echo "mkdir ${WEBAPPS}/echarts"
+mkdir "${WEBAPPS}/echarts"
 if [ $? != 0 ]
 then
-	echo "fatal: can't create ${WEBAPPS}"
+	echo "fatal: can't create ${WEBAPPS}/echarts"
 	exit 1
 fi
-echo "unzipping ${ROOT}/echarts/echarts.war to ${WEBAPPS}"
-unzip -qq -d ${WEBAPPS} ${ROOT}/echarts/echarts.war
+echo "copying ${ROOT}/echarts/echarts.war to ${WEBAPPS}/echarts.war"
+cp ${ROOT}/echarts/echarts.war ${WEBAPPS}/echarts.war
 if [ $? != 0 ]
 then
-	echo "fatal: unzip to ${WEBAPPS} unsuccessful"
+    echo "fatal: copy to ${WEBAPPS}/echarts.war failed"
+fi
+echo "unzipping ${ROOT}/echarts/echarts.war to ${WEBAPPS}/echarts"
+unzip -qq -d ${WEBAPPS}/echarts ${ROOT}/echarts/echarts.war
+if [ $? != 0 ]
+then
+	echo "fatal: unzip to ${WEBAPPS}/echarts unsuccessful"
 	exit 1
 fi
