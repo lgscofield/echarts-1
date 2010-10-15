@@ -30,7 +30,7 @@ do
 	case $RESPONSE in
 		Y)
 			echo "removing old files"
-			rm -rf ${ROOT}/echarts/* ${WEBAPPS}
+			rm -rf ${ROOT}/echarts ${WEBAPPS}
 			if [ $? != 0 ]; then
 				echo "error removing old files"
 				exit 1
@@ -44,6 +44,8 @@ do
 			echo "Please enter Y or N"
 	esac
 done
+echo "mkdir ${ROOT}/echarts"
+mkdir "${ROOT}/echarts"
 echo "copying ${ROOT}/echarts.war to ${ROOT}/echarts/echarts.war"
 cp ${ROOT}/echarts.war ${ROOT}/echarts/echarts.war
 if [ $? != 0 ]; then
@@ -57,6 +59,7 @@ if [ $? != 0 ]; then
 	exit 1
 fi
 echo "mkdir ${WEBAPPS}"
+mkdir "${WEBAPPS}"
 if [ $? != 0 ]
 then
 	echo "fatal: can't create ${WEBAPPS}"
