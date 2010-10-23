@@ -52,6 +52,8 @@ import org.eastway.echarts.client.events.ViewDiagnosesEvent;
 import org.eastway.echarts.client.events.ViewDiagnosesEventHandler;
 import org.eastway.echarts.client.events.ViewGroupProgressNoteEvent;
 import org.eastway.echarts.client.events.ViewGroupProgressNoteEventHandler;
+import org.eastway.echarts.client.events.ViewLabsEvent;
+import org.eastway.echarts.client.events.ViewLabsEventHandler;
 import org.eastway.echarts.client.events.ViewLastSeenReportEvent;
 import org.eastway.echarts.client.events.ViewLastSeenReportEventHandler;
 import org.eastway.echarts.client.events.ViewLinksEvent;
@@ -347,6 +349,12 @@ public class AppController implements Presenter {
 				doViewLastSeenReport();
 			}
 		});
+		eventBus.addHandler(ViewLabsEvent.TYPE, new ViewLabsEventHandler() {
+			@Override
+			public <T> void onViewLabs(ViewLabsEvent<T> event) {
+				doViewLabs(event.getCaseNumber(), event.getView());
+			}
+		});
 	}
 
 	private void doViewLastSeenReport() {
@@ -492,6 +500,13 @@ public class AppController implements Presenter {
 	private <T> void doViewDemographics(final EHRView<T> ehrView, GetDemographics action) {
 		Presenter presenter = new DemographicsPresenter(new DemographicsViewImpl<Demographics>(), demographicsColumnDefinitions, eventBus, dispatch, action);
 		presenter.go(ehrView.getDisplayArea());
+	}
+
+	private <T> void doViewLabs(String caseNumber, EHRView<T> view) {
+		Frame frame = new Frame("http://ewsql.eastway.local/echarts-asp/client/labs.asp?PATID=" + caseNumber);
+		ehrView.getDisplayArea().clear();
+		ehrView.getDisplayArea().add(frame);
+		frame.setSize("100%", "100%");
 	}
 
 	@Override

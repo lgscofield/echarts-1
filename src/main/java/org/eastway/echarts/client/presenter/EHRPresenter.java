@@ -25,6 +25,7 @@ import org.eastway.echarts.client.events.ViewAppointmentsEvent;
 import org.eastway.echarts.client.events.ViewContactsEvent;
 import org.eastway.echarts.client.events.ViewDemographicsEvent;
 import org.eastway.echarts.client.events.ViewDiagnosesEvent;
+import org.eastway.echarts.client.events.ViewLabsEvent;
 import org.eastway.echarts.client.events.ViewLinksEvent;
 import org.eastway.echarts.client.events.ViewMedicationsEvent;
 import org.eastway.echarts.client.events.ViewMessagesEvent;
@@ -167,5 +168,10 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<GetPatientSumm
 	@Override
 	public void viewARInfo() {
 		eventBus.fireEvent(new ViewARInfoEvent<GetPatientSummaryResult>(ehr.getPatient().getCaseNumber(), view, aRInfo));
+	}
+
+	@Override
+	public void viewLabs() {
+		eventBus.fireEvent(new ViewLabsEvent<GetPatientSummaryResult>(ehr.getPatient().getCaseNumber(), view));
 	}
 }
