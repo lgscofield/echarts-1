@@ -108,6 +108,11 @@ public class EHRViewImpl<T> extends Composite implements EHRView<T> {
 		presenter.viewMedications();
 	}
 
+	@UiHandler("labs")
+	void onLabsSelected(ClickEvent event) {
+		presenter.viewLabs();
+	}
+
 	@UiHandler("treatmentPlan")
 	void onIspSelected(ClickEvent event) {
 		presenter.viewTreatmentPlan();

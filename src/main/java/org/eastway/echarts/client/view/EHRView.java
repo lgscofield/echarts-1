@@ -48,6 +48,8 @@ public interface EHRView<T> {
 		void viewServiceHistory();
 
 		void viewARInfo();
+
+		void viewLabs();
 	}
 
 	Widget asWidget();
