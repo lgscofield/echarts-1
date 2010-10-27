@@ -64,6 +64,8 @@ import org.eastway.echarts.client.events.ViewMedsomSignaturesEvent;
 import org.eastway.echarts.client.events.ViewMedsomSignaturesEventHandler;
 import org.eastway.echarts.client.events.ViewMessagesEvent;
 import org.eastway.echarts.client.events.ViewMessagesEventHandler;
+import org.eastway.echarts.client.events.ViewOverlapsReportEvent;
+import org.eastway.echarts.client.events.ViewOverlapsReportEventHandler;
 import org.eastway.echarts.client.events.ViewPatientSummaryEvent;
 import org.eastway.echarts.client.events.ViewPatientSummaryEventHandler;
 import org.eastway.echarts.client.events.ViewProfileEvent;
@@ -355,6 +357,12 @@ public class AppController implements Presenter {
 				doViewLabs(event.getCaseNumber(), event.getView());
 			}
 		});
+		eventBus.addHandler(ViewOverlapsReportEvent.TYPE, new ViewOverlapsReportEventHandler() {
+			@Override
+			public void onOpenOverlapsReport(ViewOverlapsReportEvent event) {
+				doViewOverlapsReport();
+			}
+		});
 	}
 
 	private void doViewLastSeenReport() {
@@ -507,6 +515,10 @@ public class AppController implements Presenter {
 		ehrView.getDisplayArea().clear();
 		ehrView.getDisplayArea().add(frame);
 		frame.setSize("100%", "100%");
+	}
+
+	private void doViewOverlapsReport() {
+		Window.open("http://ewsql.eastway.local/echarts-asp/overlaps.asp?staffid=" + EchartsUser.staffId, "_blank", "");
 	}
 
 	@Override

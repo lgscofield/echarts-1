@@ -55,6 +55,8 @@ public interface DashboardView<T> {
 		void openGroupProgressNote();
 
 		void openLastSeenReport();
+
+		void openOverlapsReport();
 	}
 
 	void addTab(Widget widget, String string);

@@ -185,6 +185,9 @@
 									<li>
 										<g:Hyperlink ui:field='lastSeenReport' targetHistoryToken=''>Last Seen Report</g:Hyperlink>
 									</li>
+									<li>
+										<g:Hyperlink ui:field='overlapsReport' targetHistoryToken=''>Overlaps Report</g:Hyperlink>
+									</li>
 								</ul>
 							</g:HTMLPanel>
 						</g:west>
