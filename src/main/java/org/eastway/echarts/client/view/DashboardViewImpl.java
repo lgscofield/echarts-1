@@ -255,6 +255,11 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 		presenter.openLastSeenReport();
 	}
 
+	@UiHandler("overlapsReport")
+	public void handleOverlapsReportClicked(ClickEvent event) {
+		presenter.openOverlapsReport();
+	}
+
 	@Override
 	public void isFirstLogin() {
 		final DialogBox dialogBox = new DialogBox();

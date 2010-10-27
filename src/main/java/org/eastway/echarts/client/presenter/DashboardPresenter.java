@@ -28,6 +28,7 @@ import org.eastway.echarts.client.events.OpenEhrEvent;
 import org.eastway.echarts.client.events.ViewGroupProgressNoteEvent;
 import org.eastway.echarts.client.events.ViewLastSeenReportEvent;
 import org.eastway.echarts.client.events.ViewMedsomSignaturesEvent;
+import org.eastway.echarts.client.events.ViewOverlapsReportEvent;
 import org.eastway.echarts.client.events.ViewProfileEvent;
 import org.eastway.echarts.client.events.ViewProviderSignaturesEvent;
 import org.eastway.echarts.client.events.ViewStaffHistoryEvent;
@@ -193,5 +194,10 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 	@Override
 	public void openLastSeenReport() {
 		eventBus.fireEvent(new ViewLastSeenReportEvent());
+	}
+
+	@Override
+	public void openOverlapsReport() {
+		eventBus.fireEvent(new ViewOverlapsReportEvent());
 	}
 }
