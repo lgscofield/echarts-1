@@ -15,7 +15,7 @@
  */
 package org.eastway.echarts.client.rpc;
 
-import net.customware.gwt.presenter.client.EventBus;
+import com.google.gwt.event.shared.EventBus;
 
 import com.google.gwt.requestfactory.shared.RequestEvent;
 import com.google.gwt.requestfactory.shared.RequestEvent.State;

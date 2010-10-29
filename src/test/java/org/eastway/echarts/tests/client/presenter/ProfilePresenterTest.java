@@ -21,7 +21,7 @@ import java.util.Date;
 
 import junit.framework.TestCase;
 
-import net.customware.gwt.presenter.client.EventBus;
+import com.google.gwt.event.shared.EventBus;
 
 import org.eastway.echarts.client.common.ProfileColumnDefinitionsImpl;
 import org.eastway.echarts.client.presenter.ProfilePresenter;

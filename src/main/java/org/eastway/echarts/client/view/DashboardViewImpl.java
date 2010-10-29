@@ -21,7 +21,7 @@ import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.ui.EchartsOracle;
 import org.eastway.echarts.style.client.GlobalResources;
 
-import com.google.gwt.app.client.NotificationMole;
+import com.google.gwt.user.client.ui.NotificationMole;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.dom.client.TableCellElement;

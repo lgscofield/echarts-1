@@ -15,7 +15,7 @@
  */
 package org.eastway.echarts.client;
 
-import net.customware.gwt.presenter.client.EventBus;
+import com.google.gwt.event.shared.EventBus;
 
 import org.eastway.echarts.client.common.ARInfoColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.AddressColumnDefinitionsImpl;
@@ -263,7 +263,7 @@ public class AppController implements Presenter {
 				doViewProfile();
 			}
 		});
-		eventBus.addHandler(RequestEvent.TYPE, new RequestEvent.Handler() {
+		RequestEvent.register(eventBus, new RequestEvent.Handler() {
 			// Only show loading status if a request isn't serviced in 250ms.
 			private static final int LOADING_TIMEOUT = 250;
 			private int REQUEST_EVENT_COUNT = 0;

@@ -15,7 +15,7 @@
  */
 package org.eastway.echarts.client.ui;
 
-import net.customware.gwt.presenter.client.EventBus;
+import com.google.gwt.event.shared.EventBus;
 
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.rpc.CachingDispatchAsync;
