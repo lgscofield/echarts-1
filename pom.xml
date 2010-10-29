@@ -405,7 +405,8 @@
     	<version>2.0</version>
     </dependency>
 	</dependencies>
-	<version>1.0.5.5</version>
+	<version>VERSION</version>
+	<description>An electronic health record for Ohio behavioral healthcare agencies.</description>
 	<build>
 		<plugins>
 			<plugin>
@@ -557,8 +558,8 @@
                 <configuration>
 				<logLevel>INFO</logLevel>
 				<style>OBFUSCATED</style>
-				<gwtVersion>2.1.0.M2</gwtVersion>
-				<runTarget>/echarts.html</runTarget>
+				<gwtVersion>2.1-SNAPSHOT</gwtVersion>
+				<runTarget>/echarts.jsp</runTarget>
                 <hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
 				<modules>
 					<module>${project.groupId}.Echarts</module>

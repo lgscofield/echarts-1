@@ -27,7 +27,7 @@ import org.eastway.echarts.shared.SessionExpiredException;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 public class ServiceUtil {
-	protected void checkSessionExpire(String sessionId) throws SessionExpiredException, DbException {
+	public void checkSessionExpire(String sessionId) throws SessionExpiredException, DbException {
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 		if (sessionId == null)
 			throw new IllegalArgumentException("Please login");

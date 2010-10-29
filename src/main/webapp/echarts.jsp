@@ -1,3 +1,34 @@
+<%@ page language="java" import="javax.persistence.*,org.eastway.echarts.domain.*,org.eastway.echarts.server.*,org.eastway.echarts.shared.*" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="UTF-8"%>
+<%
+Cookie sessionId = null;
+for (Cookie cookie : request.getCookies()) {
+	if (cookie.getName().equals("session_id")) {
+		sessionId = cookie;
+		break;
+	}
+}
+
+String dbServerUrl = null;
+EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
+try {
+	DbServerConfig nameValuePair = em.find(DbServerConfigImpl.class, "dbServerUrl");
+	dbServerUrl = nameValuePair.getValue();
+} finally {
+	em.close();
+}
+
+ServiceUtil util = new ServiceUtil();
+try {
+	if (sessionId == null)
+		throw new SessionExpiredException();
+	util.checkSessionExpire(sessionId.getValue());
+} catch (SessionExpiredException e) {
+	String echartsUrl = "http://" + request.getServerName() + "/echarts/echarts.jsp";
+	String loginServerUrl = "http://" + dbServerUrl + "/echarts/login.aspx?continue=" + echartsUrl;
+	response.sendRedirect(loginServerUrl);
+}
+%>
 <!DOCTYPE HTML>
 <!-- Copyright 2010 Ian Hilt                                                -->
 <!-- Licensed under the Apache License, Version 2.0 (the "License"); you    -->
