@@ -22,6 +22,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.google.gwt.user.client.ui.RootPanel;
 
 public class Echarts implements EntryPoint {
 	private final EchartsGinjector injector = GWT.create(EchartsGinjector.class);
@@ -48,6 +49,7 @@ public class Echarts implements EntryPoint {
 	}
 
 	public void go() {
+		RootPanel.get("page-loading-message").setVisible(false);
 		AppController app = injector.getAppController();
 		app.go(root);
 		injector.getPlaceManager().fireCurrentPlace();
