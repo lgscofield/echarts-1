@@ -15,5 +15,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style>
 	</ui:style>
-	<g:FlexTable ui:field="table"/>
+	<g:ScrollPanel>
+		<g:FlexTable ui:field="table"/>
+	</g:ScrollPanel>
 </ui:UiBinder>

@@ -53,17 +53,15 @@ import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Singleton;
 import com.google.inject.TypeLiteral;
 
-import net.customware.gwt.presenter.client.DefaultEventBus;
-import net.customware.gwt.presenter.client.EventBus;
-import net.customware.gwt.presenter.client.place.PlaceManager;
+import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.event.shared.SimpleEventBus;
 
 public class EchartsClientModule extends AbstractGinModule {
 
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void configure() {
-		bind(EventBus.class).to(DefaultEventBus.class).in(Singleton.class);
-		bind(PlaceManager.class).in(Singleton.class);
+		bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
 		bind(AppController.class).in(Singleton.class);
 		bind(CachingDispatchAsync.class).to(CachingDispatchAsyncImpl.class).in(Singleton.class);
 

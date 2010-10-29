@@ -17,7 +17,7 @@ package org.eastway.echarts.client.view;
 
 import java.util.Date;
 
-import com.google.gwt.app.client.NotificationMole;
+import com.google.gwt.user.client.ui.NotificationMole;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.user.client.ui.Widget;
 

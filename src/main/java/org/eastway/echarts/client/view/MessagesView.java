@@ -29,9 +29,9 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RichTextArea;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class MessagesView extends Composite implements MessagesPresenter.Display {
@@ -40,7 +40,7 @@ public class MessagesView extends Composite implements MessagesPresenter.Display
 	interface MessagesViewUiBinder extends
 			UiBinder<Widget, MessagesView> {}
 
-	@UiField VerticalPanel messages;
+	@UiField HasWidgets messages;
 	@UiField Button add;
 	@UiField DialogBox db;
 	@UiField Button saveButton, closeButton;
@@ -132,5 +132,6 @@ public class MessagesView extends Composite implements MessagesPresenter.Display
 	public void show() {
 		db.setVisible(true);
 		db.center();
+		message.setFocus(true);
 	}
 }

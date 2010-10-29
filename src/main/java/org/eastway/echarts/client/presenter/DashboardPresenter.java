@@ -18,7 +18,7 @@ package org.eastway.echarts.client.presenter;
 import java.util.Date;
 import java.util.LinkedHashMap;
 
-import net.customware.gwt.presenter.client.EventBus;
+import com.google.gwt.event.shared.EventBus;
 
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
