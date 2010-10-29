@@ -30,26 +30,13 @@ public class Echarts implements EntryPoint {
 
 	@Override
 	public void onModuleLoad() {
-		String sessionId = Cookies.getCookie("session_id");
-		String username = Cookies.getCookie("echarts_user");
-		String staffId = Cookies.getCookie("staff_id");
-
-		if ((sessionId == null || sessionId == "null") ||
-				(username == null || username == "null") ||
-				(staffId == null || staffId == "null"))
-			Window.Location.assign("http://ewsql.eastway.local/echarts/logout.aspx?continue=" + Window.Location.getHref());
-		else {
-			EchartsUser.sessionId = sessionId;
-			EchartsUser.userName = username;
-			EchartsUser.staffId = staffId;
-			//EchartsUser.staffId = "5434"; // for testing
-			GlobalResources.resources().css().ensureInjected();
-			go();
-		}
-	}
-
-	public void go() {
 		RootPanel.get("page-loading-message").setVisible(false);
+		EchartsUser.sessionId = Cookies.getCookie("session_id");
+		EchartsUser.userName = Cookies.getCookie("echarts_user");
+		EchartsUser.staffId = Cookies.getCookie("staff_id");
+		//EchartsUser.staffId = "5434"; // for testing
+		GlobalResources.resources().css().ensureInjected();
+		Window.enableScrolling(false);
 		AppController app = injector.getAppController();
 		app.go(root);
 		injector.getPlaceManager().fireCurrentPlace();

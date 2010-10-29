@@ -13,11 +13,25 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.client;
+package org.eastway.echarts.shared;
 
-public class EchartsUser {
-	public static String sessionId;
-	public static String staffId;
-	public static String userName;
-	public static String dbServerUrl;
+import net.customware.gwt.dispatch.shared.Result;
+
+public class GetDbServerConfigResult implements Result {
+
+	private String value;
+
+	GetDbServerConfigResult() { }
+
+	public GetDbServerConfigResult(String value) {
+		this.setValue(value);
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	public String getValue() {
+		return value;
+	}
 }

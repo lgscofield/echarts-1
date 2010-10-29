@@ -25,7 +25,7 @@ import net.customware.gwt.dispatch.client.DispatchAsync;
 import net.customware.gwt.dispatch.shared.Action;
 import net.customware.gwt.dispatch.shared.Result;
 
-public class CachingDispatchAsyncImpl implements DispatchAsync, CachingDispatchAsync {
+public class CachingDispatchAsyncImpl implements CachingDispatchAsync {
 
 	private DispatchAsync dispatcher;
 	private Map<Action<Result>, Result> cache = new HashMap<Action<Result>, Result>();

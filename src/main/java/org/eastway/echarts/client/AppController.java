@@ -101,6 +101,7 @@ import org.eastway.echarts.client.presenter.ProfilePresenter;
 import org.eastway.echarts.client.presenter.ReferralPresenter;
 import org.eastway.echarts.client.presenter.TicklerPresenter;
 import org.eastway.echarts.client.rpc.CachingDispatchAsync;
+import org.eastway.echarts.client.rpc.EchartsCallback;
 import org.eastway.echarts.client.view.ARInfoViewImpl;
 import org.eastway.echarts.client.view.AddressViewImpl;
 import org.eastway.echarts.client.view.AppointmentViewImpl;
@@ -123,6 +124,8 @@ import org.eastway.echarts.shared.GetARInfo;
 import org.eastway.echarts.shared.GetAddresses;
 import org.eastway.echarts.shared.GetAppointments;
 import org.eastway.echarts.shared.GetContacts;
+import org.eastway.echarts.shared.GetDbServerConfig;
+import org.eastway.echarts.shared.GetDbServerConfigResult;
 import org.eastway.echarts.shared.GetDemographics;
 import org.eastway.echarts.shared.GetDiagnoses;
 import org.eastway.echarts.shared.GetLinks;
@@ -160,7 +163,31 @@ public class AppController implements Presenter {
 		this.dashboardPresenter = dashboardPresenter;
 		this.eventBus = eventBus;
 		this.dispatch = dispatch;
-		bind();
+		checkSession();
+	}
+
+	private void checkSession() {
+		dispatch.execute(new GetDbServerConfig("dbServerUrl"), new EchartsCallback<GetDbServerConfigResult>(eventBus) {
+			@Override
+			protected void handleFailure(Throwable caught) {
+			}
+
+			@Override
+			protected void handleSuccess(GetDbServerConfigResult t) {
+				if ((EchartsUser.sessionId == null || EchartsUser.sessionId == "null") ||
+						(EchartsUser.userName == null || EchartsUser.userName == "null") ||
+						(EchartsUser.staffId == null || EchartsUser.staffId == "null")) {
+					Window.Location.assign("http://" + t.getValue() + "/echarts/logout.aspx?continue=" + Window.Location.getHref());
+				} else {
+					setDbServerUrl(t.getValue());
+					bind();
+				}
+			}
+		});
+	}
+
+	private void setDbServerUrl(String dbServerUrl) {
+		EchartsUser.dbServerUrl = dbServerUrl;
 	}
 
 	private void bind() {
@@ -366,27 +393,27 @@ public class AppController implements Presenter {
 	}
 
 	private void doViewLastSeenReport() {
-		Window.open("http://ewsql.eastway.local/echarts-asp/lastseen.asp", "_blank", "");
+		Window.open("http://" + EchartsUser.dbServerUrl + "/echarts-asp/lastseen.asp", "_blank", "");
 	}
 
 	private void doViewGroupProgressNote() {
-		Window.open("http://ewsql.eastway.local/echarts-asp/Forms/108GroupSetup.asp?staffid=" + EchartsUser.staffId, "_blank", "");
+		Window.open("http://" + EchartsUser.dbServerUrl + "/echarts-asp/Forms/108GroupSetup.asp?staffid=" + EchartsUser.staffId, "_blank", "");
 	}
 
 	private void doViewStaffHistory() {
-		Frame frame = new Frame("http://ewsql.eastway.local/echarts-asp/staffhistory.asp?staffid=" + EchartsUser.staffId);
+		Frame frame = new Frame("http://" + EchartsUser.dbServerUrl + "/echarts-asp/staffhistory.asp?staffid=" + EchartsUser.staffId);
 		frame.setSize("100%", "100%");
 		dashboardPresenter.getDisplay().addTab(frame, "History");
 	}
 
 	private void doViewMedsomSignatures() {
-		Frame frame = new Frame("http://ewsql.eastway.local/echarts-asp/signatures/medqueue.asp?staffid=" + EchartsUser.staffId);
+		Frame frame = new Frame("http://" + EchartsUser.dbServerUrl + "/echarts-asp/signatures/medqueue.asp?staffid=" + EchartsUser.staffId);
 		frame.setSize("100%", "100%");
 		dashboardPresenter.getDisplay().addTab(frame, "Med-Som Signatures");
 	}
 
 	private void doViewSupervisorSignatures() {
-		Frame frame = new Frame("http://ewsql.eastway.local/echarts-asp/signatures/supervisorqueue.asp?staffid=" + EchartsUser.staffId);
+		Frame frame = new Frame("http://" + EchartsUser.dbServerUrl + "/echarts-asp/signatures/supervisorqueue.asp?staffid=" + EchartsUser.staffId);
 		frame.setSize("100%", "100%");
 		dashboardPresenter.getDisplay().addTab(frame, "Supervisor Signatures");
 	}
@@ -397,47 +424,47 @@ public class AppController implements Presenter {
 	}
 
 	private void doViewSignature() {
-		Frame frame = new Frame("http://ewsql.eastway.local/echarts-asp/signatures/sign.asp?staffid=" + EchartsUser.staffId);
+		Frame frame = new Frame("http://" + EchartsUser.dbServerUrl + "/echarts-asp/signatures/sign.asp?staffid=" + EchartsUser.staffId);
 		frame.setSize("100%", "100%");
 		dashboardPresenter.getDisplay().addTab(frame, "Provider Signatures");
 	}
 
 	private void doOpenNurseProgressNote(String caseNumber) {
-		Window.open("http://ewsql.eastway.local/echarts-asp/Forms/103PM-NPNEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber, "_blank", "");
+		Window.open("http://" + EchartsUser.dbServerUrl + "/echarts-asp/Forms/103PM-NPNEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber, "_blank", "");
 	}
 
 	private void doOpenDoctorProgressNote(String caseNumber) {
-		Window.open("http://ewsql.eastway.local/echarts-asp/Forms/104PharmEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber, "_blank", "");
+		Window.open("http://" + EchartsUser.dbServerUrl + "/echarts-asp/Forms/104PharmEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber, "_blank", "");
 	}
 
 	private void doOpenIndividualProgressNote(String caseNumber) {
-		Window.open("http://ewsql.eastway.local/echarts-asp/Forms/102IPNEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber, "_blank", "");
+		Window.open("http://" + EchartsUser.dbServerUrl + "/echarts-asp/Forms/102IPNEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber, "_blank", "");
 	}
 
 	private void doOpenCpstNote(String caseNumber) {
-		Window.open("http://ewsql.eastway.local/echarts-asp/Forms/101CPSTEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber, "_blank", "");
+		Window.open("http://" + EchartsUser.dbServerUrl + "/echarts-asp/Forms/101CPSTEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber, "_blank", "");
 	}
 
 	private void doLogout() {
-		Window.Location.assign("http://ewsql.eastway.local/echarts/logout.aspx?continue=" + Window.Location.getHref());
+		Window.Location.assign("http://" + EchartsUser.dbServerUrl + "/echarts/logout.aspx?continue=" + Window.Location.getHref());
 	}
 
 	private <T> void doViewServiceHistory(String caseNumber, EHRView<T> ehrView) {
-		Frame frame = new Frame("http://ewsql.eastway.local/echarts-asp/client/clienthistory.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber);
+		Frame frame = new Frame("http://" + EchartsUser.dbServerUrl + "/echarts-asp/client/clienthistory.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber);
 		ehrView.getDisplayArea().clear();
 		ehrView.getDisplayArea().add(frame);
 		frame.setSize("100%", "100%");
 	}
 
 	private <T> void doViewTreatmentPlan(String caseNumber, EHRView<T> ehrView) {
-		Frame frame = new Frame("http://ewsql.eastway.local/echarts-asp/client/treatmentplan.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber);
+		Frame frame = new Frame("http://" + EchartsUser.dbServerUrl + "/echarts-asp/client/treatmentplan.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber);
 		ehrView.getDisplayArea().clear();
 		ehrView.getDisplayArea().add(frame);
 		frame.setSize("100%", "100%");
 	}
 
 	private void doOpenIsp(String caseNumber) {
-		Window.open("http://ewsql.eastway.local/echarts-asp/Forms/GandO.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber, "_blank", "");
+		Window.open("http://" + EchartsUser.dbServerUrl + "/echarts-asp/Forms/GandO.asp?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber, "_blank", "");
 	}
 
 	private void doViewTickler() {
@@ -511,14 +538,14 @@ public class AppController implements Presenter {
 	}
 
 	private <T> void doViewLabs(String caseNumber, EHRView<T> view) {
-		Frame frame = new Frame("http://ewsql.eastway.local/echarts-asp/client/labs.asp?PATID=" + caseNumber);
+		Frame frame = new Frame("http://" + EchartsUser.dbServerUrl + "/echarts-asp/client/labs.asp?PATID=" + caseNumber);
 		ehrView.getDisplayArea().clear();
 		ehrView.getDisplayArea().add(frame);
 		frame.setSize("100%", "100%");
 	}
 
 	private void doViewOverlapsReport() {
-		Window.open("http://ewsql.eastway.local/echarts-asp/overlaps.asp?staffid=" + EchartsUser.staffId, "_blank", "");
+		Window.open("http://" + EchartsUser.dbServerUrl + "/echarts-asp/overlaps.asp?staffid=" + EchartsUser.staffId, "_blank", "");
 	}
 
 	@Override

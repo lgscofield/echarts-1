@@ -58,9 +58,9 @@ public class TicklerColumnDefinitionsImpl extends
 				String dueDate = t.getIspDueDate().getDueDate();
 				int status = t.getIspDueDate().getStatus();
 				if (status == DueDateStatus.NO_DATA)
-					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://ewsql.eastway.local/echarts-asp/forms/GandO.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + noData + "</a>";
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://" + EchartsUser.dbServerUrl + "/echarts-asp/forms/GandO.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + noData + "</a>";
 				else if (status != DueDateStatus.COMPLIANT)
-					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://ewsql.eastway.local/echarts-asp/forms/GandO.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + dueDate + "</a>";
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://" + EchartsUser.dbServerUrl + "/echarts-asp/forms/GandO.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + dueDate + "</a>";
 				sb.append(formatColumn(status, dueDate));
 			}
 		});
@@ -70,9 +70,9 @@ public class TicklerColumnDefinitionsImpl extends
 				String dueDate = t.getIspReviewDueDate().getDueDate();
 				int status = t.getIspReviewDueDate().getStatus();
 				if (status == DueDateStatus.NO_DATA)
-					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://ewsql.eastway.local/echarts-asp/forms/GandOReview.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + noData + "</a>";
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://" + EchartsUser.dbServerUrl + "/echarts-asp/forms/GandOReview.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + noData + "</a>";
 				else if (status != DueDateStatus.COMPLIANT)
-					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://ewsql.eastway.local/echarts-asp/forms/GandOReview.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + dueDate + "</a>";
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://" + EchartsUser.dbServerUrl + "/echarts-asp/forms/GandOReview.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + dueDate + "</a>";
 				sb.append(formatColumn(status, dueDate));
 			}
 		});
@@ -82,9 +82,9 @@ public class TicklerColumnDefinitionsImpl extends
 				String dueDate = t.getHealthHistoryDueDate().getDueDate();
 				int status = t.getHealthHistoryDueDate().getStatus();
 				if (status == DueDateStatus.NO_DATA)
-					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://ewsql.eastway.local/echarts-asp/forms/107HealthHxEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + noData + "</a>";
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://" + EchartsUser.dbServerUrl + "/echarts-asp/forms/107HealthHxEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + noData + "</a>";
 				else if (status != DueDateStatus.COMPLIANT)
-					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://ewsql.eastway.local/echarts-asp/forms/107HealthHxEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + dueDate + "</a>";
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://" + EchartsUser.dbServerUrl + "/echarts-asp/forms/107HealthHxEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + dueDate + "</a>";
 				sb.append(formatColumn(status, dueDate));
 			}
 		});
@@ -94,9 +94,9 @@ public class TicklerColumnDefinitionsImpl extends
 				String dueDate = t.getDiagnosticAssessmentUpdate().getDueDate();
 				int status = t.getDiagnosticAssessmentUpdate().getStatus();
 				if (status == DueDateStatus.NO_DATA)
-					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://ewsql.eastway.local/echarts-asp/forms/110ADAUpdateEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + noData + "</a>";
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://" + EchartsUser.dbServerUrl + "/echarts-asp/forms/110ADAUpdateEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + noData + "</a>";
 				else if (status != DueDateStatus.COMPLIANT)
-					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://ewsql.eastway.local/echarts-asp/forms/110ADAUpdateEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + dueDate + "</a>";
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://" + EchartsUser.dbServerUrl + "/echarts-asp/forms/110ADAUpdateEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + dueDate + "</a>";
 				sb.append(formatColumn(status, dueDate));
 			}
 		});
@@ -106,9 +106,9 @@ public class TicklerColumnDefinitionsImpl extends
 				String dueDate = t.getFinancialDueDate().getDueDate();
 				int status = t.getFinancialDueDate().getStatus();
 				if (status == DueDateStatus.NO_DATA)
-					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://ewsql.eastway.local/echarts-asp/forms/109FinancialAuthEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + noData + "</a>";
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://" + EchartsUser.dbServerUrl + "/echarts-asp/forms/109FinancialAuthEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + noData + "</a>";
 				else if (status != DueDateStatus.COMPLIANT)
-					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://ewsql.eastway.local/echarts-asp/forms/109FinancialAuthEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + dueDate + "</a>";
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://" + EchartsUser.dbServerUrl + "/echarts-asp/forms/109FinancialAuthEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + dueDate + "</a>";
 				sb.append(formatColumn(status, dueDate));
 			}
 		});
