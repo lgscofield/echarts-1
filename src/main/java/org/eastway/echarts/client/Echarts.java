@@ -39,6 +39,5 @@ public class Echarts implements EntryPoint {
 		Window.enableScrolling(false);
 		AppController app = injector.getAppController();
 		app.go(root);
-		//injector.getPlaceManager().fireCurrentPlace();
 	}
 }
