@@ -1,12 +1,16 @@
 <%@ page language="java" import="javax.persistence.*,org.eastway.echarts.domain.*,org.eastway.echarts.server.*,org.eastway.echarts.shared.*" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="UTF-8"%>
 <%
-Cookie sessionId = null;
-for (Cookie cookie : request.getCookies()) {
-	if (cookie.getName().equals("session_id")) {
-		sessionId = cookie;
-		break;
+String sessionId = null;
+
+try {
+	for (Cookie cookie : request.getCookies()) {
+		if (cookie.getName().equals("session_id")) {
+			sessionId = cookie.getValue();
+			break;
+		}
 	}
+} catch (NullPointerException e) {
 }
 
 String dbServerUrl = null;
@@ -22,7 +26,7 @@ ServiceUtil util = new ServiceUtil();
 try {
 	if (sessionId == null)
 		throw new SessionExpiredException();
-	util.checkSessionExpire(sessionId.getValue());
+	util.checkSessionExpire(sessionId);
 } catch (SessionExpiredException e) {
 	String echartsUrl = "http://" + request.getServerName() + "/echarts/echarts.jsp";
 	String loginServerUrl = "http://" + dbServerUrl + "/echarts/login.aspx?continue=" + echartsUrl;
