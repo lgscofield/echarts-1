@@ -60,7 +60,10 @@ public class PatientSummaryColumnDefinitionsImpl extends ArrayList<ColumnDefinit
 		this.add(new ColumnDefinition<GetPatientSummaryResult>() {
 			@Override
 			public void render(GetPatientSummaryResult t, StringBuilder sb) {
-				sb.append(GlobalResources.getDateFormat().format(t.getDemographics().getDob()));
+				if (t.getDemographics().getDob() != null)
+					sb.append(GlobalResources.getDateFormat().format(t.getDemographics().getDob()));
+				else
+					sb.append("");
 			}
 
 			@Override

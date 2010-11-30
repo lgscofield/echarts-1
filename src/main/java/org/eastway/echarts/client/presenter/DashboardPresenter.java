@@ -15,7 +15,6 @@
  */
 package org.eastway.echarts.client.presenter;
 
-import java.util.Date;
 import java.util.LinkedHashMap;
 
 import com.google.gwt.event.shared.EventBus;
@@ -96,11 +95,7 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 		Demographics demographics = ehr.getDemographics();
 		view.setName(patient.getName());
 		view.setCaseStatus(patient.getCaseStatus().getDescriptor() == null ? "" : patient.getCaseStatus().getDescriptor());
-
-		Long age = (new Date().getTime() - demographics.getDob().getTime()) / (3600*24*365) / 1000;
-
 		view.setDob(demographics.getDob());
-		view.setAge(" (" + age.toString() + ")");
 		view.setProvider(ehr.getProvider() == null ? "" : ehr.getProvider());
 		view.setSsn(patient.getSsn());
 		view.showEhrStub(true);

@@ -202,7 +202,13 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 
 	@Override
 	public void setDob(Date dob) {
-		currentPatientData.setText(1, 0, "DOB: " + GlobalResources.getDateFormat().format(dob));
+		if (dob != null) {
+			currentPatientData.setText(1, 0, "DOB: " + GlobalResources.getDateFormat().format(dob));
+			Long age = (new Date().getTime() - dob.getTime()) / (3600*24*365) / 1000;
+			setAge(" (" + age.toString() + ")");
+		} else {
+			currentPatientData.setText(1, 0, "DOB: NO DATA");
+		}
 	}
 
 	@Override

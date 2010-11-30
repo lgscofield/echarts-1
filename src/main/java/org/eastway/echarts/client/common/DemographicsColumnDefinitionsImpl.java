@@ -50,7 +50,10 @@ public class DemographicsColumnDefinitionsImpl extends ArrayList<ColumnDefinitio
 		this.add(new ColumnDefinition<Demographics>() {
 			@Override
 			public void render(Demographics t, StringBuilder sb) {
-				sb.append(GlobalResources.getDateFormat().format(t.getDob()));
+				if (t.getDob() != null)
+					sb.append(GlobalResources.getDateFormat().format(t.getDob()));
+				else
+					sb.append(noData);
 			}
 
 			@Override
