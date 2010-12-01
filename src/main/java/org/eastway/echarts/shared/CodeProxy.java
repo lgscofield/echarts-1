@@ -13,19 +13,21 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.client;
+package org.eastway.echarts.shared;
 
-import org.eastway.echarts.client.rpc.EchartsRequestFactory;
+import org.eastway.echarts.domain.CodeImpl;
 
-import net.customware.gwt.dispatch.client.gin.StandardDispatchModule;
+import com.google.gwt.requestfactory.shared.EntityProxy;
+import com.google.gwt.requestfactory.shared.EntityProxyId;
+import com.google.gwt.requestfactory.shared.ProxyFor;
 
-import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.inject.client.GinModules;
-import com.google.gwt.inject.client.Ginjector;
-
-@GinModules({ StandardDispatchModule.class, EchartsClientModule.class })
-public interface EchartsGinjector extends Ginjector {
-	AppController getAppController();
-	EchartsRequestFactory getRequestFactory();
-	EventBus getEventBus();
+@ProxyFor(CodeImpl.class)
+public interface CodeProxy extends EntityProxy {
+	EntityProxyId<CodeProxy> stableId();
+	String getColumnName();
+	String getValue();
+	String getDescriptor();
+	void setColumnName(String columnName);
+	void setValue(String value);
+	void setDescriptor(String descriptor);
 }

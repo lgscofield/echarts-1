@@ -102,6 +102,7 @@ import org.eastway.echarts.client.presenter.ReferralPresenter;
 import org.eastway.echarts.client.presenter.TicklerPresenter;
 import org.eastway.echarts.client.rpc.CachingDispatchAsync;
 import org.eastway.echarts.client.rpc.EchartsCallback;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.view.ARInfoViewImpl;
 import org.eastway.echarts.client.view.AddressViewImpl;
 import org.eastway.echarts.client.view.AppointmentViewImpl;
@@ -157,12 +158,14 @@ public class AppController implements Presenter {
 	@Inject private AppointmentColumnDefinitionsImpl appointmentColumnDefinitions;
 	@Inject private ReferralColumnDefinitionsImpl referralColumnDefinitions;
 	@Inject private ARInfoColumnDefinitionsImpl aRInfoColumnDefinitions;
+	private EchartsRequestFactory requestFactory;
 
 	@Inject
-	public AppController(DashboardPresenter dashboardPresenter, EventBus eventBus, CachingDispatchAsync dispatch) {
+	public AppController(DashboardPresenter dashboardPresenter, EventBus eventBus, CachingDispatchAsync dispatch, EchartsRequestFactory requestFactory) {
 		this.dashboardPresenter = dashboardPresenter;
 		this.eventBus = eventBus;
 		this.dispatch = dispatch;
+		this.requestFactory = requestFactory;
 		checkSession();
 	}
 
@@ -516,7 +519,7 @@ public class AppController implements Presenter {
 	}
 
 	private <T> void doViewMessages(EHRView<T> ehrView, GetMessages action) {
-		Presenter presenter = new MessagesPresenter(new MessagesView(), eventBus, dispatch, action);
+		Presenter presenter = new MessagesPresenter(new MessagesView(), eventBus, requestFactory, action);
 		presenter.go(ehrView.getDisplayArea());
 	}
 

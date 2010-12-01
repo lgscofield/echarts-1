@@ -17,9 +17,9 @@ package org.eastway.echarts.shared;
 
 public interface Code {
 
-	public void setCodeId(Long codeId);
+	public void setId(Long codeId);
 
-	public Long getCodeId();
+	public Long getId();
 
 	public void setColumnName(String columnName);
 

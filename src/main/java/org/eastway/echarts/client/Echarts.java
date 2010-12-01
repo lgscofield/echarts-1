@@ -15,6 +15,7 @@
  */
 package org.eastway.echarts.client;
 
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.style.client.GlobalResources;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -37,6 +38,8 @@ public class Echarts implements EntryPoint {
 		//EchartsUser.staffId = "5434"; // for testing
 		GlobalResources.resources().css().ensureInjected();
 		Window.enableScrolling(false);
+		EchartsRequestFactory requestFactory = injector.getRequestFactory();
+		requestFactory.initialize(injector.getEventBus());
 		AppController app = injector.getAppController();
 		app.go(root);
 	}

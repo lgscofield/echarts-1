@@ -32,6 +32,7 @@ import org.eastway.echarts.client.presenter.ProfilePresenter;
 import org.eastway.echarts.client.presenter.TicklerPresenter;
 import org.eastway.echarts.client.rpc.CachingDispatchAsync;
 import org.eastway.echarts.client.rpc.CachingDispatchAsyncImpl;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.ui.EchartsOracle;
 import org.eastway.echarts.client.view.DashboardView;
 import org.eastway.echarts.client.view.DashboardViewImpl;
@@ -64,6 +65,7 @@ public class EchartsClientModule extends AbstractGinModule {
 		bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
 		bind(AppController.class).in(Singleton.class);
 		bind(CachingDispatchAsync.class).to(CachingDispatchAsyncImpl.class).in(Singleton.class);
+		bind(EchartsRequestFactory.class).in(Singleton.class);
 
 		bind(GetTickler.class).in(Singleton.class);
 		bind(DashboardPresenter.class).in(Singleton.class);

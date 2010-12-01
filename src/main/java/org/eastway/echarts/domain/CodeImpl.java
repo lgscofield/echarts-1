@@ -15,6 +15,7 @@
  */
 package org.eastway.echarts.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,24 +25,30 @@ import javax.persistence.Table;
 import org.eastway.echarts.shared.Code;
 import org.eastway.echarts.shared.CodeDTO;
 
+import com.google.gwt.requestfactory.shared.Version;
+
 @Entity
 @Table(name="Codes")
 public class CodeImpl implements Code {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long codeId;
+	@Column(name = "code_id")
+	private Long id;
 	private String columnName;
 	private String value;
 	private String descriptor;
+	@Version
+	@Column(name = "version")
+	private Integer version;
 
 	public CodeImpl() { }
 
-	public void setCodeId(Long codeId) {
-		this.codeId = codeId;
+	public void setId(Long codeId) {
+		this.id = codeId;
 	}
 
-	public Long getCodeId() {
-		return codeId;
+	public Long getId() {
+		return id;
 	}
 
 	public void setColumnName(String columnName) {
@@ -68,9 +75,17 @@ public class CodeImpl implements Code {
 		return descriptor;
 	}
 
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
 	public CodeDTO toDto() {
 		CodeDTO dto = new CodeDTO();
-		dto.setCodeId(this.getCodeId());
+		dto.setId(this.getId());
 		dto.setColumnName(this.getColumnName());
 		dto.setDescriptor(this.getDescriptor());
 		dto.setValue(this.getValue());

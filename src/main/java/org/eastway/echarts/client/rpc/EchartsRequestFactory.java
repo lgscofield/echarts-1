@@ -13,19 +13,10 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.client;
+package org.eastway.echarts.client.rpc;
 
-import org.eastway.echarts.client.rpc.EchartsRequestFactory;
+import com.google.gwt.requestfactory.shared.RequestFactory;
 
-import net.customware.gwt.dispatch.client.gin.StandardDispatchModule;
-
-import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.inject.client.GinModules;
-import com.google.gwt.inject.client.Ginjector;
-
-@GinModules({ StandardDispatchModule.class, EchartsClientModule.class })
-public interface EchartsGinjector extends Ginjector {
-	AppController getAppController();
-	EchartsRequestFactory getRequestFactory();
-	EventBus getEventBus();
+public interface EchartsRequestFactory extends RequestFactory {
+	MessageRequest messageRequest();
 }

@@ -16,9 +16,11 @@
 package org.eastway.echarts.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,8 +28,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.TableGenerator;
 
+import org.eastway.echarts.server.EchartsEntityManagerFactory;
 import org.eastway.echarts.shared.Code;
 import org.eastway.echarts.shared.MessageDTO;
+
+import com.google.gwt.requestfactory.shared.Version;
 
 @Entity
 public class Message {
@@ -46,6 +51,9 @@ public class Message {
 	private Message parent;
 	private Date lastEdit;
 	private String lastEditBy;
+	@Version
+	@Column(name = "version")
+	private Integer version;
 
 	public Message() { }
 
@@ -73,7 +81,7 @@ public class Message {
 		this.messageType = (CodeImpl) messageType;
 	}
 
-	public Code getMessageType() {
+	public CodeImpl getMessageType() {
 		return messageType;
 	}
 
@@ -117,6 +125,14 @@ public class Message {
 		return parent;
 	}
 
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
 	public MessageDTO toDto() {
 		MessageDTO dto = new MessageDTO();
 		dto.setCreationTimestamp(this.getCreationTimestamp());
@@ -129,5 +145,50 @@ public class Message {
 		if (dto.getParent() != null)
 			dto.setParent(this.getParent().toDto());
 		return dto;
+	}
+
+	public static Message findMessage(Long id) {
+		if (id == null)
+			return null;
+		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
+		try {
+			Message message = em.find(Message.class, id);
+			return message;
+		} finally {
+			em.close();
+		}
+	}
+
+	public static List<Message> findMessageByCaseNumber(String caseNumber) {
+		if (caseNumber == null)
+			return null;
+		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
+		try {
+			List<Message> messages = em.createQuery(
+					"SELECT m FROM Message m WHERE m.caseNumber = '" + caseNumber + "' ORDER BY m.creationTimestamp DESC", Message.class)
+					.getResultList();
+			return messages;
+		} finally {
+			em.close();
+		}
+	}
+
+	public void persist() {
+		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
+		try {
+			em.persist(this);
+		} finally {
+			em.close();
+		}
+	}
+
+	public void remove() {
+		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
+		try {
+			Message attached = em.find(Message.class, this.id);
+			em.remove(attached);
+		} finally {
+			em.close();
+		}
 	}
 }

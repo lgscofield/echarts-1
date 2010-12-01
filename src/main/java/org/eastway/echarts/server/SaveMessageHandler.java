@@ -46,7 +46,7 @@ public class SaveMessageHandler implements ActionHandler<SaveMessage, SaveMessag
 		try {
 			MessageService ms = new MessageService(em);
 			CodeService cs = new CodeService(em);
-			Code mType = cs.find(action.getMessage().getMessageType().getCodeId());
+			Code mType = cs.find(action.getMessage().getMessageType().getId());
 			Message parent = null;
 			if (action.getMessage().getParent() != null)
 				parent = ms.find(action.getMessage().getParent().getId());

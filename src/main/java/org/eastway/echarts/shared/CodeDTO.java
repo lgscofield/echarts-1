@@ -26,11 +26,11 @@ public class CodeDTO implements Serializable, Code {
 
 	public CodeDTO() { }
 
-	public void setCodeId(Long codeId) {
+	public void setId(Long codeId) {
 		this.codeId = codeId;
 	}
 
-	public Long getCodeId() {
+	public Long getId() {
 		return codeId;
 	}
 

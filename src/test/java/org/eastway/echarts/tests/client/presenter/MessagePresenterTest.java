@@ -26,6 +26,7 @@ import com.google.gwt.event.shared.EventBus;
 import org.eastway.echarts.client.presenter.MessagesPresenter;
 import org.eastway.echarts.client.rpc.CachingDispatchAsync;
 import org.eastway.echarts.client.rpc.EchartsCallback;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.shared.CodeDTO;
 import org.eastway.echarts.shared.GetMessages;
 import org.eastway.echarts.shared.MessageDTO;
@@ -40,7 +41,7 @@ import static org.easymock.EasyMock.*;
 
 public class MessagePresenterTest extends TestCase {
 	private MessagesPresenter messagesPresenter;
-	private CachingDispatchAsync dispatch;
+	private EchartsRequestFactory requestFactory;
 	private EventBus eventBus;
 	private MessagesPresenter.Display mockMessagesDisplay;
 	private GetMessages action;
@@ -57,10 +58,10 @@ public class MessagePresenterTest extends TestCase {
 		timestamp = new Date(1270717380123L);
 		caseNumber = "0000008";
 		action = new GetMessages("12345", caseNumber);
-		dispatch = createStrictMock(CachingDispatchAsync.class);
+		requestFactory = createStrictMock(EchartsRequestFactory.class);
 		mockMessagesDisplay = createStrictMock(MessagesPresenter.Display.class);
 		eventBus = createStrictMock(EventBus.class);
-		messagesPresenter = new MessagesPresenter(mockMessagesDisplay, eventBus, dispatch, action);
+		messagesPresenter = new MessagesPresenter(mockMessagesDisplay, eventBus, requestFactory, action);
 		patient = new PatientDTO();
 		patient.setCaseNumber(caseNumber);
 
@@ -85,7 +86,7 @@ public class MessagePresenterTest extends TestCase {
 
 	@SuppressWarnings("unchecked")
 	@Test public void testAddMessage() {
-		dispatch.execute(isA(SaveMessage.class), isA(EchartsCallback.class));
+		requestFactory.execute(isA(SaveMessage.class), isA(EchartsCallback.class));
 		expectLastCall().andAnswer(new IAnswer<Object>() {
 			@Override
 			public Object answer() throws Throwable {
@@ -95,9 +96,9 @@ public class MessagePresenterTest extends TestCase {
 				return null;
 			}
 		});
-		replay(dispatch);
+		replay(requestFactory);
 		messagesPresenter.save(message);
-		verify(dispatch);
+		verify(requestFactory);
 
 		assertEquals(messagesPresenter.getMessage(0).getCreationTimestamp(), timestamp);
 		assertEquals(messagesPresenter.getMessage(0).getId(), 1);

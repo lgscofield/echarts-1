@@ -22,18 +22,18 @@ import java.util.List;
 import com.google.gwt.event.shared.EventBus;
 
 import org.eastway.echarts.client.EchartsUser;
-import org.eastway.echarts.client.rpc.CachingDispatchAsync;
-import org.eastway.echarts.client.rpc.EchartsCallback;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
+import org.eastway.echarts.client.rpc.MessageRequest;
 import org.eastway.echarts.shared.CodeDTO;
 import org.eastway.echarts.shared.GetMessages;
-import org.eastway.echarts.shared.GetMessagesResult;
 import org.eastway.echarts.shared.MessageDTO;
-import org.eastway.echarts.shared.SaveMessage;
-import org.eastway.echarts.shared.SaveMessageResult;
+import org.eastway.echarts.shared.MessageProxy;
 
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.requestfactory.shared.Receiver;
+import com.google.gwt.requestfactory.shared.Request;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class MessagesPresenter implements Presenter {
@@ -62,19 +62,17 @@ public class MessagesPresenter implements Presenter {
 		void setMessageTypes(ArrayList<String> types);
 	}
 
-	private List<MessageDTO> messages = new ArrayList<MessageDTO>();
+	private List<MessageProxy> messages = new ArrayList<MessageProxy>();
 	private ArrayList<String[]> data = new ArrayList<String[]>();
 	private List<CodeDTO> types;
 	private Display view;
-	private EventBus eventBus;
-	private CachingDispatchAsync dispatch;
+	private EchartsRequestFactory requestFactory;
 	private GetMessages action;
 
 	public MessagesPresenter(Display view, EventBus eventBus,
-			CachingDispatchAsync dispatch, GetMessages action) {
+			EchartsRequestFactory requestFactory, GetMessages action) {
 		this.view = view;
-		this.eventBus = eventBus;
-		this.dispatch = dispatch;
+		this.requestFactory = requestFactory;
 		this.action = action;
 	}
 
@@ -124,36 +122,61 @@ public class MessagesPresenter implements Presenter {
 	}
 
 	public void save(MessageDTO m) {
-		dispatch.execute(new SaveMessage(EchartsUser.sessionId, m), new EchartsCallback<SaveMessageResult>(eventBus) {
+//		requestFactory.execute(new SaveMessage(EchartsUser.sessionId, m), new EchartsCallback<SaveMessageResult>(eventBus) {
+//			@Override
+//			protected void handleFailure(Throwable caught) {
+//			}
+//
+//			@Override
+//			protected void handleSuccess(SaveMessageResult result) {
+//				view.saved();
+//				messages.add(0, result.getMessage());
+//				setData(messages);
+//				view.setData(getData());
+//			}
+//		});
+		MessageRequest request = requestFactory.messageRequest();
+		MessageProxy newMessage = request.create(MessageProxy.class);
+		newMessage.setCaseNumber(m.getCaseNumber());
+		newMessage.setCreationTimestamp(m.getCreationTimestamp());
+		newMessage.setLastEdit(m.getLastEdit());
+		newMessage.setLastEditBy(m.getLastEditBy());
+		newMessage.setMessage(m.getMessage());
+		//newMessage.setMessageType(m.getMessageType());
+		//newMessage.setParent(m.getParent());
+		Request<Void> createReq = request.persist().using(newMessage);
+		createReq.fire(new Receiver<Void>() {
 			@Override
-			protected void handleFailure(Throwable caught) {
-			}
-
-			@Override
-			protected void handleSuccess(SaveMessageResult result) {
+			public void onSuccess(Void response) {
 				view.saved();
-				messages.add(0, result.getMessage());
-				setData(messages);
-				view.setData(getData());
 			}
 		});
 	}
 
 	private void fetchData() {
-		dispatch.executeWithCache(action, new EchartsCallback<GetMessagesResult>(eventBus) {
+//		requestFactory.executeWithCache(action, new EchartsCallback<GetMessagesResult>(eventBus) {
+//			@Override
+//			public void handleFailure(Throwable caught) {
+//			}
+//
+//			@Override
+//			public void handleSuccess(GetMessagesResult result) {
+//				setData(result.getMessages());
+//				view.setData(getData());
+//				setTypes(result.getTypes());
+//				ArrayList<String> typesData = new ArrayList<String>();
+//				for (CodeDTO type : types)
+//					typesData.add(type.getDescriptor());
+//				view.setMessageTypes(typesData);
+//			}
+//		});
+		MessageRequest request = requestFactory.messageRequest();
+		Request<List<MessageProxy>> messageRequest = request.findMessageByCaseNumber(action.getCaseNumber()).with("messageType");
+		messageRequest.fire(new Receiver<List<MessageProxy>>() {
 			@Override
-			public void handleFailure(Throwable caught) {
-			}
-
-			@Override
-			public void handleSuccess(GetMessagesResult result) {
-				setData(result.getMessages());
+			public void onSuccess(List<MessageProxy> response) {
+				setData(response);
 				view.setData(getData());
-				setTypes(result.getTypes());
-				ArrayList<String> typesData = new ArrayList<String>();
-				for (CodeDTO type : types)
-					typesData.add(type.getDescriptor());
-				view.setMessageTypes(typesData);
 			}
 		});
 	}
@@ -162,11 +185,11 @@ public class MessagesPresenter implements Presenter {
 		return this.data;
 	}
 
-	public void setData(List<MessageDTO> msgs) {
+	public void setData(List<MessageProxy> msgs) {
 		this.messages = msgs;
 		ArrayList<String[]> d = new ArrayList<String[]>();
 
-		for (MessageDTO m : msgs) {
+		for (MessageProxy m : msgs) {
 			String[] msgstr = {
 					new Long(m.getCreationTimestamp().getTime()).toString(),
 					m.getMessageType().getDescriptor(),
@@ -178,7 +201,7 @@ public class MessagesPresenter implements Presenter {
 		this.data = d;
 	}
 
-	public MessageDTO getMessage(int i) {
+	public MessageProxy getMessage(int i) {
 		return messages.get(i);
 	}
 
