@@ -42,9 +42,9 @@ import org.eastway.echarts.client.view.TicklerView;
 import org.eastway.echarts.client.view.TicklerViewImpl;
 import org.eastway.echarts.shared.Address;
 import org.eastway.echarts.shared.Appointment;
-import org.eastway.echarts.shared.Demographics;
+import org.eastway.echarts.shared.DemographicsProxy;
 import org.eastway.echarts.shared.Diagnosis;
-import org.eastway.echarts.shared.GetPatientSummaryResult;
+import org.eastway.echarts.shared.EHRProxy;
 import org.eastway.echarts.shared.GetTickler;
 import org.eastway.echarts.shared.Referral;
 import org.eastway.echarts.shared.Tickler;
@@ -77,7 +77,7 @@ public class EchartsClientModule extends AbstractGinModule {
 
 		bind(new TypeLiteral<List<ColumnDefinition<Diagnosis>>>() {}).to(DiagnosisColumnDefinitionsImpl.class).in(Singleton.class);
 
-		bind(new TypeLiteral<List<ColumnDefinition<Demographics>>>() {}).to(DemographicsColumnDefinitionsImpl.class).in(Singleton.class);
+		bind(new TypeLiteral<List<ColumnDefinition<DemographicsProxy>>>() {}).to(DemographicsColumnDefinitionsImpl.class).in(Singleton.class);
 
 		bind(ProfilePresenter.class).in(Singleton.class);
 		bind(new TypeLiteral<List<ColumnDefinition<User>>>() {}).to(ProfileColumnDefinitionsImpl.class).in(Singleton.class);
@@ -87,7 +87,7 @@ public class EchartsClientModule extends AbstractGinModule {
 
 		bind(EchartsOracle.class).in(Singleton.class);
 
-		bind(new TypeLiteral<List<ColumnDefinition<GetPatientSummaryResult>>>() {}).to(PatientSummaryColumnDefinitionsImpl.class).in(Singleton.class);
+		bind(new TypeLiteral<List<ColumnDefinition<EHRProxy>>>() {}).to(PatientSummaryColumnDefinitionsImpl.class).in(Singleton.class);
 		bind(new TypeLiteral<List<ColumnDefinition<Appointment>>>() {}).to(AppointmentColumnDefinitionsImpl.class).in(Singleton.class);
 		bind(new TypeLiteral<List<ColumnDefinition<Referral>>>() {}).to(ReferralColumnDefinitionsImpl.class).in(Singleton.class);
 	}

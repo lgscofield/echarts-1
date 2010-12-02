@@ -17,30 +17,25 @@ package org.eastway.echarts.client.presenter;
 
 import java.util.List;
 
-import com.google.gwt.event.shared.EventBus;
-
 import org.eastway.echarts.client.common.ColumnDefinition;
-import org.eastway.echarts.client.rpc.CachingDispatchAsync;
-import org.eastway.echarts.client.rpc.EchartsCallback;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.view.DemographicsView;
-import org.eastway.echarts.shared.Demographics;
-import org.eastway.echarts.shared.GetDemographics;
-import org.eastway.echarts.shared.GetDemographicsResult;
+import org.eastway.echarts.shared.DemographicsProxy;
 
+import com.google.gwt.requestfactory.shared.Receiver;
+import com.google.gwt.requestfactory.shared.Request;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class DemographicsPresenter implements Presenter, DemographicsView.Presenter<Demographics> {
+public class DemographicsPresenter implements Presenter, DemographicsView.Presenter<DemographicsProxy> {
 
-	private DemographicsView<Demographics> view;
-	private EventBus eventBus;
-	private CachingDispatchAsync dispatch;
-	private GetDemographics action;
-	public DemographicsPresenter(DemographicsView<Demographics> view,
-			List<ColumnDefinition<Demographics>> columnDefinitions, EventBus eventBus, CachingDispatchAsync dispatch, GetDemographics action) {
+	private DemographicsView<DemographicsProxy> view;
+	private EchartsRequestFactory requestFactory;
+	private String caseNumber;
+	public DemographicsPresenter(DemographicsView<DemographicsProxy> view,
+			List<ColumnDefinition<DemographicsProxy>> columnDefinitions, EchartsRequestFactory requestFactory, String caseNumber) {
 		this.view = view;
-		this.eventBus = eventBus;
-		this.dispatch = dispatch;
-		this.action = action;
+		this.requestFactory = requestFactory;
+		this.caseNumber = caseNumber;
 		this.view.setPresenter(this);
 		this.view.setColumnDefinitions(columnDefinitions);
 	}
@@ -53,20 +48,21 @@ public class DemographicsPresenter implements Presenter, DemographicsView.Presen
 	}
 
 	private void fetchData() {
-		dispatch.executeWithCache(action, new EchartsCallback<GetDemographicsResult>(eventBus) {
+		Request<DemographicsProxy> request = requestFactory.demographicsRequest().findDemographics(caseNumber)
+			.with("employment")
+			.with("maritalStatus")
+			.with("educationLevel")
+			.with("educationType")
+			.with("race");
+		request.fire(new Receiver<DemographicsProxy>() {
 			@Override
-			protected void handleFailure(Throwable caught) {
+			public void onSuccess(DemographicsProxy response) {
+				setData(response);
 			}
-
-			@Override
-			protected void handleSuccess(GetDemographicsResult result) {
-				setData(result.getDemographics());
-			}
-			
 		});
 	}
 
-	public void setData(Demographics demographics) {
+	public void setData(DemographicsProxy demographics) {
 		view.setRowData(demographics);
 	}
 }

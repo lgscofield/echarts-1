@@ -15,13 +15,13 @@
  */
 package org.eastway.echarts.shared;
 
-import org.eastway.echarts.domain.CodeImpl;
+import org.eastway.echarts.domain.Code;
 
 import com.google.gwt.requestfactory.shared.EntityProxy;
 import com.google.gwt.requestfactory.shared.EntityProxyId;
 import com.google.gwt.requestfactory.shared.ProxyFor;
 
-@ProxyFor(CodeImpl.class)
+@ProxyFor(Code.class)
 public interface CodeProxy extends EntityProxy {
 	EntityProxyId<CodeProxy> stableId();
 	String getColumnName();

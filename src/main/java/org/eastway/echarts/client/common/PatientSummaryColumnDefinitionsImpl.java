@@ -17,49 +17,49 @@ package org.eastway.echarts.client.common;
 
 import java.util.ArrayList;
 
-import org.eastway.echarts.shared.GetPatientSummaryResult;
+import org.eastway.echarts.shared.EHRProxy;
 import org.eastway.echarts.style.client.GlobalResources;
 
 @SuppressWarnings("serial")
-public class PatientSummaryColumnDefinitionsImpl extends ArrayList<ColumnDefinition<GetPatientSummaryResult>> {
+public class PatientSummaryColumnDefinitionsImpl extends ArrayList<ColumnDefinition<EHRProxy>> {
 
 	public PatientSummaryColumnDefinitionsImpl() {
-		this.add(new ColumnDefinition<GetPatientSummaryResult>() {
+		this.add(new ColumnDefinition<EHRProxy>() {
 			@Override
-			public void render(GetPatientSummaryResult t, StringBuilder sb) {
+			public void render(EHRProxy t, StringBuilder sb) {
 				sb.append(t.getPatient().getName() == null ? "NO DATA" : t.getPatient().getName());
 			}
 
 			@Override
-			public String getHeader(GetPatientSummaryResult t) {
+			public String getHeader(EHRProxy t) {
 				return "<b>Name</b>";
 			}
 		});
-		this.add(new ColumnDefinition<GetPatientSummaryResult>() {
+		this.add(new ColumnDefinition<EHRProxy>() {
 			@Override
-			public void render(GetPatientSummaryResult t, StringBuilder sb) {
+			public void render(EHRProxy t, StringBuilder sb) {
 				sb.append("<img src=\"" + GlobalResources.resources().defaultPhoto().getURL() + "\" />");
 			}
 
 			@Override
-			public String getHeader(GetPatientSummaryResult t) {
+			public String getHeader(EHRProxy t) {
 				return "<b>Picture</b>";
 			}
 		});
-		this.add(new ColumnDefinition<GetPatientSummaryResult>() {
+		this.add(new ColumnDefinition<EHRProxy>() {
 			@Override
-			public void render(GetPatientSummaryResult t, StringBuilder sb) {
+			public void render(EHRProxy t, StringBuilder sb) {
 				sb.append(t.getDemographics().getGender().getDescriptor() == null ? "" : t.getDemographics().getGender().getDescriptor());
 			}
 
 			@Override
-			public String getHeader(GetPatientSummaryResult t) {
+			public String getHeader(EHRProxy t) {
 				return "<b>Gender</b>";
 			}
 		});
-		this.add(new ColumnDefinition<GetPatientSummaryResult>() {
+		this.add(new ColumnDefinition<EHRProxy>() {
 			@Override
-			public void render(GetPatientSummaryResult t, StringBuilder sb) {
+			public void render(EHRProxy t, StringBuilder sb) {
 				if (t.getDemographics().getDob() != null)
 					sb.append(GlobalResources.getDateFormat().format(t.getDemographics().getDob()));
 				else
@@ -67,42 +67,43 @@ public class PatientSummaryColumnDefinitionsImpl extends ArrayList<ColumnDefinit
 			}
 
 			@Override
-			public String getHeader(GetPatientSummaryResult t) {
+			public String getHeader(EHRProxy t) {
 				return "<b>Date&nbsp;of&nbsp;birth</b>";
 			}
 		});
-		this.add(new ColumnDefinition<GetPatientSummaryResult>() {
+		this.add(new ColumnDefinition<EHRProxy>() {
 			@Override
-			public void render(GetPatientSummaryResult t, StringBuilder sb) {
-				for (String provider : t.getProviders())
-					sb.append(provider == null ? "" : provider + "<br />");
+			public void render(EHRProxy t, StringBuilder sb) {
+				//for (String provider : t.getProviders())
+				//	sb.append(provider == null ? "" : provider + "<br />");
+				sb.append("Unimplemented");
 			}
 
 			@Override
-			public String getHeader(GetPatientSummaryResult t) {
+			public String getHeader(EHRProxy t) {
 				return "<b>Providers</b>";
 			}
 		});
-		this.add(new ColumnDefinition<GetPatientSummaryResult>() {
+		this.add(new ColumnDefinition<EHRProxy>() {
 			@Override
-			public void render(GetPatientSummaryResult t, StringBuilder sb) {
+			public void render(EHRProxy t, StringBuilder sb) {
 				sb.append(t.getPatient().getSsn() == null ? "" : t.getPatient().getSsn());
 			}
 
 			@Override
-			public String getHeader(GetPatientSummaryResult t) {
+			public String getHeader(EHRProxy t) {
 				return "<b>SSN</b>";
 			}
 		});
-		this.add(new ColumnDefinition<GetPatientSummaryResult>() {
+		this.add(new ColumnDefinition<EHRProxy>() {
 			@Override
-			public void render(GetPatientSummaryResult t, StringBuilder sb) {
+			public void render(EHRProxy t, StringBuilder sb) {
 				sb.append(t.getPatient().getCaseStatus().getDescriptor() == null ? "" :
 					t.getPatient().getCaseStatus().getDescriptor());
 			}
 
 			@Override
-			public String getHeader(GetPatientSummaryResult t) {
+			public String getHeader(EHRProxy t) {
 				return "<b>Case Status</b>";
 			}
 		});

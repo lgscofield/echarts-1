@@ -22,9 +22,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import org.eastway.echarts.shared.Code;
-import org.eastway.echarts.shared.Patient;
-
 public class PatientService {
 	@PersistenceContext(unitName="PatientService")
 	protected EntityManager em;
@@ -48,7 +45,7 @@ public class PatientService {
 			String middleInitial,
 			String ssn,
 			String suffix) {
-		Patient patient = new PatientImpl();
+		Patient patient = new Patient();
 		patient.setAlias(alias);
 		patient.setCaseNumber(caseNumber);
 		patient.setCaseStatus(caseStatus);
@@ -64,18 +61,18 @@ public class PatientService {
 	}
 
 	public void remove(long id) {
-		Patient patient = getEntityManager().find(PatientImpl.class, id);
+		Patient patient = getEntityManager().find(Patient.class, id);
 		if (patient != null)
 			getEntityManager().remove(patient);
 	}
 
-	public PatientImpl find(long id) {
-		return getEntityManager().find(PatientImpl.class, id);
+	public Patient find(long id) {
+		return getEntityManager().find(Patient.class, id);
 	}
 
-	public List<PatientImpl> findAll() {
-		TypedQuery<PatientImpl> query = getEntityManager().createQuery(
-				"SELECT p FROM PatientImpl p", PatientImpl.class);
+	public List<Patient> findAll() {
+		TypedQuery<Patient> query = getEntityManager().createQuery(
+				"SELECT p FROM Patient p", Patient.class);
 		return query.getResultList();
 	}
 }

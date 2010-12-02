@@ -21,13 +21,12 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import org.eastway.echarts.domain.AssignmentImpl;
-import org.eastway.echarts.shared.Assignment;
+import org.eastway.echarts.domain.Assignment;
+import org.eastway.echarts.domain.Patient;
 import org.eastway.echarts.shared.DbException;
 import org.eastway.echarts.shared.DueDateStatus;
 import org.eastway.echarts.shared.GetTickler;
 import org.eastway.echarts.shared.GetTicklerResult;
-import org.eastway.echarts.shared.Patient;
 import org.eastway.echarts.shared.SessionExpiredException;
 import org.eastway.echarts.shared.Tickler;
 import org.joda.time.DateTime;
@@ -56,8 +55,8 @@ public class GetTicklerHandler implements ActionHandler<GetTickler, GetTicklerRe
 
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 		try {
-			List<AssignmentImpl> assignments = em.createQuery(
-					"SELECT a From AssignmentImpl a Where a.staff = '" + action.getStaffId() + "' And a.disposition = 'Open' And a.service Like 'S%' Order By a.patient.lastName ASC, a.patient.firstName ASC, a.orderDate DESC", AssignmentImpl.class)
+			List<Assignment> assignments = em.createQuery(
+					"SELECT a From Assignment a Where a.staff = '" + action.getStaffId() + "' And a.disposition = 'Open' And a.service Like 'S%' Order By a.patient.lastName ASC, a.patient.firstName ASC, a.orderDate DESC", Assignment.class)
 					.getResultList();
 			staffId = action.getStaffId();
 			return new GetTicklerResult(setDates(assignments));
@@ -83,9 +82,9 @@ public class GetTicklerHandler implements ActionHandler<GetTickler, GetTicklerRe
 	private long NINETY_DAYS = 90L * day;
 	private long ONE_HUNDRED_EIGHTY_DAYS = 180L * day;
 
-	private List<Tickler> setDates(List<AssignmentImpl> assignments) {
+	private List<Tickler> setDates(List<Assignment> assignments) {
 		List<Tickler> tickler = new ArrayList<Tickler>();
-		for (AssignmentImpl assignment : assignments) {
+		for (Assignment assignment : assignments) {
 			Tickler result = new Tickler();
 			Patient patient = assignment.getPatient();
 			result.setName(assignment.getPatient().getName());
@@ -124,7 +123,7 @@ public class GetTicklerHandler implements ActionHandler<GetTickler, GetTicklerRe
 	
 			long financialDueDate = 0L;
 			if (patient.getFinancialDateCompleted() != null) {
-				if (patient.isTitleTwenty())
+				if (patient.getTitleTwenty())
 					financialDueDate = patient.getFinancialDateCompleted().getTime() + ONE_HUNDRED_EIGHTY_DAYS;
 				else
 					financialDueDate = patient.getFinancialDateCompleted().getTime() + YEAR;
@@ -147,7 +146,7 @@ public class GetTicklerHandler implements ActionHandler<GetTickler, GetTicklerRe
 		if (getDueDateStatus(ispDueDate) == DueDateStatus.OVERDUE) {
 			return ispDueDate;
 		} else {
-			boolean aodStatus = (assignment.getDemographics().isAlcoholDrug()==null?false:assignment.getDemographics().isAlcoholDrug())&&(staffId=="5542"||staffId=="5396");
+			boolean aodStatus = (assignment.getDemographics().getAlcoholDrug()==null?false:assignment.getDemographics().getAlcoholDrug())&&(staffId=="5542"||staffId=="5396");
 			if (patient.getIspReviewDateCompleted() != null) {
 				if (assignment.getService().matches("Pgm076")
 						|| aodStatus

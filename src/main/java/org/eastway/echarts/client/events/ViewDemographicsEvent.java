@@ -16,7 +16,6 @@
 package org.eastway.echarts.client.events;
 
 import org.eastway.echarts.client.view.EHRView;
-import org.eastway.echarts.shared.GetDemographics;
 
 import com.google.gwt.event.shared.GwtEvent;
 
@@ -24,12 +23,12 @@ public class ViewDemographicsEvent<T> extends GwtEvent<ViewDemographicsEventHand
 	public static Type<ViewDemographicsEventHandler> TYPE = new Type<ViewDemographicsEventHandler>();
 	private long ehrId;
 	private EHRView<T> view;
-	private GetDemographics action;
+	private String caseNumber;
 
-	public ViewDemographicsEvent(long ehrId, EHRView<T> view, GetDemographics action) {
+	public ViewDemographicsEvent(long ehrId, EHRView<T> view, String caseNumber) {
 		this.ehrId = ehrId;
 		this.view = view;
-		this.action = action;
+		this.caseNumber = caseNumber;
 	}
 
 	@Override
@@ -50,7 +49,7 @@ public class ViewDemographicsEvent<T> extends GwtEvent<ViewDemographicsEventHand
 		return view;
 	}
 
-	public GetDemographics getAction() {
-		return action;
+	public String getCaseNumber() {
+		return caseNumber;
 	}
 }

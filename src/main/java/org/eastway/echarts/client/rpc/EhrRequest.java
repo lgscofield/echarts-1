@@ -13,29 +13,17 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.shared;
+package org.eastway.echarts.client.rpc;
 
-import java.util.List;
+import org.eastway.echarts.domain.EHR;
+import org.eastway.echarts.shared.EHRProxy;
 
-import net.customware.gwt.dispatch.shared.Result;
+import com.google.gwt.requestfactory.shared.Request;
+import com.google.gwt.requestfactory.shared.RequestContext;
+import com.google.gwt.requestfactory.shared.Service;
 
-public class GetMessagesResult implements Result {
-
-	private List<MessageDTO> messages;
-	private List<CodeDTO> types;
-
-	GetMessagesResult () { }
-
-	public GetMessagesResult(List<MessageDTO> messages, List<CodeDTO> types) {
-		this.messages = messages;
-		this.types = types;
-	}
-
-	public List<MessageDTO> getMessages() {
-		return messages;
-	}
-
-	public List<CodeDTO> getTypes() {
-		return types;
-	}
+@Service(EHR.class)
+public interface EhrRequest extends RequestContext {
+	Request<EHRProxy> findEHR(Long id);
+	Request<EHRProxy> findEHRByCaseNumber(String caseNumber);
 }

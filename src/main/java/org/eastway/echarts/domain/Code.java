@@ -15,21 +15,23 @@
  */
 package org.eastway.echarts.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.eastway.echarts.shared.Code;
-import org.eastway.echarts.shared.CodeDTO;
+import org.eastway.echarts.server.EchartsEntityManagerFactory;
 
 import com.google.gwt.requestfactory.shared.Version;
 
 @Entity
-@Table(name="Codes")
-public class CodeImpl implements Code {
+@Table(name = "Codes")
+public class Code {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "code_id")
@@ -41,7 +43,7 @@ public class CodeImpl implements Code {
 	@Column(name = "version")
 	private Integer version;
 
-	public CodeImpl() { }
+	public Code() { }
 
 	public void setId(Long codeId) {
 		this.id = codeId;
@@ -83,12 +85,29 @@ public class CodeImpl implements Code {
 		return version;
 	}
 
-	public CodeDTO toDto() {
-		CodeDTO dto = new CodeDTO();
-		dto.setId(this.getId());
-		dto.setColumnName(this.getColumnName());
-		dto.setDescriptor(this.getDescriptor());
-		dto.setValue(this.getValue());
-		return dto;
+	public static Code findCode(Long id) {
+		if (id == null)
+			return null;
+		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
+		try {
+			Code code = em.find(Code.class, id);
+			return code;
+		} finally {
+			em.close();
+		}
+	}
+
+	public static List<Code> findCodeByName(String name) {
+		if (name == null)
+			return null;
+		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
+		try {
+			List<Code> codes = em.createQuery(
+					"SELECT c FROM Code c WHERE c.columnName = '" + name + "'", Code.class)
+					.getResultList();
+			return codes;
+		} finally {
+			em.close();
+		}
 	}
 }

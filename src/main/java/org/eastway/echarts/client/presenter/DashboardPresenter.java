@@ -35,14 +35,16 @@ import org.eastway.echarts.client.events.ViewSupervisorSignaturesEvent;
 import org.eastway.echarts.client.events.ViewTicklerEvent;
 import org.eastway.echarts.client.rpc.CachingDispatchAsync;
 import org.eastway.echarts.client.rpc.EchartsCallback;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.view.DashboardView;
-import org.eastway.echarts.shared.Demographics;
-import org.eastway.echarts.shared.GetPatientSummary;
-import org.eastway.echarts.shared.GetPatientSummaryResult;
+import org.eastway.echarts.shared.DemographicsProxy;
+import org.eastway.echarts.shared.EHRProxy;
 import org.eastway.echarts.shared.GetProductivity;
 import org.eastway.echarts.shared.GetProductivityResult;
-import org.eastway.echarts.shared.Patient;
+import org.eastway.echarts.shared.PatientProxy;
 
+import com.google.gwt.requestfactory.shared.Receiver;
+import com.google.gwt.requestfactory.shared.Request;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
@@ -51,23 +53,25 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 
 	private DashboardView<LinkedHashMap<String, Long>> view;
 	private EventBus eventBus;
-	private CachingDispatchAsync dispatch;
+	private EchartsRequestFactory requestFactory;
 	private String caseNumber;
+	private CachingDispatchAsync dispatch;
 
 	@Inject
 	public DashboardPresenter(DashboardView<LinkedHashMap<String, Long>> view,
-			EventBus eventBus, final CachingDispatchAsync dispatch) {
+			EventBus eventBus, CachingDispatchAsync dispatch, final EchartsRequestFactory requestFactory) {
 		this.view = view;
 		this.view.setPresenter(this);
 		this.eventBus = eventBus;
 		this.dispatch = dispatch;
+		this.requestFactory = requestFactory;
 	}
 
 	private void bind() {
 		eventBus.addHandler(ChangeCurrentEhrEvent.TYPE, new ChangeCurrentEhrEventHandler() {
 			@Override
 			public <T> void onChangeCurrentEhr(ChangeCurrentEhrEvent<T> event) {
-				setCurrentEhrData((GetPatientSummaryResult)event.getEhr());
+				setCurrentEhrData((EHRProxy)event.getEhr());
 			}
 		});
 	}
@@ -86,19 +90,23 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 			view.isFirstLogin();
 	}
 
-	private void setCurrentEhrData(final GetPatientSummaryResult ehr) {
+	private void setCurrentEhrData(final EHRProxy ehr) {
 		if (ehr == null) {
 			view.showEhrStub(false);
 			return;
 		}
-		Patient patient = ehr.getPatient();
-		Demographics demographics = ehr.getDemographics();
+		PatientProxy patient = ehr.getPatient();
+		DemographicsProxy demographics = ehr.getDemographics();
 		view.setName(patient.getName());
 		view.setCaseStatus(patient.getCaseStatus().getDescriptor() == null ? "" : patient.getCaseStatus().getDescriptor());
 		view.setDob(demographics.getDob());
-		view.setProvider(ehr.getProvider() == null ? "" : ehr.getProvider());
+		view.setProvider(getProvider(ehr));
 		view.setSsn(patient.getSsn());
 		view.showEhrStub(true);
+	}
+
+	private String getProvider(EHRProxy ehr) {
+		return "Unimplemented";
 	}
 
 	private void fetchData() {
@@ -107,20 +115,21 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 
 	@Override
 	public void changeCurrentEhr(Object ehr) {
-			eventBus.fireEvent(new ChangeCurrentEhrEvent<GetPatientSummaryResult>((GetPatientSummaryResult)ehr));
+			eventBus.fireEvent(new ChangeCurrentEhrEvent<EHRProxy>((EHRProxy)ehr));
 	}
 
 	@Override
 	public void openEhr(String text) {
 		caseNumber = text.replaceAll("(.*) - .*", "$1");
-		dispatch.execute(new GetPatientSummary(EchartsUser.sessionId, caseNumber, EchartsUser.staffId), new EchartsCallback<GetPatientSummaryResult>(eventBus) {
-			@Override
-			protected void handleFailure(Throwable caught) {
-			}
 
+		Request<EHRProxy> request = requestFactory.ehrRequest().findEHRByCaseNumber(caseNumber)
+			.with("patient")
+			.with("patient.caseStatus")
+			.with("demographics");
+		request.fire(new Receiver<EHRProxy>() {
 			@Override
-			protected void handleSuccess(GetPatientSummaryResult t) {
-				eventBus.fireEvent(new OpenEhrEvent(t));	
+			public void onSuccess(EHRProxy ehr) {
+				eventBus.fireEvent(new OpenEhrEvent(ehr));
 			}
 		});
 	}

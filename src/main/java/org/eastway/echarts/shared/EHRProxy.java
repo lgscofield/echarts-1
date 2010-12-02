@@ -16,23 +16,35 @@
 package org.eastway.echarts.shared;
 
 import java.util.Date;
+import java.util.List;
 
-public interface EHR {
+import org.eastway.echarts.domain.EHR;
+
+import com.google.gwt.requestfactory.shared.EntityProxy;
+import com.google.gwt.requestfactory.shared.EntityProxyId;
+import com.google.gwt.requestfactory.shared.ProxyFor;
+
+@ProxyFor(EHR.class)
+public interface EHRProxy extends EntityProxy {
 	public void setId(long id);
 
 	public long getId();
 
-	public void setSubject(Patient patient);
+	public void setPatient(PatientProxy patient);
 
-	public Patient getSubject();
+	public PatientProxy getPatient();
 
 	public void setTimeCreated(Date timeCreated);
 
 	public Date getTimeCreated();
 
-	public EHRDTO toDto();
+	public void setDemographics(DemographicsProxy demographics);
 
-	void setDemographics(Demographics demographics);
+	DemographicsProxy getDemographics();
 
-	Demographics getDemographics();
+	public void setAssignments(List<AssignmentProxy> assignments);
+
+	public List<AssignmentProxy> getAssignments();
+
+	public EntityProxyId<EHRProxy> stableId();
 }

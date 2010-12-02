@@ -29,8 +29,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.TableGenerator;
 
 import org.eastway.echarts.server.EchartsEntityManagerFactory;
-import org.eastway.echarts.shared.Code;
-import org.eastway.echarts.shared.MessageDTO;
 
 import com.google.gwt.requestfactory.shared.Version;
 
@@ -44,7 +42,7 @@ public class Message {
 	private String caseNumber;
 	@ManyToOne
 	@JoinColumn(name = "MessageType_Id")
-	private CodeImpl messageType;
+	private Code messageType;
 	private Date creationTimestamp;
 	private String message;
 	@ManyToOne
@@ -78,10 +76,10 @@ public class Message {
 	}
 
 	public void setMessageType(Code messageType) {
-		this.messageType = (CodeImpl) messageType;
+		this.messageType = (Code) messageType;
 	}
 
-	public CodeImpl getMessageType() {
+	public Code getMessageType() {
 		return messageType;
 	}
 
@@ -133,20 +131,6 @@ public class Message {
 		return version;
 	}
 
-	public MessageDTO toDto() {
-		MessageDTO dto = new MessageDTO();
-		dto.setCreationTimestamp(this.getCreationTimestamp());
-		dto.setId(this.getId());
-		dto.setCaseNumber(caseNumber);
-		dto.setLastEdit(this.getLastEdit());
-		dto.setLastEditBy(this.getLastEditBy());
-		dto.setMessage(this.getMessage().toString());
-		dto.setMessageType(this.getMessageType().toDto());
-		if (dto.getParent() != null)
-			dto.setParent(this.getParent().toDto());
-		return dto;
-	}
-
 	public static Message findMessage(Long id) {
 		if (id == null)
 			return null;
@@ -176,12 +160,17 @@ public class Message {
 	public void persist() {
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 		try {
+			em.getTransaction().begin();
 			em.persist(this);
+			em.getTransaction().commit();
 		} finally {
 			em.close();
 		}
 	}
 
+	/**
+	 * This should probably never be used.
+	 */
 	public void remove() {
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 		try {

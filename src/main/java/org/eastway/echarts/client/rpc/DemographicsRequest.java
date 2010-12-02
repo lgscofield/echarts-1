@@ -13,22 +13,16 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.shared;
+package org.eastway.echarts.client.rpc;
 
-import net.customware.gwt.dispatch.shared.Result;
+import org.eastway.echarts.domain.Demographics;
+import org.eastway.echarts.shared.DemographicsProxy;
 
-public class SaveMessageResult implements Result {
+import com.google.gwt.requestfactory.shared.Request;
+import com.google.gwt.requestfactory.shared.RequestContext;
+import com.google.gwt.requestfactory.shared.Service;
 
-	private MessageDTO message;
-
-	SaveMessageResult() { }
-
-	public SaveMessageResult(MessageDTO message) {
-		this.message = message;
-	}
-
-	public MessageDTO getMessage() {
-		return message;
-	}
-
+@Service(Demographics.class)
+public interface DemographicsRequest extends RequestContext {
+	Request<DemographicsProxy> findDemographics(String id);
 }

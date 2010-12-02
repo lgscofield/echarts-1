@@ -19,4 +19,7 @@ import com.google.gwt.requestfactory.shared.RequestFactory;
 
 public interface EchartsRequestFactory extends RequestFactory {
 	MessageRequest messageRequest();
+	CodeRequest codeRequest();
+	EhrRequest ehrRequest();
+	DemographicsRequest demographicsRequest();
 }

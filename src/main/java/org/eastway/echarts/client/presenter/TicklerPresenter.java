@@ -29,13 +29,15 @@ import org.eastway.echarts.client.events.OpenIspEvent;
 import org.eastway.echarts.client.events.OpenNurseProgressNoteEvent;
 import org.eastway.echarts.client.rpc.CachingDispatchAsync;
 import org.eastway.echarts.client.rpc.EchartsCallback;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.view.TicklerView;
-import org.eastway.echarts.shared.GetPatientSummary;
-import org.eastway.echarts.shared.GetPatientSummaryResult;
+import org.eastway.echarts.shared.EHRProxy;
 import org.eastway.echarts.shared.GetTickler;
 import org.eastway.echarts.shared.GetTicklerResult;
 import org.eastway.echarts.shared.Tickler;
 
+import com.google.gwt.requestfactory.shared.Receiver;
+import com.google.gwt.requestfactory.shared.Request;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
@@ -44,12 +46,14 @@ public class TicklerPresenter implements Presenter, TicklerView.Presenter<Tickle
 	private EventBus eventBus;
 	private CachingDispatchAsync dispatch;
 	private GetTickler action;
+	private EchartsRequestFactory requestFactory;
 
 	@Inject
-	public TicklerPresenter(TicklerView<Tickler> view, List<ColumnDefinition<Tickler>> columnDefinitions, EventBus eventBus, CachingDispatchAsync dispatch, GetTickler action) {
+	public TicklerPresenter(TicklerView<Tickler> view, List<ColumnDefinition<Tickler>> columnDefinitions, EventBus eventBus, CachingDispatchAsync dispatch, EchartsRequestFactory requestFactory, GetTickler action) {
 		this.view = view;
 		this.eventBus = eventBus;
 		this.dispatch = dispatch;
+		this.requestFactory = requestFactory;
 		this.view.setPresenter(this);
 		this.view.setColumnDefinitions(columnDefinitions);
 		this.action = action;
@@ -78,14 +82,19 @@ public class TicklerPresenter implements Presenter, TicklerView.Presenter<Tickle
 	@Override
 	public void openEhr(Tickler tickler) {
 		String caseNumber = tickler.getCaseNumber();
-		dispatch.execute(new GetPatientSummary(EchartsUser.sessionId, caseNumber, EchartsUser.staffId), new EchartsCallback<GetPatientSummaryResult>(eventBus) {
-			@Override
-			protected void handleFailure(Throwable caught) {
-			}
 
+		Request<EHRProxy> request = requestFactory.ehrRequest()
+			.findEHRByCaseNumber(caseNumber)
+				.with("patient")
+				.with("patient.caseStatus")
+				.with("demographics")
+				.with("demographics.gender")
+				.with("demographics.employment")
+				.with("demographics.maritalStatus");
+		request.fire(new Receiver<EHRProxy>() {
 			@Override
-			protected void handleSuccess(GetPatientSummaryResult t) {
-				eventBus.fireEvent(new OpenEhrEvent(t));	
+			public void onSuccess(EHRProxy ehr) {
+				eventBus.fireEvent(new OpenEhrEvent(ehr));
 			}
 		});
 	}

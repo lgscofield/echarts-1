@@ -13,27 +13,45 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.shared;
+package org.eastway.echarts.domain;
 
-import java.io.Serializable;
 import java.util.Date;
 
-@SuppressWarnings("serial")
-public class DemographicsDTO implements Serializable, Demographics {
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+
+import org.eastway.echarts.server.EchartsEntityManagerFactory;
+
+import com.google.gwt.requestfactory.shared.Version;
+
+@Entity
+public class Demographics {
+	@Id
+	private String caseNumber;
+	@ManyToOne
 	private Code gender;
+	@ManyToOne
 	private Code race;
+	@ManyToOne
 	private Code maritalStatus;
+	@ManyToOne
 	private Code livingArrangement;
+	@ManyToOne
 	private Code employment;
 	private String incomeSources;
+	@ManyToOne
 	private Code educationLevel;
+	@ManyToOne
 	private Code educationType;
 	private String allergies;
 	private String religion;
 	private String insuranceType;
 	private String preferredLanguage;
+	@ManyToOne
 	private Code ethnicity;
-
 	private Boolean isVeteran;
 	private Boolean isSmd;
 	private Boolean isAlcoholDrug;
@@ -57,404 +75,396 @@ public class DemographicsDTO implements Serializable, Demographics {
 	private Boolean isProbationParole;
 	private Boolean isGeneralPopulation;
 	private Date dob;
+	@NotNull
 	private Date lastEdit;
 	private String lastEditBy;
-	private String caseNumber;
+	@Version
+	private Integer version;
 
-	public DemographicsDTO() { }
+	public Demographics() {}
 
-	@Override
-	public void setGender(Code gender) {
-		this.gender = gender;
+	public String getId() {
+		return caseNumber;
 	}
 
-	@Override
+	public void setGender(Code gender) {
+		this.gender = (Code) gender;
+	}
+
 	public Code getGender() {
 		return gender;
 	}
 
-	@Override
 	public void setRace(Code race) {
-		this.race = race;
+		this.race = (Code) race;
 	}
 
-	@Override
 	public Code getRace() {
 		return race;
 	}
 
-	@Override
 	public void setMaritalStatus(Code maritalStatus) {
-		this.maritalStatus = maritalStatus;
+		this.maritalStatus = (Code) maritalStatus;
 	}
 
-	@Override
 	public Code getMaritalStatus() {
 		return maritalStatus;
 	}
 
-	@Override
 	public void setLivingArrangement(Code livingArrangement) {
-		this.livingArrangement = livingArrangement;
+		this.livingArrangement = (Code) livingArrangement;
 	}
 
-	@Override
 	public Code getLivingArrangement() {
 		return livingArrangement;
 	}
 
-	@Override
 	public void setEmployment(Code employment) {
-		this.employment = employment;
+		this.employment = (Code) employment;
 	}
 
-	@Override
 	public Code getEmployment() {
 		return employment;
 	}
 
-	@Override
 	public void setIncomeSources(String incomeSources) {
 		this.incomeSources = incomeSources;
 	}
 
-	@Override
 	public String getIncomeSources() {
 		return incomeSources;
 	}
 
-	@Override
 	public void setEducationLevel(Code educationLevel) {
-		this.educationLevel = educationLevel;
+		this.educationLevel = (Code) educationLevel;
 	}
 
-	@Override
 	public Code getEducationLevel() {
 		return educationLevel;
 	}
 
-	@Override
 	public void setEducationType(Code educationType) {
-		this.educationType = educationType;
+		this.educationType = (Code) educationType;
 	}
 
-	@Override
 	public Code getEducationType() {
 		return educationType;
 	}
 
-	@Override
 	public void setAllergies(String allergies) {
 		this.allergies = allergies;
 	}
 
-	@Override
 	public String getAllergies() {
 		return allergies;
 	}
 
-	@Override
 	public void setInsuranceType(String insuranceType) {
 		this.insuranceType = insuranceType;
 	}
 
-	@Override
 	public String getInsuranceType() {
 		return insuranceType;
 	}
 
-	@Override
 	public void setPreferredLanguage(String preferredLanguage) {
 		this.preferredLanguage = preferredLanguage;
 	}
 
-	@Override
 	public String getPreferredLanguage() {
 		return preferredLanguage;
 	}
 
-	@Override
 	public void setEthnicity(Code ethnicity) {
-		this.ethnicity = ethnicity;
+		this.ethnicity = (Code) ethnicity;
 	}
 
-	@Override
 	public Code getEthnicity() {
 		return ethnicity;
 	}
 
-	@Override
+	
 	public void setVeteran(Boolean veteran) {
 		this.isVeteran = veteran;
 	}
 
-	@Override
-	public Boolean isVeteran() {
+	
+	public Boolean getVeteran() {
 		return isVeteran;
 	}
 
-	@Override
+	
 	public void setSmd(Boolean isSmd) {
 		this.isSmd = isSmd;
 	}
 
-	@Override
-	public Boolean isSmd() {
+	
+	public Boolean getSmd() {
 		return isSmd;
 	}
 
-	@Override
+	
 	public void setAlcoholDrug(Boolean isAlcoholDrug) {
 		this.isAlcoholDrug = isAlcoholDrug;
 	}
 
-	@Override
-	public Boolean isAlcoholDrug() {
+	
+	public Boolean getAlcoholDrug() {
 		return isAlcoholDrug;
 	}
 
-	@Override
+	
 	public void setForensic(Boolean isForensic) {
 		this.isForensic = isForensic;
 	}
 
-	@Override
-	public Boolean isForensic() {
+	
+	public Boolean getForensic() {
 		return isForensic;
 	}
 
-	@Override
+	
 	public void setDd(Boolean isDd) {
 		this.isDd = isDd;
 	}
 
-	@Override
-	public Boolean isDd() {
+	
+	public Boolean getDd() {
 		return isDd;
 	}
 
-	@Override
+	
 	public void setMimr(Boolean isMimr) {
 		this.isMimr = isMimr;
 	}
 
-	@Override
-	public Boolean isMimr() {
+	
+	public Boolean getMimr() {
 		return isMimr;
 	}
 
-	@Override
+	
 	public void setDuidwi(Boolean isDuidwi) {
 		this.isDuidwi = isDuidwi;
 	}
 
-	@Override
-	public Boolean isDuidwi() {
+	
+	public Boolean getDuidwi() {
 		return isDuidwi;
 	}
 
-	@Override
+	
 	public void setDeaf(Boolean isDeaf) {
 		this.isDeaf = isDeaf;
 	}
 
-	@Override
-	public Boolean isDeaf() {
+	
+	public Boolean getDeaf() {
 		return isDeaf;
 	}
 
-	@Override
+	
 	public void setHearingImpaired(Boolean isHearingImpaired) {
 		this.isHearingImpaired = isHearingImpaired;
 	}
 
-	@Override
-	public Boolean isHearingImpaired() {
+	
+	public Boolean getHearingImpaired() {
 		return isHearingImpaired;
 	}
 
-	@Override
+	
 	public void setBlind(Boolean isBlind) {
 		this.isBlind = isBlind;
 	}
 
-	@Override
-	public Boolean isBlind() {
+	
+	public Boolean getBlind() {
 		return isBlind;
 	}
 
-	@Override
+	
 	public void setVisuallyImpaired(Boolean isVisuallyImpaired) {
 		this.isVisuallyImpaired = isVisuallyImpaired;
 	}
 
-	@Override
-	public Boolean isVisuallyImpaired() {
+	
+	public Boolean getVisuallyImpaired() {
 		return isVisuallyImpaired;
 	}
 
-	@Override
+	
 	public void setPhyDisabled(Boolean isPhyDisabled) {
 		this.isPhyDisabled = isPhyDisabled;
 	}
 
-	@Override
-	public Boolean isPhyDisabled() {
+	
+	public Boolean getPhyDisabled() {
 		return isPhyDisabled;
 	}
 
-	@Override
+	
 	public void setSpeechImpaired(Boolean isSpeechImpaired) {
 		this.isSpeechImpaired = isSpeechImpaired;
 	}
 
-	@Override
-	public Boolean isSpeechImpaired() {
+	
+	public Boolean getSpeechImpaired() {
 		return isSpeechImpaired;
 	}
 
-	@Override
+	
 	public void setPhysicalAbuse(Boolean isPhysicalAbuse) {
 		this.isPhysicalAbuse = isPhysicalAbuse;
 	}
 
-	@Override
-	public Boolean isPhysicalAbuse() {
+	
+	public Boolean getPhysicalAbuse() {
 		return isPhysicalAbuse;
 	}
 
-	@Override
+	
 	public void setSexualAbuse(Boolean isSexualAbuse) {
 		this.isSexualAbuse = isSexualAbuse;
 	}
 
-	@Override
-	public Boolean isSexualAbuse() {
+	
+	public Boolean getSexualAbuse() {
 		return isSexualAbuse;
 	}
 
-	@Override
+	
 	public void setDomesticViolence(Boolean isDomesticViolence) {
 		this.isDomesticViolence = isDomesticViolence;
 	}
 
-	@Override
-	public Boolean isDomesticViolence() {
+	
+	public Boolean getDomesticViolence() {
 		return isDomesticViolence;
 	}
 
-	@Override
+	
 	public void setChildAlcDrug(Boolean isChildAlcDrug) {
 		this.isChildAlcDrug = isChildAlcDrug;
 	}
 
-	@Override
-	public Boolean isChildAlcDrug() {
+	
+	public Boolean getChildAlcDrug() {
 		return isChildAlcDrug;
 	}
 
-	@Override
+	
 	public void setHivAids(Boolean isHivAids) {
 		this.isHivAids = isHivAids;
 	}
 
-	@Override
-	public Boolean isHivAids() {
+	
+	public Boolean getHivAids() {
 		return isHivAids;
 	}
 
-	@Override
+	
 	public void setSuicidal(Boolean isSuicidal) {
 		this.isSuicidal = isSuicidal;
 	}
 
-	@Override
-	public Boolean isSuicidal() {
+	
+	public Boolean getSuicidal() {
 		return isSuicidal;
 	}
 
-	@Override
+	
 	public void setSchoolDropout(Boolean isSchoolDropout) {
 		this.isSchoolDropout = isSchoolDropout;
 	}
 
-	@Override
-	public Boolean isSchoolDropout() {
+	
+	public Boolean getSchoolDropout() {
 		return isSchoolDropout;
 	}
 
-	@Override
+	
 	public void setProbationParole(Boolean isProbationParole) {
 		this.isProbationParole = isProbationParole;
 	}
 
-	@Override
-	public Boolean isProbationParole() {
+	
+	public Boolean getProbationParole() {
 		return isProbationParole;
 	}
 
-	@Override
+	
 	public void setGeneralPopulation(Boolean isGeneralPopulation) {
 		this.isGeneralPopulation = isGeneralPopulation;
 	}
 
-	@Override
-	public Boolean isGeneralPopulation() {
+	
+	public Boolean getGeneralPopulation() {
 		return isGeneralPopulation;
 	}
 
-	@Override
+	
 	public void setDob(Date dob) {
 		this.dob = dob;
 	}
 
-	@Override
+	
 	public Date getDob() {
 		return dob;
 	}
 
-	@Override
+	
 	public void setLastEdit(Date lastEdit) {
 		this.lastEdit = lastEdit;
 	}
 
-	@Override
+	
 	public Date getLastEdit() {
 		return lastEdit;
 	}
 
-	@Override
+	
 	public void setLastEditBy(String lastEditBy) {
 		this.lastEditBy = lastEditBy;
 	}
 
-	@Override
+	
 	public String getLastEditBy() {
 		return lastEditBy;
 	}
 
-	@Override
+	
 	public void setReligion(String religion) {
 		this.religion = religion;
 	}
 
-	@Override
+	
 	public String getReligion() {
 		return religion;
 	}
 
-	@Override
-	public DemographicsDTO toDto() {
-		return this;
-	}
-
-	@Override
 	public String getCaseNumber() {
 		return caseNumber;
 	}
 
-	@Override
+	
 	public void setCaseNumber(String caseNumber) {
 		this.caseNumber = caseNumber;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public static Demographics findDemographics(String id) {
+		if (id == null)
+			return null;
+		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
+		try {
+			Demographics demographics = em.find(Demographics.class, id);
+			return demographics;
+		} finally {
+			em.close();
+		}
 	}
 }

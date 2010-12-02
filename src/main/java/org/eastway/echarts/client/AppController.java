@@ -119,21 +119,18 @@ import org.eastway.echarts.client.view.ReferralViewImpl;
 import org.eastway.echarts.shared.ARInfo;
 import org.eastway.echarts.shared.Address;
 import org.eastway.echarts.shared.Appointment;
-import org.eastway.echarts.shared.Demographics;
+import org.eastway.echarts.shared.DemographicsProxy;
 import org.eastway.echarts.shared.Diagnosis;
+import org.eastway.echarts.shared.EHRProxy;
 import org.eastway.echarts.shared.GetARInfo;
 import org.eastway.echarts.shared.GetAddresses;
 import org.eastway.echarts.shared.GetAppointments;
 import org.eastway.echarts.shared.GetContacts;
 import org.eastway.echarts.shared.GetDbServerConfig;
 import org.eastway.echarts.shared.GetDbServerConfigResult;
-import org.eastway.echarts.shared.GetDemographics;
 import org.eastway.echarts.shared.GetDiagnoses;
 import org.eastway.echarts.shared.GetLinks;
 import org.eastway.echarts.shared.GetMedications;
-import org.eastway.echarts.shared.GetMessages;
-import org.eastway.echarts.shared.GetPatientSummary;
-import org.eastway.echarts.shared.GetPatientSummaryResult;
 import org.eastway.echarts.shared.GetReferral;
 import org.eastway.echarts.shared.Referral;
 
@@ -146,7 +143,7 @@ import com.google.inject.Inject;
 
 public class AppController implements Presenter {
 	private final EventBus eventBus;
-	private EHRViewImpl<GetPatientSummaryResult> ehrView;
+	private EHRViewImpl<EHRProxy> ehrView;
 	private CachingDispatchAsync dispatch;
 	private DashboardPresenter dashboardPresenter;
 	@Inject private TicklerPresenter ticklerPresenter;
@@ -203,13 +200,13 @@ public class AppController implements Presenter {
 		eventBus.addHandler(ViewPatientSummaryEvent.TYPE, new ViewPatientSummaryEventHandler() {
 			@Override
 			public <T> void onViewPatientSummary(ViewPatientSummaryEvent<T> event) {
-				doViewPatientSummary(event.getView(), event.getAction());
+				doViewPatientSummary(event.getView(), event.getCaseNumber());
 			}
 		});
 		eventBus.addHandler(ViewMessagesEvent.TYPE, new ViewMessagesEventHandler() {
 			@Override
 			public <T> void onViewMessages(ViewMessagesEvent<T> event) {
-				doViewMessages(event.getView(), event.getAction());
+				doViewMessages(event.getView(), event.getCaseNumber());
 			}
 		});
 		eventBus.addHandler(ViewReferralEvent.TYPE, new ViewReferralEventHandler() {
@@ -286,7 +283,7 @@ public class AppController implements Presenter {
 		eventBus.addHandler(ViewDemographicsEvent.TYPE, new ViewDemographicsEventHandler() {
 			@Override
 			public <T> void onViewDemographics(ViewDemographicsEvent<T> event) {
-				doViewDemographics(event.getView(), event.getAction());
+				doViewDemographics(event.getView(), event.getCaseNumber());
 			}
 		});
 		eventBus.addHandler(OpenIspEvent.TYPE, new OpenIspEventHandler() {
@@ -518,25 +515,25 @@ public class AppController implements Presenter {
 		presenter.go(ehrView.getDisplayArea());
 	}
 
-	private <T> void doViewMessages(EHRView<T> ehrView, GetMessages action) {
-		Presenter presenter = new MessagesPresenter(new MessagesView(), eventBus, requestFactory, action);
+	private <T> void doViewMessages(EHRView<T> ehrView, String caseNumber) {
+		Presenter presenter = new MessagesPresenter(new MessagesView(), eventBus, requestFactory, caseNumber);
 		presenter.go(ehrView.getDisplayArea());
 	}
 
-	private void doViewEhr(GetPatientSummaryResult ehr) {
-		ehrView = new EHRViewImpl<GetPatientSummaryResult>();
+	private void doViewEhr(EHRProxy ehr) {
+		ehrView = new EHRViewImpl<EHRProxy>();
 		Presenter presenter = new EHRPresenter(ehrView, eventBus, dispatch, ehr);
 		presenter.go(null);
 		dashboardPresenter.getDisplay().addTab(ehrView.asWidget(), ehr.getPatient().getCaseNumber());
 	}
 
-	private <T> void doViewPatientSummary(EHRView<T> ehrView, GetPatientSummary action) {
-		Presenter presenter = new PatientSummaryPresenter(new PatientSummaryViewImpl<GetPatientSummaryResult>(), patientSummaryColumnDefinitions, eventBus, dispatch, action);
+	private <T> void doViewPatientSummary(EHRView<T> ehrView, String caseNumber) {
+		Presenter presenter = new PatientSummaryPresenter(new PatientSummaryViewImpl<EHRProxy>(), patientSummaryColumnDefinitions, eventBus, requestFactory, caseNumber);
 		presenter.go(ehrView.getDisplayArea());
 	}
 
-	private <T> void doViewDemographics(final EHRView<T> ehrView, GetDemographics action) {
-		Presenter presenter = new DemographicsPresenter(new DemographicsViewImpl<Demographics>(), demographicsColumnDefinitions, eventBus, dispatch, action);
+	private <T> void doViewDemographics(final EHRView<T> ehrView, String caseNumber) {
+		Presenter presenter = new DemographicsPresenter(new DemographicsViewImpl<DemographicsProxy>(), demographicsColumnDefinitions, requestFactory, caseNumber);
 		presenter.go(ehrView.getDisplayArea());
 	}
 

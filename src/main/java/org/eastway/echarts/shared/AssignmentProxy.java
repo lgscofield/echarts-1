@@ -17,12 +17,14 @@ package org.eastway.echarts.shared;
 
 import java.util.Date;
 
-public interface Assignment {
+import org.eastway.echarts.domain.Assignment;
 
-	public void setId(Integer id);
+import com.google.gwt.requestfactory.shared.EntityProxy;
+import com.google.gwt.requestfactory.shared.EntityProxyId;
+import com.google.gwt.requestfactory.shared.ProxyFor;
 
-	public Integer getId();
-
+@ProxyFor(Assignment.class)
+public interface AssignmentProxy extends EntityProxy {
 	public void setCaseNumber(String caseNumber);
 
 	public String getCaseNumber();
@@ -75,13 +77,13 @@ public interface Assignment {
 
 	public String getLastEditBy();
 
-	public void setPatient(Patient patient);
+	public void setPatient(PatientProxy patient);
 
-	public Patient getPatient();
+	public PatientProxy getPatient();
 
-	void setDemographics(Demographics demographics);
+	void setDemographics(DemographicsProxy demographics);
 
-	Demographics getDemographics();
+	DemographicsProxy getDemographics();
 
-	public AssignmentDTO toDto();
+	EntityProxyId<AssignmentProxy> stableId();
 }

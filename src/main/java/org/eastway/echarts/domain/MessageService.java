@@ -22,8 +22,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import org.eastway.echarts.shared.Code;
-
 public class MessageService {
 	@PersistenceContext(unitName="MessageService")
 	protected EntityManager em;

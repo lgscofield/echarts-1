@@ -15,15 +15,15 @@
  */
 package org.eastway.echarts.client.events;
 
-import org.eastway.echarts.shared.GetPatientSummaryResult;
+import org.eastway.echarts.shared.EHRProxy;
 
 import com.google.gwt.event.shared.GwtEvent;
 
 public class OpenEhrEvent extends GwtEvent<OpenEhrEventHandler> {
 	public static Type<OpenEhrEventHandler> TYPE = new Type<OpenEhrEventHandler>();
-	private GetPatientSummaryResult ehr;
+	private EHRProxy ehr;
 
-	public OpenEhrEvent(GetPatientSummaryResult ehr) {
+	public OpenEhrEvent(EHRProxy ehr) {
 		this.ehr = ehr;
 	}
 
@@ -37,7 +37,7 @@ public class OpenEhrEvent extends GwtEvent<OpenEhrEventHandler> {
 		return TYPE;
 	}
 
-	public GetPatientSummaryResult getEhr() {
+	public EHRProxy getEhr() {
 		return ehr;
 	}
 }

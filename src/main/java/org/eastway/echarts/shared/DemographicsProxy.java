@@ -17,44 +17,47 @@ package org.eastway.echarts.shared;
 
 import java.util.Date;
 
+import org.eastway.echarts.domain.Demographics;
+import org.eastway.echarts.shared.CodeProxy;
 
-public interface Demographics {
+import com.google.gwt.requestfactory.shared.EntityProxy;
+import com.google.gwt.requestfactory.shared.EntityProxyId;
+import com.google.gwt.requestfactory.shared.ProxyFor;
 
-	public String getCaseNumber();
+@ProxyFor(Demographics.class)
+public interface DemographicsProxy extends EntityProxy {
 
-	public void setCaseNumber(String caseNumber);
+	public void setGender(CodeProxy gender);
 
-	public void setGender(Code gender);
+	public CodeProxy getGender();
 
-	public Code getGender();
+	public void setRace(CodeProxy race);
 
-	public void setRace(Code race);
+	public CodeProxy getRace();
 
-	public Code getRace();
+	public void setMaritalStatus(CodeProxy maritalStatus);
 
-	public void setMaritalStatus(Code maritalStatus);
+	public CodeProxy getMaritalStatus();
 
-	public Code getMaritalStatus();
+	public void setLivingArrangement(CodeProxy livingArrangement);
 
-	public void setLivingArrangement(Code livingArrangement);
+	public CodeProxy getLivingArrangement();
 
-	public Code getLivingArrangement();
+	public void setEmployment(CodeProxy employment);
 
-	public void setEmployment(Code employment);
-
-	public Code getEmployment();
+	public CodeProxy getEmployment();
 
 	public void setIncomeSources(String incomeSources);
 
 	public String getIncomeSources();
 
-	public void setEducationLevel(Code educationLevel);
+	public void setEducationLevel(CodeProxy educationLevel);
 
-	public Code getEducationLevel();
+	public CodeProxy getEducationLevel();
 
-	public void setEducationType(Code educationType);
+	public void setEducationType(CodeProxy educationType);
 
-	public Code getEducationType();
+	public CodeProxy getEducationType();
 
 	public void setAllergies(String allergies);
 
@@ -68,97 +71,97 @@ public interface Demographics {
 
 	public String getPreferredLanguage();
 
-	public void setEthnicity(Code ethnicity);
+	public void setEthnicity(CodeProxy ethnicity);
 
-	public Code getEthnicity();
+	public CodeProxy getEthnicity();
 
 	public void setVeteran(Boolean veteran);
 
-	public Boolean isVeteran();
+	public Boolean getVeteran();
 
 	public void setSmd(Boolean isSmd);
 
-	public Boolean isSmd();
+	public Boolean getSmd();
 
 	public void setAlcoholDrug(Boolean isAlcoholDrug);
 
-	public Boolean isAlcoholDrug();
+	public Boolean getAlcoholDrug();
 
 	public void setForensic(Boolean isForensic);
 
-	public Boolean isForensic();
+	public Boolean getForensic();
 
 	public void setDd(Boolean isDd);
 
-	public Boolean isDd();
+	public Boolean getDd();
 
 	public void setMimr(Boolean isMimr);
 
-	public Boolean isMimr();
+	public Boolean getMimr();
 
 	public void setDuidwi(Boolean isDuidwi);
 
-	public Boolean isDuidwi();
+	public Boolean getDuidwi();
 
 	public void setDeaf(Boolean isDeaf);
 
-	public Boolean isDeaf();
+	public Boolean getDeaf();
 
 	public void setHearingImpaired(Boolean isHearingImpaired);
 
-	public Boolean isHearingImpaired();
+	public Boolean getHearingImpaired();
 
 	public void setBlind(Boolean isBlind);
 
-	public Boolean isBlind();
+	public Boolean getBlind();
 
 	public void setVisuallyImpaired(Boolean isVisuallyImpaired);
 
-	public Boolean isVisuallyImpaired();
+	public Boolean getVisuallyImpaired();
 
 	public void setPhyDisabled(Boolean isPhyDisabled);
 
-	public Boolean isPhyDisabled();
+	public Boolean getPhyDisabled();
 
 	public void setSpeechImpaired(Boolean isSpeechImpaired);
 
-	public Boolean isSpeechImpaired();
+	public Boolean getSpeechImpaired();
 
 	public void setPhysicalAbuse(Boolean isPhysicalAbuse);
 
-	public Boolean isPhysicalAbuse();
+	public Boolean getPhysicalAbuse();
 
 	public void setSexualAbuse(Boolean isSexualAbuse);
 
-	public Boolean isSexualAbuse();
+	public Boolean getSexualAbuse();
 
 	public void setDomesticViolence(Boolean isDomesticViolence);
 
-	public Boolean isDomesticViolence();
+	public Boolean getDomesticViolence();
 
 	public void setChildAlcDrug(Boolean isChildAlcDrug);
 
-	public Boolean isChildAlcDrug();
+	public Boolean getChildAlcDrug();
 
 	public void setHivAids(Boolean isHivAids);
 
-	public Boolean isHivAids();
+	public Boolean getHivAids();
 
 	public void setSuicidal(Boolean isSuicidal);
 
-	public Boolean isSuicidal();
+	public Boolean getSuicidal();
 
 	public void setSchoolDropout(Boolean isSchoolDropout);
 
-	public Boolean isSchoolDropout();
+	public Boolean getSchoolDropout();
 
 	public void setProbationParole(Boolean isProbationParole);
 
-	public Boolean isProbationParole();
+	public Boolean getProbationParole();
 
 	public void setGeneralPopulation(Boolean isGeneralPopulation);
 
-	public Boolean isGeneralPopulation();
+	public Boolean getGeneralPopulation();
 
 	public void setDob(Date dob);
 
@@ -176,5 +179,9 @@ public interface Demographics {
 
 	public String getReligion();
 
-	public DemographicsDTO toDto();
+	public String getCaseNumber();
+
+	public void setCaseNumber(String caseNumber);
+
+	public EntityProxyId<DemographicsProxy> stableId();
 }

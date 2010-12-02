@@ -21,7 +21,7 @@ import java.util.Map;
 
 import javax.persistence.EntityManager;
 
-import org.eastway.echarts.domain.CodeImpl;
+import org.eastway.echarts.domain.Code;
 import org.eastway.echarts.shared.DbException;
 import org.eastway.echarts.shared.GetProfileViewData;
 import org.eastway.echarts.shared.GetProfileViewDataResult;
@@ -55,9 +55,9 @@ public class GetProfileViewDataHandler implements
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 		try {
 			Map<String, String> costCenters = new LinkedHashMap<String, String>();
-			List<CodeImpl> codes = em.createQuery("SELECT c FROM CodeImpl c WHERE c.columnName = 'CostCenter' ORDER BY c.descriptor", CodeImpl.class)
+			List<Code> codes = em.createQuery("SELECT c FROM Code c WHERE c.columnName = 'CostCenter' ORDER BY c.descriptor", Code.class)
 								.getResultList();
-			for (CodeImpl c : codes)
+			for (Code c : codes)
 				costCenters.put(c.getValue(), c.getDescriptor());
 			return new GetProfileViewDataResult(costCenters);
 		} finally {

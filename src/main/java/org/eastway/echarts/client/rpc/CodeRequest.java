@@ -13,27 +13,19 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.client.presenter;
+package org.eastway.echarts.client.rpc;
 
-import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.ui.HasWidgets;
+import java.util.List;
 
-import org.eastway.echarts.shared.PatientDTO;
+import org.eastway.echarts.domain.Code;
+import org.eastway.echarts.shared.CodeProxy;
 
-public class ServiceHistoryPresenter implements Presenter {
+import com.google.gwt.requestfactory.shared.Request;
+import com.google.gwt.requestfactory.shared.RequestContext;
+import com.google.gwt.requestfactory.shared.Service;
 
-	public interface Display extends EchartsDisplay {
-		void setName(String name);
-	}
-
-	public ServiceHistoryPresenter(Display display, HandlerManager eventBus,
-				PatientDTO patient) {
-		display.setName(patient.getCaseNumber());
-	}
-
-	@Override
-	public void go(HasWidgets container) {
-		// TODO Auto-generated method stub
-		
-	}
+@Service(Code.class)
+public interface CodeRequest extends RequestContext {
+	Request<CodeProxy> findCode(Long id);
+	Request<List<CodeProxy>> findCodeByName(String name);
 }
