@@ -103,7 +103,8 @@ public class Code {
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 		try {
 			List<Code> codes = em.createQuery(
-					"SELECT c FROM Code c WHERE c.columnName = '" + name + "'", Code.class)
+					"SELECT c FROM Code c WHERE c.columnName = :name", Code.class)
+					.setParameter("name", name)
 					.getResultList();
 			return codes;
 		} finally {

@@ -149,7 +149,8 @@ public class Message {
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 		try {
 			List<Message> messages = em.createQuery(
-					"SELECT m FROM Message m WHERE m.caseNumber = '" + caseNumber + "' ORDER BY m.creationTimestamp DESC", Message.class)
+					"SELECT m FROM Message m WHERE m.caseNumber = :caseNumber ORDER BY m.creationTimestamp DESC", Message.class)
+					.setParameter("caseNumber", caseNumber)
 					.getResultList();
 			return messages;
 		} finally {

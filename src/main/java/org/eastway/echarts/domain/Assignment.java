@@ -252,7 +252,8 @@ public class Assignment {
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 		try {
 			List<Assignment> assignments = em.createQuery(
-					"SELECT a From AssignmentImpl a Where a.disposition = 'Open' And a.service Like 'S%' And a.caseNumber = '" + caseNumber + "' Order By a.patient.lastName ASC, a.patient.firstName ASC, a.orderDate DESC", Assignment.class)
+					"SELECT a From AssignmentImpl a Where a.disposition = 'Open' And a.service Like 'S%' And a.caseNumber = :caseNumber Order By a.patient.lastName ASC, a.patient.firstName ASC, a.orderDate DESC", Assignment.class)
+					.setParameter("caseNumber", caseNumber)
 					.getResultList();
 			return assignments;
 		} finally {

@@ -123,7 +123,8 @@ public class EHR {
 		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 		try {
 			EHR ehr = em.createQuery(
-					"SELECT ehr FROM EHR ehr WHERE ehr.patient = '" + caseNumber + "'", EHR.class)
+					"SELECT ehr FROM EHR ehr WHERE ehr.patient.caseNumber = :caseNumber", EHR.class)
+					.setParameter("caseNumber", caseNumber)
 					.getSingleResult();
 			return ehr;
 		} finally {
