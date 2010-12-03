@@ -17,7 +17,6 @@ package org.eastway.echarts.server;
 
 import org.eastway.echarts.shared.GetARInfo;
 import org.eastway.echarts.shared.GetAddresses;
-import org.eastway.echarts.shared.GetAppointments;
 import org.eastway.echarts.shared.GetContacts;
 import org.eastway.echarts.shared.GetDbServerConfig;
 import org.eastway.echarts.shared.GetDiagnoses;
@@ -38,7 +37,6 @@ public class ServerModule extends ActionHandlerModule {
 	@Override
 	protected void configureHandlers() {
 		bindHandler(GetTickler.class, GetTicklerHandler.class);
-		bindHandler(GetAppointments.class, GetAppointmentsHandler.class);
 		bindHandler(GetReferral.class, GetReferralHandler.class);
 		bindHandler(GetDiagnoses.class, GetDiagnosesHandler.class);
 		bindHandler(GetLinks.class, GetLinksHandler.class);

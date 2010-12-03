@@ -13,33 +13,19 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.shared;
+package org.eastway.echarts.client.rpc;
 
 import java.util.List;
 
-import net.customware.gwt.dispatch.shared.Result;
+import org.eastway.echarts.domain.Appointment;
+import org.eastway.echarts.shared.AppointmentProxy;
 
-public class GetAppointmentsResult implements Result {
+import com.google.gwt.requestfactory.shared.Request;
+import com.google.gwt.requestfactory.shared.RequestContext;
+import com.google.gwt.requestfactory.shared.Service;
 
-	private List<Appointment> appointments;
-	private Long rowCount;
-
-	GetAppointmentsResult() { }
-
-	public GetAppointmentsResult(List<Appointment> appointments, Long rowCount) {
-		this.appointments = appointments;
-		this.setRowCount(rowCount);
-	}
-
-	public List<Appointment> getAppointments() {
-		return appointments;
-	}
-
-	public void setRowCount(Long rowCount) {
-		this.rowCount = rowCount;
-	}
-
-	public Long getRowCount() {
-		return rowCount;
-	}
+@Service(Appointment.class)
+public interface AppointmentRequest extends RequestContext {
+	Request<AppointmentProxy> findAppointment(Long id);
+	Request<List<AppointmentProxy>> findAppointmentEntriesByCaseNumber(String caseNumber);
 }

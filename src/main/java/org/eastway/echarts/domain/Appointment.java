@@ -15,27 +15,32 @@
  */
 package org.eastway.echarts.domain;
 
-import java.sql.Time;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-import org.eastway.echarts.shared.Appointment;
-import org.eastway.echarts.shared.AppointmentDTO;
+import org.eastway.echarts.server.EchartsEntityManagerFactory;
+
+import com.google.gwt.requestfactory.shared.Version;
 
 @Entity
 @Table(name = "apptscatt")
-public class AppointmentImpl implements Appointment {
+public class Appointment {
 
 	private String activity;
 	@Column(name="apptdate")
 	private Date appointmentDate;
 	private String caseNumber;
+	@Temporal(TemporalType.TIME)
 	@Column(name="endtime")
-	private Time endTime;
+	private Date endTime;
 	@Id
 	@Column(name="apptid", scale=18, precision=0)
 	private Long id;
@@ -44,123 +49,124 @@ public class AppointmentImpl implements Appointment {
 	private Float priority;
 	@Column(name="staffname")
 	private String staff;
+	@Temporal(TemporalType.TIME)
 	@Column(name="starttime")
-	private Time startTime;
+	private Date startTime;
+	@Version
+	private Integer version;
 
-	@Override
 	public String getActivity() {
 		return activity;
 	}
 
-	@Override
 	public Date getAppointmentDate() {
 		return appointmentDate;
 	}
 
-	@Override
 	public String getCaseNumber() {
 		return caseNumber;
 	}
 
-	@Override
-	public Time getEndTime() {
+	public Date getEndTime() {
 		return endTime;
 	}
 
-	@Override
 	public Long getId() {
 		return id;
 	}
 
-	@Override
 	public String getLocation() {
 		return location;
 	}
 
-	@Override
 	public String getNotes() {
 		return notes;
 	}
 
-	@Override
 	public Float getPriority() {
 		return priority;
 	}
 
-	@Override
 	public String getStaff() {
 		return staff;
 	}
 
-	@Override
-	public Time getStartTime() {
+	public Date getStartTime() {
 		return startTime;
 	}
 
-	@Override
+	public Integer getVersion() {
+		return version;
+	}
+
 	public void setActivity(String activity) {
 		this.activity = activity;
 	}
 
-	@Override
 	public void setAppointmentDate(Date appointmentDate) {
 		this.appointmentDate = appointmentDate;
 	}
 
-	@Override
 	public void setCaseNumber(String caseNumber) {
 		this.caseNumber = caseNumber;
 	}
 
-	@Override
-	public void setEndTime(Time endTime) {
+
+	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
 
-	@Override
+
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	@Override
+
 	public void setLocation(String location) {
 		this.location = location;
 	}
 
-	@Override
+
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
 
-	@Override
+
 	public void setPriority(Float priority) {
 		this.priority = priority;
 	}
 
-	@Override
+
 	public void setStaff(String staff) {
 		this.staff = staff;
 	}
 
-	@Override
-	public void setStartTime(Time startTime) {
+
+	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
 
-	@Override
-	public AppointmentDTO toDto() {
-		AppointmentDTO dto = new AppointmentDTO();
-		dto.setActivity(activity);
-		dto.setAppointmentDate(appointmentDate);
-		dto.setCaseNumber(caseNumber);
-		dto.setEndTime(endTime);
-		dto.setId(id);
-		dto.setLocation(location);
-		dto.setNotes(notes);
-		dto.setPriority(priority);
-		dto.setStaff(staff);
-		dto.setStartTime(startTime);
-		return dto;
+	public static Appointment findAppointment(Long id) {
+		if (id == null)
+			return null;
+		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
+		try {
+			return em.find(Appointment.class, id);
+		} finally {
+			em.close();
+		}
 	}
 
+	public static List<Appointment> findAppointmentEntriesByCaseNumber(String caseNumber) {
+		if (caseNumber == null)
+			return null;
+		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
+		try {
+			return em.createQuery("SELECT a From Appointment a WHERE a.caseNumber = :caseNumber Order By a.appointmentDate DESC", Appointment.class)
+				.setParameter("caseNumber", caseNumber)
+				.getResultList();
+		} finally {
+			em.close();
+		}
+	}
 }

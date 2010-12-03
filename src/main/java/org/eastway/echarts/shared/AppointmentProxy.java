@@ -15,15 +15,16 @@
  */
 package org.eastway.echarts.shared;
 
-import java.sql.Time;
 import java.util.Date;
 
-public interface Appointment {
+import org.eastway.echarts.domain.Appointment;
 
-	public void setId(Long id);
+import com.google.gwt.requestfactory.shared.EntityProxy;
+import com.google.gwt.requestfactory.shared.EntityProxyId;
+import com.google.gwt.requestfactory.shared.ProxyFor;
 
-	public Long getId();
-
+@ProxyFor(Appointment.class)
+public interface AppointmentProxy extends EntityProxy {
 	public void setAppointmentDate(Date appointmentDate);
 
 	public Date getAppointmentDate();
@@ -32,13 +33,13 @@ public interface Appointment {
 
 	public String getCaseNumber();
 
-	public void setStartTime(Time startTime);
+	public void setStartTime(Date startTime);
 
-	public Time getStartTime();
+	public Date getStartTime();
 
-	public void setEndTime(Time endTime);
+	public void setEndTime(Date endTime);
 
-	public Time getEndTime();
+	public Date getEndTime();
 
 	public void setActivity(String activity);
 
@@ -60,6 +61,7 @@ public interface Appointment {
 
 	public String getNotes();
 
-	public AppointmentDTO toDto();
+	public Integer getVersion();
 
+	public EntityProxyId<AppointmentProxy> stableId();
 }

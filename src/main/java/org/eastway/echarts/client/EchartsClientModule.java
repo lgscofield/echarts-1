@@ -41,7 +41,7 @@ import org.eastway.echarts.client.view.ProfileViewImpl;
 import org.eastway.echarts.client.view.TicklerView;
 import org.eastway.echarts.client.view.TicklerViewImpl;
 import org.eastway.echarts.shared.Address;
-import org.eastway.echarts.shared.Appointment;
+import org.eastway.echarts.shared.AppointmentProxy;
 import org.eastway.echarts.shared.DemographicsProxy;
 import org.eastway.echarts.shared.Diagnosis;
 import org.eastway.echarts.shared.EHRProxy;
@@ -88,7 +88,7 @@ public class EchartsClientModule extends AbstractGinModule {
 		bind(EchartsOracle.class).in(Singleton.class);
 
 		bind(new TypeLiteral<List<ColumnDefinition<EHRProxy>>>() {}).to(PatientSummaryColumnDefinitionsImpl.class).in(Singleton.class);
-		bind(new TypeLiteral<List<ColumnDefinition<Appointment>>>() {}).to(AppointmentColumnDefinitionsImpl.class).in(Singleton.class);
+		bind(new TypeLiteral<List<ColumnDefinition<AppointmentProxy>>>() {}).to(AppointmentColumnDefinitionsImpl.class).in(Singleton.class);
 		bind(new TypeLiteral<List<ColumnDefinition<Referral>>>() {}).to(ReferralColumnDefinitionsImpl.class).in(Singleton.class);
 	}
 

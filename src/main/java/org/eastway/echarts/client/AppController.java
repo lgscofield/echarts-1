@@ -118,7 +118,7 @@ import org.eastway.echarts.client.view.PatientSummaryViewImpl;
 import org.eastway.echarts.client.view.ReferralViewImpl;
 import org.eastway.echarts.shared.ARInfo;
 import org.eastway.echarts.shared.Address;
-import org.eastway.echarts.shared.Appointment;
+import org.eastway.echarts.shared.AppointmentProxy;
 import org.eastway.echarts.shared.DemographicsProxy;
 import org.eastway.echarts.shared.Diagnosis;
 import org.eastway.echarts.shared.EHRProxy;
@@ -506,7 +506,7 @@ public class AppController implements Presenter {
 	}
 
 	private <T> void doViewAppointments(EHRView<T> ehrView, GetAppointments action) {
-		Presenter presenter = new AppointmentPresenter(new AppointmentViewImpl<Appointment>(), appointmentColumnDefinitions, eventBus, dispatch, action);
+		Presenter presenter = new AppointmentPresenter(new AppointmentViewImpl<AppointmentProxy>(), appointmentColumnDefinitions, eventBus, requestFactory, action);
 		presenter.go(ehrView.getDisplayArea());
 	}
 
