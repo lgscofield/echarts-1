@@ -92,16 +92,7 @@ public class MessagesPresenter implements Presenter {
 		view.getSaveButton().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				MessageRequest request = requestFactory.messageRequest();
-				MessageProxy m = request.create(MessageProxy.class);
-				m.setCaseNumber(caseNumber);
-				CodeProxy mtDto = findMessageType(view.getMessageType());
-				m.setMessageType(mtDto);
-				m.setMessage(view.getMessage());
-				m.setCreationTimestamp(new Date());
-				m.setLastEdit(new Date());
-				m.setLastEditBy(EchartsUser.userName);
-				save(m, request);
+				save(findMessageType(view.getMessageType()), caseNumber, view.getMessage(), new Date(), new Date(), EchartsUser.userName);
 			}
 		});
 		view.getCloseButton().addClickHandler(new ClickHandler() {
@@ -120,25 +111,30 @@ public class MessagesPresenter implements Presenter {
 		return null;
 	}
 
-	public void save(MessageProxy newMessage, MessageRequest request) {
-//		requestFactory.execute(new SaveMessage(EchartsUser.sessionId, m), new EchartsCallback<SaveMessageResult>(eventBus) {
-//			@Override
-//			protected void handleFailure(Throwable caught) {
-//			}
-//
-//			@Override
-//			protected void handleSuccess(SaveMessageResult result) {
-//				view.saved();
-//				messages.add(0, result.getMessage());
-//				setData(messages);
-//				view.setData(getData());
-//			}
-//		});
-		Request<Void> createReq = request.persist().using(newMessage);
-		createReq.fire(new Receiver<Void>() {
+	public void save(CodeProxy messageType,
+			String caseNumber,
+			String message,
+			Date timestamp,
+			Date lastEdit,
+			String lastEditBy) {
+		MessageRequest messageRequest = requestFactory.messageRequest();
+		final MessageProxy newMessage = messageRequest.create(MessageProxy.class);
+
+		newMessage.setCaseNumber(caseNumber);
+		newMessage.setCreationTimestamp(timestamp);
+		newMessage.setLastEdit(lastEdit);
+		newMessage.setLastEditBy(lastEditBy);
+		newMessage.setMessage(message);
+		newMessage.setMessageType(messageType);
+
+		messageRequest.persist().using(newMessage).fire(new Receiver<Void>() {
 			@Override
 			public void onSuccess(Void response) {
 				view.saved();
+				messages.add(0, newMessage);
+				setMessages(messages);
+				setData(messages);
+				view.setData(getData());
 			}
 		});
 	}
@@ -160,6 +156,7 @@ public class MessagesPresenter implements Presenter {
 		messageRequest.fire(new Receiver<List<MessageProxy>>() {
 			@Override
 			public void onSuccess(List<MessageProxy> response) {
+				setMessages(response);
 				setData(response);
 				view.setData(getData());
 			}
@@ -170,16 +167,19 @@ public class MessagesPresenter implements Presenter {
 		return this.data;
 	}
 
-	public void setData(List<MessageProxy> msgs) {
-		this.messages = msgs;
+	public void setMessages(List<MessageProxy> messages) {
+		this.messages = messages;
+	}
+
+	public void setData(List<MessageProxy> messages) {
 		ArrayList<String[]> d = new ArrayList<String[]>();
 
-		for (MessageProxy m : msgs) {
+		for (MessageProxy message : messages) {
 			String[] msgstr = {
-					new Long(m.getCreationTimestamp().getTime()).toString(),
-					m.getMessageType().getDescriptor(),
-					m.getLastEditBy(),
-					m.getMessage()
+					new Long(message.getCreationTimestamp().getTime()).toString(),
+					message.getMessageType().getDescriptor(),
+					message.getLastEditBy(),
+					message.getMessage()
 				};
 				d.add(msgstr);
 		}

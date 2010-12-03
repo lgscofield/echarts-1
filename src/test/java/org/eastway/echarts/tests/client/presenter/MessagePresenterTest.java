@@ -22,17 +22,15 @@ import java.util.List;
 import junit.framework.TestCase;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.requestfactory.shared.InstanceRequest;
+import com.google.gwt.requestfactory.shared.Receiver;
+import com.google.gwt.requestfactory.shared.Request;
 
 import org.eastway.echarts.client.presenter.MessagesPresenter;
-import org.eastway.echarts.client.rpc.CachingDispatchAsync;
-import org.eastway.echarts.client.rpc.EchartsCallback;
 import org.eastway.echarts.client.rpc.EchartsRequestFactory;
-import org.eastway.echarts.shared.CodeDTO;
-import org.eastway.echarts.shared.GetMessages;
-import org.eastway.echarts.shared.MessageDTO;
-import org.eastway.echarts.shared.PatientDTO;
-import org.eastway.echarts.shared.SaveMessage;
-import org.eastway.echarts.shared.SaveMessageResult;
+import org.eastway.echarts.client.rpc.MessageRequest;
+import org.eastway.echarts.shared.CodeProxy;
+import org.eastway.echarts.shared.MessageProxy;
 import org.easymock.IAnswer;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,76 +42,108 @@ public class MessagePresenterTest extends TestCase {
 	private EchartsRequestFactory requestFactory;
 	private EventBus eventBus;
 	private MessagesPresenter.Display mockMessagesDisplay;
-	private GetMessages action;
-	private String caseNumber;
-	private Date timestamp;
-	private PatientDTO patient;
-	private MessageDTO message;
-	private List<MessageDTO> msgs;
-	private CodeDTO mtDto;
+	private String caseNumber = "0000008";
+	private String descriptor = "Referral Message";
+	private Date timestamp = new Date(1270717380123L);
+	private String message = "message presenter test message";
+	private Date lastEdit = timestamp;
+	private String lastEditBy = "johndoe";
+	private MessageRequest messageRequest;
+	private MessageProxy messageProxy;
+	private List<MessageProxy> messages = new ArrayList<MessageProxy>();
+	private CodeProxy codeProxy;
+	private InstanceRequest<MessageProxy, Void> instanceRequest;
+	private Request<Void> createReq;
 
+	@SuppressWarnings("unchecked")
 	@Before
 	@Override
 	public void setUp() {
-		timestamp = new Date(1270717380123L);
-		caseNumber = "0000008";
-		action = new GetMessages("12345", caseNumber);
 		requestFactory = createStrictMock(EchartsRequestFactory.class);
 		mockMessagesDisplay = createStrictMock(MessagesPresenter.Display.class);
 		eventBus = createStrictMock(EventBus.class);
-		messagesPresenter = new MessagesPresenter(mockMessagesDisplay, eventBus, requestFactory, action);
-		patient = new PatientDTO();
-		patient.setCaseNumber(caseNumber);
+		codeProxy = createStrictMock(CodeProxy.class);
+		messageProxy = createStrictMock(MessageProxy.class);
+		messageRequest = createStrictMock(MessageRequest.class);
+		createReq = createStrictMock(Request.class);
+		instanceRequest = createStrictMock(InstanceRequest.class);
 
-		message = new MessageDTO();
-
-		message.setCaseNumber(caseNumber);
-
-		mtDto = new CodeDTO();
-
-		mtDto.setDescriptor("Referral Message");
-		message.setMessageType(mtDto);
-		message.setMessage("This is test 1");
-		message.setCreationTimestamp(timestamp);
-		message.setId(1);
-		message.setLastEdit(timestamp);
-		message.setLastEditBy("johndoe");
-		message.setParent(null);
-
-		msgs = new ArrayList<MessageDTO>();
-		msgs.add(message);
+		messagesPresenter = new MessagesPresenter(mockMessagesDisplay, eventBus, requestFactory, caseNumber);
 	}
 
 	@SuppressWarnings("unchecked")
-	@Test public void testAddMessage() {
-		requestFactory.execute(isA(SaveMessage.class), isA(EchartsCallback.class));
+	@Test
+	public void testAddMessage() {
+		messageProxy.setCaseNumber(caseNumber);
+		messageProxy.setCreationTimestamp(timestamp);
+		messageProxy.setLastEdit(lastEdit);
+		messageProxy.setLastEditBy(lastEditBy);
+		messageProxy.setMessage(message);
+		messageProxy.setMessageType(codeProxy);
+
+		messages.add(messageProxy);
+		messagesPresenter.setMessages(messages);
+		expect(messagesPresenter.getMessage(0).getCreationTimestamp()).andReturn(timestamp).anyTimes();
+		expect(messagesPresenter.getMessage(0).getLastEdit()).andReturn(timestamp).anyTimes();
+		expect(messagesPresenter.getMessage(0).getLastEditBy()).andReturn(lastEditBy).anyTimes();
+		expect(messagesPresenter.getMessage(0).getCaseNumber()).andReturn(caseNumber).anyTimes();
+		expect(messagesPresenter.getMessage(0).getMessage()).andReturn(message).anyTimes();
+		expect(messagesPresenter.getMessage(0).getMessageType()).andReturn(codeProxy).anyTimes();
+		expect(codeProxy.getDescriptor()).andReturn(descriptor).anyTimes();
+		expect(messagesPresenter.getMessage(0).getParent()).andReturn(messageProxy).anyTimes();
+		expect(messagesPresenter.getMessage(0).getCaseNumber()).andReturn(caseNumber).anyTimes();
+
+		expect(requestFactory.messageRequest()).andReturn(messageRequest);
+		expect(messageRequest.create(MessageProxy.class)).andReturn(messageProxy);
+		expect(messageRequest.persist()).andReturn(instanceRequest);
+		expect(instanceRequest.using(messageProxy)).andReturn(createReq);
+
+		createReq.fire(isA(Receiver.class));
+
 		expectLastCall().andAnswer(new IAnswer<Object>() {
 			@Override
 			public Object answer() throws Throwable {
 				final Object[] arguments = getCurrentArguments();
-				EchartsCallback<SaveMessageResult> callback = (EchartsCallback<SaveMessageResult>) arguments[arguments.length - 1];
-				callback.onSuccess(new SaveMessageResult(message));
+				Receiver<Void> callback = (Receiver<Void>) arguments[arguments.length - 1];
+				callback.onSuccess(null);
 				return null;
 			}
 		});
-		replay(requestFactory);
-		messagesPresenter.save(message);
-		verify(requestFactory);
+		replay(codeProxy, messageProxy, instanceRequest, messageRequest, requestFactory);
+		messagesPresenter.save(codeProxy, caseNumber, message, timestamp, lastEdit, lastEditBy);
+		verify(codeProxy, messageProxy, instanceRequest, messageRequest, requestFactory);
 
 		assertEquals(messagesPresenter.getMessage(0).getCreationTimestamp(), timestamp);
-		assertEquals(messagesPresenter.getMessage(0).getId(), 1);
 		assertEquals(messagesPresenter.getMessage(0).getLastEdit(), timestamp);
-		assertEquals(messagesPresenter.getMessage(0).getLastEditBy(), "johndoe");
-		assertEquals(messagesPresenter.getMessage(0).getMessage(), "This is test 1");
-		assertEquals(messagesPresenter.getMessage(0).getMessageType(), mtDto);
-		assertEquals(messagesPresenter.getMessage(0).getParent(), null);
+		assertEquals(messagesPresenter.getMessage(0).getLastEditBy(), lastEditBy);
+		assertEquals(messagesPresenter.getMessage(0).getMessage(), message);
+		assertEquals(messagesPresenter.getMessage(0).getMessageType().getDescriptor(), descriptor);
+		assertEquals(messagesPresenter.getMessage(0).getParent(), messageProxy);
 		assertEquals(messagesPresenter.getMessage(0).getCaseNumber(), caseNumber);
 
-		ArrayList<String[]> data = messagesPresenter.getData();
+		
+	}
+
+	@Test
+	public void testGetData() {
+		messages.add(messageProxy);
+		messagesPresenter.setMessages(messages);
+
+		expect(messagesPresenter.getMessage(0).getCreationTimestamp()).andReturn(timestamp);
+		expect(messagesPresenter.getMessage(0).getMessageType()).andReturn(codeProxy).anyTimes();
+		expect(codeProxy.getDescriptor()).andReturn(descriptor).anyTimes();
+		expect(messagesPresenter.getMessage(0).getLastEditBy()).andReturn(lastEditBy).anyTimes();
+		expect(messagesPresenter.getMessage(0).getMessage()).andReturn(message).anyTimes();
+
+		replay(codeProxy, messageProxy);
+		messagesPresenter.setData(messages);
+		verify(codeProxy, messageProxy);
+
+		List<String[]> data = messagesPresenter.getData();
 
 		assertEquals(new Date(new Long(data.get(0)[0])), timestamp);
-		assertEquals(data.get(0)[1], mtDto.getDescriptor());
-		assertEquals(data.get(0)[2], "johndoe");
-		assertEquals(data.get(0)[3], "This is test 1");
+		assertEquals(data.get(0)[1], descriptor);
+		assertEquals(data.get(0)[2], lastEditBy);
+		assertEquals(data.get(0)[3], message);
 	}
 }
