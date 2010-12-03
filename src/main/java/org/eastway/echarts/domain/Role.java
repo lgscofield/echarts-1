@@ -13,49 +13,41 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.shared;
+package org.eastway.echarts.domain;
 
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.TableGenerator;
 
-@SuppressWarnings("serial")
-public class RoleDTO implements Serializable, Role {
-	private Integer id;
+import com.google.gwt.requestfactory.shared.Version;
+
+@Entity
+public class Role {
+	@Id
+	@TableGenerator(name = "tg", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "tg")
+	@Column(name = "Role_Id")
+	private Long id;
 	private String roleName;
-	private Byte[] permission;
+	@Version
+	private Integer version;
 
-	public RoleDTO() { }
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	@Override
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	@Override
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
 	}
 
-	@Override
 	public String getRoleName() {
 		return roleName;
 	}
 
-	@Override
-	public void setPermission(Byte[] permission) {
-		this.permission = permission;
-	}
-
-	@Override
-	public Byte[] getPermission() {
-		return permission;
-	}
-
-	@Override
-	public RoleDTO toDto() {
-		return this;
+	public Integer getVersion() {
+		return version;
 	}
 }

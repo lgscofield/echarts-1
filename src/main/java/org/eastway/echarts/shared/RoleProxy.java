@@ -15,23 +15,19 @@
  */
 package org.eastway.echarts.shared;
 
-import net.customware.gwt.dispatch.shared.Result;
+import org.eastway.echarts.domain.Role;
 
-public class GetProfileResult implements Result {
+import com.google.gwt.requestfactory.shared.EntityProxy;
+import com.google.gwt.requestfactory.shared.EntityProxyId;
+import com.google.gwt.requestfactory.shared.ProxyFor;
 
-	private User user;
+@ProxyFor(Role.class)
+public interface RoleProxy extends EntityProxy {
+	public void setRoleName(String roleName);
 
-	public GetProfileResult() { }
+	public String getRoleName();
 
-	public GetProfileResult(User user) {
-		this.setUser(user);
-	}
+	public Integer getVersion();
 
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public User getUser() {
-		return user;
-	}
+	public EntityProxyId<RoleProxy> stableId();
 }

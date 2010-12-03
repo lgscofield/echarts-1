@@ -48,7 +48,7 @@ import org.eastway.echarts.shared.EHRProxy;
 import org.eastway.echarts.shared.GetTickler;
 import org.eastway.echarts.shared.Referral;
 import org.eastway.echarts.shared.Tickler;
-import org.eastway.echarts.shared.User;
+import org.eastway.echarts.shared.UserProxy;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Singleton;
@@ -80,8 +80,8 @@ public class EchartsClientModule extends AbstractGinModule {
 		bind(new TypeLiteral<List<ColumnDefinition<DemographicsProxy>>>() {}).to(DemographicsColumnDefinitionsImpl.class).in(Singleton.class);
 
 		bind(ProfilePresenter.class).in(Singleton.class);
-		bind(new TypeLiteral<List<ColumnDefinition<User>>>() {}).to(ProfileColumnDefinitionsImpl.class).in(Singleton.class);
-		bind(new TypeLiteral<ProfileView<User>>() {}).to(ProfileViewImpl.class);
+		bind(new TypeLiteral<List<ColumnDefinition<UserProxy>>>() {}).to(ProfileColumnDefinitionsImpl.class).in(Singleton.class);
+		bind(new TypeLiteral<ProfileView<UserProxy>>() {}).to(ProfileViewImpl.class);
 
 		bind(new TypeLiteral<List<ColumnDefinition<Address>>>() {}).to(AddressColumnDefinitionsImpl.class).in(Singleton.class);
 

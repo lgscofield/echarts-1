@@ -23,4 +23,5 @@ public interface EchartsRequestFactory extends RequestFactory {
 	EhrRequest ehrRequest();
 	DemographicsRequest demographicsRequest();
 	AppointmentRequest appointmentRequest();
+	UserRequest userRequest();
 }

@@ -17,7 +17,14 @@ package org.eastway.echarts.shared;
 
 import java.util.Date;
 
-public interface User {
+import org.eastway.echarts.domain.User;
+
+import com.google.gwt.requestfactory.shared.EntityProxy;
+import com.google.gwt.requestfactory.shared.EntityProxyId;
+import com.google.gwt.requestfactory.shared.ProxyFor;
+
+@ProxyFor(User.class)
+public interface UserProxy extends EntityProxy {
 	void setCred1(String cred1);
 	String getCred1();
 
@@ -54,9 +61,6 @@ public interface User {
 	void setStaffNpi(String staffNpi);
 	String getStaffNpi();
 
-	void setExtendedPermissions(Byte[] extendedPermissions);
-	Byte[] getExtendedPermissions();
-
 	void setHireDate(Date hireDate);
 	Date getHireDate();
 
@@ -66,11 +70,13 @@ public interface User {
 	void setSupervisor(String supervisor);
 	String getSupervisor();
 
-	UserDTO toDto();
-
-	void setRole(Role role);
-	Role getRole();
+	void setRole(RoleProxy role);
+	RoleProxy getRole();
 
 	void setSessionId(String sessionId);
 	String getSessionId();
+
+	EntityProxyId<UserProxy> stableId();
+
+	Integer getVersion();
 }

@@ -25,12 +25,12 @@ import org.eastway.echarts.client.rpc.CachingDispatchAsync;
 import org.eastway.echarts.client.rpc.EchartsCallback;
 import org.eastway.echarts.shared.GetProfileViewData;
 import org.eastway.echarts.shared.GetProfileViewDataResult;
-import org.eastway.echarts.shared.User;
+import org.eastway.echarts.shared.UserProxy;
 
 import com.google.inject.Inject;
 
 @SuppressWarnings("serial")
-public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<User>> {
+public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<UserProxy>> {
 
 	private Map<String, String> costCenters;
 
@@ -55,9 +55,9 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 	}
 
 	private void setColumnDefinitions() {
-		this.add(new ColumnDefinition<User>() {
+		this.add(new ColumnDefinition<UserProxy>() {
 			@Override
-			public void render(User t, StringBuilder sb) {
+			public void render(UserProxy t, StringBuilder sb) {
 				try {
 					sb.append(t.getStaffName() == null ? "" : t.getStaffName());
 				} catch (NullPointerException e) {
@@ -66,14 +66,14 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 			}
 
 			@Override
-			public String getHeader(User t) {
+			public String getHeader(UserProxy t) {
 				return "Name";
 			}
 
 		});
-		this.add(new ColumnDefinition<User>() {
+		this.add(new ColumnDefinition<UserProxy>() {
 			@Override
-			public void render(User t, StringBuilder sb) {
+			public void render(UserProxy t, StringBuilder sb) {
 				try {
 					sb.append(t.getUsername() == null ? "" : t.getUsername());
 				} catch(NullPointerException e) {
@@ -82,13 +82,13 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 			}
 
 			@Override
-			public String getHeader(User t) {
+			public String getHeader(UserProxy t) {
 				return "Username";
 			}
 		});
-		this.add(new ColumnDefinition<User>() {
+		this.add(new ColumnDefinition<UserProxy>() {
 			@Override
-			public void render(User t, StringBuilder sb) {
+			public void render(UserProxy t, StringBuilder sb) {
 				try {
 					sb.append(t.getStaffId() == null ? "" : t.getStaffId());
 				} catch (NullPointerException e) {
@@ -97,13 +97,13 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 			}
 
 			@Override
-			public String getHeader(User t) {
+			public String getHeader(UserProxy t) {
 				return "MIS Number";
 			}
 		});
-		this.add(new ColumnDefinition<User>() {
+		this.add(new ColumnDefinition<UserProxy>() {
 			@Override
-			public void render(User t, StringBuilder sb) {
+			public void render(UserProxy t, StringBuilder sb) {
 				try {
 					sb.append(t.getStaffDescription() == null ? "" : t.getStaffDescription());
 				} catch (NullPointerException e) {
@@ -112,13 +112,13 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 			}
 
 			@Override
-			public String getHeader(User t) {
+			public String getHeader(UserProxy t) {
 				return "Staff Description";
 			}
 		});
-		this.add(new ColumnDefinition<User>() {
+		this.add(new ColumnDefinition<UserProxy>() {
 			@Override
-			public void render(User t, StringBuilder sb) {
+			public void render(UserProxy t, StringBuilder sb) {
 				try {
 					sb.append(t.getRole().getRoleName() == null ? "" : t.getRole().getRoleName());
 				} catch (NullPointerException e) {
@@ -127,22 +127,22 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 			}
 
 			@Override
-			public String getHeader(User t) {
+			public String getHeader(UserProxy t) {
 				return "Role";
 			}
 		});
-		this.add(new ColumnDefinition<User>() {
+		this.add(new ColumnDefinition<UserProxy>() {
 			@Override
-			public void render(User t, StringBuilder sb) {
+			public void render(UserProxy t, StringBuilder sb) {
 			}
 
 			@Override
-			public String getHeader(User t) {
+			public String getHeader(UserProxy t) {
 				return "Program";
 			}
 
 			@Override
-			public String getData(User t) {
+			public String getData(UserProxy t) {
 				try {
 					return t.getProgram() == null ? "" : t.getProgram();
 				} catch(NullPointerException e) {
@@ -151,12 +151,12 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 			}
 
 			@Override
-			public Map<String, String> getMap(User t) {
+			public Map<String, String> getMap(UserProxy t) {
 				return costCenters;
 			}
 
 			@Override
-			public void setData(User t, String program) {
+			public void setData(UserProxy t, String program) {
 				t.setProgram(program);
 			}
 
@@ -165,18 +165,18 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 				return true;
 			}
 		});
-		this.add(new ColumnDefinition<User>() {
+		this.add(new ColumnDefinition<UserProxy>() {
 			@Override
-			public void render(User t, StringBuilder sb) {
+			public void render(UserProxy t, StringBuilder sb) {
 			}
 
 			@Override
-			public String getHeader(User t) {
+			public String getHeader(UserProxy t) {
 				return "Credential 1";
 			}
 
 			@Override
-			public String getData(User t) {
+			public String getData(UserProxy t) {
 				try {
 					return t.getCred1() == null ? "" : t.getCred1();
 				} catch (NullPointerException e) {
@@ -185,7 +185,7 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 			}
 
 			@Override
-			public void setData(User t, String cred1) {
+			public void setData(UserProxy t, String cred1) {
 				t.setCred1(cred1);
 			}
 
@@ -194,18 +194,18 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 				return true;
 			}
 		});
-		this.add(new ColumnDefinition<User>() {
+		this.add(new ColumnDefinition<UserProxy>() {
 			@Override
-			public void render(User t, StringBuilder sb) {
+			public void render(UserProxy t, StringBuilder sb) {
 			}
 
 			@Override
-			public String getHeader(User t) {
+			public String getHeader(UserProxy t) {
 				return "Credential 2";
 			}
 
 			@Override
-			public String getData(User t) {
+			public String getData(UserProxy t) {
 				try {
 					return t.getCred2() == null ? "" : t.getCred2();
 				} catch (NullPointerException e) {
@@ -214,7 +214,7 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 			}
 
 			@Override
-			public void setData(User t, String cred2) {
+			public void setData(UserProxy t, String cred2) {
 				t.setCred2(cred2);
 			}
 
@@ -223,9 +223,9 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 				return true;
 			}
 		});
-		this.add(new ColumnDefinition<User>() {
+		this.add(new ColumnDefinition<UserProxy>() {
 			@Override
-			public void render(User t, StringBuilder sb) {
+			public void render(UserProxy t, StringBuilder sb) {
 				try {
 					sb.append(t.getOffice() == null ? "" : t.getOffice());
 				} catch (NullPointerException e) {
@@ -234,13 +234,13 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 			}
 
 			@Override
-			public String getHeader(User t) {
+			public String getHeader(UserProxy t) {
 				return "Office";
 			}
 		});
-		this.add(new ColumnDefinition<User>() {
+		this.add(new ColumnDefinition<UserProxy>() {
 			@Override
-			public void render(User t, StringBuilder sb) {
+			public void render(UserProxy t, StringBuilder sb) {
 				try {
 					sb.append(t.getOfficePhone() == null ? "" : t.getOfficePhone());
 				} catch (NullPointerException e) {
@@ -249,13 +249,13 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 			}
 
 			@Override
-			public String getHeader(User t) {
+			public String getHeader(UserProxy t) {
 				return "Office Phone";
 			}
 		});
-		this.add(new ColumnDefinition<User>() {
+		this.add(new ColumnDefinition<UserProxy>() {
 			@Override
-			public void render(User t, StringBuilder sb) {
+			public void render(UserProxy t, StringBuilder sb) {
 				try {
 					sb.append(t.getSupervisor() == null ? "" : t.getSupervisor());
 				} catch (NullPointerException e) {
@@ -264,7 +264,7 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 			}
 
 			@Override
-			public String getHeader(User t) {
+			public String getHeader(UserProxy t) {
 				return "Supervisor";
 			}
 		});

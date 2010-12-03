@@ -13,23 +13,18 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.shared;
+package org.eastway.echarts.client.rpc;
 
+import org.eastway.echarts.domain.User;
+import org.eastway.echarts.shared.UserProxy;
 
-public interface Role {
+import com.google.gwt.requestfactory.shared.InstanceRequest;
+import com.google.gwt.requestfactory.shared.Request;
+import com.google.gwt.requestfactory.shared.RequestContext;
+import com.google.gwt.requestfactory.shared.Service;
 
-	public void setId(Integer id);
-
-	public Integer getId();
-
-	public void setRoleName(String roleName);
-
-	public String getRoleName();
-
-	public void setPermission(Byte[] permission);
-
-	public Byte[] getPermission();
-
-	public RoleDTO toDto();
-
+@Service(User.class)
+public interface UserRequest extends RequestContext {
+	Request<UserProxy> findUser(String userName);
+	InstanceRequest<UserProxy, Void> persist();
 }
