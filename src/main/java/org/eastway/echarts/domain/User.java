@@ -15,15 +15,13 @@
  */
 package org.eastway.echarts.domain;
 
-import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -36,13 +34,14 @@ import com.google.gwt.requestfactory.shared.Version;
 @Entity
 @Table(name="Echarts_User")
 public class User {
-	@ManyToMany
-	@JoinTable(name="user_session_map",
-			joinColumns=@JoinColumn(name="user_id"),
-			inverseJoinColumns=@JoinColumn(name="session_id"))
-	private Collection<SessionIdLog> sessionIds;
+//	@ManyToMany
+//	@JoinTable(name="user_session_map",
+//			joinColumns=@JoinColumn(name="user_id"),
+//			inverseJoinColumns=@JoinColumn(name="session_id"))
+//	private Collection<SessionIdLog> sessionIds;
 	@Id
-	private String username;
+	@Column(name = "username")
+	private String id;
 	private String staffId;
 	@ManyToOne
 	@JoinColumn(name = "Role_Id")
@@ -63,18 +62,23 @@ public class User {
 	private String cred1;
 	private String cred2;
 	@Version
-	private Integer version;
+	@Column(name = "version")
+	private Integer version = 0;
 
 	public String getId() {
-		return username;
+		return id;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void setUsername(String userName) {
+		this.id = userName;
 	}
 
 	public String getUsername() {
-		return username;
+		return id;
 	}
 
 	public void setStaffId(String staffId) {
@@ -208,29 +212,49 @@ public class User {
 		return cred2;
 	}
 
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
 	public Integer getVersion() {
 		return version;
+	}
+
+	public static final EntityManager entityManager() {
+		return EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 	}
 
 	public static User findUser(String id) {
 		if (id == null)
 			return null;
-		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
+		EntityManager em = entityManager();
 		try {
-			return em.find(User.class, id);
+			User user = em.find(User.class, id);
+			return user;
 		} finally {
 			em.close();
 		}
 	}
 
 	public void persist() {
-		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
+		EntityManager em = entityManager();
 		try {
-			em.getTransaction().begin();
+			//em.getTransaction().begin();
 			em.persist(this);
-			em.getTransaction().commit();
+			//em.getTransaction().commit();
 		} finally {
 			em.close();
 		}
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Id: ").append(getId()).append(", ");
+		sb.append("Version: ").append(getVersion()).append(", ");
+		sb.append("UserName: ").append(getUsername()).append(", ");
+		sb.append("StaffName: ").append(getStaffName()).append(", ");
+		sb.append("StaffId: ").append(getStaffId()).append(", ");
+		return sb.toString();
 	}
 }

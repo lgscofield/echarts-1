@@ -22,6 +22,7 @@ import com.google.gwt.event.shared.EventBus;
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.rpc.EchartsRequestFactory;
+import org.eastway.echarts.client.rpc.UserRequest;
 import org.eastway.echarts.client.view.ProfileView;
 import org.eastway.echarts.shared.UserProxy;
 
@@ -34,6 +35,7 @@ public class ProfilePresenter implements Presenter, ProfileView.Presenter<UserPr
 	private ProfileView<UserProxy> view;
 	private EchartsRequestFactory requestFactory;
 	private UserProxy user;
+	private UserRequest request;
 
 	@Inject
 	public ProfilePresenter(ProfileView<UserProxy> view, List<ColumnDefinition<UserProxy>> columnDefinitions, EventBus eventBus, EchartsRequestFactory requestFactory) {
@@ -58,6 +60,12 @@ public class ProfilePresenter implements Presenter, ProfileView.Presenter<UserPr
 		});
 	}
 
+	@Override
+	public UserProxy enableEdit(UserProxy userProxy) {
+		request = requestFactory.userRequest();
+		return request.edit(userProxy);
+	}
+
 	public ProfileView<UserProxy> getDisplay() {
 		return view;
 	}
@@ -72,14 +80,13 @@ public class ProfilePresenter implements Presenter, ProfileView.Presenter<UserPr
 	}
 
 	@Override
-	public void save(final UserProxy userProxy) {
-		requestFactory.userRequest().persist().using(userProxy)
-				.fire(new Receiver<Void>() {
+	public void save(UserProxy userProxy) {
+		final String program = userProxy.getProgram();
+		request.persist().using(userProxy).fire(new Receiver<Void>() {
 			@Override
 			public void onSuccess(Void response) {
 				view.setStatus("Settings saved");
-				setData(userProxy);
-				if (userProxy.getProgram() != null)
+				if (program != null)
 					view.clearFirstLogin();
 			}
 		});
