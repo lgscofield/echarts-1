@@ -101,7 +101,6 @@ import org.eastway.echarts.client.presenter.ProfilePresenter;
 import org.eastway.echarts.client.presenter.ReferralPresenter;
 import org.eastway.echarts.client.presenter.TicklerPresenter;
 import org.eastway.echarts.client.rpc.CachingDispatchAsync;
-import org.eastway.echarts.client.rpc.EchartsCallback;
 import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.view.ARInfoViewImpl;
 import org.eastway.echarts.client.view.AddressViewImpl;
@@ -119,6 +118,7 @@ import org.eastway.echarts.client.view.ReferralViewImpl;
 import org.eastway.echarts.shared.ARInfo;
 import org.eastway.echarts.shared.Address;
 import org.eastway.echarts.shared.AppointmentProxy;
+import org.eastway.echarts.shared.DbServerConfigProxy;
 import org.eastway.echarts.shared.DemographicsProxy;
 import org.eastway.echarts.shared.Diagnosis;
 import org.eastway.echarts.shared.EHRProxy;
@@ -126,14 +126,13 @@ import org.eastway.echarts.shared.GetARInfo;
 import org.eastway.echarts.shared.GetAddresses;
 import org.eastway.echarts.shared.GetAppointments;
 import org.eastway.echarts.shared.GetContacts;
-import org.eastway.echarts.shared.GetDbServerConfig;
-import org.eastway.echarts.shared.GetDbServerConfigResult;
 import org.eastway.echarts.shared.GetDiagnoses;
 import org.eastway.echarts.shared.GetLinks;
 import org.eastway.echarts.shared.GetMedications;
 import org.eastway.echarts.shared.GetReferral;
 import org.eastway.echarts.shared.Referral;
 
+import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.requestfactory.shared.RequestEvent;
 import com.google.gwt.requestfactory.shared.RequestEvent.State;
 import com.google.gwt.user.client.Window;
@@ -167,19 +166,15 @@ public class AppController implements Presenter {
 	}
 
 	private void checkSession() {
-		dispatch.execute(new GetDbServerConfig("dbServerUrl"), new EchartsCallback<GetDbServerConfigResult>(eventBus) {
+		requestFactory.dbServerConfigRequest().findDbServerConfig("dbServerUrl").fire(new Receiver<DbServerConfigProxy>() {
 			@Override
-			protected void handleFailure(Throwable caught) {
-			}
-
-			@Override
-			protected void handleSuccess(GetDbServerConfigResult t) {
+			public void onSuccess(DbServerConfigProxy response) {
 				if ((EchartsUser.sessionId == null || EchartsUser.sessionId == "null") ||
 						(EchartsUser.userName == null || EchartsUser.userName == "null") ||
 						(EchartsUser.staffId == null || EchartsUser.staffId == "null")) {
-					Window.Location.assign("http://" + t.getValue() + "/echarts/logout.aspx?continue=" + Window.Location.getHref());
+					Window.Location.assign("http://" + response.getValue() + "/echarts/logout.aspx?continue=" + Window.Location.getHref());
 				} else {
-					setDbServerUrl(t.getValue());
+					setDbServerUrl(response.getValue());
 					bind();
 				}
 			}

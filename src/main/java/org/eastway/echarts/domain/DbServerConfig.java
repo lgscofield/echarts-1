@@ -15,46 +15,70 @@
  */
 package org.eastway.echarts.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.Version;
 
-import org.eastway.echarts.shared.DbServerConfig;
-import org.eastway.echarts.shared.DbServerConfigDTO;
+import org.eastway.echarts.server.EchartsEntityManagerFactory;
 
 @Entity
-@Table(name="DbServerConfig")
-public class DbServerConfigImpl implements DbServerConfig {
+public class DbServerConfig {
 
 	@Id
 	private String name;
 	private String value;
+	@Version
+	@Column(name = "version")
+	private Integer version;
 
-	@Override
+
+	public void setId(String id) {
+		this.name = id;
+	}
+
+	public String getId() {
+		return name;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	@Override
 	public String getName() {
 		return name;
 	}
 
-	@Override
 	public void setValue(String value) {
 		this.value = value;
 	}
 
-	@Override
 	public String getValue() {
 		return value;
 	}
 
-	@Override
-	public DbServerConfigDTO toDto() {
-		DbServerConfigDTO dto = new DbServerConfigDTO();
-		dto.setName(name);
-		dto.setValue(value);
-		return dto;
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public static final EntityManager entityManager() {
+		return EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
+	}
+
+	public static DbServerConfig findDbServerConfig(String id) {
+		if (id == null)
+			return null;
+		EntityManager em = entityManager();
+		try {
+			DbServerConfig dsc = em.find(DbServerConfig.class, id);
+			return dsc;
+		} finally {
+			em.close();
+		}
 	}
 }

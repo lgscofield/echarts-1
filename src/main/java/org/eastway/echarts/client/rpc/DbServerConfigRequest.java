@@ -13,26 +13,16 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.shared;
+package org.eastway.echarts.client.rpc;
 
-import net.customware.gwt.dispatch.shared.Action;
+import org.eastway.echarts.domain.DbServerConfig;
+import org.eastway.echarts.shared.DbServerConfigProxy;
 
-public class GetDbServerConfig implements Action<GetDbServerConfigResult> {
+import com.google.gwt.requestfactory.shared.Request;
+import com.google.gwt.requestfactory.shared.RequestContext;
+import com.google.gwt.requestfactory.shared.Service;
 
-	private String name;
-
-	GetDbServerConfig() { }
-
-	public GetDbServerConfig(String name) {
-		this.setName(name);
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getName() {
-		return name;
-	}
-
+@Service(DbServerConfig.class)
+public interface DbServerConfigRequest extends RequestContext {
+	Request<DbServerConfigProxy> findDbServerConfig(String id);
 }

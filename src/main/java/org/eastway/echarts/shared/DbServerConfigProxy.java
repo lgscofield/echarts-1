@@ -15,23 +15,20 @@
  */
 package org.eastway.echarts.shared;
 
-import net.customware.gwt.dispatch.shared.Result;
+import org.eastway.echarts.domain.DbServerConfig;
 
-public class GetDbServerConfigResult implements Result {
+import com.google.gwt.requestfactory.shared.EntityProxy;
+import com.google.gwt.requestfactory.shared.ProxyFor;
 
-	private String value;
+@ProxyFor(DbServerConfig.class)
+public interface DbServerConfigProxy extends EntityProxy {
+	public Integer getVersion();
 
-	GetDbServerConfigResult() { }
+	public void setName(String name);
 
-	public GetDbServerConfigResult(String value) {
-		this.setValue(value);
-	}
+	public String getName();
 
-	public void setValue(String value) {
-		this.value = value;
-	}
+	public void setValue(String value);
 
-	public String getValue() {
-		return value;
-	}
+	public String getValue();
 }
