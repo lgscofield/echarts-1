@@ -16,17 +16,14 @@
 package org.eastway.echarts.client.common;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
-import com.google.gwt.event.shared.EventBus;
-
-import org.eastway.echarts.client.EchartsUser;
-import org.eastway.echarts.client.rpc.CachingDispatchAsync;
-import org.eastway.echarts.client.rpc.EchartsCallback;
-import org.eastway.echarts.shared.GetProfileViewData;
-import org.eastway.echarts.shared.GetProfileViewDataResult;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
+import org.eastway.echarts.shared.CodeProxy;
 import org.eastway.echarts.shared.UserProxy;
 
+import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.inject.Inject;
 
 @SuppressWarnings("serial")
@@ -35,23 +32,19 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 	private Map<String, String> costCenters;
 
 	@Inject
-	public ProfileColumnDefinitionsImpl(EventBus eventBus, CachingDispatchAsync dispatch) {
-		dispatch.execute(new GetProfileViewData(EchartsUser.sessionId), new EchartsCallback<GetProfileViewDataResult>(eventBus) {
+	public ProfileColumnDefinitionsImpl(EchartsRequestFactory requestFactory) {
+		requestFactory.codeRequest().findCodeByName("CostCenter").fire(new Receiver<List<CodeProxy>>() {
 			@Override
-			protected void handleFailure(Throwable caught) {
-			}
-
-			@Override
-			protected void handleSuccess(GetProfileViewDataResult result) {
-				setCostCenters(result.getCostCenters());
+			public void onSuccess(List<CodeProxy> response) {
+				setCostCenters(response);
 				setColumnDefinitions();
 			}
 		});
-
 	}
 
-	private void setCostCenters(Map<String, String> costCenters) {
-		this.costCenters = costCenters;
+	private void setCostCenters(List<CodeProxy> costCenters) {
+		for (CodeProxy c : costCenters)
+			this.costCenters.put(c.getValue(), c.getDescriptor());
 	}
 
 	private void setColumnDefinitions() {
