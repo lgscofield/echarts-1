@@ -44,8 +44,6 @@ import org.eastway.echarts.client.events.ViewAddressesEvent;
 import org.eastway.echarts.client.events.ViewAddressesEventHandler;
 import org.eastway.echarts.client.events.ViewAppointmentsEvent;
 import org.eastway.echarts.client.events.ViewAppointmentsEventHandler;
-import org.eastway.echarts.client.events.ViewContactsEvent;
-import org.eastway.echarts.client.events.ViewContactsEventHandler;
 import org.eastway.echarts.client.events.ViewDemographicsEvent;
 import org.eastway.echarts.client.events.ViewDemographicsEventHandler;
 import org.eastway.echarts.client.events.ViewDiagnosesEvent;
@@ -87,7 +85,6 @@ import org.eastway.echarts.client.events.ViewTreatmentPlanEventHandler;
 import org.eastway.echarts.client.presenter.ARInfoPresenter;
 import org.eastway.echarts.client.presenter.AddressPresenter;
 import org.eastway.echarts.client.presenter.AppointmentPresenter;
-import org.eastway.echarts.client.presenter.ContactPresenter;
 import org.eastway.echarts.client.presenter.DashboardPresenter;
 import org.eastway.echarts.client.presenter.DemographicsPresenter;
 import org.eastway.echarts.client.presenter.DiagnosisPresenter;
@@ -100,12 +97,18 @@ import org.eastway.echarts.client.presenter.Presenter;
 import org.eastway.echarts.client.presenter.ProfilePresenter;
 import org.eastway.echarts.client.presenter.ReferralPresenter;
 import org.eastway.echarts.client.presenter.TicklerPresenter;
-import org.eastway.echarts.client.rpc.CachingDispatchAsync;
+import org.eastway.echarts.client.rpc.ARInfoProxy;
+import org.eastway.echarts.client.rpc.AddressProxy;
+import org.eastway.echarts.client.rpc.AppointmentProxy;
+import org.eastway.echarts.client.rpc.DbServerConfigProxy;
+import org.eastway.echarts.client.rpc.DemographicsProxy;
+import org.eastway.echarts.client.rpc.DiagnosisProxy;
+import org.eastway.echarts.client.rpc.EHRProxy;
 import org.eastway.echarts.client.rpc.EchartsRequestFactory;
+import org.eastway.echarts.client.rpc.ReferralProxy;
 import org.eastway.echarts.client.view.ARInfoViewImpl;
 import org.eastway.echarts.client.view.AddressViewImpl;
 import org.eastway.echarts.client.view.AppointmentViewImpl;
-import org.eastway.echarts.client.view.ContactView;
 import org.eastway.echarts.client.view.DemographicsViewImpl;
 import org.eastway.echarts.client.view.DiagnosisViewImpl;
 import org.eastway.echarts.client.view.EHRView;
@@ -115,22 +118,13 @@ import org.eastway.echarts.client.view.MedicationView;
 import org.eastway.echarts.client.view.MessagesView;
 import org.eastway.echarts.client.view.PatientSummaryViewImpl;
 import org.eastway.echarts.client.view.ReferralViewImpl;
-import org.eastway.echarts.shared.ARInfo;
-import org.eastway.echarts.shared.Address;
-import org.eastway.echarts.shared.AppointmentProxy;
-import org.eastway.echarts.shared.DbServerConfigProxy;
-import org.eastway.echarts.shared.DemographicsProxy;
-import org.eastway.echarts.shared.Diagnosis;
-import org.eastway.echarts.shared.EHRProxy;
 import org.eastway.echarts.shared.GetARInfo;
 import org.eastway.echarts.shared.GetAddresses;
 import org.eastway.echarts.shared.GetAppointments;
-import org.eastway.echarts.shared.GetContacts;
 import org.eastway.echarts.shared.GetDiagnoses;
 import org.eastway.echarts.shared.GetLinks;
 import org.eastway.echarts.shared.GetMedications;
 import org.eastway.echarts.shared.GetReferral;
-import org.eastway.echarts.shared.Referral;
 
 import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.requestfactory.shared.RequestEvent;
@@ -143,7 +137,6 @@ import com.google.inject.Inject;
 public class AppController implements Presenter {
 	private final EventBus eventBus;
 	private EHRViewImpl<EHRProxy> ehrView;
-	private CachingDispatchAsync dispatch;
 	private DashboardPresenter dashboardPresenter;
 	@Inject private TicklerPresenter ticklerPresenter;
 	@Inject private ProfilePresenter profilePresenter;
@@ -157,10 +150,9 @@ public class AppController implements Presenter {
 	private EchartsRequestFactory requestFactory;
 
 	@Inject
-	public AppController(DashboardPresenter dashboardPresenter, EventBus eventBus, CachingDispatchAsync dispatch, EchartsRequestFactory requestFactory) {
+	public AppController(DashboardPresenter dashboardPresenter, EventBus eventBus, EchartsRequestFactory requestFactory) {
 		this.dashboardPresenter = dashboardPresenter;
 		this.eventBus = eventBus;
-		this.dispatch = dispatch;
 		this.requestFactory = requestFactory;
 		checkSession();
 	}
@@ -172,9 +164,9 @@ public class AppController implements Presenter {
 				if ((EchartsUser.sessionId == null || EchartsUser.sessionId == "null") ||
 						(EchartsUser.userName == null || EchartsUser.userName == "null") ||
 						(EchartsUser.staffId == null || EchartsUser.staffId == "null")) {
-					Window.Location.assign("http://" + response.getValue() + "/echarts/logout.aspx?continue=" + Window.Location.getHref());
+					Window.Location.assign("http://" + response.getConfigValue() + "/echarts/logout.aspx?continue=" + Window.Location.getHref());
 				} else {
-					setDbServerUrl(response.getValue());
+					setDbServerUrl(response.getConfigValue());
 					bind();
 				}
 			}
@@ -232,12 +224,6 @@ public class AppController implements Presenter {
 			@Override
 			public <T> void onViewAddresses(ViewAddressesEvent<T> event) {
 				doViewAddresses(event.getView(), event.getAction());
-			}
-		});
-		eventBus.addHandler(ViewContactsEvent.TYPE, new ViewContactsEventHandler() {
-			@Override
-			public <T> void onViewContacts(ViewContactsEvent<T> event) {
-				doViewContacts(event.getView(), event.getAction());
 			}
 		});
 		eventBus.addHandler(ViewMedicationsEvent.TYPE, new ViewMedicationsEventHandler() {
@@ -414,7 +400,7 @@ public class AppController implements Presenter {
 	}
 
 	private <T> void doViewARInfo(String caseNumber, EHRView<T> ehrView, GetARInfo action) {
-		Presenter presenter = new ARInfoPresenter(new ARInfoViewImpl<ARInfo>(), aRInfoColumnDefinitions, eventBus, dispatch, action);
+		Presenter presenter = new ARInfoPresenter(new ARInfoViewImpl<ARInfoProxy>(), aRInfoColumnDefinitions, requestFactory, action);
 		presenter.go(ehrView.getDisplayArea());
 	}
 
@@ -476,27 +462,22 @@ public class AppController implements Presenter {
 	}
 
 	private <T> void doViewMedications(EHRView<T> ehrView, GetMedications action) {
-		Presenter presenter = new MedicationPresenter(new MedicationView(), eventBus, dispatch, action);
-		presenter.go(ehrView.getDisplayArea());
-	}
-
-	private <T> void doViewContacts(EHRView<T> ehrView, GetContacts action) {
-		Presenter presenter = new ContactPresenter(new ContactView(), eventBus, dispatch, action);
+		Presenter presenter = new MedicationPresenter(new MedicationView(), requestFactory, action);
 		presenter.go(ehrView.getDisplayArea());
 	}
 
 	private <T> void doViewAddresses(EHRView<T> ehrView, GetAddresses action) {
-		Presenter presenter = new AddressPresenter(new AddressViewImpl<Address>(), addressColumnDefinitions, eventBus, dispatch, action);
+		Presenter presenter = new AddressPresenter(new AddressViewImpl<AddressProxy>(), addressColumnDefinitions, requestFactory, action.getCaseNumber());
 		presenter.go(ehrView.getDisplayArea());
 	}
 
 	private <T> void doViewLinksEvent(EHRView<T> ehrView, GetLinks action) {
-		Presenter presenter = new LinkPresenter(new LinkView(), eventBus, dispatch, action);
+		Presenter presenter = new LinkPresenter(new LinkView(), requestFactory, action);
 		presenter.go(ehrView.getDisplayArea());
 	}
 
 	private <T> void doViewDiagnoses(EHRView<T> ehrView, String caseNumber, GetDiagnoses action) {
-		DiagnosisPresenter diagnosisPresenter = new DiagnosisPresenter(new DiagnosisViewImpl<Diagnosis>(), diagnosisColumnDefinitions, eventBus, dispatch, action);
+		DiagnosisPresenter diagnosisPresenter = new DiagnosisPresenter(new DiagnosisViewImpl<DiagnosisProxy>(), diagnosisColumnDefinitions, requestFactory, action.getCaseNumber());
 		diagnosisPresenter.go(ehrView.getDisplayArea());
 	}
 
@@ -506,7 +487,7 @@ public class AppController implements Presenter {
 	}
 
 	private <T> void doViewReferral(EHRView<T> ehrView, GetReferral action) {
-		Presenter presenter = new ReferralPresenter(new ReferralViewImpl<Referral>(), referralColumnDefinitions, eventBus, dispatch, action);
+		Presenter presenter = new ReferralPresenter(new ReferralViewImpl<ReferralProxy>(), referralColumnDefinitions, requestFactory, action.getCaseNumber());
 		presenter.go(ehrView.getDisplayArea());
 	}
 
@@ -517,7 +498,7 @@ public class AppController implements Presenter {
 
 	private void doViewEhr(EHRProxy ehr) {
 		ehrView = new EHRViewImpl<EHRProxy>();
-		Presenter presenter = new EHRPresenter(ehrView, eventBus, dispatch, ehr);
+		Presenter presenter = new EHRPresenter(ehrView, eventBus, ehr);
 		presenter.go(null);
 		dashboardPresenter.getDisplay().addTab(ehrView.asWidget(), ehr.getPatient().getCaseNumber());
 	}

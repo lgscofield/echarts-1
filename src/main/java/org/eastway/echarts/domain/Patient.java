@@ -16,23 +16,28 @@
 package org.eastway.echarts.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.PersistenceContext;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
-import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
-import com.google.gwt.requestfactory.shared.Version;
+import org.springframework.beans.factory.annotation.Configurable;
 
+@Configurable
 @Entity
-@Table(name = "Patient")
 @SecondaryTable(name = "Tickler",
 		pkJoinColumns=@PrimaryKeyJoinColumn(name="case_number"))
 public class Patient {
+	@PersistenceContext
+	transient EntityManager entityManager;
 	@Id
 	private String caseNumber;
 	private String firstName;
@@ -75,9 +80,8 @@ public class Patient {
 	@Column(name="Date_Stamp", table="tickler")
 	private Date dateStamp;
 	@Version
+	@Column(name = "version")
 	private Integer version;
-
-	public Patient() {}
 
 	public String getId() {
 		return caseNumber;
@@ -285,6 +289,19 @@ public class Patient {
 
 	public Integer getVersion() {
 		return version;
+	}
+
+	public static final EntityManager entityManager() {
+		EntityManager em = new Patient().entityManager;
+		if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+		return em;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static List<String> findPatientsLike(String searchTerm) {
+		return entityManager().createNativeQuery("SELECT top 20 case_number + ' - ' + full_name as search FROM patient inner join codes on patient.case_status = codes.code_id where column_name = 'CaseStatus' AND (descriptor = 'Active' OR descriptor = 'Pre-Admit') AND (case_number like :searchTerm + '%' OR last_name like :searchTerm + '%' OR first_name like :searchTerm + '%')")
+			.setParameter("searchTerm", searchTerm)
+			.getResultList();
 	}
 
 	public String toString() {

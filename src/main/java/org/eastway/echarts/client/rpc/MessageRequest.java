@@ -18,7 +18,6 @@ package org.eastway.echarts.client.rpc;
 import java.util.List;
 
 import org.eastway.echarts.domain.Message;
-import org.eastway.echarts.shared.MessageProxy;
 
 import com.google.gwt.requestfactory.shared.InstanceRequest;
 import com.google.gwt.requestfactory.shared.Request;

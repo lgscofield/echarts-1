@@ -20,9 +20,9 @@ import java.util.List;
 import com.google.gwt.event.shared.EventBus;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
+import org.eastway.echarts.client.rpc.AppointmentProxy;
 import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.view.AppointmentView;
-import org.eastway.echarts.shared.AppointmentProxy;
 import org.eastway.echarts.shared.GetAppointments;
 
 import com.google.gwt.requestfactory.shared.Receiver;

@@ -25,21 +25,24 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TableGenerator;
 
-import org.eastway.echarts.server.EchartsEntityManagerFactory;
+import javax.persistence.Version;
 
-import com.google.gwt.requestfactory.shared.Version;
+import org.springframework.beans.factory.annotation.Configurable;
 
+@Configurable
 @Entity
 public class EHR {
+	@PersistenceContext
+	transient EntityManager entityManager;
 	@Id
 	@TableGenerator(name="tg", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.TABLE, generator="tg")
 	@Column(name="ehr_id")
-	private long id;
+	private Long id;
 
 	@OneToOne(targetEntity = Patient.class)
 	@JoinColumn(name="subject_id", insertable=false, updatable=false)
@@ -49,23 +52,18 @@ public class EHR {
 	@JoinColumn(name="subject_id", insertable=false, updatable=false)
 	private Demographics demographics;
 
-	@OneToMany(targetEntity = Assignment.class)
-	@JoinColumn(name="caseNumber")
-	private List<Assignment> assignments;
-
 	@Version
+	@Column(name = "version")
 	private Integer version;
 
 	@Column(name="time_created")
 	private Date timeCreated;
 
-	public EHR() { }
-
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -93,42 +91,36 @@ public class EHR {
 		return demographics;
 	}
 
-	public void setAssignments(List<Assignment> assignments) {
-		this.assignments = assignments;
-	}
-
-	public List<Assignment> getAssignments() {
-		return assignments;
-	}
-
 	public Integer getVersion() {
 		return version;
 	}
 
+	// maybe gwt will someday be able to handle these
+	public void setAssignments(List<Assignment> assignments) {
+	}
+
+	public List<Assignment> getAssignments() {
+		return null;
+	}
+
+    public static final EntityManager entityManager() {
+        EntityManager em = new EHR().entityManager;
+        if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+        return em;
+    }
+
 	public static EHR findEHR(Long id) {
 		if (id == null)
 			return null;
-		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		try {
-			EHR ehr = em.find(EHR.class, id);
-			return ehr;
-		} finally {
-			em.close();
-		}
+		return entityManager().find(EHR.class, id);
 	}
 
 	public static EHR findEHRByCaseNumber(String caseNumber) {
 		if (caseNumber == null)
 			return null;
-		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		try {
-			EHR ehr = em.createQuery(
-					"SELECT ehr FROM EHR ehr WHERE ehr.patient.caseNumber = :caseNumber", EHR.class)
-					.setParameter("caseNumber", caseNumber)
-					.getSingleResult();
-			return ehr;
-		} finally {
-			em.close();
-		}
+		return entityManager().createQuery(
+			"SELECT ehr FROM EHR ehr WHERE ehr.patient.caseNumber = :caseNumber", EHR.class)
+				.setParameter("caseNumber", caseNumber)
+				.getSingleResult();
 	}
 }

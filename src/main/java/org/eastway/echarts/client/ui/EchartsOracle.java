@@ -15,38 +15,38 @@
  */
 package org.eastway.echarts.client.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.event.shared.EventBus;
 
-import org.eastway.echarts.client.EchartsUser;
-import org.eastway.echarts.client.rpc.CachingDispatchAsync;
-import org.eastway.echarts.client.rpc.EchartsCallback;
-import org.eastway.echarts.shared.GetTicklerLite;
-import org.eastway.echarts.shared.GetTicklerLiteResult;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
+import org.eastway.echarts.shared.PatientListSuggestion;
 
+import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.inject.Inject;
 
 public class EchartsOracle extends MultiWordSuggestOracle {
 
-	private CachingDispatchAsync dispatch;
-	private EventBus eventBus;
+	private EchartsRequestFactory requestFactory;
 
 	@Inject
-	public EchartsOracle(CachingDispatchAsync dispatch, EventBus eventBus) {
-		this.dispatch = dispatch;
-		this.eventBus = eventBus;
+	public EchartsOracle(EchartsRequestFactory requestFactory, EventBus eventBus) {
+		this.requestFactory = requestFactory;
 	}
 
 	@Override
 	public void requestSuggestions(final Request request, final Callback callback) {
-		dispatch.execute(new GetTicklerLite(EchartsUser.sessionId, request), new EchartsCallback<GetTicklerLiteResult>(eventBus) {
+		requestFactory.patientRequest().findPatientsLike(request.getQuery()).fire(new Receiver<List<String>>() {
 			@Override
-			protected void handleFailure(Throwable caught) {
-			}
-
-			@Override
-			protected void handleSuccess(GetTicklerLiteResult t) {
-				callback.onSuggestionsReady(request, t.getResponse());
+			public void onSuccess(List<String> response) {
+				Response searchResponse = new Response();
+				List<Suggestion> suggestions = new ArrayList<Suggestion>();
+				for (String s : response)
+					suggestions.add(new PatientListSuggestion(s));
+				searchResponse.setSuggestions(suggestions);
+				callback.onSuggestionsReady(request, searchResponse);
 			}
 		});
 	}

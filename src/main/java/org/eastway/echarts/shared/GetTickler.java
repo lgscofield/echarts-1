@@ -15,9 +15,7 @@
  */
 package org.eastway.echarts.shared;
 
-import net.customware.gwt.dispatch.shared.Action;
-
-public class GetTickler implements Action<GetTicklerResult> {
+public class GetTickler {
 
 	private String staffId;
 	private String sessionId;

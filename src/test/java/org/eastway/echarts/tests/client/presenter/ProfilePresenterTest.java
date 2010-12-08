@@ -17,69 +17,60 @@ package org.eastway.echarts.tests.client.presenter;
 
 import static org.easymock.EasyMock.*;
 
-import java.util.Date;
-
 import junit.framework.TestCase;
 
 import com.google.gwt.event.shared.EventBus;
 
 import org.eastway.echarts.client.common.ProfileColumnDefinitionsImpl;
 import org.eastway.echarts.client.presenter.ProfilePresenter;
-import org.eastway.echarts.client.rpc.CachingDispatchAsync;
-import org.eastway.echarts.client.rpc.EchartsCallback;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
+import org.eastway.echarts.client.rpc.UserProxy;
 import org.eastway.echarts.client.view.ProfileView;
-import org.eastway.echarts.shared.RoleDTO;
-import org.eastway.echarts.shared.SaveProfile;
-import org.eastway.echarts.shared.SaveProfileResult;
-import org.eastway.echarts.shared.User;
-import org.eastway.echarts.shared.UserDTO;
-import org.easymock.*;
 import org.junit.Before;
 import org.junit.Test;
 
 public class ProfilePresenterTest extends TestCase {
 	private ProfilePresenter profilePresenter;
-	private ProfileView<User> profileView;
+	private ProfileView<UserProxy> profileView;
 	private ProfileColumnDefinitionsImpl columnDefinitions;
-	private CachingDispatchAsync dispatch;
+	private EchartsRequestFactory requestFactory;
 	private EventBus eventBus;
-	private User user;
+	private UserProxy user;
 
 	@SuppressWarnings("unchecked")
 	@Before
 	@Override
 	public void setUp() {
 		profileView = createStrictMock(ProfileView.class);
-		dispatch = createStrictMock(CachingDispatchAsync.class);
+		requestFactory = createStrictMock(EchartsRequestFactory.class);
 		eventBus = createStrictMock(EventBus.class);
 		profilePresenter = new ProfilePresenter(profileView, columnDefinitions,
-				eventBus, dispatch);
-		user = new UserDTO();
-		user.setCred1("B.S");
-		user.setCred2("M.S");
-		user.setHireDate(new Date());
-		user.setProgram("010");
-		user.setRole(new RoleDTO());
+				eventBus, requestFactory);
+//		user = new UserDTO();
+//		user.setCred1("B.S");
+//		user.setCred2("M.S");
+//		user.setHireDate(new Date());
+//		user.setProgram("010");
+//		user.setRole(new RoleDTO());
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test
 	public void testSaveProfile() {
 
-		dispatch.executeWithCache(isA(SaveProfile.class),
-				isA(EchartsCallback.class));
-		expectLastCall().andAnswer(new IAnswer<Object>() {
-			@Override
-			public Object answer() throws Throwable {
-				final Object[] arguments = getCurrentArguments();
-				EchartsCallback<SaveProfileResult> callback = (EchartsCallback<SaveProfileResult>) arguments[arguments.length - 1];
-				callback.onSuccess(new SaveProfileResult(user));
-				return null;
-			}
-		});
-		replay(dispatch);
+//		requestFactory.executeWithCache(isA(SaveProfile.class),
+//				isA(EchartsCallback.class));
+//		expectLastCall().andAnswer(new IAnswer<Object>() {
+//			@Override
+//			public Object answer() throws Throwable {
+//				final Object[] arguments = getCurrentArguments();
+//				EchartsCallback<SaveProfileResult> callback = (EchartsCallback<SaveProfileResult>) arguments[arguments.length - 1];
+//				callback.onSuccess(new SaveProfileResult(user));
+//				return null;
+//			}
+//		});
+		replay(requestFactory);
 		profilePresenter.save(user);
-		verify(dispatch);
+		verify(requestFactory);
 		assertEquals("B.S", profilePresenter.getData().getCred1());
 		assertEquals("M.S", profilePresenter.getData().getCred2());
 		assertEquals("010", profilePresenter.getData().getProgram());

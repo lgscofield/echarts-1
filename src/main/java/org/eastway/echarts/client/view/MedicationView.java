@@ -23,7 +23,6 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Widget;
 
 import org.eastway.echarts.client.presenter.MedicationPresenter;
-import org.eastway.echarts.shared.MedicationDTO;
 
 public class MedicationView extends Composite implements MedicationPresenter.Display {
 
@@ -55,44 +54,7 @@ public class MedicationView extends Composite implements MedicationPresenter.Dis
 	}
 
 	@Override
-	public long getId() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public String getMedication() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setId(long id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void setMedication(String medication) {
 		this.medications.setText(record, Column.MEDICATION.ordinal(), medication);
 	}
-
-	@Override
-	public MedicationDTO toDto() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getCaseNumber() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setCaseNumber(String caseNumber) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

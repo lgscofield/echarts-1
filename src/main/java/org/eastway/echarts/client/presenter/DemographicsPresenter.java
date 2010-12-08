@@ -18,9 +18,9 @@ package org.eastway.echarts.client.presenter;
 import java.util.List;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
+import org.eastway.echarts.client.rpc.DemographicsProxy;
 import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.view.DemographicsView;
-import org.eastway.echarts.shared.DemographicsProxy;
 
 import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.requestfactory.shared.Request;

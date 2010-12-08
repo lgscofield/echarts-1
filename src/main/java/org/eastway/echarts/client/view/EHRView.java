@@ -39,8 +39,6 @@ public interface EHRView<T> {
 
 		void viewAddresses();
 
-		void viewContacts();
-
 		void viewMedications();
 
 		void viewTreatmentPlan();

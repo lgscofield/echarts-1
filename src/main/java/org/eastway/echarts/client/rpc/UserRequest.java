@@ -16,13 +16,14 @@
 package org.eastway.echarts.client.rpc;
 
 import org.eastway.echarts.domain.User;
-import org.eastway.echarts.shared.UserProxy;
+import org.springframework.roo.addon.gwt.RooGwtMirroredFrom;
 
 import com.google.gwt.requestfactory.shared.InstanceRequest;
 import com.google.gwt.requestfactory.shared.Request;
 import com.google.gwt.requestfactory.shared.RequestContext;
 import com.google.gwt.requestfactory.shared.Service;
 
+@RooGwtMirroredFrom(User.class)
 @Service(User.class)
 public interface UserRequest extends RequestContext {
 	Request<UserProxy> findUser(String userName);

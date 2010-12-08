@@ -16,7 +16,6 @@
 package org.eastway.echarts.client.rpc;
 
 import org.eastway.echarts.domain.EHR;
-import org.eastway.echarts.shared.EHRProxy;
 
 import com.google.gwt.requestfactory.shared.Request;
 import com.google.gwt.requestfactory.shared.RequestContext;

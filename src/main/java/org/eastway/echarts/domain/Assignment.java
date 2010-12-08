@@ -20,8 +20,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
 import javax.persistence.Column;
+import javax.persistence.Version;
 
 import java.util.Date;
 import java.util.List;
@@ -30,20 +32,17 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Null;
 
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import org.eastway.echarts.server.EchartsEntityManagerFactory;
-import org.eastway.echarts.shared.PatientProxy;
-
-import com.google.gwt.requestfactory.shared.Version;
-
+@Configurable
 @Entity
 @Table(name = "Orders")
 public class Assignment {
 
 	@Id
 	@Column(name = "orderid")
-    private Integer id;
+    private Long id;
 
 	@ManyToOne(targetEntity = Patient.class)
 	@JoinColumn(name = "caseNumber", insertable = false, updatable = false)
@@ -100,13 +99,14 @@ public class Assignment {
 	@Version
 	private Integer version;
 
-    public Assignment() { }
+	@PersistenceContext
+	transient EntityManager entityManager;
 
-    public void setId(Integer id) {
+	public void setId(Long id) {
     	this.id = id;
     }
 
-    public Integer getId() {
+    public Long getId() {
     	return id;
     }
     
@@ -214,8 +214,8 @@ public class Assignment {
 		this.caseNumber = caseNumber;
 	}
 
-	public void setPatient(PatientProxy patient) {
-		this.patient = (Patient) patient;
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 
 	public Patient getPatient() {
@@ -223,7 +223,7 @@ public class Assignment {
 	}
 
 	public void setDemographics(Demographics demographics) {
-		this.demographics = (Demographics) demographics;
+		this.demographics = demographics;
 	}
 
 	public Demographics getDemographics() {
@@ -234,30 +234,31 @@ public class Assignment {
 		return version;
 	}
 
+	public static final EntityManager entityManager() {
+		EntityManager em = new Assignment().entityManager;
+		if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+		return em;
+	}
+
 	public static Assignment findAssignment(Long id) {
 		if (id == null)
 			return null;
-		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		try {
-			Assignment assignment = em.find(Assignment.class, id);
-			return assignment;
-		} finally {
-			em.close();
-		}
+		return entityManager().find(Assignment.class, id);
 	}
 
-	public static List<Assignment> findAssignmentEntriesByCaseNumber(String caseNumber) {
+	public static List<Assignment> findAssignmentsByStaff(String staff) {
+		return entityManager().createQuery(
+			"SELECT a From Assignment a Where a.staff = :staff And a.disposition = 'Open' And a.service Like 'S%' Order By a.patient.lastName ASC, a.patient.firstName ASC, a.orderDate DESC", Assignment.class)
+				.setParameter("staff", staff)
+				.getResultList();
+	}
+
+	public static List<Assignment> findAssignmentsByCaseNumber(String caseNumber) {
 		if (caseNumber == null)
 			return null;
-		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		try {
-			List<Assignment> assignments = em.createQuery(
-					"SELECT a From AssignmentImpl a Where a.disposition = 'Open' And a.service Like 'S%' And a.caseNumber = :caseNumber Order By a.patient.lastName ASC, a.patient.firstName ASC, a.orderDate DESC", Assignment.class)
-					.setParameter("caseNumber", caseNumber)
-					.getResultList();
-			return assignments;
-		} finally {
-			em.close();
-		}
+		return entityManager().createQuery(
+			"SELECT a From Assignment a Where a.disposition = 'Open' And a.service Like 'S%' And a.caseNumber = :caseNumber Order By a.patient.lastName ASC, a.patient.firstName ASC, a.orderDate DESC", Assignment.class)
+				.setParameter("caseNumber", caseNumber)
+				.getResultList();
 	}
 }

@@ -17,26 +17,37 @@ package org.eastway.echarts.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TableGenerator;
+import javax.persistence.Version;
 
-import com.google.gwt.requestfactory.shared.Version;
+import org.springframework.beans.factory.annotation.Configurable;
 
+@Configurable
 @Entity
 public class Role {
+	@PersistenceContext
+	transient EntityManager entityManager;
 	@Id
 	@TableGenerator(name = "tg", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "tg")
-	@Column(name = "Role_Id")
+	@Column(name = "role_id")
 	private Long id;
 	private String roleName;
 	@Version
+	@Column(name = "version")
 	private Integer version;
 
 	public Long getId() {
 		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public void setRoleName(String roleName) {
@@ -49,5 +60,11 @@ public class Role {
 
 	public Integer getVersion() {
 		return version;
+	}
+
+	public static final EntityManager entityManager() {
+		EntityManager em = new Role().entityManager;
+		if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+		return em;
 	}
 }

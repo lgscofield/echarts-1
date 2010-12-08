@@ -26,12 +26,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TableGenerator;
+import javax.persistence.Version;
 
-import org.eastway.echarts.server.EchartsEntityManagerFactory;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.google.gwt.requestfactory.shared.Version;
-
+@Configurable
 @Entity
 public class Message {
 	@Id
@@ -52,6 +54,9 @@ public class Message {
 	@Version
 	@Column(name = "version")
 	private Integer version;
+
+	@PersistenceContext
+	transient EntityManager entityManager;
 
 	public Message() { }
 
@@ -131,54 +136,44 @@ public class Message {
 		return version;
 	}
 
+	public static final EntityManager entityManager() {
+		EntityManager em = new Message().entityManager;
+		if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+		return em;
+	}
+
 	public static Message findMessage(Long id) {
 		if (id == null)
 			return null;
-		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		try {
-			Message message = em.find(Message.class, id);
-			return message;
-		} finally {
-			em.close();
-		}
+		return entityManager().find(Message.class, id);
 	}
 
 	public static List<Message> findMessageByCaseNumber(String caseNumber) {
 		if (caseNumber == null)
 			return null;
-		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		try {
-			List<Message> messages = em.createQuery(
-					"SELECT m FROM Message m WHERE m.caseNumber = :caseNumber ORDER BY m.creationTimestamp DESC", Message.class)
-					.setParameter("caseNumber", caseNumber)
-					.getResultList();
-			return messages;
-		} finally {
-			em.close();
-		}
+		return entityManager().createQuery(
+			"SELECT m FROM Message m WHERE m.caseNumber = :caseNumber ORDER BY m.creationTimestamp DESC", Message.class)
+				.setParameter("caseNumber", caseNumber)
+				.getResultList();
 	}
 
+	@Transactional
 	public void persist() {
-		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		try {
-			em.getTransaction().begin();
-			em.persist(this);
-			em.getTransaction().commit();
-		} finally {
-			em.close();
-		}
+		if (this.entityManager == null) this.entityManager = entityManager();
+		this.entityManager.persist(this);
 	}
 
 	/**
 	 * This should probably never be used.
 	 */
+	@Transactional
 	public void remove() {
-		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		try {
-			Message attached = em.find(Message.class, this.id);
-			em.remove(attached);
-		} finally {
-			em.close();
+		if (this.entityManager == null) this.entityManager = entityManager();
+		if (this.entityManager.contains(this)) {
+			this.entityManager.remove(this);
+		} else {
+			Message attached = this.entityManager.find(this.getClass(), this.id);
+			this.entityManager.remove(attached);
 		}
 	}
 }

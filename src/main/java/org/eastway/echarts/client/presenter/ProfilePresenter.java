@@ -22,9 +22,9 @@ import com.google.gwt.event.shared.EventBus;
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.rpc.EchartsRequestFactory;
+import org.eastway.echarts.client.rpc.UserProxy;
 import org.eastway.echarts.client.rpc.UserRequest;
 import org.eastway.echarts.client.view.ProfileView;
-import org.eastway.echarts.shared.UserProxy;
 
 import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -52,6 +52,8 @@ public class ProfilePresenter implements Presenter, ProfileView.Presenter<UserPr
 
 	private void fetchData() {
 		requestFactory.userRequest().findUser(EchartsUser.userName)
+			.with("role")
+			.with("supervisor")
 				.fire(new Receiver<UserProxy>() {
 			@Override
 			public void onSuccess(UserProxy response) {

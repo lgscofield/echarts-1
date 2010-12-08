@@ -15,9 +15,7 @@
  */
 package org.eastway.echarts.shared;
 
-import net.customware.gwt.dispatch.shared.Action;
-
-public class GetLinks implements Action<GetLinksResult> {
+public class GetLinks {
 
 	private String sessionId;
 	private String caseNumber;

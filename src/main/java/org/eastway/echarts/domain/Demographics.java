@@ -17,16 +17,19 @@ package org.eastway.echarts.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.PersistenceContext;
 import javax.validation.constraints.NotNull;
 
-import org.eastway.echarts.server.EchartsEntityManagerFactory;
+import javax.persistence.Version;
 
-import com.google.gwt.requestfactory.shared.Version;
+import org.springframework.beans.factory.annotation.Configurable;
 
+@Configurable
 @Entity
 public class Demographics {
 	@Id
@@ -79,7 +82,11 @@ public class Demographics {
 	private Date lastEdit;
 	private String lastEditBy;
 	@Version
+	@Column(name = "version")
 	private Integer version;
+
+	@PersistenceContext
+	transient EntityManager entityManager;
 
 	public Demographics() {}
 
@@ -456,15 +463,15 @@ public class Demographics {
 		return version;
 	}
 
+    public static final EntityManager entityManager() {
+        EntityManager em = new Demographics().entityManager;
+        if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+        return em;
+    }
+
 	public static Demographics findDemographics(String id) {
 		if (id == null)
 			return null;
-		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		try {
-			Demographics demographics = em.find(Demographics.class, id);
-			return demographics;
-		} finally {
-			em.close();
-		}
+		return entityManager().find(Demographics.class, id);
 	}
 }

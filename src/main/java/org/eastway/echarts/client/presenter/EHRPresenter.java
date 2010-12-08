@@ -22,7 +22,6 @@ import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
 import org.eastway.echarts.client.events.ViewARInfoEvent;
 import org.eastway.echarts.client.events.ViewAddressesEvent;
 import org.eastway.echarts.client.events.ViewAppointmentsEvent;
-import org.eastway.echarts.client.events.ViewContactsEvent;
 import org.eastway.echarts.client.events.ViewDemographicsEvent;
 import org.eastway.echarts.client.events.ViewDiagnosesEvent;
 import org.eastway.echarts.client.events.ViewLabsEvent;
@@ -33,14 +32,12 @@ import org.eastway.echarts.client.events.ViewPatientSummaryEvent;
 import org.eastway.echarts.client.events.ViewReferralEvent;
 import org.eastway.echarts.client.events.ViewServiceHistoryEvent;
 import org.eastway.echarts.client.events.ViewTreatmentPlanEvent;
-import org.eastway.echarts.client.rpc.CachingDispatchAsync;
+import org.eastway.echarts.client.rpc.EHRProxy;
 import org.eastway.echarts.client.view.EHRView;
 import org.eastway.echarts.client.view.EHRViewImpl;
-import org.eastway.echarts.shared.EHRProxy;
 import org.eastway.echarts.shared.GetARInfo;
 import org.eastway.echarts.shared.GetAddresses;
 import org.eastway.echarts.shared.GetAppointments;
-import org.eastway.echarts.shared.GetContacts;
 import org.eastway.echarts.shared.GetDiagnoses;
 import org.eastway.echarts.shared.GetLinks;
 import org.eastway.echarts.shared.GetMedications;
@@ -59,20 +56,19 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHRProxy> {
 	private GetDiagnoses diagnoses;
 	private GetLinks links = null;
 	private GetAddresses addresses = null;
-	private GetContacts contacts = null;
 	private GetMedications medications = null;
 	private GetARInfo aRInfo = null;
 
-	public EHRPresenter(EHRViewImpl<EHRProxy> ehrView, EventBus eventBus, CachingDispatchAsync dispatch, EHRProxy ehr) {
+	public EHRPresenter(EHRViewImpl<EHRProxy> ehrView, EventBus eventBus, EHRProxy ehr) {
+		this.eventBus = eventBus;
 		this.view = ehrView;
 		this.view.setPresenter(this);
-		this.eventBus = eventBus;
 		setData(ehr);
 	}
 
-	protected void setData(EHRProxy result) {
-		this.ehr = result;
-		eventBus.fireEvent(new ChangeCurrentEhrEvent<EHRProxy>(result));
+	protected void setData(EHRProxy ehr) {
+		this.ehr = ehr;
+		eventBus.fireEvent(new ChangeCurrentEhrEvent<EHRProxy>(ehr));
 	}
 
 	private void setActions() {
@@ -81,7 +77,6 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHRProxy> {
 		diagnoses = new GetDiagnoses(EchartsUser.sessionId, ehr.getPatient().getCaseNumber());
 		links = new GetLinks(EchartsUser.sessionId, ehr.getPatient().getCaseNumber());
 		addresses = new GetAddresses(EchartsUser.sessionId, ehr.getPatient().getCaseNumber());
-		contacts = new GetContacts(EchartsUser.sessionId, ehr.getPatient().getCaseNumber());
 		medications = new GetMedications(EchartsUser.sessionId, ehr.getPatient().getCaseNumber());
 		aRInfo = new GetARInfo(EchartsUser.sessionId, ehr.getPatient().getCaseNumber());
 	}
@@ -135,11 +130,6 @@ public class EHRPresenter implements Presenter, EHRView.Presenter<EHRProxy> {
 	@Override
 	public void viewAddresses() {
 		eventBus.fireEvent(new ViewAddressesEvent<EHRProxy>(ehr.getPatient().getCaseNumber(), view, addresses));
-	}
-
-	@Override
-	public void viewContacts() {
-		eventBus.fireEvent(new ViewContactsEvent<EHRProxy>(ehr.getPatient().getCaseNumber(), view, contacts));
 	}
 
 	@Override

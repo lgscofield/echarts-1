@@ -18,7 +18,6 @@ package org.eastway.echarts.client.rpc;
 import java.util.List;
 
 import org.eastway.echarts.domain.Appointment;
-import org.eastway.echarts.shared.AppointmentProxy;
 
 import com.google.gwt.requestfactory.shared.Request;
 import com.google.gwt.requestfactory.shared.RequestContext;

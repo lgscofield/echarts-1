@@ -17,32 +17,26 @@ package org.eastway.echarts.client.presenter;
 
 import java.util.List;
 
-import com.google.gwt.event.shared.EventBus;
-
 import org.eastway.echarts.client.common.ColumnDefinition;
-import org.eastway.echarts.client.rpc.CachingDispatchAsync;
-import org.eastway.echarts.client.rpc.EchartsCallback;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
+import org.eastway.echarts.client.rpc.ReferralProxy;
 import org.eastway.echarts.client.view.ReferralView;
-import org.eastway.echarts.shared.GetReferral;
-import org.eastway.echarts.shared.GetReferralResult;
-import org.eastway.echarts.shared.Referral;
 
+import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class ReferralPresenter implements Presenter, ReferralView.Presenter<Referral> {
+public class ReferralPresenter implements Presenter, ReferralView.Presenter<ReferralProxy> {
 
-	private EventBus eventBus;
-	private CachingDispatchAsync dispatch;
-	private GetReferral action;
-	private ReferralView<Referral> view;
+	private ReferralView<ReferralProxy> view;
+	private EchartsRequestFactory requestFactory;
+	private String caseNumber;
 
-	public ReferralPresenter(ReferralView<Referral> view, List<ColumnDefinition<Referral>> columnDefinitions, EventBus eventBus, CachingDispatchAsync dispatch, GetReferral action) {
+	public ReferralPresenter(ReferralView<ReferralProxy> view, List<ColumnDefinition<ReferralProxy>> columnDefinitions, EchartsRequestFactory requestFactory, String caseNumber) {
 		this.view = view;
+		this.requestFactory = requestFactory;
+		this.caseNumber = caseNumber;
 		this.view.setPresenter(this);
 		this.view.setColumnDefinitions(columnDefinitions);
-		this.eventBus = eventBus;
-		this.dispatch = dispatch;
-		this.action = action;
 	}
 
 	@Override
@@ -53,14 +47,10 @@ public class ReferralPresenter implements Presenter, ReferralView.Presenter<Refe
 	}
 
 	private void fetchData() {
-		dispatch.executeWithCache(action, new EchartsCallback<GetReferralResult>(eventBus) {
+		requestFactory.referralRequest().findReferral(caseNumber).fire(new Receiver<ReferralProxy>() {
 			@Override
-			protected void handleFailure(Throwable caught) {
-			}
-
-			@Override
-			protected void handleSuccess(GetReferralResult result) {
-				view.setRowData(result.getReferral());
+			public void onSuccess(ReferralProxy response) {
+				view.setRowData(response);
 			}
 		});
 	}

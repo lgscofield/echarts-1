@@ -17,7 +17,8 @@ package org.eastway.echarts.client.common;
 
 import java.util.ArrayList;
 
-import org.eastway.echarts.shared.EHRProxy;
+import org.eastway.echarts.client.rpc.AssignmentProxy;
+import org.eastway.echarts.client.rpc.EHRProxy;
 import org.eastway.echarts.style.client.GlobalResources;
 
 @SuppressWarnings("serial")
@@ -49,7 +50,7 @@ public class PatientSummaryColumnDefinitionsImpl extends ArrayList<ColumnDefinit
 		this.add(new ColumnDefinition<EHRProxy>() {
 			@Override
 			public void render(EHRProxy t, StringBuilder sb) {
-				sb.append(t.getDemographics().getGender().getDescriptor() == null ? "" : t.getDemographics().getGender().getDescriptor());
+				sb.append(t.getDemographics().getGender().getCodeDescriptor() == null ? "" : t.getDemographics().getGender().getCodeDescriptor());
 			}
 
 			@Override
@@ -74,9 +75,8 @@ public class PatientSummaryColumnDefinitionsImpl extends ArrayList<ColumnDefinit
 		this.add(new ColumnDefinition<EHRProxy>() {
 			@Override
 			public void render(EHRProxy t, StringBuilder sb) {
-				//for (String provider : t.getProviders())
-				//	sb.append(provider == null ? "" : provider + "<br />");
-				sb.append("Unimplemented");
+				for (AssignmentProxy assignment : t.getAssignments())
+					sb.append(assignment.getStaffName() == null ? "" : assignment.getStaffName() + "<br />");
 			}
 
 			@Override
@@ -98,8 +98,8 @@ public class PatientSummaryColumnDefinitionsImpl extends ArrayList<ColumnDefinit
 		this.add(new ColumnDefinition<EHRProxy>() {
 			@Override
 			public void render(EHRProxy t, StringBuilder sb) {
-				sb.append(t.getPatient().getCaseStatus().getDescriptor() == null ? "" :
-					t.getPatient().getCaseStatus().getDescriptor());
+				sb.append(t.getPatient().getCaseStatus().getCodeDescriptor() == null ? "" :
+					t.getPatient().getCaseStatus().getCodeDescriptor());
 			}
 
 			@Override

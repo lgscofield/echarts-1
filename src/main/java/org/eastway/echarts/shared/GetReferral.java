@@ -15,9 +15,7 @@
  */
 package org.eastway.echarts.shared;
 
-import net.customware.gwt.dispatch.shared.Action;
-
-public class GetReferral implements Action<GetReferralResult> {
+public class GetReferral {
 
 	private String sessionId;
 	private String caseNumber;

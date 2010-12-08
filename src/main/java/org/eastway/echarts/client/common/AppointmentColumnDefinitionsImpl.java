@@ -17,7 +17,7 @@ package org.eastway.echarts.client.common;
 
 import java.util.ArrayList;
 
-import org.eastway.echarts.shared.AppointmentProxy;
+import org.eastway.echarts.client.rpc.AppointmentProxy;
 import org.eastway.echarts.style.client.GlobalResources;
 
 @SuppressWarnings("serial")

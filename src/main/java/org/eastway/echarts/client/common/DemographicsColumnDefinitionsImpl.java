@@ -17,7 +17,7 @@ package org.eastway.echarts.client.common;
 
 import java.util.ArrayList;
 
-import org.eastway.echarts.shared.DemographicsProxy;
+import org.eastway.echarts.client.rpc.DemographicsProxy;
 import org.eastway.echarts.style.client.GlobalResources;
 
 @SuppressWarnings("serial")
@@ -39,7 +39,7 @@ public class DemographicsColumnDefinitionsImpl extends ArrayList<ColumnDefinitio
 		this.add(new ColumnDefinition<DemographicsProxy>() {
 			@Override
 			public void render(DemographicsProxy t, StringBuilder sb) {
-				sb.append((t.getEmployment() == null || t.getEmployment().getDescriptor() == null ? noData : t.getEmployment().getDescriptor()));
+				sb.append((t.getEmployment() == null || t.getEmployment().getCodeDescriptor() == null ? noData : t.getEmployment().getCodeDescriptor()));
 			}
 
 			@Override
@@ -64,7 +64,7 @@ public class DemographicsColumnDefinitionsImpl extends ArrayList<ColumnDefinitio
 		this.add(new ColumnDefinition<DemographicsProxy>() {
 			@Override
 			public void render(DemographicsProxy t, StringBuilder sb) {
-				sb.append(t.getMaritalStatus() == null || t.getMaritalStatus().getDescriptor() == null ? noData : t.getMaritalStatus().getDescriptor());
+				sb.append(t.getMaritalStatus() == null || t.getMaritalStatus().getCodeDescriptor() == null ? noData : t.getMaritalStatus().getCodeDescriptor());
 			}
 
 			@Override
@@ -75,7 +75,7 @@ public class DemographicsColumnDefinitionsImpl extends ArrayList<ColumnDefinitio
 		this.add(new ColumnDefinition<DemographicsProxy>() {
 			@Override
 			public void render(DemographicsProxy t, StringBuilder sb) {
-				sb.append(t.getEducationLevel() == null || t.getEducationLevel().getDescriptor() == null ? noData : t.getEducationLevel().getDescriptor());
+				sb.append(t.getEducationLevel() == null || t.getEducationLevel().getCodeDescriptor() == null ? noData : t.getEducationLevel().getCodeDescriptor());
 			}
 
 			@Override
@@ -86,7 +86,7 @@ public class DemographicsColumnDefinitionsImpl extends ArrayList<ColumnDefinitio
 		this.add(new ColumnDefinition<DemographicsProxy>() {
 			@Override
 			public void render(DemographicsProxy t, StringBuilder sb) {
-				sb.append(t.getEducationType() == null || t.getEducationType().getDescriptor() == null ? noData : t.getEducationType().getDescriptor());
+				sb.append(t.getEducationType() == null || t.getEducationType().getCodeDescriptor() == null ? noData : t.getEducationType().getCodeDescriptor());
 			}
 
 			@Override
@@ -97,7 +97,7 @@ public class DemographicsColumnDefinitionsImpl extends ArrayList<ColumnDefinitio
 		this.add(new ColumnDefinition<DemographicsProxy>() {
 			@Override
 			public void render(DemographicsProxy t, StringBuilder sb) {
-				sb.append(t.getRace() == null || t.getRace().getDescriptor() == null ? noData : t.getRace().getDescriptor());
+				sb.append(t.getRace() == null || t.getRace().getCodeDescriptor() == null ? noData : t.getRace().getCodeDescriptor());
 			}
 
 			@Override

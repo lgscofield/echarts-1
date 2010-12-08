@@ -20,15 +20,49 @@ import java.util.List;
 import com.google.gwt.event.shared.EventBus;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
+import org.eastway.echarts.client.rpc.AssignmentProxy;
+import org.eastway.echarts.client.rpc.AssignmentRequest;
+import org.eastway.echarts.client.rpc.EHRProxy;
 import org.eastway.echarts.client.rpc.EchartsRequestFactory;
+import org.eastway.echarts.client.rpc.EhrRequest;
 import org.eastway.echarts.client.view.PatientSummaryView;
-import org.eastway.echarts.shared.EHRProxy;
 
 import com.google.gwt.requestfactory.shared.Receiver;
-import com.google.gwt.requestfactory.shared.Request;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class PatientSummaryPresenter implements Presenter, PatientSummaryView.Presenter<EHRProxy> {
+
+	class EHRFetcher {
+		EHRProxy fetchedEHR;
+		List<AssignmentProxy> fetchedAssignments;
+
+		void Run(final EhrRequest ehrRequest, final AssignmentRequest assignmentRequest, final String caseNumber, final Receiver<EHRFetcher> callback) {
+			ehrRequest.findEHRByCaseNumber(caseNumber)
+				.with("patient")
+				.with("patient.caseStatus")
+				.with("demographics")
+				.with("demographics.gender")
+				.fire(
+					new Receiver<EHRProxy>() {
+						@Override
+						public void onSuccess(EHRProxy response) {
+							if (response != null) {
+								fetchedEHR = response;
+								assignmentRequest.findAssignmentsByCaseNumber(caseNumber).fire(
+										new Receiver<List<AssignmentProxy>>() {
+											@Override
+											public void onSuccess(List<AssignmentProxy> response) {
+												fetchedAssignments = response;
+												if (fetchedAssignments != null)
+													callback.onSuccess(EHRFetcher.this);
+											}
+										});
+							}
+						}
+					});
+								
+		}
+	}
 
 	private String caseNumber;
 	private PatientSummaryView<EHRProxy> view;
@@ -51,14 +85,13 @@ public class PatientSummaryPresenter implements Presenter, PatientSummaryView.Pr
 	}
 
 	private void fetchData() {
-		Request<EHRProxy> request = requestFactory.ehrRequest().findEHRByCaseNumber(caseNumber)
-			.with("patient")
-			.with("patient.caseStatus")
-			.with("demographics")
-			.with("demographics.gender");
-		request.fire(new Receiver<EHRProxy>() {
+		final EhrRequest ehrRequest = requestFactory.ehrRequest();
+		AssignmentRequest assignmentRequest = requestFactory.assignmentRequest();
+		new EHRFetcher().Run(ehrRequest, assignmentRequest, caseNumber, new Receiver<PatientSummaryPresenter.EHRFetcher>() {
 			@Override
-			public void onSuccess(EHRProxy ehr) {
+			public void onSuccess(EHRFetcher response) {
+				EHRProxy ehr = requestFactory.ehrRequest().edit(response.fetchedEHR);
+				ehr.setAssignments(response.fetchedAssignments);
 				view.setRowData(ehr);
 			}
 		});

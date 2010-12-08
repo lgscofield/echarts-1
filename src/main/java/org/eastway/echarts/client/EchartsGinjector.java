@@ -17,13 +17,11 @@ package org.eastway.echarts.client;
 
 import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 
-import net.customware.gwt.dispatch.client.gin.StandardDispatchModule;
-
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.inject.client.GinModules;
 import com.google.gwt.inject.client.Ginjector;
 
-@GinModules({ StandardDispatchModule.class, EchartsClientModule.class })
+@GinModules({ EchartsClientModule.class })
 public interface EchartsGinjector extends Ginjector {
 	AppController getAppController();
 	EchartsRequestFactory getRequestFactory();

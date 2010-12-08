@@ -22,14 +22,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.Id;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
-import org.eastway.echarts.server.EchartsEntityManagerFactory;
+import org.springframework.beans.factory.annotation.Configurable;
 
-import com.google.gwt.requestfactory.shared.Version;
-
+@Configurable
 @Entity
 @Table(name = "apptscatt")
 public class Appointment {
@@ -54,6 +55,9 @@ public class Appointment {
 	private Date startTime;
 	@Version
 	private Integer version;
+
+	@PersistenceContext
+	transient EntityManager entityManager;
 
 	public String getActivity() {
 		return activity;
@@ -146,27 +150,23 @@ public class Appointment {
 		this.startTime = startTime;
 	}
 
+	public static final EntityManager entityManager() {
+		EntityManager em = new Appointment().entityManager;
+		if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+		return em;
+	}
+
 	public static Appointment findAppointment(Long id) {
 		if (id == null)
 			return null;
-		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		try {
-			return em.find(Appointment.class, id);
-		} finally {
-			em.close();
-		}
+		return entityManager().find(Appointment.class, id);
 	}
 
 	public static List<Appointment> findAppointmentEntriesByCaseNumber(String caseNumber) {
 		if (caseNumber == null)
 			return null;
-		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-		try {
-			return em.createQuery("SELECT a From Appointment a WHERE a.caseNumber = :caseNumber Order By a.appointmentDate DESC", Appointment.class)
-				.setParameter("caseNumber", caseNumber)
-				.getResultList();
-		} finally {
-			em.close();
-		}
+		return entityManager().createQuery("SELECT a From Appointment a WHERE a.caseNumber = :caseNumber Order By a.appointmentDate DESC", Appointment.class)
+			.setParameter("caseNumber", caseNumber)
+			.getResultList();
 	}
 }

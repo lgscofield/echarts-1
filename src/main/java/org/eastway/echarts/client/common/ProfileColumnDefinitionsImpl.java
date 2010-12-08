@@ -16,12 +16,13 @@
 package org.eastway.echarts.client.common;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eastway.echarts.client.rpc.CodeProxy;
 import org.eastway.echarts.client.rpc.EchartsRequestFactory;
-import org.eastway.echarts.shared.CodeProxy;
-import org.eastway.echarts.shared.UserProxy;
+import org.eastway.echarts.client.rpc.UserProxy;
 
 import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.inject.Inject;
@@ -29,11 +30,11 @@ import com.google.inject.Inject;
 @SuppressWarnings("serial")
 public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<UserProxy>> {
 
-	private Map<String, String> costCenters;
+	private Map<String, String> costCenters = new LinkedHashMap<String, String>();
 
 	@Inject
 	public ProfileColumnDefinitionsImpl(EchartsRequestFactory requestFactory) {
-		requestFactory.codeRequest().findCodeByName("CostCenter").fire(new Receiver<List<CodeProxy>>() {
+		requestFactory.codeRequest().findAllCodes().fire(new Receiver<List<CodeProxy>>() {
 			@Override
 			public void onSuccess(List<CodeProxy> response) {
 				setCostCenters(response);
@@ -44,7 +45,8 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 
 	private void setCostCenters(List<CodeProxy> costCenters) {
 		for (CodeProxy c : costCenters)
-			this.costCenters.put(c.getValue(), c.getDescriptor());
+			if (c.getColumnName().equals("CostCenter"))
+				this.costCenters.put(c.getCodeValue(), c.getCodeDescriptor());
 	}
 
 	private void setColumnDefinitions() {
@@ -68,7 +70,7 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 			@Override
 			public void render(UserProxy t, StringBuilder sb) {
 				try {
-					sb.append(t.getUsername() == null ? "" : t.getUsername());
+					sb.append(t.getId() == null ? "" : t.getId());
 				} catch(NullPointerException e) {
 					sb.append("");
 				}
@@ -250,7 +252,7 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 			@Override
 			public void render(UserProxy t, StringBuilder sb) {
 				try {
-					sb.append(t.getSupervisor() == null ? "" : t.getSupervisor());
+					sb.append(t.getSupervisor() == null ? "" : t.getSupervisor().getStaffName());
 				} catch (NullPointerException e) {
 					sb.append("");
 				}

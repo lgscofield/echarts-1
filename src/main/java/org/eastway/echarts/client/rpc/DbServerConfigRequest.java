@@ -16,12 +16,13 @@
 package org.eastway.echarts.client.rpc;
 
 import org.eastway.echarts.domain.DbServerConfig;
-import org.eastway.echarts.shared.DbServerConfigProxy;
+import org.springframework.roo.addon.gwt.RooGwtMirroredFrom;
 
 import com.google.gwt.requestfactory.shared.Request;
 import com.google.gwt.requestfactory.shared.RequestContext;
 import com.google.gwt.requestfactory.shared.Service;
 
+@RooGwtMirroredFrom(DbServerConfig.class)
 @Service(DbServerConfig.class)
 public interface DbServerConfigRequest extends RequestContext {
 	Request<DbServerConfigProxy> findDbServerConfig(String id);

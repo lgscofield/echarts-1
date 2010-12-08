@@ -23,14 +23,16 @@ import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
-import org.eastway.echarts.server.EchartsEntityManagerFactory;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.google.gwt.requestfactory.shared.Version;
-
+@Configurable
 @Entity
 @Table(name="Echarts_User")
 public class User {
@@ -44,7 +46,7 @@ public class User {
 	private String id;
 	private String staffId;
 	@ManyToOne
-	@JoinColumn(name = "Role_Id")
+	@JoinColumn(name = "role_id")
 	private Role role;
 	private String staffName;
 	private String program;
@@ -64,6 +66,9 @@ public class User {
 	@Version
 	@Column(name = "version")
 	private Integer version = 0;
+
+	@PersistenceContext
+	transient EntityManager entityManager;
 
 	public String getId() {
 		return id;
@@ -177,11 +182,11 @@ public class User {
 		return staffNpi;
 	}
 
-	public String getSupervisor() {
-		return supervisor.getStaffName();
+	public User getSupervisor() {
+		return supervisor;
 	}
 
-	public void setSupervisor(String supervisor) {
+	public void setSupervisor(User supervisor) {
 		
 	}
 
@@ -221,30 +226,21 @@ public class User {
 	}
 
 	public static final EntityManager entityManager() {
-		return EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
+		EntityManager em = new User().entityManager;
+		if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+		return em;
 	}
 
 	public static User findUser(String id) {
 		if (id == null)
 			return null;
-		EntityManager em = entityManager();
-		try {
-			User user = em.find(User.class, id);
-			return user;
-		} finally {
-			em.close();
-		}
+		return entityManager().find(User.class, id);
 	}
 
+	@Transactional
 	public void persist() {
-		EntityManager em = entityManager();
-		try {
-			//em.getTransaction().begin();
-			em.persist(this);
-			//em.getTransaction().commit();
-		} finally {
-			em.close();
-		}
+		if (this.entityManager == null) this.entityManager = entityManager();
+		this.entityManager.persist(this);
 	}
 
 	@Override

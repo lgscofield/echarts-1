@@ -17,31 +17,24 @@ package org.eastway.echarts.client.presenter;
 
 import java.util.List;
 
-import com.google.gwt.event.shared.EventBus;
-
 import org.eastway.echarts.client.common.ColumnDefinition;
-import org.eastway.echarts.client.rpc.CachingDispatchAsync;
-import org.eastway.echarts.client.rpc.EchartsCallback;
+import org.eastway.echarts.client.rpc.DiagnosisProxy;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.view.DiagnosisView;
-import org.eastway.echarts.shared.Diagnosis;
-import org.eastway.echarts.shared.GetDiagnoses;
-import org.eastway.echarts.shared.GetDiagnosesResult;
 
+import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class DiagnosisPresenter implements Presenter, DiagnosisView.Presenter<Diagnosis> {
+public class DiagnosisPresenter implements Presenter, DiagnosisView.Presenter<DiagnosisProxy> {
 
-	private DiagnosisView<Diagnosis> view;
-	private EventBus eventBus;
-	private CachingDispatchAsync dispatch;
-	private GetDiagnoses action;
+	private DiagnosisView<DiagnosisProxy> view;
+	private String caseNumber;
+	private EchartsRequestFactory requestFactory;
 
-	public DiagnosisPresenter(DiagnosisView<Diagnosis> view, List<ColumnDefinition<Diagnosis>> columnDefinitions, EventBus eventBus,
-			CachingDispatchAsync dispatch, GetDiagnoses action) {
+	public DiagnosisPresenter(DiagnosisView<DiagnosisProxy> view, List<ColumnDefinition<DiagnosisProxy>> columnDefinitions, EchartsRequestFactory requestFactory, String caseNumber) {
 		this.view = view;
-		this.eventBus = eventBus;
-		this.dispatch = dispatch;
-		this.action = action;
+		this.requestFactory = requestFactory;
+		this.caseNumber = caseNumber;
 		this.view.setPresenter(this);
 		this.view.setColumnDefinitions(columnDefinitions);
 	}
@@ -54,19 +47,24 @@ public class DiagnosisPresenter implements Presenter, DiagnosisView.Presenter<Di
 	}
 
 	public void fetchData() {
-		dispatch.executeWithCache(action, new EchartsCallback<GetDiagnosesResult>(eventBus) {
+		requestFactory.diagnosisRequest().findDiagnosesByCaseNumber(caseNumber)
+			.with("axis1A")
+			.with("axis1B")
+			.with("axis1C")
+			.with("axis1D")
+			.with("axis1E")
+			.with("axis2A")
+			.with("axis2B")
+			.with("axis2C")
+				.fire(new Receiver<List<DiagnosisProxy>>() {
 			@Override
-			protected void handleFailure(Throwable caught) {
-			}
-
-			@Override
-			protected void handleSuccess(GetDiagnosesResult result) {
-				setData(result);				
+			public void onSuccess(List<DiagnosisProxy> response) {
+				setData(response);
 			}
 		});
 	}
 
-	private void setData(GetDiagnosesResult result) {
-		view.setRowData(result.getDiagnoses());
+	private void setData(List<DiagnosisProxy> response) {
+		view.setRowData(response);
 	}
 }

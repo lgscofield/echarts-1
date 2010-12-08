@@ -27,10 +27,10 @@ import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.requestfactory.shared.Request;
 
 import org.eastway.echarts.client.presenter.MessagesPresenter;
+import org.eastway.echarts.client.rpc.CodeProxy;
 import org.eastway.echarts.client.rpc.EchartsRequestFactory;
+import org.eastway.echarts.client.rpc.MessageProxy;
 import org.eastway.echarts.client.rpc.MessageRequest;
-import org.eastway.echarts.shared.CodeProxy;
-import org.eastway.echarts.shared.MessageProxy;
 import org.easymock.IAnswer;
 import org.junit.Before;
 import org.junit.Test;
@@ -89,7 +89,7 @@ public class MessagePresenterTest extends TestCase {
 		expect(messagesPresenter.getMessage(0).getCaseNumber()).andReturn(caseNumber).anyTimes();
 		expect(messagesPresenter.getMessage(0).getMessage()).andReturn(message).anyTimes();
 		expect(messagesPresenter.getMessage(0).getMessageType()).andReturn(codeProxy).anyTimes();
-		expect(codeProxy.getDescriptor()).andReturn(descriptor).anyTimes();
+		expect(codeProxy.getCodeDescriptor()).andReturn(descriptor).anyTimes();
 		expect(messagesPresenter.getMessage(0).getParent()).andReturn(messageProxy).anyTimes();
 		expect(messagesPresenter.getMessage(0).getCaseNumber()).andReturn(caseNumber).anyTimes();
 
@@ -117,7 +117,7 @@ public class MessagePresenterTest extends TestCase {
 		assertEquals(messagesPresenter.getMessage(0).getLastEdit(), timestamp);
 		assertEquals(messagesPresenter.getMessage(0).getLastEditBy(), lastEditBy);
 		assertEquals(messagesPresenter.getMessage(0).getMessage(), message);
-		assertEquals(messagesPresenter.getMessage(0).getMessageType().getDescriptor(), descriptor);
+		assertEquals(messagesPresenter.getMessage(0).getMessageType().getCodeDescriptor(), descriptor);
 		assertEquals(messagesPresenter.getMessage(0).getParent(), messageProxy);
 		assertEquals(messagesPresenter.getMessage(0).getCaseNumber(), caseNumber);
 
@@ -131,7 +131,7 @@ public class MessagePresenterTest extends TestCase {
 
 		expect(messagesPresenter.getMessage(0).getCreationTimestamp()).andReturn(timestamp);
 		expect(messagesPresenter.getMessage(0).getMessageType()).andReturn(codeProxy).anyTimes();
-		expect(codeProxy.getDescriptor()).andReturn(descriptor).anyTimes();
+		expect(codeProxy.getCodeDescriptor()).andReturn(descriptor).anyTimes();
 		expect(messagesPresenter.getMessage(0).getLastEditBy()).andReturn(lastEditBy).anyTimes();
 		expect(messagesPresenter.getMessage(0).getMessage()).andReturn(message).anyTimes();
 

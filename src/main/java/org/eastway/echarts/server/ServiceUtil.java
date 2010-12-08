@@ -19,16 +19,21 @@ import java.util.Date;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.eastway.echarts.domain.SessionIdLog;
 import org.eastway.echarts.shared.DbException;
 import org.eastway.echarts.shared.SessionExpiredException;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.dao.EmptyResultDataAccessException;
 
+@Configurable
 public class ServiceUtil {
+	@PersistenceContext
+	EntityManager em;
+
 	public void checkSessionExpire(String sessionId) throws SessionExpiredException, DbException {
-		EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
 		if (sessionId == null)
 			throw new IllegalArgumentException("Please login");
 		try {

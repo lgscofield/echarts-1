@@ -22,10 +22,10 @@ import java.util.List;
 import com.google.gwt.event.shared.EventBus;
 
 import org.eastway.echarts.client.EchartsUser;
+import org.eastway.echarts.client.rpc.CodeProxy;
 import org.eastway.echarts.client.rpc.EchartsRequestFactory;
+import org.eastway.echarts.client.rpc.MessageProxy;
 import org.eastway.echarts.client.rpc.MessageRequest;
-import org.eastway.echarts.shared.CodeProxy;
-import org.eastway.echarts.shared.MessageProxy;
 
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -62,7 +62,7 @@ public class MessagesPresenter implements Presenter {
 
 	private List<MessageProxy> messages = new ArrayList<MessageProxy>();
 	private ArrayList<String[]> data = new ArrayList<String[]>();
-	private List<CodeProxy> types;
+	private List<CodeProxy> types = new ArrayList<CodeProxy>();
 	private Display view;
 	private EchartsRequestFactory requestFactory;
 	private String caseNumber;
@@ -106,7 +106,7 @@ public class MessagesPresenter implements Presenter {
 	public CodeProxy findMessageType(String messageType) {
 		List<CodeProxy> types = getTypes();
 		for (CodeProxy type : types)
-			if (type.getDescriptor().matches(messageType))
+			if (type.getCodeDescriptor().matches(messageType))
 				return type;
 		return null;
 	}
@@ -140,14 +140,14 @@ public class MessagesPresenter implements Presenter {
 	}
 
 	private void fetchData() {
-		Request<List<CodeProxy>> codeRequest = requestFactory.codeRequest().findCodeByName("MessageType");
+		Request<List<CodeProxy>> codeRequest = requestFactory.codeRequest().findAllCodes();
 		codeRequest.fire(new Receiver<List<CodeProxy>>() {
 			@Override
 			public void onSuccess(List<CodeProxy> response) {
 				setTypes(response);
 				ArrayList<String> typesData = new ArrayList<String>();
 				for (CodeProxy type : types)
-					typesData.add(type.getDescriptor());
+					typesData.add(type.getCodeDescriptor());
 				view.setMessageTypes(typesData);
 			}
 		});
@@ -177,7 +177,7 @@ public class MessagesPresenter implements Presenter {
 		for (MessageProxy message : messages) {
 			String[] msgstr = {
 					new Long(message.getCreationTimestamp().getTime()).toString(),
-					message.getMessageType().getDescriptor(),
+					message.getMessageType().getCodeDescriptor(),
 					message.getLastEditBy(),
 					message.getMessage()
 				};
@@ -196,7 +196,9 @@ public class MessagesPresenter implements Presenter {
 	}
 
 	public void setTypes(List<CodeProxy> types) {
-		this.types = types;
+		for (CodeProxy c : types)
+			if(c.getColumnName().equals("MessageType"))
+					this.types.add(c);
 	}
 
 	public List<CodeProxy> getTypes() {
