@@ -46,6 +46,7 @@ import org.eastway.echarts.client.rpc.ProductivityProxy;
 import org.eastway.echarts.client.view.DashboardView;
 
 import com.google.gwt.requestfactory.shared.Receiver;
+import com.google.gwt.requestfactory.shared.ServerFailure;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
@@ -77,7 +78,13 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 											}
 										});
 						}
+
+						@Override
+						public void onFailure(ServerFailure error) {
+							com.google.gwt.user.client.Window.alert(error.getMessage());
+						}
 					});
+			
 		}
 	}
 
@@ -124,7 +131,10 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 		PatientProxy patient = ehr.getPatient();
 		DemographicsProxy demographics = ehr.getDemographics();
 		view.setName(patient.getName());
-		view.setCaseStatus(patient.getCaseStatus().getCodeDescriptor() == null ? "" : patient.getCaseStatus().getCodeDescriptor());
+		if (patient.getCaseStatus() != null)
+			view.setCaseStatus(patient.getCaseStatus().getCodeDescriptor() == null ? "NO DATA" : patient.getCaseStatus().getCodeDescriptor());
+		else
+			view.setCaseStatus("NO DATA");
 		view.setDob(demographics.getDob());
 		view.setProvider(getProvider(ehr.getAssignments()));
 		view.setSsn(patient.getSsn());
@@ -144,6 +154,8 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 			}
 			if (provider == null && list.size() > 0)
 				provider = list.get(0).getStaffName();
+			if (provider == null)
+				return "NO DATA";
 			return provider;
 		}
 	}
@@ -175,6 +187,8 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 		requestFactory.productivityRequest().findProductivityByStaffId(EchartsUser.staffId).fire(new Receiver<ProductivityProxy>() {
 			@Override
 			public void onSuccess(ProductivityProxy response) {
+				if (response == null)
+					return;
 				String color = null;
 				if (response.getTotal() < response.getYellowNumber())
 					color = "red";
