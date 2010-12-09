@@ -263,11 +263,7 @@ public class AppController implements Presenter {
 			public void onRequestEvent(RequestEvent requestEvent) {
 				if (requestEvent.getState() == State.SENT) {
 					dashboardPresenter.getDisplay().getMole().showDelayed(LOADING_TIMEOUT);
-					REQUEST_EVENT_COUNT++;
-				} else if (REQUEST_EVENT_COUNT > 1) {
-					REQUEST_EVENT_COUNT--;
-				} else {
-					REQUEST_EVENT_COUNT--;
+				} else if (requestEvent.getState() == State.RECEIVED) {
 					dashboardPresenter.getDisplay().getMole().hide();
 				}
 			}
