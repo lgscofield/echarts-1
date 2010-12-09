@@ -15,6 +15,10 @@
  */
 package org.eastway.echarts.client;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 
 import org.eastway.echarts.client.common.ARInfoColumnDefinitionsImpl;
@@ -149,6 +153,8 @@ public class AppController implements Presenter {
 	@Inject private ARInfoColumnDefinitionsImpl aRInfoColumnDefinitions;
 	private EchartsRequestFactory requestFactory;
 
+	private static final Logger log = Logger.getLogger(AppController.class.getName());
+
 	@Inject
 	public AppController(DashboardPresenter dashboardPresenter, EventBus eventBus, EchartsRequestFactory requestFactory) {
 		this.dashboardPresenter = dashboardPresenter;
@@ -178,6 +184,11 @@ public class AppController implements Presenter {
 	}
 
 	private void bind() {
+		GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
+			public void onUncaughtException(Throwable e) {
+				log.log(Level.SEVERE, e.getMessage(), e);
+			}
+		});
 		eventBus.addHandler(OpenEhrEvent.TYPE, new OpenEhrEventHandler() {
 			@Override
 			public void onOpenEhr(OpenEhrEvent event) {
