@@ -258,7 +258,6 @@ public class AppController implements Presenter {
 		RequestEvent.register(eventBus, new RequestEvent.Handler() {
 			// Only show loading status if a request isn't serviced in 250ms.
 			private static final int LOADING_TIMEOUT = 250;
-			private int REQUEST_EVENT_COUNT = 0;
 			@Override
 			public void onRequestEvent(RequestEvent requestEvent) {
 				if (requestEvent.getState() == State.SENT) {
