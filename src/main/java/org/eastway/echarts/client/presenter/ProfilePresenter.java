@@ -57,7 +57,8 @@ public class ProfilePresenter implements Presenter, ProfileView.Presenter<UserPr
 				.fire(new Receiver<UserProxy>() {
 			@Override
 			public void onSuccess(UserProxy response) {
-				setData(response);
+				if (response != null)
+					setData(response);
 			}
 		});
 	}

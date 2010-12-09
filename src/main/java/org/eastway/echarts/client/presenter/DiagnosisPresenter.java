@@ -59,7 +59,8 @@ public class DiagnosisPresenter implements Presenter, DiagnosisView.Presenter<Di
 				.fire(new Receiver<List<DiagnosisProxy>>() {
 			@Override
 			public void onSuccess(List<DiagnosisProxy> response) {
-				setData(response);
+				if (response != null)
+					setData(response);
 			}
 		});
 	}

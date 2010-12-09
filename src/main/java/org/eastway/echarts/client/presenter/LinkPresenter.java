@@ -47,8 +47,10 @@ public class LinkPresenter implements Presenter {
 		requestFactory.linkRequest().findAllLinks().fire(new Receiver<List<LinkProxy>>() {
 			@Override
 			public void onSuccess(List<LinkProxy> response) {
-				setData(response);
-				display.setData(getData());
+				if (response != null) {
+					setData(response);
+					display.setData(getData());
+				}
 			}
 			
 		});

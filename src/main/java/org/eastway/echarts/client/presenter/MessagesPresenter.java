@@ -144,11 +144,13 @@ public class MessagesPresenter implements Presenter {
 		codeRequest.fire(new Receiver<List<CodeProxy>>() {
 			@Override
 			public void onSuccess(List<CodeProxy> response) {
-				setTypes(response);
-				ArrayList<String> typesData = new ArrayList<String>();
-				for (CodeProxy type : types)
-					typesData.add(type.getCodeDescriptor());
-				view.setMessageTypes(typesData);
+				if (response != null) {
+					setTypes(response);
+					ArrayList<String> typesData = new ArrayList<String>();
+					for (CodeProxy type : types)
+						typesData.add(type.getCodeDescriptor());
+					view.setMessageTypes(typesData);
+				}
 			}
 		});
 		MessageRequest request = requestFactory.messageRequest();
@@ -156,9 +158,11 @@ public class MessagesPresenter implements Presenter {
 		messageRequest.fire(new Receiver<List<MessageProxy>>() {
 			@Override
 			public void onSuccess(List<MessageProxy> response) {
-				setMessages(response);
-				setData(response);
-				view.setData(getData());
+				if (response != null) {
+					setMessages(response);
+					setData(response);
+					view.setData(getData());
+				}
 			}
 		});
 	}

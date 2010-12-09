@@ -54,7 +54,8 @@ public class MedicationPresenter implements Presenter {
 		requestFactory.medicationRequest().findMedicationsByCaseNumber(action.getCaseNumber()).fire(new Receiver<List<MedicationProxy>>() {
 			@Override
 			public void onSuccess(List<MedicationProxy> response) {
-				setData(response);
+				if (response != null)
+					setData(response);
 			}
 		});
 	}

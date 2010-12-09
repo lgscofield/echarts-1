@@ -51,7 +51,8 @@ public class ARInfoPresenter implements Presenter, ARInfoView.Presenter<ARInfoPr
 		requestFactory.arinfoRequest().findARInfo(action.getCaseNumber()).fire(new Receiver<ARInfoProxy>() {
 			@Override
 			public void onSuccess(ARInfoProxy response) {
-				view.setRowData(response);
+				if (response != null)
+					view.setRowData(response);
 			}
 		});
 	}

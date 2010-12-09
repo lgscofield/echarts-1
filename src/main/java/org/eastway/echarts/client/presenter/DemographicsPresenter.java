@@ -57,7 +57,8 @@ public class DemographicsPresenter implements Presenter, DemographicsView.Presen
 		request.fire(new Receiver<DemographicsProxy>() {
 			@Override
 			public void onSuccess(DemographicsProxy response) {
-				setData(response);
+				if (response != null)
+					setData(response);
 			}
 		});
 	}

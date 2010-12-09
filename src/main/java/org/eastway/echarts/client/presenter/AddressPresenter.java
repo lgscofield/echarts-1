@@ -50,7 +50,8 @@ public class AddressPresenter implements Presenter, AddressView.Presenter<Addres
 		requestFactory.addressRequest().findAddressesByCaseNumber(caseNumber).fire(new Receiver<List<AddressProxy>>() {
 			@Override
 			public void onSuccess(List<AddressProxy> response) {
-				view.setRowData(response);
+				if (response != null)
+					view.setRowData(response);
 			}
 		});
 	}

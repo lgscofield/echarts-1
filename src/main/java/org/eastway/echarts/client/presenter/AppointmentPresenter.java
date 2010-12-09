@@ -57,21 +57,12 @@ public class AppointmentPresenter implements Presenter, AppointmentView.Presente
 				.fire(new Receiver<List<AppointmentProxy>>() {
 			@Override
 			public void onSuccess(List<AppointmentProxy> response) {
-				rowCount = response.size();
-				view.setRowData(response, action.getStartRecord(), action.getMaxResults(), rowCount);
+				if (response != null) {
+					rowCount = response.size();
+					view.setRowData(response, action.getStartRecord(), action.getMaxResults(), rowCount);
+				}
 			}
 		});
-//		dispatch.execute(action, new EchartsCallback<GetAppointmentsResult>(eventBus) {
-//			@Override
-//			protected void handleFailure(Throwable caught) {
-//			}
-//
-//			@Override
-//			protected void handleSuccess(GetAppointmentsResult result) {
-//				rowCount = result.getRowCount();
-//				view.setRowData(result.getAppointments(), action.getStartRecord(), action.getMaxResults(), rowCount);
-//			}
-//		});
 	}
 
 	@Override

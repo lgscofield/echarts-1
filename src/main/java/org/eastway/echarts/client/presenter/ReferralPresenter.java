@@ -50,7 +50,8 @@ public class ReferralPresenter implements Presenter, ReferralView.Presenter<Refe
 		requestFactory.referralRequest().findReferral(caseNumber).fire(new Receiver<ReferralProxy>() {
 			@Override
 			public void onSuccess(ReferralProxy response) {
-				view.setRowData(response);
+				if (response != null)
+					view.setRowData(response);
 			}
 		});
 	}

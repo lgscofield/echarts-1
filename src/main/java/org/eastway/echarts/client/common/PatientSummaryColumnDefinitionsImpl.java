@@ -98,8 +98,11 @@ public class PatientSummaryColumnDefinitionsImpl extends ArrayList<ColumnDefinit
 		this.add(new ColumnDefinition<EHRProxy>() {
 			@Override
 			public void render(EHRProxy t, StringBuilder sb) {
-				sb.append(t.getPatient().getCaseStatus().getCodeDescriptor() == null ? "" :
-					t.getPatient().getCaseStatus().getCodeDescriptor());
+				if (t.getPatient().getCaseStatus() != null)
+					sb.append(t.getPatient().getCaseStatus().getCodeDescriptor() == null ? "" :
+						t.getPatient().getCaseStatus().getCodeDescriptor());
+				else
+					sb.append("");
 			}
 
 			@Override
