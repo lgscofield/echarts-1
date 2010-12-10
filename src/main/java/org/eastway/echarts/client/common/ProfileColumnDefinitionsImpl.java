@@ -114,11 +114,10 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 		this.add(new ColumnDefinition<UserProxy>() {
 			@Override
 			public void render(UserProxy t, StringBuilder sb) {
-				try {
+				if (t.getRole() != null)
 					sb.append(t.getRole().getRoleName() == null ? "" : t.getRole().getRoleName());
-				} catch (NullPointerException e) {
+				else
 					sb.append("");
-				}
 			}
 
 			@Override
