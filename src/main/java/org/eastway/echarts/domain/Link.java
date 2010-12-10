@@ -15,9 +15,18 @@
  */
 package org.eastway.echarts.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.Id;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Version;
+
+import org.springframework.beans.factory.annotation.Configurable;
+
+@Configurable
 @Entity
 public class Link {
 	@Id
@@ -25,8 +34,20 @@ public class Link {
 	private String url;
 	private String header;
 	private Integer sortOrder;
+	@Version
+	@Column(name = "version")
+	private Integer version;
 
-	public Link() { }
+	@PersistenceContext
+	transient EntityManager entityManager;
+
+	public void setId(String id) {
+		this.name = id;
+	}
+
+	public String getId() {
+		return name;
+	}
 
 	public void setName(String name) {
 		this.name = name;
@@ -58,5 +79,24 @@ public class Link {
 
 	public Integer getSortOrder() {
 		return sortOrder;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+    public static final EntityManager entityManager() {
+        EntityManager em = new Link().entityManager;
+        if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+        return em;
+    }
+
+	public static List<Link> findAllLinks() {
+		return entityManager().createQuery("SELECT link FROM Link link ORDER BY link.header, link.sortOrder", Link.class)
+			.getResultList();
 	}
 }

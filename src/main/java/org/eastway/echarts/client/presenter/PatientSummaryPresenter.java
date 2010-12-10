@@ -20,29 +20,61 @@ import java.util.List;
 import com.google.gwt.event.shared.EventBus;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
-import org.eastway.echarts.client.rpc.CachingDispatchAsync;
-import org.eastway.echarts.client.rpc.EchartsCallback;
+import org.eastway.echarts.client.rpc.AssignmentProxy;
+import org.eastway.echarts.client.rpc.AssignmentRequest;
+import org.eastway.echarts.client.rpc.EHRProxy;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
+import org.eastway.echarts.client.rpc.EhrRequest;
 import org.eastway.echarts.client.view.PatientSummaryView;
-import org.eastway.echarts.shared.GetPatientSummary;
-import org.eastway.echarts.shared.GetPatientSummaryResult;
 
+import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class PatientSummaryPresenter implements Presenter, PatientSummaryView.Presenter<GetPatientSummaryResult> {
+public class PatientSummaryPresenter implements Presenter, PatientSummaryView.Presenter<EHRProxy> {
 
-	private EventBus eventBus;
-	private CachingDispatchAsync dispatch;
-	private GetPatientSummary action;
-	private PatientSummaryView<GetPatientSummaryResult> view;
+	class EHRFetcher {
+		EHRProxy fetchedEHR;
+		List<AssignmentProxy> fetchedAssignments;
 
-	public PatientSummaryPresenter(PatientSummaryView<GetPatientSummaryResult> view,
-			List<ColumnDefinition<GetPatientSummaryResult>> columnDefinitions, EventBus eventBus, CachingDispatchAsync dispatch, GetPatientSummary action) {
+		void Run(final EhrRequest ehrRequest, final AssignmentRequest assignmentRequest, final String caseNumber, final Receiver<EHRFetcher> callback) {
+			ehrRequest.findEHRByCaseNumber(caseNumber)
+				.with("patient")
+				.with("patient.caseStatus")
+				.with("demographics")
+				.with("demographics.gender")
+				.fire(
+					new Receiver<EHRProxy>() {
+						@Override
+						public void onSuccess(EHRProxy response) {
+							if (response != null) {
+								fetchedEHR = response;
+								assignmentRequest.findAssignmentsByCaseNumber(caseNumber).fire(
+										new Receiver<List<AssignmentProxy>>() {
+											@Override
+											public void onSuccess(List<AssignmentProxy> response) {
+												fetchedAssignments = response;
+												if (fetchedAssignments != null)
+													callback.onSuccess(EHRFetcher.this);
+											}
+										});
+							}
+						}
+					});
+								
+		}
+	}
+
+	private String caseNumber;
+	private PatientSummaryView<EHRProxy> view;
+	private EchartsRequestFactory requestFactory;
+
+	public PatientSummaryPresenter(PatientSummaryView<EHRProxy> view,
+			List<ColumnDefinition<EHRProxy>> columnDefinitions, EventBus eventBus, EchartsRequestFactory requestFactory, String caseNumber) {
 		this.view = view;
 		this.view.setPresenter(this);
 		this.view.setColumnDefinitions(columnDefinitions);
-		this.eventBus = eventBus;
-		this.dispatch = dispatch;
-		this.action = action;
+		this.caseNumber = caseNumber;
+		this.requestFactory = requestFactory;
 	}
 
 	@Override
@@ -53,14 +85,14 @@ public class PatientSummaryPresenter implements Presenter, PatientSummaryView.Pr
 	}
 
 	private void fetchData() {
-		dispatch.executeWithCache(action, new EchartsCallback<GetPatientSummaryResult>(eventBus) {
+		final EhrRequest ehrRequest = requestFactory.ehrRequest();
+		AssignmentRequest assignmentRequest = requestFactory.assignmentRequest();
+		new EHRFetcher().Run(ehrRequest, assignmentRequest, caseNumber, new Receiver<PatientSummaryPresenter.EHRFetcher>() {
 			@Override
-			protected void handleFailure(Throwable caught) {
-			}
-
-			@Override
-			protected void handleSuccess(GetPatientSummaryResult result) {
-				view.setRowData(result);
+			public void onSuccess(EHRFetcher response) {
+				EHRProxy ehr = requestFactory.ehrRequest().edit(response.fetchedEHR);
+				ehr.setAssignments(response.fetchedAssignments);
+				view.setRowData(ehr);
 			}
 		});
 	}

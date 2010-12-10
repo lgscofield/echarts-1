@@ -15,9 +15,7 @@
  */
 package org.eastway.echarts.shared;
 
-import net.customware.gwt.dispatch.shared.Action;
-
-public class GetAppointments implements Action<GetAppointmentsResult> {
+public class GetAppointments {
 
 	private String sessionId;
 	private String caseNumber;

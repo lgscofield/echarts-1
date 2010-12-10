@@ -17,15 +17,15 @@ package org.eastway.echarts.client.common;
 
 import java.util.ArrayList;
 
-import org.eastway.echarts.shared.Address;
+import org.eastway.echarts.client.rpc.AddressProxy;
 
 @SuppressWarnings("serial")
-public class AddressColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Address>> {
+public class AddressColumnDefinitionsImpl extends ArrayList<ColumnDefinition<AddressProxy>> {
 
 	public AddressColumnDefinitionsImpl() {
-		this.add(new ColumnDefinition<Address>() {
+		this.add(new ColumnDefinition<AddressProxy>() {
 			@Override
-			public void render(Address t, StringBuilder sb) {
+			public void render(AddressProxy t, StringBuilder sb) {
 				try {
 					sb.append(t.getDescriptor() == null ? "" : t.getDescriptor());
 				} catch (NullPointerException e) {
@@ -33,9 +33,9 @@ public class AddressColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Add
 				}
 			}
 		});
-		this.add(new ColumnDefinition<Address>() {
+		this.add(new ColumnDefinition<AddressProxy>() {
 			@Override
-			public void render(Address t, StringBuilder sb) {
+			public void render(AddressProxy t, StringBuilder sb) {
 				try {
 					sb.append(t.getTitle() == null ? "" : t.getTitle());
 				} catch (NullPointerException e) {
@@ -44,13 +44,13 @@ public class AddressColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Add
 			}
 
 			@Override
-			public String getHeader(Address t) {
+			public String getHeader(AddressProxy t) {
 				return "<b>Name</b>";
 			}
 		});
-		this.add(new ColumnDefinition<Address>() {
+		this.add(new ColumnDefinition<AddressProxy>() {
 			@Override
-			public void render(Address t, StringBuilder sb) {
+			public void render(AddressProxy t, StringBuilder sb) {
 				try {
 					sb.append(t.getStreet1() == null ? "" : t.getStreet1() + "&nbsp;");
 					sb.append(t.getStreet2() == null ? "" : t.getStreet2() + "&nbsp;");
@@ -68,13 +68,13 @@ public class AddressColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Add
 			}
 
 			@Override
-			public String getHeader(Address t) {
+			public String getHeader(AddressProxy t) {
 				return "<b>Address</b>";
 			}
 		});
-		this.add(new ColumnDefinition<Address>() {
+		this.add(new ColumnDefinition<AddressProxy>() {
 			@Override
-			public void render(Address t, StringBuilder sb) {
+			public void render(AddressProxy t, StringBuilder sb) {
 				try {
 					sb.append(t.getPhone1Desc() == null ? "" : t.getPhone1Desc() + "&nbsp;");
 					sb.append(t.getPhone1() == null ? "" : t.getPhone1());
@@ -91,7 +91,7 @@ public class AddressColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Add
 			}
 
 			@Override
-			public String getHeader(Address t) {
+			public String getHeader(AddressProxy t) {
 				return "<b>Phone</b>";
 			}
 		});

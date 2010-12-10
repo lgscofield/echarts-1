@@ -6,11 +6,12 @@ mvn clean &&
 mvn versions:set -DnewVersion=$VERSION -DgenerateBackupPoms=false &&
 sed -i s/ECharts\ -\ .*\<\\/title\>/ECharts\ -\ $VERSION\<\\/title\>/g src/main/webapp/echarts.html &&
 sed -i s/ECharts\ -\ .*\<\\/title\>/ECharts\ -\ $VERSION\<\\/title\>/g src/main/webapp/echarts.jsp &&
-sed -i s/localhost/192.168.201.18/g src/main/resources/META-INF/persistence.xml &&
+sed -i s/localhost/192.168.201.18/g src/main/resources/META-INF/spring/database.properties &&
 sed -i s/echarts-.*\\/WEB-INF/echarts-$VERSION\\/WEB-INF/g .classpath &&
 mvn package &&
-mv target/echarts-$VERSION.war target/echarts.war &&
-git checkout -- src/main/resources/META-INF/persistence.xml
+mv target/echarts-$VERSION.war target/echarts.war
+
+git checkout -- src/main/resources/META-INF/spring/database.properties
 
 if [ -f .settings/com.google.gdt.eclipse.core.prefs ]
 then

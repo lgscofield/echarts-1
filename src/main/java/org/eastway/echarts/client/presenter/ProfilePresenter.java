@@ -21,32 +21,28 @@ import com.google.gwt.event.shared.EventBus;
 
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.common.ColumnDefinition;
-import org.eastway.echarts.client.rpc.CachingDispatchAsync;
-import org.eastway.echarts.client.rpc.EchartsCallback;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
+import org.eastway.echarts.client.rpc.UserProxy;
+import org.eastway.echarts.client.rpc.UserRequest;
 import org.eastway.echarts.client.view.ProfileView;
-import org.eastway.echarts.shared.GetProfile;
-import org.eastway.echarts.shared.GetProfileResult;
-import org.eastway.echarts.shared.SaveProfile;
-import org.eastway.echarts.shared.SaveProfileResult;
-import org.eastway.echarts.shared.User;
 
+import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
-public class ProfilePresenter implements Presenter, ProfileView.Presenter<User> {
+public class ProfilePresenter implements Presenter, ProfileView.Presenter<UserProxy> {
 
-	private ProfileView<User> view;
-	private EventBus eventBus;
-	private CachingDispatchAsync dispatch;
-	private User user;
+	private ProfileView<UserProxy> view;
+	private EchartsRequestFactory requestFactory;
+	private UserProxy user;
+	private UserRequest request;
 
 	@Inject
-	public ProfilePresenter(ProfileView<User> view, List<ColumnDefinition<User>> columnDefinitions, EventBus eventBus, CachingDispatchAsync dispatch) {
+	public ProfilePresenter(ProfileView<UserProxy> view, List<ColumnDefinition<UserProxy>> columnDefinitions, EventBus eventBus, EchartsRequestFactory requestFactory) {
 		this.view = view;
 		this.view.setColumnDefinitions(columnDefinitions);
 		this.view.setPresenter(this);
-		this.eventBus = eventBus;
-		this.dispatch = dispatch;
+		this.requestFactory = requestFactory;
 	}
 
 	@Override
@@ -55,49 +51,45 @@ public class ProfilePresenter implements Presenter, ProfileView.Presenter<User> 
 	}
 
 	private void fetchData() {
-		dispatch.executeWithCache(new GetProfile(EchartsUser.sessionId, EchartsUser.userName), new EchartsCallback<GetProfileResult>(eventBus) {
+		requestFactory.userRequest().findUser(EchartsUser.userName)
+			.with("role")
+			.with("supervisor")
+				.fire(new Receiver<UserProxy>() {
 			@Override
-			protected void handleFailure(Throwable caught) {
-			}
-
-			@Override
-			protected void handleSuccess(GetProfileResult result) {
-				try {
-					setData(result.getUser());
-				} catch (NullPointerException e) {
-					setData(null);
-				}
+			public void onSuccess(UserProxy response) {
+				if (response != null)
+					setData(response);
 			}
 		});
 	}
 
-	public ProfileView<User> getDisplay() {
+	@Override
+	public UserProxy enableEdit(UserProxy userProxy) {
+		request = requestFactory.userRequest();
+		return request.edit(userProxy);
+	}
+
+	public ProfileView<UserProxy> getDisplay() {
 		return view;
 	}
 
-	public void setData(User user) {
+	public void setData(UserProxy user) {
 		this.user = user;
 		view.setRowData(user);
 	}
 
-	public User getData() {
+	public UserProxy getData() {
 		return user;
 	}
 
 	@Override
-	public void save(User data) {
-		SaveProfile action = new SaveProfile(EchartsUser.sessionId);
-		action.setUser(data);
-		dispatch.executeWithCache(action, new EchartsCallback<SaveProfileResult>(eventBus) {
+	public void save(UserProxy userProxy) {
+		final String program = userProxy.getProgram();
+		request.persist().using(userProxy).fire(new Receiver<Void>() {
 			@Override
-			protected void handleFailure(Throwable caught) {
-			}
-
-			@Override
-			protected void handleSuccess(SaveProfileResult t) {
+			public void onSuccess(Void response) {
 				view.setStatus("Settings saved");
-				setData(t.getUser());
-				if (t.getUser().getProgram() != null)
+				if (program != null)
 					view.clearFirstLogin();
 			}
 		});

@@ -15,9 +15,7 @@
  */
 package org.eastway.echarts.shared;
 
-import net.customware.gwt.dispatch.shared.Action;
-
-public class GetProfile implements Action<GetProfileResult> {
+public class GetProfile {
 
 	private String sessionId;
 	private String username;

@@ -24,7 +24,6 @@
 				<g:Label ui:field='aRInfo'>A/R Info</g:Label>
 				<g:Label ui:field='referral'>Referral</g:Label>
 				<g:Label ui:field='addresses'>Addresses</g:Label>
-				<!-- <g:Label ui:field='contacts'>Contacts</g:Label> -->
 				<g:Label ui:field='diagnoses'>Diagnoses</g:Label>
 				<g:Label ui:field='appointments'>Appointments</g:Label>
 				<g:Label ui:field='medications'>Medications</g:Label>

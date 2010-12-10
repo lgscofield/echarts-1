@@ -17,31 +17,26 @@ package org.eastway.echarts.client.presenter;
 
 import java.util.List;
 
-import com.google.gwt.event.shared.EventBus;
-
 import org.eastway.echarts.client.common.ColumnDefinition;
-import org.eastway.echarts.client.rpc.CachingDispatchAsync;
-import org.eastway.echarts.client.rpc.EchartsCallback;
+import org.eastway.echarts.client.rpc.ARInfoProxy;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.view.ARInfoView;
-import org.eastway.echarts.shared.ARInfo;
 import org.eastway.echarts.shared.GetARInfo;
-import org.eastway.echarts.shared.GetARInfoResult;
 
+import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class ARInfoPresenter implements Presenter, ARInfoView.Presenter<ARInfo> {
+public class ARInfoPresenter implements Presenter, ARInfoView.Presenter<ARInfoProxy> {
 
-	private ARInfoView<ARInfo> view;
-	private EventBus eventBus;
-	private CachingDispatchAsync dispatch;
+	private ARInfoView<ARInfoProxy> view;
+	private EchartsRequestFactory requestFactory;
 	private GetARInfo action;
 
-	public ARInfoPresenter(ARInfoView<ARInfo> view, List<ColumnDefinition<ARInfo>> columnDefinitions, EventBus eventBus, CachingDispatchAsync dispatch, GetARInfo action) {
+	public ARInfoPresenter(ARInfoView<ARInfoProxy> view, List<ColumnDefinition<ARInfoProxy>> columnDefinitions, EchartsRequestFactory requestFactory, GetARInfo action) {
 		this.view = view;
 		this.view.setPresenter(this);
 		this.view.setColumnDefinitions(columnDefinitions);
-		this.eventBus = eventBus;
-		this.dispatch = dispatch;
+		this.requestFactory = requestFactory;
 		this.action = action;
 	}
 
@@ -53,14 +48,11 @@ public class ARInfoPresenter implements Presenter, ARInfoView.Presenter<ARInfo> 
 	}
 
 	private void fetchData() {
-		dispatch.executeWithCache(action, new EchartsCallback<GetARInfoResult>(eventBus) {
+		requestFactory.arinfoRequest().findARInfo(action.getCaseNumber()).fire(new Receiver<ARInfoProxy>() {
 			@Override
-			protected void handleFailure(Throwable caught) {
-			}
-
-			@Override
-			protected void handleSuccess(GetARInfoResult result) {
-				view.setRowData(result.getARInfo());
+			public void onSuccess(ARInfoProxy response) {
+				if (response != null)
+					view.setRowData(response);
 			}
 		});
 	}

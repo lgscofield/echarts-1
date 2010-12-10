@@ -8,6 +8,9 @@ target/*
 # Spring roo log file
 log.roo
 
+# Spring Roo Files
+*_Roo_*
+
 # Directory created by DevMode
 src/main/webapp/echarts
 

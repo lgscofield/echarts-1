@@ -17,30 +17,24 @@ package org.eastway.echarts.client.presenter;
 
 import java.util.List;
 
-import com.google.gwt.event.shared.EventBus;
-
 import org.eastway.echarts.client.common.ColumnDefinition;
-import org.eastway.echarts.client.rpc.CachingDispatchAsync;
-import org.eastway.echarts.client.rpc.EchartsCallback;
+import org.eastway.echarts.client.rpc.AddressProxy;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.view.AddressView;
-import org.eastway.echarts.shared.Address;
-import org.eastway.echarts.shared.GetAddresses;
-import org.eastway.echarts.shared.GetAddressesResult;
 
+import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class AddressPresenter implements Presenter, AddressView.Presenter<Address> {
+public class AddressPresenter implements Presenter, AddressView.Presenter<AddressProxy> {
 
-	private AddressView<Address> view;
-	private EventBus eventBus;
-	private CachingDispatchAsync dispatch;
-	private GetAddresses action;
+	private AddressView<AddressProxy> view;
+	private EchartsRequestFactory requestFactory;
+	private String caseNumber;
 
-	public AddressPresenter(AddressView<Address> view, List<ColumnDefinition<Address>> columnDefinitions, EventBus eventBus, CachingDispatchAsync dispatch, GetAddresses action) {
+	public AddressPresenter(AddressView<AddressProxy> view, List<ColumnDefinition<AddressProxy>> columnDefinitions, EchartsRequestFactory requestFactory, String caseNumber) {
 		this.view = view;
-		this.eventBus = eventBus;
-		this.dispatch = dispatch;
-		this.action = action;
+		this.requestFactory = requestFactory;
+		this.caseNumber = caseNumber;
 		this.view.setPresenter(this);
 		this.view.setColumnDefinitions(columnDefinitions);
 	}
@@ -53,18 +47,11 @@ public class AddressPresenter implements Presenter, AddressView.Presenter<Addres
 	}
 
 	private void fetchData() {
-		dispatch.executeWithCache(action, new EchartsCallback<GetAddressesResult>(eventBus) {
+		requestFactory.addressRequest().findAddressesByCaseNumber(caseNumber).fire(new Receiver<List<AddressProxy>>() {
 			@Override
-			protected void handleFailure(Throwable caught) {
-			}
-
-			@Override
-			protected void handleSuccess(GetAddressesResult result) {
-				try {
-					view.setRowData(result.getAddresses());
-				} catch (NullPointerException e) {
-					view.setRowData(null);
-				}
+			public void onSuccess(List<AddressProxy> response) {
+				if (response != null)
+					view.setRowData(response);
 			}
 		});
 	}

@@ -15,9 +15,7 @@
  */
 package org.eastway.echarts.shared;
 
-import net.customware.gwt.dispatch.shared.Action;
-
-public class GetARInfo implements Action<GetARInfoResult> {
+public class GetARInfo {
 
 	private String sessionId;
 	private String caseNumber;

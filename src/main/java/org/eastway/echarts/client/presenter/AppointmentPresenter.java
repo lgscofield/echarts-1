@@ -20,28 +20,25 @@ import java.util.List;
 import com.google.gwt.event.shared.EventBus;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
-import org.eastway.echarts.client.rpc.CachingDispatchAsync;
-import org.eastway.echarts.client.rpc.EchartsCallback;
+import org.eastway.echarts.client.rpc.AppointmentProxy;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.view.AppointmentView;
-import org.eastway.echarts.shared.Appointment;
 import org.eastway.echarts.shared.GetAppointments;
-import org.eastway.echarts.shared.GetAppointmentsResult;
 
+import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class AppointmentPresenter implements Presenter, AppointmentView.Presenter<Appointment> {
+public class AppointmentPresenter implements Presenter, AppointmentView.Presenter<AppointmentProxy> {
 
-	private EventBus eventBus;
-	private CachingDispatchAsync dispatch;
+	private EchartsRequestFactory requestFactory;
 	private GetAppointments action;
-	private AppointmentView<Appointment> view;
+	private AppointmentView<AppointmentProxy> view;
 
-	public AppointmentPresenter(AppointmentView<Appointment> view, List<ColumnDefinition<Appointment>> columnDefinitions, EventBus eventBus, CachingDispatchAsync dispatch, GetAppointments action) {
+	public AppointmentPresenter(AppointmentView<AppointmentProxy> view, List<ColumnDefinition<AppointmentProxy>> columnDefinitions, EventBus eventBus, EchartsRequestFactory requestFactory, GetAppointments action) {
 		this.view = view;
 		this.view.setPresenter(this);
 		this.view.setColumnDefinitions(columnDefinitions);
-		this.dispatch = dispatch;
-		this.eventBus = eventBus;
+		this.requestFactory = requestFactory;
 		this.action = action;
 	}
 
@@ -56,15 +53,14 @@ public class AppointmentPresenter implements Presenter, AppointmentView.Presente
 	private long rowCount = 0;
 
 	public void fetchData() {
-		dispatch.execute(action, new EchartsCallback<GetAppointmentsResult>(eventBus) {
+		requestFactory.appointmentRequest().findAppointmentEntriesByCaseNumber(action.getCaseNumber())
+				.fire(new Receiver<List<AppointmentProxy>>() {
 			@Override
-			protected void handleFailure(Throwable caught) {
-			}
-
-			@Override
-			protected void handleSuccess(GetAppointmentsResult result) {
-				rowCount = result.getRowCount();
-				view.setRowData(result.getAppointments(), action.getStartRecord(), action.getMaxResults(), rowCount);
+			public void onSuccess(List<AppointmentProxy> response) {
+				if (response != null) {
+					rowCount = response.size();
+					view.setRowData(response, action.getStartRecord(), action.getMaxResults(), rowCount);
+				}
 			}
 		});
 	}

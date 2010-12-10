@@ -24,6 +24,7 @@ import com.google.gwt.user.client.ui.Widget;
 public interface ProfileView<T> {
 
 	public interface Presenter<T> {
+		T enableEdit(T data);
 		void save(T data);
 	}
 

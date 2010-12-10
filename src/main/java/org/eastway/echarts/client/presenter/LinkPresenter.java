@@ -15,60 +15,63 @@
  */
 package org.eastway.echarts.client.presenter;
 
-import java.util.LinkedHashSet;
-
-import com.google.gwt.event.shared.EventBus;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eastway.echarts.client.EchartsUser;
-import org.eastway.echarts.client.rpc.CachingDispatchAsync;
-import org.eastway.echarts.client.rpc.EchartsCallback;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
+import org.eastway.echarts.client.rpc.LinkProxy;
 import org.eastway.echarts.shared.GetLinks;
-import org.eastway.echarts.shared.GetLinksResult;
 
+import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class LinkPresenter implements Presenter {
 
 	public interface Display extends EchartsDisplay {
-		void setData(LinkedHashSet<String[]> data);
+		void setData(List<String[]> list);
 	}
 
-	private LinkedHashSet<String[]> data;
+	private List<String[]> data;
 	private Display display;
 	private GetLinks action;
-	private CachingDispatchAsync dispatch;
-	private EventBus eventBus;
+	private EchartsRequestFactory requestFactory;
 
-	public LinkPresenter(Display display, EventBus eventBus, CachingDispatchAsync dispatch, GetLinks action) {
+	public LinkPresenter(Display display, EchartsRequestFactory requestFactory, GetLinks action) {
 		this.action = action;
-		this.eventBus = eventBus;
-		this.dispatch = dispatch;
+		this.requestFactory = requestFactory;
 		this.display = display;
 	}
 
 	public void fetchData() {
-		dispatch.execute(action, new EchartsCallback<GetLinksResult>(eventBus) {
+		requestFactory.linkRequest().findAllLinks().fire(new Receiver<List<LinkProxy>>() {
 			@Override
-			protected void handleFailure(Throwable caught) {
+			public void onSuccess(List<LinkProxy> response) {
+				if (response != null) {
+					setData(response);
+					display.setData(getData());
+				}
 			}
-
-			@Override
-			protected void handleSuccess(GetLinksResult result) {
-				setData(result.getLinks());
-				display.setData(result.getLinks());
-			}
+			
 		});
 	}
 
-	public LinkedHashSet<String[]> getData() {
+	public List<String[]> getData() {
 		return data;
 	}
 
-	public void setData(LinkedHashSet<String[]> d) {
-		this.data = d;
-		for (String[] s : data) {
-			s[1] += "?staffid=" + EchartsUser.staffId + "&PATID=" + action.getCaseNumber();
+	public void setData(List<LinkProxy> linkList) {
+		List<String[]> data = new ArrayList<String[]>();
+
+		for (LinkProxy link : linkList) {
+			String[] str = new String[3];
+			str[0] = link.getName();
+			str[1] = (link.getUrl() + "?staffid=" + EchartsUser.staffId + "&PATID=" + action.getCaseNumber());
+			str[2] = link.getHeader();
+			data.add(str);
 		}
+
+		this.data = data;
 	}
 
 	@Override

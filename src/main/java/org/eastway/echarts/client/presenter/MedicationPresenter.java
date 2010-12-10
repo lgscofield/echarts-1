@@ -17,33 +17,29 @@ package org.eastway.echarts.client.presenter;
 
 import java.util.List;
 
-import com.google.gwt.event.shared.EventBus;
-
-import org.eastway.echarts.client.rpc.CachingDispatchAsync;
-import org.eastway.echarts.client.rpc.EchartsCallback;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
+import org.eastway.echarts.client.rpc.MedicationProxy;
 import org.eastway.echarts.shared.GetMedications;
-import org.eastway.echarts.shared.GetMedicationsResult;
-import org.eastway.echarts.shared.Medication;
 
+import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class MedicationPresenter implements Presenter {
 
-	public interface Display extends EchartsDisplay, Medication {
+	public interface Display extends EchartsDisplay {
 		public void nextRecord();
+
+		public void setMedication(String medication);
 	}
 
 	private Display view;
-	private EventBus eventBus;
-	private CachingDispatchAsync dispatch;
 	private GetMedications action;
+	private EchartsRequestFactory requestFactory;
 
-	public MedicationPresenter(Display view,
-			EventBus eventBus, CachingDispatchAsync dispatch,
+	public MedicationPresenter(Display view, EchartsRequestFactory requestFactory,
 			GetMedications action) {
 		this.view = view;
-		this.eventBus = eventBus;
-		this.dispatch = dispatch;
+		this.requestFactory = requestFactory;
 		this.action = action;
 	}
 
@@ -55,20 +51,17 @@ public class MedicationPresenter implements Presenter {
 	}
 
 	private void fetchData() {
-		dispatch.executeWithCache(action, new EchartsCallback<GetMedicationsResult>(eventBus) {
+		requestFactory.medicationRequest().findMedicationsByCaseNumber(action.getCaseNumber()).fire(new Receiver<List<MedicationProxy>>() {
 			@Override
-			protected void handleFailure(Throwable caught) {
-			}
-
-			@Override
-			protected void handleSuccess(GetMedicationsResult result) {
-				setData(result.getMedications());
+			public void onSuccess(List<MedicationProxy> response) {
+				if (response != null)
+					setData(response);
 			}
 		});
 	}
 
-	public void setData(List<Medication> medications) {
-		for (Medication medication : medications) {
+	public void setData(List<MedicationProxy> medications) {
+		for (MedicationProxy medication : medications) {
 			view.setMedication(medication.getMedication());
 			view.nextRecord();
 		}

@@ -16,7 +16,7 @@
 package org.eastway.echarts.client.view;
 
 import java.util.HashSet;
-import java.util.LinkedHashSet;
+import java.util.List;
 
 import org.eastway.echarts.client.presenter.LinkPresenter;
 
@@ -46,16 +46,16 @@ public class LinkView extends Composite implements LinkPresenter.Display {
 	}
 
 	@Override
-	public void setData(LinkedHashSet<String[]> data) {
+	public void setData(List<String[]> linkList) {
 		HashSet<String> header = new HashSet<String>();
-		for (String[] s : data)
+		for (String[] s : linkList)
 			while (!header.contains(s[2]))
 				header.add(s[2]);
 		for (String h : header) {
 			formsList.add(new HTML("<p>" + h + "</p>"));
 			String content = new String();
 			content = "<ul>";
-			for (String[] s : data) {
+			for (String[] s : linkList) {
 				if (s[2].equals(h))
 					content += "<li>" + new Anchor(s[0], s[1], "_blank") + "</li>";
 			}

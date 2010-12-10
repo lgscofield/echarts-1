@@ -17,9 +17,7 @@ package org.eastway.echarts.shared;
 
 import java.math.BigDecimal;
 
-import net.customware.gwt.dispatch.shared.Result;
-
-public class GetProductivityResult implements Result {
+public class GetProductivityResult {
 
 	private String staffId;
 	private String staffName;

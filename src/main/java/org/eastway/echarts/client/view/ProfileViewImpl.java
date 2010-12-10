@@ -100,21 +100,20 @@ public class ProfileViewImpl<T> extends Composite implements ProfileView<T> {
 
 	@UiHandler("save")
 	public void handleSave(ClickEvent event) {
+		T editableRowData = presenter.enableEdit(rowData);
 		for (int i = 0; i < columnDefinitions.size(); i++) {
 			try {
 				if (columnDefinitions.get(i).isMap()) {
 					int selected = ((ListBox) table.getWidget(i, 1)).getSelectedIndex();
-					columnDefinitions.get(i).setData(rowData, ((ListBox) table.getWidget(i, 1)).getValue(selected));
+					columnDefinitions.get(i).setData(editableRowData, ((ListBox) table.getWidget(i, 1)).getValue(selected));
 				} else if (columnDefinitions.get(i).isEditable()) {
-					columnDefinitions.get(i).setData(rowData, ((TextBox) table.getWidget(i, 1)).getValue());
-				} else {
-					columnDefinitions.get(i).setData(rowData, table.getText(i, 1));
+					columnDefinitions.get(i).setData(editableRowData, ((TextBox) table.getWidget(i, 1)).getValue());
 				}
 			} catch (NullPointerException e) {
-				columnDefinitions.get(i).setData(rowData, "");
+				columnDefinitions.get(i).setData(editableRowData, "");
 			}
 		}
-		presenter.save(rowData);
+		presenter.save(editableRowData);
 	}
 
 	@Override

@@ -15,7 +15,9 @@
  */
 package org.eastway.echarts.client.presenter;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import com.google.gwt.event.shared.EventBus;
 
@@ -33,41 +35,76 @@ import org.eastway.echarts.client.events.ViewProviderSignaturesEvent;
 import org.eastway.echarts.client.events.ViewStaffHistoryEvent;
 import org.eastway.echarts.client.events.ViewSupervisorSignaturesEvent;
 import org.eastway.echarts.client.events.ViewTicklerEvent;
-import org.eastway.echarts.client.rpc.CachingDispatchAsync;
-import org.eastway.echarts.client.rpc.EchartsCallback;
+import org.eastway.echarts.client.rpc.AssignmentProxy;
+import org.eastway.echarts.client.rpc.AssignmentRequest;
+import org.eastway.echarts.client.rpc.DemographicsProxy;
+import org.eastway.echarts.client.rpc.EHRProxy;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
+import org.eastway.echarts.client.rpc.EhrRequest;
+import org.eastway.echarts.client.rpc.PatientProxy;
+import org.eastway.echarts.client.rpc.ProductivityProxy;
 import org.eastway.echarts.client.view.DashboardView;
-import org.eastway.echarts.shared.Demographics;
-import org.eastway.echarts.shared.GetPatientSummary;
-import org.eastway.echarts.shared.GetPatientSummaryResult;
-import org.eastway.echarts.shared.GetProductivity;
-import org.eastway.echarts.shared.GetProductivityResult;
-import org.eastway.echarts.shared.Patient;
 
+import com.google.gwt.requestfactory.shared.Receiver;
+import com.google.gwt.requestfactory.shared.ServerFailure;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
 public class DashboardPresenter implements Presenter, DashboardView.Presenter<LinkedHashMap<String, Long>> {
 
+	class EHRFetcher {
+		EHRProxy fetchedEHR;
+		List<AssignmentProxy> fetchedAssignments;
+
+		void Run(final EhrRequest ehrRequest, final AssignmentRequest assignmentRequest, final String caseNumber, final Receiver<EHRFetcher> callback) {
+			ehrRequest.findEHRByCaseNumber(caseNumber)
+				.with("patient")
+				.with("patient.caseStatus")
+				.with("demographics")
+				.fire(
+					new Receiver<EHRProxy>() {
+						@Override
+						public void onSuccess(EHRProxy response) {
+							if (response != null)
+								fetchedEHR = response;
+								assignmentRequest.findAssignmentsByCaseNumber(caseNumber).fire(
+										new Receiver<List<AssignmentProxy>>() {
+											@Override
+											public void onSuccess(List<AssignmentProxy> response) {
+												fetchedAssignments = response;
+												if (fetchedAssignments != null)
+													callback.onSuccess(EHRFetcher.this);
+											}
+										});
+						}
+
+						@Override
+						public void onFailure(ServerFailure error) {
+							com.google.gwt.user.client.Window.alert(error.getMessage());
+						}
+					});
+			
+		}
+	}
+
 	private DashboardView<LinkedHashMap<String, Long>> view;
 	private EventBus eventBus;
-	private CachingDispatchAsync dispatch;
-	private String caseNumber;
+	private EchartsRequestFactory requestFactory;
 
 	@Inject
-	public DashboardPresenter(DashboardView<LinkedHashMap<String, Long>> view,
-			EventBus eventBus, final CachingDispatchAsync dispatch) {
+	public DashboardPresenter(DashboardView<LinkedHashMap<String, Long>> view, EventBus eventBus, final EchartsRequestFactory requestFactory) {
 		this.view = view;
-		this.view.setPresenter(this);
 		this.eventBus = eventBus;
-		this.dispatch = dispatch;
+		this.view.setPresenter(this);
+		this.requestFactory = requestFactory;
 	}
 
 	private void bind() {
 		eventBus.addHandler(ChangeCurrentEhrEvent.TYPE, new ChangeCurrentEhrEventHandler() {
 			@Override
 			public <T> void onChangeCurrentEhr(ChangeCurrentEhrEvent<T> event) {
-				setCurrentEhrData((GetPatientSummaryResult)event.getEhr());
+				setCurrentEhrData((EHRProxy)event.getEhr());
 			}
 		});
 	}
@@ -86,19 +123,41 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 			view.isFirstLogin();
 	}
 
-	private void setCurrentEhrData(final GetPatientSummaryResult ehr) {
+	private void setCurrentEhrData(EHRProxy ehr) {
 		if (ehr == null) {
 			view.showEhrStub(false);
 			return;
 		}
-		Patient patient = ehr.getPatient();
-		Demographics demographics = ehr.getDemographics();
+		PatientProxy patient = ehr.getPatient();
+		DemographicsProxy demographics = ehr.getDemographics();
 		view.setName(patient.getName());
-		view.setCaseStatus(patient.getCaseStatus().getDescriptor() == null ? "" : patient.getCaseStatus().getDescriptor());
+		if (patient.getCaseStatus() != null)
+			view.setCaseStatus(patient.getCaseStatus().getCodeDescriptor() == null ? "NO DATA" : patient.getCaseStatus().getCodeDescriptor());
+		else
+			view.setCaseStatus("NO DATA");
 		view.setDob(demographics.getDob());
-		view.setProvider(ehr.getProvider() == null ? "" : ehr.getProvider());
+		view.setProvider(getProvider(ehr.getAssignments()));
 		view.setSsn(patient.getSsn());
 		view.showEhrStub(true);
+	}
+
+	private String getProvider(List<AssignmentProxy> list) {
+		if (list == null) {
+			return "";
+		} else {
+			List<String> providers = new ArrayList<String>();
+			String provider = null;
+			for (AssignmentProxy a : list) {
+				providers.add(a.getStaffName());
+				if (a.getStaff() != null && a.getStaff().matches(EchartsUser.staffId))
+					provider = a.getStaffName();
+			}
+			if (provider == null && list.size() > 0)
+				provider = list.get(0).getStaffName();
+			if (provider == null)
+				return "NO DATA";
+			return provider;
+		}
 	}
 
 	private void fetchData() {
@@ -107,41 +166,38 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 
 	@Override
 	public void changeCurrentEhr(Object ehr) {
-			eventBus.fireEvent(new ChangeCurrentEhrEvent<GetPatientSummaryResult>((GetPatientSummaryResult)ehr));
+			eventBus.fireEvent(new ChangeCurrentEhrEvent<EHRProxy>((EHRProxy)ehr));
 	}
 
 	@Override
 	public void openEhr(String text) {
-		caseNumber = text.replaceAll("(.*) - .*", "$1");
-		dispatch.execute(new GetPatientSummary(EchartsUser.sessionId, caseNumber, EchartsUser.staffId), new EchartsCallback<GetPatientSummaryResult>(eventBus) {
+		final EhrRequest ehrRequest = requestFactory.ehrRequest();
+		AssignmentRequest assignmentRequest = requestFactory.assignmentRequest();
+		new EHRFetcher().Run(ehrRequest, assignmentRequest, text.replaceAll("(.*) - .*", "$1"), new Receiver<DashboardPresenter.EHRFetcher>() {
 			@Override
-			protected void handleFailure(Throwable caught) {
-			}
-
-			@Override
-			protected void handleSuccess(GetPatientSummaryResult t) {
-				eventBus.fireEvent(new OpenEhrEvent(t));	
+			public void onSuccess(EHRFetcher response) {
+				EHRProxy ehr = requestFactory.ehrRequest().edit(response.fetchedEHR);
+				ehr.setAssignments(response.fetchedAssignments);
+				eventBus.fireEvent(new OpenEhrEvent(ehr));
 			}
 		});
 	}
 
 	private void getProductivityData() {
-		dispatch.execute(new GetProductivity(EchartsUser.sessionId, EchartsUser.staffId), new EchartsCallback<GetProductivityResult>(eventBus) {
+		requestFactory.productivityRequest().findProductivityByStaffId(EchartsUser.staffId).fire(new Receiver<ProductivityProxy>() {
 			@Override
-			protected void handleFailure(Throwable caught) {
-			}
-
-			@Override
-			protected void handleSuccess(GetProductivityResult result) {
+			public void onSuccess(ProductivityProxy response) {
+				if (response == null)
+					return;
 				String color = null;
-				if (result.getTotal().doubleValue() < result.getYellowNumber())
+				if (response.getTotal() < response.getYellowNumber())
 					color = "red";
-				else if (result.getTotal().doubleValue() < result.getGreenNumber())
+				else if (response.getTotal() < response.getGreenNumber())
 					color = "yellow";
 				else
 					color = "green";
-				view.setProductivity(result.getTotal().toPlainString(), color);
-				view.setBonusProjection(new Double(result.getGreenNumber()).toString());
+				view.setProductivity(response.getTotal().toString(), color);
+				view.setBonusProjection(response.getGreenNumber().toString());
 			}
 		});
 	}

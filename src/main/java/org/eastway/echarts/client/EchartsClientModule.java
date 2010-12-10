@@ -30,8 +30,14 @@ import org.eastway.echarts.client.common.TicklerColumnDefinitionsImpl;
 import org.eastway.echarts.client.presenter.DashboardPresenter;
 import org.eastway.echarts.client.presenter.ProfilePresenter;
 import org.eastway.echarts.client.presenter.TicklerPresenter;
-import org.eastway.echarts.client.rpc.CachingDispatchAsync;
-import org.eastway.echarts.client.rpc.CachingDispatchAsyncImpl;
+import org.eastway.echarts.client.rpc.AddressProxy;
+import org.eastway.echarts.client.rpc.AppointmentProxy;
+import org.eastway.echarts.client.rpc.DemographicsProxy;
+import org.eastway.echarts.client.rpc.DiagnosisProxy;
+import org.eastway.echarts.client.rpc.EHRProxy;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
+import org.eastway.echarts.client.rpc.ReferralProxy;
+import org.eastway.echarts.client.rpc.UserProxy;
 import org.eastway.echarts.client.ui.EchartsOracle;
 import org.eastway.echarts.client.view.DashboardView;
 import org.eastway.echarts.client.view.DashboardViewImpl;
@@ -39,15 +45,8 @@ import org.eastway.echarts.client.view.ProfileView;
 import org.eastway.echarts.client.view.ProfileViewImpl;
 import org.eastway.echarts.client.view.TicklerView;
 import org.eastway.echarts.client.view.TicklerViewImpl;
-import org.eastway.echarts.shared.Address;
-import org.eastway.echarts.shared.Appointment;
-import org.eastway.echarts.shared.Demographics;
-import org.eastway.echarts.shared.Diagnosis;
-import org.eastway.echarts.shared.GetPatientSummaryResult;
 import org.eastway.echarts.shared.GetTickler;
-import org.eastway.echarts.shared.Referral;
 import org.eastway.echarts.shared.Tickler;
-import org.eastway.echarts.shared.User;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Singleton;
@@ -63,7 +62,7 @@ public class EchartsClientModule extends AbstractGinModule {
 	protected void configure() {
 		bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
 		bind(AppController.class).in(Singleton.class);
-		bind(CachingDispatchAsync.class).to(CachingDispatchAsyncImpl.class).in(Singleton.class);
+		bind(EchartsRequestFactory.class).in(Singleton.class);
 
 		bind(GetTickler.class).in(Singleton.class);
 		bind(DashboardPresenter.class).in(Singleton.class);
@@ -73,21 +72,21 @@ public class EchartsClientModule extends AbstractGinModule {
 		bind(new TypeLiteral<TicklerView<Tickler>>() {}).to(TicklerViewImpl.class);
 		bind(new TypeLiteral<List<ColumnDefinition<Tickler>>>() {}).to(TicklerColumnDefinitionsImpl.class).in(Singleton.class);
 
-		bind(new TypeLiteral<List<ColumnDefinition<Diagnosis>>>() {}).to(DiagnosisColumnDefinitionsImpl.class).in(Singleton.class);
+		bind(new TypeLiteral<List<ColumnDefinition<DiagnosisProxy>>>() {}).to(DiagnosisColumnDefinitionsImpl.class).in(Singleton.class);
 
-		bind(new TypeLiteral<List<ColumnDefinition<Demographics>>>() {}).to(DemographicsColumnDefinitionsImpl.class).in(Singleton.class);
+		bind(new TypeLiteral<List<ColumnDefinition<DemographicsProxy>>>() {}).to(DemographicsColumnDefinitionsImpl.class).in(Singleton.class);
 
 		bind(ProfilePresenter.class).in(Singleton.class);
-		bind(new TypeLiteral<List<ColumnDefinition<User>>>() {}).to(ProfileColumnDefinitionsImpl.class).in(Singleton.class);
-		bind(new TypeLiteral<ProfileView<User>>() {}).to(ProfileViewImpl.class);
+		bind(new TypeLiteral<List<ColumnDefinition<UserProxy>>>() {}).to(ProfileColumnDefinitionsImpl.class).in(Singleton.class);
+		bind(new TypeLiteral<ProfileView<UserProxy>>() {}).to(ProfileViewImpl.class);
 
-		bind(new TypeLiteral<List<ColumnDefinition<Address>>>() {}).to(AddressColumnDefinitionsImpl.class).in(Singleton.class);
+		bind(new TypeLiteral<List<ColumnDefinition<AddressProxy>>>() {}).to(AddressColumnDefinitionsImpl.class).in(Singleton.class);
 
 		bind(EchartsOracle.class).in(Singleton.class);
 
-		bind(new TypeLiteral<List<ColumnDefinition<GetPatientSummaryResult>>>() {}).to(PatientSummaryColumnDefinitionsImpl.class).in(Singleton.class);
-		bind(new TypeLiteral<List<ColumnDefinition<Appointment>>>() {}).to(AppointmentColumnDefinitionsImpl.class).in(Singleton.class);
-		bind(new TypeLiteral<List<ColumnDefinition<Referral>>>() {}).to(ReferralColumnDefinitionsImpl.class).in(Singleton.class);
+		bind(new TypeLiteral<List<ColumnDefinition<EHRProxy>>>() {}).to(PatientSummaryColumnDefinitionsImpl.class).in(Singleton.class);
+		bind(new TypeLiteral<List<ColumnDefinition<AppointmentProxy>>>() {}).to(AppointmentColumnDefinitionsImpl.class).in(Singleton.class);
+		bind(new TypeLiteral<List<ColumnDefinition<ReferralProxy>>>() {}).to(ReferralColumnDefinitionsImpl.class).in(Singleton.class);
 	}
 
 }

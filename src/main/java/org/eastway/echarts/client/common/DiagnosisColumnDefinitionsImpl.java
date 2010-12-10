@@ -17,103 +17,103 @@ package org.eastway.echarts.client.common;
 
 import java.util.ArrayList;
 
-import org.eastway.echarts.shared.Diagnosis;
+import org.eastway.echarts.client.rpc.DiagnosisProxy;
 import org.eastway.echarts.style.client.GlobalResources;
 
 @SuppressWarnings("serial")
-public class DiagnosisColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Diagnosis>> {
+public class DiagnosisColumnDefinitionsImpl extends ArrayList<ColumnDefinition<DiagnosisProxy>> {
 
 	private String dash = "&nbsp;&mdash;&nbsp;";
 	protected DiagnosisColumnDefinitionsImpl() {
-		this.add(new ColumnDefinition<Diagnosis>() {
+		this.add(new ColumnDefinition<DiagnosisProxy>() {
 			@Override
-			public void render(Diagnosis t, StringBuilder sb) {
-				if (t.getAxis1A().getDescription() == null)
+			public void render(DiagnosisProxy t, StringBuilder sb) {
+				if (t.getAxis1A() == null || t.getAxis1A().getDescription() == null)
 					sb.append("<p>Axis 1A: NO DATA</p>");
 				else
-					sb.append("<p>Axis 1A: " + t.getAxis1A().getIcd9() + dash + t.getAxis1A().getDescription() + "</p>");
+					sb.append("<p>Axis 1A: " + t.getAxis1A().getId() + dash + t.getAxis1A().getDescription() + "</p>");
 			}
 
 			@Override
-			public String getHeader(Diagnosis t) {
+			public String getHeader(DiagnosisProxy t) {
 				return GlobalResources.getDateFormat().format(t.getDate());
 			}
 		});
-		this.add(new ColumnDefinition<Diagnosis>() {
+		this.add(new ColumnDefinition<DiagnosisProxy>() {
 			@Override
-			public void render(Diagnosis t, StringBuilder sb) {
-				if (t.getAxis1B().getDescription() == null)
+			public void render(DiagnosisProxy t, StringBuilder sb) {
+				if (t.getAxis1B() == null || t.getAxis1B().getDescription() == null)
 					sb.append("<p>Axis 1B: NO DATA</p>");
 				else
-					sb.append("<p>Axis 1B: " + t.getAxis1B().getIcd9() + dash + t.getAxis1B().getDescription() + "</p>");
+					sb.append("<p>Axis 1B: " + t.getAxis1B().getId() + dash + t.getAxis1B().getDescription() + "</p>");
 			}
 		});
-		this.add(new ColumnDefinition<Diagnosis>() {
+		this.add(new ColumnDefinition<DiagnosisProxy>() {
 			@Override
-			public void render(Diagnosis t, StringBuilder sb) {
-				if (t.getAxis1C().getDescription() == null)
+			public void render(DiagnosisProxy t, StringBuilder sb) {
+				if (t.getAxis1C() == null || t.getAxis1C().getDescription() == null)
 					sb.append("<p>Axis 1C: NO DATA</p>");
 				else
-					sb.append("<p>Axis 1C: " + t.getAxis1C().getIcd9() + dash + t.getAxis1C().getDescription() + "</p>");
+					sb.append("<p>Axis 1C: " + t.getAxis1C().getId() + dash + t.getAxis1C().getDescription() + "</p>");
 			}
 		});
-		this.add(new ColumnDefinition<Diagnosis>() {
+		this.add(new ColumnDefinition<DiagnosisProxy>() {
 			@Override
-			public void render(Diagnosis t, StringBuilder sb) {
-				if (t.getAxis1D().getDescription() == null)
+			public void render(DiagnosisProxy t, StringBuilder sb) {
+				if (t.getAxis1D() == null || t.getAxis1D().getDescription() == null)
 					sb.append("<p>Axis 1D: NO DATA</p>");
 				else
-					sb.append("<p>Axis 1D: " + t.getAxis1D().getIcd9() + dash + t.getAxis1D().getDescription() + "</p>");
+					sb.append("<p>Axis 1D: " + t.getAxis1D().getId() + dash + t.getAxis1D().getDescription() + "</p>");
 			}
 		});
-		this.add(new ColumnDefinition<Diagnosis>() {
+		this.add(new ColumnDefinition<DiagnosisProxy>() {
 			@Override
-			public void render(Diagnosis t, StringBuilder sb) {
-				if (t.getAxis1E().getDescription() == null)
+			public void render(DiagnosisProxy t, StringBuilder sb) {
+				if (t.getAxis1E() == null || t.getAxis1E().getDescription() == null)
 					sb.append("<p>Axis 1E: NO DATA</p>");
 				else
-					sb.append("<p>Axis 1E: " + t.getAxis1E().getIcd9() + dash + t.getAxis1E().getDescription() + "</p>");
+					sb.append("<p>Axis 1E: " + t.getAxis1E().getId() + dash + t.getAxis1E().getDescription() + "</p>");
 			}
 		});
-		this.add(new ColumnDefinition<Diagnosis>() {
+		this.add(new ColumnDefinition<DiagnosisProxy>() {
 			@Override
-			public void render(Diagnosis t, StringBuilder sb) {
-				if (t.getAxis2A().getDescription() == null)
+			public void render(DiagnosisProxy t, StringBuilder sb) {
+				if (t.getAxis2A() == null || t.getAxis2A().getDescription() == null)
 					sb.append("<p>Axis 2A: NO DATA</p>");
 				else
-					sb.append("<p>Axis 2A: " + t.getAxis2A().getIcd9() + dash + t.getAxis2A().getDescription() + "</p>");
+					sb.append("<p>Axis 2A: " + t.getAxis2A().getId() + dash + t.getAxis2A().getDescription() + "</p>");
 			}
 		});
-		this.add(new ColumnDefinition<Diagnosis>() {
+		this.add(new ColumnDefinition<DiagnosisProxy>() {
 			@Override
-			public void render(Diagnosis t, StringBuilder sb) {
-				if (t.getAxis2B().getDescription() == null)
+			public void render(DiagnosisProxy t, StringBuilder sb) {
+				if (t.getAxis2B() == null || t.getAxis2B().getDescription() == null)
 					sb.append("<p>Axis 2B: NO DATA</p>");
 				else
-					sb.append("<p>Axis 2B: " + t.getAxis2B().getIcd9() + dash + t.getAxis2B().getDescription() + "</p>");
+					sb.append("<p>Axis 2B: " + t.getAxis2B().getId() + dash + t.getAxis2B().getDescription() + "</p>");
 			}
 		});
-		this.add(new ColumnDefinition<Diagnosis>() {
+		this.add(new ColumnDefinition<DiagnosisProxy>() {
 			@Override
-			public void render(Diagnosis t, StringBuilder sb) {
-				if (t.getAxis2C().getDescription() == null)
+			public void render(DiagnosisProxy t, StringBuilder sb) {
+				if (t.getAxis2C() == null || t.getAxis2C().getDescription() == null)
 					sb.append("<p>Axis 2C: NO DATA</p>");
 				else
-					sb.append("<p>Axis 2C: " + t.getAxis2C().getIcd9() + dash + t.getAxis2C().getDescription() + "</p>");
+					sb.append("<p>Axis 2C: " + t.getAxis2C().getId() + dash + t.getAxis2C().getDescription() + "</p>");
 			}
 		});
-		this.add(new ColumnDefinition<Diagnosis>() {
+		this.add(new ColumnDefinition<DiagnosisProxy>() {
 			@Override
-			public void render(Diagnosis t, StringBuilder sb) {
+			public void render(DiagnosisProxy t, StringBuilder sb) {
 				if (t.getAxis3() == null)
 					sb.append("<p>Axis 3: NO DATA</p>");
 				else
 					sb.append("<p>Axis 3: " + t.getAxis3() + "</p>");
 			}
 		});
-		this.add(new ColumnDefinition<Diagnosis>() {
+		this.add(new ColumnDefinition<DiagnosisProxy>() {
 			@Override
-			public void render(Diagnosis t, StringBuilder sb) {
+			public void render(DiagnosisProxy t, StringBuilder sb) {
 				if (t.getAxis4() == null)
 					sb.append("<p>Axis 4: NO DATA</p>");
 				else

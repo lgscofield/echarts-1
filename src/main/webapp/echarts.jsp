@@ -14,13 +14,8 @@ try {
 }
 
 String dbServerUrl = null;
-EntityManager em = EchartsEntityManagerFactory.getEntityManagerFactory().createEntityManager();
-try {
-	DbServerConfig nameValuePair = em.find(DbServerConfigImpl.class, "dbServerUrl");
-	dbServerUrl = nameValuePair.getValue();
-} finally {
-	em.close();
-}
+DbServerConfig nameValuePair = DbServerConfig.findDbServerConfig("dbServerUrl");
+dbServerUrl = nameValuePair.getConfigValue();
 
 ServiceUtil util = new ServiceUtil();
 try {

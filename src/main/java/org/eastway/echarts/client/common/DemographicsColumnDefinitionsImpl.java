@@ -17,39 +17,39 @@ package org.eastway.echarts.client.common;
 
 import java.util.ArrayList;
 
-import org.eastway.echarts.shared.Demographics;
+import org.eastway.echarts.client.rpc.DemographicsProxy;
 import org.eastway.echarts.style.client.GlobalResources;
 
 @SuppressWarnings("serial")
-public class DemographicsColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Demographics>> {
+public class DemographicsColumnDefinitionsImpl extends ArrayList<ColumnDefinition<DemographicsProxy>> {
 
 	private String noData = "NO DATA";
 	protected DemographicsColumnDefinitionsImpl() {
-		this.add(new ColumnDefinition<Demographics>() {
+		this.add(new ColumnDefinition<DemographicsProxy>() {
 			@Override
-			public void render(Demographics t, StringBuilder sb) {
+			public void render(DemographicsProxy t, StringBuilder sb) {
 				sb.append(t.getAllergies() == null ? noData : t.getAllergies());
 			}
 
 			@Override
-			public String getHeader(Demographics t) {
+			public String getHeader(DemographicsProxy t) {
 				return "<b>Allergies</b>";
 			}
 		});
-		this.add(new ColumnDefinition<Demographics>() {
+		this.add(new ColumnDefinition<DemographicsProxy>() {
 			@Override
-			public void render(Demographics t, StringBuilder sb) {
-				sb.append((t.getEmployment() == null || t.getEmployment().getDescriptor() == null ? noData : t.getEmployment().getDescriptor()));
+			public void render(DemographicsProxy t, StringBuilder sb) {
+				sb.append((t.getEmployment() == null || t.getEmployment().getCodeDescriptor() == null ? noData : t.getEmployment().getCodeDescriptor()));
 			}
 
 			@Override
-			public String getHeader(Demographics t) {
+			public String getHeader(DemographicsProxy t) {
 				return "<b>Employment</b>";
 			}
 		});
-		this.add(new ColumnDefinition<Demographics>() {
+		this.add(new ColumnDefinition<DemographicsProxy>() {
 			@Override
-			public void render(Demographics t, StringBuilder sb) {
+			public void render(DemographicsProxy t, StringBuilder sb) {
 				if (t.getDob() != null)
 					sb.append(GlobalResources.getDateFormat().format(t.getDob()));
 				else
@@ -57,51 +57,51 @@ public class DemographicsColumnDefinitionsImpl extends ArrayList<ColumnDefinitio
 			}
 
 			@Override
-			public String getHeader(Demographics t) {
+			public String getHeader(DemographicsProxy t) {
 				return "<b>DOB</b>";
 			}
 		});
-		this.add(new ColumnDefinition<Demographics>() {
+		this.add(new ColumnDefinition<DemographicsProxy>() {
 			@Override
-			public void render(Demographics t, StringBuilder sb) {
-				sb.append(t.getMaritalStatus() == null || t.getMaritalStatus().getDescriptor() == null ? noData : t.getMaritalStatus().getDescriptor());
+			public void render(DemographicsProxy t, StringBuilder sb) {
+				sb.append(t.getMaritalStatus() == null || t.getMaritalStatus().getCodeDescriptor() == null ? noData : t.getMaritalStatus().getCodeDescriptor());
 			}
 
 			@Override
-			public String getHeader(Demographics t) {
+			public String getHeader(DemographicsProxy t) {
 				return "<b>Marital&nbsp;Status</b>";
 			}
 		});
-		this.add(new ColumnDefinition<Demographics>() {
+		this.add(new ColumnDefinition<DemographicsProxy>() {
 			@Override
-			public void render(Demographics t, StringBuilder sb) {
-				sb.append(t.getEducationLevel() == null || t.getEducationLevel().getDescriptor() == null ? noData : t.getEducationLevel().getDescriptor());
+			public void render(DemographicsProxy t, StringBuilder sb) {
+				sb.append(t.getEducationLevel() == null || t.getEducationLevel().getCodeDescriptor() == null ? noData : t.getEducationLevel().getCodeDescriptor());
 			}
 
 			@Override
-			public String getHeader(Demographics t) {
+			public String getHeader(DemographicsProxy t) {
 				return "<b>Education&nbsp;Level</b>";
 			}
 		});
-		this.add(new ColumnDefinition<Demographics>() {
+		this.add(new ColumnDefinition<DemographicsProxy>() {
 			@Override
-			public void render(Demographics t, StringBuilder sb) {
-				sb.append(t.getEducationType() == null || t.getEducationType().getDescriptor() == null ? noData : t.getEducationType().getDescriptor());
+			public void render(DemographicsProxy t, StringBuilder sb) {
+				sb.append(t.getEducationType() == null || t.getEducationType().getCodeDescriptor() == null ? noData : t.getEducationType().getCodeDescriptor());
 			}
 
 			@Override
-			public String getHeader(Demographics t) {
+			public String getHeader(DemographicsProxy t) {
 				return "<b>Education&nbsp;Type</b>";
 			}
 		});
-		this.add(new ColumnDefinition<Demographics>() {
+		this.add(new ColumnDefinition<DemographicsProxy>() {
 			@Override
-			public void render(Demographics t, StringBuilder sb) {
-				sb.append(t.getRace() == null || t.getRace().getDescriptor() == null ? noData : t.getRace().getDescriptor());
+			public void render(DemographicsProxy t, StringBuilder sb) {
+				sb.append(t.getRace() == null || t.getRace().getCodeDescriptor() == null ? noData : t.getRace().getCodeDescriptor());
 			}
 
 			@Override
-			public String getHeader(Demographics t) {
+			public String getHeader(DemographicsProxy t) {
 				return "<b>Race</b>";
 			}
 		});
