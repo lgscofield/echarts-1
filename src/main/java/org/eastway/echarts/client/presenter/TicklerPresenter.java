@@ -19,17 +19,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.i18n.client.DateTimeFormat;
 
+import org.eastway.echarts.client.EchartsClientFactory;
 import org.eastway.echarts.client.EchartsUser;
-import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.events.OpenCpstNoteEvent;
 import org.eastway.echarts.client.events.OpenDoctorProgressNoteEvent;
 import org.eastway.echarts.client.events.OpenEhrEvent;
 import org.eastway.echarts.client.events.OpenIndividualProgressNoteEvent;
 import org.eastway.echarts.client.events.OpenIspEvent;
 import org.eastway.echarts.client.events.OpenNurseProgressNoteEvent;
+import org.eastway.echarts.client.place.TicklerPlace;
 import org.eastway.echarts.client.rpc.AssignmentProxy;
 import org.eastway.echarts.client.rpc.AssignmentRequest;
 import org.eastway.echarts.client.rpc.EHRProxy;
@@ -41,11 +43,12 @@ import org.eastway.echarts.shared.DueDateStatus;
 import org.eastway.echarts.shared.GetTickler;
 import org.eastway.echarts.shared.Tickler;
 
+import com.google.gwt.place.shared.Place;
 import com.google.gwt.requestfactory.shared.Receiver;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.inject.Inject;
 
-public class TicklerPresenter implements Presenter, TicklerView.Presenter<Tickler> {
+public class TicklerPresenter extends AbstractActivity implements Presenter, TicklerView.Presenter<Tickler> {
 
 	class EHRFetcher {
 		EHRProxy fetchedEHR;
@@ -84,21 +87,16 @@ public class TicklerPresenter implements Presenter, TicklerView.Presenter<Tickle
 	private EventBus eventBus;
 	private GetTickler action;
 	private EchartsRequestFactory requestFactory;
+	private EchartsClientFactory clientFactory;
 
-	@Inject
-	public TicklerPresenter(TicklerView<Tickler> view, List<ColumnDefinition<Tickler>> columnDefinitions, EventBus eventBus, EchartsRequestFactory requestFactory, GetTickler action) {
-		this.view = view;
-		this.requestFactory = requestFactory;
-		this.eventBus = eventBus;
-		this.view.setPresenter(this);
-		this.view.setColumnDefinitions(columnDefinitions);
-		this.action = action;
+	public TicklerPresenter(TicklerPlace place, EchartsClientFactory clientFactory) {
+		this.clientFactory = clientFactory;
 	}
 
 	public void fetchData() {
-		action.setSessionId(EchartsUser.sessionId);
-		action.setStaffId(EchartsUser.staffId);
-		requestFactory.assignmentRequest().findAssignmentsByStaff(EchartsUser.staffId)
+		//action.setSessionId(EchartsUser.sessionId);
+		//action.setStaffId(EchartsUser.staffId);
+		clientFactory.getRequestFactory().assignmentRequest().findAssignmentsByStaff(EchartsUser.staffId)
 			.with("patient")
 			.with("demographics")
 				.fire(new Receiver<List<AssignmentProxy>>() {
@@ -271,5 +269,19 @@ public class TicklerPresenter implements Presenter, TicklerView.Presenter<Tickle
 	@Override
 	public void openNurseProgressNote(Tickler tickler) {
 		eventBus.fireEvent(new OpenNurseProgressNoteEvent(tickler.getCaseNumber()));
+	}
+
+	@Override
+	public void start(AcceptsOneWidget panel, EventBus eventBus) {
+		view = clientFactory.getTicklerView();
+		view.setColumnDefinitions(clientFactory.getTicklerColumnDefinitions());
+		view.setPresenter(this);
+		panel.setWidget(view.asWidget());
+		fetchData();
+	}
+
+	@Override
+	public void goTo(Place place) {
+		clientFactory.getPlaceController().goTo(place);
 	}
 }

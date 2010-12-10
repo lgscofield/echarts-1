@@ -27,9 +27,11 @@ import org.eastway.echarts.client.common.PatientSummaryColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.ProfileColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.ReferralColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.TicklerColumnDefinitionsImpl;
+import org.eastway.echarts.client.place.EchartsPlaceController;
+import org.eastway.echarts.client.place.EchartsPlaceHistoryMapper;
+import org.eastway.echarts.client.place.PlaceControllerProvider;
 import org.eastway.echarts.client.presenter.DashboardPresenter;
 import org.eastway.echarts.client.presenter.ProfilePresenter;
-import org.eastway.echarts.client.presenter.TicklerPresenter;
 import org.eastway.echarts.client.rpc.AddressProxy;
 import org.eastway.echarts.client.rpc.AppointmentProxy;
 import org.eastway.echarts.client.rpc.DemographicsProxy;
@@ -49,9 +51,11 @@ import org.eastway.echarts.shared.GetTickler;
 import org.eastway.echarts.shared.Tickler;
 
 import com.google.gwt.inject.client.AbstractGinModule;
+import com.google.gwt.place.shared.PlaceController;
 import com.google.inject.Singleton;
 import com.google.inject.TypeLiteral;
 
+import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 
@@ -63,12 +67,14 @@ public class EchartsClientModule extends AbstractGinModule {
 		bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
 		bind(AppController.class).in(Singleton.class);
 		bind(EchartsRequestFactory.class).in(Singleton.class);
-
+		bind(ActivityMapper.class).to(EchartsActivityMapper.class).in(Singleton.class);
+		bind(EchartsPlaceHistoryMapper.class).in(Singleton.class);
+		bind(EchartsClientFactory.class).in(Singleton.class);
+		bind(PlaceController.class).toProvider(PlaceControllerProvider.class);
 		bind(GetTickler.class).in(Singleton.class);
 		bind(DashboardPresenter.class).in(Singleton.class);
 		bind(new TypeLiteral<DashboardView<LinkedHashMap<String, Long>>>() {}).to(DashboardViewImpl.class);
 
-		bind(TicklerPresenter.class).in(Singleton.class);
 		bind(new TypeLiteral<TicklerView<Tickler>>() {}).to(TicklerViewImpl.class);
 		bind(new TypeLiteral<List<ColumnDefinition<Tickler>>>() {}).to(TicklerColumnDefinitionsImpl.class).in(Singleton.class);
 

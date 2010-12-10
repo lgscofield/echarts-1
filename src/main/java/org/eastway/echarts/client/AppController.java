@@ -142,7 +142,6 @@ public class AppController implements Presenter {
 	private final EventBus eventBus;
 	private EHRViewImpl<EHRProxy> ehrView;
 	private DashboardPresenter dashboardPresenter;
-	@Inject private TicklerPresenter ticklerPresenter;
 	@Inject private ProfilePresenter profilePresenter;
 	@Inject private DiagnosisColumnDefinitionsImpl diagnosisColumnDefinitions;
 	@Inject private DemographicsColumnDefinitionsImpl demographicsColumnDefinitions;
@@ -455,11 +454,11 @@ public class AppController implements Presenter {
 	}
 
 	private void doViewTickler() {
-		dashboardPresenter.getDisplay().addTab(
-				ticklerPresenter
-					.getDisplay()
-					.asWidget(), "Tickler");
-		ticklerPresenter.go(null);
+//		dashboardPresenter.getDisplay().addTab(
+//				ticklerPresenter
+//					.getDisplay()
+//					.asWidget(), "Tickler");
+//		ticklerPresenter.go(null);
 	}
 
 	private void doViewProfile() {

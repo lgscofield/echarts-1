@@ -14,6 +14,8 @@
   <inherits name='com.google.gwt.user.User'/>
   <inherits name='com.google.gwt.user.theme.standard.Standard'/>
   <inherits name='com.google.gwt.requestfactory.RequestFactory'/>
+  <inherits name="com.google.gwt.activity.Activity"/>
+  <inherits name="com.google.gwt.place.Place"/>
   <inherits name="com.google.gwt.inject.Inject"/>
   <inherits name='org.eastway.echarts.style.Style'/>
   <inherits name='com.google.gwt.junit.JUnit'/>

@@ -15,19 +15,27 @@
  */
 package org.eastway.echarts.client;
 
+import org.eastway.echarts.client.place.EchartsPlaceHistoryMapper;
+import org.eastway.echarts.client.place.TicklerPlace;
 import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.style.client.GlobalResources;
 
+import com.google.gwt.activity.shared.ActivityManager;
+import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.place.shared.PlaceController;
+import com.google.gwt.place.shared.PlaceHistoryHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.SimplePanel;
 
 public class Echarts implements EntryPoint {
-	private final EchartsGinjector injector = GWT.create(EchartsGinjector.class);
-	private RootLayoutPanel root = RootLayoutPanel.get();
+	private SimplePanel appWidget = new SimplePanel();
+	private TicklerPlace defaultPlace = new TicklerPlace();
 
 	@Override
 	public void onModuleLoad() {
@@ -38,9 +46,25 @@ public class Echarts implements EntryPoint {
 		//EchartsUser.staffId = "5434"; // for testing
 		GlobalResources.resources().css().ensureInjected();
 		Window.enableScrolling(false);
-		EchartsRequestFactory requestFactory = injector.getRequestFactory();
-		requestFactory.initialize(injector.getEventBus());
-		AppController app = injector.getAppController();
-		app.go(root);
+
+		EchartsClientFactory clientFactory = GWT.create(EchartsClientFactory.class);
+        EventBus eventBus = clientFactory.getEventBus();
+        PlaceController placeController = clientFactory.getPlaceController();
+
+        // Start ActivityManager for the main widget with our ActivityMapper
+        ActivityMapper activityMapper = new EchartsActivityMapper(clientFactory);
+        ActivityManager activityManager = new ActivityManager(activityMapper, eventBus);
+        activityManager.setDisplay(appWidget);
+
+        // Start PlaceHistoryHandler with our PlaceHistoryMapper
+        EchartsPlaceHistoryMapper historyMapper= GWT.create(EchartsPlaceHistoryMapper.class);
+        PlaceHistoryHandler historyHandler = new PlaceHistoryHandler(historyMapper);
+        historyHandler.register(placeController, eventBus, defaultPlace);
+
+        clientFactory.getRequestFactory().initialize(eventBus);
+
+        RootPanel.get().add(appWidget);
+        // Goes to the place represented on URL else default place
+        historyHandler.handleCurrentHistory();
 	}
 }

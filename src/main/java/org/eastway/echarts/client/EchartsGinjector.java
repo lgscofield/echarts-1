@@ -15,15 +15,10 @@
  */
 package org.eastway.echarts.client;
 
-import org.eastway.echarts.client.rpc.EchartsRequestFactory;
-
-import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.inject.client.GinModules;
 import com.google.gwt.inject.client.Ginjector;
 
 @GinModules({ EchartsClientModule.class })
 public interface EchartsGinjector extends Ginjector {
-	AppController getAppController();
-	EchartsRequestFactory getRequestFactory();
-	EventBus getEventBus();
+	EchartsClientFactory getClientFactory();
 }
