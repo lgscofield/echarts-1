@@ -13,18 +13,20 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.client.view;
+package org.eastway.echarts.client.ui;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-import org.eastway.echarts.client.presenter.MessagesPresenter;
 import org.eastway.echarts.style.client.GlobalResources;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -34,11 +36,13 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.Widget;
 
-public class MessagesView extends Composite implements MessagesPresenter.Display {
+public class MessageViewImpl<T> extends Composite implements MessageView<T> {
 	private static MessagesViewUiBinder uiBinder = GWT.create(MessagesViewUiBinder.class);
 
+	@SuppressWarnings("unchecked")
+	@UiTemplate("MessageView.ui.xml")
 	interface MessagesViewUiBinder extends
-			UiBinder<Widget, MessagesView> {}
+			UiBinder<Widget, MessageViewImpl> {}
 
 	@UiField HasWidgets messages;
 	@UiField Button add;
@@ -46,8 +50,9 @@ public class MessagesView extends Composite implements MessagesPresenter.Display
 	@UiField Button saveButton, closeButton;
 	@UiField ListBox messageTypes;
 	@UiField RichTextArea message;
+	private Presenter<T> presenter;
 
-	public MessagesView() {
+	public MessageViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
@@ -77,9 +82,15 @@ public class MessagesView extends Composite implements MessagesPresenter.Display
 				+ message + "</div>");
 	}
 
-	@Override
-	public HasClickHandlers getAddButton() {
-		return add;
+	@UiHandler("saveButton")
+	void handleSaveClicked(ClickEvent event) {
+		presenter.save(getMessageType(), getMessage());
+	}
+
+	@UiHandler("add")
+	void handleAddClicked(ClickEvent event) {
+		setText(presenter.getId());
+		show();
 	}
 
 	@Override
@@ -133,5 +144,10 @@ public class MessagesView extends Composite implements MessagesPresenter.Display
 		db.setVisible(true);
 		db.center();
 		message.setFocus(true);
+	}
+
+	@Override
+	public void setPresenter(Presenter<T> presenter) {
+		this.presenter = presenter;
 	}
 }

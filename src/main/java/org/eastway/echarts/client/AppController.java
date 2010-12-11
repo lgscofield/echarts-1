@@ -23,7 +23,6 @@ import com.google.gwt.event.shared.EventBus;
 
 import org.eastway.echarts.client.activity.EhrActivity;
 import org.eastway.echarts.client.activity.PatientSummaryActivity;
-import org.eastway.echarts.client.activity.TicklerActivity;
 import org.eastway.echarts.client.common.ARInfoColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.AddressColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.AppointmentColumnDefinitionsImpl;
@@ -97,7 +96,6 @@ import org.eastway.echarts.client.presenter.DemographicsPresenter;
 import org.eastway.echarts.client.presenter.DiagnosisPresenter;
 import org.eastway.echarts.client.presenter.LinkPresenter;
 import org.eastway.echarts.client.presenter.MedicationPresenter;
-import org.eastway.echarts.client.presenter.MessagesPresenter;
 import org.eastway.echarts.client.presenter.Presenter;
 import org.eastway.echarts.client.presenter.ProfilePresenter;
 import org.eastway.echarts.client.presenter.ReferralPresenter;
@@ -119,7 +117,6 @@ import org.eastway.echarts.client.view.EHRView;
 import org.eastway.echarts.client.view.EHRViewImpl;
 import org.eastway.echarts.client.view.LinkView;
 import org.eastway.echarts.client.view.MedicationView;
-import org.eastway.echarts.client.view.MessagesView;
 import org.eastway.echarts.client.view.PatientSummaryViewImpl;
 import org.eastway.echarts.client.view.ReferralViewImpl;
 import org.eastway.echarts.shared.GetARInfo;
@@ -497,8 +494,8 @@ public class AppController implements Presenter {
 	}
 
 	private <T> void doViewMessages(EHRView<T> ehrView, String caseNumber) {
-		Presenter presenter = new MessagesPresenter(new MessagesView(), eventBus, requestFactory, caseNumber);
-		presenter.go(ehrView.getDisplayArea());
+		//Presenter presenter = new MessageActivity(new MessageViewImpl(), eventBus, requestFactory, caseNumber);
+		//presenter.go(ehrView.getDisplayArea());
 	}
 
 	private void doViewEhr(EHRProxy ehr) {

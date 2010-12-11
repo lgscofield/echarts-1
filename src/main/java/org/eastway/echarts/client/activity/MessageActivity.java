@@ -13,68 +13,45 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.client.presenter;
+package org.eastway.echarts.client.activity;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.event.shared.EventBus;
 
+import org.eastway.echarts.client.EchartsClientFactory;
 import org.eastway.echarts.client.EchartsUser;
+import org.eastway.echarts.client.place.MessagePlace;
 import org.eastway.echarts.client.rpc.CodeProxy;
-import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.rpc.MessageProxy;
 import org.eastway.echarts.client.rpc.MessageRequest;
+import org.eastway.echarts.client.ui.MessageView;
 
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.requestfactory.shared.Request;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class MessagesPresenter implements Presenter {
-
-	public interface Display extends EchartsDisplay {
-		void setData(ArrayList<String[]> data);
-
-		HasClickHandlers getAddButton();
-
-		void setText(String patientId);
-
-		HasClickHandlers getSaveButton();
-
-		HasClickHandlers getCloseButton();
-
-		String getMessage();
-
-		String getMessageType();
-
-		void saved();
-
-		void close();
-
-		void show();
-
-		void setMessageTypes(ArrayList<String> types);
-	}
+public class MessageActivity implements Activity, MessageView.Presenter<MessageProxy> {
 
 	private List<MessageProxy> messages = new ArrayList<MessageProxy>();
 	private ArrayList<String[]> data = new ArrayList<String[]>();
 	private List<CodeProxy> types = new ArrayList<CodeProxy>();
-	private Display view;
-	private EchartsRequestFactory requestFactory;
+	private MessageView<MessageProxy> view;
 	private String caseNumber;
+	private EchartsClientFactory clientFactory;
 
-	public MessagesPresenter(Display view, EventBus eventBus,
-			EchartsRequestFactory requestFactory, String caseNumber) {
-		this.view = view;
-		this.requestFactory = requestFactory;
-		this.caseNumber = caseNumber;
+	public MessageActivity(MessagePlace place,
+			EchartsClientFactory clientFactory) {
+		this.caseNumber = place.getCaseNumber();
+		this.clientFactory = clientFactory;
 	}
 
-	@Override
 	public void go(final HasWidgets container) {
 		container.clear();
 		container.add(view.asWidget());
@@ -83,16 +60,10 @@ public class MessagesPresenter implements Presenter {
 	}
 
 	private void bind() {
-		view.getAddButton().addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				showAddMessage();
-			}
-		});
 		view.getSaveButton().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				save(findMessageType(view.getMessageType()), caseNumber, view.getMessage(), new Date(), new Date(), EchartsUser.userName);
+				//save(findMessageType(view.getMessageType()), caseNumber, view.getMessage(), new Date(), new Date(), EchartsUser.userName);
 			}
 		});
 		view.getCloseButton().addClickHandler(new ClickHandler() {
@@ -111,21 +82,18 @@ public class MessagesPresenter implements Presenter {
 		return null;
 	}
 
-	public void save(CodeProxy messageType,
-			String caseNumber,
-			String message,
-			Date timestamp,
-			Date lastEdit,
-			String lastEditBy) {
-		MessageRequest messageRequest = requestFactory.messageRequest();
+	public void save(String messageType, String message) {
+		CodeProxy codeProxy = findMessageType(messageType);
+		Date now = new Date();
+		MessageRequest messageRequest = clientFactory.getRequestFactory().messageRequest();
 		final MessageProxy newMessage = messageRequest.create(MessageProxy.class);
 
 		newMessage.setCaseNumber(caseNumber);
-		newMessage.setCreationTimestamp(timestamp);
-		newMessage.setLastEdit(lastEdit);
-		newMessage.setLastEditBy(lastEditBy);
+		newMessage.setCreationTimestamp(now);
+		newMessage.setLastEdit(now);
+		newMessage.setLastEditBy(EchartsUser.userName);
 		newMessage.setMessage(message);
-		newMessage.setMessageType(messageType);
+		newMessage.setMessageType(codeProxy);
 
 		messageRequest.persist().using(newMessage).fire(new Receiver<Void>() {
 			@Override
@@ -140,7 +108,7 @@ public class MessagesPresenter implements Presenter {
 	}
 
 	private void fetchData() {
-		Request<List<CodeProxy>> codeRequest = requestFactory.codeRequest().findAllCodes();
+		Request<List<CodeProxy>> codeRequest = clientFactory.getRequestFactory().codeRequest().findAllCodes();
 		codeRequest.fire(new Receiver<List<CodeProxy>>() {
 			@Override
 			public void onSuccess(List<CodeProxy> response) {
@@ -153,7 +121,7 @@ public class MessagesPresenter implements Presenter {
 				}
 			}
 		});
-		MessageRequest request = requestFactory.messageRequest();
+		MessageRequest request = clientFactory.getRequestFactory().messageRequest();
 		Request<List<MessageProxy>> messageRequest = request.findMessageByCaseNumber(caseNumber).with("messageType");
 		messageRequest.fire(new Receiver<List<MessageProxy>>() {
 			@Override
@@ -194,11 +162,6 @@ public class MessagesPresenter implements Presenter {
 		return messages.get(i);
 	}
 
-	private void showAddMessage() {
-		view.setText(caseNumber);
-		view.show();
-	}
-
 	public void setTypes(List<CodeProxy> types) {
 		for (CodeProxy c : types)
 			if(c.getColumnName().equals("MessageType"))
@@ -207,5 +170,35 @@ public class MessagesPresenter implements Presenter {
 
 	public List<CodeProxy> getTypes() {
 		return types;
+	}
+
+	@Override
+	public String mayStop() {
+		return null;
+	}
+
+	@Override
+	public void onCancel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onStop() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void start(AcceptsOneWidget panel, EventBus eventBus) {
+		view = clientFactory.getMessageView();
+		view.setPresenter(this);
+		panel.setWidget(view.asWidget());
+		fetchData();
+	}
+
+	@Override
+	public String getId() {
+		return caseNumber;
 	}
 }

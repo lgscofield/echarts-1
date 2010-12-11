@@ -6,6 +6,8 @@ import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.presenter.DashboardPresenter;
 import org.eastway.echarts.client.rpc.EHRProxy;
 import org.eastway.echarts.client.rpc.EchartsRequestFactory;
+import org.eastway.echarts.client.rpc.MessageProxy;
+import org.eastway.echarts.client.ui.MessageView;
 import org.eastway.echarts.client.ui.TicklerView;
 import org.eastway.echarts.client.view.EHRView;
 import org.eastway.echarts.client.view.PatientSummaryView;
@@ -29,4 +31,5 @@ public interface EchartsClientFactory extends Ginjector {
 	EHRView<EHRProxy> getEhrView();
 	PatientSummaryView<EHRProxy> getPatientSummaryView();
 	List<ColumnDefinition<EHRProxy>> getPatientSummaryColumnDefinitions();
+	MessageView<MessageProxy> getMessageView();
 }

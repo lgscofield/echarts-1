@@ -37,15 +37,12 @@ import org.eastway.echarts.client.presenter.Presenter;
 import org.eastway.echarts.client.rpc.AssignmentProxy;
 import org.eastway.echarts.client.rpc.AssignmentRequest;
 import org.eastway.echarts.client.rpc.EHRProxy;
-import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.rpc.EhrRequest;
 import org.eastway.echarts.client.rpc.PatientProxy;
 import org.eastway.echarts.client.ui.TicklerView;
 import org.eastway.echarts.shared.DueDateStatus;
-import org.eastway.echarts.shared.GetTickler;
 import org.eastway.echarts.shared.Tickler;
 
-import com.google.gwt.place.shared.Place;
 import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -87,8 +84,6 @@ public class TicklerActivity extends AbstractActivity implements Presenter, Tick
 
 	private TicklerView<Tickler> view;
 	private EventBus eventBus;
-	private GetTickler action;
-	private EchartsRequestFactory requestFactory;
 	private EchartsClientFactory clientFactory;
 
 	public TicklerActivity(TicklerPlace place, EchartsClientFactory clientFactory) {

@@ -2,9 +2,11 @@ package org.eastway.echarts.client.mvp;
 
 import org.eastway.echarts.client.EchartsClientFactory;
 import org.eastway.echarts.client.activity.EhrActivity;
+import org.eastway.echarts.client.activity.MessageActivity;
 import org.eastway.echarts.client.activity.PatientSummaryActivity;
 import org.eastway.echarts.client.activity.TicklerActivity;
 import org.eastway.echarts.client.place.EhrPlace;
+import org.eastway.echarts.client.place.MessagePlace;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
 import org.eastway.echarts.client.place.TicklerPlace;
 
@@ -30,6 +32,8 @@ public class EchartsActivityMapper implements ActivityMapper {
 			return new EhrActivity((EhrPlace) place, clientFactory);
 		else if (place instanceof PatientSummaryPlace)
 			return new PatientSummaryActivity((PatientSummaryPlace) place, clientFactory);
+		else if (place instanceof MessagePlace)
+			return new MessageActivity((MessagePlace) place, clientFactory);
 		return null;
 	}
 

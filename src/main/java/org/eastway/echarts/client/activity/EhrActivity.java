@@ -36,6 +36,7 @@ import org.eastway.echarts.client.events.ViewReferralEvent;
 import org.eastway.echarts.client.events.ViewServiceHistoryEvent;
 import org.eastway.echarts.client.events.ViewTreatmentPlanEvent;
 import org.eastway.echarts.client.place.EhrPlace;
+import org.eastway.echarts.client.place.MessagePlace;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
 import org.eastway.echarts.client.presenter.Presenter;
 import org.eastway.echarts.client.rpc.AssignmentProxy;
@@ -150,7 +151,7 @@ public class EhrActivity extends AbstractActivity implements Presenter, EHRView.
 
 	@Override
 	public void viewMessages() {
-		eventBus.fireEvent(new ViewMessagesEvent<EHRProxy>(ehr.getPatient().getCaseNumber(), view));
+		clientFactory.getPlaceController().goTo(new MessagePlace(caseNumber));
 	}
 
 	@Override
