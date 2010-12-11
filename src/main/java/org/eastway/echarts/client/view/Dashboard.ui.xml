@@ -191,6 +191,9 @@
 								</ul>
 							</g:HTMLPanel>
 						</g:west>
+						<g:center>
+							<g:ScrollPanel ui:field="display" />
+						</g:center>
 					</g:SplitLayoutPanel>
 				</g:tab>
 			</g:TabLayoutPanel>

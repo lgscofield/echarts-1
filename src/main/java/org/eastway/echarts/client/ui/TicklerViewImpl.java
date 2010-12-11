@@ -13,13 +13,12 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.client.view;
+package org.eastway.echarts.client.ui;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
-import org.eastway.echarts.client.ui.ContextMenuLabel;
 import org.eastway.echarts.style.client.GlobalResources;
 
 import com.google.gwt.core.client.GWT;

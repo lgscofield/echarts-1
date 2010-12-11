@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.client.presenter;
+package org.eastway.echarts.client.activity;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,13 +32,14 @@ import org.eastway.echarts.client.events.OpenIndividualProgressNoteEvent;
 import org.eastway.echarts.client.events.OpenIspEvent;
 import org.eastway.echarts.client.events.OpenNurseProgressNoteEvent;
 import org.eastway.echarts.client.place.TicklerPlace;
+import org.eastway.echarts.client.presenter.Presenter;
 import org.eastway.echarts.client.rpc.AssignmentProxy;
 import org.eastway.echarts.client.rpc.AssignmentRequest;
 import org.eastway.echarts.client.rpc.EHRProxy;
 import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.rpc.EhrRequest;
 import org.eastway.echarts.client.rpc.PatientProxy;
-import org.eastway.echarts.client.view.TicklerView;
+import org.eastway.echarts.client.ui.TicklerView;
 import org.eastway.echarts.shared.DueDateStatus;
 import org.eastway.echarts.shared.GetTickler;
 import org.eastway.echarts.shared.Tickler;
@@ -48,7 +49,7 @@ import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class TicklerPresenter extends AbstractActivity implements Presenter, TicklerView.Presenter<Tickler> {
+public class TicklerActivity extends AbstractActivity implements Presenter, TicklerView.Presenter<Tickler> {
 
 	class EHRFetcher {
 		EHRProxy fetchedEHR;
@@ -89,7 +90,7 @@ public class TicklerPresenter extends AbstractActivity implements Presenter, Tic
 	private EchartsRequestFactory requestFactory;
 	private EchartsClientFactory clientFactory;
 
-	public TicklerPresenter(TicklerPlace place, EchartsClientFactory clientFactory) {
+	public TicklerActivity(TicklerPlace place, EchartsClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
 	}
 
@@ -230,14 +231,14 @@ public class TicklerPresenter extends AbstractActivity implements Presenter, Tic
 	@Override
 	public void openEhr(Tickler tickler) {
 		String caseNumber = tickler.getCaseNumber();
-		final EhrRequest ehrRequest = requestFactory.ehrRequest();
-		AssignmentRequest assignmentRequest = requestFactory.assignmentRequest();
-		new EHRFetcher().Run(ehrRequest, assignmentRequest, caseNumber, new Receiver<TicklerPresenter.EHRFetcher>() {
+		final EhrRequest ehrRequest = clientFactory.getRequestFactory().ehrRequest();
+		AssignmentRequest assignmentRequest = clientFactory.getRequestFactory().assignmentRequest();
+		new EHRFetcher().Run(ehrRequest, assignmentRequest, caseNumber, new Receiver<TicklerActivity.EHRFetcher>() {
 			@Override
 			public void onSuccess(EHRFetcher response) {
-				EHRProxy ehr = requestFactory.ehrRequest().edit(response.fetchedEHR);
+				EHRProxy ehr = clientFactory.getRequestFactory().ehrRequest().edit(response.fetchedEHR);
 				ehr.setAssignments(response.fetchedAssignments);
-				eventBus.fireEvent(new OpenEhrEvent(ehr));
+				clientFactory.getEventBus().fireEvent(new OpenEhrEvent(ehr));
 			}
 		});
 	}

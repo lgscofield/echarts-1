@@ -15,8 +15,10 @@
  */
 package org.eastway.echarts.client;
 
-import org.eastway.echarts.client.place.EchartsPlaceHistoryMapper;
+import org.eastway.echarts.client.mvp.EchartsActivityMapper;
+import org.eastway.echarts.client.mvp.EchartsPlaceHistoryMapper;
 import org.eastway.echarts.client.place.TicklerPlace;
+import org.eastway.echarts.client.presenter.DashboardPresenter;
 import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.style.client.GlobalResources;
 
@@ -54,16 +56,17 @@ public class Echarts implements EntryPoint {
         // Start ActivityManager for the main widget with our ActivityMapper
         ActivityMapper activityMapper = new EchartsActivityMapper(clientFactory);
         ActivityManager activityManager = new ActivityManager(activityMapper, eventBus);
-        activityManager.setDisplay(appWidget);
+        DashboardPresenter dashboardPresenter = clientFactory.getDashboard();
+        activityManager.setDisplay(dashboardPresenter.getDisplay().asAcceptsOneWidget());
 
         // Start PlaceHistoryHandler with our PlaceHistoryMapper
-        EchartsPlaceHistoryMapper historyMapper= GWT.create(EchartsPlaceHistoryMapper.class);
+        EchartsPlaceHistoryMapper historyMapper = GWT.create(EchartsPlaceHistoryMapper.class);
         PlaceHistoryHandler historyHandler = new PlaceHistoryHandler(historyMapper);
         historyHandler.register(placeController, eventBus, defaultPlace);
 
         clientFactory.getRequestFactory().initialize(eventBus);
 
-        RootPanel.get().add(appWidget);
+        dashboardPresenter.go(RootLayoutPanel.get());
         // Goes to the place represented on URL else default place
         historyHandler.handleCurrentHistory();
 	}

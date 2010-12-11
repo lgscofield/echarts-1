@@ -1,7 +1,8 @@
-package org.eastway.echarts.client;
+package org.eastway.echarts.client.mvp;
 
+import org.eastway.echarts.client.EchartsClientFactory;
+import org.eastway.echarts.client.activity.TicklerActivity;
 import org.eastway.echarts.client.place.TicklerPlace;
-import org.eastway.echarts.client.presenter.TicklerPresenter;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;
@@ -20,7 +21,7 @@ public class EchartsActivityMapper implements ActivityMapper {
 	@Override
 	public Activity getActivity(Place place) {
 		if (place instanceof TicklerPlace)
-			return new TicklerPresenter((TicklerPlace) place, clientFactory);
+			return new TicklerActivity((TicklerPlace) place, clientFactory);
 		return null;
 	}
 

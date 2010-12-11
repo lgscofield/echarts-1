@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 
+import org.eastway.echarts.client.activity.TicklerActivity;
 import org.eastway.echarts.client.common.ARInfoColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.AddressColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.AppointmentColumnDefinitionsImpl;
@@ -100,7 +101,6 @@ import org.eastway.echarts.client.presenter.PatientSummaryPresenter;
 import org.eastway.echarts.client.presenter.Presenter;
 import org.eastway.echarts.client.presenter.ProfilePresenter;
 import org.eastway.echarts.client.presenter.ReferralPresenter;
-import org.eastway.echarts.client.presenter.TicklerPresenter;
 import org.eastway.echarts.client.rpc.ARInfoProxy;
 import org.eastway.echarts.client.rpc.AddressProxy;
 import org.eastway.echarts.client.rpc.AppointmentProxy;
