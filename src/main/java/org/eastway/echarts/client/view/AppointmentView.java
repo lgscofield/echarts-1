@@ -19,9 +19,10 @@ import java.util.List;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
 
+import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 
-public interface AppointmentView<T> {
+public interface AppointmentView<T> extends IsWidget {
 	interface Presenter<T> {
 		void getNewest();
 

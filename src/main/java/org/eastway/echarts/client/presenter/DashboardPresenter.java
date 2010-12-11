@@ -35,7 +35,6 @@ import org.eastway.echarts.client.events.ViewProfileEvent;
 import org.eastway.echarts.client.events.ViewProviderSignaturesEvent;
 import org.eastway.echarts.client.events.ViewStaffHistoryEvent;
 import org.eastway.echarts.client.events.ViewSupervisorSignaturesEvent;
-import org.eastway.echarts.client.events.ViewTicklerEvent;
 import org.eastway.echarts.client.place.TicklerPlace;
 import org.eastway.echarts.client.rpc.AssignmentProxy;
 import org.eastway.echarts.client.rpc.AssignmentRequest;

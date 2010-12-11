@@ -13,33 +13,44 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.client.presenter;
+package org.eastway.echarts.client.activity;
 
 import java.util.List;
 
+import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 
+import org.eastway.echarts.client.EchartsClientFactory;
 import org.eastway.echarts.client.common.ColumnDefinition;
+import org.eastway.echarts.client.place.AppointmentPlace;
+import org.eastway.echarts.client.presenter.Presenter;
 import org.eastway.echarts.client.rpc.AppointmentProxy;
 import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.view.AppointmentView;
 import org.eastway.echarts.shared.GetAppointments;
 
 import com.google.gwt.requestfactory.shared.Receiver;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class AppointmentPresenter implements Presenter, AppointmentView.Presenter<AppointmentProxy> {
+public class AppointmentActivity extends AbstractActivity implements Presenter, AppointmentView.Presenter<AppointmentProxy> {
 
-	private EchartsRequestFactory requestFactory;
-	private GetAppointments action;
 	private AppointmentView<AppointmentProxy> view;
+	private EchartsClientFactory clientFactory;
+	private String caseNumber;
+	private int maxResults = 0;
+	private int startRecord = 0;
 
-	public AppointmentPresenter(AppointmentView<AppointmentProxy> view, List<ColumnDefinition<AppointmentProxy>> columnDefinitions, EventBus eventBus, EchartsRequestFactory requestFactory, GetAppointments action) {
+	public AppointmentActivity(AppointmentView<AppointmentProxy> view, List<ColumnDefinition<AppointmentProxy>> columnDefinitions, EventBus eventBus, EchartsRequestFactory requestFactory, GetAppointments action) {
 		this.view = view;
 		this.view.setPresenter(this);
 		this.view.setColumnDefinitions(columnDefinitions);
-		this.requestFactory = requestFactory;
-		this.action = action;
+	}
+
+	public AppointmentActivity(AppointmentPlace place,
+			EchartsClientFactory clientFactory) {
+		this.caseNumber = place.getCaseNumber();
+		this.clientFactory = clientFactory;
 	}
 
 	@Override
@@ -53,13 +64,13 @@ public class AppointmentPresenter implements Presenter, AppointmentView.Presente
 	private long rowCount = 0;
 
 	public void fetchData() {
-		requestFactory.appointmentRequest().findAppointmentEntriesByCaseNumber(action.getCaseNumber())
+		clientFactory.getRequestFactory().appointmentRequest().findAppointmentEntriesByCaseNumber(caseNumber)
 				.fire(new Receiver<List<AppointmentProxy>>() {
 			@Override
 			public void onSuccess(List<AppointmentProxy> response) {
 				if (response != null) {
 					rowCount = response.size();
-					view.setRowData(response, action.getStartRecord(), action.getMaxResults(), rowCount);
+					view.setRowData(response, startRecord, maxResults, rowCount);
 				}
 			}
 		});
@@ -67,37 +78,46 @@ public class AppointmentPresenter implements Presenter, AppointmentView.Presente
 
 	@Override
 	public void getOlder() {
-		record += action.getMaxResults();
+		record += maxResults;
 		if (record > rowCount) {
-			record -= action.getMaxResults();
+			record -= maxResults;
 			return;				
 		}
-		action.setStartRecord(record);
+		startRecord = record;
 		fetchData();
 	}
 
 	@Override
 	public void getNewer() {
-		record -= action.getMaxResults();
+		record -= maxResults;
 		if (record < 0) {
 			record = 0;
 			return;
 		}
-		action.setStartRecord(record);
+		startRecord = record;
 		fetchData();
 	}
 
 	@Override
 	public void getNewest() {
-		action.setStartRecord(0);
+		startRecord = 0;
 		record = 0;
 		fetchData();
 	}
 
 	@Override
 	public void getOldest() {
-		action.setStartRecord((int)rowCount - (int)rowCount % action.getMaxResults());
-		record = action.getStartRecord();
+		startRecord = (int)rowCount - (int)rowCount % maxResults;
+		record = startRecord;
+		fetchData();
+	}
+
+	@Override
+	public void start(AcceptsOneWidget panel, EventBus eventBus) {
+		view = clientFactory.getAppointmentView();
+		view.setPresenter(this);
+		view.setColumnDefinitions(clientFactory.getAppointmentColumnDefinitions());
+		panel.setWidget(view.asWidget());
 		fetchData();
 	}
 }

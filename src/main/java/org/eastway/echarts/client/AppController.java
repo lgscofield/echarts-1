@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 
+import org.eastway.echarts.client.activity.AppointmentActivity;
 import org.eastway.echarts.client.activity.DemographicsActivity;
 import org.eastway.echarts.client.activity.EhrActivity;
 import org.eastway.echarts.client.activity.PatientSummaryActivity;
@@ -92,7 +93,6 @@ import org.eastway.echarts.client.events.ViewTreatmentPlanEvent;
 import org.eastway.echarts.client.events.ViewTreatmentPlanEventHandler;
 import org.eastway.echarts.client.presenter.ARInfoPresenter;
 import org.eastway.echarts.client.presenter.AddressPresenter;
-import org.eastway.echarts.client.presenter.AppointmentPresenter;
 import org.eastway.echarts.client.presenter.DashboardPresenter;
 import org.eastway.echarts.client.presenter.DiagnosisPresenter;
 import org.eastway.echarts.client.presenter.LinkPresenter;
@@ -484,7 +484,7 @@ public class AppController implements Presenter {
 	}
 
 	private <T> void doViewAppointments(EHRView<T> ehrView, GetAppointments action) {
-		Presenter presenter = new AppointmentPresenter(new AppointmentViewImpl<AppointmentProxy>(), appointmentColumnDefinitions, eventBus, requestFactory, action);
+		Presenter presenter = new AppointmentActivity(new AppointmentViewImpl<AppointmentProxy>(), appointmentColumnDefinitions, eventBus, requestFactory, action);
 		presenter.go(ehrView.getDisplayArea());
 	}
 
