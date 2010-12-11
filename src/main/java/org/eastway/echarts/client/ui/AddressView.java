@@ -13,15 +13,16 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.client.view;
+package org.eastway.echarts.client.ui;
 
 import java.util.List;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
 
+import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 
-public interface AddressView<T> {
+public interface AddressView<T> extends IsWidget {
 	interface Presenter<T> { }
 
 	void setPresenter(Presenter<T> presenter);

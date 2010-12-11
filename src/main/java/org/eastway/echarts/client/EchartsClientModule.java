@@ -38,10 +38,15 @@ import org.eastway.echarts.client.rpc.DemographicsProxy;
 import org.eastway.echarts.client.rpc.DiagnosisProxy;
 import org.eastway.echarts.client.rpc.EHRProxy;
 import org.eastway.echarts.client.rpc.EchartsRequestFactory;
+import org.eastway.echarts.client.rpc.LinkProxy;
 import org.eastway.echarts.client.rpc.MessageProxy;
 import org.eastway.echarts.client.rpc.ReferralProxy;
 import org.eastway.echarts.client.rpc.UserProxy;
+import org.eastway.echarts.client.ui.AddressView;
+import org.eastway.echarts.client.ui.AddressViewImpl;
 import org.eastway.echarts.client.ui.EchartsOracle;
+import org.eastway.echarts.client.ui.LinkView;
+import org.eastway.echarts.client.ui.LinkViewImpl;
 import org.eastway.echarts.client.ui.MessageView;
 import org.eastway.echarts.client.ui.MessageViewImpl;
 import org.eastway.echarts.client.ui.TicklerView;
@@ -80,7 +85,6 @@ public class EchartsClientModule extends AbstractGinModule {
 	@Override
 	protected void configure() {
 		bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
-		bind(AppController.class).in(Singleton.class);
 		bind(EchartsRequestFactory.class).in(Singleton.class);
 		bind(ActivityMapper.class).to(EchartsActivityMapper.class).in(Singleton.class);
 		bind(EchartsPlaceHistoryMapper.class).in(Singleton.class);
@@ -98,6 +102,8 @@ public class EchartsClientModule extends AbstractGinModule {
 		bind(new TypeLiteral<ReferralView<ReferralProxy>>() {}).to(ReferralViewImpl.class);
 		bind(new TypeLiteral<AppointmentView<AppointmentProxy>>() {}).to(AppointmentViewImpl.class);
 		bind(new TypeLiteral<DiagnosisView<DiagnosisProxy>>() {}).to(DiagnosisViewImpl.class);
+		bind(new TypeLiteral<LinkView<LinkProxy>>() {}).to(LinkViewImpl.class);
+		bind(new TypeLiteral<AddressView<AddressProxy>>() {}).to(AddressViewImpl.class);
 
 		bind(new TypeLiteral<List<ColumnDefinition<Tickler>>>() {}).to(TicklerColumnDefinitionsImpl.class).in(Singleton.class);
 

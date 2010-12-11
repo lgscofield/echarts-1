@@ -13,43 +13,40 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.client.presenter;
+package org.eastway.echarts.client.activity;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eastway.echarts.client.EchartsClientFactory;
 import org.eastway.echarts.client.EchartsUser;
-import org.eastway.echarts.client.rpc.EchartsRequestFactory;
+import org.eastway.echarts.client.place.LinkPlace;
 import org.eastway.echarts.client.rpc.LinkProxy;
-import org.eastway.echarts.shared.GetLinks;
+import org.eastway.echarts.client.ui.LinkView;
 
+import com.google.gwt.activity.shared.AbstractActivity;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.requestfactory.shared.Receiver;
-import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
-public class LinkPresenter implements Presenter {
-
-	public interface Display extends EchartsDisplay {
-		void setData(List<String[]> list);
-	}
-
+public class LinkActivity extends AbstractActivity implements LinkView.Presenter<LinkProxy> {
 	private List<String[]> data;
-	private Display display;
-	private GetLinks action;
-	private EchartsRequestFactory requestFactory;
+	private String caseNumber;
+	private EchartsClientFactory clientFactory;
+	private LinkView<LinkProxy> view;
 
-	public LinkPresenter(Display display, EchartsRequestFactory requestFactory, GetLinks action) {
-		this.action = action;
-		this.requestFactory = requestFactory;
-		this.display = display;
+	public LinkActivity(LinkPlace place, EchartsClientFactory clientFactory) {
+		this.caseNumber = place.getCaseNumber();
+		this.clientFactory = clientFactory;
 	}
 
 	public void fetchData() {
-		requestFactory.linkRequest().findAllLinks().fire(new Receiver<List<LinkProxy>>() {
+		clientFactory.getRequestFactory().linkRequest().findAllLinks().fire(new Receiver<List<LinkProxy>>() {
 			@Override
 			public void onSuccess(List<LinkProxy> response) {
 				if (response != null) {
 					setData(response);
-					display.setData(getData());
+					view.setData(getData());
 				}
 			}
 			
@@ -66,7 +63,7 @@ public class LinkPresenter implements Presenter {
 		for (LinkProxy link : linkList) {
 			String[] str = new String[3];
 			str[0] = link.getName();
-			str[1] = (link.getUrl() + "?staffid=" + EchartsUser.staffId + "&PATID=" + action.getCaseNumber());
+			str[1] = (link.getUrl() + "?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber);
 			str[2] = link.getHeader();
 			data.add(str);
 		}
@@ -75,9 +72,9 @@ public class LinkPresenter implements Presenter {
 	}
 
 	@Override
-	public void go(HasWidgets container) {
-		container.clear();
-		container.add(display.asWidget());
+	public void start(AcceptsOneWidget panel, EventBus eventBus) {
+		view = clientFactory.getLinkView();
+		panel.setWidget(view.asWidget());
 		fetchData();
 	}
 }

@@ -13,30 +13,31 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.client.view;
+package org.eastway.echarts.client.ui;
 
 import java.util.HashSet;
 import java.util.List;
 
-import org.eastway.echarts.client.presenter.LinkPresenter;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
-public class LinkView extends Composite implements LinkPresenter.Display {
-	private static FormsViewUiBinder uiBinder = GWT.create(FormsViewUiBinder.class);
+public class LinkViewImpl<T> extends Composite implements LinkView<T> {
+	private static LinkViewUiBinder uiBinder = GWT.create(LinkViewUiBinder.class);
 
-	interface FormsViewUiBinder extends UiBinder<Widget, LinkView> { }
+	@SuppressWarnings("unchecked")
+	@UiTemplate("LinkView.ui.xml")
+	interface LinkViewUiBinder extends UiBinder<Widget, LinkViewImpl> { }
 
-	@UiField FlowPanel formsList;
+	@UiField FlowPanel panel;
 
-	public LinkView() {
+	public LinkViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
@@ -52,7 +53,7 @@ public class LinkView extends Composite implements LinkPresenter.Display {
 			while (!header.contains(s[2]))
 				header.add(s[2]);
 		for (String h : header) {
-			formsList.add(new HTML("<p>" + h + "</p>"));
+			panel.add(new HTML("<p>" + h + "</p>"));
 			String content = new String();
 			content = "<ul>";
 			for (String[] s : linkList) {
@@ -60,7 +61,7 @@ public class LinkView extends Composite implements LinkPresenter.Display {
 					content += "<li>" + new Anchor(s[0], s[1], "_blank") + "</li>";
 			}
 			content += "</ul>";
-			formsList.add(new HTML(content));
+			panel.add(new HTML(content));
 		}
 	}
 }

@@ -4,13 +4,17 @@ import java.util.List;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.presenter.DashboardPresenter;
+import org.eastway.echarts.client.rpc.AddressProxy;
 import org.eastway.echarts.client.rpc.AppointmentProxy;
 import org.eastway.echarts.client.rpc.DemographicsProxy;
 import org.eastway.echarts.client.rpc.DiagnosisProxy;
 import org.eastway.echarts.client.rpc.EHRProxy;
 import org.eastway.echarts.client.rpc.EchartsRequestFactory;
+import org.eastway.echarts.client.rpc.LinkProxy;
 import org.eastway.echarts.client.rpc.MessageProxy;
 import org.eastway.echarts.client.rpc.ReferralProxy;
+import org.eastway.echarts.client.ui.AddressView;
+import org.eastway.echarts.client.ui.LinkView;
 import org.eastway.echarts.client.ui.MessageView;
 import org.eastway.echarts.client.ui.TicklerView;
 import org.eastway.echarts.client.view.AppointmentView;
@@ -48,4 +52,7 @@ public interface EchartsClientFactory extends Ginjector {
 	List<ColumnDefinition<AppointmentProxy>> getAppointmentColumnDefinitions();
 	DiagnosisView<DiagnosisProxy> getDiagnosisView();
 	List<ColumnDefinition<DiagnosisProxy>> getDiagnosisColumnDefinitions();
+	LinkView<LinkProxy> getLinkView();
+	AddressView<AddressProxy> getAddressView();
+	List<ColumnDefinition<AddressProxy>> getAddressColumnDefinitions();
 }
