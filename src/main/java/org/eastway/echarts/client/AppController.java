@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 
+import org.eastway.echarts.client.activity.DemographicsActivity;
 import org.eastway.echarts.client.activity.EhrActivity;
 import org.eastway.echarts.client.activity.PatientSummaryActivity;
 import org.eastway.echarts.client.common.ARInfoColumnDefinitionsImpl;
@@ -92,7 +93,6 @@ import org.eastway.echarts.client.presenter.ARInfoPresenter;
 import org.eastway.echarts.client.presenter.AddressPresenter;
 import org.eastway.echarts.client.presenter.AppointmentPresenter;
 import org.eastway.echarts.client.presenter.DashboardPresenter;
-import org.eastway.echarts.client.presenter.DemographicsPresenter;
 import org.eastway.echarts.client.presenter.DiagnosisPresenter;
 import org.eastway.echarts.client.presenter.LinkPresenter;
 import org.eastway.echarts.client.presenter.MedicationPresenter;
@@ -511,7 +511,7 @@ public class AppController implements Presenter {
 	}
 
 	private <T> void doViewDemographics(final EHRView<T> ehrView, String caseNumber) {
-		Presenter presenter = new DemographicsPresenter(new DemographicsViewImpl<DemographicsProxy>(), demographicsColumnDefinitions, requestFactory, caseNumber);
+		Presenter presenter = new DemographicsActivity(new DemographicsViewImpl<DemographicsProxy>(), demographicsColumnDefinitions, requestFactory, caseNumber);
 		presenter.go(ehrView.getDisplayArea());
 	}
 

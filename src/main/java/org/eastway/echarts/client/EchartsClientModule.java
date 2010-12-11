@@ -48,6 +48,8 @@ import org.eastway.echarts.client.ui.TicklerView;
 import org.eastway.echarts.client.ui.TicklerViewImpl;
 import org.eastway.echarts.client.view.DashboardView;
 import org.eastway.echarts.client.view.DashboardViewImpl;
+import org.eastway.echarts.client.view.DemographicsView;
+import org.eastway.echarts.client.view.DemographicsViewImpl;
 import org.eastway.echarts.client.view.EHRView;
 import org.eastway.echarts.client.view.EHRViewImpl;
 import org.eastway.echarts.client.view.PatientSummaryView;
@@ -86,6 +88,7 @@ public class EchartsClientModule extends AbstractGinModule {
 		bind(new TypeLiteral<EHRView<EHRProxy>>() {}).to(EHRViewImpl.class);
 		bind(new TypeLiteral<PatientSummaryView<EHRProxy>>() {}).to(PatientSummaryViewImpl.class);
 		bind(new TypeLiteral<MessageView<MessageProxy>>() {}).to(MessageViewImpl.class);
+		bind(new TypeLiteral<DemographicsView<DemographicsProxy>>() {}).to(DemographicsViewImpl.class);
 
 		bind(new TypeLiteral<List<ColumnDefinition<Tickler>>>() {}).to(TicklerColumnDefinitionsImpl.class).in(Singleton.class);
 
