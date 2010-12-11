@@ -25,6 +25,7 @@ import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
 import org.eastway.echarts.client.events.ViewARInfoEvent;
 import org.eastway.echarts.client.events.ViewLabsEvent;
+import org.eastway.echarts.client.place.ARInfoPlace;
 import org.eastway.echarts.client.place.AddressPlace;
 import org.eastway.echarts.client.place.AppointmentPlace;
 import org.eastway.echarts.client.place.DemographicsPlace;
@@ -181,7 +182,7 @@ public class EhrActivity extends AbstractActivity implements Presenter, EHRView.
 
 	@Override
 	public void viewARInfo() {
-		eventBus.fireEvent(new ViewARInfoEvent<EHRProxy>(ehr.getPatient().getCaseNumber(), view, aRInfo));
+		clientFactory.getPlaceController().goTo(new ARInfoPlace(caseNumber));
 	}
 
 	@Override

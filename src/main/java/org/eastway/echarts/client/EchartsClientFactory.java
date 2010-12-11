@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.presenter.DashboardPresenter;
+import org.eastway.echarts.client.rpc.ARInfoProxy;
 import org.eastway.echarts.client.rpc.AddressProxy;
 import org.eastway.echarts.client.rpc.AppointmentProxy;
 import org.eastway.echarts.client.rpc.DemographicsProxy;
@@ -14,6 +15,7 @@ import org.eastway.echarts.client.rpc.LinkProxy;
 import org.eastway.echarts.client.rpc.MedicationProxy;
 import org.eastway.echarts.client.rpc.MessageProxy;
 import org.eastway.echarts.client.rpc.ReferralProxy;
+import org.eastway.echarts.client.ui.ARInfoView;
 import org.eastway.echarts.client.ui.AddressView;
 import org.eastway.echarts.client.ui.LinkView;
 import org.eastway.echarts.client.ui.MedicationView;
@@ -58,4 +60,6 @@ public interface EchartsClientFactory extends Ginjector {
 	AddressView<AddressProxy> getAddressView();
 	List<ColumnDefinition<AddressProxy>> getAddressColumnDefinitions();
 	MedicationView<MedicationProxy> getMedicationView();
+	ARInfoView<ARInfoProxy> getARInfoView();
+	List<ColumnDefinition<ARInfoProxy>> getARInfoColumnDefinitions();
 }

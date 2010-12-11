@@ -18,6 +18,7 @@ package org.eastway.echarts.client;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.eastway.echarts.client.common.ARInfoColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.AddressColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.AppointmentColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.ColumnDefinition;
@@ -32,6 +33,7 @@ import org.eastway.echarts.client.mvp.EchartsPlaceHistoryMapper;
 import org.eastway.echarts.client.place.PlaceControllerProvider;
 import org.eastway.echarts.client.presenter.DashboardPresenter;
 import org.eastway.echarts.client.presenter.ProfilePresenter;
+import org.eastway.echarts.client.rpc.ARInfoProxy;
 import org.eastway.echarts.client.rpc.AddressProxy;
 import org.eastway.echarts.client.rpc.AppointmentProxy;
 import org.eastway.echarts.client.rpc.DemographicsProxy;
@@ -43,6 +45,8 @@ import org.eastway.echarts.client.rpc.MedicationProxy;
 import org.eastway.echarts.client.rpc.MessageProxy;
 import org.eastway.echarts.client.rpc.ReferralProxy;
 import org.eastway.echarts.client.rpc.UserProxy;
+import org.eastway.echarts.client.ui.ARInfoView;
+import org.eastway.echarts.client.ui.ARInfoViewImpl;
 import org.eastway.echarts.client.ui.AddressView;
 import org.eastway.echarts.client.ui.AddressViewImpl;
 import org.eastway.echarts.client.ui.EchartsOracle;
@@ -108,6 +112,9 @@ public class EchartsClientModule extends AbstractGinModule {
 		bind(new TypeLiteral<LinkView<LinkProxy>>() {}).to(LinkViewImpl.class);
 		bind(new TypeLiteral<AddressView<AddressProxy>>() {}).to(AddressViewImpl.class);
 		bind(new TypeLiteral<MedicationView<MedicationProxy>>() {}).to(MedicationViewImpl.class);
+		bind(new TypeLiteral<ARInfoView<ARInfoProxy>>() {}).to(ARInfoViewImpl.class);
+
+		bind(new TypeLiteral<List<ColumnDefinition<ARInfoProxy>>>() {}).to(ARInfoColumnDefinitionsImpl.class).in(Singleton.class);
 
 		bind(new TypeLiteral<List<ColumnDefinition<Tickler>>>() {}).to(TicklerColumnDefinitionsImpl.class).in(Singleton.class);
 

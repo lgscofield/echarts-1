@@ -1,5 +1,6 @@
 package org.eastway.echarts.client.mvp;
 
+import org.eastway.echarts.client.place.ARInfoPlace;
 import org.eastway.echarts.client.place.AddressPlace;
 import org.eastway.echarts.client.place.AppointmentPlace;
 import org.eastway.echarts.client.place.DemographicsPlace;
@@ -29,6 +30,7 @@ import com.google.gwt.place.shared.WithTokenizers;
 				  AddressPlace.Tokenizer.class,
 				  MedicationPlace.Tokenizer.class,
 				  TreatmentPlanPlace.Tokenizer.class,
-				  ServiceHistoryPlace.Tokenizer.class })
+				  ServiceHistoryPlace.Tokenizer.class,
+				  ARInfoPlace.Tokenizer.class })
 public interface EchartsPlaceHistoryMapper extends PlaceHistoryMapper {
 }

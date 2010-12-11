@@ -1,6 +1,7 @@
 package org.eastway.echarts.client.mvp;
 
 import org.eastway.echarts.client.EchartsClientFactory;
+import org.eastway.echarts.client.activity.ARInfoActivity;
 import org.eastway.echarts.client.activity.AddressActivity;
 import org.eastway.echarts.client.activity.AppointmentActivity;
 import org.eastway.echarts.client.activity.DemographicsActivity;
@@ -14,6 +15,7 @@ import org.eastway.echarts.client.activity.ReferralActivity;
 import org.eastway.echarts.client.activity.ServiceHistoryActivity;
 import org.eastway.echarts.client.activity.TicklerActivity;
 import org.eastway.echarts.client.activity.TreatmentPlanActivity;
+import org.eastway.echarts.client.place.ARInfoPlace;
 import org.eastway.echarts.client.place.AddressPlace;
 import org.eastway.echarts.client.place.AppointmentPlace;
 import org.eastway.echarts.client.place.DemographicsPlace;
@@ -70,6 +72,8 @@ public class EchartsActivityMapper implements ActivityMapper {
 			return new TreatmentPlanActivity((TreatmentPlanPlace) place, clientFactory);
 		else if (place instanceof ServiceHistoryPlace)
 			return new ServiceHistoryActivity((ServiceHistoryPlace) place, clientFactory);
+		else if (place instanceof ARInfoPlace)
+			return new ARInfoActivity((ARInfoPlace) place, clientFactory);
 		return null;
 	}
 
