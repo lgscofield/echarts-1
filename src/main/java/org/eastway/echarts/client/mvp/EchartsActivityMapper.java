@@ -11,6 +11,7 @@ import org.eastway.echarts.client.activity.MedicationActivity;
 import org.eastway.echarts.client.activity.MessageActivity;
 import org.eastway.echarts.client.activity.PatientSummaryActivity;
 import org.eastway.echarts.client.activity.ReferralActivity;
+import org.eastway.echarts.client.activity.ServiceHistoryActivity;
 import org.eastway.echarts.client.activity.TicklerActivity;
 import org.eastway.echarts.client.activity.TreatmentPlanActivity;
 import org.eastway.echarts.client.place.AddressPlace;
@@ -23,6 +24,7 @@ import org.eastway.echarts.client.place.MedicationPlace;
 import org.eastway.echarts.client.place.MessagePlace;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
 import org.eastway.echarts.client.place.ReferralPlace;
+import org.eastway.echarts.client.place.ServiceHistoryPlace;
 import org.eastway.echarts.client.place.TicklerPlace;
 import org.eastway.echarts.client.place.TreatmentPlanPlace;
 
@@ -66,6 +68,8 @@ public class EchartsActivityMapper implements ActivityMapper {
 			return new MedicationActivity((MedicationPlace) place, clientFactory);
 		else if (place instanceof TreatmentPlanPlace)
 			return new TreatmentPlanActivity((TreatmentPlanPlace) place, clientFactory);
+		else if (place instanceof ServiceHistoryPlace)
+			return new ServiceHistoryActivity((ServiceHistoryPlace) place, clientFactory);
 		return null;
 	}
 
