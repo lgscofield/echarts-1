@@ -6,6 +6,7 @@ import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.presenter.DashboardPresenter;
 import org.eastway.echarts.client.rpc.AppointmentProxy;
 import org.eastway.echarts.client.rpc.DemographicsProxy;
+import org.eastway.echarts.client.rpc.DiagnosisProxy;
 import org.eastway.echarts.client.rpc.EHRProxy;
 import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.rpc.MessageProxy;
@@ -14,6 +15,7 @@ import org.eastway.echarts.client.ui.MessageView;
 import org.eastway.echarts.client.ui.TicklerView;
 import org.eastway.echarts.client.view.AppointmentView;
 import org.eastway.echarts.client.view.DemographicsView;
+import org.eastway.echarts.client.view.DiagnosisView;
 import org.eastway.echarts.client.view.EHRView;
 import org.eastway.echarts.client.view.PatientSummaryView;
 import org.eastway.echarts.client.view.ReferralView;
@@ -44,4 +46,6 @@ public interface EchartsClientFactory extends Ginjector {
 	List<ColumnDefinition<ReferralProxy>> getReferralColumnDefinitions();
 	AppointmentView<AppointmentProxy> getAppointmentView();
 	List<ColumnDefinition<AppointmentProxy>> getAppointmentColumnDefinitions();
+	DiagnosisView<DiagnosisProxy> getDiagnosisView();
+	List<ColumnDefinition<DiagnosisProxy>> getDiagnosisColumnDefinitions();
 }

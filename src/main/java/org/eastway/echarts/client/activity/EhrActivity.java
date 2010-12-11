@@ -25,7 +25,6 @@ import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
 import org.eastway.echarts.client.events.ViewARInfoEvent;
 import org.eastway.echarts.client.events.ViewAddressesEvent;
-import org.eastway.echarts.client.events.ViewDiagnosesEvent;
 import org.eastway.echarts.client.events.ViewLabsEvent;
 import org.eastway.echarts.client.events.ViewLinksEvent;
 import org.eastway.echarts.client.events.ViewMedicationsEvent;
@@ -33,6 +32,7 @@ import org.eastway.echarts.client.events.ViewServiceHistoryEvent;
 import org.eastway.echarts.client.events.ViewTreatmentPlanEvent;
 import org.eastway.echarts.client.place.AppointmentPlace;
 import org.eastway.echarts.client.place.DemographicsPlace;
+import org.eastway.echarts.client.place.DiagnosisPlace;
 import org.eastway.echarts.client.place.EhrPlace;
 import org.eastway.echarts.client.place.MessagePlace;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
@@ -46,7 +46,6 @@ import org.eastway.echarts.client.view.EHRView;
 import org.eastway.echarts.client.view.EHRViewImpl;
 import org.eastway.echarts.shared.GetARInfo;
 import org.eastway.echarts.shared.GetAddresses;
-import org.eastway.echarts.shared.GetDiagnoses;
 import org.eastway.echarts.shared.GetLinks;
 import org.eastway.echarts.shared.GetMedications;
 
@@ -92,7 +91,6 @@ public class EhrActivity extends AbstractActivity implements Presenter, EHRView.
 	private EHRProxy ehr;
 	private EHRView<EHRProxy> view;
 	private EventBus eventBus;
-	private GetDiagnoses diagnoses;
 	private GetLinks links = null;
 	private GetAddresses addresses = null;
 	private GetMedications medications = null;
@@ -118,7 +116,6 @@ public class EhrActivity extends AbstractActivity implements Presenter, EHRView.
 	}
 
 	private void setActions() {
-		diagnoses = new GetDiagnoses(EchartsUser.sessionId, ehr.getPatient().getCaseNumber());
 		links = new GetLinks(EchartsUser.sessionId, ehr.getPatient().getCaseNumber());
 		addresses = new GetAddresses(EchartsUser.sessionId, ehr.getPatient().getCaseNumber());
 		medications = new GetMedications(EchartsUser.sessionId, ehr.getPatient().getCaseNumber());
@@ -163,7 +160,7 @@ public class EhrActivity extends AbstractActivity implements Presenter, EHRView.
 
 	@Override
 	public void viewDiagnoses() {
-		eventBus.fireEvent(new ViewDiagnosesEvent<EHRProxy>(ehr.getPatient().getCaseNumber(), view, diagnoses));
+		clientFactory.getPlaceController().goTo(new DiagnosisPlace(caseNumber));
 	}
 
 	@Override

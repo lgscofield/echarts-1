@@ -24,24 +24,30 @@
     	margin: 5px;
     }
   </ui:style>
-	<g:HTMLPanel>
-		<g:FlowPanel>
-			<g:Button addStyleNames='{style.newMessage}' ui:field="add">New Message</g:Button>
-		</g:FlowPanel>
+  <g:LayoutPanel>
+    <g:layer>
+	    <g:DialogBox ui:field="db" visible='false' modal="false">
+	      <g:FlowPanel>
+	        <g:RichTextArea width="400px" height="400px" ui:field="message"/>
+	        <g:FlowPanel>
+	          <g:FlowPanel addStyleNames="{style.h}">
+	            <g:ListBox ui:field="messageTypes" />
+	            <g:Button ui:field="saveButton">Save</g:Button>
+	            <g:Button ui:field="closeButton">Close</g:Button>
+	          </g:FlowPanel>
+	        </g:FlowPanel>
+	      </g:FlowPanel>
+	    </g:DialogBox>
+	</g:layer>
+    <g:layer top='0px' height='45px' left='0px' width='100%'>
+    	<g:FlowPanel>
+    		<g:Button addStyleNames='{style.newMessage}' ui:field="add">New Message</g:Button>
+    	</g:FlowPanel>
+    </g:layer>
+  	<g:layer top='45px' bottom='0px'>
 		<g:ScrollPanel>
-			<g:FlowPanel ui:field="messages" />
-		</g:ScrollPanel>
-		<g:DialogBox ui:field="db" visible='false' modal="false">
-			<g:FlowPanel>
-				<g:RichTextArea width="400px" height="400px" ui:field="message"/>
-				<g:FlowPanel>
-					<g:FlowPanel addStyleNames="{style.h}">
-						<g:ListBox ui:field="messageTypes" />
-						<g:Button ui:field="saveButton">Save</g:Button>
-						<g:Button ui:field="closeButton">Close</g:Button>
-					</g:FlowPanel>
-				</g:FlowPanel>
-			</g:FlowPanel>
-		</g:DialogBox>
-	</g:HTMLPanel>
+	    	<g:FlowPanel ui:field="messages" />
+    	</g:ScrollPanel>
+	</g:layer>
+  </g:LayoutPanel>
 </ui:UiBinder>

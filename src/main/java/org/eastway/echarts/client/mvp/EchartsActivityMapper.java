@@ -3,6 +3,7 @@ package org.eastway.echarts.client.mvp;
 import org.eastway.echarts.client.EchartsClientFactory;
 import org.eastway.echarts.client.activity.AppointmentActivity;
 import org.eastway.echarts.client.activity.DemographicsActivity;
+import org.eastway.echarts.client.activity.DiagnosisActivity;
 import org.eastway.echarts.client.activity.EhrActivity;
 import org.eastway.echarts.client.activity.MessageActivity;
 import org.eastway.echarts.client.activity.PatientSummaryActivity;
@@ -10,6 +11,7 @@ import org.eastway.echarts.client.activity.ReferralActivity;
 import org.eastway.echarts.client.activity.TicklerActivity;
 import org.eastway.echarts.client.place.AppointmentPlace;
 import org.eastway.echarts.client.place.DemographicsPlace;
+import org.eastway.echarts.client.place.DiagnosisPlace;
 import org.eastway.echarts.client.place.EhrPlace;
 import org.eastway.echarts.client.place.MessagePlace;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
@@ -46,6 +48,8 @@ public class EchartsActivityMapper implements ActivityMapper {
 			return new ReferralActivity((ReferralPlace) place, clientFactory);
 		else if (place instanceof AppointmentPlace)
 			return new AppointmentActivity((AppointmentPlace) place, clientFactory);
+		else if (place instanceof DiagnosisPlace)
+			return new DiagnosisActivity((DiagnosisPlace) place, clientFactory);
 		return null;
 	}
 

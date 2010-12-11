@@ -23,6 +23,7 @@ import com.google.gwt.event.shared.EventBus;
 
 import org.eastway.echarts.client.activity.AppointmentActivity;
 import org.eastway.echarts.client.activity.DemographicsActivity;
+import org.eastway.echarts.client.activity.DiagnosisActivity;
 import org.eastway.echarts.client.activity.EhrActivity;
 import org.eastway.echarts.client.activity.PatientSummaryActivity;
 import org.eastway.echarts.client.activity.ReferralActivity;
@@ -94,7 +95,6 @@ import org.eastway.echarts.client.events.ViewTreatmentPlanEventHandler;
 import org.eastway.echarts.client.presenter.ARInfoPresenter;
 import org.eastway.echarts.client.presenter.AddressPresenter;
 import org.eastway.echarts.client.presenter.DashboardPresenter;
-import org.eastway.echarts.client.presenter.DiagnosisPresenter;
 import org.eastway.echarts.client.presenter.LinkPresenter;
 import org.eastway.echarts.client.presenter.MedicationPresenter;
 import org.eastway.echarts.client.presenter.Presenter;
@@ -479,7 +479,7 @@ public class AppController implements Presenter {
 	}
 
 	private <T> void doViewDiagnoses(EHRView<T> ehrView, String caseNumber, GetDiagnoses action) {
-		DiagnosisPresenter diagnosisPresenter = new DiagnosisPresenter(new DiagnosisViewImpl<DiagnosisProxy>(), diagnosisColumnDefinitions, requestFactory, action.getCaseNumber());
+		DiagnosisActivity diagnosisPresenter = new DiagnosisActivity(new DiagnosisViewImpl<DiagnosisProxy>(), diagnosisColumnDefinitions, requestFactory, action.getCaseNumber());
 		diagnosisPresenter.go(ehrView.getDisplayArea());
 	}
 

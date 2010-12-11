@@ -24,6 +24,7 @@ import org.eastway.echarts.style.client.GlobalResources;
 import com.google.gwt.user.client.ui.NotificationMole;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SpanElement;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.TableCellElement;
 import com.google.gwt.dom.client.TableElement;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -38,6 +39,7 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -45,7 +47,6 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -71,7 +72,7 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T>,
 	@UiField TableCellElement graphColor;
 	@UiField TableElement graph;
 	@UiField Hyperlink tickler;
-	@UiField ScrollPanel display;
+	@UiField DockLayoutPanel display;
 
 	private double productivityUnit = 0.83;
 	private SuggestBox suggestBox;
@@ -298,8 +299,10 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T>,
 
 	@Override
 	public void setWidget(IsWidget w) {
-		display.clear();
-		display.add(w);
+		if (w != null) {
+			display.clear();
+			display.add(w);
+		}
 	}
 
 	@Override
