@@ -140,7 +140,7 @@ public class EhrActivity extends AbstractActivity implements Presenter, EHRView.
 
 	@Override
 	public void viewPatientSummary() {
-		clientFactory.getPlaceController().goTo(new PatientSummaryPlace(ehr.getPatient().getCaseNumber()));
+		clientFactory.getPlaceController().goTo(new PatientSummaryPlace(caseNumber));
 	}
 
 	@Override
