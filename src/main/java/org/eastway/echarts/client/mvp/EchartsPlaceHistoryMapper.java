@@ -11,6 +11,7 @@ import org.eastway.echarts.client.place.MessagePlace;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
 import org.eastway.echarts.client.place.ReferralPlace;
 import org.eastway.echarts.client.place.TicklerPlace;
+import org.eastway.echarts.client.place.TreatmentPlanPlace;
 
 import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.gwt.place.shared.WithTokenizers;
@@ -25,6 +26,7 @@ import com.google.gwt.place.shared.WithTokenizers;
 				  DiagnosisPlace.Tokenizer.class,
 				  LinkPlace.Tokenizer.class,
 				  AddressPlace.Tokenizer.class,
-				  MedicationPlace.Tokenizer.class })
+				  MedicationPlace.Tokenizer.class,
+				  TreatmentPlanPlace.Tokenizer.class })
 public interface EchartsPlaceHistoryMapper extends PlaceHistoryMapper {
 }

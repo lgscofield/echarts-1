@@ -38,6 +38,7 @@ import org.eastway.echarts.client.events.ViewSupervisorSignaturesEvent;
 import org.eastway.echarts.client.place.TicklerPlace;
 import org.eastway.echarts.client.rpc.AssignmentProxy;
 import org.eastway.echarts.client.rpc.AssignmentRequest;
+import org.eastway.echarts.client.rpc.DbServerConfigProxy;
 import org.eastway.echarts.client.rpc.DemographicsProxy;
 import org.eastway.echarts.client.rpc.EHRProxy;
 import org.eastway.echarts.client.rpc.EchartsRequestFactory;
@@ -49,6 +50,7 @@ import org.eastway.echarts.client.view.DashboardView;
 import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.requestfactory.shared.ServerFailure;
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
@@ -164,6 +166,18 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 	}
 
 	private void fetchData() {
+		requestFactory.dbServerConfigRequest().findDbServerConfig("dbServerUrl").fire(new Receiver<DbServerConfigProxy>() {
+			@Override
+			public void onSuccess(DbServerConfigProxy response) {
+				if ((EchartsUser.sessionId == null || EchartsUser.sessionId == "null") ||
+						(EchartsUser.userName == null || EchartsUser.userName == "null") ||
+						(EchartsUser.staffId == null || EchartsUser.staffId == "null")) {
+					Window.Location.assign("http://" + response.getConfigValue() + "/echarts/logout.aspx?continue=" + Window.Location.getHref());
+				} else {
+					EchartsUser.dbServerUrl = response.getConfigValue();
+				}
+			}
+		});
 		getProductivityData();
 	}
 
