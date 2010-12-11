@@ -21,6 +21,8 @@ import java.util.logging.Logger;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 
+import org.eastway.echarts.client.activity.EhrActivity;
+import org.eastway.echarts.client.activity.PatientSummaryActivity;
 import org.eastway.echarts.client.activity.TicklerActivity;
 import org.eastway.echarts.client.common.ARInfoColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.AddressColumnDefinitionsImpl;
@@ -93,11 +95,9 @@ import org.eastway.echarts.client.presenter.AppointmentPresenter;
 import org.eastway.echarts.client.presenter.DashboardPresenter;
 import org.eastway.echarts.client.presenter.DemographicsPresenter;
 import org.eastway.echarts.client.presenter.DiagnosisPresenter;
-import org.eastway.echarts.client.presenter.EHRPresenter;
 import org.eastway.echarts.client.presenter.LinkPresenter;
 import org.eastway.echarts.client.presenter.MedicationPresenter;
 import org.eastway.echarts.client.presenter.MessagesPresenter;
-import org.eastway.echarts.client.presenter.PatientSummaryPresenter;
 import org.eastway.echarts.client.presenter.Presenter;
 import org.eastway.echarts.client.presenter.ProfilePresenter;
 import org.eastway.echarts.client.presenter.ReferralPresenter;
@@ -503,13 +503,13 @@ public class AppController implements Presenter {
 
 	private void doViewEhr(EHRProxy ehr) {
 		ehrView = new EHRViewImpl<EHRProxy>();
-		Presenter presenter = new EHRPresenter(ehrView, eventBus, ehr);
+		Presenter presenter = new EhrActivity(ehrView, eventBus, ehr);
 		presenter.go(null);
 		dashboardPresenter.getDisplay().addTab(ehrView.asWidget(), ehr.getPatient().getCaseNumber());
 	}
 
 	private <T> void doViewPatientSummary(EHRView<T> ehrView, String caseNumber) {
-		Presenter presenter = new PatientSummaryPresenter(new PatientSummaryViewImpl<EHRProxy>(), patientSummaryColumnDefinitions, eventBus, requestFactory, caseNumber);
+		Presenter presenter = new PatientSummaryActivity(new PatientSummaryViewImpl<EHRProxy>(), patientSummaryColumnDefinitions, eventBus, requestFactory, caseNumber);
 		presenter.go(ehrView.getDisplayArea());
 	}
 

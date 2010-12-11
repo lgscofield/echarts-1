@@ -19,7 +19,6 @@ import java.util.List;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
 
-import com.google.gwt.place.shared.Place;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
@@ -32,7 +31,7 @@ public interface TicklerView<T> extends IsWidget {
 		void openIndividualProgressNote(T t);
 		void openDoctorProgressNote(T t);
 		void openNurseProgressNote(T t);
-		void goTo(Place place);
+		void goTo(T t);
 	}
 
 	enum DueDateStatus {

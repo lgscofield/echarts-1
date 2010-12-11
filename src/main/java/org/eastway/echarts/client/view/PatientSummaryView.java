@@ -19,9 +19,10 @@ import java.util.List;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
 
+import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 
-public interface PatientSummaryView<T> {
+public interface PatientSummaryView<T> extends IsWidget {
 	public interface Presenter<T> { }
 
 	Widget asWidget();

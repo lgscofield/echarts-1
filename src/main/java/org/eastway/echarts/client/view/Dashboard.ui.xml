@@ -165,7 +165,7 @@
 								<b>Links</b>
 								<ul style='margin-top:0px;'>
 									<li>
-										<g:Hyperlink ui:field='tickler' targetHistoryToken=''>Tickler</g:Hyperlink>
+										<g:Hyperlink ui:field='tickler' targetHistoryToken='TicklerPlace:'>Tickler</g:Hyperlink>
 									</li>
 									<li>
 										<g:Hyperlink ui:field='providerSignatures' targetHistoryToken=''>Provider Signatures</g:Hyperlink>

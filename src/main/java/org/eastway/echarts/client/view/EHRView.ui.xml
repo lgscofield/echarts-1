@@ -16,8 +16,6 @@
 	<ui:style>
 		
 	</ui:style>
-	<g:SplitLayoutPanel ui:field='body'>
-		<g:west size='150'>
 			<g:Tree ui:field='menu'>
 				<g:Label ui:field='patientSummary'>Patient Summary</g:Label>
 				<g:Label ui:field='demographics'>Demographics</g:Label>
@@ -33,10 +31,4 @@
 				<g:Label ui:field='serviceHistory'>Service History</g:Label>
 				<g:Label ui:field='treatmentPlan'>Treatment Plan</g:Label>
 			</g:Tree>
-		</g:west>
-		<g:center>
-			<g:LayoutPanel ui:field='displayArea'>
-			</g:LayoutPanel>
-		</g:center>
-	</g:SplitLayoutPanel>
 </ui:UiBinder> 

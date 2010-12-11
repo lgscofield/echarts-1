@@ -21,6 +21,7 @@ import java.util.List;
 
 import com.google.gwt.event.shared.EventBus;
 
+import org.eastway.echarts.client.EchartsClientFactory;
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEventHandler;
@@ -35,6 +36,7 @@ import org.eastway.echarts.client.events.ViewProviderSignaturesEvent;
 import org.eastway.echarts.client.events.ViewStaffHistoryEvent;
 import org.eastway.echarts.client.events.ViewSupervisorSignaturesEvent;
 import org.eastway.echarts.client.events.ViewTicklerEvent;
+import org.eastway.echarts.client.place.TicklerPlace;
 import org.eastway.echarts.client.rpc.AssignmentProxy;
 import org.eastway.echarts.client.rpc.AssignmentRequest;
 import org.eastway.echarts.client.rpc.DemographicsProxy;
@@ -91,9 +93,11 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 	private DashboardView<LinkedHashMap<String, Long>> view;
 	private EventBus eventBus;
 	private EchartsRequestFactory requestFactory;
+	private EchartsClientFactory clientFactory;
 
 	@Inject
-	public DashboardPresenter(DashboardView<LinkedHashMap<String, Long>> view, EventBus eventBus, final EchartsRequestFactory requestFactory) {
+	public DashboardPresenter(EchartsClientFactory clientFactory, DashboardView<LinkedHashMap<String, Long>> view, EventBus eventBus, final EchartsRequestFactory requestFactory) {
+		this.clientFactory = clientFactory;
 		this.view = view;
 		this.eventBus = eventBus;
 		this.view.setPresenter(this);
@@ -204,7 +208,7 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 
 	@Override
 	public void openTickler() {
-		eventBus.fireEvent(new ViewTicklerEvent());
+		clientFactory.getPlaceController().goTo(new TicklerPlace());
 	}
 
 	@Override

@@ -13,13 +13,17 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.client.presenter;
+package org.eastway.echarts.client.activity;
 
 import java.util.List;
 
+import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 
+import org.eastway.echarts.client.EchartsClientFactory;
 import org.eastway.echarts.client.common.ColumnDefinition;
+import org.eastway.echarts.client.place.PatientSummaryPlace;
+import org.eastway.echarts.client.presenter.Presenter;
 import org.eastway.echarts.client.rpc.AssignmentProxy;
 import org.eastway.echarts.client.rpc.AssignmentRequest;
 import org.eastway.echarts.client.rpc.EHRProxy;
@@ -28,9 +32,10 @@ import org.eastway.echarts.client.rpc.EhrRequest;
 import org.eastway.echarts.client.view.PatientSummaryView;
 
 import com.google.gwt.requestfactory.shared.Receiver;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class PatientSummaryPresenter implements Presenter, PatientSummaryView.Presenter<EHRProxy> {
+public class PatientSummaryActivity extends AbstractActivity implements Presenter, PatientSummaryView.Presenter<EHRProxy> {
 
 	class EHRFetcher {
 		EHRProxy fetchedEHR;
@@ -67,14 +72,21 @@ public class PatientSummaryPresenter implements Presenter, PatientSummaryView.Pr
 	private String caseNumber;
 	private PatientSummaryView<EHRProxy> view;
 	private EchartsRequestFactory requestFactory;
+	private EchartsClientFactory clientFactory;
 
-	public PatientSummaryPresenter(PatientSummaryView<EHRProxy> view,
+	public PatientSummaryActivity(PatientSummaryView<EHRProxy> view,
 			List<ColumnDefinition<EHRProxy>> columnDefinitions, EventBus eventBus, EchartsRequestFactory requestFactory, String caseNumber) {
 		this.view = view;
 		this.view.setPresenter(this);
 		this.view.setColumnDefinitions(columnDefinitions);
 		this.caseNumber = caseNumber;
 		this.requestFactory = requestFactory;
+	}
+
+	public PatientSummaryActivity(PatientSummaryPlace place,
+			EchartsClientFactory clientFactory) {
+		this.caseNumber = place.getCaseNumber();
+		this.clientFactory = clientFactory;
 	}
 
 	@Override
@@ -87,10 +99,28 @@ public class PatientSummaryPresenter implements Presenter, PatientSummaryView.Pr
 	private void fetchData() {
 		final EhrRequest ehrRequest = requestFactory.ehrRequest();
 		AssignmentRequest assignmentRequest = requestFactory.assignmentRequest();
-		new EHRFetcher().Run(ehrRequest, assignmentRequest, caseNumber, new Receiver<PatientSummaryPresenter.EHRFetcher>() {
+		new EHRFetcher().Run(ehrRequest, assignmentRequest, caseNumber, new Receiver<PatientSummaryActivity.EHRFetcher>() {
 			@Override
 			public void onSuccess(EHRFetcher response) {
 				EHRProxy ehr = requestFactory.ehrRequest().edit(response.fetchedEHR);
+				ehr.setAssignments(response.fetchedAssignments);
+				view.setRowData(ehr);
+			}
+		});
+	}
+
+	@Override
+	public void start(AcceptsOneWidget panel, EventBus eventBus) {
+		view = clientFactory.getPatientSummaryView();
+		view.setPresenter(this);
+		view.setColumnDefinitions(clientFactory.getPatientSummaryColumnDefinitions());
+		panel.setWidget(view.asWidget());
+		final EhrRequest ehrRequest = clientFactory.getRequestFactory().ehrRequest();
+		AssignmentRequest assignmentRequest = clientFactory.getRequestFactory().assignmentRequest();
+		new EHRFetcher().Run(ehrRequest, assignmentRequest, caseNumber, new Receiver<PatientSummaryActivity.EHRFetcher>() {
+			@Override
+			public void onSuccess(EHRFetcher response) {
+				EHRProxy ehr = clientFactory.getRequestFactory().ehrRequest().edit(response.fetchedEHR);
 				ehr.setAssignments(response.fetchedAssignments);
 				view.setRowData(ehr);
 			}

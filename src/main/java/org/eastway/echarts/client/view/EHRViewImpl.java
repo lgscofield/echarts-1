@@ -36,7 +36,7 @@ public class EHRViewImpl<T> extends Composite implements EHRView<T> {
 	private Presenter<T> presenter;
 	@UiField Tree menu;
 	@UiField Label patientSummary;
-	@UiField LayoutPanel displayArea;
+	LayoutPanel displayArea;
 
 	public EHRViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));

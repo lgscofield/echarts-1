@@ -183,7 +183,7 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T>,
 
 	@UiHandler(value="tickler")
 	public void onTicklerClicked(ClickEvent event) {
-		presenter.openTickler();
+		//presenter.openTickler();
 	}
 
 	@Override

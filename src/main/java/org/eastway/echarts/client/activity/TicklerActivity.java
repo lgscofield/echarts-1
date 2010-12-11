@@ -31,6 +31,7 @@ import org.eastway.echarts.client.events.OpenEhrEvent;
 import org.eastway.echarts.client.events.OpenIndividualProgressNoteEvent;
 import org.eastway.echarts.client.events.OpenIspEvent;
 import org.eastway.echarts.client.events.OpenNurseProgressNoteEvent;
+import org.eastway.echarts.client.place.EhrPlace;
 import org.eastway.echarts.client.place.TicklerPlace;
 import org.eastway.echarts.client.presenter.Presenter;
 import org.eastway.echarts.client.rpc.AssignmentProxy;
@@ -282,7 +283,7 @@ public class TicklerActivity extends AbstractActivity implements Presenter, Tick
 	}
 
 	@Override
-	public void goTo(Place place) {
-		clientFactory.getPlaceController().goTo(place);
+	public void goTo(Tickler tickler) {
+		clientFactory.getPlaceController().goTo(new EhrPlace(tickler.getCaseNumber()));
 	}
 }

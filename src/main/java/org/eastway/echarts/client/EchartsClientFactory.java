@@ -4,8 +4,11 @@ import java.util.List;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.presenter.DashboardPresenter;
+import org.eastway.echarts.client.rpc.EHRProxy;
 import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.ui.TicklerView;
+import org.eastway.echarts.client.view.EHRView;
+import org.eastway.echarts.client.view.PatientSummaryView;
 import org.eastway.echarts.shared.Tickler;
 
 import com.google.gwt.activity.shared.ActivityMapper;
@@ -23,4 +26,7 @@ public interface EchartsClientFactory extends Ginjector {
 	List<ColumnDefinition<Tickler>> getTicklerColumnDefinitions();
 	ActivityMapper getActivityMapper();
 	DashboardPresenter getDashboard();
+	EHRView<EHRProxy> getEhrView();
+	PatientSummaryView<EHRProxy> getPatientSummaryView();
+	List<ColumnDefinition<EHRProxy>> getPatientSummaryColumnDefinitions();
 }

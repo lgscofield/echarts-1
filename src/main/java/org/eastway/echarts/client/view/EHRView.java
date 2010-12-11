@@ -16,9 +16,10 @@
 package org.eastway.echarts.client.view;
 
 import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 
-public interface EHRView<T> {
+public interface EHRView<T> extends IsWidget {
 
 	public interface Presenter<T> {
 		void viewPatientSummary();

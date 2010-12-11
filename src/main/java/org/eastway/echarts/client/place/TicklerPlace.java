@@ -20,12 +20,12 @@ public class TicklerPlace extends Place {
 	public static class Tokenizer implements PlaceTokenizer<TicklerPlace> {
 		@Override
 		public TicklerPlace getPlace(String token) {
-			return new TicklerPlace(token);
+			return new TicklerPlace();
 		}
 
 		@Override
 		public String getToken(TicklerPlace place) {
-			return place.getTicklerName();
+			return "";
 		}
 	}
 }

@@ -172,7 +172,7 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 				selected = cell.getRowIndex();
 				if (selected < 1)
 					return;
-				presenter.openEhr(rowData.get(getRow(selected)));
+				presenter.goTo(rowData.get(getRow(selected)));
 			}
 		}
 	}

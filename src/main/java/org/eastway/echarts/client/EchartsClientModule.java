@@ -29,7 +29,6 @@ import org.eastway.echarts.client.common.ReferralColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.TicklerColumnDefinitionsImpl;
 import org.eastway.echarts.client.mvp.EchartsActivityMapper;
 import org.eastway.echarts.client.mvp.EchartsPlaceHistoryMapper;
-import org.eastway.echarts.client.place.EchartsPlaceController;
 import org.eastway.echarts.client.place.PlaceControllerProvider;
 import org.eastway.echarts.client.presenter.DashboardPresenter;
 import org.eastway.echarts.client.presenter.ProfilePresenter;
@@ -46,6 +45,10 @@ import org.eastway.echarts.client.ui.TicklerView;
 import org.eastway.echarts.client.ui.TicklerViewImpl;
 import org.eastway.echarts.client.view.DashboardView;
 import org.eastway.echarts.client.view.DashboardViewImpl;
+import org.eastway.echarts.client.view.EHRView;
+import org.eastway.echarts.client.view.EHRViewImpl;
+import org.eastway.echarts.client.view.PatientSummaryView;
+import org.eastway.echarts.client.view.PatientSummaryViewImpl;
 import org.eastway.echarts.client.view.ProfileView;
 import org.eastway.echarts.client.view.ProfileViewImpl;
 import org.eastway.echarts.shared.GetTickler;
@@ -77,6 +80,9 @@ public class EchartsClientModule extends AbstractGinModule {
 		bind(new TypeLiteral<DashboardView<LinkedHashMap<String, Long>>>() {}).to(DashboardViewImpl.class);
 
 		bind(new TypeLiteral<TicklerView<Tickler>>() {}).to(TicklerViewImpl.class);
+		bind(new TypeLiteral<EHRView<EHRProxy>>() {}).to(EHRViewImpl.class);
+		bind(new TypeLiteral<PatientSummaryView<EHRProxy>>() {}).to(PatientSummaryViewImpl.class);
+
 		bind(new TypeLiteral<List<ColumnDefinition<Tickler>>>() {}).to(TicklerColumnDefinitionsImpl.class).in(Singleton.class);
 
 		bind(new TypeLiteral<List<ColumnDefinition<DiagnosisProxy>>>() {}).to(DiagnosisColumnDefinitionsImpl.class).in(Singleton.class);
