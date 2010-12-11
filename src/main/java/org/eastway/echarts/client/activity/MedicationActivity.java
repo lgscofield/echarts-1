@@ -13,45 +13,34 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.client.presenter;
+package org.eastway.echarts.client.activity;
 
 import java.util.List;
 
-import org.eastway.echarts.client.rpc.EchartsRequestFactory;
+import org.eastway.echarts.client.EchartsClientFactory;
+import org.eastway.echarts.client.place.MedicationPlace;
 import org.eastway.echarts.client.rpc.MedicationProxy;
-import org.eastway.echarts.shared.GetMedications;
+import org.eastway.echarts.client.ui.MedicationView;
 
+import com.google.gwt.activity.shared.AbstractActivity;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.requestfactory.shared.Receiver;
-import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
-public class MedicationPresenter implements Presenter {
+public class MedicationActivity extends AbstractActivity implements MedicationView.Presenter<MedicationProxy> {
 
-	public interface Display extends EchartsDisplay {
-		public void nextRecord();
+	private String caseNumber;
+	private EchartsClientFactory clientFactory;
+	private MedicationView<MedicationProxy> view;
 
-		public void setMedication(String medication);
-	}
-
-	private Display view;
-	private GetMedications action;
-	private EchartsRequestFactory requestFactory;
-
-	public MedicationPresenter(Display view, EchartsRequestFactory requestFactory,
-			GetMedications action) {
-		this.view = view;
-		this.requestFactory = requestFactory;
-		this.action = action;
-	}
-
-	@Override
-	public void go(HasWidgets container) {
-		container.clear();
-		container.add(view.asWidget());
-		fetchData();
+	public MedicationActivity(MedicationPlace place,
+			EchartsClientFactory clientFactory) {
+		this.caseNumber = place.getCaseNumber();
+		this.clientFactory = clientFactory;
 	}
 
 	private void fetchData() {
-		requestFactory.medicationRequest().findMedicationsByCaseNumber(action.getCaseNumber()).fire(new Receiver<List<MedicationProxy>>() {
+		clientFactory.getRequestFactory().medicationRequest().findMedicationsByCaseNumber(caseNumber).fire(new Receiver<List<MedicationProxy>>() {
 			@Override
 			public void onSuccess(List<MedicationProxy> response) {
 				if (response != null)
@@ -65,5 +54,12 @@ public class MedicationPresenter implements Presenter {
 			view.setMedication(medication.getMedication());
 			view.nextRecord();
 		}
+	}
+
+	@Override
+	public void start(AcceptsOneWidget panel, EventBus eventBus) {
+		view = clientFactory.getMedicationView();
+		panel.setWidget(view.asWidget());
+		fetchData();
 	}
 }

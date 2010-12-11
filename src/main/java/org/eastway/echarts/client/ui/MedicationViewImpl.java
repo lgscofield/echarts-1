@@ -13,23 +13,24 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.client.view;
+package org.eastway.echarts.client.ui;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Widget;
 
-import org.eastway.echarts.client.presenter.MedicationPresenter;
-
-public class MedicationView extends Composite implements MedicationPresenter.Display {
+public class MedicationViewImpl<T> extends Composite implements MedicationView<T> {
 
 	private static MedicationViewUiBinder uiBinder = GWT
 			.create(MedicationViewUiBinder.class);
 
-	interface MedicationViewUiBinder extends UiBinder<Widget, MedicationView> { }
+	@SuppressWarnings("unchecked")
+	@UiTemplate("MedicationView.ui.xml")
+	interface MedicationViewUiBinder extends UiBinder<Widget, MedicationViewImpl> { }
 
 	private int record = 0;
 	@UiField FlexTable medications;
@@ -38,7 +39,7 @@ public class MedicationView extends Composite implements MedicationPresenter.Dis
 		MEDICATION,
 	}
 
-	public MedicationView() {
+	public MedicationViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
 		medications.setBorderWidth(1);
 	}

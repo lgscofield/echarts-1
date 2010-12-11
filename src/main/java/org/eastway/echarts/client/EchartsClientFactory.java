@@ -11,10 +11,12 @@ import org.eastway.echarts.client.rpc.DiagnosisProxy;
 import org.eastway.echarts.client.rpc.EHRProxy;
 import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.rpc.LinkProxy;
+import org.eastway.echarts.client.rpc.MedicationProxy;
 import org.eastway.echarts.client.rpc.MessageProxy;
 import org.eastway.echarts.client.rpc.ReferralProxy;
 import org.eastway.echarts.client.ui.AddressView;
 import org.eastway.echarts.client.ui.LinkView;
+import org.eastway.echarts.client.ui.MedicationView;
 import org.eastway.echarts.client.ui.MessageView;
 import org.eastway.echarts.client.ui.TicklerView;
 import org.eastway.echarts.client.view.AppointmentView;
@@ -55,4 +57,5 @@ public interface EchartsClientFactory extends Ginjector {
 	LinkView<LinkProxy> getLinkView();
 	AddressView<AddressProxy> getAddressView();
 	List<ColumnDefinition<AddressProxy>> getAddressColumnDefinitions();
+	MedicationView<MedicationProxy> getMedicationView();
 }
