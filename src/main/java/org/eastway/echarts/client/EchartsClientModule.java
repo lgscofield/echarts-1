@@ -56,6 +56,8 @@ import org.eastway.echarts.client.view.PatientSummaryView;
 import org.eastway.echarts.client.view.PatientSummaryViewImpl;
 import org.eastway.echarts.client.view.ProfileView;
 import org.eastway.echarts.client.view.ProfileViewImpl;
+import org.eastway.echarts.client.view.ReferralView;
+import org.eastway.echarts.client.view.ReferralViewImpl;
 import org.eastway.echarts.shared.GetTickler;
 import org.eastway.echarts.shared.Tickler;
 
@@ -89,6 +91,7 @@ public class EchartsClientModule extends AbstractGinModule {
 		bind(new TypeLiteral<PatientSummaryView<EHRProxy>>() {}).to(PatientSummaryViewImpl.class);
 		bind(new TypeLiteral<MessageView<MessageProxy>>() {}).to(MessageViewImpl.class);
 		bind(new TypeLiteral<DemographicsView<DemographicsProxy>>() {}).to(DemographicsViewImpl.class);
+		bind(new TypeLiteral<ReferralView<ReferralProxy>>() {}).to(ReferralViewImpl.class);
 
 		bind(new TypeLiteral<List<ColumnDefinition<Tickler>>>() {}).to(TicklerColumnDefinitionsImpl.class).in(Singleton.class);
 

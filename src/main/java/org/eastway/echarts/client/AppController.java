@@ -24,6 +24,7 @@ import com.google.gwt.event.shared.EventBus;
 import org.eastway.echarts.client.activity.DemographicsActivity;
 import org.eastway.echarts.client.activity.EhrActivity;
 import org.eastway.echarts.client.activity.PatientSummaryActivity;
+import org.eastway.echarts.client.activity.ReferralActivity;
 import org.eastway.echarts.client.common.ARInfoColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.AddressColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.AppointmentColumnDefinitionsImpl;
@@ -98,7 +99,6 @@ import org.eastway.echarts.client.presenter.LinkPresenter;
 import org.eastway.echarts.client.presenter.MedicationPresenter;
 import org.eastway.echarts.client.presenter.Presenter;
 import org.eastway.echarts.client.presenter.ProfilePresenter;
-import org.eastway.echarts.client.presenter.ReferralPresenter;
 import org.eastway.echarts.client.rpc.ARInfoProxy;
 import org.eastway.echarts.client.rpc.AddressProxy;
 import org.eastway.echarts.client.rpc.AppointmentProxy;
@@ -489,7 +489,7 @@ public class AppController implements Presenter {
 	}
 
 	private <T> void doViewReferral(EHRView<T> ehrView, GetReferral action) {
-		Presenter presenter = new ReferralPresenter(new ReferralViewImpl<ReferralProxy>(), referralColumnDefinitions, requestFactory, action.getCaseNumber());
+		Presenter presenter = new ReferralActivity(new ReferralViewImpl<ReferralProxy>(), referralColumnDefinitions, requestFactory, action.getCaseNumber());
 		presenter.go(ehrView.getDisplayArea());
 	}
 

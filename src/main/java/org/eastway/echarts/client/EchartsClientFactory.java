@@ -8,11 +8,13 @@ import org.eastway.echarts.client.rpc.DemographicsProxy;
 import org.eastway.echarts.client.rpc.EHRProxy;
 import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.rpc.MessageProxy;
+import org.eastway.echarts.client.rpc.ReferralProxy;
 import org.eastway.echarts.client.ui.MessageView;
 import org.eastway.echarts.client.ui.TicklerView;
 import org.eastway.echarts.client.view.DemographicsView;
 import org.eastway.echarts.client.view.EHRView;
 import org.eastway.echarts.client.view.PatientSummaryView;
+import org.eastway.echarts.client.view.ReferralView;
 import org.eastway.echarts.shared.Tickler;
 
 import com.google.gwt.activity.shared.ActivityMapper;
@@ -36,4 +38,6 @@ public interface EchartsClientFactory extends Ginjector {
 	MessageView<MessageProxy> getMessageView();
 	DemographicsView<DemographicsProxy> getDemographicsView();
 	List<ColumnDefinition<DemographicsProxy>> getDemographicsColumnDefinitions();
+	ReferralView<ReferralProxy> getReferralView();
+	List<ColumnDefinition<ReferralProxy>> getReferralColumnDefinitions();
 }

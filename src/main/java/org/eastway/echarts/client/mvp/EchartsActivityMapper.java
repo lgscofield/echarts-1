@@ -5,11 +5,13 @@ import org.eastway.echarts.client.activity.DemographicsActivity;
 import org.eastway.echarts.client.activity.EhrActivity;
 import org.eastway.echarts.client.activity.MessageActivity;
 import org.eastway.echarts.client.activity.PatientSummaryActivity;
+import org.eastway.echarts.client.activity.ReferralActivity;
 import org.eastway.echarts.client.activity.TicklerActivity;
 import org.eastway.echarts.client.place.DemographicsPlace;
 import org.eastway.echarts.client.place.EhrPlace;
 import org.eastway.echarts.client.place.MessagePlace;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
+import org.eastway.echarts.client.place.ReferralPlace;
 import org.eastway.echarts.client.place.TicklerPlace;
 
 import com.google.gwt.activity.shared.Activity;
@@ -38,6 +40,8 @@ public class EchartsActivityMapper implements ActivityMapper {
 			return new MessageActivity((MessagePlace) place, clientFactory);
 		else if (place instanceof DemographicsPlace)
 			return new DemographicsActivity((DemographicsPlace) place, clientFactory);
+		else if (place instanceof ReferralPlace)
+			return new ReferralActivity((ReferralPlace) place, clientFactory);
 		return null;
 	}
 

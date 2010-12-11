@@ -13,30 +13,42 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.client.presenter;
+package org.eastway.echarts.client.activity;
 
 import java.util.List;
 
+import org.eastway.echarts.client.EchartsClientFactory;
 import org.eastway.echarts.client.common.ColumnDefinition;
+import org.eastway.echarts.client.place.ReferralPlace;
+import org.eastway.echarts.client.presenter.Presenter;
 import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.rpc.ReferralProxy;
 import org.eastway.echarts.client.view.ReferralView;
 
+import com.google.gwt.activity.shared.AbstractActivity;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.requestfactory.shared.Receiver;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class ReferralPresenter implements Presenter, ReferralView.Presenter<ReferralProxy> {
+public class ReferralActivity extends AbstractActivity implements Presenter, ReferralView.Presenter<ReferralProxy> {
 
 	private ReferralView<ReferralProxy> view;
-	private EchartsRequestFactory requestFactory;
 	private String caseNumber;
+	private EchartsClientFactory clientFactory;
 
-	public ReferralPresenter(ReferralView<ReferralProxy> view, List<ColumnDefinition<ReferralProxy>> columnDefinitions, EchartsRequestFactory requestFactory, String caseNumber) {
+	public ReferralActivity(ReferralView<ReferralProxy> view, List<ColumnDefinition<ReferralProxy>> columnDefinitions, EchartsRequestFactory requestFactory, String caseNumber) {
 		this.view = view;
-		this.requestFactory = requestFactory;
+		//this.requestFactory = requestFactory;
 		this.caseNumber = caseNumber;
 		this.view.setPresenter(this);
 		this.view.setColumnDefinitions(columnDefinitions);
+	}
+
+	public ReferralActivity(ReferralPlace place,
+			EchartsClientFactory clientFactory) {
+		this.caseNumber = place.getCaseNumber();
+		this.clientFactory = clientFactory;
 	}
 
 	@Override
@@ -47,12 +59,21 @@ public class ReferralPresenter implements Presenter, ReferralView.Presenter<Refe
 	}
 
 	private void fetchData() {
-		requestFactory.referralRequest().findReferral(caseNumber).fire(new Receiver<ReferralProxy>() {
+		clientFactory.getRequestFactory().referralRequest().findReferral(caseNumber).fire(new Receiver<ReferralProxy>() {
 			@Override
 			public void onSuccess(ReferralProxy response) {
 				if (response != null)
 					view.setRowData(response);
 			}
 		});
+	}
+
+	@Override
+	public void start(AcceptsOneWidget panel, EventBus eventBus) {
+		view = clientFactory.getReferralView();
+		view.setPresenter(this);
+		view.setColumnDefinitions(clientFactory.getReferralColumnDefinitions());
+		panel.setWidget(view.asWidget());
+		fetchData();
 	}
 }
