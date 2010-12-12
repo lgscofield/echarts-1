@@ -15,9 +15,12 @@
  */
 package org.eastway.echarts.client.activity;
 
-import org.eastway.echarts.client.EchartsClientFactory;
+import java.util.List;
+
+import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.place.ARInfoPlace;
 import org.eastway.echarts.client.rpc.ARInfoProxy;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.ui.ARInfoView;
 
 import com.google.gwt.activity.shared.AbstractActivity;
@@ -29,15 +32,21 @@ public class ARInfoActivity extends AbstractActivity implements ARInfoView.Prese
 
 	private ARInfoView<ARInfoProxy> view;
 	private String caseNumber;
-	private EchartsClientFactory clientFactory;
+	private EchartsRequestFactory requestFactory;
+	private List<ColumnDefinition<ARInfoProxy>> columnDefinitions;
 
-	public ARInfoActivity(ARInfoPlace place, EchartsClientFactory clientFactory) {
+	public ARInfoActivity(ARInfoPlace place,
+			EchartsRequestFactory requestFactory,
+			List<ColumnDefinition<ARInfoProxy>> columnDefinitions,
+			ARInfoView<ARInfoProxy> view) {
 		this.caseNumber = place.getCaseNumber();
-		this.clientFactory = clientFactory;
+		this.requestFactory = requestFactory;
+		this.columnDefinitions = columnDefinitions;
+		this.view = view;
 	}
 
 	private void fetchData() {
-		clientFactory.getRequestFactory().arinfoRequest().findARInfo(caseNumber).fire(new Receiver<ARInfoProxy>() {
+		requestFactory.arinfoRequest().findARInfo(caseNumber).fire(new Receiver<ARInfoProxy>() {
 			@Override
 			public void onSuccess(ARInfoProxy response) {
 				if (response != null)
@@ -48,9 +57,8 @@ public class ARInfoActivity extends AbstractActivity implements ARInfoView.Prese
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		view = clientFactory.getARInfoView();
 		view.setPresenter(this);
-		view.setColumnDefinitions(clientFactory.getARInfoColumnDefinitions());
+		view.setColumnDefinitions(columnDefinitions);
 		panel.setWidget(view.asWidget());
 		fetchData();
 	}

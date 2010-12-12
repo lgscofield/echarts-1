@@ -20,10 +20,7 @@ import java.util.List;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 
-import org.eastway.echarts.client.EchartsClientFactory;
-import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
-import org.eastway.echarts.client.events.ViewARInfoEvent;
 import org.eastway.echarts.client.events.ViewLabsEvent;
 import org.eastway.echarts.client.place.ARInfoPlace;
 import org.eastway.echarts.client.place.AddressPlace;
@@ -38,20 +35,18 @@ import org.eastway.echarts.client.place.PatientSummaryPlace;
 import org.eastway.echarts.client.place.ReferralPlace;
 import org.eastway.echarts.client.place.ServiceHistoryPlace;
 import org.eastway.echarts.client.place.TreatmentPlanPlace;
-import org.eastway.echarts.client.presenter.Presenter;
 import org.eastway.echarts.client.rpc.AssignmentProxy;
 import org.eastway.echarts.client.rpc.AssignmentRequest;
 import org.eastway.echarts.client.rpc.EHRProxy;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.rpc.EhrRequest;
 import org.eastway.echarts.client.view.EHRView;
-import org.eastway.echarts.client.view.EHRViewImpl;
-import org.eastway.echarts.shared.GetARInfo;
 
+import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
-import com.google.gwt.user.client.ui.HasWidgets;
 
-public class EhrActivity extends AbstractActivity implements Presenter, EHRView.Presenter<EHRProxy> {
+public class EhrActivity extends AbstractActivity implements EHRView.Presenter<EHRProxy> {
 
 	class EHRFetcher {
 		EHRProxy fetchedEHR;
@@ -89,40 +84,30 @@ public class EhrActivity extends AbstractActivity implements Presenter, EHRView.
 	private EHRProxy ehr;
 	private EHRView<EHRProxy> view;
 	private EventBus eventBus;
-	private GetARInfo aRInfo = null;
-	private EchartsClientFactory clientFactory;
 	private String caseNumber;
+	private EchartsRequestFactory requestFactory;
+	private PlaceController placeController;
 
-	public EhrActivity(EHRViewImpl<EHRProxy> ehrView, EventBus eventBus, EHRProxy ehr) {
-		this.eventBus = eventBus;
-		this.view = ehrView;
-		this.view.setPresenter(this);
-		setData(ehr);
-	}
-
-	public EhrActivity(EhrPlace place, EchartsClientFactory clientFactory) {
-		this.clientFactory = clientFactory;
+	public EhrActivity(EhrPlace place,
+					   EchartsRequestFactory requestFactory,
+					   EventBus eventBus,
+					   PlaceController placeController,
+					   EHRView<EHRProxy> view) {
 		this.caseNumber = place.getCaseNumber();
+		this.requestFactory = requestFactory;
+		this.eventBus = eventBus;
+		this.placeController = placeController;
+		this.view = view;
 	}
 
 	protected void setData(EHRProxy ehr) {
 		this.ehr = ehr;
-		clientFactory.getEventBus().fireEvent(new ChangeCurrentEhrEvent<EHRProxy>(ehr));
-	}
-
-	private void setActions() {
-		aRInfo = new GetARInfo(EchartsUser.sessionId, ehr.getPatient().getCaseNumber());
-	}
-
-	@Override
-	public void go(final HasWidgets container) {
-		setActions();
-		viewPatientSummary();
+		eventBus.fireEvent(new ChangeCurrentEhrEvent<EHRProxy>(ehr));
 	}
 
 	@Override
 	public void viewPatientSummary() {
-		clientFactory.getPlaceController().goTo(new PatientSummaryPlace(caseNumber));
+		placeController.goTo(new PatientSummaryPlace(caseNumber));
 	}
 
 	@Override
@@ -132,57 +117,57 @@ public class EhrActivity extends AbstractActivity implements Presenter, EHRView.
 
 	@Override
 	public void viewMessages() {
-		clientFactory.getPlaceController().goTo(new MessagePlace(caseNumber));
+		placeController.goTo(new MessagePlace(caseNumber));
 	}
 
 	@Override
 	public void viewDemographics() {
-		clientFactory.getPlaceController().goTo(new DemographicsPlace(caseNumber));
+		placeController.goTo(new DemographicsPlace(caseNumber));
 	}
 
 	@Override
 	public void viewReferral() {
-		clientFactory.getPlaceController().goTo(new ReferralPlace(caseNumber));
+		placeController.goTo(new ReferralPlace(caseNumber));
 	}
 
 	@Override
 	public void viewAppointments() {
-		clientFactory.getPlaceController().goTo(new AppointmentPlace(caseNumber));
+		placeController.goTo(new AppointmentPlace(caseNumber));
 	}
 
 	@Override
 	public void viewDiagnoses() {
-		clientFactory.getPlaceController().goTo(new DiagnosisPlace(caseNumber));
+		placeController.goTo(new DiagnosisPlace(caseNumber));
 	}
 
 	@Override
 	public void viewLinks() {
-		clientFactory.getPlaceController().goTo(new LinkPlace(caseNumber));
+		placeController.goTo(new LinkPlace(caseNumber));
 	}
 
 	@Override
 	public void viewAddresses() {
-		clientFactory.getPlaceController().goTo(new AddressPlace(caseNumber));
+		placeController.goTo(new AddressPlace(caseNumber));
 	}
 
 	@Override
 	public void viewMedications() {
-		clientFactory.getPlaceController().goTo(new MedicationPlace(caseNumber));
+		placeController.goTo(new MedicationPlace(caseNumber));
 	}
 
 	@Override
 	public void viewTreatmentPlan() {
-		clientFactory.getPlaceController().goTo(new TreatmentPlanPlace(caseNumber));
+		placeController.goTo(new TreatmentPlanPlace(caseNumber));
 	}
 
 	@Override
 	public void viewServiceHistory() {
-		clientFactory.getPlaceController().goTo(new ServiceHistoryPlace(caseNumber));
+		placeController.goTo(new ServiceHistoryPlace(caseNumber));
 	}
 
 	@Override
 	public void viewARInfo() {
-		clientFactory.getPlaceController().goTo(new ARInfoPlace(caseNumber));
+		placeController.goTo(new ARInfoPlace(caseNumber));
 	}
 
 	@Override
@@ -192,15 +177,14 @@ public class EhrActivity extends AbstractActivity implements Presenter, EHRView.
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		view = clientFactory.getEhrView();
 		view.setPresenter(this);
 		panel.setWidget(view.asWidget());
-		final EhrRequest ehrRequest = clientFactory.getRequestFactory().ehrRequest();
-		AssignmentRequest assignmentRequest = clientFactory.getRequestFactory().assignmentRequest();
+		final EhrRequest ehrRequest = requestFactory.ehrRequest();
+		AssignmentRequest assignmentRequest = requestFactory.assignmentRequest();
 		new EHRFetcher().Run(ehrRequest, assignmentRequest, caseNumber, new Receiver<EhrActivity.EHRFetcher>() {
 			@Override
 			public void onSuccess(EHRFetcher response) {
-				EHRProxy ehr = clientFactory.getRequestFactory().ehrRequest().edit(response.fetchedEHR);
+				EHRProxy ehr = requestFactory.ehrRequest().edit(response.fetchedEHR);
 				ehr.setAssignments(response.fetchedAssignments);
 				setData(ehr);
 			}

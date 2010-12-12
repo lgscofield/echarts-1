@@ -22,20 +22,17 @@ import java.util.List;
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.event.shared.EventBus;
 
-import org.eastway.echarts.client.EchartsClientFactory;
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.place.MessagePlace;
 import org.eastway.echarts.client.rpc.CodeProxy;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.rpc.MessageProxy;
 import org.eastway.echarts.client.rpc.MessageRequest;
 import org.eastway.echarts.client.ui.MessageView;
 
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.requestfactory.shared.Request;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
-import com.google.gwt.user.client.ui.HasWidgets;
 
 public class MessageActivity implements Activity, MessageView.Presenter<MessageProxy> {
 
@@ -44,34 +41,14 @@ public class MessageActivity implements Activity, MessageView.Presenter<MessageP
 	private List<CodeProxy> types = new ArrayList<CodeProxy>();
 	private MessageView<MessageProxy> view;
 	private String caseNumber;
-	private EchartsClientFactory clientFactory;
+	private EchartsRequestFactory requestFactory;
 
 	public MessageActivity(MessagePlace place,
-			EchartsClientFactory clientFactory) {
+						   EchartsRequestFactory requestFactory,
+						   MessageView<MessageProxy> view) {
 		this.caseNumber = place.getCaseNumber();
-		this.clientFactory = clientFactory;
-	}
-
-	public void go(final HasWidgets container) {
-		container.clear();
-		container.add(view.asWidget());
-		fetchData();
-		bind();
-	}
-
-	private void bind() {
-		view.getSaveButton().addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				//save(findMessageType(view.getMessageType()), caseNumber, view.getMessage(), new Date(), new Date(), EchartsUser.userName);
-			}
-		});
-		view.getCloseButton().addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				view.close();
-			}
-		});
+		this.requestFactory = requestFactory;
+		this.view = view;
 	}
 
 	public CodeProxy findMessageType(String messageType) {
@@ -85,7 +62,7 @@ public class MessageActivity implements Activity, MessageView.Presenter<MessageP
 	public void save(String messageType, String message) {
 		CodeProxy codeProxy = findMessageType(messageType);
 		Date now = new Date();
-		MessageRequest messageRequest = clientFactory.getRequestFactory().messageRequest();
+		MessageRequest messageRequest = requestFactory.messageRequest();
 		final MessageProxy newMessage = messageRequest.create(MessageProxy.class);
 
 		newMessage.setCaseNumber(caseNumber);
@@ -108,7 +85,7 @@ public class MessageActivity implements Activity, MessageView.Presenter<MessageP
 	}
 
 	private void fetchData() {
-		Request<List<CodeProxy>> codeRequest = clientFactory.getRequestFactory().codeRequest().findAllCodes();
+		Request<List<CodeProxy>> codeRequest = requestFactory.codeRequest().findAllCodes();
 		codeRequest.fire(new Receiver<List<CodeProxy>>() {
 			@Override
 			public void onSuccess(List<CodeProxy> response) {
@@ -121,7 +98,7 @@ public class MessageActivity implements Activity, MessageView.Presenter<MessageP
 				}
 			}
 		});
-		MessageRequest request = clientFactory.getRequestFactory().messageRequest();
+		MessageRequest request = requestFactory.messageRequest();
 		Request<List<MessageProxy>> messageRequest = request.findMessageByCaseNumber(caseNumber).with("messageType");
 		messageRequest.fire(new Receiver<List<MessageProxy>>() {
 			@Override
@@ -191,7 +168,6 @@ public class MessageActivity implements Activity, MessageView.Presenter<MessageP
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		view = clientFactory.getMessageView();
 		view.setPresenter(this);
 		panel.setWidget(view.asWidget());
 		fetchData();

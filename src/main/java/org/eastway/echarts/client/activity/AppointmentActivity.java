@@ -20,51 +20,39 @@ import java.util.List;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 
-import org.eastway.echarts.client.EchartsClientFactory;
 import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.place.AppointmentPlace;
-import org.eastway.echarts.client.presenter.Presenter;
 import org.eastway.echarts.client.rpc.AppointmentProxy;
 import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.view.AppointmentView;
-import org.eastway.echarts.shared.GetAppointments;
 
 import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
-import com.google.gwt.user.client.ui.HasWidgets;
 
-public class AppointmentActivity extends AbstractActivity implements Presenter, AppointmentView.Presenter<AppointmentProxy> {
+public class AppointmentActivity extends AbstractActivity implements AppointmentView.Presenter<AppointmentProxy> {
 
 	private AppointmentView<AppointmentProxy> view;
-	private EchartsClientFactory clientFactory;
 	private String caseNumber;
 	private int maxResults = 0;
 	private int startRecord = 0;
-
-	public AppointmentActivity(AppointmentView<AppointmentProxy> view, List<ColumnDefinition<AppointmentProxy>> columnDefinitions, EventBus eventBus, EchartsRequestFactory requestFactory, GetAppointments action) {
-		this.view = view;
-		this.view.setPresenter(this);
-		this.view.setColumnDefinitions(columnDefinitions);
-	}
+	private EchartsRequestFactory requestFactory;
+	private List<ColumnDefinition<AppointmentProxy>> columnDefinitions;
 
 	public AppointmentActivity(AppointmentPlace place,
-			EchartsClientFactory clientFactory) {
+			EchartsRequestFactory requestFactory,
+			List<ColumnDefinition<AppointmentProxy>> columnDefinitions,
+			AppointmentView<AppointmentProxy> view) {
 		this.caseNumber = place.getCaseNumber();
-		this.clientFactory = clientFactory;
-	}
-
-	@Override
-	public void go(HasWidgets container) {
-		container.clear();
-		container.add(view.asWidget());
-		fetchData();
+		this.requestFactory = requestFactory;
+		this.columnDefinitions = columnDefinitions;
+		this.view = view;
 	}
 
 	private int record = 0;
 	private long rowCount = 0;
 
 	public void fetchData() {
-		clientFactory.getRequestFactory().appointmentRequest().findAppointmentEntriesByCaseNumber(caseNumber)
+		requestFactory.appointmentRequest().findAppointmentEntriesByCaseNumber(caseNumber)
 				.fire(new Receiver<List<AppointmentProxy>>() {
 			@Override
 			public void onSuccess(List<AppointmentProxy> response) {
@@ -114,9 +102,8 @@ public class AppointmentActivity extends AbstractActivity implements Presenter, 
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		view = clientFactory.getAppointmentView();
 		view.setPresenter(this);
-		view.setColumnDefinitions(clientFactory.getAppointmentColumnDefinitions());
+		view.setColumnDefinitions(columnDefinitions);
 		panel.setWidget(view.asWidget());
 		fetchData();
 	}

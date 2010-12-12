@@ -18,9 +18,9 @@ package org.eastway.echarts.client.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eastway.echarts.client.EchartsClientFactory;
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.place.LinkPlace;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.rpc.LinkProxy;
 import org.eastway.echarts.client.ui.LinkView;
 
@@ -32,16 +32,19 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 public class LinkActivity extends AbstractActivity implements LinkView.Presenter<LinkProxy> {
 	private List<String[]> data;
 	private String caseNumber;
-	private EchartsClientFactory clientFactory;
 	private LinkView<LinkProxy> view;
+	private EchartsRequestFactory requestFactory;
 
-	public LinkActivity(LinkPlace place, EchartsClientFactory clientFactory) {
+	public LinkActivity(LinkPlace place,
+					    EchartsRequestFactory requestFactory,
+					    LinkView<LinkProxy> view) {
 		this.caseNumber = place.getCaseNumber();
-		this.clientFactory = clientFactory;
+		this.requestFactory = requestFactory;
+		this.view = view;
 	}
 
 	public void fetchData() {
-		clientFactory.getRequestFactory().linkRequest().findAllLinks().fire(new Receiver<List<LinkProxy>>() {
+		requestFactory.linkRequest().findAllLinks().fire(new Receiver<List<LinkProxy>>() {
 			@Override
 			public void onSuccess(List<LinkProxy> response) {
 				if (response != null) {
@@ -73,7 +76,6 @@ public class LinkActivity extends AbstractActivity implements LinkView.Presenter
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		view = clientFactory.getLinkView();
 		panel.setWidget(view.asWidget());
 		fetchData();
 	}

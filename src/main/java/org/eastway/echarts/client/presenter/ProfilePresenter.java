@@ -30,7 +30,7 @@ import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
-public class ProfilePresenter implements Presenter, ProfileView.Presenter<UserProxy> {
+public class ProfilePresenter implements ProfileView.Presenter<UserProxy> {
 
 	private ProfileView<UserProxy> view;
 	private EchartsRequestFactory requestFactory;
@@ -45,7 +45,6 @@ public class ProfilePresenter implements Presenter, ProfileView.Presenter<UserPr
 		this.requestFactory = requestFactory;
 	}
 
-	@Override
 	public void go(HasWidgets container) {
 		fetchData();
 	}

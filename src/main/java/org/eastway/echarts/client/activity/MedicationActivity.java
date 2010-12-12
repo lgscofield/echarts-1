@@ -17,8 +17,8 @@ package org.eastway.echarts.client.activity;
 
 import java.util.List;
 
-import org.eastway.echarts.client.EchartsClientFactory;
 import org.eastway.echarts.client.place.MedicationPlace;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.rpc.MedicationProxy;
 import org.eastway.echarts.client.ui.MedicationView;
 
@@ -30,17 +30,19 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 public class MedicationActivity extends AbstractActivity implements MedicationView.Presenter<MedicationProxy> {
 
 	private String caseNumber;
-	private EchartsClientFactory clientFactory;
 	private MedicationView<MedicationProxy> view;
+	private EchartsRequestFactory requestFactory;
 
 	public MedicationActivity(MedicationPlace place,
-			EchartsClientFactory clientFactory) {
+							  EchartsRequestFactory requestFactory,
+							  MedicationView<MedicationProxy> view) {
 		this.caseNumber = place.getCaseNumber();
-		this.clientFactory = clientFactory;
+		this.requestFactory = requestFactory;
+		this.view = view;
 	}
 
 	private void fetchData() {
-		clientFactory.getRequestFactory().medicationRequest().findMedicationsByCaseNumber(caseNumber).fire(new Receiver<List<MedicationProxy>>() {
+		requestFactory.medicationRequest().findMedicationsByCaseNumber(caseNumber).fire(new Receiver<List<MedicationProxy>>() {
 			@Override
 			public void onSuccess(List<MedicationProxy> response) {
 				if (response != null)
@@ -58,7 +60,6 @@ public class MedicationActivity extends AbstractActivity implements MedicationVi
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		view = clientFactory.getMedicationView();
 		panel.setWidget(view.asWidget());
 		fetchData();
 	}

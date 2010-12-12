@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.client;
+package org.eastway.echarts.client.scaffold.ioc;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -31,7 +31,6 @@ import org.eastway.echarts.client.common.TicklerColumnDefinitionsImpl;
 import org.eastway.echarts.client.mvp.EchartsActivityMapper;
 import org.eastway.echarts.client.mvp.EchartsPlaceHistoryMapper;
 import org.eastway.echarts.client.place.PlaceControllerProvider;
-import org.eastway.echarts.client.presenter.DashboardPresenter;
 import org.eastway.echarts.client.presenter.ProfilePresenter;
 import org.eastway.echarts.client.rpc.ARInfoProxy;
 import org.eastway.echarts.client.rpc.AddressProxy;
@@ -45,6 +44,7 @@ import org.eastway.echarts.client.rpc.MedicationProxy;
 import org.eastway.echarts.client.rpc.MessageProxy;
 import org.eastway.echarts.client.rpc.ReferralProxy;
 import org.eastway.echarts.client.rpc.UserProxy;
+import org.eastway.echarts.client.scaffold.ScaffoldDesktopShell;
 import org.eastway.echarts.client.ui.ARInfoView;
 import org.eastway.echarts.client.ui.ARInfoViewImpl;
 import org.eastway.echarts.client.ui.AddressView;
@@ -86,7 +86,7 @@ import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 
-public class EchartsClientModule extends AbstractGinModule {
+public class ScaffoldModule extends AbstractGinModule {
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -95,13 +95,13 @@ public class EchartsClientModule extends AbstractGinModule {
 		bind(EchartsRequestFactory.class).in(Singleton.class);
 		bind(ActivityMapper.class).to(EchartsActivityMapper.class).in(Singleton.class);
 		bind(EchartsPlaceHistoryMapper.class).in(Singleton.class);
-		bind(EchartsClientFactory.class).in(Singleton.class);
+		bind(ScaffoldInjector.class).in(Singleton.class);
 		bind(PlaceController.class).toProvider(PlaceControllerProvider.class);
 		bind(GetTickler.class).in(Singleton.class);
-		bind(DashboardPresenter.class).in(Singleton.class);
+		bind(ScaffoldDesktopShell.class).in(Singleton.class);
 		bind(new TypeLiteral<DashboardView<LinkedHashMap<String, Long>>>() {}).to(DashboardViewImpl.class);
 
-		bind(new TypeLiteral<TicklerView<Tickler>>() {}).to(TicklerViewImpl.class);
+		bind(new TypeLiteral<TicklerView<Tickler>>() {}).to(TicklerViewImpl.class).in(Singleton.class);
 		bind(new TypeLiteral<EHRView<EHRProxy>>() {}).to(EHRViewImpl.class);
 		bind(new TypeLiteral<PatientSummaryView<EHRProxy>>() {}).to(PatientSummaryViewImpl.class);
 		bind(new TypeLiteral<MessageView<MessageProxy>>() {}).to(MessageViewImpl.class);

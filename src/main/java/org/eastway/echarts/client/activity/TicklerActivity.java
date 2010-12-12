@@ -23,8 +23,8 @@ import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.i18n.client.DateTimeFormat;
 
-import org.eastway.echarts.client.EchartsClientFactory;
 import org.eastway.echarts.client.EchartsUser;
+import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.events.OpenCpstNoteEvent;
 import org.eastway.echarts.client.events.OpenDoctorProgressNoteEvent;
 import org.eastway.echarts.client.events.OpenEhrEvent;
@@ -33,21 +33,21 @@ import org.eastway.echarts.client.events.OpenIspEvent;
 import org.eastway.echarts.client.events.OpenNurseProgressNoteEvent;
 import org.eastway.echarts.client.place.EhrPlace;
 import org.eastway.echarts.client.place.TicklerPlace;
-import org.eastway.echarts.client.presenter.Presenter;
 import org.eastway.echarts.client.rpc.AssignmentProxy;
 import org.eastway.echarts.client.rpc.AssignmentRequest;
 import org.eastway.echarts.client.rpc.EHRProxy;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.rpc.EhrRequest;
 import org.eastway.echarts.client.rpc.PatientProxy;
 import org.eastway.echarts.client.ui.TicklerView;
 import org.eastway.echarts.shared.DueDateStatus;
 import org.eastway.echarts.shared.Tickler;
 
+import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
-import com.google.gwt.user.client.ui.HasWidgets;
 
-public class TicklerActivity extends AbstractActivity implements Presenter, TicklerView.Presenter<Tickler> {
+public class TicklerActivity extends AbstractActivity implements TicklerView.Presenter<Tickler> {
 
 	class EHRFetcher {
 		EHRProxy fetchedEHR;
@@ -84,16 +84,25 @@ public class TicklerActivity extends AbstractActivity implements Presenter, Tick
 
 	private TicklerView<Tickler> view;
 	private EventBus eventBus;
-	private EchartsClientFactory clientFactory;
+	private EchartsRequestFactory requestFactory;
+	private List<ColumnDefinition<Tickler>> columnDefinitions;
+	private PlaceController placeController;
 
-	public TicklerActivity(TicklerPlace place, EchartsClientFactory clientFactory) {
-		this.clientFactory = clientFactory;
+	public TicklerActivity(TicklerPlace place,
+						   EchartsRequestFactory requestFactory,
+						   EventBus eventBus,
+						   List<ColumnDefinition<Tickler>> columnDefinitions,
+						   PlaceController placeController,
+						   TicklerView<Tickler> view) {
+		this.requestFactory = requestFactory;
+		this.eventBus = eventBus;
+		this.columnDefinitions = columnDefinitions;
+		this.placeController = placeController;
+		this.view = view;
 	}
 
 	public void fetchData() {
-		//action.setSessionId(EchartsUser.sessionId);
-		//action.setStaffId(EchartsUser.staffId);
-		clientFactory.getRequestFactory().assignmentRequest().findAssignmentsByStaff(EchartsUser.staffId)
+		requestFactory.assignmentRequest().findAssignmentsByStaff(EchartsUser.staffId)
 			.with("patient")
 			.with("demographics")
 				.fire(new Receiver<List<AssignmentProxy>>() {
@@ -220,21 +229,16 @@ public class TicklerActivity extends AbstractActivity implements Presenter, Tick
 	}
 
 	@Override
-	public void go(HasWidgets container) {
-		fetchData();
-	}
-
-	@Override
 	public void openEhr(Tickler tickler) {
 		String caseNumber = tickler.getCaseNumber();
-		final EhrRequest ehrRequest = clientFactory.getRequestFactory().ehrRequest();
-		AssignmentRequest assignmentRequest = clientFactory.getRequestFactory().assignmentRequest();
+		final EhrRequest ehrRequest = requestFactory.ehrRequest();
+		AssignmentRequest assignmentRequest = requestFactory.assignmentRequest();
 		new EHRFetcher().Run(ehrRequest, assignmentRequest, caseNumber, new Receiver<TicklerActivity.EHRFetcher>() {
 			@Override
 			public void onSuccess(EHRFetcher response) {
-				EHRProxy ehr = clientFactory.getRequestFactory().ehrRequest().edit(response.fetchedEHR);
+				EHRProxy ehr = requestFactory.ehrRequest().edit(response.fetchedEHR);
 				ehr.setAssignments(response.fetchedAssignments);
-				clientFactory.getEventBus().fireEvent(new OpenEhrEvent(ehr));
+				eventBus.fireEvent(new OpenEhrEvent(ehr));
 			}
 		});
 	}
@@ -270,8 +274,7 @@ public class TicklerActivity extends AbstractActivity implements Presenter, Tick
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		view = clientFactory.getTicklerView();
-		view.setColumnDefinitions(clientFactory.getTicklerColumnDefinitions());
+		view.setColumnDefinitions(columnDefinitions);
 		view.setPresenter(this);
 		panel.setWidget(view.asWidget());
 		fetchData();
@@ -279,6 +282,6 @@ public class TicklerActivity extends AbstractActivity implements Presenter, Tick
 
 	@Override
 	public void goTo(Tickler tickler) {
-		clientFactory.getPlaceController().goTo(new EhrPlace(tickler.getCaseNumber()));
+		placeController.goTo(new EhrPlace(tickler.getCaseNumber()));
 	}
 }

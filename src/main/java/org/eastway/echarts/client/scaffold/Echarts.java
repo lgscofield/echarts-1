@@ -13,10 +13,19 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.client.presenter;
+package org.eastway.echarts.client.scaffold;
 
-import com.google.gwt.user.client.ui.HasWidgets;
+import org.eastway.echarts.client.scaffold.ioc.DesktopInjectorWrapper;
+import org.eastway.echarts.client.scaffold.ioc.InjectorWrapper;
 
-public abstract interface Presenter {
-	  public abstract void go(final HasWidgets container);
+import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
+
+public class Echarts implements EntryPoint {
+	final private InjectorWrapper injectorWrapper = GWT.create(DesktopInjectorWrapper.class);
+
+	@Override
+	public void onModuleLoad() {
+		injectorWrapper.getInjector().getScaffoldApp().run();
+	}
 }

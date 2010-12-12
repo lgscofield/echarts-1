@@ -17,9 +17,10 @@ package org.eastway.echarts.client.activity;
 
 import java.util.List;
 
-import org.eastway.echarts.client.EchartsClientFactory;
+import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.place.AddressPlace;
 import org.eastway.echarts.client.rpc.AddressProxy;
+import org.eastway.echarts.client.rpc.EchartsRequestFactory;
 import org.eastway.echarts.client.ui.AddressView;
 
 import com.google.gwt.activity.shared.AbstractActivity;
@@ -31,16 +32,21 @@ public class AddressActivity extends AbstractActivity implements AddressView.Pre
 
 	private AddressView<AddressProxy> view;
 	private String caseNumber;
-	private EchartsClientFactory clientFactory;
+	private EchartsRequestFactory requestFactory;
+	private List<ColumnDefinition<AddressProxy>> columnDefinitions;
 
 	public AddressActivity(AddressPlace place,
-			EchartsClientFactory clientFactory) {
+			EchartsRequestFactory requestFactory,
+			List<ColumnDefinition<AddressProxy>> columnDefinitions,
+			AddressView<AddressProxy> view) {
 		this.caseNumber = place.getCaseNumber();
-		this.clientFactory = clientFactory;
+		this.requestFactory = requestFactory;
+		this.columnDefinitions = columnDefinitions;
+		this.view = view;
 	}
 
 	private void fetchData() {
-		clientFactory.getRequestFactory().addressRequest().findAddressesByCaseNumber(caseNumber).fire(new Receiver<List<AddressProxy>>() {
+		requestFactory.addressRequest().findAddressesByCaseNumber(caseNumber).fire(new Receiver<List<AddressProxy>>() {
 			@Override
 			public void onSuccess(List<AddressProxy> response) {
 				if (response != null)
@@ -51,9 +57,8 @@ public class AddressActivity extends AbstractActivity implements AddressView.Pre
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		view = clientFactory.getAddressView();
 		view.setPresenter(this);
-		view.setColumnDefinitions(clientFactory.getAddressColumnDefinitions());
+		view.setColumnDefinitions(columnDefinitions);
 		panel.setWidget(view.asWidget());
 		fetchData();
 	}

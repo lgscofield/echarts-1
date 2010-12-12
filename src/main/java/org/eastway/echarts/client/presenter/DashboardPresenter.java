@@ -21,7 +21,6 @@ import java.util.List;
 
 import com.google.gwt.event.shared.EventBus;
 
-import org.eastway.echarts.client.EchartsClientFactory;
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
 import org.eastway.echarts.client.events.ChangeCurrentEhrEventHandler;
@@ -47,6 +46,7 @@ import org.eastway.echarts.client.rpc.PatientProxy;
 import org.eastway.echarts.client.rpc.ProductivityProxy;
 import org.eastway.echarts.client.view.DashboardView;
 
+import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.requestfactory.shared.ServerFailure;
 import com.google.gwt.user.client.Cookies;
@@ -54,7 +54,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 
-public class DashboardPresenter implements Presenter, DashboardView.Presenter<LinkedHashMap<String, Long>> {
+public class DashboardPresenter implements DashboardView.Presenter<LinkedHashMap<String, Long>> {
 
 	class EHRFetcher {
 		EHRProxy fetchedEHR;
@@ -94,15 +94,15 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 	private DashboardView<LinkedHashMap<String, Long>> view;
 	private EventBus eventBus;
 	private EchartsRequestFactory requestFactory;
-	private EchartsClientFactory clientFactory;
+	private PlaceController placeController;
 
 	@Inject
-	public DashboardPresenter(EchartsClientFactory clientFactory, DashboardView<LinkedHashMap<String, Long>> view, EventBus eventBus, final EchartsRequestFactory requestFactory) {
-		this.clientFactory = clientFactory;
+	public DashboardPresenter(PlaceController placeController, DashboardView<LinkedHashMap<String, Long>> view, EventBus eventBus, final EchartsRequestFactory requestFactory) {
 		this.view = view;
 		this.eventBus = eventBus;
 		this.view.setPresenter(this);
 		this.requestFactory = requestFactory;
+		this.placeController = placeController;
 	}
 
 	private void bind() {
@@ -118,7 +118,6 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 		return view;
 	}
 
-	@Override
 	public void go(HasWidgets container) {
 		container.clear();
 		container.add(view.asWidget());
@@ -221,7 +220,7 @@ public class DashboardPresenter implements Presenter, DashboardView.Presenter<Li
 
 	@Override
 	public void openTickler() {
-		clientFactory.getPlaceController().goTo(new TicklerPlace());
+		placeController.goTo(new TicklerPlace());
 	}
 
 	@Override
