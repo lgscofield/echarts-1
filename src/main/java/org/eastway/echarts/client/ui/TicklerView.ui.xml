@@ -33,7 +33,5 @@
 	  	border: 1px solid LightGray;
 	  }
 	</ui:style>
-	<g:ScrollPanel>
-		<g:FlexTable addStyleNames='{style.table}' ui:field='table'/>
-	</g:ScrollPanel>
+	<g:FlexTable addStyleNames='{style.table}' ui:field='table'/>
 </ui:UiBinder>

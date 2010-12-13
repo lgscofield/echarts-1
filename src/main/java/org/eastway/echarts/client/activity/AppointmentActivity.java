@@ -22,9 +22,9 @@ import com.google.gwt.event.shared.EventBus;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.place.AppointmentPlace;
-import org.eastway.echarts.client.rpc.AppointmentProxy;
-import org.eastway.echarts.client.rpc.EchartsRequestFactory;
-import org.eastway.echarts.client.view.AppointmentView;
+import org.eastway.echarts.client.request.AppointmentProxy;
+import org.eastway.echarts.client.request.EchartsRequestFactory;
+import org.eastway.echarts.client.ui.AppointmentView;
 
 import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;

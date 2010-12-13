@@ -19,9 +19,9 @@ import java.util.List;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.place.DemographicsPlace;
-import org.eastway.echarts.client.rpc.DemographicsProxy;
-import org.eastway.echarts.client.rpc.EchartsRequestFactory;
-import org.eastway.echarts.client.view.DemographicsView;
+import org.eastway.echarts.client.request.DemographicsProxy;
+import org.eastway.echarts.client.request.EchartsRequestFactory;
+import org.eastway.echarts.client.ui.DemographicsView;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;

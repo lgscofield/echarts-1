@@ -24,10 +24,10 @@ import com.google.gwt.event.shared.EventBus;
 
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.place.MessagePlace;
-import org.eastway.echarts.client.rpc.CodeProxy;
-import org.eastway.echarts.client.rpc.EchartsRequestFactory;
-import org.eastway.echarts.client.rpc.MessageProxy;
-import org.eastway.echarts.client.rpc.MessageRequest;
+import org.eastway.echarts.client.request.CodeProxy;
+import org.eastway.echarts.client.request.EchartsRequestFactory;
+import org.eastway.echarts.client.request.MessageProxy;
+import org.eastway.echarts.client.request.MessageRequest;
 import org.eastway.echarts.client.ui.MessageView;
 
 import com.google.gwt.requestfactory.shared.Receiver;

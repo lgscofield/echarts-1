@@ -35,12 +35,12 @@ import org.eastway.echarts.client.place.PatientSummaryPlace;
 import org.eastway.echarts.client.place.ReferralPlace;
 import org.eastway.echarts.client.place.ServiceHistoryPlace;
 import org.eastway.echarts.client.place.TreatmentPlanPlace;
-import org.eastway.echarts.client.rpc.AssignmentProxy;
-import org.eastway.echarts.client.rpc.AssignmentRequest;
-import org.eastway.echarts.client.rpc.EHRProxy;
-import org.eastway.echarts.client.rpc.EchartsRequestFactory;
-import org.eastway.echarts.client.rpc.EhrRequest;
-import org.eastway.echarts.client.view.EHRView;
+import org.eastway.echarts.client.request.AssignmentProxy;
+import org.eastway.echarts.client.request.AssignmentRequest;
+import org.eastway.echarts.client.request.EHRProxy;
+import org.eastway.echarts.client.request.EchartsRequestFactory;
+import org.eastway.echarts.client.request.EhrRequest;
+import org.eastway.echarts.client.ui.EHRView;
 
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.requestfactory.shared.Receiver;
@@ -90,12 +90,10 @@ public class EhrActivity extends AbstractActivity implements EHRView.Presenter<E
 
 	public EhrActivity(EhrPlace place,
 					   EchartsRequestFactory requestFactory,
-					   EventBus eventBus,
 					   PlaceController placeController,
 					   EHRView<EHRProxy> view) {
 		this.caseNumber = place.getCaseNumber();
 		this.requestFactory = requestFactory;
-		this.eventBus = eventBus;
 		this.placeController = placeController;
 		this.view = view;
 	}
@@ -177,6 +175,7 @@ public class EhrActivity extends AbstractActivity implements EHRView.Presenter<E
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
+		this.eventBus = eventBus;
 		view.setPresenter(this);
 		panel.setWidget(view.asWidget());
 		final EhrRequest ehrRequest = requestFactory.ehrRequest();

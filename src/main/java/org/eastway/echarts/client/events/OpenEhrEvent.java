@@ -15,7 +15,7 @@
  */
 package org.eastway.echarts.client.events;
 
-import org.eastway.echarts.client.rpc.EHRProxy;
+import org.eastway.echarts.client.request.EHRProxy;
 
 import com.google.gwt.event.shared.GwtEvent;
 

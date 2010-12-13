@@ -21,7 +21,6 @@ import org.eastway.echarts.client.common.ColumnDefinition;
 
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.user.client.ui.IsWidget;
-import com.google.gwt.user.client.ui.Widget;
 
 public interface TicklerView<T> extends IsWidget {
 	public interface Presenter<T> {
@@ -49,7 +48,6 @@ public interface TicklerView<T> extends IsWidget {
 	}
 
 	void setPresenter(Presenter<T> presenter);
-	Widget asWidget();
 	void setRowData(List<T> ticklers);
 	void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions);
 }

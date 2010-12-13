@@ -15,7 +15,7 @@
  */
 package org.eastway.echarts.client.events;
 
-import org.eastway.echarts.client.view.EHRView;
+import org.eastway.echarts.client.ui.EHRView;
 import org.eastway.echarts.shared.GetReferral;
 
 import com.google.gwt.event.shared.GwtEvent;

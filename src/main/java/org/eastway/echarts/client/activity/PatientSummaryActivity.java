@@ -22,12 +22,12 @@ import com.google.gwt.event.shared.EventBus;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
-import org.eastway.echarts.client.rpc.AssignmentProxy;
-import org.eastway.echarts.client.rpc.AssignmentRequest;
-import org.eastway.echarts.client.rpc.EHRProxy;
-import org.eastway.echarts.client.rpc.EchartsRequestFactory;
-import org.eastway.echarts.client.rpc.EhrRequest;
-import org.eastway.echarts.client.view.PatientSummaryView;
+import org.eastway.echarts.client.request.AssignmentProxy;
+import org.eastway.echarts.client.request.AssignmentRequest;
+import org.eastway.echarts.client.request.EHRProxy;
+import org.eastway.echarts.client.request.EchartsRequestFactory;
+import org.eastway.echarts.client.request.EhrRequest;
+import org.eastway.echarts.client.ui.PatientSummaryView;
 
 import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;

@@ -1,11 +1,9 @@
 package org.eastway.echarts.client.scaffold;
 
-import org.eastway.echarts.client.EchartsUser;
-import org.eastway.echarts.client.mvp.EchartsActivityMapper;
-import org.eastway.echarts.client.mvp.EchartsPlaceHistoryMapper;
-import org.eastway.echarts.client.place.TicklerPlace;
-import org.eastway.echarts.client.rpc.EchartsRequestFactory;
-import org.eastway.echarts.style.client.GlobalResources;
+import org.eastway.echarts.client.activity.DetailsActivityMapper;
+import org.eastway.echarts.client.activity.EchartsPlaceHistoryMapper;
+import org.eastway.echarts.client.activity.MasterActivityMapper;
+import org.eastway.echarts.client.place.DashboardPlace;
 
 import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.core.client.GWT;
@@ -15,7 +13,6 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
 import com.google.gwt.requestfactory.shared.RequestEvent;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.inject.Inject;
@@ -24,19 +21,21 @@ public class ScaffoldDesktopApp extends ScaffoldApp {
 
 	private ScaffoldDesktopShell shell;
 	private EventBus eventBus;
-	private EchartsRequestFactory requestFactory;
 	private PlaceController placeController;
-	private EchartsActivityMapper activityMapper;
+	private MasterActivityMapper masterActivityMapper;
+	private DetailsActivityMapper detailsActivityMapper;
 
 	@Inject
-	public ScaffoldDesktopApp(ScaffoldDesktopShell shell, EventBus eventBus,
-							  EchartsRequestFactory requestFactory, PlaceController placeController,
-							  EchartsActivityMapper activityMapper) {
+	public ScaffoldDesktopApp(ScaffoldDesktopShell shell,
+							  EventBus eventBus,
+							  PlaceController placeController,
+							  MasterActivityMapper masterActivityMapper,
+							  DetailsActivityMapper detailsActivityMapper) {
 		this.shell = shell;
 		this.eventBus = eventBus;
-		this.requestFactory = requestFactory;
 		this.placeController = placeController;
-		this.activityMapper = activityMapper;
+		this.masterActivityMapper = masterActivityMapper;
+		this.detailsActivityMapper = detailsActivityMapper;
 	}
 
 	public void run() {
@@ -45,25 +44,22 @@ public class ScaffoldDesktopApp extends ScaffoldApp {
 		Element loading = Document.get().getElementById("page-loading-message");
 		loading.getParentElement().removeChild(loading);
 
-		EchartsUser.sessionId = Cookies.getCookie("session_id");
-		EchartsUser.userName = Cookies.getCookie("echarts_user");
-		EchartsUser.staffId = Cookies.getCookie("staff_id");
-		EchartsUser.staffId = "5434"; // for testing
-		GlobalResources.resources().css().ensureInjected();
 		Window.enableScrolling(false);
 
-		RootLayoutPanel.get().add(shell);
-
 		// Start ActivityManager for the main widget with our ActivityMapper
-		ActivityManager activityManager = new ActivityManager(activityMapper, eventBus);
-		activityManager.setDisplay(shell.getMasterPanel());
+		ActivityManager masterActivityManager = new ActivityManager(masterActivityMapper, eventBus);
+		masterActivityManager.setDisplay(shell.getMasterPanel());
+
+		// Start ActivityManager for the details side bar
+		ActivityManager detailsActivityManager = new ActivityManager(detailsActivityMapper, eventBus);
+		detailsActivityManager.setDisplay(shell.getDetailsPanel());
+
+		RootLayoutPanel.get().add(shell);
 
 		// Start PlaceHistoryHandler with our PlaceHistoryMapper
 		EchartsPlaceHistoryMapper historyMapper = GWT.create(EchartsPlaceHistoryMapper.class);
 		PlaceHistoryHandler historyHandler = new PlaceHistoryHandler(historyMapper);
-		historyHandler.register(placeController, eventBus, new TicklerPlace());
-
-		requestFactory.initialize(eventBus);
+		historyHandler.register(placeController, eventBus, new DashboardPlace());
 
 		// Goes to the place represented on URL else default place
 		historyHandler.handleCurrentHistory();

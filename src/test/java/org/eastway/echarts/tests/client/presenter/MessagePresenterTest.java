@@ -26,10 +26,10 @@ import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.requestfactory.shared.Request;
 
 import org.eastway.echarts.client.activity.MessageActivity;
-import org.eastway.echarts.client.rpc.CodeProxy;
-import org.eastway.echarts.client.rpc.EchartsRequestFactory;
-import org.eastway.echarts.client.rpc.MessageProxy;
-import org.eastway.echarts.client.rpc.MessageRequest;
+import org.eastway.echarts.client.request.CodeProxy;
+import org.eastway.echarts.client.request.EchartsRequestFactory;
+import org.eastway.echarts.client.request.MessageProxy;
+import org.eastway.echarts.client.request.MessageRequest;
 import org.easymock.IAnswer;
 import org.junit.Before;
 import org.junit.Test;

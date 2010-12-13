@@ -17,8 +17,8 @@ package org.eastway.echarts.client.common;
 
 import java.util.ArrayList;
 
-import org.eastway.echarts.client.rpc.AssignmentProxy;
-import org.eastway.echarts.client.rpc.EHRProxy;
+import org.eastway.echarts.client.request.AssignmentProxy;
+import org.eastway.echarts.client.request.EHRProxy;
 import org.eastway.echarts.style.client.GlobalResources;
 
 @SuppressWarnings("serial")

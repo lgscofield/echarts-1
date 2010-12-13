@@ -20,8 +20,8 @@ import java.util.List;
 
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.place.LinkPlace;
-import org.eastway.echarts.client.rpc.EchartsRequestFactory;
-import org.eastway.echarts.client.rpc.LinkProxy;
+import org.eastway.echarts.client.request.EchartsRequestFactory;
+import org.eastway.echarts.client.request.LinkProxy;
 import org.eastway.echarts.client.ui.LinkView;
 
 import com.google.gwt.activity.shared.AbstractActivity;

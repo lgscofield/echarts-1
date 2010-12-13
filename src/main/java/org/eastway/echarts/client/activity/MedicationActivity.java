@@ -18,8 +18,8 @@ package org.eastway.echarts.client.activity;
 import java.util.List;
 
 import org.eastway.echarts.client.place.MedicationPlace;
-import org.eastway.echarts.client.rpc.EchartsRequestFactory;
-import org.eastway.echarts.client.rpc.MedicationProxy;
+import org.eastway.echarts.client.request.EchartsRequestFactory;
+import org.eastway.echarts.client.request.MedicationProxy;
 import org.eastway.echarts.client.ui.MedicationView;
 
 import com.google.gwt.activity.shared.AbstractActivity;

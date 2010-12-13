@@ -31,14 +31,14 @@ import org.eastway.echarts.client.events.OpenEhrEvent;
 import org.eastway.echarts.client.events.OpenIndividualProgressNoteEvent;
 import org.eastway.echarts.client.events.OpenIspEvent;
 import org.eastway.echarts.client.events.OpenNurseProgressNoteEvent;
-import org.eastway.echarts.client.place.EhrPlace;
+import org.eastway.echarts.client.place.PatientSummaryPlace;
 import org.eastway.echarts.client.place.TicklerPlace;
-import org.eastway.echarts.client.rpc.AssignmentProxy;
-import org.eastway.echarts.client.rpc.AssignmentRequest;
-import org.eastway.echarts.client.rpc.EHRProxy;
-import org.eastway.echarts.client.rpc.EchartsRequestFactory;
-import org.eastway.echarts.client.rpc.EhrRequest;
-import org.eastway.echarts.client.rpc.PatientProxy;
+import org.eastway.echarts.client.request.AssignmentProxy;
+import org.eastway.echarts.client.request.AssignmentRequest;
+import org.eastway.echarts.client.request.EHRProxy;
+import org.eastway.echarts.client.request.EchartsRequestFactory;
+import org.eastway.echarts.client.request.EhrRequest;
+import org.eastway.echarts.client.request.PatientProxy;
 import org.eastway.echarts.client.ui.TicklerView;
 import org.eastway.echarts.shared.DueDateStatus;
 import org.eastway.echarts.shared.Tickler;
@@ -90,12 +90,10 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 
 	public TicklerActivity(TicklerPlace place,
 						   EchartsRequestFactory requestFactory,
-						   EventBus eventBus,
 						   List<ColumnDefinition<Tickler>> columnDefinitions,
 						   PlaceController placeController,
 						   TicklerView<Tickler> view) {
 		this.requestFactory = requestFactory;
-		this.eventBus = eventBus;
 		this.columnDefinitions = columnDefinitions;
 		this.placeController = placeController;
 		this.view = view;
@@ -274,6 +272,7 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
+		this.eventBus = eventBus;
 		view.setColumnDefinitions(columnDefinitions);
 		view.setPresenter(this);
 		panel.setWidget(view.asWidget());
@@ -282,6 +281,6 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 
 	@Override
 	public void goTo(Tickler tickler) {
-		placeController.goTo(new EhrPlace(tickler.getCaseNumber()));
+		placeController.goTo(new PatientSummaryPlace(tickler.getCaseNumber()));
 	}
 }

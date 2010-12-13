@@ -24,8 +24,8 @@ import junit.framework.TestCase;
 
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.activity.LinkActivity;
-import org.eastway.echarts.client.rpc.EchartsRequestFactory;
-import org.eastway.echarts.client.rpc.LinkProxy;
+import org.eastway.echarts.client.request.EchartsRequestFactory;
+import org.eastway.echarts.client.request.LinkProxy;
 import org.eastway.echarts.client.ui.LinkView;
 import org.eastway.echarts.shared.GetLinks;
 import org.junit.Before;

@@ -17,7 +17,7 @@ package org.eastway.echarts.client.common;
 
 import java.util.ArrayList;
 
-import org.eastway.echarts.client.rpc.DemographicsProxy;
+import org.eastway.echarts.client.request.DemographicsProxy;
 import org.eastway.echarts.style.client.GlobalResources;
 
 @SuppressWarnings("serial")

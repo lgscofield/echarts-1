@@ -18,7 +18,5 @@
   <ui:style>
 
   </ui:style>
-  <g:HTMLPanel>
-    <g:FlowPanel ui:field='panel' />
-  </g:HTMLPanel>
+  <g:FlowPanel ui:field='panel' />
 </ui:UiBinder>

@@ -17,7 +17,7 @@ package org.eastway.echarts.client.common;
 
 import java.util.ArrayList;
 
-import org.eastway.echarts.client.rpc.AddressProxy;
+import org.eastway.echarts.client.request.AddressProxy;
 
 @SuppressWarnings("serial")
 public class AddressColumnDefinitionsImpl extends ArrayList<ColumnDefinition<AddressProxy>> {

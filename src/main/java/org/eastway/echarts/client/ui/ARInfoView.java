@@ -19,12 +19,11 @@ import java.util.List;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
 
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.IsWidget;
 
-public interface ARInfoView<T> {
+public interface ARInfoView<T> extends IsWidget {
 	interface Presenter<T> { }
 
-	Widget asWidget();
 	void setPresenter(Presenter<T> presenter);
 	void setRowData(T rowData);
 	void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions);
