@@ -3,6 +3,7 @@ package org.eastway.echarts.client.ui;
 import java.util.ArrayList;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.user.client.ui.IsWidget;
 
 public interface MessageView<T> extends IsWidget {
@@ -11,6 +12,11 @@ public interface MessageView<T> extends IsWidget {
 		String getId();
 
 		void save(String messageType, String message);
+	}
+
+	public interface Style extends CssResource {
+		String hide();
+		String show();
 	}
 
 	void setData(ArrayList<String[]> data);

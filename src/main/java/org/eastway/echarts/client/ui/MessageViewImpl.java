@@ -50,6 +50,8 @@ public class MessageViewImpl<T> extends Composite implements MessageView<T> {
 	@UiField Button saveButton, closeButton;
 	@UiField ListBox messageTypes;
 	@UiField RichTextArea message;
+	@UiField Style style;
+
 	private Presenter<T> presenter;
 
 	public MessageViewImpl() {
@@ -142,6 +144,7 @@ public class MessageViewImpl<T> extends Composite implements MessageView<T> {
 	@Override
 	public void show() {
 		db.setVisible(true);
+		db.addStyleName(style.show());
 		db.center();
 		message.setFocus(true);
 	}
