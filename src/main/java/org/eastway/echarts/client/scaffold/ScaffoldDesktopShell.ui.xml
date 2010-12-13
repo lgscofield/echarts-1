@@ -112,7 +112,7 @@
 						<g:HorizontalPanel addStyleNames="{style.right}">
 							<g:Hyperlink title='Edit your settings' targetHistoryToken='ProfilePlace:' ui:field="username" />
 							<g:HTML>&nbsp;&mdash;&nbsp;</g:HTML>
-							<g:Hyperlink ui:field="logoutButton" targetHistoryToken=''>Logout</g:Hyperlink>
+							<g:Hyperlink ui:field="logout" targetHistoryToken=''>Logout</g:Hyperlink>
 						</g:HorizontalPanel>
 						<g:HorizontalPanel ui:field="patientSearch" addStyleNames="{style.right} {style.top}">
 							<g:FlowPanel ui:field='patientIdBox'/>

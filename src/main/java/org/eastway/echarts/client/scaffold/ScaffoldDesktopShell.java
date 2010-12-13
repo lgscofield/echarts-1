@@ -4,9 +4,12 @@ import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.ui.EchartsOracle;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
@@ -34,6 +37,7 @@ public class ScaffoldDesktopShell extends Composite {
 	@UiField SimplePanel master;
 	@UiField SimplePanel details;
 	@UiField Hyperlink username;
+	@UiField Hyperlink logout;
 	@UiField NotificationMole mole;
 	private SuggestBox suggestBox;
 	@UiField FlowPanel patientIdBox;
@@ -58,5 +62,10 @@ public class ScaffoldDesktopShell extends Composite {
 
 	public SimplePanel getDetailsPanel() {
 		return details;
+	}
+
+	@UiHandler("logout")
+	void handleLogout(ClickEvent event) {
+		Window.Location.assign("http://" + EchartsUser.dbServerUrl + "/echarts/logout.aspx?continue=" + Window.Location.getHref());
 	}
 }
