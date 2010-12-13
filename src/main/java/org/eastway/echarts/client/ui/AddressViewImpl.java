@@ -22,13 +22,10 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.ScrollPanel;
-import com.google.gwt.user.client.ui.StackLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-import org.eastway.echarts.client.common.ColumnDefinition;
-import org.eastway.echarts.style.client.GlobalResources;
+import org.eastway.echarts.client.common.AddressCellTable;
+import org.eastway.echarts.client.request.AddressProxy;
 
 public class AddressViewImpl<T> extends Composite implements AddressView<T> {
 	@SuppressWarnings("unchecked")
@@ -38,10 +35,7 @@ public class AddressViewImpl<T> extends Composite implements AddressView<T> {
 	private static AddressViewUiBinder uiBinder = GWT
 			.create(AddressViewUiBinder.class);
 
-	@UiField StackLayoutPanel panel;
-	//private Presenter<T> presenter;
-	private List<ColumnDefinition<T>> columnDefinitions;
-	private List<T> rowData;
+	@UiField AddressCellTable panel;
 
 	public AddressViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -49,7 +43,6 @@ public class AddressViewImpl<T> extends Composite implements AddressView<T> {
 
 	@Override
 	public void setPresenter(Presenter<T> presenter) {
-		//this.presenter = presenter;
 	}
 
 	@Override
@@ -57,34 +50,9 @@ public class AddressViewImpl<T> extends Composite implements AddressView<T> {
 		return this;
 	}
 
-	@Override
-	public void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions) {
-		this.columnDefinitions = columnDefinitions;
-	}
-
+	@SuppressWarnings("unchecked")
 	@Override
 	public void setRowData(List<T> rowData) {
-		panel.clear();
-		this.rowData = rowData;
-
-		for(int i = 0; i < this.rowData.size(); i++) {
-			final T t = this.rowData.get(i);
-			StringBuilder header = new StringBuilder();
-			ScrollPanel scroll = new ScrollPanel();
-			FlexTable table = new FlexTable();
-			table.addStyleName(GlobalResources.styles().table());
-			for (int j = 0; j < columnDefinitions.size(); j++) {
-				if (j == 0) {
-					columnDefinitions.get(j).render(t, header);
-				} else {
-					StringBuilder sb = new StringBuilder();
-					table.setHTML(j - 1, 0, columnDefinitions.get(j).getHeader(t));
-					columnDefinitions.get(j).render(t, sb);
-					table.setHTML(j - 1, 1, sb.toString());
-				}
-			}
-			scroll.add(table);
-			panel.add(scroll, header.toString(), 30);
-		}
+		panel.setRowData(0, (List<? extends AddressProxy>) rowData);
 	}
 }

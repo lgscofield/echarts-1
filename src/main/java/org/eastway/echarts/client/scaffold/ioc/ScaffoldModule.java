@@ -22,7 +22,6 @@ import org.eastway.echarts.client.activity.DetailsActivityMapper;
 import org.eastway.echarts.client.activity.EchartsPlaceHistoryMapper;
 import org.eastway.echarts.client.activity.MasterActivityMapper;
 import org.eastway.echarts.client.common.ARInfoColumnDefinitionsImpl;
-import org.eastway.echarts.client.common.AddressColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.AppointmentColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.common.DemographicsColumnDefinitionsImpl;
@@ -151,9 +150,6 @@ public class ScaffoldModule extends AbstractGinModule {
 
 		bind(new TypeLiteral<List<ColumnDefinition<UserProxy>>>() {})
 			.to(ProfileColumnDefinitionsImpl.class).in(Singleton.class);
-
-		bind(new TypeLiteral<List<ColumnDefinition<AddressProxy>>>() {})
-			.to(AddressColumnDefinitionsImpl.class).in(Singleton.class);
 
 		bind(new TypeLiteral<List<ColumnDefinition<EHRProxy>>>() {})
 			.to(PatientSummaryColumnDefinitionsImpl.class).in(Singleton.class);

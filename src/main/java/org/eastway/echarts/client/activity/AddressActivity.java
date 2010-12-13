@@ -17,7 +17,6 @@ package org.eastway.echarts.client.activity;
 
 import java.util.List;
 
-import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.place.AddressPlace;
 import org.eastway.echarts.client.request.AddressProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
@@ -33,15 +32,12 @@ public class AddressActivity extends AbstractActivity implements AddressView.Pre
 	private AddressView<AddressProxy> view;
 	private String caseNumber;
 	private EchartsRequestFactory requestFactory;
-	private List<ColumnDefinition<AddressProxy>> columnDefinitions;
 
 	public AddressActivity(AddressPlace place,
 			EchartsRequestFactory requestFactory,
-			List<ColumnDefinition<AddressProxy>> columnDefinitions,
 			AddressView<AddressProxy> view) {
 		this.caseNumber = place.getCaseNumber();
 		this.requestFactory = requestFactory;
-		this.columnDefinitions = columnDefinitions;
 		this.view = view;
 	}
 
@@ -58,7 +54,6 @@ public class AddressActivity extends AbstractActivity implements AddressView.Pre
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		view.setPresenter(this);
-		view.setColumnDefinitions(columnDefinitions);
 		panel.setWidget(view.asWidget());
 		fetchData();
 	}

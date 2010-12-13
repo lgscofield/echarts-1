@@ -75,7 +75,6 @@ public class MasterActivityMapper implements ActivityMapper {
 	private List<ColumnDefinition<DiagnosisProxy>> diagnosisColumnDefinitions;
 	private LinkView<LinkProxy> linkView;
 	private AddressView<AddressProxy> addressView;
-	private List<ColumnDefinition<AddressProxy>> addressColumnDefinitions;
 	private MedicationView<MedicationProxy> medicationView;
 	private ARInfoView<ARInfoProxy> arInfoView;
 	private List<ColumnDefinition<ARInfoProxy>> arInfoColumnDefinitions;
@@ -102,7 +101,6 @@ public class MasterActivityMapper implements ActivityMapper {
 							     List<ColumnDefinition<DiagnosisProxy>> diagnosisColumnDefinitions,
 							     LinkView<LinkProxy> linkView,
 							     AddressView<AddressProxy> addressView,
-							     List<ColumnDefinition<AddressProxy>> addressColumnDefinitions,
 							     MedicationView<MedicationProxy> medicationView,
 							     ARInfoView<ARInfoProxy> arInfoView,
 							     List<ColumnDefinition<ARInfoProxy>> arInfoColumnDefinitions,
@@ -129,7 +127,6 @@ public class MasterActivityMapper implements ActivityMapper {
 		this.linkView = linkView;
 		this.addressView = addressView;
 		this.medicationView = medicationView;
-		this.addressColumnDefinitions = addressColumnDefinitions;
 		this.arInfoView = arInfoView;
 		this.arInfoColumnDefinitions = arInfoColumnDefinitions;
 		this.dashboardView = dashboardView;
@@ -158,7 +155,7 @@ public class MasterActivityMapper implements ActivityMapper {
 		else if (place instanceof LinkPlace)
 			return new LinkActivity((LinkPlace) place, requestFactory, linkView);
 		else if (place instanceof AddressPlace)
-			return new AddressActivity((AddressPlace) place, requestFactory, addressColumnDefinitions, addressView);
+			return new AddressActivity((AddressPlace) place, requestFactory, addressView);
 		else if (place instanceof MedicationPlace)
 			return new MedicationActivity((MedicationPlace) place, requestFactory, medicationView);
 		else if (place instanceof TreatmentPlanPlace)

@@ -17,14 +17,11 @@ package org.eastway.echarts.client.ui;
 
 import java.util.List;
 
-import org.eastway.echarts.client.common.ColumnDefinition;
-
 import com.google.gwt.user.client.ui.IsWidget;
 
 public interface AddressView<T> extends IsWidget {
 	interface Presenter<T> { }
 
 	void setPresenter(Presenter<T> presenter);
-	void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions);
 	void setRowData(List<T> rowData);
 }
