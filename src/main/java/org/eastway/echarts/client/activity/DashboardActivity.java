@@ -37,7 +37,6 @@ import org.eastway.echarts.client.place.DashboardPlace;
 import org.eastway.echarts.client.place.TicklerPlace;
 import org.eastway.echarts.client.request.AssignmentProxy;
 import org.eastway.echarts.client.request.AssignmentRequest;
-import org.eastway.echarts.client.request.DbServerConfigProxy;
 import org.eastway.echarts.client.request.EHRProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.request.EhrRequest;
@@ -48,7 +47,6 @@ import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.requestfactory.shared.ServerFailure;
 import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 public class DashboardActivity extends AbstractActivity implements DashboardView.Presenter<LinkedHashMap<String, Long>> {
@@ -107,18 +105,6 @@ public class DashboardActivity extends AbstractActivity implements DashboardView
 	}
 
 	private void fetchData() {
-		requestFactory.dbServerConfigRequest().findDbServerConfig("dbServerUrl").fire(new Receiver<DbServerConfigProxy>() {
-			@Override
-			public void onSuccess(DbServerConfigProxy response) {
-				if ((EchartsUser.sessionId == null || EchartsUser.sessionId == "null") ||
-						(EchartsUser.userName == null || EchartsUser.userName == "null") ||
-						(EchartsUser.staffId == null || EchartsUser.staffId == "null")) {
-					Window.Location.assign("http://" + response.getConfigValue() + "/echarts/logout.aspx?continue=" + Window.Location.getHref());
-				} else {
-					EchartsUser.dbServerUrl = response.getConfigValue();
-				}
-			}
-		});
 		getProductivityData();
 	}
 
