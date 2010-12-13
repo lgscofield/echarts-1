@@ -58,4 +58,10 @@ public class MedicationViewImpl<T> extends Composite implements MedicationView<T
 	public void setMedication(String medication) {
 		this.medications.setText(record, Column.MEDICATION.ordinal(), medication);
 	}
+
+	@Override
+	public void clear() {
+		record = 0;
+		medications.clear();
+	}
 }

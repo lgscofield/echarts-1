@@ -52,6 +52,7 @@ public class MedicationActivity extends AbstractActivity implements MedicationVi
 	}
 
 	public void setData(List<MedicationProxy> medications) {
+		view.clear();
 		for (MedicationProxy medication : medications) {
 			view.setMedication(medication.getMedication());
 			view.nextRecord();

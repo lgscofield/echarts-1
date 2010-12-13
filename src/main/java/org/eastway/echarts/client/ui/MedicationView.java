@@ -8,4 +8,6 @@ public interface MedicationView<T> extends IsWidget {
 	public void nextRecord();
 
 	public void setMedication(String medication);
+
+	public void clear();
 }
