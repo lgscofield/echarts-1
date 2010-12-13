@@ -48,6 +48,7 @@ public class LinkViewImpl<T> extends Composite implements LinkView<T> {
 
 	@Override
 	public void setData(List<String[]> linkList) {
+		panel.clear();
 		HashSet<String> header = new HashSet<String>();
 		for (String[] s : linkList)
 			while (!header.contains(s[2]))
