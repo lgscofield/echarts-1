@@ -14,7 +14,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:a='urn:import:com.google.gwt.user.client.ui'
-	xmlns:l="urn:import:org.eastway.echarts.client.ui">
+	xmlns:e="urn:import:org.eastway.echarts.client.ui">
 	<ui:style type="org.eastway.echarts.client.scaffold.ScaffoldDesktopShell.Style">
 		.alerts {
 			border-top: 1px solid SkyBlue;
@@ -67,21 +67,6 @@
 			font-style: italic;
 		}
 		
-		.button {
-			padding: 3px;
-			margin: 4px 2px 2px 2px;
-		}
-		
-		.searchbox {
-			margin-top: 2px;
-			padding: 6px;
-			width: 220px;
-		}
-		
-		.top {
-			margin-top: 10px;
-		}
-
 		.label:hover {
 			cursor: pointer;
 			background-color: #dfeffc;
@@ -110,11 +95,8 @@
 					<g:FlexTable ui:field='currentPatientData'
 						addStyleNames='{style.left} {style.margin} {style.italics}'/>
 					<g:VerticalPanel addStyleNames="{style.right}">
-						<l:LoginWidget ui:field="loginWidget" />
-						<g:HorizontalPanel ui:field="patientSearch" addStyleNames="{style.right} {style.top}">
-							<g:FlowPanel ui:field='patientIdBox'/>
-							<g:Button ui:field='patientSearchButton' addStyleNames='{style.button}'>Search</g:Button>
-						</g:HorizontalPanel>
+						<e:LoginWidget ui:field="loginWidget" />
+						<e:PatientSearchWidget ui:field="patientSearchWidget" />
 					</g:VerticalPanel>
 				</g:HorizontalPanel>
 			</g:FlowPanel>

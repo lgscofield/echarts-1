@@ -1,0 +1,29 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style type="org.eastway.echarts.client.ui.PatientSearchWidget.Style">
+		.right {
+			float: right;
+		}
+		.top {
+			margin-top: 10px;
+		}
+		.button {
+			padding: 3px;
+			margin: 4px 2px 2px 2px;
+		}
+		.searchbox {
+			margin-top: 2px;
+			padding: 6px;
+			width: 220px;
+		}
+	</ui:style>
+	<g:HTMLPanel ui:field="patientSearch" addStyleNames="{style.right} {style.top}">
+		<table>
+			<tr>
+				<td><g:FlowPanel ui:field='patientIdBox' /></td>
+				<td><g:Button ui:field='patientSearchButton' addStyleNames='{style.button}'>Search</g:Button></td>
+			</tr>
+		</table>
+	</g:HTMLPanel>
+</ui:UiBinder> 
