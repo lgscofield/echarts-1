@@ -97,7 +97,7 @@
 			-webkit-border-bottom-right-radius: 10px;
 		}
 	</ui:style>
-	<ui:image field="logo" src="../style/echarts-logo.gif"/>
+	<ui:image field="logo" src="../style/images/echarts-logo.gif"/>
 	<g:DockLayoutPanel unit="EM" ui:field="dockLayoutPanel">
 		<g:north size="6">
 			<g:FlowPanel>

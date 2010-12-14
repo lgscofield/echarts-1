@@ -31,7 +31,7 @@ public class GlobalResources {
 		@NotStrict
 		@Source("echarts.css")
 		Styles css();
-		@Source("default_photo.jpg")
+		@Source("images/default_photo.jpg")
 		ImageResource defaultPhoto();
 	}
 
