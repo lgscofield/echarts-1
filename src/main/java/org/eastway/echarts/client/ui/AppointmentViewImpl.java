@@ -30,7 +30,7 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Widget;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
-import org.eastway.echarts.style.client.GlobalResources;
+import org.eastway.echarts.client.style.GlobalResources;
 
 public class AppointmentViewImpl<T> extends Composite implements AppointmentView<T> {
 	@SuppressWarnings("unchecked")

@@ -18,7 +18,7 @@ package org.eastway.echarts.client.ui;
 import java.util.List;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
-import org.eastway.echarts.style.client.GlobalResources;
+import org.eastway.echarts.client.style.GlobalResources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;

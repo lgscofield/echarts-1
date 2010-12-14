@@ -18,7 +18,7 @@ package org.eastway.echarts.client.scaffold;
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.scaffold.ioc.DesktopInjectorWrapper;
 import org.eastway.echarts.client.scaffold.ioc.InjectorWrapper;
-import org.eastway.echarts.style.client.GlobalResources;
+import org.eastway.echarts.client.style.GlobalResources;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;

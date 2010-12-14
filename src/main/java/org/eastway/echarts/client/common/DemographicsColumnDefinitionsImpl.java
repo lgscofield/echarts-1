@@ -18,7 +18,7 @@ package org.eastway.echarts.client.common;
 import java.util.ArrayList;
 
 import org.eastway.echarts.client.request.DemographicsProxy;
-import org.eastway.echarts.style.client.GlobalResources;
+import org.eastway.echarts.client.style.GlobalResources;
 
 @SuppressWarnings("serial")
 public class DemographicsColumnDefinitionsImpl extends ArrayList<ColumnDefinition<DemographicsProxy>> {

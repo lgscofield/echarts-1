@@ -18,7 +18,7 @@ package org.eastway.echarts.client.ui;
 import java.util.ArrayList;
 import java.util.Date;
 
-import org.eastway.echarts.style.client.GlobalResources;
+import org.eastway.echarts.client.style.GlobalResources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;

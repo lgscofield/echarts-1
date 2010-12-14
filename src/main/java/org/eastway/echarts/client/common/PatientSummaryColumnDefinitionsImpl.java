@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 import org.eastway.echarts.client.request.AssignmentProxy;
 import org.eastway.echarts.client.request.EHRProxy;
-import org.eastway.echarts.style.client.GlobalResources;
+import org.eastway.echarts.client.style.GlobalResources;
 
 @SuppressWarnings("serial")
 public class PatientSummaryColumnDefinitionsImpl extends ArrayList<ColumnDefinition<EHRProxy>> {

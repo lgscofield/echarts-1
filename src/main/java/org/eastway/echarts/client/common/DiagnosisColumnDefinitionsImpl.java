@@ -18,7 +18,7 @@ package org.eastway.echarts.client.common;
 import java.util.ArrayList;
 
 import org.eastway.echarts.client.request.DiagnosisProxy;
-import org.eastway.echarts.style.client.GlobalResources;
+import org.eastway.echarts.client.style.GlobalResources;
 
 @SuppressWarnings("serial")
 public class DiagnosisColumnDefinitionsImpl extends ArrayList<ColumnDefinition<DiagnosisProxy>> {
