@@ -1,18 +1,14 @@
 package org.eastway.echarts.client.scaffold;
 
-import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.ui.EchartsOracle;
+import org.eastway.echarts.client.ui.LoginWidget;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.NotificationMole;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.SuggestBox;
@@ -36,8 +32,7 @@ public class ScaffoldDesktopShell extends Composite {
 
 	@UiField SimplePanel master;
 	@UiField SimplePanel details;
-	@UiField Hyperlink username;
-	@UiField Hyperlink logout;
+	@UiField LoginWidget loginWidget;
 	@UiField NotificationMole mole;
 	private SuggestBox suggestBox;
 	@UiField FlowPanel patientIdBox;
@@ -46,7 +41,6 @@ public class ScaffoldDesktopShell extends Composite {
 	@Inject
 	public ScaffoldDesktopShell(EchartsOracle oracle) {
 		initWidget(BINDER.createAndBindUi(this));
-		username.setText(EchartsUser.userName);
 		this.suggestBox = new SuggestBox(oracle);
 		suggestBox.addStyleName(style.searchbox());
 		patientIdBox.add(suggestBox);
@@ -64,8 +58,7 @@ public class ScaffoldDesktopShell extends Composite {
 		return details;
 	}
 
-	@UiHandler("logout")
-	void handleLogout(ClickEvent event) {
-		Window.Location.assign("http://" + EchartsUser.dbServerUrl + "/echarts/logout.aspx?continue=" + Window.Location.getHref());
+	public LoginWidget getLoginWidget() {
+		return loginWidget;
 	}
 }
