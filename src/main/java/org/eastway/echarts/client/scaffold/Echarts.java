@@ -18,7 +18,6 @@ package org.eastway.echarts.client.scaffold;
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.scaffold.ioc.DesktopInjectorWrapper;
 import org.eastway.echarts.client.scaffold.ioc.InjectorWrapper;
-import org.eastway.echarts.client.style.GlobalResources;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -32,7 +31,6 @@ public class Echarts implements EntryPoint {
 		EchartsUser.sessionId = Cookies.getCookie("session_id");
 		EchartsUser.userName = Cookies.getCookie("echarts_user");
 		EchartsUser.staffId = Cookies.getCookie("staff_id");
-		GlobalResources.resources().css().ensureInjected();
 
 		injectorWrapper.getInjector().getScaffoldApp().run();
 	}
