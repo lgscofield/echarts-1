@@ -57,8 +57,6 @@ import org.eastway.echarts.client.ui.DemographicsView;
 import org.eastway.echarts.client.ui.DemographicsViewImpl;
 import org.eastway.echarts.client.ui.DiagnosisView;
 import org.eastway.echarts.client.ui.DiagnosisViewImpl;
-import org.eastway.echarts.client.ui.EHRView;
-import org.eastway.echarts.client.ui.EHRViewImpl;
 import org.eastway.echarts.client.ui.EchartsOracle;
 import org.eastway.echarts.client.ui.EhrSideBarView;
 import org.eastway.echarts.client.ui.EhrSideBarViewImpl;
@@ -105,8 +103,6 @@ public class ScaffoldModule extends AbstractGinModule {
 
 		bind(new TypeLiteral<TicklerView<Tickler>>() {})
 			.to(TicklerViewImpl.class).in(Singleton.class);
-		bind(new TypeLiteral<EHRView<EHRProxy>>() {})
-			.to(EHRViewImpl.class).in(Singleton.class);
 		bind(new TypeLiteral<PatientSummaryView<EHRProxy>>() {})
 			.to(PatientSummaryViewImpl.class).in(Singleton.class);
 		bind(new TypeLiteral<MessageView<MessageProxy>>() {})

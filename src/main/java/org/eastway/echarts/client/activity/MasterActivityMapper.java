@@ -10,7 +10,6 @@ import org.eastway.echarts.client.place.AppointmentPlace;
 import org.eastway.echarts.client.place.DashboardPlace;
 import org.eastway.echarts.client.place.DemographicsPlace;
 import org.eastway.echarts.client.place.DiagnosisPlace;
-import org.eastway.echarts.client.place.EhrPlace;
 import org.eastway.echarts.client.place.LinkPlace;
 import org.eastway.echarts.client.place.MedicationPlace;
 import org.eastway.echarts.client.place.MessagePlace;
@@ -39,7 +38,6 @@ import org.eastway.echarts.client.ui.AppointmentView;
 import org.eastway.echarts.client.ui.DashboardView;
 import org.eastway.echarts.client.ui.DemographicsView;
 import org.eastway.echarts.client.ui.DiagnosisView;
-import org.eastway.echarts.client.ui.EHRView;
 import org.eastway.echarts.client.ui.LinkView;
 import org.eastway.echarts.client.ui.MedicationView;
 import org.eastway.echarts.client.ui.MessageView;
@@ -61,7 +59,6 @@ public class MasterActivityMapper implements ActivityMapper {
 	private PlaceController placeController;
 	private TicklerView<Tickler> ticklerView;
 	private List<ColumnDefinition<Tickler>> ticklerColumnDefinitions;
-	private EHRView<EHRProxy> ehrView;
 	private PatientSummaryView<EHRProxy> patientSummaryView;
 	private List<ColumnDefinition<EHRProxy>> patientSummaryColumnDefinitions;
 	private MessageView<MessageProxy> messageView;
@@ -87,7 +84,6 @@ public class MasterActivityMapper implements ActivityMapper {
 							     PlaceController placeController,
 							     TicklerView<Tickler> ticklerView,
 							     List<ColumnDefinition<Tickler>> ticklerColumnDefinitions,
-							     EHRView<EHRProxy> ehrView,
 							     PatientSummaryView<EHRProxy> patientSummaryView,
 							     List<ColumnDefinition<EHRProxy>> patientSummaryColumnDefinitions,
 							     MessageView<MessageProxy> messageView,
@@ -112,7 +108,6 @@ public class MasterActivityMapper implements ActivityMapper {
 		this.placeController = placeController;
 		this.ticklerView = ticklerView;
 		this.ticklerColumnDefinitions = ticklerColumnDefinitions;
-		this.ehrView = ehrView;
 		this.patientSummaryView = patientSummaryView;
 		this.patientSummaryColumnDefinitions = patientSummaryColumnDefinitions;
 		this.messageView = messageView;
@@ -138,8 +133,6 @@ public class MasterActivityMapper implements ActivityMapper {
 	public Activity getActivity(Place place) {
 		if (place instanceof TicklerPlace)
 			return new TicklerActivity((TicklerPlace) place, requestFactory, ticklerColumnDefinitions, placeController, ticklerView);
-		else if (place instanceof EhrPlace)
-			return new EhrActivity((EhrPlace) place, requestFactory, placeController, ehrView);
 		else if (place instanceof PatientSummaryPlace)
 			return new PatientSummaryActivity((PatientSummaryPlace) place, requestFactory, patientSummaryColumnDefinitions, patientSummaryView);
 		else if (place instanceof MessagePlace)

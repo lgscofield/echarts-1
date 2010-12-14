@@ -94,7 +94,6 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 		openEhr = new Command() {
 			@Override
 			public void execute() {
-				presenter.openEhr(t);
 				menuPopup.hide();
 			}
 		};
@@ -104,7 +103,6 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 		openIsp = new Command() {
 			@Override
 			public void execute() {
-				presenter.openIsp(t);
 				menuPopup.hide();
 			}
 		};
@@ -113,7 +111,6 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 		openIndividualProgressNote = new Command() {
 			@Override
 			public void execute() {
-				presenter.openIndividualProgressNote(t);
 				menuPopup.hide();
 			}
 		};
@@ -122,7 +119,6 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 		openCpstNote = new Command() {
 			@Override
 			public void execute() {
-				presenter.openCpstNote(t);
 				menuPopup.hide();
 			}
 		};
@@ -131,7 +127,6 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 		openDoctorProgressNote = new Command() {
 			@Override
 			public void execute() {
-				presenter.openDoctorProgressNote(t);
 				menuPopup.hide();
 			}
 		};
@@ -140,7 +135,6 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 		openNurseProgressNote = new Command() {
 			@Override
 			public void execute() {
-				presenter.openNurseProgressNote(t);
 				menuPopup.hide();
 			}
 		};

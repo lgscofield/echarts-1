@@ -22,17 +22,6 @@ import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 
 import org.eastway.echarts.client.EchartsUser;
-import org.eastway.echarts.client.events.ChangeCurrentEhrEvent;
-import org.eastway.echarts.client.events.LogoutEvent;
-import org.eastway.echarts.client.events.OpenEhrEvent;
-import org.eastway.echarts.client.events.ViewGroupProgressNoteEvent;
-import org.eastway.echarts.client.events.ViewLastSeenReportEvent;
-import org.eastway.echarts.client.events.ViewMedsomSignaturesEvent;
-import org.eastway.echarts.client.events.ViewOverlapsReportEvent;
-import org.eastway.echarts.client.events.ViewProfileEvent;
-import org.eastway.echarts.client.events.ViewProviderSignaturesEvent;
-import org.eastway.echarts.client.events.ViewStaffHistoryEvent;
-import org.eastway.echarts.client.events.ViewSupervisorSignaturesEvent;
 import org.eastway.echarts.client.place.DashboardPlace;
 import org.eastway.echarts.client.place.TicklerPlace;
 import org.eastway.echarts.client.request.AssignmentProxy;
@@ -87,7 +76,6 @@ public class DashboardActivity extends AbstractActivity implements DashboardView
 	}
 
 	private DashboardView<LinkedHashMap<String, Long>> view;
-	private EventBus eventBus;
 	private EchartsRequestFactory requestFactory;
 	private PlaceController placeController;
 
@@ -106,25 +94,6 @@ public class DashboardActivity extends AbstractActivity implements DashboardView
 
 	private void fetchData() {
 		getProductivityData();
-	}
-
-	@Override
-	public void changeCurrentEhr(Object ehr) {
-			eventBus.fireEvent(new ChangeCurrentEhrEvent<EHRProxy>((EHRProxy)ehr));
-	}
-
-	@Override
-	public void openEhr(String text) {
-		final EhrRequest ehrRequest = requestFactory.ehrRequest();
-		AssignmentRequest assignmentRequest = requestFactory.assignmentRequest();
-		new EHRFetcher().Run(ehrRequest, assignmentRequest, text.replaceAll("(.*) - .*", "$1"), new Receiver<DashboardActivity.EHRFetcher>() {
-			@Override
-			public void onSuccess(EHRFetcher response) {
-				EHRProxy ehr = requestFactory.ehrRequest().edit(response.fetchedEHR);
-				ehr.setAssignments(response.fetchedAssignments);
-				eventBus.fireEvent(new OpenEhrEvent(ehr));
-			}
-		});
 	}
 
 	private void getProductivityData() {
@@ -152,53 +121,7 @@ public class DashboardActivity extends AbstractActivity implements DashboardView
 	}
 
 	@Override
-	public void logout() {
-		eventBus.fireEvent(new LogoutEvent());
-	}
-
-	@Override
-	public void openProfile() {
-		eventBus.fireEvent(new ViewProfileEvent());
-	}
-
-	@Override
-	public void openProviderSignatures() {
-		eventBus.fireEvent(new ViewProviderSignaturesEvent());
-	}
-
-	@Override
-	public void openSupervisorSignatures() {
-		eventBus.fireEvent(new ViewSupervisorSignaturesEvent());
-	}
-
-	@Override
-	public void openMedsomSignatures() {
-		eventBus.fireEvent(new ViewMedsomSignaturesEvent());
-	}
-
-	@Override
-	public void openStaffHistory() {
-		eventBus.fireEvent(new ViewStaffHistoryEvent());
-	}
-
-	@Override
-	public void openGroupProgressNote() {
-		eventBus.fireEvent(new ViewGroupProgressNoteEvent());
-	}
-
-	@Override
-	public void openLastSeenReport() {
-		eventBus.fireEvent(new ViewLastSeenReportEvent());
-	}
-
-	@Override
-	public void openOverlapsReport() {
-		eventBus.fireEvent(new ViewOverlapsReportEvent());
-	}
-
-	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		this.eventBus = eventBus;
 		view.setPresenter(this);
 		panel.setWidget(view.asWidget());
 		fetchData();

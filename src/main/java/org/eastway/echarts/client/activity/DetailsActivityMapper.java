@@ -6,7 +6,6 @@ import org.eastway.echarts.client.place.AppointmentPlace;
 import org.eastway.echarts.client.place.DashboardPlace;
 import org.eastway.echarts.client.place.DemographicsPlace;
 import org.eastway.echarts.client.place.DiagnosisPlace;
-import org.eastway.echarts.client.place.EhrPlace;
 import org.eastway.echarts.client.place.LinkPlace;
 import org.eastway.echarts.client.place.MedicationPlace;
 import org.eastway.echarts.client.place.MessagePlace;
@@ -52,8 +51,6 @@ public class DetailsActivityMapper implements ActivityMapper {
 	public Activity getActivity(Place place) {
 		if (place instanceof TicklerPlace)
 			return new DashboardSideBarActivity(dashboardSideBarView);
-		else if (place instanceof EhrPlace)
-			;
 		else if (place instanceof PatientSummaryPlace)
 			return new EhrSideBarActivity(ehrSideBarView, placeController, ((PatientSummaryPlace) place).getCaseNumber());
 		else if (place instanceof MessagePlace)

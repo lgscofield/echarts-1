@@ -25,12 +25,6 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.common.ColumnDefinition;
-import org.eastway.echarts.client.events.OpenCpstNoteEvent;
-import org.eastway.echarts.client.events.OpenDoctorProgressNoteEvent;
-import org.eastway.echarts.client.events.OpenEhrEvent;
-import org.eastway.echarts.client.events.OpenIndividualProgressNoteEvent;
-import org.eastway.echarts.client.events.OpenIspEvent;
-import org.eastway.echarts.client.events.OpenNurseProgressNoteEvent;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
 import org.eastway.echarts.client.place.TicklerPlace;
 import org.eastway.echarts.client.request.AssignmentProxy;
@@ -83,7 +77,6 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 	}
 
 	private TicklerView<Tickler> view;
-	private EventBus eventBus;
 	private EchartsRequestFactory requestFactory;
 	private List<ColumnDefinition<Tickler>> columnDefinitions;
 	private PlaceController placeController;
@@ -226,53 +219,12 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 			.format(new Date(dueDate));
 	}
 
-	@Override
-	public void openEhr(Tickler tickler) {
-		String caseNumber = tickler.getCaseNumber();
-		final EhrRequest ehrRequest = requestFactory.ehrRequest();
-		AssignmentRequest assignmentRequest = requestFactory.assignmentRequest();
-		new EHRFetcher().Run(ehrRequest, assignmentRequest, caseNumber, new Receiver<TicklerActivity.EHRFetcher>() {
-			@Override
-			public void onSuccess(EHRFetcher response) {
-				EHRProxy ehr = requestFactory.ehrRequest().edit(response.fetchedEHR);
-				ehr.setAssignments(response.fetchedAssignments);
-				eventBus.fireEvent(new OpenEhrEvent(ehr));
-			}
-		});
-	}
-
-	@Override
-	public void openIsp(Tickler tickler) {
-		eventBus.fireEvent(new OpenIspEvent(tickler.getCaseNumber()));
-	}
-
 	public TicklerView<Tickler> getDisplay() {
 		return view;
 	}
 
 	@Override
-	public void openCpstNote(Tickler tickler) {
-		eventBus.fireEvent(new OpenCpstNoteEvent(tickler.getCaseNumber()));
-	}
-
-	@Override
-	public void openIndividualProgressNote(Tickler tickler) {
-		eventBus.fireEvent(new OpenIndividualProgressNoteEvent(tickler.getCaseNumber()));
-	}
-
-	@Override
-	public void openDoctorProgressNote(Tickler tickler) {
-		eventBus.fireEvent(new OpenDoctorProgressNoteEvent(tickler.getCaseNumber()));
-	}
-
-	@Override
-	public void openNurseProgressNote(Tickler tickler) {
-		eventBus.fireEvent(new OpenNurseProgressNoteEvent(tickler.getCaseNumber()));
-	}
-
-	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		this.eventBus = eventBus;
 		view.setColumnDefinitions(columnDefinitions);
 		view.setPresenter(this);
 		panel.setWidget(view.asWidget());

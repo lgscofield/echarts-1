@@ -24,12 +24,6 @@ import com.google.gwt.user.client.ui.IsWidget;
 
 public interface TicklerView<T> extends IsWidget {
 	public interface Presenter<T> {
-		void openEhr(T caseNumber);
-		void openIsp(T t);
-		void openCpstNote(T t);
-		void openIndividualProgressNote(T t);
-		void openDoctorProgressNote(T t);
-		void openNurseProgressNote(T t);
 		void goTo(T t);
 	}
 

@@ -6,7 +6,6 @@ import org.eastway.echarts.client.place.AppointmentPlace;
 import org.eastway.echarts.client.place.DashboardPlace;
 import org.eastway.echarts.client.place.DemographicsPlace;
 import org.eastway.echarts.client.place.DiagnosisPlace;
-import org.eastway.echarts.client.place.EhrPlace;
 import org.eastway.echarts.client.place.LinkPlace;
 import org.eastway.echarts.client.place.MedicationPlace;
 import org.eastway.echarts.client.place.MessagePlace;
@@ -21,7 +20,6 @@ import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.gwt.place.shared.WithTokenizers;
 
 @WithTokenizers({ TicklerPlace.Tokenizer.class,
-				  EhrPlace.Tokenizer.class,
 				  PatientSummaryPlace.Tokenizer.class,
 				  MessagePlace.Tokenizer.class,
 				  DemographicsPlace.Tokenizer.class,

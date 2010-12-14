@@ -30,29 +30,7 @@ public interface DashboardView<T> extends IsWidget {
 	}
 
 	public interface Presenter<T> {
-		void changeCurrentEhr(Object object);
-
-		void openEhr(String text);
-
 		void openTickler();
-
-		void logout();
-
-		void openProfile();
-
-		void openProviderSignatures();
-
-		void openSupervisorSignatures();
-
-		void openMedsomSignatures();
-
-		void openStaffHistory();
-
-		void openGroupProgressNote();
-
-		void openLastSeenReport();
-
-		void openOverlapsReport();
 	}
 
 	void setPresenter(Presenter<T> presenter);
