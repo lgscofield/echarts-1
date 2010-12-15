@@ -15,5 +15,8 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style>
 	</ui:style>
-	<g:FlexTable ui:field="table"/>
+	<g:HTMLPanel>
+		<span ui:field="error" />
+		<g:FlexTable ui:field="table"/>
+	</g:HTMLPanel>
 </ui:UiBinder>

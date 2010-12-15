@@ -21,6 +21,7 @@ import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.style.GlobalResources;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
@@ -40,6 +41,7 @@ public class DemographicsViewImpl<T> extends Composite implements DemographicsVi
 	private T rowData;
 	private List<ColumnDefinition<T>> columnDefinitions;
 	@UiField FlexTable table;
+	@UiField SpanElement error;
 
 	public DemographicsViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -58,6 +60,8 @@ public class DemographicsViewImpl<T> extends Composite implements DemographicsVi
 
 	@Override
 	public void setRowData(T rowData) {
+		if (rowData == null)
+			return;
 		this.rowData = rowData;
 		for (int i = 0; i < columnDefinitions.size(); i++) {
 			StringBuilder sb = new StringBuilder();
@@ -70,5 +74,10 @@ public class DemographicsViewImpl<T> extends Composite implements DemographicsVi
 	@Override
 	public void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions) {
 		this.columnDefinitions = columnDefinitions;
+	}
+
+	@Override
+	public void setError(String message) {
+		error.setInnerText(message);
 	}
 }

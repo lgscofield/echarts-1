@@ -28,6 +28,7 @@ import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.requestfactory.shared.Request;
+import com.google.gwt.requestfactory.shared.ServerFailure;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 public class DemographicsActivity extends AbstractActivity implements DemographicsView.Presenter<DemographicsProxy> {
@@ -57,14 +58,23 @@ public class DemographicsActivity extends AbstractActivity implements Demographi
 		request.fire(new Receiver<DemographicsProxy>() {
 			@Override
 			public void onSuccess(DemographicsProxy response) {
-				if (response != null)
-					setData(response);
+				if (response != null) {
+					CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
+					view.setRowData(response);
+				} else {
+					CurrentEhrWidget.instance().setEhr(null);
+					view.setRowData(null);
+					view.setError("No demographics found for case number: " + caseNumber);
+				}
+			}
+
+			@Override
+			public void onFailure(ServerFailure failure) {
+				CurrentEhrWidget.instance().setEhr(null);
+				view.setRowData(null);
+				view.setError(failure.getMessage());
 			}
 		});
-	}
-
-	public void setData(DemographicsProxy demographics) {
-		view.setRowData(demographics);
 	}
 
 	@Override
@@ -73,6 +83,5 @@ public class DemographicsActivity extends AbstractActivity implements Demographi
 		view.setColumnDefinitions(columnDefinitions);
 		panel.setWidget(view.asWidget());
 		fetchData();
-		CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
 	}
 }
