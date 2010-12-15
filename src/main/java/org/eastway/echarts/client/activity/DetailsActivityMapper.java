@@ -49,36 +49,49 @@ public class DetailsActivityMapper implements ActivityMapper {
 
 	@Override
 	public Activity getActivity(Place place) {
-		if (place instanceof TicklerPlace)
+		if (place instanceof TicklerPlace) {
 			return new DashboardSideBarActivity(dashboardSideBarView);
-		else if (place instanceof PatientSummaryPlace)
+		} else if (place instanceof PatientSummaryPlace) {
+			ehrSideBarView.selectPatientSummaryPlace();
 			return new EhrSideBarActivity(ehrSideBarView, placeController, ((PatientSummaryPlace) place).getCaseNumber());
-		else if (place instanceof MessagePlace)
+		} else if (place instanceof MessagePlace) {
+			ehrSideBarView.selectMessagePlace();
 			return new EhrSideBarActivity(ehrSideBarView, placeController, ((MessagePlace) place).getCaseNumber());
-		else if (place instanceof DemographicsPlace)
+		} else if (place instanceof DemographicsPlace) {
+			ehrSideBarView.selectDemographicsPlace();
 			return new EhrSideBarActivity(ehrSideBarView, placeController, ((DemographicsPlace) place).getCaseNumber());
-		else if (place instanceof ReferralPlace)
+		} else if (place instanceof ReferralPlace) {
+			ehrSideBarView.selectReferralPlace();
 			return new EhrSideBarActivity(ehrSideBarView, placeController, ((ReferralPlace) place).getCaseNumber());
-		else if (place instanceof AppointmentPlace)
+		} else if (place instanceof AppointmentPlace) {
+			ehrSideBarView.selectAppointmentPlace();
 			return new EhrSideBarActivity(ehrSideBarView, placeController, ((AppointmentPlace) place).getCaseNumber());
-		else if (place instanceof DiagnosisPlace)
+		} else if (place instanceof DiagnosisPlace) {
+			ehrSideBarView.selectDiagnosisPlace();
 			return new EhrSideBarActivity(ehrSideBarView, placeController, ((DiagnosisPlace) place).getCaseNumber());
-		else if (place instanceof LinkPlace)
+		} else if (place instanceof LinkPlace) {
+			ehrSideBarView.selectLinkPlace();
 			return new EhrSideBarActivity(ehrSideBarView, placeController, ((LinkPlace) place).getCaseNumber());
-		else if (place instanceof AddressPlace)
+		} else if (place instanceof AddressPlace) {
+			ehrSideBarView.selectAddressPlace();
 			return new EhrSideBarActivity(ehrSideBarView, placeController, ((AddressPlace) place).getCaseNumber());
-		else if (place instanceof MedicationPlace)
+		} else if (place instanceof MedicationPlace) {
+			ehrSideBarView.selectMedicationPlace();
 			return new EhrSideBarActivity(ehrSideBarView, placeController, ((MedicationPlace) place).getCaseNumber());
-		else if (place instanceof TreatmentPlanPlace)
+		} else if (place instanceof TreatmentPlanPlace) {
+			ehrSideBarView.selectTreatmentPlanPlace();
 			return new EhrSideBarActivity(ehrSideBarView, placeController, ((TreatmentPlanPlace) place).getCaseNumber());
-		else if (place instanceof ServiceHistoryPlace)
+		} else if (place instanceof ServiceHistoryPlace) {
+			ehrSideBarView.selectServiceHistoryPlace();
 			return new EhrSideBarActivity(ehrSideBarView, placeController, ((ServiceHistoryPlace) place).getCaseNumber());
-		else if (place instanceof ARInfoPlace)
+		} else if (place instanceof ARInfoPlace) {
+			ehrSideBarView.selectARInfoPlace();
 			return new EhrSideBarActivity(ehrSideBarView, placeController, ((ARInfoPlace) place).getCaseNumber());
-		else if (place instanceof DashboardPlace)
+		} else if (place instanceof DashboardPlace) {
 			return new DashboardSideBarActivity(dashboardSideBarView);
-		else if (place instanceof ProfilePlace)
+		} else if (place instanceof ProfilePlace) {
 			return new DashboardSideBarActivity(dashboardSideBarView);
+		}
 		return null;
 	}
 

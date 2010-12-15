@@ -12,4 +12,28 @@ public interface EhrSideBarView extends IsWidget {
 	void setPresenter(Presenter presenter);
 
 	void setId(String id);
+
+	void selectPatientSummaryPlace();
+
+	void selectMessagePlace();
+
+	void selectDemographicsPlace();
+
+	void selectReferralPlace();
+
+	void selectAppointmentPlace();
+
+	void selectDiagnosisPlace();
+
+	void selectLinkPlace();
+
+	void selectAddressPlace();
+
+	void selectMedicationPlace();
+
+	void selectTreatmentPlanPlace();
+
+	void selectServiceHistoryPlace();
+
+	void selectARInfoPlace();
 }

@@ -1,5 +1,7 @@
 package org.eastway.echarts.client.ui;
 
+import java.util.Iterator;
+
 import org.eastway.echarts.client.place.ARInfoPlace;
 import org.eastway.echarts.client.place.AddressPlace;
 import org.eastway.echarts.client.place.AppointmentPlace;
@@ -16,9 +18,13 @@ import org.eastway.echarts.client.place.TreatmentPlanPlace;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Tree;
+import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
 
 public class EhrSideBarViewImpl extends Composite implements EhrSideBarView {
@@ -29,6 +35,22 @@ public class EhrSideBarViewImpl extends Composite implements EhrSideBarView {
 	private static EhrSideBarViewUiBinder BINDER = GWT.create(EhrSideBarViewUiBinder.class);
 	private EhrSideBarView.Presenter presenter;
 	private String id;
+
+	@UiField Tree menu;
+
+	@UiField Label patientSummary;
+	@UiField Label messages;
+	@UiField Label demographics;
+	@UiField Label aRInfo;
+	@UiField Label referral;
+	@UiField Label addresses;
+	@UiField Label diagnoses;
+	@UiField Label appointments;
+	@UiField Label medications;
+	@UiField Label labs;
+	@UiField Label links;
+	@UiField Label serviceHistory;
+	@UiField Label treatmentPlan;
 
 	public EhrSideBarViewImpl() {
 		initWidget(BINDER.createAndBindUi(this));
@@ -114,4 +136,74 @@ public class EhrSideBarViewImpl extends Composite implements EhrSideBarView {
 		this.id = id;
 	}
 
+	private TreeItem getTreeItem(Label label) {
+		Iterator<TreeItem> iterator = menu.treeItemIterator();
+
+		while (iterator.hasNext()) {
+			TreeItem item = iterator.next();
+			if (item.getWidget().equals(label))
+					return item;
+		}
+		return null;
+	}
+
+	@Override
+	public void selectPatientSummaryPlace() {
+		menu.setSelectedItem(getTreeItem(patientSummary));
+	}
+
+	@Override
+	public void selectMessagePlace() {
+		menu.setSelectedItem(getTreeItem(messages));
+	}
+
+	@Override
+	public void selectDemographicsPlace() {
+		menu.setSelectedItem(getTreeItem(demographics));
+	}
+
+	@Override
+	public void selectReferralPlace() {
+		menu.setSelectedItem(getTreeItem(referral));
+	}
+
+	@Override
+	public void selectAppointmentPlace() {
+		menu.setSelectedItem(getTreeItem(appointments));
+	}
+
+	@Override
+	public void selectDiagnosisPlace() {
+		menu.setSelectedItem(getTreeItem(diagnoses));
+	}
+
+	@Override
+	public void selectLinkPlace() {
+		menu.setSelectedItem(getTreeItem(links));
+	}
+
+	@Override
+	public void selectAddressPlace() {
+		menu.setSelectedItem(getTreeItem(addresses));
+	}
+
+	@Override
+	public void selectMedicationPlace() {
+		menu.setSelectedItem(getTreeItem(medications));
+	}
+
+	@Override
+	public void selectTreatmentPlanPlace() {
+		menu.setSelectedItem(getTreeItem(treatmentPlan));
+	}
+
+	@Override
+	public void selectServiceHistoryPlace() {
+		menu.setSelectedItem(getTreeItem(serviceHistory));
+	}
+
+	@Override
+	public void selectARInfoPlace() {
+		menu.setSelectedItem(getTreeItem(aRInfo));
+	}
 }
