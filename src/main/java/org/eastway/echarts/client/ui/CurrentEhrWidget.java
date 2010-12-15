@@ -86,6 +86,7 @@ public class CurrentEhrWidget extends Composite {
 	public void setEhr(EHRProxy ehr) {
 		if (ehr == null || ehr.getPatient() == null || ehr.getDemographics() == null) {
 			container.setVisible(false);
+			container.clear();
 			return;
 		} else {
 			caseNumber = ehr.getPatient().getCaseNumber();
