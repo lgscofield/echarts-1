@@ -21,6 +21,7 @@ import java.util.Date;
 import org.eastway.echarts.client.style.GlobalResources;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -30,8 +31,8 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.Widget;
@@ -44,13 +45,14 @@ public class MessageViewImpl<T> extends Composite implements MessageView<T> {
 	interface MessagesViewUiBinder extends
 			UiBinder<Widget, MessageViewImpl> {}
 
-	@UiField HasWidgets messages;
+	@UiField FlowPanel messages;
 	@UiField Button add;
 	@UiField DialogBox db;
 	@UiField Button saveButton, closeButton;
 	@UiField ListBox messageTypes;
 	@UiField RichTextArea message;
 	@UiField Style style;
+	@UiField SpanElement error;
 
 	private Presenter<T> presenter;
 
@@ -65,12 +67,16 @@ public class MessageViewImpl<T> extends Composite implements MessageView<T> {
 
 	@Override
 	public void setData(ArrayList<String[]> data) {
+		if (data == null || data.isEmpty()) {
+			messages.setVisible(false);
+			return;
+		} else {
+			messages.setVisible(true);
+			error.setInnerHTML("");
+		}
 		messages.clear();
-		if (data == null)
-			messages.add(new HTML("No messages"));
-		else
-			for (String[] s : data)
-				messages.add(formatMessage(s));
+		for (String[] s : data)
+			messages.add(formatMessage(s));
 	}
 
 	public HTML formatMessage(String[] m) {
@@ -152,5 +158,10 @@ public class MessageViewImpl<T> extends Composite implements MessageView<T> {
 	@Override
 	public void setPresenter(Presenter<T> presenter) {
 		this.presenter = presenter;
+	}
+
+	@Override
+	public void setError(String message) {
+		error.setInnerText(message);
 	}
 }

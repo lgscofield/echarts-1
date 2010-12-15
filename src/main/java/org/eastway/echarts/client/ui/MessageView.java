@@ -40,4 +40,6 @@ public interface MessageView<T> extends IsWidget {
 	void setMessageTypes(ArrayList<String> types);
 
 	void setPresenter(Presenter<T> presenter);
+
+	void setError(String message);
 }

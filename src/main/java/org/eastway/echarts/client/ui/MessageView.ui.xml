@@ -31,6 +31,7 @@
     }
   </ui:style>
   	<g:HTMLPanel>
+  		<span ui:field="error" />
   		<table>
   			<tr>
   				<td>

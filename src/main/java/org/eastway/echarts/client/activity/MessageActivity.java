@@ -33,6 +33,7 @@ import org.eastway.echarts.client.ui.MessageView;
 
 import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.requestfactory.shared.Request;
+import com.google.gwt.requestfactory.shared.ServerFailure;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 public class MessageActivity implements Activity, MessageView.Presenter<MessageProxy> {
@@ -104,11 +105,19 @@ public class MessageActivity implements Activity, MessageView.Presenter<MessageP
 		messageRequest.fire(new Receiver<List<MessageProxy>>() {
 			@Override
 			public void onSuccess(List<MessageProxy> response) {
-				if (response != null) {
+				if (response != null && !response.isEmpty()) {
 					setMessages(response);
 					setData(response);
 					view.setData(getData());
+					CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
+				} else {
+					handleFailure("No messages found for case number: " + caseNumber);
 				}
+			}
+
+			@Override
+			public void onFailure(ServerFailure failure) {
+				handleFailure(failure.getMessage());
 			}
 		});
 	}
@@ -172,11 +181,17 @@ public class MessageActivity implements Activity, MessageView.Presenter<MessageP
 		view.setPresenter(this);
 		panel.setWidget(view.asWidget());
 		fetchData();
-		CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
+		
 	}
 
 	@Override
 	public String getId() {
 		return caseNumber;
+	}
+
+	private void handleFailure(String message) {
+		view.setData(null);
+		CurrentEhrWidget.instance().setEhr(null);
+		view.setError(message);
 	}
 }
