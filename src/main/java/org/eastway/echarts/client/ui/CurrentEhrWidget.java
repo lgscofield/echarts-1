@@ -15,6 +15,7 @@ import org.eastway.echarts.client.style.GlobalResources;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.requestfactory.shared.Receiver;
+import com.google.gwt.requestfactory.shared.ServerFailure;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -49,6 +50,11 @@ public class CurrentEhrWidget extends Composite {
 											}
 										});
 							}
+						}
+
+						@Override
+						public void onFailure(ServerFailure failure) {
+							setEhr(null);
 						}
 					});
 								
