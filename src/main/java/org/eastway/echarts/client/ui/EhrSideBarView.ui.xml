@@ -17,8 +17,8 @@
 		
 	</ui:style>
 	<g:HTMLPanel>
-		<g:Hyperlink targetHistoryToken="DashboardPlace:">Dashboard</g:Hyperlink>
 		<g:Tree ui:field='menu'>
+			<g:Hyperlink targetHistoryToken="DashboardPlace:">Dashboard</g:Hyperlink>
 			<g:Label ui:field='patientSummary'>Patient Summary</g:Label>
 			<g:Label ui:field='demographics'>Demographics</g:Label>
 			<g:Label ui:field='aRInfo'>A/R Info</g:Label>
