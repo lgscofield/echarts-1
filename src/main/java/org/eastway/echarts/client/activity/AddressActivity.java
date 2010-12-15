@@ -26,6 +26,7 @@ import org.eastway.echarts.client.ui.CurrentEhrWidget;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.requestfactory.shared.Receiver;
+import com.google.gwt.requestfactory.shared.ServerFailure;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 public class AddressActivity extends AbstractActivity implements AddressView.Presenter<AddressProxy> {
@@ -44,10 +45,20 @@ public class AddressActivity extends AbstractActivity implements AddressView.Pre
 
 	private void fetchData() {
 		requestFactory.addressRequest().findAddressesByCaseNumber(caseNumber).fire(new Receiver<List<AddressProxy>>() {
+			@SuppressWarnings("null")
 			@Override
 			public void onSuccess(List<AddressProxy> response) {
-				if (response != null)
+				if (response != null && !response.isEmpty()) {
 					view.setRowData(response);
+					CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
+				} else {
+					handleFailure("No address data found for case number: " + caseNumber);
+				}
+			}
+
+			@Override
+			public void onFailure(ServerFailure failure) {
+				handleFailure(failure.getMessage());
 			}
 		});
 	}
@@ -57,6 +68,11 @@ public class AddressActivity extends AbstractActivity implements AddressView.Pre
 		view.setPresenter(this);
 		panel.setWidget(view.asWidget());
 		fetchData();
-		CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
+	}
+
+	private void handleFailure(String message) {
+		view.setRowData(null);
+		CurrentEhrWidget.instance().setEhr(null);
+		view.setError(message);
 	}
 }

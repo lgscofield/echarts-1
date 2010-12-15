@@ -24,4 +24,5 @@ public interface AddressView<T> extends IsWidget {
 
 	void setPresenter(Presenter<T> presenter);
 	void setRowData(List<T> rowData);
+	void setError(String message);
 }

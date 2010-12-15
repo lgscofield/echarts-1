@@ -16,5 +16,8 @@
 	xmlns:c="urn:import:org.eastway.echarts.client.common">
 	<ui:style>
 	</ui:style>
-	<c:AddressCellTable ui:field='panel' />
+	<g:HTMLPanel>
+		<span ui:field="error" />
+		<c:AddressCellTable ui:field='panel' />
+	</g:HTMLPanel>
 </ui:UiBinder>

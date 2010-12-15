@@ -18,6 +18,7 @@ package org.eastway.echarts.client.ui;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
@@ -36,6 +37,7 @@ public class AddressViewImpl<T> extends Composite implements AddressView<T> {
 			.create(AddressViewUiBinder.class);
 
 	@UiField AddressCellTable panel;
+	@UiField SpanElement error;
 
 	public AddressViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -53,6 +55,18 @@ public class AddressViewImpl<T> extends Composite implements AddressView<T> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setRowData(List<T> rowData) {
+		if (rowData == null || rowData.isEmpty()) {
+			panel.setVisible(false);
+			return;
+		} else {
+			panel.setVisible(true);
+			error.setInnerText("");
+		}
 		panel.setRowData(0, (List<? extends AddressProxy>) rowData);
+	}
+
+	@Override
+	public void setError(String message) {
+		error.setInnerText(message);
 	}
 }
