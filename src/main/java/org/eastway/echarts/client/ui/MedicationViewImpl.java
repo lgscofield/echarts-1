@@ -16,6 +16,7 @@
 package org.eastway.echarts.client.ui;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
@@ -34,6 +35,7 @@ public class MedicationViewImpl<T> extends Composite implements MedicationView<T
 
 	private int record = 0;
 	@UiField FlexTable medications;
+	@UiField SpanElement error;
 
 	enum Column {
 		MEDICATION,
@@ -61,7 +63,13 @@ public class MedicationViewImpl<T> extends Composite implements MedicationView<T
 
 	@Override
 	public void clear() {
+		error.setInnerText("");
 		record = 0;
-		medications.clear();
+		medications.clear(true);
+	}
+
+	@Override
+	public void setError(String message) {
+		error.setInnerText(message);
 	}
 }

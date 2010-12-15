@@ -16,5 +16,8 @@
 	<ui:style>
 		
 	</ui:style>
-	<g:FlexTable ui:field='medications'/>
+	<g:HTMLPanel>
+		<span ui:field="error" />
+		<g:FlexTable ui:field='medications'/>
+	</g:HTMLPanel>
 </ui:UiBinder> 

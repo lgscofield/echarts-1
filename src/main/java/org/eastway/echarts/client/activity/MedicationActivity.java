@@ -46,8 +46,12 @@ public class MedicationActivity extends AbstractActivity implements MedicationVi
 		requestFactory.medicationRequest().findMedicationsByCaseNumber(caseNumber).fire(new Receiver<List<MedicationProxy>>() {
 			@Override
 			public void onSuccess(List<MedicationProxy> response) {
-				if (response != null)
+				if (response != null && !response.isEmpty()) {
 					setData(response);
+					CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
+				} else {
+					handleFailure("No medication data found for case number: " + caseNumber);
+				}
 			}
 		});
 	}
@@ -64,6 +68,11 @@ public class MedicationActivity extends AbstractActivity implements MedicationVi
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		panel.setWidget(view.asWidget());
 		fetchData();
-		CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
+	}
+
+	private void handleFailure(String message) {
+		view.clear();
+		CurrentEhrWidget.instance().setEhr(null);
+		view.setError(message);
 	}
 }

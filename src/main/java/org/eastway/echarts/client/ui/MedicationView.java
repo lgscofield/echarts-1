@@ -10,4 +10,6 @@ public interface MedicationView<T> extends IsWidget {
 	public void setMedication(String medication);
 
 	public void clear();
+
+	public void setError(String message);
 }
