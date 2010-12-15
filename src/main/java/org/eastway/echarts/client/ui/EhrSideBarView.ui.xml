@@ -16,19 +16,22 @@
 	<ui:style>
 		
 	</ui:style>
-	<g:Tree ui:field='menu'>
-		<g:Label ui:field='patientSummary'>Patient Summary</g:Label>
-		<g:Label ui:field='demographics'>Demographics</g:Label>
-		<g:Label ui:field='aRInfo'>A/R Info</g:Label>
-		<g:Label ui:field='referral'>Referral</g:Label>
-		<g:Label ui:field='addresses'>Addresses</g:Label>
-		<g:Label ui:field='diagnoses'>Diagnoses</g:Label>
-		<g:Label ui:field='appointments'>Appointments</g:Label>
-		<g:Label ui:field='medications'>Medications</g:Label>
-		<g:Label ui:field='labs'>Labs</g:Label>
-		<g:Label ui:field='messages'>Messages</g:Label>
-		<g:Label ui:field='links'>Forms</g:Label>
-		<g:Label ui:field='serviceHistory'>Service History</g:Label>
-		<g:Label ui:field='treatmentPlan'>Treatment Plan</g:Label>
-	</g:Tree>
+	<g:HTMLPanel>
+		<g:Hyperlink targetHistoryToken="DashboardPlace:">Dashboard</g:Hyperlink>
+		<g:Tree ui:field='menu'>
+			<g:Label ui:field='patientSummary'>Patient Summary</g:Label>
+			<g:Label ui:field='demographics'>Demographics</g:Label>
+			<g:Label ui:field='aRInfo'>A/R Info</g:Label>
+			<g:Label ui:field='referral'>Referral</g:Label>
+			<g:Label ui:field='addresses'>Addresses</g:Label>
+			<g:Label ui:field='diagnoses'>Diagnoses</g:Label>
+			<g:Label ui:field='appointments'>Appointments</g:Label>
+			<g:Label ui:field='medications'>Medications</g:Label>
+			<g:Label ui:field='labs'>Labs</g:Label>
+			<g:Label ui:field='messages'>Messages</g:Label>
+			<g:Label ui:field='links'>Forms</g:Label>
+			<g:Label ui:field='serviceHistory'>Service History</g:Label>
+			<g:Label ui:field='treatmentPlan'>Treatment Plan</g:Label>
+		</g:Tree>
+	</g:HTMLPanel>
 </ui:UiBinder>
