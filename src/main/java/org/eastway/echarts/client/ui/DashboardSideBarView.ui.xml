@@ -17,6 +17,9 @@
 		<b>Links</b>
 		<ul style='margin-top:0px;'>
 			<li>
+				<g:Hyperlink targetHistoryToken='DashboardPlace:'>Dashboard</g:Hyperlink>
+			</li>
+			<li>
 				<g:Hyperlink ui:field='tickler' targetHistoryToken='TicklerPlace:'>Tickler</g:Hyperlink>
 			</li>
 			<li>
