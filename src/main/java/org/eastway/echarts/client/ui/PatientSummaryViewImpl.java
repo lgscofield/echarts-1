@@ -59,6 +59,9 @@ public class PatientSummaryViewImpl<T> extends Composite implements PatientSumma
 	public void setRowData(T rowData) {
 		if (rowData == null)
 			return;
+		else
+			error.setInnerText("");
+
 		this.rowData = rowData;
 		for (int i = 0; i < columnDefinitions.size(); i++) {
 			StringBuilder sb = new StringBuilder();
