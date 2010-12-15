@@ -20,6 +20,7 @@ import java.util.List;
 import org.eastway.echarts.client.place.MedicationPlace;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.request.MedicationProxy;
+import org.eastway.echarts.client.ui.CurrentEhrWidget;
 import org.eastway.echarts.client.ui.MedicationView;
 
 import com.google.gwt.activity.shared.AbstractActivity;
@@ -63,5 +64,6 @@ public class MedicationActivity extends AbstractActivity implements MedicationVi
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		panel.setWidget(view.asWidget());
 		fetchData();
+		CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
 	}
 }

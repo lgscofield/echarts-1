@@ -21,6 +21,7 @@ import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.place.ReferralPlace;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.request.ReferralProxy;
+import org.eastway.echarts.client.ui.CurrentEhrWidget;
 import org.eastway.echarts.client.ui.ReferralView;
 
 import com.google.gwt.activity.shared.AbstractActivity;
@@ -61,5 +62,6 @@ public class ReferralActivity extends AbstractActivity implements ReferralView.P
 		view.setColumnDefinitions(columnDefinitions);
 		panel.setWidget(view.asWidget());
 		fetchData();
+		CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
 	}
 }

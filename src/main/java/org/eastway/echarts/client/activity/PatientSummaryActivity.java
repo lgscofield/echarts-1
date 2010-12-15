@@ -27,6 +27,7 @@ import org.eastway.echarts.client.request.AssignmentRequest;
 import org.eastway.echarts.client.request.EHRProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.request.EhrRequest;
+import org.eastway.echarts.client.ui.CurrentEhrWidget;
 import org.eastway.echarts.client.ui.PatientSummaryView;
 
 import com.google.gwt.requestfactory.shared.Receiver;
@@ -94,6 +95,7 @@ public class PatientSummaryActivity extends AbstractActivity implements PatientS
 				EHRProxy ehr = requestFactory.ehrRequest().edit(response.fetchedEHR);
 				ehr.setAssignments(response.fetchedAssignments);
 				view.setRowData(ehr);
+				CurrentEhrWidget.instance().setEhr(ehr);
 			}
 		});
 	}

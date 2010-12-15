@@ -31,7 +31,6 @@ import org.eastway.echarts.client.request.MedicationProxy;
 import org.eastway.echarts.client.request.MessageProxy;
 import org.eastway.echarts.client.request.ReferralProxy;
 import org.eastway.echarts.client.request.UserProxy;
-import org.eastway.echarts.client.scaffold.ioc.ScaffoldInjector;
 import org.eastway.echarts.client.ui.ARInfoView;
 import org.eastway.echarts.client.ui.AddressView;
 import org.eastway.echarts.client.ui.AppointmentView;
@@ -54,7 +53,6 @@ import com.google.gwt.place.shared.PlaceController;
 import com.google.inject.Inject;
 
 public class MasterActivityMapper implements ActivityMapper {
-	private ScaffoldInjector clientFactory;
 	private EchartsRequestFactory requestFactory;
 	private PlaceController placeController;
 	private TicklerView<Tickler> ticklerView;
@@ -152,9 +150,9 @@ public class MasterActivityMapper implements ActivityMapper {
 		else if (place instanceof MedicationPlace)
 			return new MedicationActivity((MedicationPlace) place, requestFactory, medicationView);
 		else if (place instanceof TreatmentPlanPlace)
-			return new TreatmentPlanActivity((TreatmentPlanPlace) place, clientFactory);
+			return new TreatmentPlanActivity((TreatmentPlanPlace) place, requestFactory);
 		else if (place instanceof ServiceHistoryPlace)
-			return new ServiceHistoryActivity((ServiceHistoryPlace) place, clientFactory);
+			return new ServiceHistoryActivity((ServiceHistoryPlace) place, requestFactory);
 		else if (place instanceof ARInfoPlace)
 			return new ARInfoActivity((ARInfoPlace) place, requestFactory, arInfoColumnDefinitions, arInfoView);
 		else if (place instanceof DashboardPlace)

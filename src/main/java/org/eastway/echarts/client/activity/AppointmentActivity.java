@@ -25,6 +25,7 @@ import org.eastway.echarts.client.place.AppointmentPlace;
 import org.eastway.echarts.client.request.AppointmentProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.ui.AppointmentView;
+import org.eastway.echarts.client.ui.CurrentEhrWidget;
 
 import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -106,5 +107,6 @@ public class AppointmentActivity extends AbstractActivity implements Appointment
 		view.setColumnDefinitions(columnDefinitions);
 		panel.setWidget(view.asWidget());
 		fetchData();
+		CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
 	}
 }

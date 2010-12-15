@@ -43,10 +43,6 @@
 			cursor: pointer;
 		}
 		
-		.margin {
-			margin: 10px;
-		}
-		
 		.floatleft>* {
 			float: left;
 		}
@@ -61,10 +57,6 @@
 		
 		.right {
 			float: right;
-		}
-		
-		.italics {
-			font-style: italic;
 		}
 		
 		.label:hover {
@@ -92,8 +84,7 @@
 				</g:FlowPanel>
 				<g:HorizontalPanel width="100%">
 					<g:FlowPanel addStyleNames="{style.banner} {style.left}" />
-					<g:FlexTable ui:field='currentPatientData'
-						addStyleNames='{style.left} {style.margin} {style.italics}'/>
+					<e:CurrentEhrWidget ui:field="currentEhrPanel" />
 					<g:VerticalPanel addStyleNames="{style.right}">
 						<e:LoginWidget ui:field="loginWidget" />
 						<e:PatientSearchWidget ui:field="patientSearchWidget" />

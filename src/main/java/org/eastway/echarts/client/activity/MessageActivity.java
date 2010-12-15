@@ -28,6 +28,7 @@ import org.eastway.echarts.client.request.CodeProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.request.MessageProxy;
 import org.eastway.echarts.client.request.MessageRequest;
+import org.eastway.echarts.client.ui.CurrentEhrWidget;
 import org.eastway.echarts.client.ui.MessageView;
 
 import com.google.gwt.requestfactory.shared.Receiver;
@@ -171,6 +172,7 @@ public class MessageActivity implements Activity, MessageView.Presenter<MessageP
 		view.setPresenter(this);
 		panel.setWidget(view.asWidget());
 		fetchData();
+		CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
 	}
 
 	@Override

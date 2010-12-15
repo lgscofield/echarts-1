@@ -22,6 +22,7 @@ import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.place.LinkPlace;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.request.LinkProxy;
+import org.eastway.echarts.client.ui.CurrentEhrWidget;
 import org.eastway.echarts.client.ui.LinkView;
 
 import com.google.gwt.activity.shared.AbstractActivity;
@@ -78,5 +79,6 @@ public class LinkActivity extends AbstractActivity implements LinkView.Presenter
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		panel.setWidget(view.asWidget());
 		fetchData();
+		CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
 	}
 }

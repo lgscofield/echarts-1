@@ -21,6 +21,7 @@ import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.place.DemographicsPlace;
 import org.eastway.echarts.client.request.DemographicsProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
+import org.eastway.echarts.client.ui.CurrentEhrWidget;
 import org.eastway.echarts.client.ui.DemographicsView;
 
 import com.google.gwt.activity.shared.AbstractActivity;
@@ -72,5 +73,6 @@ public class DemographicsActivity extends AbstractActivity implements Demographi
 		view.setColumnDefinitions(columnDefinitions);
 		panel.setWidget(view.asWidget());
 		fetchData();
+		CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
 	}
 }
