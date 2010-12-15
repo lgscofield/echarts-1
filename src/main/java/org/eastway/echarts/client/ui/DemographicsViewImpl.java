@@ -60,10 +60,13 @@ public class DemographicsViewImpl<T> extends Composite implements DemographicsVi
 
 	@Override
 	public void setRowData(T rowData) {
-		if (rowData == null)
+		if (rowData == null) {
+			table.setVisible(false);
 			return;
-		else
+		} else {
+			table.setVisible(true);
 			error.setInnerText("");
+		}
 
 		this.rowData = rowData;
 		for (int i = 0; i < columnDefinitions.size(); i++) {

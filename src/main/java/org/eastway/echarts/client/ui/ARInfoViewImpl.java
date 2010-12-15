@@ -59,10 +59,13 @@ public class ARInfoViewImpl<T> extends Composite implements ARInfoView<T> {
 
 	@Override
 	public void setRowData(T rowData) {
-		if (rowData == null)
+		if (rowData == null) {
+			table.setVisible(false);
 			return;
-		else
+		} else {
+			table.setVisible(true);
 			error.setInnerText("");
+		}
 
 		this.rowData = rowData;
 
