@@ -31,6 +31,7 @@ import org.eastway.echarts.client.ui.CurrentEhrWidget;
 import org.eastway.echarts.client.ui.PatientSummaryView;
 
 import com.google.gwt.requestfactory.shared.Receiver;
+import com.google.gwt.requestfactory.shared.ServerFailure;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 public class PatientSummaryActivity extends AbstractActivity implements PatientSummaryView.Presenter<EHRProxy> {
@@ -61,6 +62,11 @@ public class PatientSummaryActivity extends AbstractActivity implements PatientS
 											}
 										});
 							}
+						}
+
+						@Override
+						public void onFailure(ServerFailure failure) {
+							callback.onFailure(failure);
 						}
 					});
 								
@@ -96,6 +102,13 @@ public class PatientSummaryActivity extends AbstractActivity implements PatientS
 				ehr.setAssignments(response.fetchedAssignments);
 				view.setRowData(ehr);
 				CurrentEhrWidget.instance().setEhr(ehr);
+			}
+
+			@Override
+			public void onFailure(ServerFailure failure) {
+				view.setRowData(null);
+				view.setError(failure.getMessage());
+				CurrentEhrWidget.instance().setEhr(null);
 			}
 		});
 	}

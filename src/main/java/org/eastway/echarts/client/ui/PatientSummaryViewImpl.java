@@ -21,6 +21,7 @@ import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.style.GlobalResources;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
@@ -37,6 +38,7 @@ public class PatientSummaryViewImpl<T> extends Composite implements PatientSumma
 	private T rowData;
 	//private Presenter<T> presenter;
 	@UiField FlexTable table;
+	@UiField SpanElement error;
 
 	public PatientSummaryViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -55,6 +57,8 @@ public class PatientSummaryViewImpl<T> extends Composite implements PatientSumma
 
 	@Override
 	public void setRowData(T rowData) {
+		if (rowData == null)
+			return;
 		this.rowData = rowData;
 		for (int i = 0; i < columnDefinitions.size(); i++) {
 			StringBuilder sb = new StringBuilder();
@@ -67,5 +71,10 @@ public class PatientSummaryViewImpl<T> extends Composite implements PatientSumma
 	@Override
 	public void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions) {
 		this.columnDefinitions = columnDefinitions;
+	}
+
+	@Override
+	public void setError(String message) {
+		error.setInnerText(message);
 	}
 }
