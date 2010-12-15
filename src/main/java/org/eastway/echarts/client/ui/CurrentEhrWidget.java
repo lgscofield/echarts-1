@@ -131,7 +131,7 @@ public class CurrentEhrWidget extends Composite {
 	}
 
 	private String getProvider(List<AssignmentProxy> assignments) {
-		if (assignments == null)
+		if (assignments == null || assignments.isEmpty())
 			return "NO DATA";
 		for (AssignmentProxy a : assignments)
 			if (a.getStaff() != null && a.getStaff().equals(EchartsUser.staffId))
