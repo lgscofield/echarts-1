@@ -41,6 +41,7 @@ public class AppointmentViewImpl<T> extends Composite implements AppointmentView
 
 	@UiField FlexTable table;
 	@UiField SpanElement counter;
+	@UiField SpanElement error;
 
 	private List<ColumnDefinition<T>> columnDefinitions;
 
@@ -72,6 +73,14 @@ public class AppointmentViewImpl<T> extends Composite implements AppointmentView
 
 	@Override
 	public void setRowData(List<T> rowData, int startRecord, int maxResults, long rowCount) {
+		if (rowData == null || rowData.isEmpty()) {
+			table.setVisible(false);
+			return;
+		} else {
+			table.setVisible(true);
+			error.setInnerText("");
+		}
+
 		table.removeAllRows();
 		this.rowData = rowData;
 		row = 0;
@@ -117,5 +126,10 @@ public class AppointmentViewImpl<T> extends Composite implements AppointmentView
 	@UiHandler("oldest")
 	public void handleOldestClicked(ClickEvent event) {
 		presenter.getOldest();
+	}
+
+	@Override
+	public void setError(String message) {
+		error.setInnerText(message);
 	}
 }

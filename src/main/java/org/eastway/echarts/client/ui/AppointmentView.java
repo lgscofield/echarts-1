@@ -37,4 +37,5 @@ public interface AppointmentView<T> extends IsWidget {
 	Widget asWidget();
 	void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions);
 	void setRowData(List<T> rowData, int startRecord, int maxResults, long rowCount);
+	void setError(String message);
 }

@@ -28,6 +28,7 @@ import org.eastway.echarts.client.ui.AppointmentView;
 import org.eastway.echarts.client.ui.CurrentEhrWidget;
 
 import com.google.gwt.requestfactory.shared.Receiver;
+import com.google.gwt.requestfactory.shared.ServerFailure;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 public class AppointmentActivity extends AbstractActivity implements AppointmentView.Presenter<AppointmentProxy> {
@@ -57,10 +58,18 @@ public class AppointmentActivity extends AbstractActivity implements Appointment
 				.fire(new Receiver<List<AppointmentProxy>>() {
 			@Override
 			public void onSuccess(List<AppointmentProxy> response) {
-				if (response != null) {
+				if (response != null && !response.isEmpty()) {
 					rowCount = response.size();
 					view.setRowData(response, startRecord, maxResults, rowCount);
+					CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
+				} else {
+					handleFailure("No appointments found for case number " + caseNumber);
 				}
+			}
+
+			@Override
+			public void onFailure(ServerFailure failure) {
+				handleFailure(failure.getMessage());
 			}
 		});
 	}
@@ -107,6 +116,12 @@ public class AppointmentActivity extends AbstractActivity implements Appointment
 		view.setColumnDefinitions(columnDefinitions);
 		panel.setWidget(view.asWidget());
 		fetchData();
-		CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
+
+	}
+
+	private void handleFailure(String message) {
+		view.setRowData(null, 0, 0, 0L);
+		CurrentEhrWidget.instance().setEhr(null);
+		view.setError(message);
 	}
 }
