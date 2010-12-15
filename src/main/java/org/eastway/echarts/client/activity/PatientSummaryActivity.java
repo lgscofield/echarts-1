@@ -98,18 +98,26 @@ public class PatientSummaryActivity extends AbstractActivity implements PatientS
 		new EHRFetcher().Run(ehrRequest, assignmentRequest, caseNumber, new Receiver<PatientSummaryActivity.EHRFetcher>() {
 			@Override
 			public void onSuccess(EHRFetcher response) {
-				EHRProxy ehr = requestFactory.ehrRequest().edit(response.fetchedEHR);
-				ehr.setAssignments(response.fetchedAssignments);
-				view.setRowData(ehr);
-				CurrentEhrWidget.instance().setEhr(ehr);
+				if (response != null) {
+					EHRProxy ehr = requestFactory.ehrRequest().edit(response.fetchedEHR);
+					ehr.setAssignments(response.fetchedAssignments);
+					view.setRowData(ehr);
+					CurrentEhrWidget.instance().setEhr(ehr);
+				} else {
+					handleFailure("No information found for case number: " + caseNumber);
+				}
 			}
 
 			@Override
 			public void onFailure(ServerFailure failure) {
-				view.setRowData(null);
-				view.setError("No information found for case number: " + caseNumber);
-				CurrentEhrWidget.instance().setEhr(null);
+				handleFailure(failure.getMessage());
 			}
 		});
+	}
+
+	private void handleFailure(String message) {
+		view.setRowData(null);
+		view.setError(message);
+		CurrentEhrWidget.instance().setEhr(null);
 	}
 }
