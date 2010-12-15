@@ -15,5 +15,8 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style>
 	</ui:style>
-	<g:StackLayoutPanel height="100%" width="98%" unit='PX' ui:field='diagnoses' />
+	<g:HTMLPanel>
+		<span ui:field="error" />
+		<g:StackLayoutPanel height="100%" width="98%" unit='PX' ui:field='diagnoses' />
+	</g:HTMLPanel>
 </ui:UiBinder>

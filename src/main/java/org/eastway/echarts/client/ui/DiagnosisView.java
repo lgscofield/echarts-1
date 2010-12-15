@@ -28,4 +28,5 @@ public interface DiagnosisView<T> {
 	Widget asWidget();
 	void setRowData(List<T> diagnoses);
 	void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions);
+	void setError(String message);
 }

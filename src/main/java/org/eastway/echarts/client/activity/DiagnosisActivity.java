@@ -27,6 +27,7 @@ import org.eastway.echarts.client.ui.DiagnosisView;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.requestfactory.shared.Receiver;
+import com.google.gwt.requestfactory.shared.ServerFailure;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 public class DiagnosisActivity extends AbstractActivity implements DiagnosisView.Presenter<DiagnosisProxy> {
@@ -59,14 +60,19 @@ public class DiagnosisActivity extends AbstractActivity implements DiagnosisView
 				.fire(new Receiver<List<DiagnosisProxy>>() {
 			@Override
 			public void onSuccess(List<DiagnosisProxy> response) {
-				if (response != null)
-					setData(response);
+				if (response != null && !response.isEmpty()) {
+					view.setRowData(response);
+					CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
+				} else {
+					handleFailure("No diagnosis data found for case number " + caseNumber);
+				}
+			}
+
+			@Override
+			public void onFailure(ServerFailure failure) {
+				handleFailure(failure.getMessage());
 			}
 		});
-	}
-
-	private void setData(List<DiagnosisProxy> response) {
-		view.setRowData(response);
 	}
 
 	@Override
@@ -75,6 +81,11 @@ public class DiagnosisActivity extends AbstractActivity implements DiagnosisView
 		view.setColumnDefinitions(columnDefinitions);
 		panel.setWidget(view.asWidget());
 		fetchData();
-		CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
+	}
+
+	private void handleFailure(String message) {
+		view.setRowData(null);
+		CurrentEhrWidget.instance().setEhr(null);
+		view.setError(message);
 	}
 }

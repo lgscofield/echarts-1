@@ -20,6 +20,7 @@ import java.util.List;
 import org.eastway.echarts.client.common.ColumnDefinition;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
@@ -36,6 +37,7 @@ public class DiagnosisViewImpl<T> extends Composite implements DiagnosisView<T> 
 	private static DiagnosisViewUiBinder uiBinder = GWT.create(DiagnosisViewUiBinder.class);
 
 	@UiField StackLayoutPanel diagnoses;
+	@UiField SpanElement error;
 	//private Presenter<T> presenter;
 	private List<T> rowData;
 	private List<ColumnDefinition<T>> columnDefinitions;
@@ -72,6 +74,14 @@ public class DiagnosisViewImpl<T> extends Composite implements DiagnosisView<T> 
 
 	@Override
 	public void setRowData(List<T> rowData) {
+		if (rowData == null || rowData.isEmpty()) {
+			diagnoses.setVisible(false);
+			return;
+		} else {
+			diagnoses.setVisible(true);
+			error.setInnerText("");
+		}
+
 		diagnoses.clear();
 		this.rowData = rowData;
 
@@ -93,5 +103,10 @@ public class DiagnosisViewImpl<T> extends Composite implements DiagnosisView<T> 
 	@Override
 	public void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions) {
 		this.columnDefinitions = columnDefinitions;
+	}
+
+	@Override
+	public void setError(String message) {
+		error.setInnerText(message);
 	}
 }
