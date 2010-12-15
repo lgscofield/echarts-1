@@ -27,4 +27,5 @@ public interface ARInfoView<T> extends IsWidget {
 	void setPresenter(Presenter<T> presenter);
 	void setRowData(T rowData);
 	void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions);
+	void setError(String string);
 }

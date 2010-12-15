@@ -27,6 +27,7 @@ import org.eastway.echarts.client.ui.CurrentEhrWidget;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.requestfactory.shared.Receiver;
+import com.google.gwt.requestfactory.shared.ServerFailure;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 public class ARInfoActivity extends AbstractActivity implements ARInfoView.Presenter<ARInfoProxy> {
@@ -50,8 +51,17 @@ public class ARInfoActivity extends AbstractActivity implements ARInfoView.Prese
 		requestFactory.arinfoRequest().findARInfo(caseNumber).fire(new Receiver<ARInfoProxy>() {
 			@Override
 			public void onSuccess(ARInfoProxy response) {
-				if (response != null)
+				if (response != null) {
 					view.setRowData(response);
+					CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
+				} else {
+					handleFailure("No ARInfo found for case number: " + caseNumber);
+				}
+			}
+
+			@Override
+			public void onFailure(ServerFailure failure) {
+				handleFailure(failure.getMessage());
 			}
 		});
 	}
@@ -62,6 +72,11 @@ public class ARInfoActivity extends AbstractActivity implements ARInfoView.Prese
 		view.setColumnDefinitions(columnDefinitions);
 		panel.setWidget(view.asWidget());
 		fetchData();
-		CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
+	}
+
+	private void handleFailure(String message) {
+		view.setRowData(null);
+		CurrentEhrWidget.instance().setEhr(null);
+		view.setError(message);
 	}
 }

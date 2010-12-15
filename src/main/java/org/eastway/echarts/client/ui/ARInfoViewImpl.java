@@ -21,6 +21,7 @@ import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.style.GlobalResources;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
@@ -35,6 +36,7 @@ public class ARInfoViewImpl<T> extends Composite implements ARInfoView<T> {
 	static ARInfoViewUiBinder uiBinder = GWT.create(ARInfoViewUiBinder.class);
 
 	@UiField FlexTable table;
+	@UiField SpanElement error;
 
 	private T rowData;
 
@@ -57,6 +59,11 @@ public class ARInfoViewImpl<T> extends Composite implements ARInfoView<T> {
 
 	@Override
 	public void setRowData(T rowData) {
+		if (rowData == null)
+			return;
+		else
+			error.setInnerText("");
+
 		this.rowData = rowData;
 
 		for (int i = 0; i < columnDefinitions.size(); i++) {
@@ -70,5 +77,10 @@ public class ARInfoViewImpl<T> extends Composite implements ARInfoView<T> {
 	@Override
 	public void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions) {
 		this.columnDefinitions = columnDefinitions;
+	}
+
+	@Override
+	public void setError(String message) {
+		error.setInnerText(message);
 	}
 }
