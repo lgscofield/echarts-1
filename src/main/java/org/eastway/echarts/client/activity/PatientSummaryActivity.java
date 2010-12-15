@@ -107,7 +107,7 @@ public class PatientSummaryActivity extends AbstractActivity implements PatientS
 			@Override
 			public void onFailure(ServerFailure failure) {
 				view.setRowData(null);
-				view.setError(failure.getMessage());
+				view.setError("No information found for case number: " + caseNumber);
 				CurrentEhrWidget.instance().setEhr(null);
 			}
 		});
