@@ -20,7 +20,6 @@ import java.util.List;
 import org.eastway.echarts.client.place.MedicationPlace;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.request.MedicationProxy;
-import org.eastway.echarts.client.ui.CurrentEhrWidget;
 import org.eastway.echarts.client.ui.MedicationView;
 
 import com.google.gwt.activity.shared.AbstractActivity;
@@ -48,7 +47,6 @@ public class MedicationActivity extends AbstractActivity implements MedicationVi
 			public void onSuccess(List<MedicationProxy> response) {
 				if (response != null && !response.isEmpty()) {
 					setData(response);
-					CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
 				} else {
 					handleFailure("No medication data found for case number: " + caseNumber);
 				}
@@ -72,7 +70,6 @@ public class MedicationActivity extends AbstractActivity implements MedicationVi
 
 	private void handleFailure(String message) {
 		view.clear();
-		CurrentEhrWidget.instance().setEhr(null);
 		view.setError(message);
 	}
 }

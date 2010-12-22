@@ -30,7 +30,6 @@ import org.eastway.echarts.client.request.EHRProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.request.EhrRequest;
 import org.eastway.echarts.client.request.ProductivityProxy;
-import org.eastway.echarts.client.ui.CurrentEhrWidget;
 import org.eastway.echarts.client.ui.DashboardView;
 
 import com.google.gwt.place.shared.PlaceController;
@@ -128,6 +127,5 @@ public class DashboardActivity extends AbstractActivity implements DashboardView
 		fetchData();
 		if (Cookies.getCookie("first_login") != null)
 			view.isFirstLogin();
-		CurrentEhrWidget.instance().setEhr(null);
 	}
 }

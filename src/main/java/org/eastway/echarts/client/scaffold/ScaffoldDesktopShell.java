@@ -34,6 +34,8 @@ public class ScaffoldDesktopShell extends Composite {
 	@UiField LoginWidget loginWidget;
 	@UiField NotificationMole mole;
 	@UiField Style style;
+	@UiField SimplePanel currentEhrPanel;
+
 	private EchartsOracle oracle;
 	private PlaceController placeController;
 
@@ -63,5 +65,9 @@ public class ScaffoldDesktopShell extends Composite {
 	@UiFactory
 	PatientSearchWidget createPatientSearchWidget() {
 		return new PatientSearchWidget(oracle, placeController);
+	}
+
+	public SimplePanel getCurrentEhrPanel() {
+		return currentEhrPanel;
 	}
 }

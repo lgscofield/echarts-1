@@ -84,7 +84,7 @@
 				</g:FlowPanel>
 				<g:HorizontalPanel width="100%">
 					<g:FlowPanel addStyleNames="{style.banner} {style.left}" />
-					<e:CurrentEhrWidget ui:field="currentEhrPanel" />
+					<g:SimplePanel ui:field="currentEhrPanel" />
 					<g:VerticalPanel addStyleNames="{style.right}">
 						<e:LoginWidget ui:field="loginWidget" />
 						<e:PatientSearchWidget ui:field="patientSearchWidget" />

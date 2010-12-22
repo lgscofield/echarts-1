@@ -26,7 +26,6 @@ import org.eastway.echarts.client.place.ProfilePlace;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.request.UserProxy;
 import org.eastway.echarts.client.request.UserRequest;
-import org.eastway.echarts.client.ui.CurrentEhrWidget;
 import org.eastway.echarts.client.ui.ProfileView;
 
 import com.google.gwt.requestfactory.shared.Receiver;
@@ -100,6 +99,5 @@ public class ProfileActivity extends AbstractActivity implements ProfileView.Pre
 		view.setColumnDefinitions(columnDefinitions);
 		panel.setWidget(view.asWidget());
 		fetchData();
-		CurrentEhrWidget.instance().setEhr(null);
 	}
 }

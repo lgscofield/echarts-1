@@ -21,7 +21,6 @@ import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.place.DemographicsPlace;
 import org.eastway.echarts.client.request.DemographicsProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
-import org.eastway.echarts.client.ui.CurrentEhrWidget;
 import org.eastway.echarts.client.ui.DemographicsView;
 
 import com.google.gwt.activity.shared.AbstractActivity;
@@ -59,10 +58,8 @@ public class DemographicsActivity extends AbstractActivity implements Demographi
 			@Override
 			public void onSuccess(DemographicsProxy response) {
 				if (response != null) {
-					CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
 					view.setRowData(response);
 				} else {
-					CurrentEhrWidget.instance().setEhr(null);
 					view.setRowData(null);
 					view.setError("No demographics found for case number: " + caseNumber);
 				}
@@ -70,7 +67,6 @@ public class DemographicsActivity extends AbstractActivity implements Demographi
 
 			@Override
 			public void onFailure(ServerFailure failure) {
-				CurrentEhrWidget.instance().setEhr(null);
 				view.setRowData(null);
 				view.setError(failure.getMessage());
 			}

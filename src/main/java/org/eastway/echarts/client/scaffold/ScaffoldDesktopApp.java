@@ -1,6 +1,7 @@
 package org.eastway.echarts.client.scaffold;
 
 import org.eastway.echarts.client.EchartsUser;
+import org.eastway.echarts.client.activity.CurrentEhrActivityMapper;
 import org.eastway.echarts.client.activity.DetailsActivityMapper;
 import org.eastway.echarts.client.activity.EchartsPlaceHistoryMapper;
 import org.eastway.echarts.client.activity.MasterActivityMapper;
@@ -29,6 +30,7 @@ public class ScaffoldDesktopApp extends ScaffoldApp {
 	private MasterActivityMapper masterActivityMapper;
 	private DetailsActivityMapper detailsActivityMapper;
 	private EchartsRequestFactory requestFactory;
+	private CurrentEhrActivityMapper currentEhrActivityMapper;
 
 	@Inject
 	public ScaffoldDesktopApp(ScaffoldDesktopShell shell,
@@ -36,13 +38,15 @@ public class ScaffoldDesktopApp extends ScaffoldApp {
 							  EchartsRequestFactory requestFactory,
 							  PlaceController placeController,
 							  MasterActivityMapper masterActivityMapper,
-							  DetailsActivityMapper detailsActivityMapper) {
+							  DetailsActivityMapper detailsActivityMapper,
+							  CurrentEhrActivityMapper currentEhrActivityMapper) {
 		this.shell = shell;
 		this.eventBus = eventBus;
 		this.requestFactory = requestFactory;
 		this.placeController = placeController;
 		this.masterActivityMapper = masterActivityMapper;
 		this.detailsActivityMapper = detailsActivityMapper;
+		this.currentEhrActivityMapper = currentEhrActivityMapper;
 	}
 
 	public void run() {
@@ -84,6 +88,10 @@ public class ScaffoldDesktopApp extends ScaffoldApp {
 					// Start ActivityManager for the details side bar
 					ActivityManager detailsActivityManager = new ActivityManager(detailsActivityMapper, eventBus);
 					detailsActivityManager.setDisplay(shell.getDetailsPanel());
+
+					// Start ActivityManager for the CurrentEhrWidget
+					ActivityManager currentEhrActivityManager = new ActivityManager(currentEhrActivityMapper, eventBus);
+					currentEhrActivityManager.setDisplay(shell.getCurrentEhrPanel());
 
 					RootLayoutPanel.get().add(shell);
 

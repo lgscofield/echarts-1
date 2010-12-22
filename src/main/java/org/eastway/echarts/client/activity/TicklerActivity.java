@@ -33,7 +33,6 @@ import org.eastway.echarts.client.request.EHRProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.request.EhrRequest;
 import org.eastway.echarts.client.request.PatientProxy;
-import org.eastway.echarts.client.ui.CurrentEhrWidget;
 import org.eastway.echarts.client.ui.TicklerView;
 import org.eastway.echarts.shared.DueDateStatus;
 import org.eastway.echarts.shared.Tickler;
@@ -230,7 +229,6 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 		view.setPresenter(this);
 		panel.setWidget(view.asWidget());
 		fetchData();
-		CurrentEhrWidget.instance().setEhr(null);
 	}
 
 	@Override

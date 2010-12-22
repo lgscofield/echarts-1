@@ -21,7 +21,6 @@ import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.place.ReferralPlace;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.request.ReferralProxy;
-import org.eastway.echarts.client.ui.CurrentEhrWidget;
 import org.eastway.echarts.client.ui.ReferralView;
 
 import com.google.gwt.activity.shared.AbstractActivity;
@@ -53,7 +52,6 @@ public class ReferralActivity extends AbstractActivity implements ReferralView.P
 			public void onSuccess(ReferralProxy response) {
 				if (response != null) {
 					view.setRowData(response);
-					CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
 				} else {
 					handleFailure("No referral data found for case number: " + caseNumber);
 				}
@@ -77,7 +75,6 @@ public class ReferralActivity extends AbstractActivity implements ReferralView.P
 
 	private void handleFailure(String message) {
 		view.setRowData(null);
-		CurrentEhrWidget.instance().setEhr(null);
 		view.setError(message);
 	}
 }

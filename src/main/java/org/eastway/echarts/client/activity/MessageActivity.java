@@ -28,7 +28,6 @@ import org.eastway.echarts.client.request.CodeProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.request.MessageProxy;
 import org.eastway.echarts.client.request.MessageRequest;
-import org.eastway.echarts.client.ui.CurrentEhrWidget;
 import org.eastway.echarts.client.ui.MessageView;
 
 import com.google.gwt.requestfactory.shared.Receiver;
@@ -109,7 +108,6 @@ public class MessageActivity implements Activity, MessageView.Presenter<MessageP
 					setMessages(response);
 					setData(response);
 					view.setData(getData());
-					CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
 				} else {
 					handleFailure("No messages found for case number: " + caseNumber);
 				}
@@ -191,7 +189,6 @@ public class MessageActivity implements Activity, MessageView.Presenter<MessageP
 
 	private void handleFailure(String message) {
 		view.setData(null);
-		CurrentEhrWidget.instance().setEhr(null);
 		view.setError(message);
 	}
 }

@@ -12,17 +12,20 @@ import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.request.EhrRequest;
 import org.eastway.echarts.client.style.GlobalResources;
 
+import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SpanElement;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.requestfactory.shared.ServerFailure;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CurrentEhrWidget extends Composite {
+public class CurrentEhrWidget extends Composite implements Activity {
 
 	class EHRFetcher {
 		EHRProxy fetchedEHR;
@@ -115,16 +118,30 @@ public class CurrentEhrWidget extends Composite {
 			container.setVisible(false);
 			return;
 		} else {
-			if (this.caseNumber != null && this.caseNumber.equals(caseNumber))
-				return;
+			if (this.caseNumber != null && this.caseNumber.equals(caseNumber)) {
+				if (!container.isVisible()) {
+					container.setVisible(true);
+				} else {
+					return;
+				}
+			}
 			final EhrRequest ehrRequest = requestFactory.ehrRequest();
 			AssignmentRequest assignmentRequest = requestFactory.assignmentRequest();
 			new EHRFetcher().Run(ehrRequest, assignmentRequest, caseNumber, new Receiver<EHRFetcher>() {
 				@Override
 				public void onSuccess(EHRFetcher response) {
-					EHRProxy ehr = requestFactory.ehrRequest().edit(response.fetchedEHR);
-					ehr.setAssignments(response.fetchedAssignments);
-					CurrentEhrWidget.instance().setEhr(ehr);
+					if (response != null) {
+						EHRProxy ehr = requestFactory.ehrRequest().edit(response.fetchedEHR);
+						ehr.setAssignments(response.fetchedAssignments);
+						setEhr(ehr);
+					} else {
+						setEhr(null);
+					}
+				}
+
+				@Override
+				public void onFailure(ServerFailure failure) {
+					setEhr(null);
 				}
 			});
 			container.setVisible(true);
@@ -150,7 +167,25 @@ public class CurrentEhrWidget extends Composite {
 
 	public static CurrentEhrWidget instance() {
 		if (INSTANCE == null)
-			return new CurrentEhrWidget();
+			INSTANCE = new CurrentEhrWidget();
 		return INSTANCE;
+	}
+
+	@Override
+	public String mayStop() {
+		return null;
+	}
+
+	@Override
+	public void onCancel() {
+	}
+
+	@Override
+	public void onStop() {
+	}
+
+	@Override
+	public void start(AcceptsOneWidget panel, EventBus eventBus) {
+		panel.setWidget(this);
 	}
 }

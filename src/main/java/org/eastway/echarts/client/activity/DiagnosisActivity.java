@@ -21,7 +21,6 @@ import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.place.DiagnosisPlace;
 import org.eastway.echarts.client.request.DiagnosisProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
-import org.eastway.echarts.client.ui.CurrentEhrWidget;
 import org.eastway.echarts.client.ui.DiagnosisView;
 
 import com.google.gwt.activity.shared.AbstractActivity;
@@ -62,7 +61,6 @@ public class DiagnosisActivity extends AbstractActivity implements DiagnosisView
 			public void onSuccess(List<DiagnosisProxy> response) {
 				if (response != null && !response.isEmpty()) {
 					view.setRowData(response);
-					CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
 				} else {
 					handleFailure("No diagnosis data found for case number " + caseNumber);
 				}
@@ -85,7 +83,6 @@ public class DiagnosisActivity extends AbstractActivity implements DiagnosisView
 
 	private void handleFailure(String message) {
 		view.setRowData(null);
-		CurrentEhrWidget.instance().setEhr(null);
 		view.setError(message);
 	}
 }

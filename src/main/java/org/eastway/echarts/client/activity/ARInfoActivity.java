@@ -22,7 +22,6 @@ import org.eastway.echarts.client.place.ARInfoPlace;
 import org.eastway.echarts.client.request.ARInfoProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.ui.ARInfoView;
-import org.eastway.echarts.client.ui.CurrentEhrWidget;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
@@ -53,7 +52,6 @@ public class ARInfoActivity extends AbstractActivity implements ARInfoView.Prese
 			public void onSuccess(ARInfoProxy response) {
 				if (response != null) {
 					view.setRowData(response);
-					CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
 				} else {
 					handleFailure("No ARInfo found for case number: " + caseNumber);
 				}
@@ -76,7 +74,6 @@ public class ARInfoActivity extends AbstractActivity implements ARInfoView.Prese
 
 	private void handleFailure(String message) {
 		view.setRowData(null);
-		CurrentEhrWidget.instance().setEhr(null);
 		view.setError(message);
 	}
 }

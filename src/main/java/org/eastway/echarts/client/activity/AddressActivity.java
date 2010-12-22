@@ -21,7 +21,6 @@ import org.eastway.echarts.client.place.AddressPlace;
 import org.eastway.echarts.client.request.AddressProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.ui.AddressView;
-import org.eastway.echarts.client.ui.CurrentEhrWidget;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
@@ -50,7 +49,6 @@ public class AddressActivity extends AbstractActivity implements AddressView.Pre
 			public void onSuccess(List<AddressProxy> response) {
 				if (response != null && !response.isEmpty()) {
 					view.setRowData(response);
-					CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
 				} else {
 					handleFailure("No address data found for case number: " + caseNumber);
 				}
@@ -72,7 +70,6 @@ public class AddressActivity extends AbstractActivity implements AddressView.Pre
 
 	private void handleFailure(String message) {
 		view.setRowData(null);
-		CurrentEhrWidget.instance().setEhr(null);
 		view.setError(message);
 	}
 }

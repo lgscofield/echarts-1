@@ -25,7 +25,6 @@ import org.eastway.echarts.client.place.AppointmentPlace;
 import org.eastway.echarts.client.request.AppointmentProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.ui.AppointmentView;
-import org.eastway.echarts.client.ui.CurrentEhrWidget;
 
 import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.requestfactory.shared.ServerFailure;
@@ -61,7 +60,6 @@ public class AppointmentActivity extends AbstractActivity implements Appointment
 				if (response != null && !response.isEmpty()) {
 					rowCount = response.size();
 					view.setRowData(response, startRecord, maxResults, rowCount);
-					CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
 				} else {
 					handleFailure("No appointments found for case number " + caseNumber);
 				}
@@ -121,7 +119,6 @@ public class AppointmentActivity extends AbstractActivity implements Appointment
 
 	private void handleFailure(String message) {
 		view.setRowData(null, 0, 0, 0L);
-		CurrentEhrWidget.instance().setEhr(null);
 		view.setError(message);
 	}
 }
