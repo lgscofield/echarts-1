@@ -18,6 +18,7 @@ package org.eastway.echarts.client.ui;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
@@ -36,6 +37,7 @@ public class ReferralViewImpl<T> extends Composite implements ReferralView<T> {
 	private static ReferralViewUiBinder uiBinder = GWT.create(ReferralViewUiBinder.class);
 
 	@UiField FlexTable table;
+	@UiField SpanElement error;
 
 	private List<ColumnDefinition<T>> columnDefinitions;
 
@@ -57,6 +59,13 @@ public class ReferralViewImpl<T> extends Composite implements ReferralView<T> {
 
 	@Override
 	public void setRowData(T rowData) {
+		if (rowData == null) {
+			table.setVisible(false);
+			return;
+		} else {
+			table.setVisible(true);
+			error.setInnerText("");
+		}
 		this.rowData = rowData;
 
 		for (int i = 0; i < columnDefinitions.size(); i++) {
@@ -70,5 +79,10 @@ public class ReferralViewImpl<T> extends Composite implements ReferralView<T> {
 	@Override
 	public void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions) {
 		this.columnDefinitions = columnDefinitions;
+	}
+
+	@Override
+	public void setError(String message) {
+		error.setInnerText(message);
 	}
 }

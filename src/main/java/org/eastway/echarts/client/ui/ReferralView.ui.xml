@@ -13,5 +13,8 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<g:FlexTable ui:field="table"/>
+	<g:HTMLPanel>
+		<span ui:field="error" />
+		<g:FlexTable ui:field="table"/>
+	</g:HTMLPanel>
 </ui:UiBinder>

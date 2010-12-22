@@ -27,6 +27,7 @@ import org.eastway.echarts.client.ui.ReferralView;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.requestfactory.shared.Receiver;
+import com.google.gwt.requestfactory.shared.ServerFailure;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 public class ReferralActivity extends AbstractActivity implements ReferralView.Presenter<ReferralProxy> {
@@ -50,8 +51,17 @@ public class ReferralActivity extends AbstractActivity implements ReferralView.P
 		requestFactory.referralRequest().findReferral(caseNumber).fire(new Receiver<ReferralProxy>() {
 			@Override
 			public void onSuccess(ReferralProxy response) {
-				if (response != null)
+				if (response != null) {
 					view.setRowData(response);
+					CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
+				} else {
+					handleFailure("No referral data found for case number: " + caseNumber);
+				}
+			}
+
+			@Override
+			public void onFailure(ServerFailure failure) {
+				handleFailure(failure.getMessage());
 			}
 		});
 	}
@@ -60,8 +70,14 @@ public class ReferralActivity extends AbstractActivity implements ReferralView.P
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		view.setPresenter(this);
 		view.setColumnDefinitions(columnDefinitions);
-		panel.setWidget(view.asWidget());
+		panel.setWidget(view);
 		fetchData();
-		CurrentEhrWidget.instance().setEhr(caseNumber, requestFactory);
+
+	}
+
+	private void handleFailure(String message) {
+		view.setRowData(null);
+		CurrentEhrWidget.instance().setEhr(null);
+		view.setError(message);
 	}
 }
