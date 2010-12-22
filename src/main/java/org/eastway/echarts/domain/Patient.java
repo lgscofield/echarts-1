@@ -297,6 +297,12 @@ public class Patient {
 		return em;
 	}
 
+	public static Patient findPatient(String id) {
+		if (id == null)
+			return null;
+		return entityManager().find(Patient.class, id);
+	}
+
 	@SuppressWarnings("unchecked")
 	public static List<String> findPatientsLike(String searchTerm) {
 		return entityManager().createNativeQuery("SELECT top 20 case_number + ' - ' + full_name as search FROM patient inner join codes on patient.case_status = codes.code_id where column_name = 'CaseStatus' AND (descriptor = 'Active' OR descriptor = 'Pre-Admit') AND (case_number like :searchTerm + '%' OR last_name like :searchTerm + '%' OR first_name like :searchTerm + '%')")

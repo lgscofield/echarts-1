@@ -39,7 +39,7 @@ public class Medication {
 	@Column(name = "version")
 	private Integer version;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -47,7 +47,7 @@ public class Medication {
 		return medication;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -75,6 +75,12 @@ public class Medication {
 		EntityManager em = new Medication().entityManager;
 		if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
 		return em;
+	}
+
+	public static Medication findMedication(Long id) {
+		if (id == null)
+			return null;
+		return entityManager().find(Medication.class, id);
 	}
 
 	public static List<Medication> findMedicationsByCaseNumber(String caseNumber) {

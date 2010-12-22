@@ -23,6 +23,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import org.springframework.beans.factory.annotation.Configurable;
+
+@Configurable
 @Entity
 @Table(name = "diagnosisaxis")
 public class DiagnosisCode {
@@ -68,5 +71,17 @@ public class DiagnosisCode {
 
 	public Integer getVersion() {
 		return version;
+	}
+
+	public static final EntityManager entityManager() {
+        EntityManager em = new DiagnosisCode().entityManager;
+        if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+        return em;
+    }
+
+	public static DiagnosisCode findDiagnosisCode(String id) {
+		if (id == null)
+			return null;
+		return entityManager().find(DiagnosisCode.class, id);
 	}
 }

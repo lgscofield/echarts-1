@@ -22,9 +22,9 @@ import com.google.gwt.requestfactory.shared.ProxyFor;
 
 @ProxyFor(Medication.class)
 public interface MedicationProxy extends EntityProxy {
-	public void setId(long id);
+	public void setId(Long id);
 
-	public long getId();
+	public Long getId();
 
 	public void setCaseNumber(String caseNumber);
 

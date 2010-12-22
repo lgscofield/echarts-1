@@ -16,7 +16,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
 import com.google.gwt.requestfactory.shared.Receiver;
-import com.google.gwt.requestfactory.shared.RequestEvent;
+//import com.google.gwt.requestfactory.shared.RequestEvent;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.inject.Inject;
@@ -50,18 +50,18 @@ public class ScaffoldDesktopApp extends ScaffoldApp {
 	}
 
 	private void init() {
-		RequestEvent.register(eventBus, new RequestEvent.Handler() {
-			// Only show loading status if a request isn't serviced in 250ms.
-			private static final int LOADING_TIMEOUT = 250;
-
-			public void onRequestEvent(RequestEvent requestEvent) {
-				if (requestEvent.getState() == RequestEvent.State.SENT) {
-					shell.getMole().showDelayed(LOADING_TIMEOUT);
-				} else {
-					shell.getMole().hide();
-				}
-			}
-		});
+//		RequestEvent.register(eventBus, new RequestEvent.Handler() {
+//			// Only show loading status if a request isn't serviced in 250ms.
+//			private static final int LOADING_TIMEOUT = 250;
+//
+//			public void onRequestEvent(RequestEvent requestEvent) {
+//				if (requestEvent.getState() == RequestEvent.State.SENT) {
+//					shell.getMole().showDelayed(LOADING_TIMEOUT);
+//				} else {
+//					shell.getMole().hide();
+//				}
+//			}
+//		});
 		requestFactory.dbServerConfigRequest().findDbServerConfig("dbServerUrl").fire(new Receiver<DbServerConfigProxy>() {
 			@Override
 			public void onSuccess(DbServerConfigProxy response) {
