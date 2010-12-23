@@ -165,7 +165,7 @@ public class Appointment {
 	public static List<Appointment> findAppointmentEntriesByCaseNumber(String caseNumber) {
 		if (caseNumber == null)
 			return null;
-		return entityManager().createQuery("SELECT a From Appointment a WHERE a.caseNumber = :caseNumber Order By a.appointmentDate DESC", Appointment.class)
+		return entityManager().createQuery("SELECT a From Appointment a WHERE a.caseNumber = :caseNumber Order By a.appointmentDate DESC, a.startTime DESC", Appointment.class)
 			.setParameter("caseNumber", caseNumber)
 			.getResultList();
 	}

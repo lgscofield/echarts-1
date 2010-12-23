@@ -65,7 +65,6 @@ public class MasterActivityMapper implements ActivityMapper {
 	private List<ColumnDefinition<ReferralProxy>> referralColumnDefinitions;
 	private ReferralView<ReferralProxy> referralView;
 	private AppointmentView<AppointmentProxy> appointmentView;
-	private List<ColumnDefinition<AppointmentProxy>> appointmentColumnDefinitions;
 	private DiagnosisView<DiagnosisProxy> diagnosisView;
 	private List<ColumnDefinition<DiagnosisProxy>> diagnosisColumnDefinitions;
 	private LinkView<LinkProxy> linkView;
@@ -90,7 +89,6 @@ public class MasterActivityMapper implements ActivityMapper {
 							     ReferralView<ReferralProxy> referralView,
 							     List<ColumnDefinition<ReferralProxy>> referralColumnDefinitions,
 							     AppointmentView<AppointmentProxy> appointmentView,
-							     List<ColumnDefinition<AppointmentProxy>> appointmentColumnDefinitions,
 							     DiagnosisView<DiagnosisProxy> diagnosisView,
 							     List<ColumnDefinition<DiagnosisProxy>> diagnosisColumnDefinitions,
 							     LinkView<LinkProxy> linkView,
@@ -114,7 +112,6 @@ public class MasterActivityMapper implements ActivityMapper {
 		this.referralView = referralView;
 		this.referralColumnDefinitions = referralColumnDefinitions;
 		this.appointmentView = appointmentView;
-		this.appointmentColumnDefinitions = appointmentColumnDefinitions;
 		this.diagnosisView = diagnosisView;
 		this.diagnosisColumnDefinitions = diagnosisColumnDefinitions;
 		this.linkView = linkView;
@@ -140,7 +137,7 @@ public class MasterActivityMapper implements ActivityMapper {
 		else if (place instanceof ReferralPlace)
 			return new ReferralActivity((ReferralPlace) place, requestFactory, referralColumnDefinitions, referralView);
 		else if (place instanceof AppointmentPlace)
-			return new AppointmentActivity((AppointmentPlace) place, requestFactory, appointmentColumnDefinitions, appointmentView);
+			return new AppointmentActivity((AppointmentPlace) place, requestFactory, appointmentView);
 		else if (place instanceof DiagnosisPlace)
 			return new DiagnosisActivity((DiagnosisPlace) place, requestFactory, diagnosisColumnDefinitions, diagnosisView);
 		else if (place instanceof LinkPlace)

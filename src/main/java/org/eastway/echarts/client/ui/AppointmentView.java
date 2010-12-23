@@ -17,25 +17,15 @@ package org.eastway.echarts.client.ui;
 
 import java.util.List;
 
-import org.eastway.echarts.client.common.ColumnDefinition;
-
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 
 public interface AppointmentView<T> extends IsWidget {
 	interface Presenter<T> {
-		void getNewest();
-
-		void getNewer();
-
-		void getOlder();
-
-		void getOldest();
 	}
 
 	void setPresenter(Presenter<T> presenter);
 	Widget asWidget();
-	void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions);
 	void setRowData(List<T> rowData, int startRecord, int maxResults, long rowCount);
 	void setError(String message);
 }

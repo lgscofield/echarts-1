@@ -20,7 +20,6 @@ import java.util.List;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 
-import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.place.AppointmentPlace;
 import org.eastway.echarts.client.request.AppointmentProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
@@ -37,19 +36,15 @@ public class AppointmentActivity extends AbstractActivity implements Appointment
 	private int maxResults = 0;
 	private int startRecord = 0;
 	private EchartsRequestFactory requestFactory;
-	private List<ColumnDefinition<AppointmentProxy>> columnDefinitions;
 
 	public AppointmentActivity(AppointmentPlace place,
 			EchartsRequestFactory requestFactory,
-			List<ColumnDefinition<AppointmentProxy>> columnDefinitions,
 			AppointmentView<AppointmentProxy> view) {
 		this.caseNumber = place.getCaseNumber();
 		this.requestFactory = requestFactory;
-		this.columnDefinitions = columnDefinitions;
 		this.view = view;
 	}
 
-	private int record = 0;
 	private long rowCount = 0;
 
 	public void fetchData() {
@@ -73,48 +68,10 @@ public class AppointmentActivity extends AbstractActivity implements Appointment
 	}
 
 	@Override
-	public void getOlder() {
-		record += maxResults;
-		if (record > rowCount) {
-			record -= maxResults;
-			return;				
-		}
-		startRecord = record;
-		fetchData();
-	}
-
-	@Override
-	public void getNewer() {
-		record -= maxResults;
-		if (record < 0) {
-			record = 0;
-			return;
-		}
-		startRecord = record;
-		fetchData();
-	}
-
-	@Override
-	public void getNewest() {
-		startRecord = 0;
-		record = 0;
-		fetchData();
-	}
-
-	@Override
-	public void getOldest() {
-		startRecord = (int)rowCount - (int)rowCount % maxResults;
-		record = startRecord;
-		fetchData();
-	}
-
-	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		view.setPresenter(this);
-		view.setColumnDefinitions(columnDefinitions);
 		panel.setWidget(view.asWidget());
 		fetchData();
-
 	}
 
 	private void handleFailure(String message) {
