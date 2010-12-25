@@ -525,7 +525,7 @@
                 <configuration>
 				<logLevel>INFO</logLevel>
 				<style>OBFUSCATED</style>
-				<gwtVersion>2.1.0</gwtVersion>
+				<gwtVersion>2.1.1</gwtVersion>
 				<runTarget>/echarts.jsp</runTarget>
                 <hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
 				<modules>
