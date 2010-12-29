@@ -26,7 +26,7 @@
 				<g:Hyperlink ui:field='providerSignatures' targetHistoryToken='ProviderSignaturesPlace:'>Provider Signatures</g:Hyperlink>
 			</li>
 			<li>
-				<g:Hyperlink ui:field='supervisorSignatures' targetHistoryToken=''>Supervisor Signatures</g:Hyperlink>
+				<g:Hyperlink ui:field='supervisorSignatures' targetHistoryToken='SupervisorSignaturesPlace:'>Supervisor Signatures</g:Hyperlink>
 			</li>
 			<li>
 				<g:Hyperlink ui:field='medsomSignatures' targetHistoryToken=''>Med-Som Signatures</g:Hyperlink>
