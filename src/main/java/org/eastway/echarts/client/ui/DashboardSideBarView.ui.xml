@@ -29,7 +29,7 @@
 				<g:Hyperlink ui:field='supervisorSignatures' targetHistoryToken='SupervisorSignaturesPlace:'>Supervisor Signatures</g:Hyperlink>
 			</li>
 			<li>
-				<g:Hyperlink ui:field='medsomSignatures' targetHistoryToken=''>Med-Som Signatures</g:Hyperlink>
+				<g:Hyperlink ui:field='medsomSignatures' targetHistoryToken='MedSomSignaturesPlace:'>Med-Som Signatures</g:Hyperlink>
 			</li>
 			<li>
 				<g:Hyperlink ui:field='staffHistory' targetHistoryToken=''>Staff History</g:Hyperlink>

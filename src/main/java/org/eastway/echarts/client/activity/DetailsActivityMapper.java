@@ -8,6 +8,7 @@ import org.eastway.echarts.client.place.DemographicsPlace;
 import org.eastway.echarts.client.place.DiagnosisPlace;
 import org.eastway.echarts.client.place.LabPlace;
 import org.eastway.echarts.client.place.LinkPlace;
+import org.eastway.echarts.client.place.MedSomSignaturesPlace;
 import org.eastway.echarts.client.place.MedicationPlace;
 import org.eastway.echarts.client.place.MessagePlace;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
@@ -99,6 +100,8 @@ public class DetailsActivityMapper implements ActivityMapper {
 		} else if (place instanceof ProviderSignaturesPlace) {
 			return new DashboardSideBarActivity(dashboardSideBarView);
 		} else if (place instanceof SupervisorSignaturesPlace) {
+			return new DashboardSideBarActivity(dashboardSideBarView);
+		} else if (place instanceof MedSomSignaturesPlace) {
 			return new DashboardSideBarActivity(dashboardSideBarView);
 		}
 		return null;
