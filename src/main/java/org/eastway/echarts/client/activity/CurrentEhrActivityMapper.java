@@ -16,6 +16,7 @@ import org.eastway.echarts.client.place.ProfilePlace;
 import org.eastway.echarts.client.place.ProviderSignaturesPlace;
 import org.eastway.echarts.client.place.ReferralPlace;
 import org.eastway.echarts.client.place.ServiceHistoryPlace;
+import org.eastway.echarts.client.place.StaffHistoryPlace;
 import org.eastway.echarts.client.place.SupervisorSignaturesPlace;
 import org.eastway.echarts.client.place.TicklerPlace;
 import org.eastway.echarts.client.place.TreatmentPlanPlace;
@@ -77,6 +78,8 @@ public class CurrentEhrActivityMapper implements ActivityMapper {
 		} else if (place instanceof SupervisorSignaturesPlace) {
 			return new CurrentEhrActivity(null, null, null);
 		} else if (place instanceof MedSomSignaturesPlace) {
+			return new CurrentEhrActivity(null, null, null);
+		} else if (place instanceof StaffHistoryPlace) {
 			return new CurrentEhrActivity(null, null, null);
 		}
 		return null;
