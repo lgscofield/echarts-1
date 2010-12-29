@@ -94,10 +94,11 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 		openEhr = new Command() {
 			@Override
 			public void execute() {
+				presenter.openEhr(t);
 				menuPopup.hide();
 			}
 		};
-		MenuItem openEhrMenuItem = new MenuItem("View Patient Tab", true, openEhr);
+		MenuItem openEhrMenuItem = new MenuItem("Open Patient Chart in New Window", true, openEhr);
 		menuBar.addItem(openEhrMenuItem);
 		menuBar.addSeparator();
 		openIsp = new Command() {

@@ -39,6 +39,7 @@ import org.eastway.echarts.shared.Tickler;
 
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.requestfactory.shared.Receiver;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 public class TicklerActivity extends AbstractActivity implements TicklerView.Presenter<Tickler> {
@@ -234,5 +235,10 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 	@Override
 	public void goTo(Tickler tickler) {
 		placeController.goTo(new PatientSummaryPlace(tickler.getCaseNumber()));
+	}
+
+	@Override
+	public void openEhr(Tickler t) {
+		Window.open("http://" + Window.Location.getHost() + Window.Location.getPath() + Window.Location.getQueryString() + "#PatientSummaryPlace:" + t.getCaseNumber(), "_blank", "");
 	}
 }
