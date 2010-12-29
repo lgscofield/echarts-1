@@ -200,6 +200,12 @@ public class Address {
 		return em;
 	}
 
+	public static Address findAddress(Long id) {
+		if (id == null)
+			return null;
+		return entityManager().find(Address.class, id);
+	}
+
 	public static List<Address> findAddressesByCaseNumber(String caseNumber) {
 		return entityManager().createQuery("SELECT a FROM Address a where a.caseNumber = :caseNumber", Address.class)
 			.setParameter("caseNumber", caseNumber)
