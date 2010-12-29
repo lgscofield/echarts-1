@@ -34,7 +34,7 @@ public class DiagnosisActivity extends AbstractActivity implements DiagnosisView
 	private DiagnosisView<DiagnosisProxy> view;
 	private String caseNumber;
 	private EchartsRequestFactory requestFactory;
-	private List<ColumnDefinition<DiagnosisProxy>> columnDefinitions;
+	private AcceptsOneWidget panel;
 
 	public DiagnosisActivity(DiagnosisPlace place,
 			EchartsRequestFactory requestFactory,
@@ -42,8 +42,9 @@ public class DiagnosisActivity extends AbstractActivity implements DiagnosisView
 			DiagnosisView<DiagnosisProxy> view) {
 		this.caseNumber = place.getCaseNumber();
 		this.requestFactory = requestFactory;
-		this.columnDefinitions = columnDefinitions;
 		this.view = view;
+		this.view.setPresenter(this);
+		this.view.setColumnDefinitions(columnDefinitions);
 	}
 
 	public void fetchData() {
@@ -61,6 +62,7 @@ public class DiagnosisActivity extends AbstractActivity implements DiagnosisView
 			public void onSuccess(List<DiagnosisProxy> response) {
 				if (response != null && !response.isEmpty()) {
 					view.setRowData(response);
+					panel.setWidget(view);
 				} else {
 					handleFailure("No diagnosis data found for case number " + caseNumber);
 				}
@@ -75,14 +77,13 @@ public class DiagnosisActivity extends AbstractActivity implements DiagnosisView
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		view.setPresenter(this);
-		view.setColumnDefinitions(columnDefinitions);
-		panel.setWidget(view.asWidget());
+		this.panel = panel;
 		fetchData();
 	}
 
 	private void handleFailure(String message) {
 		view.setRowData(null);
 		view.setError(message);
+		panel.setWidget(view);
 	}
 }

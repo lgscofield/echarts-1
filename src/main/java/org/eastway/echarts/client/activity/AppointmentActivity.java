@@ -43,9 +43,11 @@ public class AppointmentActivity extends AbstractActivity implements Appointment
 		this.caseNumber = place.getCaseNumber();
 		this.requestFactory = requestFactory;
 		this.view = view;
+		this.view.setPresenter(this);
 	}
 
 	private long rowCount = 0;
+	private AcceptsOneWidget panel;
 
 	public void fetchData() {
 		requestFactory.appointmentRequest().findAppointmentEntriesByCaseNumber(caseNumber)
@@ -55,8 +57,9 @@ public class AppointmentActivity extends AbstractActivity implements Appointment
 				if (response != null && !response.isEmpty()) {
 					rowCount = response.size();
 					view.setRowData(response, startRecord, maxResults, rowCount);
+					panel.setWidget(view);
 				} else {
-					handleFailure("No appointments found for case number " + caseNumber);
+					handleFailure("No appointments for case number " + caseNumber);
 				}
 			}
 
@@ -69,13 +72,13 @@ public class AppointmentActivity extends AbstractActivity implements Appointment
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		view.setPresenter(this);
-		panel.setWidget(view.asWidget());
+		this.panel = panel;
 		fetchData();
 	}
 
 	private void handleFailure(String message) {
 		view.setRowData(null, 0, 0, 0L);
 		view.setError(message);
+		panel.setWidget(view);
 	}
 }

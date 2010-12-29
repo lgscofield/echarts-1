@@ -33,6 +33,7 @@ public class AddressActivity extends AbstractActivity implements AddressView.Pre
 	private AddressView<AddressProxy> view;
 	private String caseNumber;
 	private EchartsRequestFactory requestFactory;
+	private AcceptsOneWidget panel;
 
 	public AddressActivity(AddressPlace place,
 			EchartsRequestFactory requestFactory,
@@ -40,6 +41,7 @@ public class AddressActivity extends AbstractActivity implements AddressView.Pre
 		this.caseNumber = place.getCaseNumber();
 		this.requestFactory = requestFactory;
 		this.view = view;
+		this.view.setPresenter(this);
 	}
 
 	private void fetchData() {
@@ -49,6 +51,7 @@ public class AddressActivity extends AbstractActivity implements AddressView.Pre
 			public void onSuccess(List<AddressProxy> response) {
 				if (response != null && !response.isEmpty()) {
 					view.setRowData(response);
+					panel.setWidget(view);
 				} else {
 					handleFailure("No address data found for case number: " + caseNumber);
 				}
@@ -63,13 +66,13 @@ public class AddressActivity extends AbstractActivity implements AddressView.Pre
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		view.setPresenter(this);
-		panel.setWidget(view.asWidget());
+		this.panel = panel;
 		fetchData();
 	}
 
 	private void handleFailure(String message) {
 		view.setRowData(null);
 		view.setError(message);
+		panel.setWidget(view);
 	}
 }

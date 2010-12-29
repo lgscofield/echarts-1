@@ -34,7 +34,7 @@ public class ReferralActivity extends AbstractActivity implements ReferralView.P
 	private ReferralView<ReferralProxy> view;
 	private String caseNumber;
 	private EchartsRequestFactory requestFactory;
-	private List<ColumnDefinition<ReferralProxy>> columnDefinitions;
+	private AcceptsOneWidget panel;
 
 	public ReferralActivity(ReferralPlace place,
 							EchartsRequestFactory requestFactory,
@@ -42,8 +42,9 @@ public class ReferralActivity extends AbstractActivity implements ReferralView.P
 							ReferralView<ReferralProxy> view) {
 		this.caseNumber = place.getCaseNumber();
 		this.requestFactory = requestFactory;
-		this.columnDefinitions = columnDefinitions;
 		this.view = view;
+		this.view.setPresenter(this);
+		this.view.setColumnDefinitions(columnDefinitions);
 	}
 
 	private void fetchData() {
@@ -52,6 +53,7 @@ public class ReferralActivity extends AbstractActivity implements ReferralView.P
 			public void onSuccess(ReferralProxy response) {
 				if (response != null) {
 					view.setRowData(response);
+					panel.setWidget(view);
 				} else {
 					handleFailure("No referral data found for case number: " + caseNumber);
 				}
@@ -66,15 +68,13 @@ public class ReferralActivity extends AbstractActivity implements ReferralView.P
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		view.setPresenter(this);
-		view.setColumnDefinitions(columnDefinitions);
-		panel.setWidget(view);
+		this.panel = panel;
 		fetchData();
-
 	}
 
 	private void handleFailure(String message) {
 		view.setRowData(null);
 		view.setError(message);
+		panel.setWidget(view);
 	}
 }

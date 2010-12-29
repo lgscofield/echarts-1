@@ -43,6 +43,7 @@ public class MessageActivity implements Activity, MessageView.Presenter<MessageP
 	private MessageView<MessageProxy> view;
 	private String caseNumber;
 	private EchartsRequestFactory requestFactory;
+	private AcceptsOneWidget panel;
 
 	public MessageActivity(MessagePlace place,
 						   EchartsRequestFactory requestFactory,
@@ -50,6 +51,7 @@ public class MessageActivity implements Activity, MessageView.Presenter<MessageP
 		this.caseNumber = place.getCaseNumber();
 		this.requestFactory = requestFactory;
 		this.view = view;
+		this.view.setPresenter(this);
 	}
 
 	public CodeProxy findMessageType(String messageType) {
@@ -96,6 +98,7 @@ public class MessageActivity implements Activity, MessageView.Presenter<MessageP
 					for (CodeProxy type : types)
 						typesData.add(type.getCodeDescriptor());
 					view.setMessageTypes(typesData);
+
 				}
 			}
 		});
@@ -108,6 +111,7 @@ public class MessageActivity implements Activity, MessageView.Presenter<MessageP
 					setMessages(response);
 					setData(response);
 					view.setData(getData());
+					panel.setWidget(view);
 				} else {
 					handleFailure("No messages found for case number: " + caseNumber);
 				}
@@ -176,10 +180,8 @@ public class MessageActivity implements Activity, MessageView.Presenter<MessageP
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		view.setPresenter(this);
-		panel.setWidget(view.asWidget());
+		this.panel = panel;
 		fetchData();
-		
 	}
 
 	@Override
@@ -190,5 +192,6 @@ public class MessageActivity implements Activity, MessageView.Presenter<MessageP
 	private void handleFailure(String message) {
 		view.setData(null);
 		view.setError(message);
+		panel.setWidget(view);
 	}
 }

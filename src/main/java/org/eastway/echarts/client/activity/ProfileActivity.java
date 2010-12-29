@@ -37,15 +37,16 @@ public class ProfileActivity extends AbstractActivity implements ProfileView.Pre
 	private EchartsRequestFactory requestFactory;
 	private UserProxy user;
 	private UserRequest request;
-	private List<ColumnDefinition<UserProxy>> columnDefinitions;
+	private AcceptsOneWidget panel;
 
 	public ProfileActivity(ProfilePlace place,
 						   List<ColumnDefinition<UserProxy>> columnDefinitions,
 						   EchartsRequestFactory requestFactory,
 						   ProfileView<UserProxy> view) {
 		this.view = view;
-		this.columnDefinitions = columnDefinitions;
 		this.requestFactory = requestFactory;
+		this.view.setPresenter(this);
+		this.view.setColumnDefinitions(columnDefinitions);
 	}
 
 	private void fetchData() {
@@ -55,8 +56,10 @@ public class ProfileActivity extends AbstractActivity implements ProfileView.Pre
 				.fire(new Receiver<UserProxy>() {
 			@Override
 			public void onSuccess(UserProxy response) {
-				if (response != null)
+				if (response != null) {
 					setData(response);
+					panel.setWidget(view);
+				}
 			}
 		});
 	}
@@ -95,9 +98,7 @@ public class ProfileActivity extends AbstractActivity implements ProfileView.Pre
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		view.setPresenter(this);
-		view.setColumnDefinitions(columnDefinitions);
-		panel.setWidget(view.asWidget());
+		this.panel = panel;
 		fetchData();
 	}
 }

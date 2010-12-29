@@ -75,7 +75,7 @@ public class PatientSummaryActivity extends AbstractActivity implements PatientS
 	private String caseNumber;
 	private PatientSummaryView<EHRProxy> view;
 	private EchartsRequestFactory requestFactory;
-	private List<ColumnDefinition<EHRProxy>> columnDefinitions;
+	private AcceptsOneWidget panel;
 
 	public PatientSummaryActivity(PatientSummaryPlace place,
 								  EchartsRequestFactory requestFactory,
@@ -83,15 +83,14 @@ public class PatientSummaryActivity extends AbstractActivity implements PatientS
 								  PatientSummaryView<EHRProxy> view) {
 		this.caseNumber = place.getCaseNumber();
 		this.requestFactory = requestFactory;
-		this.columnDefinitions = columnDefinitions;
 		this.view = view;
+		this.view.setPresenter(this);
+		this.view.setColumnDefinitions(columnDefinitions);
 	}
 
 	@Override
-	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		view.setPresenter(this);
-		view.setColumnDefinitions(columnDefinitions);
-		panel.setWidget(view.asWidget());
+	public void start(final AcceptsOneWidget panel, EventBus eventBus) {
+		this.panel = panel;
 		final EhrRequest ehrRequest = requestFactory.ehrRequest();
 		AssignmentRequest assignmentRequest = requestFactory.assignmentRequest();
 		new EHRFetcher().Run(ehrRequest, assignmentRequest, caseNumber, new Receiver<PatientSummaryActivity.EHRFetcher>() {
@@ -101,6 +100,7 @@ public class PatientSummaryActivity extends AbstractActivity implements PatientS
 					EHRProxy ehr = requestFactory.ehrRequest().edit(response.fetchedEHR);
 					ehr.setAssignments(response.fetchedAssignments);
 					view.setRowData(ehr);
+					panel.setWidget(view);
 				} else {
 					handleFailure("No information found for case number: " + caseNumber);
 				}
@@ -116,5 +116,6 @@ public class PatientSummaryActivity extends AbstractActivity implements PatientS
 	private void handleFailure(String message) {
 		view.setRowData(null);
 		view.setError(message);
+		panel.setWidget(view);
 	}
 }

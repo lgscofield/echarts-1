@@ -34,6 +34,7 @@ public class LinkActivity extends AbstractActivity implements LinkView.Presenter
 	private String caseNumber;
 	private LinkView<LinkProxy> view;
 	private EchartsRequestFactory requestFactory;
+	private AcceptsOneWidget panel;
 
 	public LinkActivity(LinkPlace place,
 					    EchartsRequestFactory requestFactory,
@@ -50,6 +51,7 @@ public class LinkActivity extends AbstractActivity implements LinkView.Presenter
 				if (response != null) {
 					setData(response);
 					view.setData(getData());
+					panel.setWidget(view);
 				}
 			}
 			
@@ -76,7 +78,7 @@ public class LinkActivity extends AbstractActivity implements LinkView.Presenter
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		panel.setWidget(view.asWidget());
+		this.panel = panel;
 		fetchData();
 	}
 }

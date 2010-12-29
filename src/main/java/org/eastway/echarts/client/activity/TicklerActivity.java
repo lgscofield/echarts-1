@@ -78,7 +78,6 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 
 	private TicklerView<Tickler> view;
 	private EchartsRequestFactory requestFactory;
-	private List<ColumnDefinition<Tickler>> columnDefinitions;
 	private PlaceController placeController;
 
 	public TicklerActivity(TicklerPlace place,
@@ -87,9 +86,10 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 						   PlaceController placeController,
 						   TicklerView<Tickler> view) {
 		this.requestFactory = requestFactory;
-		this.columnDefinitions = columnDefinitions;
 		this.placeController = placeController;
 		this.view = view;
+		this.view.setColumnDefinitions(columnDefinitions);
+		this.view.setPresenter(this);
 	}
 
 	public void fetchData() {
@@ -100,6 +100,7 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 			@Override
 			public void onSuccess(List<AssignmentProxy> response) {
 				view.setRowData(setDates(response));
+				panel.setWidget(view);
 			}
 		});
 	}
@@ -110,6 +111,7 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 	private long THIRTY_DAYS = 30L * day;
 	private long NINETY_DAYS = 90L * day;
 	private long ONE_HUNDRED_EIGHTY_DAYS = 180L * day;
+	private AcceptsOneWidget panel;
 
 	private List<Tickler> setDates(List<AssignmentProxy> assignments) {
 		List<Tickler> tickler = new ArrayList<Tickler>();
@@ -225,9 +227,7 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		view.setColumnDefinitions(columnDefinitions);
-		view.setPresenter(this);
-		panel.setWidget(view.asWidget());
+		this.panel = panel;
 		fetchData();
 	}
 

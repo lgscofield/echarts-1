@@ -34,7 +34,7 @@ public class ARInfoActivity extends AbstractActivity implements ARInfoView.Prese
 	private ARInfoView<ARInfoProxy> view;
 	private String caseNumber;
 	private EchartsRequestFactory requestFactory;
-	private List<ColumnDefinition<ARInfoProxy>> columnDefinitions;
+	private AcceptsOneWidget panel;
 
 	public ARInfoActivity(ARInfoPlace place,
 			EchartsRequestFactory requestFactory,
@@ -42,8 +42,9 @@ public class ARInfoActivity extends AbstractActivity implements ARInfoView.Prese
 			ARInfoView<ARInfoProxy> view) {
 		this.caseNumber = place.getCaseNumber();
 		this.requestFactory = requestFactory;
-		this.columnDefinitions = columnDefinitions;
 		this.view = view;
+		this.view.setPresenter(this);
+		this.view.setColumnDefinitions(columnDefinitions);
 	}
 
 	private void fetchData() {
@@ -52,6 +53,7 @@ public class ARInfoActivity extends AbstractActivity implements ARInfoView.Prese
 			public void onSuccess(ARInfoProxy response) {
 				if (response != null) {
 					view.setRowData(response);
+					panel.setWidget(view);
 				} else {
 					handleFailure("No ARInfo found for case number: " + caseNumber);
 				}
@@ -66,14 +68,13 @@ public class ARInfoActivity extends AbstractActivity implements ARInfoView.Prese
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		view.setPresenter(this);
-		view.setColumnDefinitions(columnDefinitions);
-		panel.setWidget(view.asWidget());
+		this.panel = panel;
 		fetchData();
 	}
 
 	private void handleFailure(String message) {
 		view.setRowData(null);
 		view.setError(message);
+		panel.setWidget(view);
 	}
 }

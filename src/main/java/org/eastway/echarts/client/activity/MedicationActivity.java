@@ -32,6 +32,7 @@ public class MedicationActivity extends AbstractActivity implements MedicationVi
 	private String caseNumber;
 	private MedicationView<MedicationProxy> view;
 	private EchartsRequestFactory requestFactory;
+	private AcceptsOneWidget panel;
 
 	public MedicationActivity(MedicationPlace place,
 							  EchartsRequestFactory requestFactory,
@@ -47,6 +48,7 @@ public class MedicationActivity extends AbstractActivity implements MedicationVi
 			public void onSuccess(List<MedicationProxy> response) {
 				if (response != null && !response.isEmpty()) {
 					setData(response);
+					panel.setWidget(view);
 				} else {
 					handleFailure("No medication data found for case number: " + caseNumber);
 				}
@@ -64,12 +66,13 @@ public class MedicationActivity extends AbstractActivity implements MedicationVi
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		panel.setWidget(view.asWidget());
+		this.panel = panel;
 		fetchData();
 	}
 
 	private void handleFailure(String message) {
 		view.clear();
 		view.setError(message);
+		panel.setWidget(view);
 	}
 }

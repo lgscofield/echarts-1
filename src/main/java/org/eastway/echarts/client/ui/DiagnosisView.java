@@ -19,13 +19,12 @@ import java.util.List;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
 
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.IsWidget;
 
-public interface DiagnosisView<T> {
+public interface DiagnosisView<T> extends IsWidget {
 	public interface Presenter<T> { }
 
 	void setPresenter(Presenter<T> presenter);
-	Widget asWidget();
 	void setRowData(List<T> diagnoses);
 	void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions);
 	void setError(String message);

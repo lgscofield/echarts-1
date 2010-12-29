@@ -80,6 +80,7 @@ public class CurrentEhrWidget extends Composite implements Activity {
 	@UiField HTMLPanel container;
 
 	private String caseNumber;
+	private AcceptsOneWidget panel;
 
 	public CurrentEhrWidget() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -102,6 +103,7 @@ public class CurrentEhrWidget extends Composite implements Activity {
 			provider.setInnerText(getProvider(ehr.getAssignments()));
 			caseStatus.setInnerText(getCaseStatus(ehr.getPatient().getCaseStatus()));
 			container.setVisible(true);
+			panel.setWidget(this);
 		}
 	}
 
@@ -186,6 +188,6 @@ public class CurrentEhrWidget extends Composite implements Activity {
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		panel.setWidget(this);
+		this.panel = panel;
 	}
 }

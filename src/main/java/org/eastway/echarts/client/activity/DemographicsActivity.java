@@ -35,7 +35,7 @@ public class DemographicsActivity extends AbstractActivity implements Demographi
 	private DemographicsView<DemographicsProxy> view;
 	private String caseNumber;
 	private EchartsRequestFactory requestFactory;
-	private List<ColumnDefinition<DemographicsProxy>> columnDefinitions;
+	private AcceptsOneWidget panel;
 
 	public DemographicsActivity(DemographicsPlace place,
 			EchartsRequestFactory requestFactory,
@@ -43,8 +43,9 @@ public class DemographicsActivity extends AbstractActivity implements Demographi
 			DemographicsView<DemographicsProxy> view) {
 		this.caseNumber = place.getCaseNumber();
 		this.requestFactory = requestFactory;
-		this.columnDefinitions = columnDefinitions;
 		this.view = view;
+		this.view.setPresenter(this);
+		this.view.setColumnDefinitions(columnDefinitions);
 	}
 
 	private void fetchData() {
@@ -59,25 +60,28 @@ public class DemographicsActivity extends AbstractActivity implements Demographi
 			public void onSuccess(DemographicsProxy response) {
 				if (response != null) {
 					view.setRowData(response);
+					panel.setWidget(view);
 				} else {
-					view.setRowData(null);
-					view.setError("No demographics found for case number: " + caseNumber);
+					handleFailure("No demographics found for case number: " + caseNumber);
 				}
 			}
 
 			@Override
 			public void onFailure(ServerFailure failure) {
-				view.setRowData(null);
-				view.setError(failure.getMessage());
+				handleFailure(failure.getMessage());
 			}
 		});
 	}
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		view.setPresenter(this);
-		view.setColumnDefinitions(columnDefinitions);
-		panel.setWidget(view.asWidget());
+		this.panel = panel;
 		fetchData();
+	}
+
+	private void handleFailure(String message) {
+		view.setRowData(null);
+		view.setError(message);
+		panel.setWidget(view);
 	}
 }
