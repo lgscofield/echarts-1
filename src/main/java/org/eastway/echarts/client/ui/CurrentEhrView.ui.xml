@@ -13,6 +13,7 @@
 		}
 	</ui:style>
 	<g:HTMLPanel addStyleNames='{style.left} {style.margin} {style.italics}' ui:field="container">
+		<span ui:field="error" />
 		<table>
 			<tr>
 				<td>Name: <span ui:field="name" /></td>

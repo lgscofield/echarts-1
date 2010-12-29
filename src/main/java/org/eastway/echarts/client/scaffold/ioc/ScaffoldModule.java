@@ -48,6 +48,7 @@ import org.eastway.echarts.client.ui.AddressView;
 import org.eastway.echarts.client.ui.AddressViewImpl;
 import org.eastway.echarts.client.ui.AppointmentView;
 import org.eastway.echarts.client.ui.AppointmentViewImpl;
+import org.eastway.echarts.client.ui.CurrentEhrView;
 import org.eastway.echarts.client.ui.DashboardSideBarView;
 import org.eastway.echarts.client.ui.DashboardSideBarViewImpl;
 import org.eastway.echarts.client.ui.DashboardView;
@@ -130,6 +131,7 @@ public class ScaffoldModule extends AbstractGinModule {
 			.to(EhrSideBarViewImpl.class).in(Singleton.class);
 		bind(new TypeLiteral<ProfileView<UserProxy>>() {})
 			.to(ProfileViewImpl.class).in(Singleton.class);
+		bind(CurrentEhrView.class).in(Singleton.class);
 
 		bind(new TypeLiteral<List<ColumnDefinition<ARInfoProxy>>>() {})
 			.to(ARInfoColumnDefinitionsImpl.class).in(Singleton.class);
