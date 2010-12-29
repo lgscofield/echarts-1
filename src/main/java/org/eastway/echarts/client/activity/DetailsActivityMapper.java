@@ -6,6 +6,7 @@ import org.eastway.echarts.client.place.AppointmentPlace;
 import org.eastway.echarts.client.place.DashboardPlace;
 import org.eastway.echarts.client.place.DemographicsPlace;
 import org.eastway.echarts.client.place.DiagnosisPlace;
+import org.eastway.echarts.client.place.LabPlace;
 import org.eastway.echarts.client.place.LinkPlace;
 import org.eastway.echarts.client.place.MedicationPlace;
 import org.eastway.echarts.client.place.MessagePlace;
@@ -91,6 +92,8 @@ public class DetailsActivityMapper implements ActivityMapper {
 			return new DashboardSideBarActivity(dashboardSideBarView);
 		} else if (place instanceof ProfilePlace) {
 			return new DashboardSideBarActivity(dashboardSideBarView);
+		} else if (place instanceof LabPlace) {
+			return new EhrSideBarActivity(ehrSideBarView, placeController, ((LabPlace) place).getCaseNumber());
 		}
 		return null;
 	}

@@ -10,6 +10,7 @@ import org.eastway.echarts.client.place.AppointmentPlace;
 import org.eastway.echarts.client.place.DashboardPlace;
 import org.eastway.echarts.client.place.DemographicsPlace;
 import org.eastway.echarts.client.place.DiagnosisPlace;
+import org.eastway.echarts.client.place.LabPlace;
 import org.eastway.echarts.client.place.LinkPlace;
 import org.eastway.echarts.client.place.MedicationPlace;
 import org.eastway.echarts.client.place.MessagePlace;
@@ -156,6 +157,8 @@ public class MasterActivityMapper implements ActivityMapper {
 			return new DashboardActivity((DashboardPlace) place, placeController, dashboardView, requestFactory);
 		else if (place instanceof ProfilePlace)
 			return new ProfileActivity((ProfilePlace) place, profileColumnDefinitions, requestFactory, profileView);
+		else if (place instanceof LabPlace)
+			return new LabActivity((LabPlace) place);
 		return null;
 	}
 

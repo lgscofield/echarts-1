@@ -7,6 +7,7 @@ import org.eastway.echarts.client.place.AddressPlace;
 import org.eastway.echarts.client.place.AppointmentPlace;
 import org.eastway.echarts.client.place.DemographicsPlace;
 import org.eastway.echarts.client.place.DiagnosisPlace;
+import org.eastway.echarts.client.place.LabPlace;
 import org.eastway.echarts.client.place.LinkPlace;
 import org.eastway.echarts.client.place.MedicationPlace;
 import org.eastway.echarts.client.place.MessagePlace;
@@ -108,7 +109,7 @@ public class EhrSideBarViewImpl extends Composite implements EhrSideBarView {
 
 	@UiHandler("labs")
 	void onLabsSelected(ClickEvent event) {
-		//presenter.goTo(new LabPlace(id));
+		presenter.goTo(new LabPlace(id));
 	}
 
 	@UiHandler("treatmentPlan")
