@@ -16,6 +16,7 @@ import org.eastway.echarts.client.place.MedicationPlace;
 import org.eastway.echarts.client.place.MessagePlace;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
 import org.eastway.echarts.client.place.ProfilePlace;
+import org.eastway.echarts.client.place.ProviderSignaturesPlace;
 import org.eastway.echarts.client.place.ReferralPlace;
 import org.eastway.echarts.client.place.ServiceHistoryPlace;
 import org.eastway.echarts.client.place.TicklerPlace;
@@ -159,6 +160,8 @@ public class MasterActivityMapper implements ActivityMapper {
 			return new ProfileActivity((ProfilePlace) place, profileColumnDefinitions, requestFactory, profileView);
 		else if (place instanceof LabPlace)
 			return new LabActivity((LabPlace) place);
+		else if (place instanceof ProviderSignaturesPlace)
+			return new ProviderSignaturesActivity();
 		return null;
 	}
 

@@ -23,7 +23,7 @@
 				<g:Hyperlink ui:field='tickler' targetHistoryToken='TicklerPlace:'>Tickler</g:Hyperlink>
 			</li>
 			<li>
-				<g:Hyperlink ui:field='providerSignatures' targetHistoryToken=''>Provider Signatures</g:Hyperlink>
+				<g:Hyperlink ui:field='providerSignatures' targetHistoryToken='ProviderSignaturesPlace:'>Provider Signatures</g:Hyperlink>
 			</li>
 			<li>
 				<g:Hyperlink ui:field='supervisorSignatures' targetHistoryToken=''>Supervisor Signatures</g:Hyperlink>
