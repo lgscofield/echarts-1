@@ -97,7 +97,7 @@
 				<g:SimplePanel ui:field="master"></g:SimplePanel>
 			</g:FlowPanel>
 		</g:center>
-		<g:west size="15">
+		<g:west size="13">
 			<g:SimplePanel ui:field="details"></g:SimplePanel>
 		</g:west>
 	</g:DockLayoutPanel>
