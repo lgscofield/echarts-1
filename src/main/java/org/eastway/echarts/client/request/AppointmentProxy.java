@@ -64,4 +64,8 @@ public interface AppointmentProxy extends EntityProxy {
 	public Integer getVersion();
 
 	public EntityProxyId<AppointmentProxy> stableId();
+
+	public Long getId();
+
+	public void setId(Long id);
 }

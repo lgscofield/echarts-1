@@ -31,7 +31,7 @@ import org.eastway.echarts.client.common.ReferralColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.TicklerColumnDefinitionsImpl;
 import org.eastway.echarts.client.request.ARInfoProxy;
 import org.eastway.echarts.client.request.AddressProxy;
-import org.eastway.echarts.client.request.AppointmentProxy;
+import org.eastway.echarts.client.request.AppointmentDataProvider;
 import org.eastway.echarts.client.request.DemographicsProxy;
 import org.eastway.echarts.client.request.DiagnosisProxy;
 import org.eastway.echarts.client.request.EHRProxy;
@@ -47,7 +47,6 @@ import org.eastway.echarts.client.ui.ARInfoViewImpl;
 import org.eastway.echarts.client.ui.AddressView;
 import org.eastway.echarts.client.ui.AddressViewImpl;
 import org.eastway.echarts.client.ui.AppointmentView;
-import org.eastway.echarts.client.ui.AppointmentViewImpl;
 import org.eastway.echarts.client.ui.CurrentEhrView;
 import org.eastway.echarts.client.ui.DashboardSideBarView;
 import org.eastway.echarts.client.ui.DashboardSideBarViewImpl;
@@ -111,8 +110,7 @@ public class ScaffoldModule extends AbstractGinModule {
 			.to(DemographicsViewImpl.class).in(Singleton.class);
 		bind(new TypeLiteral<ReferralView<ReferralProxy>>() {})
 			.to(ReferralViewImpl.class).in(Singleton.class);
-		bind(new TypeLiteral<AppointmentView<AppointmentProxy>>() {})
-			.to(AppointmentViewImpl.class).in(Singleton.class);
+		bind(AppointmentView.class).in(Singleton.class);
 		bind(new TypeLiteral<DiagnosisView<DiagnosisProxy>>() {})
 			.to(DiagnosisViewImpl.class).in(Singleton.class);
 		bind(new TypeLiteral<LinkView<LinkProxy>>() {})
@@ -155,6 +153,8 @@ public class ScaffoldModule extends AbstractGinModule {
 			.to(ReferralColumnDefinitionsImpl.class).in(Singleton.class);
 
 		bind(EchartsOracle.class).in(Singleton.class);
+
+		bind(AppointmentDataProvider.class).in(Singleton.class);
 	}
 
 	static class PlaceControllerProvider implements Provider<PlaceController> {

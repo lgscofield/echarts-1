@@ -26,6 +26,7 @@ import org.eastway.echarts.client.place.TicklerPlace;
 import org.eastway.echarts.client.place.TreatmentPlanPlace;
 import org.eastway.echarts.client.request.ARInfoProxy;
 import org.eastway.echarts.client.request.AddressProxy;
+import org.eastway.echarts.client.request.AppointmentDataProvider;
 import org.eastway.echarts.client.request.AppointmentProxy;
 import org.eastway.echarts.client.request.DemographicsProxy;
 import org.eastway.echarts.client.request.DiagnosisProxy;
@@ -80,6 +81,7 @@ public class MasterActivityMapper implements ActivityMapper {
 	private DashboardView<LinkedHashMap<String, Long>> dashboardView;
 	private ProfileView<UserProxy> profileView;
 	private List<ColumnDefinition<UserProxy>> profileColumnDefinitions;
+	private AppointmentDataProvider appointmentDataProvider;
 
 	@Inject
 	public MasterActivityMapper(EchartsRequestFactory requestFactory,
@@ -103,7 +105,8 @@ public class MasterActivityMapper implements ActivityMapper {
 							     List<ColumnDefinition<ARInfoProxy>> arInfoColumnDefinitions,
 							     DashboardView<LinkedHashMap<String, Long>> dashboardView,
 							     ProfileView<UserProxy> profileView,
-							     List<ColumnDefinition<UserProxy>> profileColumnDefinitions) {
+							     List<ColumnDefinition<UserProxy>> profileColumnDefinitions,
+							     AppointmentDataProvider appointmentDataProvider) {
 		super();
 		this.requestFactory = requestFactory;
 		this.placeController = placeController;
@@ -127,6 +130,7 @@ public class MasterActivityMapper implements ActivityMapper {
 		this.dashboardView = dashboardView;
 		this.profileView = profileView;
 		this.profileColumnDefinitions = profileColumnDefinitions;
+		this.appointmentDataProvider = appointmentDataProvider;
 	}
 
 	@Override
@@ -142,7 +146,7 @@ public class MasterActivityMapper implements ActivityMapper {
 		else if (place instanceof ReferralPlace)
 			return new ReferralActivity((ReferralPlace) place, requestFactory, referralColumnDefinitions, referralView);
 		else if (place instanceof AppointmentPlace)
-			return new AppointmentActivity((AppointmentPlace) place, requestFactory, appointmentView);
+			return new AppointmentActivity((AppointmentPlace) place, requestFactory, appointmentView, appointmentDataProvider);
 		else if (place instanceof DiagnosisPlace)
 			return new DiagnosisActivity((DiagnosisPlace) place, requestFactory, diagnosisColumnDefinitions, diagnosisView);
 		else if (place instanceof LinkPlace)

@@ -26,5 +26,5 @@ import com.google.gwt.requestfactory.shared.Service;
 @Service(Appointment.class)
 public interface AppointmentRequest extends RequestContext {
 	Request<AppointmentProxy> findAppointment(Long id);
-	Request<List<AppointmentProxy>> findAppointmentEntriesByCaseNumber(String caseNumber);
+	Request<List<AppointmentProxy>> findAppointmentEntriesByCaseNumber(int start, int max, String caseNumber);
 }

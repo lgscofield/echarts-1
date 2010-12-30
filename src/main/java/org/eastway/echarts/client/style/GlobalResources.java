@@ -53,22 +53,30 @@ public class GlobalResources {
 	}
 
 	public static DateTimeFormat getDateFormat() {
-		return DateTimeFormat.getFormat("M/d/y");
+		return DateTimeFormat.getFormat(DateTimeConstants.SHORT_DATE);
 	}
 
 	public static DateTimeFormat getExtendedISODateTimeFormat() {
-		return DateTimeFormat.getFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZZ");
+		return DateTimeFormat.getFormat(DateTimeConstants.EXTENDED_ISO_DATE_TIME);
 	}
 
 	public static DateTimeFormat getBasicISODateTimeFormat() {
-		return DateTimeFormat.getFormat("yyyyMMdd'T'HHmmss.SSSZ");
+		return DateTimeFormat.getFormat(DateTimeConstants.BASIC_ISO_DATE_TIME);
 	}
 
 	public static DateTimeFormat getDateTimeFormat() {
-		return DateTimeFormat.getFormat("h:mm a M/d/y");
+		return DateTimeFormat.getFormat(DateTimeConstants.DATE_TIME);
 	}
 
 	public static DateTimeFormat getTimeFormat() {
-		return DateTimeFormat.getFormat("h:mm a");
+		return DateTimeFormat.getFormat(DateTimeConstants.SHORT_TIME);
+	}
+
+	public static interface DateTimeConstants {
+		public static final String SHORT_DATE = "M/d/y";
+		public static final String EXTENDED_ISO_DATE_TIME = "yyyy-MM-dd'T'HH:mm:ss.SSSZZ";
+		public static final String BASIC_ISO_DATE_TIME = "yyyyMMdd'T'HHmmss.SSSZ";
+		public static final String DATE_TIME = "h:mm a M/d/y";
+		public static final String SHORT_TIME = "h:mm a";
 	}
 }

@@ -15,10 +15,9 @@
  */
 package org.eastway.echarts.client.ui;
 
-import java.util.List;
-
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.AbstractDataProvider;
 
 public interface AppointmentView<T> extends IsWidget {
 	interface Presenter<T> {
@@ -26,6 +25,7 @@ public interface AppointmentView<T> extends IsWidget {
 
 	void setPresenter(Presenter<T> presenter);
 	Widget asWidget();
-	void setRowData(List<T> rowData, int startRecord, int maxResults, long rowCount);
 	void setError(String message);
+	void reset();
+	void setDataProvider(AbstractDataProvider<T> dataProvider);
 }
