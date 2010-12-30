@@ -241,4 +241,29 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 	public void openEhr(Tickler t) {
 		Window.open("http://" + Window.Location.getHost() + Window.Location.getPath() + Window.Location.getQueryString() + "#PatientSummaryPlace:" + t.getCaseNumber(), "_blank", "");
 	}
+
+	@Override
+	public void openIsp(Tickler t) {
+		Window.open("http://" + EchartsUser.dbServerUrl + "/echarts-asp/Forms/GandO.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber(), "_blank", "");
+	}
+
+	@Override
+	public void openIndividualProgressNote(Tickler t) {
+		Window.open("http://" + EchartsUser.dbServerUrl + "/echarts-asp/Forms/102IPNEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber(), "_blank", "");
+	}
+
+	@Override
+	public void openCpstNote(Tickler t) {
+		Window.open("http://" + EchartsUser.dbServerUrl + "/echarts-asp/Forms/101CPSTEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber(), "_blank", "");
+	}
+
+	@Override
+	public void openDoctorProgressNote(Tickler t) {
+		Window.open("http://" + EchartsUser.dbServerUrl + "/echarts-asp/Forms/104PharmEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber(), "_blank", "");
+	}
+
+	@Override
+	public void openNurseProgressNote(Tickler t) {
+		Window.open("http://" + EchartsUser.dbServerUrl + "/echarts-asp/Forms/103PM-NPNEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber(), "_blank", "");
+	}
 }

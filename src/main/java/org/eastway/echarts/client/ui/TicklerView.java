@@ -26,6 +26,11 @@ public interface TicklerView<T> extends IsWidget {
 	public interface Presenter<T> {
 		void openEhr(T t);
 		void goTo(T t);
+		void openIsp(T t);
+		void openIndividualProgressNote(T t);
+		void openCpstNote(T t);
+		void openDoctorProgressNote(T t);
+		void openNurseProgressNote(T t);
 	}
 
 	enum DueDateStatus {
