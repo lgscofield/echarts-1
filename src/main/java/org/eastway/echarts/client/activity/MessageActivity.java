@@ -33,6 +33,7 @@ import org.eastway.echarts.client.ui.MessageView;
 import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.requestfactory.shared.Request;
 import com.google.gwt.requestfactory.shared.ServerFailure;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 public class MessageActivity implements Activity, MessageView.Presenter<MessageProxy> {
@@ -163,19 +164,20 @@ public class MessageActivity implements Activity, MessageView.Presenter<MessageP
 
 	@Override
 	public String mayStop() {
-		return null;
+		if (view.isDisplayVisible())
+			return "Your message has not been sent.\n\nDiscard message?";
+		else
+			return null;
 	}
 
 	@Override
 	public void onCancel() {
-		// TODO Auto-generated method stub
-		
+		Window.alert("onCancel");
 	}
 
 	@Override
 	public void onStop() {
-		// TODO Auto-generated method stub
-		
+		view.reset();
 	}
 
 	@Override

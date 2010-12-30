@@ -42,4 +42,8 @@ public interface MessageView<T> extends IsWidget {
 	void setPresenter(Presenter<T> presenter);
 
 	void setError(String message);
+
+	void reset();
+
+	boolean isDisplayVisible();
 }

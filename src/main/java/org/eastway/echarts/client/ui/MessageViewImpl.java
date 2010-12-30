@@ -98,7 +98,13 @@ public class MessageViewImpl<T> extends Composite implements MessageView<T> {
 	@UiHandler("add")
 	void handleAddClicked(ClickEvent event) {
 		setText(presenter.getId());
+		message.setText("");
 		show();
+	}
+
+	@UiHandler("closeButton")
+	void handleCloseClicked(ClickEvent event) {
+		close();
 	}
 
 	@Override
@@ -163,5 +169,16 @@ public class MessageViewImpl<T> extends Composite implements MessageView<T> {
 	@Override
 	public void setError(String message) {
 		error.setInnerText(message);
+	}
+
+	@Override
+	public void reset() {
+		close();
+		message.setText("");
+	}
+
+	@Override
+	public boolean isDisplayVisible() {
+		return db.isVisible();
 	}
 }
