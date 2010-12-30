@@ -16,7 +16,7 @@
 	xmlns:c="urn:import:com.google.gwt.user.cellview.client">
 	<ui:style>
 		.cellTable {
-			width: 600px;
+			width: 100%;
 			text-align: left;
 		}
 	</ui:style>

@@ -75,7 +75,7 @@ public class AppointmentViewImpl<T> extends Composite implements AppointmentView
 			public String getValue(AppointmentProxy object) {
 				return GlobalResources.getDateFormat().format(object.getAppointmentDate());
 			}
-		}, "Appt Date");
+		}, "Date");
 		cellTable.addColumn(new TextColumn<AppointmentProxy>() {
 			@Override
 			public String getValue(AppointmentProxy object) {
@@ -88,6 +88,18 @@ public class AppointmentViewImpl<T> extends Composite implements AppointmentView
 				return GlobalResources.getTimeFormat().format(object.getEndTime());
 			}
 		}, "End Time");
+		cellTable.addColumn(new TextColumn<AppointmentProxy>() {
+			@Override
+			public String getValue(AppointmentProxy object) {
+				return object.getLocation();
+			}
+		}, "Location");
+		cellTable.addColumn(new TextColumn<AppointmentProxy>() {
+			@Override
+			public String getValue(AppointmentProxy object) {
+				return object.getNotes();
+			}
+		}, "Notes");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -105,6 +117,7 @@ public class AppointmentViewImpl<T> extends Composite implements AppointmentView
 		}
 		listDataProvider.setList((List<AppointmentProxy>) rowData);
 		cellTable.setRowData(0, (List<? extends AppointmentProxy>) rowData);
+		cellTable.setRowCount(rowData.size());
 	}
 
 	@Override
