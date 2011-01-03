@@ -34,6 +34,7 @@ public class CurrentEhrView extends Composite {
 	@UiField SpanElement caseStatus;
 	@UiField HTMLPanel container;
 	@UiField SpanElement error;
+	@UiField SpanElement caseNumber;
 
 	public CurrentEhrView() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -43,6 +44,7 @@ public class CurrentEhrView extends Composite {
 		if (ehr == null)
 			return;
 		name.setInnerText(ehr.getPatient().getName() == null ? "NO DATA" : ehr.getPatient().getName());
+		caseNumber.setInnerText(ehr.getPatient().getCaseNumber() == null ? "NO DATA" : String.valueOf(ehr.getPatient().getCaseNumber()));
 		dob.setInnerText(ehr.getDemographics() == null ? "NO DATA" : GlobalResources.getDateFormat()
 				.format(ehr.getDemographics()
 						.getDob()));

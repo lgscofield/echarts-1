@@ -16,13 +16,13 @@
 		<span ui:field="error" />
 		<table>
 			<tr>
-				<td>Name: <span ui:field="name" /></td>
+				<td><b>Case #:</b> <span ui:field="caseNumber" />&nbsp;<b>Name:</b> <span ui:field="name" /></td>
 			</tr>
 			<tr>
-				<td>DOB: <span ui:field="dob" /> (<span ui:field="age" />)&nbsp;SSN: <span ui:field="ssn" /></td>
+				<td><b>DOB:</b> <span ui:field="dob" /> (<span ui:field="age" />)&nbsp;<b>SSN:</b> <span ui:field="ssn" /></td>
 			</tr>
 			<tr>
-				<td>Provider: <span ui:field="provider" />&nbsp;Case Status: <span ui:field="caseStatus" /></td>
+				<td><b>Provider:</b> <span ui:field="provider" />&nbsp;<b>Case Status:</b> <span ui:field="caseStatus" /></td>
 			</tr>
 		</table>
 	</g:HTMLPanel>
