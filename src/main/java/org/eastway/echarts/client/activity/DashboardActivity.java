@@ -78,7 +78,6 @@ public class DashboardActivity extends AbstractActivity implements DashboardView
 	private DashboardView<LinkedHashMap<String, Long>> view;
 	private EchartsRequestFactory requestFactory;
 	private PlaceController placeController;
-	private AcceptsOneWidget panel;
 
 	public DashboardActivity(DashboardPlace place,
 							 PlaceController placeController,
@@ -113,7 +112,6 @@ public class DashboardActivity extends AbstractActivity implements DashboardView
 					color = "green";
 				view.setProductivity(response.getTotal().toString(), color);
 				view.setBonusProjection(response.getGreenNumber().toString());
-				panel.setWidget(view);
 			}
 		});
 	}
@@ -125,7 +123,7 @@ public class DashboardActivity extends AbstractActivity implements DashboardView
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		this.panel = panel;
+		panel.setWidget(view);
 		fetchData();
 		if (Cookies.getCookie("first_login") != null)
 			view.isFirstLogin();
