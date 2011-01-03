@@ -36,4 +36,6 @@ public interface EhrSideBarView extends IsWidget {
 	void selectServiceHistoryPlace();
 
 	void selectARInfoPlace();
+
+	void selectLabPlace();
 }

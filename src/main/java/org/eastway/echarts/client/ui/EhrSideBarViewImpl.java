@@ -194,6 +194,11 @@ public class EhrSideBarViewImpl extends Composite implements EhrSideBarView {
 	}
 
 	@Override
+	public void selectLabPlace() {
+		menu.setSelectedItem(getTreeItem(labs));
+	}
+
+	@Override
 	public void selectTreatmentPlanPlace() {
 		menu.setSelectedItem(getTreeItem(treatmentPlan));
 	}

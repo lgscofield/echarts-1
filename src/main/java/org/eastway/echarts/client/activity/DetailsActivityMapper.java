@@ -97,6 +97,7 @@ public class DetailsActivityMapper implements ActivityMapper {
 		} else if (place instanceof ProfilePlace) {
 			return new DashboardSideBarActivity(dashboardSideBarView);
 		} else if (place instanceof LabPlace) {
+			ehrSideBarView.selectLabPlace();
 			return new EhrSideBarActivity(ehrSideBarView, placeController, ((LabPlace) place).getCaseNumber());
 		} else if (place instanceof ProviderSignaturesPlace) {
 			return new DashboardSideBarActivity(dashboardSideBarView);
