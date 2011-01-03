@@ -1,4 +1,4 @@
-<%@ page language="java" import="javax.persistence.*,org.eastway.echarts.domain.*,org.eastway.echarts.server.*,org.eastway.echarts.shared.*" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" import="javax.persistence.*,org.eastway.echarts.domain.*,org.eastway.echartsrequest.server.*,org.eastway.echarts.shared.*" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="UTF-8"%>
 <%
 String sessionId = null;
@@ -13,18 +13,9 @@ try {
 } catch (NullPointerException e) {
 }
 
-String dbServerUrl = null;
-DbServerConfig nameValuePair = DbServerConfig.findDbServerConfig("dbServerUrl");
-dbServerUrl = nameValuePair.getConfigValue();
-
-ServiceUtil util = new ServiceUtil();
-try {
-	if (sessionId == null)
-		throw new SessionExpiredException();
-	util.checkSessionExpire(sessionId);
-} catch (SessionExpiredException e) {
+if (!ServiceUtil.isUserLoggedIn(sessionId)) {
 	String echartsUrl = "http://" + request.getServerName() + "/echarts/echarts.jsp";
-	String loginServerUrl = "http://" + dbServerUrl + "/echarts/login.aspx?continue=" + echartsUrl;
+	String loginServerUrl = "http://" + DbServerConfig.findDbServerConfig("dbServerUrl").getConfigValue() + "/echarts/login.aspx?continue=" + echartsUrl;
 	response.sendRedirect(loginServerUrl);
 }
 %>

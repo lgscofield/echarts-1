@@ -1,8 +1,8 @@
 package org.eastway.echarts.client.scaffold;
 
 import org.eastway.echarts.client.ui.EchartsOracle;
-import org.eastway.echarts.client.ui.LoginWidget;
 import org.eastway.echarts.client.ui.PatientSearchWidget;
+import org.eastway.echartsrequest.client.LoginWidget;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.place.shared.PlaceController;

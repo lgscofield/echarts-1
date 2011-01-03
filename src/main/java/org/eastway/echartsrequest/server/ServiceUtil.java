@@ -13,44 +13,47 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.eastway.echarts.server;
+package org.eastway.echartsrequest.server;
 
 import java.util.Date;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 
 import org.eastway.echarts.domain.SessionIdLog;
-import org.eastway.echarts.shared.DbException;
-import org.eastway.echarts.shared.SessionExpiredException;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 @Configurable
 public class ServiceUtil {
 	@PersistenceContext
-	EntityManager em;
+	transient EntityManager entityManager;
 
-	public void checkSessionExpire(String sessionId) throws SessionExpiredException, DbException {
+	public static final boolean isUserLoggedIn(String sessionId) {
 		if (sessionId == null)
-			throw new IllegalArgumentException("Please login");
+			return false;
 		try {
-			TypedQuery<SessionIdLog> query = em.createQuery(
-					"SELECT s FROM SessionIdLog s WHERE s.sessionId = '" + sessionId + "'",
-						SessionIdLog.class);
-			SessionIdLog sil = query.getSingleResult();
+			SessionIdLog sil = entityManager().createQuery(
+					"SELECT s FROM SessionIdLog s WHERE s.sessionId = :sessionId", SessionIdLog.class)
+						.setParameter("sessionId", sessionId)
+						.getSingleResult();
 			Date now = new Date();
 			Date expire = new Date(sil.getSessionIdExpire());
 			if (now.after(expire))
-				throw new SessionExpiredException();
+				return false;
+			else
+				return true;
 		} catch (EmptyResultDataAccessException e) {
-			throw new SessionExpiredException("Please login");
+			return false;
 		} catch (NoResultException e) {
-			throw new SessionExpiredException("Please login");
-		} finally {
-			em.close();
+			return false;
 		}
+	}
+
+	public static final EntityManager entityManager() {
+		EntityManager em = new ServiceUtil().entityManager;
+		if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+		return em;
 	}
 }

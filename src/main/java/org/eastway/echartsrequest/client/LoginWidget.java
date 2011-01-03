@@ -1,4 +1,4 @@
-package org.eastway.echarts.client.ui;
+package org.eastway.echartsrequest.client;
 
 import org.eastway.echarts.client.EchartsUser;
 

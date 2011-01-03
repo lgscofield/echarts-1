@@ -97,6 +97,19 @@
         <servlet-name>requestFactory</servlet-name>
         <url-pattern>/gwtRequest</url-pattern>
     </servlet-mapping>
+
+  <filter>
+    <description>
+      Authentication filter for ECharts.
+    </description>
+    <filter-name>EchartsAuthFilter</filter-name>
+    <filter-class>org.eastway.echartsrequest.server.EchartsAuthFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>EchartsAuthFilter</filter-name>
+    <url-pattern>/gwtRequest/*</url-pattern>
+  </filter-mapping>
+
     <session-config>
         <session-timeout>10</session-timeout>
     </session-config>

@@ -74,6 +74,7 @@ import org.eastway.echarts.client.ui.ReferralViewImpl;
 import org.eastway.echarts.client.ui.TicklerView;
 import org.eastway.echarts.client.ui.TicklerViewImpl;
 import org.eastway.echarts.shared.Tickler;
+import org.eastway.echartsrequest.client.EchartsAuthRequestTransport;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.gwt.place.shared.PlaceController;
@@ -185,7 +186,8 @@ public class ScaffoldModule extends AbstractGinModule {
 		@Override
 		public EchartsRequestFactory get() {
 			EchartsRequestFactory requestFactory = GWT.create(EchartsRequestFactory.class);
-			requestFactory.initialize(eventBus);
+			EchartsAuthRequestTransport transport = new EchartsAuthRequestTransport(eventBus);
+			requestFactory.initialize(eventBus, transport);
 			return requestFactory;
 		}
 		

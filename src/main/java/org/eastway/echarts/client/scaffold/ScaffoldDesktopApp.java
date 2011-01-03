@@ -8,6 +8,7 @@ import org.eastway.echarts.client.activity.MasterActivityMapper;
 import org.eastway.echarts.client.place.DashboardPlace;
 import org.eastway.echarts.client.request.DbServerConfigProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
+import org.eastway.echartsrequest.client.ReloadOnAuthenticationFailure;
 
 import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.core.client.GWT;
@@ -66,6 +67,9 @@ public class ScaffoldDesktopApp extends ScaffoldApp {
 //				}
 //			}
 //		});
+
+		new ReloadOnAuthenticationFailure().register(eventBus);
+
 		requestFactory.dbServerConfigRequest().findDbServerConfig("dbServerUrl").fire(new Receiver<DbServerConfigProxy>() {
 			@Override
 			public void onSuccess(DbServerConfigProxy response) {
