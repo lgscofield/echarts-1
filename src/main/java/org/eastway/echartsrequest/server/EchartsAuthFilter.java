@@ -2,54 +2,69 @@ package org.eastway.echartsrequest.server;
 
 import java.io.IOException;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.eastway.echarts.domain.DbServerConfig;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.util.StringUtils;
 
-public class EchartsAuthFilter implements Filter {
+public class EchartsAuthFilter extends AbstractAuthenticationProcessingFilter {
+	private String sessionIdCookieName = "session_id";
 
-	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
+	protected EchartsAuthFilter() {
+		super("/echarts_security_check");
 	}
 
 	@Override
-	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
-			FilterChain chain) throws IOException, ServletException {
-		HttpServletRequest request = (HttpServletRequest) servletRequest;
-		HttpServletResponse response = (HttpServletResponse) servletResponse;
+	public Authentication attemptAuthentication(HttpServletRequest request,
+			HttpServletResponse response) throws AuthenticationException,
+			IOException, ServletException {
+		String sessionId = getSessionId(request);
 
-		String sessionId = null;
-
-		try {
-			for (Cookie cookie : request.getCookies()) {
-				if (cookie.getName().equals("session_id")) {
-					sessionId = cookie.getValue();
-					break;
-				}
-			}
-		} catch (NullPointerException e) {
+		if (!ServiceUtil.isSessionValid(sessionId)) {
+			response.sendRedirect("http://" + DbServerConfig.findDbServerConfig("dbServerUrl").getConfigValue() + "/echarts/logout.aspx?continue=http://" + request.getServerName() + "/echarts/echarts.jsp");
+			return null;
 		}
 
-		if (!ServiceUtil.isUserLoggedIn(sessionId)) {
-			String echartsUrl = "http://" + request.getServerName() + "/echarts/echarts.jsp";
-			String loginServerUrl = "http://" + DbServerConfig.findDbServerConfig("dbServerUrl").getConfigValue() + "/echarts/login.aspx?continue=" + echartsUrl;
-			response.setHeader("login", loginServerUrl);
-			response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-			return;
+		EchartsAuthenticationToken token = new EchartsAuthenticationToken(
+				sessionId, EchartsAuthenticationStatus.SUCCESS);
+
+		token.setDetails(authenticationDetailsSource.buildDetails(request));
+
+		Authentication authentication = this.getAuthenticationManager()
+				.authenticate(token);
+		if (authentication.isAuthenticated()) {
+			setLastUsername(token.getIdentifier(), request);
 		}
-		chain.doFilter(request, response);
+		return authentication;
 	}
 
-	@Override
-	public void destroy() {
+	private void setLastUsername(String username, HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+
+		if (session != null || getAllowSessionCreation()) {
+			request.getSession()
+					.setAttribute(
+							UsernamePasswordAuthenticationFilter.SPRING_SECURITY_LAST_USERNAME_KEY,
+							username);
+		}
 	}
 
+	private String getSessionId(HttpServletRequest request) {
+		Cookie[] cookies = request.getCookies();
+		if (cookies == null || cookies.length == 0)
+			return null;
+		for (Cookie cookie : cookies)
+			if (cookie.getName().equals(sessionIdCookieName))
+				return StringUtils.hasText(cookie.getValue()) ? cookie
+						.getValue() : null;
+		return null;
+	}
 }

@@ -15,11 +15,21 @@
  */
 package org.eastway.echarts.domain;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.PersistenceContext;
 
+import org.springframework.beans.factory.annotation.Configurable;
+
+@Configurable
 @Entity
 public class SessionIdLog {
 	@Id
@@ -27,6 +37,14 @@ public class SessionIdLog {
 	private long id;
 	private String sessionId;
 	private Long sessionIdExpire;
+	@PersistenceContext
+	transient EntityManager entityManager;
+
+	@ManyToOne
+	@JoinTable(name="user_session_map",
+			joinColumns=@JoinColumn(name="session_id"),
+			inverseJoinColumns=@JoinColumn(name="user_id"))
+	private User user;
 
 	public SessionIdLog() { }
 
@@ -52,5 +70,27 @@ public class SessionIdLog {
 
 	public long getSessionIdExpire() {
 		return sessionIdExpire;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public static final EntityManager entityManager() {
+		EntityManager em = new SessionIdLog().entityManager;
+		if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+		return em;
+	}
+
+	public static List<SessionIdLog> findUserBySessionId(String sessionId) {
+		if (sessionId == null)
+			return null;
+		return entityManager().createQuery("SELECT o FROM SessionIdLog o WHERE o.sessionId = :sessionId", SessionIdLog.class)
+			.setParameter("sessionId", sessionId)
+			.getResultList();
 	}
 }

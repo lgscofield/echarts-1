@@ -1,22 +1,9 @@
-<%@ page language="java" import="javax.persistence.*,org.eastway.echarts.domain.*,org.eastway.echartsrequest.server.*,org.eastway.echarts.shared.*" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="UTF-8"%>
 <%
-String sessionId = null;
 
-try {
-	for (Cookie cookie : request.getCookies()) {
-		if (cookie.getName().equals("session_id")) {
-			sessionId = cookie.getValue();
-			break;
-		}
-	}
-} catch (NullPointerException e) {
-}
-
-if (!ServiceUtil.isUserLoggedIn(sessionId)) {
-	String echartsUrl = "http://" + request.getServerName() + "/echarts/echarts.jsp";
-	String loginServerUrl = "http://" + DbServerConfig.findDbServerConfig("dbServerUrl").getConfigValue() + "/echarts/login.aspx?continue=" + echartsUrl;
-	response.sendRedirect(loginServerUrl);
+if (request.getUserPrincipal() == null) {
+	response.sendRedirect("echarts_security_check");
 }
 %>
 <!DOCTYPE HTML>

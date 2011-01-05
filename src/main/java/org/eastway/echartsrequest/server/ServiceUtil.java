@@ -30,7 +30,7 @@ public class ServiceUtil {
 	@PersistenceContext
 	transient EntityManager entityManager;
 
-	public static final boolean isUserLoggedIn(String sessionId) {
+	public static final boolean isSessionValid(String sessionId) {
 		if (sessionId == null)
 			return false;
 		try {

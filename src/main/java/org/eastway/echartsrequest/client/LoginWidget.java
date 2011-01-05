@@ -1,7 +1,5 @@
 package org.eastway.echartsrequest.client;
 
-import org.eastway.echarts.client.EchartsUser;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -27,7 +25,7 @@ public class LoginWidget extends Composite {
 
 	@UiHandler("logout")
 	void handleLogout(ClickEvent event) {
-		Window.Location.assign("http://" + EchartsUser.dbServerUrl + "/echarts/logout.aspx?continue=" + Window.Location.getHref());
+		Window.Location.replace("/echarts/j_spring_security_logout");
 	}
 
 	public void setUsername(String userName) {
