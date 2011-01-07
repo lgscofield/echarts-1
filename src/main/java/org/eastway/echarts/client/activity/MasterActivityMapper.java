@@ -16,6 +16,7 @@ import org.eastway.echarts.client.place.MedSomSignaturesPlace;
 import org.eastway.echarts.client.place.MedicationPlace;
 import org.eastway.echarts.client.place.MessagePlace;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
+import org.eastway.echarts.client.place.PhysicianOrderPlace;
 import org.eastway.echarts.client.place.ProfilePlace;
 import org.eastway.echarts.client.place.ProviderSignaturesPlace;
 import org.eastway.echarts.client.place.ReferralPlace;
@@ -175,6 +176,8 @@ public class MasterActivityMapper implements ActivityMapper {
 			return new MedSomSignaturesActivity();
 		else if (place instanceof StaffHistoryPlace)
 			return new StaffHistoryActivity();
+		else if (place instanceof PhysicianOrderPlace)
+			return new PhysicianOrderActivity((PhysicianOrderPlace) place);
 		return null;
 	}
 
