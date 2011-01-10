@@ -73,8 +73,7 @@ public class ScaffoldDesktopApp extends ScaffoldApp {
 		requestFactory.dbServerConfigRequest().findDbServerConfig("dbServerUrl").fire(new Receiver<DbServerConfigProxy>() {
 			@Override
 			public void onSuccess(DbServerConfigProxy response) {
-				if ((EchartsUser.sessionId == null || EchartsUser.sessionId == "null") ||
-						(EchartsUser.userName == null || EchartsUser.userName == "null") ||
+				if ((EchartsUser.userName == null || EchartsUser.userName == "null") ||
 						(EchartsUser.staffId == null || EchartsUser.staffId == "null")) {
 					Window.Location.assign("http://" + response.getConfigValue() + "/echarts/logout.aspx?continue=" + Window.Location.getHref());
 				} else {

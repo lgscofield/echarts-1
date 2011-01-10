@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+	<http entry-point-ref="echartsAuthenticationEntryPoint">
+		<custom-filter after="FORM_LOGIN_FILTER" ref="echartsAuthFilter" />
+		<logout success-handler-ref="echartsLogoutSuccessHandler" />
+	</http>
+	<beans:bean id="echartsLogoutSuccessHandler"
+		class="org.eastway.echartsrequest.server.EchartsLogoutSuccessHandler" />
+	<beans:bean id="echartsAuthenticationEntryPoint"
+		class="org.eastway.echartsrequest.server.EchartsAuthenticationEntryPoint" />
+	<beans:bean id="userDetailsService"
+		class="org.eastway.echartsrequest.server.EchartsUserDetailsService" />
+	<beans:bean id="echartsAuthProvider"
+		class="org.eastway.echartsrequest.server.EchartsAuthenticationProvider">
+		<beans:property name="userDetailsService" ref="userDetailsService" />
+	</beans:bean>
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider ref="echartsAuthProvider" />
+	</authentication-manager>
+	<beans:bean id="echartsAuthFilter"
+		class="org.eastway.echartsrequest.server.EchartsAuthFilter">
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+	</beans:bean>
+</beans:beans>

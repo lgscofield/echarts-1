@@ -36,11 +36,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Entity
 @Table(name="Echarts_User")
 public class User {
-//	@ManyToMany
-//	@JoinTable(name="user_session_map",
-//			joinColumns=@JoinColumn(name="user_id"),
-//			inverseJoinColumns=@JoinColumn(name="session_id"))
-//	private Collection<SessionIdLog> sessionIds;
 	@Id
 	@Column(name = "username")
 	private String id;
@@ -191,8 +186,6 @@ public class User {
 	}
 
 	public String getSessionId() {
-//		for (SessionIdLog sessionId : sessionIds)
-//			return sessionId.getSessionId();
 		return null;
 	}
 
