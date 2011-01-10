@@ -43,7 +43,7 @@ public class CurrentEhrActivityMapper implements ActivityMapper {
 	@Override
 	public Activity getActivity(Place place) {
 		if (place instanceof TicklerPlace) {
-			return new CurrentEhrActivity(null, null, null);
+			return new CurrentEhrActivity(null, view, requestFactory);
 		} else if (place instanceof PatientSummaryPlace) {
 			return new CurrentEhrActivity(((PatientSummaryPlace) place).getCaseNumber(), view, requestFactory);
 		} else if (place instanceof MessagePlace) {
@@ -69,19 +69,19 @@ public class CurrentEhrActivityMapper implements ActivityMapper {
 		} else if (place instanceof ARInfoPlace) {
 			return new CurrentEhrActivity(((ARInfoPlace) place).getCaseNumber(), view, requestFactory);
 		} else if (place instanceof DashboardPlace) {
-			return new CurrentEhrActivity(null, null, null);
+			return new CurrentEhrActivity(null, view, requestFactory);
 		} else if (place instanceof ProfilePlace) {
-			return new CurrentEhrActivity(null, null, null);
+			return new CurrentEhrActivity(null, view, requestFactory);
 		} else if (place instanceof LabPlace) {
 			return new CurrentEhrActivity(((LabPlace) place).getCaseNumber(), view, requestFactory);
 		} else if (place instanceof ProviderSignaturesPlace) {
-			return new CurrentEhrActivity(null, null, null);
+			return new CurrentEhrActivity(null, view, requestFactory);
 		} else if (place instanceof SupervisorSignaturesPlace) {
-			return new CurrentEhrActivity(null, null, null);
+			return new CurrentEhrActivity(null, view, requestFactory);
 		} else if (place instanceof MedSomSignaturesPlace) {
-			return new CurrentEhrActivity(null, null, null);
+			return new CurrentEhrActivity(null, view, requestFactory);
 		} else if (place instanceof StaffHistoryPlace) {
-			return new CurrentEhrActivity(null, null, null);
+			return new CurrentEhrActivity(null, view, requestFactory);
 		} else if (place instanceof PhysicianOrderPlace) {
 			return new CurrentEhrActivity(((PhysicianOrderPlace) place).getCaseNumber(), view, requestFactory);
 		}

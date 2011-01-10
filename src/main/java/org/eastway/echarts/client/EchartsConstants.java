@@ -17,8 +17,6 @@ package org.eastway.echarts.client;
 
 import com.google.gwt.i18n.client.Constants;
 
-public interface AgencyConstants extends Constants {
-	String agencyName();
-	String gmhServicesProvided();
-	String gmhServicesNotProvided();
+public interface EchartsConstants extends Constants {
+	String version();
 }
