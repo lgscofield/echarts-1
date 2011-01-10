@@ -12,6 +12,7 @@ import org.eastway.echarts.client.place.LinkPlace;
 import org.eastway.echarts.client.place.MedicationPlace;
 import org.eastway.echarts.client.place.MessagePlace;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
+import org.eastway.echarts.client.place.PhysicianOrderPlace;
 import org.eastway.echarts.client.place.ReferralPlace;
 import org.eastway.echarts.client.place.ServiceHistoryPlace;
 import org.eastway.echarts.client.place.TreatmentPlanPlace;
@@ -48,6 +49,7 @@ public class EhrSideBarViewImpl extends Composite implements EhrSideBarView {
 	@UiField Label diagnoses;
 	@UiField Label appointments;
 	@UiField Label medications;
+	@UiField Label physicianOrder;
 	@UiField Label labs;
 	@UiField Label links;
 	@UiField Label serviceHistory;
@@ -105,6 +107,11 @@ public class EhrSideBarViewImpl extends Composite implements EhrSideBarView {
 	@UiHandler("medications")
 	void onMedicationsSelected(ClickEvent event) {
 		presenter.goTo(new MedicationPlace(id));
+	}
+
+	@UiHandler("physicianOrder")
+	void onPhysicianOrdersSelected(ClickEvent event) {
+		presenter.goTo(new PhysicianOrderPlace(id));
 	}
 
 	@UiHandler("labs")
@@ -211,5 +218,10 @@ public class EhrSideBarViewImpl extends Composite implements EhrSideBarView {
 	@Override
 	public void selectARInfoPlace() {
 		menu.setSelectedItem(getTreeItem(aRInfo));
+	}
+
+	@Override
+	public void selectPhysicianOrderPlace() {
+		menu.setSelectedItem(getTreeItem(physicianOrder));
 	}
 }
