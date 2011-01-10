@@ -3,6 +3,7 @@ package org.eastway.echarts.client.ui;
 import java.util.Date;
 import java.util.List;
 
+import org.eastway.echarts.client.EchartsConstants;
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.request.AssignmentProxy;
 import org.eastway.echarts.client.request.CodeProxy;
@@ -13,6 +14,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -36,13 +38,17 @@ public class CurrentEhrView extends Composite {
 	@UiField SpanElement error;
 	@UiField SpanElement caseNumber;
 
+	EchartsConstants echartsConstants = GWT.<EchartsConstants>create(EchartsConstants.class);
+
 	public CurrentEhrView() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
 	public void setRowData(EHRProxy ehr) {
-		if (ehr == null)
+		if (ehr == null) {
+			Window.setTitle(Window.getTitle().replaceAll("ECharts - .*", "ECharts - " + echartsConstants.version()));
 			return;
+		}
 		name.setInnerText(ehr.getPatient().getName() == null ? "NO DATA" : ehr.getPatient().getName());
 		caseNumber.setInnerText(ehr.getPatient().getCaseNumber() == null ? "NO DATA" : String.valueOf(ehr.getPatient().getCaseNumber()));
 		dob.setInnerText(ehr.getDemographics() == null ? "NO DATA" : GlobalResources.getDateFormat()
@@ -53,6 +59,7 @@ public class CurrentEhrView extends Composite {
 		provider.setInnerText(getProvider(ehr.getAssignments()));
 		caseStatus.setInnerText(getCaseStatus(ehr.getPatient().getCaseStatus()));
 		container.setVisible(true);
+		Window.setTitle(Window.getTitle().replaceAll("ECharts - (.*)", "ECharts - " + ehr.getPatient().getCaseNumber() + " - " + echartsConstants.version()));
 	}
 
 	private String getCaseStatus(CodeProxy caseStatus) {
