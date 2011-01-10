@@ -95,6 +95,12 @@ public class Link {
         return em;
     }
 
+    public static Link findLink(String id) {
+    	if (id == null)
+    		return null;
+    	return entityManager().find(Link.class, id);
+    }
+
 	public static List<Link> findAllLinks() {
 		return entityManager().createQuery("SELECT link FROM Link link ORDER BY link.header, link.sortOrder", Link.class)
 			.getResultList();

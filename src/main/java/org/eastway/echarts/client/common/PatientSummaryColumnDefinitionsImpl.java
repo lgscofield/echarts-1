@@ -17,9 +17,9 @@ package org.eastway.echarts.client.common;
 
 import java.util.ArrayList;
 
-import org.eastway.echarts.client.rpc.AssignmentProxy;
-import org.eastway.echarts.client.rpc.EHRProxy;
-import org.eastway.echarts.style.client.GlobalResources;
+import org.eastway.echarts.client.request.AssignmentProxy;
+import org.eastway.echarts.client.request.EHRProxy;
+import org.eastway.echarts.client.style.GlobalResources;
 
 @SuppressWarnings("serial")
 public class PatientSummaryColumnDefinitionsImpl extends ArrayList<ColumnDefinition<EHRProxy>> {
@@ -28,6 +28,8 @@ public class PatientSummaryColumnDefinitionsImpl extends ArrayList<ColumnDefinit
 		this.add(new ColumnDefinition<EHRProxy>() {
 			@Override
 			public void render(EHRProxy t, StringBuilder sb) {
+				if (t == null)
+					return;
 				sb.append(t.getPatient().getName() == null ? "NO DATA" : t.getPatient().getName());
 			}
 
@@ -39,6 +41,8 @@ public class PatientSummaryColumnDefinitionsImpl extends ArrayList<ColumnDefinit
 		this.add(new ColumnDefinition<EHRProxy>() {
 			@Override
 			public void render(EHRProxy t, StringBuilder sb) {
+				if (t == null)
+					return;
 				sb.append("<img src=\"" + GlobalResources.resources().defaultPhoto().getURL() + "\" />");
 			}
 
@@ -50,6 +54,8 @@ public class PatientSummaryColumnDefinitionsImpl extends ArrayList<ColumnDefinit
 		this.add(new ColumnDefinition<EHRProxy>() {
 			@Override
 			public void render(EHRProxy t, StringBuilder sb) {
+				if (t == null)
+					return;
 				sb.append(t.getDemographics().getGender().getCodeDescriptor() == null ? "" : t.getDemographics().getGender().getCodeDescriptor());
 			}
 
@@ -61,6 +67,8 @@ public class PatientSummaryColumnDefinitionsImpl extends ArrayList<ColumnDefinit
 		this.add(new ColumnDefinition<EHRProxy>() {
 			@Override
 			public void render(EHRProxy t, StringBuilder sb) {
+				if (t == null)
+					return;
 				if (t.getDemographics().getDob() != null)
 					sb.append(GlobalResources.getDateFormat().format(t.getDemographics().getDob()));
 				else
@@ -75,6 +83,8 @@ public class PatientSummaryColumnDefinitionsImpl extends ArrayList<ColumnDefinit
 		this.add(new ColumnDefinition<EHRProxy>() {
 			@Override
 			public void render(EHRProxy t, StringBuilder sb) {
+				if (t == null)
+					return;
 				for (AssignmentProxy assignment : t.getAssignments())
 					sb.append(assignment.getStaffName() == null ? "" : assignment.getStaffName() + "<br />");
 			}
@@ -87,6 +97,8 @@ public class PatientSummaryColumnDefinitionsImpl extends ArrayList<ColumnDefinit
 		this.add(new ColumnDefinition<EHRProxy>() {
 			@Override
 			public void render(EHRProxy t, StringBuilder sb) {
+				if (t == null)
+					return;
 				sb.append(t.getPatient().getSsn() == null ? "" : t.getPatient().getSsn());
 			}
 
@@ -98,6 +110,8 @@ public class PatientSummaryColumnDefinitionsImpl extends ArrayList<ColumnDefinit
 		this.add(new ColumnDefinition<EHRProxy>() {
 			@Override
 			public void render(EHRProxy t, StringBuilder sb) {
+				if (t == null)
+					return;
 				if (t.getPatient().getCaseStatus() != null)
 					sb.append(t.getPatient().getCaseStatus().getCodeDescriptor() == null ? "" :
 						t.getPatient().getCaseStatus().getCodeDescriptor());

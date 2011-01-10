@@ -67,4 +67,10 @@ public class Role {
 		if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
 		return em;
 	}
+
+	public static Role findRole(Long id) {
+		if (id == null)
+			return null;
+		return entityManager().find(Role.class, id);
+	}
 }

@@ -23,29 +23,28 @@ import java.util.List;
 import junit.framework.TestCase;
 
 import org.eastway.echarts.client.EchartsUser;
-import org.eastway.echarts.client.presenter.LinkPresenter;
-import org.eastway.echarts.client.rpc.EchartsRequestFactory;
+import org.eastway.echarts.client.activity.LinkActivity;
+import org.eastway.echarts.client.request.EchartsRequestFactory;
+import org.eastway.echarts.client.request.LinkProxy;
+import org.eastway.echarts.client.ui.LinkView;
 import org.eastway.echarts.shared.GetLinks;
 import org.junit.Before;
 import org.junit.Test;
 
 public class LinksPresenterTest extends TestCase {
-	private LinkPresenter linkPresenter;
-	private EchartsRequestFactory requestFactory;
-	private LinkPresenter.Display view;
+	private LinkActivity linkPresenter;
+	private LinkView<LinkProxy> view;
 	private LinkedHashSet<String[]> data;
 	private String patientid;
-	private GetLinks action = null;
 
+	@SuppressWarnings("unchecked")
 	@Before
 	@Override
 	public void setUp() {
 		data = new LinkedHashSet<String[]>();
 		patientid = "000000008";
-		view = createStrictMock(LinkPresenter.Display.class);
-		requestFactory = createStrictMock(EchartsRequestFactory.class);
-		action = new GetLinks("12345", patientid);
-		linkPresenter = new LinkPresenter(view, requestFactory, action);
+		view = createStrictMock(LinkView.class);
+		linkPresenter = createStrictMock(LinkActivity.class);
 		data.add(new String[] { "title1","content1" } );
 		data.add(new String[] { "title2","content2" } );
 		data.add(new String[] { "title3","content3" } );
@@ -63,9 +62,9 @@ public class LinksPresenterTest extends TestCase {
 //				return null;
 //			}
 //		});
-		replay(requestFactory);
-		linkPresenter.fetchData();
-		verify(requestFactory);
+//		replay(clientFactory);
+//		linkPresenter.fetchData();
+//		verify(requestFactory);
 
 		int i = 1;
 		List<String[]> d = linkPresenter.getData();

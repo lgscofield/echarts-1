@@ -1,0 +1,37 @@
+<!-- Copyright 2010 Ian Hilt                                                -->
+<!-- Licensed under the Apache License, Version 2.0 (the "License"); you    -->
+<!-- may not use this file except in compliance with the License. You may   -->
+<!-- may obtain a copy of the License at                                    -->
+<!--                                                                        -->
+<!-- http://www.apache.org/licenses/LICENSE-2.0                             -->
+<!--                                                                        -->
+<!-- Unless required by applicable law or agreed to in writing, software    -->
+<!-- distributed under the License is distributed on an "AS IS" BASIS,      -->
+<!-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or        -->
+<!-- implied. License for the specific language governing permissions and   -->
+<!-- limitations under the License.                                         -->
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		
+	</ui:style>
+	<g:HTMLPanel>
+		<g:Tree ui:field='menu'>
+			<g:Hyperlink targetHistoryToken="DashboardPlace:">Dashboard</g:Hyperlink>
+			<g:Label ui:field='patientSummary'>Patient Summary</g:Label>
+			<g:Label ui:field='demographics'>Demographics</g:Label>
+			<g:Label ui:field='aRInfo'>A/R Info</g:Label>
+			<g:Label ui:field='referral'>Referral</g:Label>
+			<g:Label ui:field='addresses'>Addresses</g:Label>
+			<g:Label ui:field='diagnoses'>Diagnoses</g:Label>
+			<g:Label ui:field='appointments'>Appointments</g:Label>
+			<g:Label ui:field='medications'>Medications</g:Label>
+			<g:Label ui:field='labs'>Labs</g:Label>
+			<g:Label ui:field='messages'>Messages</g:Label>
+			<g:Label ui:field='links'>Forms</g:Label>
+			<g:Label ui:field='serviceHistory'>Service History</g:Label>
+			<g:Label ui:field='treatmentPlan'>Treatment Plan</g:Label>
+		</g:Tree>
+	</g:HTMLPanel>
+</ui:UiBinder>

@@ -20,7 +20,7 @@ import java.util.List;
 
 import com.google.gwt.event.shared.EventBus;
 
-import org.eastway.echarts.client.rpc.EchartsRequestFactory;
+import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.shared.PatientListSuggestion;
 
 import com.google.gwt.requestfactory.shared.Receiver;

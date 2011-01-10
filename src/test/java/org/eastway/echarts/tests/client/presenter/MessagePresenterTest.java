@@ -21,16 +21,15 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
-import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.requestfactory.shared.InstanceRequest;
 import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.requestfactory.shared.Request;
 
-import org.eastway.echarts.client.presenter.MessagesPresenter;
-import org.eastway.echarts.client.rpc.CodeProxy;
-import org.eastway.echarts.client.rpc.EchartsRequestFactory;
-import org.eastway.echarts.client.rpc.MessageProxy;
-import org.eastway.echarts.client.rpc.MessageRequest;
+import org.eastway.echarts.client.activity.MessageActivity;
+import org.eastway.echarts.client.request.CodeProxy;
+import org.eastway.echarts.client.request.EchartsRequestFactory;
+import org.eastway.echarts.client.request.MessageProxy;
+import org.eastway.echarts.client.request.MessageRequest;
 import org.easymock.IAnswer;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,10 +37,8 @@ import org.junit.Test;
 import static org.easymock.EasyMock.*;
 
 public class MessagePresenterTest extends TestCase {
-	private MessagesPresenter messagesPresenter;
+	private MessageActivity messagesPresenter;
 	private EchartsRequestFactory requestFactory;
-	private EventBus eventBus;
-	private MessagesPresenter.Display mockMessagesDisplay;
 	private String caseNumber = "0000008";
 	private String descriptor = "Referral Message";
 	private Date timestamp = new Date(1270717380123L);
@@ -60,15 +57,13 @@ public class MessagePresenterTest extends TestCase {
 	@Override
 	public void setUp() {
 		requestFactory = createStrictMock(EchartsRequestFactory.class);
-		mockMessagesDisplay = createStrictMock(MessagesPresenter.Display.class);
-		eventBus = createStrictMock(EventBus.class);
 		codeProxy = createStrictMock(CodeProxy.class);
 		messageProxy = createStrictMock(MessageProxy.class);
 		messageRequest = createStrictMock(MessageRequest.class);
 		createReq = createStrictMock(Request.class);
 		instanceRequest = createStrictMock(InstanceRequest.class);
 
-		messagesPresenter = new MessagesPresenter(mockMessagesDisplay, eventBus, requestFactory, caseNumber);
+		messagesPresenter = createStrictMock(MessageActivity.class);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -110,7 +105,7 @@ public class MessagePresenterTest extends TestCase {
 			}
 		});
 		replay(codeProxy, messageProxy, instanceRequest, messageRequest, requestFactory);
-		messagesPresenter.save(codeProxy, caseNumber, message, timestamp, lastEdit, lastEditBy);
+		messagesPresenter.save(descriptor, message);
 		verify(codeProxy, messageProxy, instanceRequest, messageRequest, requestFactory);
 
 		assertEquals(messagesPresenter.getMessage(0).getCreationTimestamp(), timestamp);

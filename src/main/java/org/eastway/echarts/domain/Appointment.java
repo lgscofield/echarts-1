@@ -162,11 +162,13 @@ public class Appointment {
 		return entityManager().find(Appointment.class, id);
 	}
 
-	public static List<Appointment> findAppointmentEntriesByCaseNumber(String caseNumber) {
+	public static List<Appointment> findAppointmentEntriesByCaseNumber(int start, int max, String caseNumber) {
 		if (caseNumber == null)
 			return null;
-		return entityManager().createQuery("SELECT a From Appointment a WHERE a.caseNumber = :caseNumber Order By a.appointmentDate DESC", Appointment.class)
+		return entityManager().createQuery("SELECT a From Appointment a WHERE a.caseNumber = :caseNumber Order By a.appointmentDate DESC, a.startTime DESC", Appointment.class)
 			.setParameter("caseNumber", caseNumber)
+			.setFirstResult(start)
+			.setMaxResults(max)
 			.getResultList();
 	}
 }

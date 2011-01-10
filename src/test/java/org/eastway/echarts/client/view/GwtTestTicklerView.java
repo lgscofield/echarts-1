@@ -20,7 +20,7 @@ import java.util.List;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.common.TicklerColumnDefinitionsImpl;
-import org.eastway.echarts.client.view.TicklerViewImpl;
+import org.eastway.echarts.client.ui.TicklerViewImpl;
 import org.eastway.echarts.shared.Tickler;
 import org.junit.Before;
 import org.junit.Test;

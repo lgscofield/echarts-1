@@ -17,8 +17,8 @@ package org.eastway.echarts.client.common;
 
 import java.util.ArrayList;
 
-import org.eastway.echarts.client.rpc.ARInfoProxy;
-import org.eastway.echarts.style.client.GlobalResources;
+import org.eastway.echarts.client.request.ARInfoProxy;
+import org.eastway.echarts.client.style.GlobalResources;
 
 @SuppressWarnings("serial")
 public class ARInfoColumnDefinitionsImpl extends ArrayList<ColumnDefinition<ARInfoProxy>> {

@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!-- Copyright 2010 Ian Hilt                                                -->
+<!-- Licensed under the Apache License, Version 2.0 (the "License"); you    -->
+<!-- may not use this file except in compliance with the License. You may   -->
+<!-- may obtain a copy of the License at                                    -->
+<!--                                                                        -->
+<!-- http://www.apache.org/licenses/LICENSE-2.0                             -->
+<!--                                                                        -->
+<!-- Unless required by applicable law or agreed to in writing, software    -->
+<!-- distributed under the License is distributed on an "AS IS" BASIS,      -->
+<!-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or        -->
+<!-- implied. License for the specific language governing permissions and   -->
+<!-- limitations under the License.                                         -->
+
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+  xmlns:g="urn:import:com.google.gwt.user.client.ui">
+  <ui:style type="org.eastway.echarts.client.ui.MessageView.Style">
+    .h {
+    	float: right;
+    }
+    .newMessage {
+    	padding: 2px;
+    	margin: 5px;
+    }
+    .hide {
+    	display: none;
+    }
+    .show {
+    	display: inline;
+    }
+  </ui:style>
+  	<g:HTMLPanel>
+  		<span ui:field="error" />
+  		<table>
+  			<tr>
+  				<td>
+			    	<g:DialogBox addStyleNames='{style.hide}' ui:field="db" visible='false' modal="false">
+				      	<g:FlowPanel>
+				        	<g:RichTextArea width="400px" height="400px" ui:field="message"/>
+					        <g:FlowPanel>
+								<g:FlowPanel addStyleNames="{style.h}">
+					            	<g:ListBox ui:field="messageTypes" />
+					            	<g:Button ui:field="saveButton">Save</g:Button>
+					            	<g:Button ui:field="closeButton">Close</g:Button>
+					          	</g:FlowPanel>
+					        </g:FlowPanel>
+				      	</g:FlowPanel>
+			    	</g:DialogBox>
+		    		<g:FlowPanel>
+		    			<g:Button addStyleNames='{style.newMessage}' ui:field="add">New Message</g:Button>
+		    		</g:FlowPanel>
+			    	<g:FlowPanel ui:field="messages" />
+		    	</td>
+	    	</tr>
+		</table>
+  </g:HTMLPanel>
+</ui:UiBinder>

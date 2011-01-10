@@ -232,6 +232,12 @@ public class Diagnosis {
         return em;
     }
 
+	public static Diagnosis findDiagnosis(Long id) {
+		if (id == null)
+			return null;
+		return entityManager().find(Diagnosis.class, id);
+	}
+
 	public static List<Diagnosis> findDiagnosesByCaseNumber(String caseNumber) {
 		return entityManager().createQuery("SELECT d FROM Diagnosis d WHERE d.caseNumber = :caseNumber ORDER BY d.date DESC", Diagnosis.class)
 			.setParameter("caseNumber", caseNumber)

@@ -21,20 +21,19 @@ import junit.framework.TestCase;
 
 import com.google.gwt.event.shared.EventBus;
 
+import org.eastway.echarts.client.activity.ProfileActivity;
 import org.eastway.echarts.client.common.ProfileColumnDefinitionsImpl;
-import org.eastway.echarts.client.presenter.ProfilePresenter;
-import org.eastway.echarts.client.rpc.EchartsRequestFactory;
-import org.eastway.echarts.client.rpc.UserProxy;
-import org.eastway.echarts.client.view.ProfileView;
+import org.eastway.echarts.client.request.EchartsRequestFactory;
+import org.eastway.echarts.client.request.UserProxy;
+import org.eastway.echarts.client.ui.ProfileView;
 import org.junit.Before;
 import org.junit.Test;
 
 public class ProfilePresenterTest extends TestCase {
-	private ProfilePresenter profilePresenter;
+	private ProfileActivity profilePresenter;
 	private ProfileView<UserProxy> profileView;
 	private ProfileColumnDefinitionsImpl columnDefinitions;
 	private EchartsRequestFactory requestFactory;
-	private EventBus eventBus;
 	private UserProxy user;
 
 	@SuppressWarnings("unchecked")
@@ -43,9 +42,7 @@ public class ProfilePresenterTest extends TestCase {
 	public void setUp() {
 		profileView = createStrictMock(ProfileView.class);
 		requestFactory = createStrictMock(EchartsRequestFactory.class);
-		eventBus = createStrictMock(EventBus.class);
-		profilePresenter = new ProfilePresenter(profileView, columnDefinitions,
-				eventBus, requestFactory);
+		profilePresenter = createStrictMock(ProfileActivity.class);
 //		user = new UserDTO();
 //		user.setCred1("B.S");
 //		user.setCred2("M.S");

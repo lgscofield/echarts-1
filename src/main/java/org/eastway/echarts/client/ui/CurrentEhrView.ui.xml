@@ -1,0 +1,29 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.italics {
+			font-style: italic;
+		}
+		.margin {
+			margin: 10px;
+		}
+		.left {
+			float: left;
+		}
+	</ui:style>
+	<g:HTMLPanel addStyleNames='{style.left} {style.margin} {style.italics}' ui:field="container">
+		<span ui:field="error" />
+		<table>
+			<tr>
+				<td><b>Case #:</b> <span ui:field="caseNumber" />&nbsp;<b>Name:</b> <span ui:field="name" /></td>
+			</tr>
+			<tr>
+				<td><b>DOB:</b> <span ui:field="dob" /> (<span ui:field="age" />)&nbsp;<b>SSN:</b> <span ui:field="ssn" /></td>
+			</tr>
+			<tr>
+				<td><b>Provider:</b> <span ui:field="provider" />&nbsp;<b>Case Status:</b> <span ui:field="caseStatus" /></td>
+			</tr>
+		</table>
+	</g:HTMLPanel>
+</ui:UiBinder>
