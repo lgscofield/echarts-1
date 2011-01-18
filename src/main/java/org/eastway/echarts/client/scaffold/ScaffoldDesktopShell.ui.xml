@@ -16,64 +16,25 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:a='urn:import:com.google.gwt.user.client.ui'
 	xmlns:r="urn:import:org.eastway.echartsrequest.client"
 	xmlns:e="urn:import:org.eastway.echarts.client.ui">
-	<ui:style type="org.eastway.echarts.client.scaffold.ScaffoldDesktopShell.Style">
-		.alerts {
-			border-top: 1px solid SkyBlue;
-		}
-		
-		.productivity {
-			border: 1px dotted Green;
-			margin: 5px;
-			text-align: center;
-		}
-		
-		.green {
-			background-color: green;
-		}
-		
-		.red {
-			background-color: red;
-		}
-		
-		.yellow {
-			background-color: yellow;
-		}
-		
-		.anchor:hover {
-			text-decoration: underline;
-			cursor: pointer;
-		}
-		
-		.floatleft>* {
-			float: left;
-		}
-		
+	<ui:style>
 		@sprite .banner {
 			gwt-image: 'logo';
 		}
-		
 		.left {
 			float: left;
 		}
-		
 		.right {
 			float: right;
 		}
-		
-		.label:hover {
-			cursor: pointer;
-			background-color: #dfeffc;
-			width: 100%;
-		}
 		.content {
 			position: relative;
-			border: 1px solid #ddf;
+			border-top: 5px solid #ddf;
+			border-left: 5px solid #ddf;
 			overflow-y: auto;
 			overflow-x: hidden;
-			-moz-border-radius-bottomleft: 10px;
-			-webkit-border-bottom-left-radius: 10px;
-			-moz-border-radius-bottomright: 10px;
-			-webkit-border-bottom-right-radius: 10px;
+		}
+		.sidebar {
+			border-top: 5px solid #ddf;
 		}
 	</ui:style>
 	<ui:image field="logo" src="../style/images/echarts-logo.gif"/>
@@ -99,7 +60,9 @@
 			</g:FlowPanel>
 		</g:center>
 		<g:west size="13">
-			<g:SimplePanel ui:field="details"></g:SimplePanel>
+			<g:FlowPanel styleName="{style.sidebar}">
+				<g:SimplePanel ui:field="details"></g:SimplePanel>
+			</g:FlowPanel>
 		</g:west>
 	</g:DockLayoutPanel>
 </ui:UiBinder>

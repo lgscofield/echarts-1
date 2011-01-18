@@ -6,7 +6,6 @@ import org.eastway.echartsrequest.client.LoginWidget;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.place.shared.PlaceController;
-import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
@@ -22,18 +21,10 @@ public class ScaffoldDesktopShell extends Composite {
 
 	private static final Binder BINDER = GWT.create(Binder.class);
 
-	interface Style extends CssResource {
-		String green();
-		String yellow();
-		String red();
-		String label();
-	}
-
 	@UiField SimplePanel master;
 	@UiField SimplePanel details;
 	@UiField LoginWidget loginWidget;
 	@UiField NotificationMole mole;
-	@UiField Style style;
 	@UiField SimplePanel currentEhrPanel;
 
 	private EchartsOracle oracle;
