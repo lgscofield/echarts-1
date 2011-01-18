@@ -23,7 +23,6 @@ import org.eastway.echarts.client.activity.EchartsPlaceHistoryMapper;
 import org.eastway.echarts.client.activity.MasterActivityMapper;
 import org.eastway.echarts.client.common.ARInfoColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.ColumnDefinition;
-import org.eastway.echarts.client.common.DemographicsColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.DiagnosisColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.PatientSummaryColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.ProfileColumnDefinitionsImpl;
@@ -32,7 +31,6 @@ import org.eastway.echarts.client.common.TicklerColumnDefinitionsImpl;
 import org.eastway.echarts.client.request.ARInfoProxy;
 import org.eastway.echarts.client.request.AddressProxy;
 import org.eastway.echarts.client.request.AppointmentDataProvider;
-import org.eastway.echarts.client.request.DemographicsProxy;
 import org.eastway.echarts.client.request.DiagnosisProxy;
 import org.eastway.echarts.client.request.EHRProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
@@ -52,8 +50,6 @@ import org.eastway.echarts.client.ui.DashboardSideBarView;
 import org.eastway.echarts.client.ui.DashboardSideBarViewImpl;
 import org.eastway.echarts.client.ui.DashboardView;
 import org.eastway.echarts.client.ui.DashboardViewImpl;
-import org.eastway.echarts.client.ui.DemographicsView;
-import org.eastway.echarts.client.ui.DemographicsViewImpl;
 import org.eastway.echarts.client.ui.DiagnosisView;
 import org.eastway.echarts.client.ui.DiagnosisViewImpl;
 import org.eastway.echarts.client.ui.EchartsOracle;
@@ -107,8 +103,6 @@ public class ScaffoldModule extends AbstractGinModule {
 			.to(PatientSummaryViewImpl.class).in(Singleton.class);
 		bind(new TypeLiteral<MessageView<MessageProxy>>() {})
 			.to(MessageViewImpl.class).in(Singleton.class);
-		bind(new TypeLiteral<DemographicsView<DemographicsProxy>>() {})
-			.to(DemographicsViewImpl.class).in(Singleton.class);
 		bind(new TypeLiteral<ReferralView<ReferralProxy>>() {})
 			.to(ReferralViewImpl.class).in(Singleton.class);
 		bind(AppointmentView.class).in(Singleton.class);
@@ -140,9 +134,6 @@ public class ScaffoldModule extends AbstractGinModule {
 
 		bind(new TypeLiteral<List<ColumnDefinition<DiagnosisProxy>>>() {})
 			.to(DiagnosisColumnDefinitionsImpl.class).in(Singleton.class);
-
-		bind(new TypeLiteral<List<ColumnDefinition<DemographicsProxy>>>() {})
-			.to(DemographicsColumnDefinitionsImpl.class).in(Singleton.class);
 
 		bind(new TypeLiteral<List<ColumnDefinition<UserProxy>>>() {})
 			.to(ProfileColumnDefinitionsImpl.class).in(Singleton.class);

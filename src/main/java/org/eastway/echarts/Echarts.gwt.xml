@@ -36,4 +36,7 @@
   <replace-with class="org.eastway.echarts.client.ui.AppointmentViewImpl">
   	<when-type-is class="org.eastway.echarts.client.ui.AppointmentView"/>
   </replace-with>
+  <replace-with class="org.eastway.echarts.client.ui.DemographicsViewImpl">
+  	<when-type-is class="org.eastway.echarts.client.ui.DemographicsView"/>
+  </replace-with>
 </module>

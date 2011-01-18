@@ -29,7 +29,6 @@ import org.eastway.echarts.client.request.ARInfoProxy;
 import org.eastway.echarts.client.request.AddressProxy;
 import org.eastway.echarts.client.request.AppointmentDataProvider;
 import org.eastway.echarts.client.request.AppointmentProxy;
-import org.eastway.echarts.client.request.DemographicsProxy;
 import org.eastway.echarts.client.request.DiagnosisProxy;
 import org.eastway.echarts.client.request.EHRProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
@@ -67,8 +66,7 @@ public class MasterActivityMapper implements ActivityMapper {
 	private PatientSummaryView<EHRProxy> patientSummaryView;
 	private List<ColumnDefinition<EHRProxy>> patientSummaryColumnDefinitions;
 	private MessageView<MessageProxy> messageView;
-	private DemographicsView<DemographicsProxy> demographicsView;
-	private List<ColumnDefinition<DemographicsProxy>> demographicsColumnDefinitions;
+	private DemographicsView demographicsView;
 	private List<ColumnDefinition<ReferralProxy>> referralColumnDefinitions;
 	private ReferralView<ReferralProxy> referralView;
 	private AppointmentView<AppointmentProxy> appointmentView;
@@ -92,8 +90,7 @@ public class MasterActivityMapper implements ActivityMapper {
 							     PatientSummaryView<EHRProxy> patientSummaryView,
 							     List<ColumnDefinition<EHRProxy>> patientSummaryColumnDefinitions,
 							     MessageView<MessageProxy> messageView,
-							     DemographicsView<DemographicsProxy> demographicsView,
-							     List<ColumnDefinition<DemographicsProxy>> demographicsColumnDefinitions,
+							     DemographicsView demographicsView,
 							     ReferralView<ReferralProxy> referralView,
 							     List<ColumnDefinition<ReferralProxy>> referralColumnDefinitions,
 							     AppointmentView<AppointmentProxy> appointmentView,
@@ -117,7 +114,6 @@ public class MasterActivityMapper implements ActivityMapper {
 		this.patientSummaryColumnDefinitions = patientSummaryColumnDefinitions;
 		this.messageView = messageView;
 		this.demographicsView = demographicsView;
-		this.demographicsColumnDefinitions = demographicsColumnDefinitions;
 		this.referralView = referralView;
 		this.referralColumnDefinitions = referralColumnDefinitions;
 		this.appointmentView = appointmentView;
@@ -143,7 +139,7 @@ public class MasterActivityMapper implements ActivityMapper {
 		else if (place instanceof MessagePlace)
 			return new MessageActivity((MessagePlace) place, requestFactory, messageView);
 		else if (place instanceof DemographicsPlace)
-			return new DemographicsActivity((DemographicsPlace) place, requestFactory, demographicsColumnDefinitions, demographicsView);
+			return new DemographicsActivity((DemographicsPlace) place, requestFactory, demographicsView);
 		else if (place instanceof ReferralPlace)
 			return new ReferralActivity((ReferralPlace) place, requestFactory, referralColumnDefinitions, referralView);
 		else if (place instanceof AppointmentPlace)

@@ -15,18 +15,14 @@
  */
 package org.eastway.echarts.client.ui;
 
-import java.util.List;
-
-import org.eastway.echarts.client.common.ColumnDefinition;
+import org.eastway.echarts.client.request.DemographicsProxy;
 
 import com.google.gwt.user.client.ui.IsWidget;
 
-public interface DemographicsView<T> extends IsWidget {
+public interface DemographicsView extends IsWidget {
 
-	interface Presenter<T> { }
+	interface Presenter { }
 
-	void setPresenter(Presenter<T> presenter);
-	void setRowData(T rowData);
-	void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions);
+	void setValue(DemographicsProxy proxy);
 	void setError(String message);
 }

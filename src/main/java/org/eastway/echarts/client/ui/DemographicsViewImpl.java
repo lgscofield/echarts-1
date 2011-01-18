@@ -15,9 +15,7 @@
  */
 package org.eastway.echarts.client.ui;
 
-import java.util.List;
-
-import org.eastway.echarts.client.common.ColumnDefinition;
+import org.eastway.echarts.client.request.DemographicsProxy;
 import org.eastway.echarts.client.style.GlobalResources;
 
 import com.google.gwt.core.client.GWT;
@@ -26,26 +24,28 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Widget;
 
-public class DemographicsViewImpl<T> extends Composite implements DemographicsView<T> {
-	@SuppressWarnings("unchecked")
+public class DemographicsViewImpl extends Composite implements DemographicsView {
 	@UiTemplate("DemographicsView.ui.xml")
 	interface DemographicsViewUiBinder extends UiBinder<Widget, DemographicsViewImpl> { }
 
 	private static DemographicsViewUiBinder uiBinder = GWT
 			.create(DemographicsViewUiBinder.class);
 
-	//private Presenter<T> presenter;
-	private T rowData;
-	private List<ColumnDefinition<T>> columnDefinitions;
-	@UiField FlexTable table;
+	private DemographicsProxy proxy;
+
 	@UiField SpanElement error;
+	@UiField SpanElement allergies;
+	@UiField SpanElement employment;
+	@UiField SpanElement dob;
+	@UiField SpanElement maritalStatus;
+	@UiField SpanElement educationLevel;
+	@UiField SpanElement educationType;
+	@UiField SpanElement race;
 
 	public DemographicsViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
-		table.addStyleName(GlobalResources.styles().table());
 	}
 
 	@Override
@@ -54,32 +54,16 @@ public class DemographicsViewImpl<T> extends Composite implements DemographicsVi
 	}
 
 	@Override
-	public void setPresenter(Presenter<T> presenter) {
-		//this.presenter = presenter;
-	}
+	public void setValue(DemographicsProxy proxy) {
+		this.proxy = proxy;
 
-	@Override
-	public void setRowData(T rowData) {
-		if (rowData == null) {
-			table.setVisible(false);
-			return;
-		} else {
-			table.setVisible(true);
-			error.setInnerText("");
-		}
-
-		this.rowData = rowData;
-		for (int i = 0; i < columnDefinitions.size(); i++) {
-			StringBuilder sb = new StringBuilder();
-			table.setHTML(i, 0, columnDefinitions.get(i).getHeader(this.rowData));
-			columnDefinitions.get(i).render(this.rowData, sb);
-			table.setHTML(i, 1, sb.toString());
-		}
-	}
-
-	@Override
-	public void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions) {
-		this.columnDefinitions = columnDefinitions;
+		allergies.setInnerText(this.proxy.getAllergies() == null ? "" : this.proxy.getAllergies());
+		employment.setInnerText(this.proxy.getEmployment() == null ? "" : CodeProxyRenderer.instance().render(this.proxy.getEmployment()));
+		dob.setInnerText(this.proxy.getDob() == null ? "" : GlobalResources.getDateFormat().format(this.proxy.getDob()));
+		maritalStatus.setInnerText(this.proxy.getMaritalStatus() == null ? "" : CodeProxyRenderer.instance().render(this.proxy.getMaritalStatus()));
+		educationLevel.setInnerText(this.proxy.getEducationLevel() == null ? "" : CodeProxyRenderer.instance().render(this.proxy.getEducationLevel()));
+		educationType.setInnerText(this.proxy.getEducationType() == null ? "" : CodeProxyRenderer.instance().render(this.proxy.getEducationType()));
+		race.setInnerText(this.proxy.getRace() == null ? null : CodeProxyRenderer.instance().render(this.proxy.getRace()));
 	}
 
 	@Override

@@ -15,9 +15,6 @@
  */
 package org.eastway.echarts.client.activity;
 
-import java.util.List;
-
-import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.place.DemographicsPlace;
 import org.eastway.echarts.client.request.DemographicsProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
@@ -30,22 +27,19 @@ import com.google.gwt.requestfactory.shared.Request;
 import com.google.gwt.requestfactory.shared.ServerFailure;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
-public class DemographicsActivity extends AbstractActivity implements DemographicsView.Presenter<DemographicsProxy> {
+public class DemographicsActivity extends AbstractActivity implements DemographicsView.Presenter {
 
-	private DemographicsView<DemographicsProxy> view;
+	private DemographicsView view;
 	private String caseNumber;
 	private EchartsRequestFactory requestFactory;
 	private AcceptsOneWidget panel;
 
 	public DemographicsActivity(DemographicsPlace place,
 			EchartsRequestFactory requestFactory,
-			List<ColumnDefinition<DemographicsProxy>> columnDefinitions,
-			DemographicsView<DemographicsProxy> view) {
+			DemographicsView view) {
 		this.caseNumber = place.getCaseNumber();
 		this.requestFactory = requestFactory;
 		this.view = view;
-		this.view.setPresenter(this);
-		this.view.setColumnDefinitions(columnDefinitions);
 	}
 
 	private void fetchData() {
@@ -59,7 +53,7 @@ public class DemographicsActivity extends AbstractActivity implements Demographi
 			@Override
 			public void onSuccess(DemographicsProxy response) {
 				if (response != null) {
-					view.setRowData(response);
+					view.setValue(response);
 					panel.setWidget(view);
 				} else {
 					handleFailure("No demographics found for case number: " + caseNumber);
@@ -80,7 +74,7 @@ public class DemographicsActivity extends AbstractActivity implements Demographi
 	}
 
 	private void handleFailure(String message) {
-		view.setRowData(null);
+		view.setValue(null);
 		view.setError(message);
 		panel.setWidget(view);
 	}
