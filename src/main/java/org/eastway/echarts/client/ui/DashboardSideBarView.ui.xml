@@ -14,8 +14,8 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<g:HTMLPanel>
-		<b>Links</b>
-		<ul style='margin-top:0px;'>
+		<b>Tools</b>
+		<ul>
 			<li>
 				<g:Hyperlink targetHistoryToken='DashboardPlace:'>Dashboard</g:Hyperlink>
 			</li>
@@ -23,22 +23,28 @@
 				<g:Hyperlink ui:field='tickler' targetHistoryToken='TicklerPlace:'>Tickler</g:Hyperlink>
 			</li>
 			<li>
-				<g:Hyperlink ui:field='providerSignatures' targetHistoryToken='ProviderSignaturesPlace:'>Provider Signatures</g:Hyperlink>
+				<g:Anchor ui:field='groupProgressNote' href='#'>Group Progress Note</g:Anchor>
+			</li>
+		</ul>
+		<b>Signatures</b>
+		<ul>
+			<li>
+				<g:Hyperlink ui:field='providerSignatures' targetHistoryToken='ProviderSignaturesPlace:'>Provider</g:Hyperlink>
 			</li>
 			<li>
-				<g:Hyperlink ui:field='supervisorSignatures' targetHistoryToken='SupervisorSignaturesPlace:'>Supervisor Signatures</g:Hyperlink>
+				<g:Hyperlink ui:field='supervisorSignatures' targetHistoryToken='SupervisorSignaturesPlace:'>Supervisor</g:Hyperlink>
 			</li>
 			<li>
-				<g:Hyperlink ui:field='medsomSignatures' targetHistoryToken='MedSomSignaturesPlace:'>Med-Som Signatures</g:Hyperlink>
+				<g:Hyperlink ui:field='medsomSignatures' targetHistoryToken='MedSomSignaturesPlace:'>Med-Som</g:Hyperlink>
 			</li>
+		</ul>
+		<b>Reports</b>
+		<ul>
 			<li>
 				<g:Hyperlink ui:field='staffHistory' targetHistoryToken='StaffHistoryPlace:'>Staff History</g:Hyperlink>
 			</li>
 			<li>
-				<g:Anchor ui:field='groupProgressNote' href='#'>Group Progress Note</g:Anchor>
-			</li>
-			<li>
-				<g:Anchor ui:field='lastSeenReport' href='#'>Last Seen Report</g:Anchor>
+				<g:Anchor ui:field='lastSeenReport' href='#'>Last Seen</g:Anchor>
 			</li>
 			<li>
 				<g:Anchor ui:field='overlapsReport' href='#'>Overlaps Report</g:Anchor>
