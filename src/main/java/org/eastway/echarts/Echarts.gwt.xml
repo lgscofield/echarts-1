@@ -39,4 +39,7 @@
   <replace-with class="org.eastway.echarts.client.ui.DemographicsViewImpl">
   	<when-type-is class="org.eastway.echarts.client.ui.DemographicsView"/>
   </replace-with>
+  <replace-with class="org.eastway.echarts.client.ui.PatientSummaryViewImpl">
+  	<when-type-is class="org.eastway.echarts.client.ui.PatientSummaryView"/>
+  </replace-with>
 </module>

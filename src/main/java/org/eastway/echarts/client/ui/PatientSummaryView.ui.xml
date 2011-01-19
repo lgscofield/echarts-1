@@ -15,10 +15,53 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<ui:style>
+	<ui:style type="org.eastway.echarts.client.ui.PatientSummaryViewImpl.Style">
+		.table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+		.table td {
+			text-align: left;
+			padding: 5px;
+		}
+		.table tr:hover {
+			background-color: #eee;
+		}
+		.evenRow {
+			background-color: #f3f7fb;
+		}
 	</ui:style>
 	<g:HTMLPanel>
 		<span ui:field="error" />
-		<g:FlexTable ui:field="table"/>
+		<table ui:field='table' class='{style.table}'>
+			<tr>
+				<td><b>Name</b></td>
+				<td><span ui:field='displayName' /></td>
+			</tr>
+			<tr>
+				<td><b>Picture</b></td>
+				<td><img ui:field='picture' /></td>
+			</tr>
+			<tr>
+				<td><b>Gender</b></td>
+				<td><span ui:field='gender' /></td>
+			</tr>
+			<tr>
+				<td><b>Date of birth</b></td>
+				<td><span ui:field='dob' /></td>
+			</tr>
+			<tr>
+				<td><b>Providers</b></td>
+				<td><span ui:field='providers' /></td>
+			</tr>
+			<tr>
+				<td><b>SSN</b></td>
+				<td><span ui:field='ssn' /></td>
+			</tr>
+			<tr>
+				<td><b>Case Status</b></td>
+				<td><span ui:field='caseStatus' /></td>
+			</tr>
+		</table>
 	</g:HTMLPanel>
 </ui:UiBinder>

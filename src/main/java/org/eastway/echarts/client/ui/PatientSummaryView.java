@@ -15,19 +15,13 @@
  */
 package org.eastway.echarts.client.ui;
 
-import java.util.List;
-
-import org.eastway.echarts.client.common.ColumnDefinition;
+import org.eastway.echarts.client.request.EHRProxy;
 
 import com.google.gwt.user.client.ui.IsWidget;
-import com.google.gwt.user.client.ui.Widget;
 
-public interface PatientSummaryView<T> extends IsWidget {
-	public interface Presenter<T> { }
+public interface PatientSummaryView extends IsWidget {
+	interface Presenter {}
 
-	Widget asWidget();
-	void setPresenter(Presenter<T> presenter);
-	void setRowData(T rowData);
-	void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions);
+	void setValue(EHRProxy proxy);
 	void setError(String message);
 }

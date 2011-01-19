@@ -20,7 +20,6 @@ import java.util.List;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 
-import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
 import org.eastway.echarts.client.request.AssignmentProxy;
 import org.eastway.echarts.client.request.AssignmentRequest;
@@ -33,7 +32,7 @@ import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.requestfactory.shared.ServerFailure;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
-public class PatientSummaryActivity extends AbstractActivity implements PatientSummaryView.Presenter<EHRProxy> {
+public class PatientSummaryActivity extends AbstractActivity implements PatientSummaryView.Presenter {
 
 	class EHRFetcher {
 		EHRProxy fetchedEHR;
@@ -73,19 +72,16 @@ public class PatientSummaryActivity extends AbstractActivity implements PatientS
 	}
 
 	private String caseNumber;
-	private PatientSummaryView<EHRProxy> view;
+	private PatientSummaryView view;
 	private EchartsRequestFactory requestFactory;
 	private AcceptsOneWidget panel;
 
 	public PatientSummaryActivity(PatientSummaryPlace place,
 								  EchartsRequestFactory requestFactory,
-								  List<ColumnDefinition<EHRProxy>> columnDefinitions,
-								  PatientSummaryView<EHRProxy> view) {
+								  PatientSummaryView view) {
 		this.caseNumber = place.getCaseNumber();
 		this.requestFactory = requestFactory;
 		this.view = view;
-		this.view.setPresenter(this);
-		this.view.setColumnDefinitions(columnDefinitions);
 	}
 
 	@Override
@@ -99,7 +95,7 @@ public class PatientSummaryActivity extends AbstractActivity implements PatientS
 				if (response != null) {
 					EHRProxy ehr = requestFactory.ehrRequest().edit(response.fetchedEHR);
 					ehr.setAssignments(response.fetchedAssignments);
-					view.setRowData(ehr);
+					view.setValue(ehr);
 					panel.setWidget(view);
 				} else {
 					handleFailure("No information found for case number: " + caseNumber);
@@ -114,7 +110,7 @@ public class PatientSummaryActivity extends AbstractActivity implements PatientS
 	}
 
 	private void handleFailure(String message) {
-		view.setRowData(null);
+		view.setValue(null);
 		view.setError(message);
 		panel.setWidget(view);
 	}
