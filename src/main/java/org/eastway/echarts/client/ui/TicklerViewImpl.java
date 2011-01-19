@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
-import org.eastway.echarts.client.style.GlobalResources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -73,17 +72,16 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 
 	public TicklerViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
-		table.addStyleName(GlobalResources.styles().table());
 		menuPopup.setAutoHideEnabled(true);
 		menuPopup.add(menuBar);
 	}
 
 	private void setHeader(int row) {
 		table.setHTML(row, Column.NAME.ordinal(), "<b>Name</b>");
-		table.setHTML(row, Column.CASE_NUMBER.ordinal(), "<b>Case Number</b>");
+		table.setHTML(row, Column.CASE_NUMBER.ordinal(), "<b>Case #</b>");
 		table.setHTML(row, Column.ISP.ordinal(), "<b>ISP</b>");
 		table.setHTML(row, Column.ISP_REVIEW.ordinal(), "<b>ISP Review</b>");
-		table.setHTML(row, Column.HEALTH_HISTORY.ordinal(), "<b>Health History</b>");
+		table.setHTML(row, Column.HEALTH_HISTORY.ordinal(), "<b>Health HX</b>");
 		table.setHTML(row, Column.DIAGNOSTIC_ASSESSMENT_UPDATE.ordinal(), "<b>DA Update</b>");
 		table.setHTML(row, Column.FINANCIAL.ordinal(), "<b>Financial</b>");
 		table.setHTML(row, Column.OOC.ordinal(), "<b>OOC</b>");

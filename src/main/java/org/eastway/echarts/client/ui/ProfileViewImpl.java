@@ -19,7 +19,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
-import org.eastway.echarts.client.style.GlobalResources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -49,7 +48,6 @@ public class ProfileViewImpl<T> extends Composite implements ProfileView<T> {
 
 	public ProfileViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
-		table.addStyleName(GlobalResources.styles().table());
 	}
 
 	@Override
