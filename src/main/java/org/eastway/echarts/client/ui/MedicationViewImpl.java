@@ -15,13 +15,15 @@
  */
 package org.eastway.echarts.client.ui;
 
+import java.util.List;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Widget;
 
 public class MedicationViewImpl<T> extends Composite implements MedicationView<T> {
@@ -33,22 +35,11 @@ public class MedicationViewImpl<T> extends Composite implements MedicationView<T
 	@UiTemplate("MedicationView.ui.xml")
 	interface MedicationViewUiBinder extends UiBinder<Widget, MedicationViewImpl> { }
 
-	private int record = 0;
-	@UiField FlexTable medications;
+	@UiField CellTable<T> cellTable;
 	@UiField SpanElement error;
-
-	enum Column {
-		MEDICATION,
-	}
 
 	public MedicationViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
-		medications.setBorderWidth(1);
-	}
-
-	@Override
-	public void nextRecord() {
-		record++;
 	}
 
 	@Override
@@ -57,19 +48,18 @@ public class MedicationViewImpl<T> extends Composite implements MedicationView<T
 	}
 
 	@Override
-	public void setMedication(String medication) {
-		this.medications.setText(record, Column.MEDICATION.ordinal(), medication);
-	}
-
-	@Override
-	public void clear() {
-		error.setInnerText("");
-		record = 0;
-		medications.clear(true);
-	}
-
-	@Override
 	public void setError(String message) {
 		error.setInnerText(message);
+	}
+
+	@Override
+	public void setRowData(List<T> values) {
+		if (values == null || values.isEmpty()) {
+			cellTable.setVisible(false);
+			return;
+		}
+		cellTable.setVisible(true);
+		error.setInnerText("");
+		cellTable.setRowData(values);
 	}
 }

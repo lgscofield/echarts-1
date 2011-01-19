@@ -15,6 +15,7 @@
  */
 package org.eastway.echarts.domain;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -35,6 +36,10 @@ public class Medication {
 	private Long id;
 	private String medication;
 	private String caseNumber;
+	private Date lastEdit;
+	private String lastEditBy;
+	private String medMonitoring;
+	private String labsOrdered;
 	@Version
 	@Column(name = "version")
 	private Integer version;
@@ -57,6 +62,38 @@ public class Medication {
 
 	public String getCaseNumber() {
 		return caseNumber;
+	}
+
+	public void setLastEdit(Date lastEdit) {
+		this.lastEdit = lastEdit;
+	}
+
+	public Date getLastEdit() {
+		return lastEdit;
+	}
+
+	public void setLastEditBy(String lastEditBy) {
+		this.lastEditBy = lastEditBy;
+	}
+
+	public String getLastEditBy() {
+		return lastEditBy;
+	}
+
+	public void setMedMonitoring(String medMonitoring) {
+		this.medMonitoring = medMonitoring;
+	}
+
+	public String getMedMonitoring() {
+		return medMonitoring;
+	}
+
+	public void setLabsOrdered(String labsOrdered) {
+		this.labsOrdered = labsOrdered;
+	}
+
+	public String getLabsOrdered() {
+		return labsOrdered;
 	}
 
 	public void setMedication(String medication) {

@@ -18,11 +18,13 @@ package org.eastway.echarts.client.request;
 import java.util.List;
 
 import org.eastway.echarts.domain.Medication;
+import org.springframework.roo.addon.gwt.RooGwtMirroredFrom;
 
 import com.google.gwt.requestfactory.shared.Request;
 import com.google.gwt.requestfactory.shared.RequestContext;
 import com.google.gwt.requestfactory.shared.Service;
 
+@RooGwtMirroredFrom(Medication.class)
 @Service(Medication.class)
 public interface MedicationRequest extends RequestContext {
 	Request<List<MedicationProxy>> findMedicationsByCaseNumber(String caseNumber);

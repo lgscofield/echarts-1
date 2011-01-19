@@ -15,6 +15,8 @@
  */
 package org.eastway.echarts.client.request;
 
+import java.util.Date;
+
 import org.eastway.echarts.domain.Medication;
 
 import com.google.gwt.requestfactory.shared.EntityProxy;
@@ -33,4 +35,20 @@ public interface MedicationProxy extends EntityProxy {
 	public void setMedication(String medication);
 
 	public String getMedication();
+
+	public void setLastEdit(Date lastEdit);
+
+	public Date getLastEdit();
+
+	public void setLastEditBy(String lastEdit);
+
+	public String getLastEditBy();
+
+	public void setMedMonitoring(String medMonitoring);
+
+	public String getMedMonitoring();
+
+	public void setLabsOrdered(String labsOrdered);
+
+	public String getLabsOrdered();
 }

@@ -43,25 +43,19 @@ public class MedicationActivity extends AbstractActivity implements MedicationVi
 	}
 
 	private void fetchData() {
-		requestFactory.medicationRequest().findMedicationsByCaseNumber(caseNumber).fire(new Receiver<List<MedicationProxy>>() {
+		requestFactory.medicationRequest().findMedicationsByCaseNumber(caseNumber)
+				.with("lastEditBy")
+				.fire(new Receiver<List<MedicationProxy>>() {
 			@Override
 			public void onSuccess(List<MedicationProxy> response) {
 				if (response != null && !response.isEmpty()) {
-					setData(response);
+					view.setRowData(response);
 					panel.setWidget(view);
 				} else {
 					handleFailure("No medication data found for case number: " + caseNumber);
 				}
 			}
 		});
-	}
-
-	public void setData(List<MedicationProxy> medications) {
-		view.clear();
-		for (MedicationProxy medication : medications) {
-			view.setMedication(medication.getMedication());
-			view.nextRecord();
-		}
 	}
 
 	@Override
@@ -71,7 +65,7 @@ public class MedicationActivity extends AbstractActivity implements MedicationVi
 	}
 
 	private void handleFailure(String message) {
-		view.clear();
+		view.setRowData(null);
 		view.setError(message);
 		panel.setWidget(view);
 	}
