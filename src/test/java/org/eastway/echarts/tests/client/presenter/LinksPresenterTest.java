@@ -24,26 +24,19 @@ import junit.framework.TestCase;
 
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.activity.LinkActivity;
-import org.eastway.echarts.client.request.EchartsRequestFactory;
-import org.eastway.echarts.client.request.LinkProxy;
-import org.eastway.echarts.client.ui.LinkView;
-import org.eastway.echarts.shared.GetLinks;
 import org.junit.Before;
 import org.junit.Test;
 
 public class LinksPresenterTest extends TestCase {
 	private LinkActivity linkPresenter;
-	private LinkView<LinkProxy> view;
 	private LinkedHashSet<String[]> data;
 	private String patientid;
 
-	@SuppressWarnings("unchecked")
 	@Before
 	@Override
 	public void setUp() {
 		data = new LinkedHashSet<String[]>();
 		patientid = "000000008";
-		view = createStrictMock(LinkView.class);
 		linkPresenter = createStrictMock(LinkActivity.class);
 		data.add(new String[] { "title1","content1" } );
 		data.add(new String[] { "title2","content2" } );

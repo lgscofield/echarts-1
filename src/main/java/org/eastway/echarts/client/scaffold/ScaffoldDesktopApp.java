@@ -8,6 +8,7 @@ import org.eastway.echarts.client.activity.MasterActivityMapper;
 import org.eastway.echarts.client.place.DashboardPlace;
 import org.eastway.echarts.client.request.DbServerConfigProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
+import org.eastway.echarts.client.style.GlobalResources;
 import org.eastway.echartsrequest.client.ReloadOnAuthenticationFailure;
 
 import com.google.gwt.activity.shared.ActivityManager;
@@ -51,6 +52,7 @@ public class ScaffoldDesktopApp extends ScaffoldApp {
 	}
 
 	public void run() {
+		GlobalResources.styles().ensureInjected();
 		init();
 	}
 

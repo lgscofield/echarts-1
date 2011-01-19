@@ -40,7 +40,6 @@ public class GlobalResources {
 
 	static {
 		resources = GWT.create(Resources.class);
-		resources.css().ensureInjected();
 	}
 
 	public static Resources resources() {
