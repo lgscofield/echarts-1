@@ -19,7 +19,10 @@ import org.eastway.echarts.client.request.DemographicsProxy;
 import org.eastway.echarts.client.style.GlobalResources;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.dom.client.SpanElement;
+import com.google.gwt.dom.client.TableElement;
+import com.google.gwt.dom.client.TableRowElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
@@ -43,9 +46,11 @@ public class DemographicsViewImpl extends Composite implements DemographicsView 
 	@UiField SpanElement educationLevel;
 	@UiField SpanElement educationType;
 	@UiField SpanElement race;
+	@UiField TableElement table;
 
 	public DemographicsViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
+		setAlternateColors();
 	}
 
 	@Override
@@ -69,5 +74,14 @@ public class DemographicsViewImpl extends Composite implements DemographicsView 
 	@Override
 	public void setError(String message) {
 		error.setInnerText(message);
+	}
+
+	@UiField Style style;
+
+	private void setAlternateColors() {
+		NodeList<TableRowElement> nodeList = table.getRows();
+		for (int i = 0; i < nodeList.getLength(); i++)
+			if ((i % 2) == 0)
+				nodeList.getItem(i).addClassName(style.evenRow());
 	}
 }

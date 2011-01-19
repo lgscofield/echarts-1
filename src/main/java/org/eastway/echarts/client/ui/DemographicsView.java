@@ -17,11 +17,16 @@ package org.eastway.echarts.client.ui;
 
 import org.eastway.echarts.client.request.DemographicsProxy;
 
+import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.user.client.ui.IsWidget;
 
 public interface DemographicsView extends IsWidget {
 
 	interface Presenter { }
+
+	interface Style extends CssResource {
+		String evenRow();
+	}
 
 	void setValue(DemographicsProxy proxy);
 	void setError(String message);

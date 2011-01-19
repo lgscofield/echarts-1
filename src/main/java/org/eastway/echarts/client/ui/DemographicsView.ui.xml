@@ -13,9 +13,10 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<ui:style>
+	<ui:style type="org.eastway.echarts.client.ui.DemographicsView.Style">
 		.table {
 			border-collapse: collapse;
+			width: 100%;
 		}
 		.table td {
 			text-align: left;
@@ -24,36 +25,39 @@
 		.table tr:hover {
 			background-color: #eee;
 		}
+		.evenRow {
+			background-color: #f3f7fb;
+		}
 	</ui:style>
 	<g:HTMLPanel>
 		<span ui:field="error" />
-		<table class='{style.table}' rules='rows'>
+		<table ui:field='table' class='{style.table}'>
 			<tr>
-				<td><b>Allergies</b></td>
+				<td width='20%'><b>Allergies</b></td>
 				<td><span ui:field='allergies' /></td>
 			</tr>
 			<tr>
-				<td><b>Employment</b></td>
+				<td width='20%'><b>Employment</b></td>
 				<td><span ui:field='employment' /></td>
 			</tr>
 			<tr>
-				<td><b>DOB</b></td>
+				<td width='20%'><b>DOB</b></td>
 				<td><span ui:field='dob' /></td>
 			</tr>
 			<tr>
-				<td><b>Marital Status</b></td>
+				<td width='20%'><b>Marital Status</b></td>
 				<td><span ui:field='maritalStatus' /></td>
 			</tr>
 			<tr>
-				<td><b>Education Level</b></td>
+				<td width='20%'><b>Education Level</b></td>
 				<td><span ui:field='educationLevel' /></td>
 			</tr>
 			<tr>
-				<td><b>Education Type</b></td>
+				<td width='20%'><b>Education Type</b></td>
 				<td><span ui:field='educationType' /></td>
 			</tr>
 			<tr>
-				<td><b>Race</b></td>
+				<td width='20%'><b>Race</b></td>
 				<td><span ui:field='race' /></td>
 			</tr>
 		</table>
