@@ -15,36 +15,45 @@
  */
 package org.eastway.echarts.client.ui;
 
-import java.util.List;
-
-import org.eastway.echarts.client.common.ColumnDefinition;
+import org.eastway.echarts.client.request.ARInfoProxy;
 import org.eastway.echarts.client.style.GlobalResources;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.dom.client.SpanElement;
+import com.google.gwt.dom.client.TableElement;
+import com.google.gwt.dom.client.TableRowElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ARInfoViewImpl<T> extends Composite implements ARInfoView<T> {
-	@SuppressWarnings("unchecked")
+public class ARInfoViewImpl extends Composite implements ARInfoView {
 	@UiTemplate("ARInfoView.ui.xml")
 	interface ARInfoViewUiBinder extends UiBinder<Widget, ARInfoViewImpl> {}
 	static ARInfoViewUiBinder uiBinder = GWT.create(ARInfoViewUiBinder.class);
 
-	@UiField FlexTable table;
+	@UiField TableElement table;
 	@UiField SpanElement error;
+	@UiField SpanElement billCode;
+	@UiField SpanElement arStatus;
+	@UiField SpanElement income;
+	@UiField SpanElement dependents;
+	@UiField SpanElement spendDown;
+	@UiField SpanElement macsisRegisteredName;
+	@UiField SpanElement macsisEffectiveDate;
+	@UiField SpanElement uci;
+	@UiField SpanElement medicaidNumber;
+	@UiField SpanElement titleXXApplicationDate;
+	@UiField SpanElement titleXXRedetermineDate;
+	@UiField SpanElement titleXXEligibilityCategory;
 
-	private T rowData;
-
-	private List<ColumnDefinition<T>> columnDefinitions;
+	private ARInfoProxy proxy;
 
 	public ARInfoViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
-		table.addStyleName(GlobalResources.styles().table());
+		setAlternateColors();
 	}
 
 	@Override
@@ -53,33 +62,30 @@ public class ARInfoViewImpl<T> extends Composite implements ARInfoView<T> {
 	}
 
 	@Override
-	public void setPresenter(Presenter<T> presenter) {
-		
+	public void setValue(ARInfoProxy proxy) {
+		this.proxy = proxy;
+
+		billCode.setInnerText(this.proxy.getBillCode() == null ? "" : String.valueOf(this.proxy.getBillCode()));
+		arStatus.setInnerText(this.proxy.getArStatus() == null ? "" : String.valueOf(this.proxy.getArStatus()));
+		income.setInnerText(this.proxy.getIncome() == null ? "" : String.valueOf(this.proxy.getIncome()));
+		dependents.setInnerText(this.proxy.getDependents() == null ? "" : String.valueOf(this.proxy.getDependents()));
+		spendDown.setInnerText(this.proxy.getSpendDown() == null ? "" : String.valueOf(this.proxy.getSpendDown()));
+		macsisRegisteredName.setInnerText(this.proxy.getMacRegName() == null ? "" : String.valueOf(this.proxy.getMacRegName()));
+		macsisEffectiveDate.setInnerText(this.proxy.getMacRegDate() == null ? "" : GlobalResources.getDateFormat().format(this.proxy.getMacRegDate()));
+		uci.setInnerText(this.proxy.getUci() == null ? "" : String.valueOf(this.proxy.getUci()));
+		medicaidNumber.setInnerText(this.proxy.getMedicaidId() == null ? "" : String.valueOf(this.proxy.getMedicaidId()));
+		titleXXApplicationDate.setInnerText(this.proxy.getTitleTwentyAppDate() == null ? "" : GlobalResources.getDateFormat().format(this.proxy.getTitleTwentyAppDate()));
+		titleXXRedetermineDate.setInnerText(this.proxy.getTitleTwentyRedetermDate() == null ? "" : GlobalResources.getDateFormat().format(this.proxy.getTitleTwentyRedetermDate()));
+		titleXXEligibilityCategory.setInnerText(this.proxy.getTitleTwentyEligibilityCategory() == null ? "" : String.valueOf(this.proxy.getTitleTwentyEligibilityCategory()));
 	}
 
-	@Override
-	public void setRowData(T rowData) {
-		if (rowData == null) {
-			table.setVisible(false);
-			return;
-		} else {
-			table.setVisible(true);
-			error.setInnerText("");
-		}
+	@UiField Style style;
 
-		this.rowData = rowData;
-
-		for (int i = 0; i < columnDefinitions.size(); i++) {
-			StringBuilder sb = new StringBuilder();
-			table.setHTML(i, 0, columnDefinitions.get(i).getHeader(this.rowData));
-			columnDefinitions.get(i).render(this.rowData, sb);
-			table.setHTML(i, 1, sb.toString());
-		}
-	}
-
-	@Override
-	public void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions) {
-		this.columnDefinitions = columnDefinitions;
+	private void setAlternateColors() {
+		NodeList<TableRowElement> nodeList = table.getRows();
+		for (int i = 0; i < nodeList.getLength(); i++)
+			if ((i % 2) == 0)
+				nodeList.getItem(i).addClassName(style.evenRow());
 	}
 
 	@Override

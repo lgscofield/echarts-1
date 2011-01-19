@@ -21,17 +21,14 @@ import java.util.List;
 import org.eastway.echarts.client.activity.DetailsActivityMapper;
 import org.eastway.echarts.client.activity.EchartsPlaceHistoryMapper;
 import org.eastway.echarts.client.activity.MasterActivityMapper;
-import org.eastway.echarts.client.common.ARInfoColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.common.DiagnosisColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.ProfileColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.ReferralColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.TicklerColumnDefinitionsImpl;
-import org.eastway.echarts.client.request.ARInfoProxy;
 import org.eastway.echarts.client.request.AddressProxy;
 import org.eastway.echarts.client.request.AppointmentDataProvider;
 import org.eastway.echarts.client.request.DiagnosisProxy;
-import org.eastway.echarts.client.request.EHRProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.request.LinkProxy;
 import org.eastway.echarts.client.request.MedicationProxy;
@@ -39,8 +36,6 @@ import org.eastway.echarts.client.request.MessageProxy;
 import org.eastway.echarts.client.request.ReferralProxy;
 import org.eastway.echarts.client.request.UserProxy;
 import org.eastway.echarts.client.scaffold.ScaffoldDesktopShell;
-import org.eastway.echarts.client.ui.ARInfoView;
-import org.eastway.echarts.client.ui.ARInfoViewImpl;
 import org.eastway.echarts.client.ui.AddressView;
 import org.eastway.echarts.client.ui.AddressViewImpl;
 import org.eastway.echarts.client.ui.AppointmentView;
@@ -109,8 +104,6 @@ public class ScaffoldModule extends AbstractGinModule {
 			.to(AddressViewImpl.class).in(Singleton.class);
 		bind(new TypeLiteral<MedicationView<MedicationProxy>>() {})
 			.to(MedicationViewImpl.class).in(Singleton.class);
-		bind(new TypeLiteral<ARInfoView<ARInfoProxy>>() {})
-			.to(ARInfoViewImpl.class).in(Singleton.class);
 		bind(new TypeLiteral<DashboardView<LinkedHashMap<String, Long>>>() {})
 			.to(DashboardViewImpl.class).in(Singleton.class);
 		bind(DashboardSideBarView.class)
@@ -120,9 +113,6 @@ public class ScaffoldModule extends AbstractGinModule {
 		bind(new TypeLiteral<ProfileView<UserProxy>>() {})
 			.to(ProfileViewImpl.class).in(Singleton.class);
 		bind(CurrentEhrView.class).in(Singleton.class);
-
-		bind(new TypeLiteral<List<ColumnDefinition<ARInfoProxy>>>() {})
-			.to(ARInfoColumnDefinitionsImpl.class).in(Singleton.class);
 
 		bind(new TypeLiteral<List<ColumnDefinition<Tickler>>>() {})
 			.to(TicklerColumnDefinitionsImpl.class).in(Singleton.class);

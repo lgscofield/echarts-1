@@ -15,17 +15,18 @@
  */
 package org.eastway.echarts.client.ui;
 
-import java.util.List;
+import org.eastway.echarts.client.request.ARInfoProxy;
 
-import org.eastway.echarts.client.common.ColumnDefinition;
-
+import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.user.client.ui.IsWidget;
 
-public interface ARInfoView<T> extends IsWidget {
-	interface Presenter<T> { }
+public interface ARInfoView extends IsWidget {
+	interface Presenter { }
 
-	void setPresenter(Presenter<T> presenter);
-	void setRowData(T rowData);
-	void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions);
+	interface Style extends CssResource {
+		String evenRow();
+	}
+
+	void setValue(ARInfoProxy proxy);
 	void setError(String string);
 }

@@ -13,8 +13,73 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style type='org.eastway.echarts.client.ui.ARInfoView.Style'>
+		.table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+		.table td {
+			text-align: left;
+			padding: 5px;
+		}
+		.table tr:hover {
+			background-color: #eee;
+		}
+		.evenRow {
+			background-color: #f3f7fb;
+		}
+	</ui:style>
 	<g:HTMLPanel>
 		<span ui:field="error" />
-		<g:FlexTable ui:field="table"/>
+		<table ui:field='table' class='{style.table}'>
+			<tr>
+				<td width='20%'><b>Bill&nbsp;Code</b></td>
+				<td><span ui:field='billCode' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>AR&nbsp;Status</b></td>
+				<td><span ui:field='arStatus' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Income</b></td>
+				<td><span ui:field='income' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Dependents</b></td>
+				<td><span ui:field='dependents' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Spend&nbsp;Down</b></td>
+				<td><span ui:field='spendDown' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>MACSIS&nbsp;Registered&nbsp;Name</b></td>
+				<td><span ui:field='macsisRegisteredName' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>MACSIS&nbsp;Effective&nbsp;Date</b></td>
+				<td><span ui:field='macsisEffectiveDate' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>UCI</b></td>
+				<td><span ui:field='uci' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Medicaid&nbsp;Number</b></td>
+				<td><span ui:field='medicaidNumber' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Title&nbsp;XX&nbsp;Application&nbsp;Date</b></td>
+				<td><span ui:field='titleXXApplicationDate' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Title&nbsp;XX&nbsp;Redetermine&nbsp;Date</b></td>
+				<td><span ui:field='titleXXRedetermineDate' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Title&nbsp;XX&nbsp;Eligibility&nbsp;Category</b></td>
+				<td><span ui:field='titleXXEligibilityCategory' /></td>
+			</tr>
+		</table>
 	</g:HTMLPanel>
 </ui:UiBinder>

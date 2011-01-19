@@ -25,7 +25,6 @@ import org.eastway.echarts.client.place.StaffHistoryPlace;
 import org.eastway.echarts.client.place.SupervisorSignaturesPlace;
 import org.eastway.echarts.client.place.TicklerPlace;
 import org.eastway.echarts.client.place.TreatmentPlanPlace;
-import org.eastway.echarts.client.request.ARInfoProxy;
 import org.eastway.echarts.client.request.AddressProxy;
 import org.eastway.echarts.client.request.AppointmentDataProvider;
 import org.eastway.echarts.client.request.AppointmentProxy;
@@ -72,8 +71,7 @@ public class MasterActivityMapper implements ActivityMapper {
 	private LinkView<LinkProxy> linkView;
 	private AddressView<AddressProxy> addressView;
 	private MedicationView<MedicationProxy> medicationView;
-	private ARInfoView<ARInfoProxy> arInfoView;
-	private List<ColumnDefinition<ARInfoProxy>> arInfoColumnDefinitions;
+	private ARInfoView arInfoView;
 	private DashboardView<LinkedHashMap<String, Long>> dashboardView;
 	private ProfileView<UserProxy> profileView;
 	private List<ColumnDefinition<UserProxy>> profileColumnDefinitions;
@@ -96,8 +94,7 @@ public class MasterActivityMapper implements ActivityMapper {
 							     LinkView<LinkProxy> linkView,
 							     AddressView<AddressProxy> addressView,
 							     MedicationView<MedicationProxy> medicationView,
-							     ARInfoView<ARInfoProxy> arInfoView,
-							     List<ColumnDefinition<ARInfoProxy>> arInfoColumnDefinitions,
+							     ARInfoView arInfoView,
 							     DashboardView<LinkedHashMap<String, Long>> dashboardView,
 							     ProfileView<UserProxy> profileView,
 							     List<ColumnDefinition<UserProxy>> profileColumnDefinitions,
@@ -119,7 +116,6 @@ public class MasterActivityMapper implements ActivityMapper {
 		this.addressView = addressView;
 		this.medicationView = medicationView;
 		this.arInfoView = arInfoView;
-		this.arInfoColumnDefinitions = arInfoColumnDefinitions;
 		this.dashboardView = dashboardView;
 		this.profileView = profileView;
 		this.profileColumnDefinitions = profileColumnDefinitions;
@@ -153,7 +149,7 @@ public class MasterActivityMapper implements ActivityMapper {
 		else if (place instanceof ServiceHistoryPlace)
 			return new ServiceHistoryActivity((ServiceHistoryPlace) place, requestFactory);
 		else if (place instanceof ARInfoPlace)
-			return new ARInfoActivity((ARInfoPlace) place, requestFactory, arInfoColumnDefinitions, arInfoView);
+			return new ARInfoActivity((ARInfoPlace) place, requestFactory, arInfoView);
 		else if (place instanceof DashboardPlace)
 			return new DashboardActivity((DashboardPlace) place, placeController, dashboardView, requestFactory);
 		else if (place instanceof ProfilePlace)
