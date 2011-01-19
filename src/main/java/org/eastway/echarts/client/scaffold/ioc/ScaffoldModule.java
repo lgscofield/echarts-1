@@ -24,7 +24,6 @@ import org.eastway.echarts.client.activity.MasterActivityMapper;
 import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.common.DiagnosisColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.ProfileColumnDefinitionsImpl;
-import org.eastway.echarts.client.common.ReferralColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.TicklerColumnDefinitionsImpl;
 import org.eastway.echarts.client.request.AddressProxy;
 import org.eastway.echarts.client.request.AppointmentDataProvider;
@@ -33,7 +32,6 @@ import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.request.LinkProxy;
 import org.eastway.echarts.client.request.MedicationProxy;
 import org.eastway.echarts.client.request.MessageProxy;
-import org.eastway.echarts.client.request.ReferralProxy;
 import org.eastway.echarts.client.request.UserProxy;
 import org.eastway.echarts.client.scaffold.ScaffoldDesktopShell;
 import org.eastway.echarts.client.ui.AddressView;
@@ -57,8 +55,6 @@ import org.eastway.echarts.client.ui.MessageView;
 import org.eastway.echarts.client.ui.MessageViewImpl;
 import org.eastway.echarts.client.ui.ProfileView;
 import org.eastway.echarts.client.ui.ProfileViewImpl;
-import org.eastway.echarts.client.ui.ReferralView;
-import org.eastway.echarts.client.ui.ReferralViewImpl;
 import org.eastway.echarts.client.ui.TicklerView;
 import org.eastway.echarts.client.ui.TicklerViewImpl;
 import org.eastway.echarts.shared.Tickler;
@@ -93,8 +89,6 @@ public class ScaffoldModule extends AbstractGinModule {
 			.to(TicklerViewImpl.class).in(Singleton.class);
 		bind(new TypeLiteral<MessageView<MessageProxy>>() {})
 			.to(MessageViewImpl.class).in(Singleton.class);
-		bind(new TypeLiteral<ReferralView<ReferralProxy>>() {})
-			.to(ReferralViewImpl.class).in(Singleton.class);
 		bind(AppointmentView.class).in(Singleton.class);
 		bind(new TypeLiteral<DiagnosisView<DiagnosisProxy>>() {})
 			.to(DiagnosisViewImpl.class).in(Singleton.class);
@@ -122,9 +116,6 @@ public class ScaffoldModule extends AbstractGinModule {
 
 		bind(new TypeLiteral<List<ColumnDefinition<UserProxy>>>() {})
 			.to(ProfileColumnDefinitionsImpl.class).in(Singleton.class);
-
-		bind(new TypeLiteral<List<ColumnDefinition<ReferralProxy>>>() {})
-			.to(ReferralColumnDefinitionsImpl.class).in(Singleton.class);
 
 		bind(EchartsOracle.class).in(Singleton.class);
 

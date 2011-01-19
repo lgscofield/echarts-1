@@ -15,17 +15,18 @@
  */
 package org.eastway.echarts.client.ui;
 
-import java.util.List;
+import org.eastway.echarts.client.request.ReferralProxy;
 
-import org.eastway.echarts.client.common.ColumnDefinition;
-
+import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.user.client.ui.IsWidget;
 
-public interface ReferralView<T> extends IsWidget {
-	interface Presenter<T> { }
+public interface ReferralView extends IsWidget {
+	interface Presenter { }
 
-	void setPresenter(Presenter<T> presenter);
-	void setRowData(T rowData);
-	void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions);
+	interface Style extends CssResource {
+		String evenRow();
+	}
+
 	void setError(String message);
+	void setValue(ReferralProxy proxy);
 }

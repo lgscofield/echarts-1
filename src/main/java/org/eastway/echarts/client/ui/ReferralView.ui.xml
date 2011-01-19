@@ -13,8 +13,53 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style type='org.eastway.echarts.client.ui.ReferralView.Style'>
+		.table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+		.table td {
+			text-align: left;
+			padding: 5px;
+		}
+		.table tr:hover {
+			background-color: #eee;
+		}
+		.evenRow {
+			background-color: #f3f7fb;
+		}
+	</ui:style>
 	<g:HTMLPanel>
 		<span ui:field="error" />
-		<g:FlexTable ui:field="table"/>
+		<table ui:field='table' class='{style.table}'>
+			<tr>
+				<td width='20%'><b>Taken By</b></td>
+				<td><span ui:field='takenBy' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Disposition</b></td>
+				<td><span ui:field='disposition' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Source</b></td>
+				<td><span ui:field='source' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Admission Date</b></td>
+				<td><span ui:field='admissionDate' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Type</b></td>
+				<td><span ui:field='type' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Referral Date</b></td>
+				<td><span ui:field='referralDate' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Discharge Date</b></td>
+				<td><span ui:field='dischargeDate' /></td>
+			</tr>
+		</table>
 	</g:HTMLPanel>
 </ui:UiBinder>

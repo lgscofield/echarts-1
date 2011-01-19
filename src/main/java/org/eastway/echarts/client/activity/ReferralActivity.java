@@ -15,9 +15,6 @@
  */
 package org.eastway.echarts.client.activity;
 
-import java.util.List;
-
-import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.place.ReferralPlace;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.request.ReferralProxy;
@@ -29,22 +26,19 @@ import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.requestfactory.shared.ServerFailure;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
-public class ReferralActivity extends AbstractActivity implements ReferralView.Presenter<ReferralProxy> {
+public class ReferralActivity extends AbstractActivity implements ReferralView.Presenter {
 
-	private ReferralView<ReferralProxy> view;
+	private ReferralView view;
 	private String caseNumber;
 	private EchartsRequestFactory requestFactory;
 	private AcceptsOneWidget panel;
 
 	public ReferralActivity(ReferralPlace place,
 							EchartsRequestFactory requestFactory,
-							List<ColumnDefinition<ReferralProxy>> columnDefinitions,
-							ReferralView<ReferralProxy> view) {
+							ReferralView view) {
 		this.caseNumber = place.getCaseNumber();
 		this.requestFactory = requestFactory;
 		this.view = view;
-		this.view.setPresenter(this);
-		this.view.setColumnDefinitions(columnDefinitions);
 	}
 
 	private void fetchData() {
@@ -52,7 +46,7 @@ public class ReferralActivity extends AbstractActivity implements ReferralView.P
 			@Override
 			public void onSuccess(ReferralProxy response) {
 				if (response != null) {
-					view.setRowData(response);
+					view.setValue(response);
 					panel.setWidget(view);
 				} else {
 					handleFailure("No referral data found for case number: " + caseNumber);
@@ -73,7 +67,7 @@ public class ReferralActivity extends AbstractActivity implements ReferralView.P
 	}
 
 	private void handleFailure(String message) {
-		view.setRowData(null);
+		view.setValue(null);
 		view.setError(message);
 		panel.setWidget(view);
 	}

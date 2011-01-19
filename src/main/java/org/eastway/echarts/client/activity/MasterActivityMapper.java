@@ -33,7 +33,6 @@ import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.request.LinkProxy;
 import org.eastway.echarts.client.request.MedicationProxy;
 import org.eastway.echarts.client.request.MessageProxy;
-import org.eastway.echarts.client.request.ReferralProxy;
 import org.eastway.echarts.client.request.UserProxy;
 import org.eastway.echarts.client.ui.ARInfoView;
 import org.eastway.echarts.client.ui.AddressView;
@@ -63,8 +62,7 @@ public class MasterActivityMapper implements ActivityMapper {
 	private List<ColumnDefinition<Tickler>> ticklerColumnDefinitions;
 	private MessageView<MessageProxy> messageView;
 	private DemographicsView demographicsView;
-	private List<ColumnDefinition<ReferralProxy>> referralColumnDefinitions;
-	private ReferralView<ReferralProxy> referralView;
+	private ReferralView referralView;
 	private AppointmentView<AppointmentProxy> appointmentView;
 	private DiagnosisView<DiagnosisProxy> diagnosisView;
 	private List<ColumnDefinition<DiagnosisProxy>> diagnosisColumnDefinitions;
@@ -86,8 +84,7 @@ public class MasterActivityMapper implements ActivityMapper {
 							     PatientSummaryView patientSummaryView,
 							     MessageView<MessageProxy> messageView,
 							     DemographicsView demographicsView,
-							     ReferralView<ReferralProxy> referralView,
-							     List<ColumnDefinition<ReferralProxy>> referralColumnDefinitions,
+							     ReferralView referralView,
 							     AppointmentView<AppointmentProxy> appointmentView,
 							     DiagnosisView<DiagnosisProxy> diagnosisView,
 							     List<ColumnDefinition<DiagnosisProxy>> diagnosisColumnDefinitions,
@@ -108,7 +105,6 @@ public class MasterActivityMapper implements ActivityMapper {
 		this.messageView = messageView;
 		this.demographicsView = demographicsView;
 		this.referralView = referralView;
-		this.referralColumnDefinitions = referralColumnDefinitions;
 		this.appointmentView = appointmentView;
 		this.diagnosisView = diagnosisView;
 		this.diagnosisColumnDefinitions = diagnosisColumnDefinitions;
@@ -133,7 +129,7 @@ public class MasterActivityMapper implements ActivityMapper {
 		else if (place instanceof DemographicsPlace)
 			return new DemographicsActivity((DemographicsPlace) place, requestFactory, demographicsView);
 		else if (place instanceof ReferralPlace)
-			return new ReferralActivity((ReferralPlace) place, requestFactory, referralColumnDefinitions, referralView);
+			return new ReferralActivity((ReferralPlace) place, requestFactory, referralView);
 		else if (place instanceof AppointmentPlace)
 			return new AppointmentActivity((AppointmentPlace) place, requestFactory, appointmentView, appointmentDataProvider);
 		else if (place instanceof DiagnosisPlace)
