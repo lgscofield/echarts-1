@@ -24,6 +24,9 @@
 			text-align: left;
 			padding: 5px;
 		}
+		.table tr + td {
+			width: 20%;
+		}
 		.table tr:hover {
 			background-color: #eee;
 		}
@@ -35,31 +38,31 @@
 		<span ui:field="error" />
 		<table ui:field='table' class='{style.table}'>
 			<tr>
-				<td><b>Name</b></td>
+				<td width='20%'><b>Name</b></td>
 				<td><span ui:field='displayName' /></td>
 			</tr>
 			<tr>
-				<td><b>Picture</b></td>
+				<td width='20%'><b>Picture</b></td>
 				<td><img ui:field='picture' /></td>
 			</tr>
 			<tr>
-				<td><b>Gender</b></td>
+				<td width='20%'><b>Gender</b></td>
 				<td><span ui:field='gender' /></td>
 			</tr>
 			<tr>
-				<td><b>Date of birth</b></td>
+				<td width='20%'><b>Date of birth</b></td>
 				<td><span ui:field='dob' /></td>
 			</tr>
 			<tr>
-				<td><b>Providers</b></td>
+				<td width='20%'><b>Providers</b></td>
 				<td><span ui:field='providers' /></td>
 			</tr>
 			<tr>
-				<td><b>SSN</b></td>
+				<td width='20%'><b>SSN</b></td>
 				<td><span ui:field='ssn' /></td>
 			</tr>
 			<tr>
-				<td><b>Case Status</b></td>
+				<td width='20%'><b>Case Status</b></td>
 				<td><span ui:field='caseStatus' /></td>
 			</tr>
 		</table>
