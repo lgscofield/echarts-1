@@ -25,7 +25,6 @@ import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.dom.client.TableElement;
 import com.google.gwt.dom.client.TableRowElement;
-import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
@@ -79,10 +78,6 @@ public class PatientSummaryViewImpl extends Composite implements PatientSummaryV
 	@Override
 	public void setError(String message) {
 		error.setInnerText(message);
-	}
-
-	interface Style extends CssResource {
-		String evenRow();
 	}
 
 	@UiField Style style;

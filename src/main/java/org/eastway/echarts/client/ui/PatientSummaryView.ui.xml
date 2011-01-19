@@ -15,7 +15,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<ui:style type="org.eastway.echarts.client.ui.PatientSummaryViewImpl.Style">
+	<ui:style type="org.eastway.echarts.client.ui.PatientSummaryView.Style">
 		.table {
 			border-collapse: collapse;
 			width: 100%;
@@ -23,9 +23,6 @@
 		.table td {
 			text-align: left;
 			padding: 5px;
-		}
-		.table tr + td {
-			width: 20%;
 		}
 		.table tr:hover {
 			background-color: #eee;

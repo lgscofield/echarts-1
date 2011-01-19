@@ -17,10 +17,15 @@ package org.eastway.echarts.client.ui;
 
 import org.eastway.echarts.client.request.EHRProxy;
 
+import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.user.client.ui.IsWidget;
 
 public interface PatientSummaryView extends IsWidget {
 	interface Presenter {}
+
+	interface Style extends CssResource {
+		String evenRow();
+	}
 
 	void setValue(EHRProxy proxy);
 	void setError(String message);
