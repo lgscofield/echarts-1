@@ -28,13 +28,13 @@
 		}
 		.content {
 			position: relative;
-			border-top: 5px solid #ddf;
-			border-left: 5px solid #ddf;
+			border-top: 5px solid #315a8c;
+			border-left: 5px solid #315a8c;
 			overflow-y: auto;
-			overflow-x: hidden;
+			overflow-x: auto;
 		}
 		.sidebar {
-			border-top: 5px solid #ddf;
+			border-top: 5px solid #315a8c;
 		}
 	</ui:style>
 	<ui:image field="logo" src="../style/images/echarts-logo.gif"/>
