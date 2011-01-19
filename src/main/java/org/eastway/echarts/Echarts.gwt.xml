@@ -48,4 +48,7 @@
   <replace-with class="org.eastway.echarts.client.ui.ReferralViewImpl">
   	<when-type-is class="org.eastway.echarts.client.ui.ReferralView"/>
   </replace-with>
+  <replace-with class="org.eastway.echarts.client.ui.DiagnosisViewImpl">
+  	<when-type-is class="org.eastway.echarts.client.ui.DiagnosisView"/>
+  </replace-with>
 </module>

@@ -17,7 +17,6 @@ package org.eastway.echarts.client.activity;
 
 import java.util.List;
 
-import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.place.DiagnosisPlace;
 import org.eastway.echarts.client.request.DiagnosisProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
@@ -38,13 +37,10 @@ public class DiagnosisActivity extends AbstractActivity implements DiagnosisView
 
 	public DiagnosisActivity(DiagnosisPlace place,
 			EchartsRequestFactory requestFactory,
-			List<ColumnDefinition<DiagnosisProxy>> columnDefinitions,
 			DiagnosisView<DiagnosisProxy> view) {
 		this.caseNumber = place.getCaseNumber();
 		this.requestFactory = requestFactory;
 		this.view = view;
-		this.view.setPresenter(this);
-		this.view.setColumnDefinitions(columnDefinitions);
 	}
 
 	public void fetchData() {

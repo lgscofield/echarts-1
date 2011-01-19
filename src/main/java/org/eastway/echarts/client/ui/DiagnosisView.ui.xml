@@ -12,11 +12,12 @@
 <!-- limitations under the License.                                         -->
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:e="urn:import:org.eastway.echarts.client.common">
 	<ui:style>
 	</ui:style>
 	<g:HTMLPanel>
 		<span ui:field="error" />
-		<g:StackLayoutPanel height="100%" width="98%" unit='PX' ui:field='diagnoses' />
+		<e:DiagnosisCellTable ui:field='cellTable' />
 	</g:HTMLPanel>
 </ui:UiBinder>

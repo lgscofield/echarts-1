@@ -65,7 +65,6 @@ public class MasterActivityMapper implements ActivityMapper {
 	private ReferralView referralView;
 	private AppointmentView<AppointmentProxy> appointmentView;
 	private DiagnosisView<DiagnosisProxy> diagnosisView;
-	private List<ColumnDefinition<DiagnosisProxy>> diagnosisColumnDefinitions;
 	private LinkView<LinkProxy> linkView;
 	private AddressView<AddressProxy> addressView;
 	private MedicationView<MedicationProxy> medicationView;
@@ -87,7 +86,6 @@ public class MasterActivityMapper implements ActivityMapper {
 							     ReferralView referralView,
 							     AppointmentView<AppointmentProxy> appointmentView,
 							     DiagnosisView<DiagnosisProxy> diagnosisView,
-							     List<ColumnDefinition<DiagnosisProxy>> diagnosisColumnDefinitions,
 							     LinkView<LinkProxy> linkView,
 							     AddressView<AddressProxy> addressView,
 							     MedicationView<MedicationProxy> medicationView,
@@ -107,7 +105,6 @@ public class MasterActivityMapper implements ActivityMapper {
 		this.referralView = referralView;
 		this.appointmentView = appointmentView;
 		this.diagnosisView = diagnosisView;
-		this.diagnosisColumnDefinitions = diagnosisColumnDefinitions;
 		this.linkView = linkView;
 		this.addressView = addressView;
 		this.medicationView = medicationView;
@@ -133,7 +130,7 @@ public class MasterActivityMapper implements ActivityMapper {
 		else if (place instanceof AppointmentPlace)
 			return new AppointmentActivity((AppointmentPlace) place, requestFactory, appointmentView, appointmentDataProvider);
 		else if (place instanceof DiagnosisPlace)
-			return new DiagnosisActivity((DiagnosisPlace) place, requestFactory, diagnosisColumnDefinitions, diagnosisView);
+			return new DiagnosisActivity((DiagnosisPlace) place, requestFactory, diagnosisView);
 		else if (place instanceof LinkPlace)
 			return new LinkActivity((LinkPlace) place, requestFactory, linkView);
 		else if (place instanceof AddressPlace)

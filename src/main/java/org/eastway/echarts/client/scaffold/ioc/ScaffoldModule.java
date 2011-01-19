@@ -22,12 +22,10 @@ import org.eastway.echarts.client.activity.DetailsActivityMapper;
 import org.eastway.echarts.client.activity.EchartsPlaceHistoryMapper;
 import org.eastway.echarts.client.activity.MasterActivityMapper;
 import org.eastway.echarts.client.common.ColumnDefinition;
-import org.eastway.echarts.client.common.DiagnosisColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.ProfileColumnDefinitionsImpl;
 import org.eastway.echarts.client.common.TicklerColumnDefinitionsImpl;
 import org.eastway.echarts.client.request.AddressProxy;
 import org.eastway.echarts.client.request.AppointmentDataProvider;
-import org.eastway.echarts.client.request.DiagnosisProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.request.LinkProxy;
 import org.eastway.echarts.client.request.MedicationProxy;
@@ -42,8 +40,6 @@ import org.eastway.echarts.client.ui.DashboardSideBarView;
 import org.eastway.echarts.client.ui.DashboardSideBarViewImpl;
 import org.eastway.echarts.client.ui.DashboardView;
 import org.eastway.echarts.client.ui.DashboardViewImpl;
-import org.eastway.echarts.client.ui.DiagnosisView;
-import org.eastway.echarts.client.ui.DiagnosisViewImpl;
 import org.eastway.echarts.client.ui.EchartsOracle;
 import org.eastway.echarts.client.ui.EhrSideBarView;
 import org.eastway.echarts.client.ui.EhrSideBarViewImpl;
@@ -90,8 +86,6 @@ public class ScaffoldModule extends AbstractGinModule {
 		bind(new TypeLiteral<MessageView<MessageProxy>>() {})
 			.to(MessageViewImpl.class).in(Singleton.class);
 		bind(AppointmentView.class).in(Singleton.class);
-		bind(new TypeLiteral<DiagnosisView<DiagnosisProxy>>() {})
-			.to(DiagnosisViewImpl.class).in(Singleton.class);
 		bind(new TypeLiteral<LinkView<LinkProxy>>() {})
 			.to(LinkViewImpl.class).in(Singleton.class);
 		bind(new TypeLiteral<AddressView<AddressProxy>>() {})
@@ -110,9 +104,6 @@ public class ScaffoldModule extends AbstractGinModule {
 
 		bind(new TypeLiteral<List<ColumnDefinition<Tickler>>>() {})
 			.to(TicklerColumnDefinitionsImpl.class).in(Singleton.class);
-
-		bind(new TypeLiteral<List<ColumnDefinition<DiagnosisProxy>>>() {})
-			.to(DiagnosisColumnDefinitionsImpl.class).in(Singleton.class);
 
 		bind(new TypeLiteral<List<ColumnDefinition<UserProxy>>>() {})
 			.to(ProfileColumnDefinitionsImpl.class).in(Singleton.class);
