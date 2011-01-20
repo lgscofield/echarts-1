@@ -7,11 +7,10 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.Frame;
 
-public class StaffHistoryActivity extends AbstractActivity {
-
+public class PhysicianOrderQueueReportActivity extends AbstractActivity {
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		Frame frame = new Frame("http://" + EchartsUser.dbServerUrl + "/echarts-asp/reports/staffhistory.asp?staffid=" + EchartsUser.staffId);
+		Frame frame = new Frame("http://" + EchartsUser.dbServerUrl + "/echarts-asp/reports/phyorderqueue.asp?staffid=" + EchartsUser.staffId);
 		panel.setWidget(frame);
 		frame.setSize("100%", "100%");
 	}

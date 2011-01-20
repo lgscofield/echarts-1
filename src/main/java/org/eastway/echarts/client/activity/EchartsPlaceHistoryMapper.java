@@ -7,12 +7,15 @@ import org.eastway.echarts.client.place.DashboardPlace;
 import org.eastway.echarts.client.place.DemographicsPlace;
 import org.eastway.echarts.client.place.DiagnosisPlace;
 import org.eastway.echarts.client.place.LabPlace;
+import org.eastway.echarts.client.place.LastSeenReportPlace;
 import org.eastway.echarts.client.place.LinkPlace;
 import org.eastway.echarts.client.place.MedSomSignaturesPlace;
 import org.eastway.echarts.client.place.MedicationPlace;
 import org.eastway.echarts.client.place.MessagePlace;
+import org.eastway.echarts.client.place.OverlapsReportPlace;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
 import org.eastway.echarts.client.place.PhysicianOrderPlace;
+import org.eastway.echarts.client.place.PhysicianOrderQueueReportPlace;
 import org.eastway.echarts.client.place.ProfilePlace;
 import org.eastway.echarts.client.place.ProviderSignaturesPlace;
 import org.eastway.echarts.client.place.ReferralPlace;
@@ -45,6 +48,9 @@ import com.google.gwt.place.shared.WithTokenizers;
 				  SupervisorSignaturesPlace.Tokenizer.class,
 				  MedSomSignaturesPlace.Tokenizer.class,
 				  StaffHistoryPlace.Tokenizer.class,
-				  PhysicianOrderPlace.Tokenizer.class })
+				  PhysicianOrderPlace.Tokenizer.class,
+				  LastSeenReportPlace.Tokenizer.class,
+				  OverlapsReportPlace.Tokenizer.class,
+				  PhysicianOrderQueueReportPlace.Tokenizer.class })
 public interface EchartsPlaceHistoryMapper extends PlaceHistoryMapper {
 }

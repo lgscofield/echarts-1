@@ -7,12 +7,15 @@ import org.eastway.echarts.client.place.DashboardPlace;
 import org.eastway.echarts.client.place.DemographicsPlace;
 import org.eastway.echarts.client.place.DiagnosisPlace;
 import org.eastway.echarts.client.place.LabPlace;
+import org.eastway.echarts.client.place.LastSeenReportPlace;
 import org.eastway.echarts.client.place.LinkPlace;
 import org.eastway.echarts.client.place.MedSomSignaturesPlace;
 import org.eastway.echarts.client.place.MedicationPlace;
 import org.eastway.echarts.client.place.MessagePlace;
+import org.eastway.echarts.client.place.OverlapsReportPlace;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
 import org.eastway.echarts.client.place.PhysicianOrderPlace;
+import org.eastway.echarts.client.place.PhysicianOrderQueueReportPlace;
 import org.eastway.echarts.client.place.ProfilePlace;
 import org.eastway.echarts.client.place.ProviderSignaturesPlace;
 import org.eastway.echarts.client.place.ReferralPlace;
@@ -84,6 +87,12 @@ public class CurrentEhrActivityMapper implements ActivityMapper {
 			return new CurrentEhrActivity(null, view, requestFactory);
 		} else if (place instanceof PhysicianOrderPlace) {
 			return new CurrentEhrActivity(((PhysicianOrderPlace) place).getCaseNumber(), view, requestFactory);
+		} else if (place instanceof OverlapsReportPlace) {
+			return new CurrentEhrActivity(null, view, requestFactory);
+		} else if (place instanceof LastSeenReportPlace) {
+			return new CurrentEhrActivity(null, view, requestFactory);
+		} else if (place instanceof PhysicianOrderQueueReportPlace) {
+			return new CurrentEhrActivity(null, view, requestFactory);
 		}
 		return null;
 	}

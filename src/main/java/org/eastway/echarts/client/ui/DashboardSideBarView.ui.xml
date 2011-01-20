@@ -44,10 +44,13 @@
 				<g:Hyperlink ui:field='staffHistory' targetHistoryToken='StaffHistoryPlace:'>Staff History</g:Hyperlink>
 			</li>
 			<li>
-				<g:Anchor ui:field='lastSeenReport' href='#'>Last Seen</g:Anchor>
+				<g:Hyperlink ui:field='lastSeenReport' targetHistoryToken='LastSeenReportPlace:'>Last Seen</g:Hyperlink>
 			</li>
 			<li>
-				<g:Anchor ui:field='overlapsReport' href='#'>Overlaps Report</g:Anchor>
+				<g:Hyperlink ui:field='overlapsReport' targetHistoryToken='OverlapsReportPlace:'>Overlaps</g:Hyperlink>
+			</li>
+			<li>
+				<g:Hyperlink ui:field='physicianOrder' targetHistoryToken='PhysicianOrderQueueReportPlace:'>Physician Order</g:Hyperlink>
 			</li>
 		</ul>
 	</g:HTMLPanel>

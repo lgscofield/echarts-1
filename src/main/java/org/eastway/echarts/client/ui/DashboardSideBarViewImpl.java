@@ -32,16 +32,4 @@ public class DashboardSideBarViewImpl extends Composite implements DashboardSide
 		event.preventDefault();
 		Window.open("http://" + EchartsUser.dbServerUrl + "/echarts-asp/Forms/108GroupSetup.asp?staffid=" + EchartsUser.staffId, "_blank", "");
 	}
-
-	@UiHandler("lastSeenReport")
-	void handleLastSeenReportClicked(ClickEvent event) {
-		event.preventDefault();
-		Window.open("http://" + EchartsUser.dbServerUrl + "/echarts-asp/lastseen.asp", "_blank", "");
-	}
-
-	@UiHandler("overlapsReport")
-	void handleOverLapsReportClicked(ClickEvent event) {
-		event.preventDefault();
-		Window.open("http://" + EchartsUser.dbServerUrl + "/echarts-asp/overlaps.asp?staffid=" + EchartsUser.staffId, "_blank", "");
-	}
 }
