@@ -18,24 +18,17 @@
 	<ui:style>
 		.cellTable {
 			width: 100%;
-			text-align: left;
 		}
 	</ui:style>
 	<g:HTMLPanel>
 		<span ui:field="error" />
-		<table>
+		<e:AppointmentCellTable
+			pageSize="17"
+			addStyleNames='{style.cellTable}'
+			ui:field="cellTable" />
+		<table width='100%'>
 			<tr>
-				<td valign="top">
-					<e:AppointmentCellTable
-						pageSize="17"
-						addStyleNames='{style.cellTable}'
-						ui:field="cellTable" />
-				</td>
-			</tr>
-			<tr>
-				<td align="center">
-					<c:SimplePager ui:field="pager" />
-				</td>
+				<td align='center'><c:SimplePager ui:field="pager" /></td>
 			</tr>
 		</table>
 	</g:HTMLPanel>
