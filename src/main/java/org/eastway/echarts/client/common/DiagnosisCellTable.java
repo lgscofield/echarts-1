@@ -2,7 +2,6 @@ package org.eastway.echarts.client.common;
 
 import org.eastway.echarts.client.request.DiagnosisProxy;
 import org.eastway.echarts.client.style.GlobalResources;
-import org.eastway.echarts.client.ui.DiagnosisCodeProxyRenderer;
 
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
@@ -22,7 +21,7 @@ public class DiagnosisCellTable extends CellTable<DiagnosisProxy> {
 			public String getValue(DiagnosisProxy object) {
 				if (object == null)
 					return "";
-				return object.getAxis1A() == null ? "" : DiagnosisCodeProxyRenderer.instance().render(object.getAxis1A());
+				return object.getAxis1A() == null ? "" : object.getAxis1A().getId();
 			}
 		}, "Axis 1A");
 		this.addColumn(new TextColumn<DiagnosisProxy>() {
@@ -30,7 +29,7 @@ public class DiagnosisCellTable extends CellTable<DiagnosisProxy> {
 			public String getValue(DiagnosisProxy object) {
 				if (object == null)
 					return "";
-				return object.getAxis1B() == null ? "" : DiagnosisCodeProxyRenderer.instance().render(object.getAxis1B());
+				return object.getAxis1B() == null ? "" : object.getAxis1B().getId();
 			}
 		}, "Axis 1B");
 		this.addColumn(new TextColumn<DiagnosisProxy>() {
@@ -38,7 +37,7 @@ public class DiagnosisCellTable extends CellTable<DiagnosisProxy> {
 			public String getValue(DiagnosisProxy object) {
 				if (object == null)
 					return "";
-				return object.getAxis1C() == null ? "" : DiagnosisCodeProxyRenderer.instance().render(object.getAxis1C());
+				return object.getAxis1C() == null ? "" : object.getAxis1C().getId();
 			}
 		}, "Axis 1C");
 		this.addColumn(new TextColumn<DiagnosisProxy>() {
@@ -46,7 +45,7 @@ public class DiagnosisCellTable extends CellTable<DiagnosisProxy> {
 			public String getValue(DiagnosisProxy object) {
 				if (object == null)
 					return "";
-				return object.getAxis1D() == null ? "" : DiagnosisCodeProxyRenderer.instance().render(object.getAxis1D());
+				return object.getAxis1D() == null ? "" : object.getAxis1D().getId();
 			}
 		}, "Axis 1D");
 		this.addColumn(new TextColumn<DiagnosisProxy>() {
@@ -54,7 +53,7 @@ public class DiagnosisCellTable extends CellTable<DiagnosisProxy> {
 			public String getValue(DiagnosisProxy object) {
 				if (object == null)
 					return "";
-				return object.getAxis1E() == null ? "" : DiagnosisCodeProxyRenderer.instance().render(object.getAxis1E());
+				return object.getAxis1E() == null ? "" : object.getAxis1E().getId();
 			}
 		}, "Axis 1E");
 		this.addColumn(new TextColumn<DiagnosisProxy>() {
@@ -62,7 +61,7 @@ public class DiagnosisCellTable extends CellTable<DiagnosisProxy> {
 			public String getValue(DiagnosisProxy object) {
 				if (object == null)
 					return "";
-				return object.getAxis2A() == null ? "" : DiagnosisCodeProxyRenderer.instance().render(object.getAxis2A());
+				return object.getAxis2A() == null ? "" : object.getAxis2A().getId();
 			}
 		}, "Axis 2A");
 		this.addColumn(new TextColumn<DiagnosisProxy>() {
@@ -70,7 +69,7 @@ public class DiagnosisCellTable extends CellTable<DiagnosisProxy> {
 			public String getValue(DiagnosisProxy object) {
 				if (object == null)
 					return "";
-				return object.getAxis2B() == null ? "" : DiagnosisCodeProxyRenderer.instance().render(object.getAxis2B());
+				return object.getAxis2B() == null ? "" : object.getAxis2B().getId();
 			}
 		}, "Axis 2B");
 		this.addColumn(new TextColumn<DiagnosisProxy>() {
@@ -78,40 +77,8 @@ public class DiagnosisCellTable extends CellTable<DiagnosisProxy> {
 			public String getValue(DiagnosisProxy object) {
 				if (object == null)
 					return "";
-				return object.getAxis2C() == null ? "" : DiagnosisCodeProxyRenderer.instance().render(object.getAxis2C());
+				return object.getAxis2C() == null ? "" : object.getAxis2C().getId();
 			}
 		}, "Axis 2C");
-		this.addColumn(new TextColumn<DiagnosisProxy>() {
-			@Override
-			public String getValue(DiagnosisProxy object) {
-				if (object == null)
-					return "";
-				return object.getAxis3() == null ? "" : String.valueOf(object.getAxis3());
-			}
-		}, "Axis 3");
-		this.addColumn(new TextColumn<DiagnosisProxy>() {
-			@Override
-			public String getValue(DiagnosisProxy object) {
-				if (object == null)
-					return "";
-				return object.getAxis4() == null ? "" : String.valueOf(object.getAxis4());
-			}
-		}, "Axis 4");
-		this.addColumn(new TextColumn<DiagnosisProxy>() {
-			@Override
-			public String getValue(DiagnosisProxy object) {
-				if (object == null)
-					return "";
-				return object.getCurrentGAF() == null ? "" : String.valueOf(object.getCurrentGAF());
-			}
-		}, "Current GAF");
-		this.addColumn(new TextColumn<DiagnosisProxy>() {
-			@Override
-			public String getValue(DiagnosisProxy object) {
-				if (object == null)
-					return "";
-				return object.getHighestGAF() == null ? "" : String.valueOf(object.getHighestGAF());
-			}
-		}, "Highest GAF");
 	}
 }

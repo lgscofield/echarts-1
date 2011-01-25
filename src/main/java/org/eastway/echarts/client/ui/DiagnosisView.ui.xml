@@ -13,11 +13,18 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"
-	xmlns:e="urn:import:org.eastway.echarts.client.common">
+	xmlns:e="urn:import:org.eastway.echarts.client.common"
+	xmlns:u="urn:import:org.eastway.echarts.client.ui">
 	<ui:style>
+		.list {
+			border-bottom: 2px solid LightGray;
+		}
 	</ui:style>
 	<g:HTMLPanel>
-		<span ui:field="error" />
-		<e:DiagnosisCellTable ui:field='cellTable' />
+		<span ui:field='error' />
+		<g:ScrollPanel height='100px' width='100%' addStyleNames='{style.list}'>
+			<e:DiagnosisCellTable ui:field='cellTable' />
+		</g:ScrollPanel>
+		<g:FlowPanel addStyleNames='{style.list}' ui:field="details" />
 	</g:HTMLPanel>
 </ui:UiBinder>

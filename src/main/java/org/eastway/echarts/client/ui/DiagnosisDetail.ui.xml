@@ -1,0 +1,76 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style type="org.eastway.echarts.client.ui.DiagnosisDetail.Style">
+		.table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+		.table td {
+			text-align: left;
+			padding: 5px;
+		}
+		.table tr:hover {
+			background-color: #eee;
+		}
+		.evenRow {
+			background-color: #f3f7fb;
+		}
+	</ui:style>
+	<g:HTMLPanel>
+		<table ui:field='table' class='{style.table}'>
+			<tr>
+				<td width='20%'><b>Date</b></td>
+				<td><span ui:field='date' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Axis 1A</b></td>
+				<td><span ui:field='axis1A' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Axis 1B</b></td>
+				<td><span ui:field='axis1B' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Axis 1C</b></td>
+				<td><span ui:field='axis1C' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Axis 1D</b></td>
+				<td><span ui:field='axis1D' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Axis 1E</b></td>
+				<td><span ui:field='axis1E' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Axis 2A</b></td>
+				<td><span ui:field='axis2A' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Axis 2B</b></td>
+				<td><span ui:field='axis2B' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Axis 2C</b></td>
+				<td><span ui:field='axis2C' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Axis 3</b></td>
+				<td><span ui:field='axis3' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Axis 4</b></td>
+				<td><span ui:field='axis4' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Current GAF</b></td>
+				<td><span ui:field='currentGAF' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Highest GAF</b></td>
+				<td><span ui:field='highestGAF' /></td>
+			</tr>
+		</table>
+	</g:HTMLPanel>
+</ui:UiBinder> 

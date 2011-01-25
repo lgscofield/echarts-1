@@ -21,7 +21,7 @@ public class DiagnosisCodeProxyRenderer extends ProxyRenderer<DiagnosisCodeProxy
 	public String render(DiagnosisCodeProxy object) {
 		if (object == null)
 			return null;
-		return object.getId() + " " + object.getDescription();
+		return object.getId() + " (" + object.getDescription() + ")";
 	}
 
 }

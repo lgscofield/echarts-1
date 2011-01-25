@@ -24,7 +24,10 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.view.client.SingleSelectionModel;
 
 public class DiagnosisViewImpl<T> extends Composite implements DiagnosisView<T> {
 	@SuppressWarnings("unchecked")
@@ -34,9 +37,11 @@ public class DiagnosisViewImpl<T> extends Composite implements DiagnosisView<T> 
 
 	@UiField CellTable<T> cellTable;
 	@UiField SpanElement error;
+	@UiField FlowPanel details;
 
 	public DiagnosisViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
+		setSelectionModel();
 	}
 
 	@Override
@@ -48,15 +53,33 @@ public class DiagnosisViewImpl<T> extends Composite implements DiagnosisView<T> 
 	public void setRowData(List<T> rowData) {
 		if (rowData == null) {
 			cellTable.setVisible(false);
+			details.setVisible(false);
 			return;
 		}
 		cellTable.setVisible(true);
+		details.setVisible(true);
 		cellTable.setRowData(rowData);
+		cellTable.getSelectionModel().setSelected(cellTable.getVisibleItem(0), true);
 		error.setInnerText("");
 	}
 
 	@Override
 	public void setError(String message) {
 		error.setInnerText(message);
+	}
+
+	private void setSelectionModel() {
+		final SingleSelectionModel<T> selectionModel = new SingleSelectionModel<T>();
+		cellTable.setSelectionModel(selectionModel);
+		selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+			@Override
+			public void onSelectionChange(SelectionChangeEvent event) {
+				T selected = selectionModel.getSelectedObject();
+				if (selected != null) {
+					details.add(DiagnosisDetail.instance());
+					DiagnosisDetail.instance().setValue(selected);
+				}
+			}
+		});
 	}
 }
