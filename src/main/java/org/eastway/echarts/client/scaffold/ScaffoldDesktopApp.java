@@ -1,5 +1,8 @@
 package org.eastway.echarts.client.scaffold;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.activity.CurrentEhrActivityMapper;
 import org.eastway.echarts.client.activity.DetailsActivityMapper;
@@ -25,6 +28,8 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.inject.Inject;
 
 public class ScaffoldDesktopApp extends ScaffoldApp {
+
+	private static final Logger log = Logger.getLogger(Echarts.class.getName());
 
 	private ScaffoldDesktopShell shell;
 	private EventBus eventBus;
@@ -57,6 +62,14 @@ public class ScaffoldDesktopApp extends ScaffoldApp {
 	}
 
 	private void init() {
+
+		GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
+			public void onUncaughtException(Throwable e) {
+				Window.alert("Error: " + e.getMessage());
+				log.log(Level.SEVERE, e.getMessage(), e);
+			}
+		});
+
 		RequestEvent.register(eventBus, new RequestEvent.Handler() {
 			// Only show loading status if a request isn't serviced in 250ms.
 			private static final int LOADING_TIMEOUT = 250;
