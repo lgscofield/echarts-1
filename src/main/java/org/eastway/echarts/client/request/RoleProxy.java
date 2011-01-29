@@ -15,14 +15,13 @@
  */
 package org.eastway.echarts.client.request;
 
-import org.eastway.echarts.domain.Role;
 import org.springframework.roo.addon.gwt.RooGwtMirroredFrom;
 
 import com.google.gwt.requestfactory.shared.EntityProxy;
-import com.google.gwt.requestfactory.shared.ProxyFor;
+import com.google.gwt.requestfactory.shared.ProxyForName;
 
-@RooGwtMirroredFrom(Role.class)
-@ProxyFor(Role.class)
+@RooGwtMirroredFrom("org.eastway.echarts.domain.Role")
+@ProxyForName("org.eastway.echarts.domain.Role")
 public interface RoleProxy extends EntityProxy {
 	public void setRoleName(String roleName);
 

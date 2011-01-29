@@ -15,15 +15,14 @@
  */
 package org.eastway.echarts.client.request;
 
-import org.eastway.echarts.domain.DbServerConfig;
 import org.springframework.roo.addon.gwt.RooGwtMirroredFrom;
 
 import com.google.gwt.requestfactory.shared.Request;
 import com.google.gwt.requestfactory.shared.RequestContext;
-import com.google.gwt.requestfactory.shared.Service;
+import com.google.gwt.requestfactory.shared.ServiceName;
 
-@RooGwtMirroredFrom(DbServerConfig.class)
-@Service(DbServerConfig.class)
+@RooGwtMirroredFrom("org.eastway.echarts.domain.DbServerConfig")
+@ServiceName("org.eastway.echarts.domain.DbServerConfig")
 public interface DbServerConfigRequest extends RequestContext {
 	Request<DbServerConfigProxy> findDbServerConfig(String id);
 }

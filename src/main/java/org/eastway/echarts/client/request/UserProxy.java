@@ -17,14 +17,13 @@ package org.eastway.echarts.client.request;
 
 import java.util.Date;
 
-import org.eastway.echarts.domain.User;
 import org.springframework.roo.addon.gwt.RooGwtMirroredFrom;
 
 import com.google.gwt.requestfactory.shared.EntityProxy;
-import com.google.gwt.requestfactory.shared.ProxyFor;
+import com.google.gwt.requestfactory.shared.ProxyForName;
 
-@RooGwtMirroredFrom(User.class)
-@ProxyFor(User.class)
+@RooGwtMirroredFrom("org.eastway.echarts.domain.User")
+@ProxyForName("org.eastway.echarts.domain.User")
 public interface UserProxy extends EntityProxy {
 	void setCred1(String cred1);
 	String getCred1();

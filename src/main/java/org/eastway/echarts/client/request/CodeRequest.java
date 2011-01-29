@@ -15,15 +15,14 @@
  */
 package org.eastway.echarts.client.request;
 
-import org.eastway.echarts.domain.Code;
 import org.springframework.roo.addon.gwt.RooGwtMirroredFrom;
 
 import com.google.gwt.requestfactory.shared.Request;
 import com.google.gwt.requestfactory.shared.RequestContext;
-import com.google.gwt.requestfactory.shared.Service;
+import com.google.gwt.requestfactory.shared.ServiceName;
 
-@RooGwtMirroredFrom(Code.class)
-@Service(Code.class)
+@RooGwtMirroredFrom("org.eastway.echarts.domain.Code")
+@ServiceName("org.eastway.echarts.domain.Code")
 public interface CodeRequest extends RequestContext {
 	abstract Request<org.eastway.echarts.client.request.CodeProxy> findCode(Long id);
 	//abstract Request<java.util.List<org.eastway.echarts.client.rpc.CodeProxy>> findCodesByColumnName(String columnName);
