@@ -32,6 +32,7 @@ import org.eastway.echarts.client.request.MedicationProxy;
 import org.eastway.echarts.client.request.MessageProxy;
 import org.eastway.echarts.client.request.UserProxy;
 import org.eastway.echarts.client.scaffold.ScaffoldDesktopShell;
+import org.eastway.echarts.client.scaffold.request.EventSourceRequestTransport;
 import org.eastway.echarts.client.ui.AddressView;
 import org.eastway.echarts.client.ui.AddressViewImpl;
 import org.eastway.echarts.client.ui.AppointmentView;
@@ -54,7 +55,6 @@ import org.eastway.echarts.client.ui.ProfileViewImpl;
 import org.eastway.echarts.client.ui.TicklerView;
 import org.eastway.echarts.client.ui.TicklerViewImpl;
 import org.eastway.echarts.shared.Tickler;
-import org.eastway.echartsrequest.client.EchartsAuthRequestTransport;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.gwt.place.shared.PlaceController;
@@ -141,7 +141,7 @@ public class ScaffoldModule extends AbstractGinModule {
 		@Override
 		public EchartsRequestFactory get() {
 			EchartsRequestFactory requestFactory = GWT.create(EchartsRequestFactory.class);
-			EchartsAuthRequestTransport transport = new EchartsAuthRequestTransport(eventBus);
+			EventSourceRequestTransport transport = new EventSourceRequestTransport(eventBus);
 			requestFactory.initialize(eventBus, transport);
 			return requestFactory;
 		}
