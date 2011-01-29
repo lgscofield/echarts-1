@@ -10,7 +10,7 @@
 	<properties>
 		<roo.version>1.1.1.RELEASE</roo.version>
 		<spring.version>3.0.5.RELEASE</spring.version>
-		<aspectj.version>1.6.10</aspectj.version>
+		<aspectj.version>1.6.11.M1</aspectj.version>
 		<slf4j.version>1.6.1</slf4j.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -35,11 +35,6 @@
 			<url>https://repository.jboss.org/nexus/content/repositories/releases</url>
 			<name>JBoss Repo</name>
 		</repository>
-		<repository>
-			<id>gwt-repo</id>
-			<url>http://google-web-toolkit.googlecode.com/svn/2.1.1/gwt/maven</url>
-			<name>Google Web Toolkit Repository</name>
-		</repository>
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
@@ -56,11 +51,6 @@
 			<id>spring-roo-repository</id>
 			<name>Spring Roo Repository</name>
 			<url>http://spring-roo-repository.springsource.org/release</url>
-		</pluginRepository>
-		<pluginRepository>
-			<id>gwt-plugin-repo</id>
-			<url>http://google-web-toolkit.googlecode.com/svn/2.1.1/gwt/maven</url>
-			<name>Google Web Toolkit Plugin Repository</name>
 		</pluginRepository>
 	</pluginRepositories>
 	<dependencies>
@@ -94,6 +84,11 @@
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
+			<version>${aspectj.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
 			<version>${aspectj.version}</version>
 		</dependency>
 		<dependency>
@@ -161,12 +156,12 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>3.5.5-Final</version>
+			<version>3.6.0.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>3.5.5-Final</version>
+			<version>3.6.0.Final</version>
 			<exclusions>
 				<exclusion>
 					<groupId>cglib</groupId>
@@ -286,7 +281,7 @@
 		<dependency>
 			<groupId>org.springframework.webflow</groupId>
 			<artifactId>spring-js-resources</artifactId>
-			<version>2.2.0.RELEASE</version>
+			<version>2.2.1.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-digester</groupId>
@@ -327,6 +322,12 @@
 			<version>1.6</version>
 		</dependency>
 		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
 			<version>2.1.1</version>
@@ -353,11 +354,6 @@
 			<version>3.0</version>
 		</dependency>
 		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
-			<version>${aspectj.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>net.sourceforge.jtds</groupId>
 			<artifactId>jtds</artifactId>
 			<version>1.2.4</version>
@@ -366,12 +362,6 @@
 			<groupId>xalan</groupId>
 			<artifactId>xalan</artifactId>
 			<version>2.7.1</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>jsp-api</artifactId>
-			<version>2.1</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -394,7 +384,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.1-beta-1</version>
+				<version>2.1.1</version>
 				<!-- <configuration> <webXml>target/web.xml</webXml> </configuration> -->
 			</plugin>
 			<plugin>
@@ -404,6 +394,7 @@
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
+					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -520,12 +511,12 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>tomcat-maven-plugin</artifactId>
-				<version>1.0</version>
+				<version>1.1</version>
 			</plugin>
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<version>7.1.2.v20100523</version>
+				<version>7.2.2.v20101205</version>
 				<configuration>
 					<webAppConfig>
 						<contextPath>/${project.name}</contextPath>
@@ -535,11 +526,10 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
-				<version>1.3.2.google</version>
+				<version>2.1.0-1</version>
 				<configuration>
 					<logLevel>INFO</logLevel>
 					<style>OBFUSCATED</style>
-					<gwtVersion>2.1.1</gwtVersion>
 					<runTarget>/echarts.jsp</runTarget>
 					<hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
 					<modules>
@@ -564,6 +554,18 @@
 						</goals>
 					</execution>
 				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>com.google.gwt</groupId>
+						<artifactId>gwt-dev</artifactId>
+						<version>2.1.1</version>
+					</dependency>
+					<dependency>
+						<groupId>com.google.gwt</groupId>
+						<artifactId>gwt-user</artifactId>
+						<version>2.1.1</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 		<outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>
