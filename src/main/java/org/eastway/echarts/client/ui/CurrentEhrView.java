@@ -88,4 +88,10 @@ public class CurrentEhrView extends Composite {
 	public void setError(String message) {
 		error.setInnerText(message);
 	}
+
+	public boolean isEhrLoaded(String caseNumber) {
+		if (this.caseNumber.getInnerText() != null && this.caseNumber.getInnerText().equals(caseNumber))
+			return true;
+		return false;
+	}
 }

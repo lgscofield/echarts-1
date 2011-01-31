@@ -66,8 +66,11 @@ public class CurrentEhrActivity extends AbstractActivity {
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		if (caseNumber == null || view == null || requestFactory == null) {
+		if (caseNumber == null) {
 			view.setRowData(null);
+			return;
+		} else if (view.isEhrLoaded(caseNumber)) {
+			panel.setWidget(view);
 			return;
 		}
 		this.panel = panel;
