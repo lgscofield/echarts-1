@@ -15,12 +15,15 @@
  */
 package org.eastway.echarts.client.ui;
 
+import java.util.Date;
+
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AbstractDataProvider;
 
 public interface AppointmentView<T> extends IsWidget {
 	interface Presenter<T> {
+		void setDateFilter(Date value);
 	}
 
 	void setPresenter(Presenter<T> presenter);
@@ -28,4 +31,5 @@ public interface AppointmentView<T> extends IsWidget {
 	void setError(String message);
 	void reset();
 	void setDataProvider(AbstractDataProvider<T> dataProvider);
+	void setStartDate(Date date);
 }

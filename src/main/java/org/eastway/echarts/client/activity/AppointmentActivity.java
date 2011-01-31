@@ -15,6 +15,8 @@
  */
 package org.eastway.echarts.client.activity;
 
+import java.util.Date;
+
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 
@@ -45,12 +47,19 @@ public class AppointmentActivity extends AbstractActivity implements Appointment
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		dataProvider.setCaseNumber(caseNumber);
+		dataProvider.setStartDate(new Date());
 		view.setDataProvider(dataProvider);
+		view.setStartDate(new Date());
 		panel.setWidget(view);
 	}
 
 	@Override
 	public void onStop() {
 		view.reset();
+	}
+
+	@Override
+	public void setDateFilter(Date value) {
+		dataProvider.setStartDate(value);
 	}
 }

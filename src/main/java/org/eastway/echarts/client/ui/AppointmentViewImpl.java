@@ -15,16 +15,24 @@
  */
 package org.eastway.echarts.client.ui;
 
+import java.util.Date;
+
+import org.eastway.echarts.client.style.GlobalResources;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SpanElement;
+import com.google.gwt.event.dom.client.ClickEvent;
 
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.SimplePager;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.gwt.view.client.AbstractDataProvider;
 
 public class AppointmentViewImpl<T> extends Composite implements AppointmentView<T> {
@@ -40,15 +48,22 @@ public class AppointmentViewImpl<T> extends Composite implements AppointmentView
 	SimplePager.Resources resources = GWT.create(SimplePager.Resources.class);
 	@UiField(provided=true) SimplePager pager = new SimplePager(SimplePager.TextLocation.RIGHT, resources, false, 0, false);
 
+	@UiField DateBox datePicker;
+	@UiField Button filter;
+
 	private AbstractDataProvider<T> dataProvider;
+
+	private Presenter<T> presenter;
 
 	public AppointmentViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
 		pager.setDisplay(cellTable);
+		datePicker.setFormat(new DateBox.DefaultFormat(GlobalResources.getDateFormat()));
 	}
 
 	@Override
 	public void setPresenter(Presenter<T> presenter) {
+		this.presenter = presenter;
 	}
 
 	@Override
@@ -71,5 +86,17 @@ public class AppointmentViewImpl<T> extends Composite implements AppointmentView
 	public void setDataProvider(AbstractDataProvider<T> dataProviderIn) {
 		this.dataProvider = dataProviderIn;
 		dataProvider.addDataDisplay(cellTable);
+	}
+
+	@UiHandler("filter")
+	void filter(ClickEvent event) {
+		presenter.setDateFilter(datePicker.getValue());
+		reset();
+		dataProvider.addDataDisplay(cellTable);
+	}
+
+	@Override
+	public void setStartDate(Date date) {
+		datePicker.setValue(date);
 	}
 }

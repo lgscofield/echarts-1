@@ -15,6 +15,7 @@
  */
 package org.eastway.echarts.client.request;
 
+import java.util.Date;
 import java.util.List;
 
 import org.eastway.echarts.domain.Appointment;
@@ -27,4 +28,5 @@ import com.google.gwt.requestfactory.shared.Service;
 public interface AppointmentRequest extends RequestContext {
 	Request<AppointmentProxy> findAppointment(Long id);
 	Request<List<AppointmentProxy>> findAppointmentEntriesByCaseNumber(int start, int max, String caseNumber);
+	Request<List<AppointmentProxy>> findAppointmentEntriesByCaseNumberAndDate(int start, int length, String caseNumber, Date startDate);
 }
