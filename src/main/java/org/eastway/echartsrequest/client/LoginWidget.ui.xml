@@ -24,9 +24,8 @@
 			<tr>
 				<td><g:Hyperlink title='Edit your settings' targetHistoryToken='ProfilePlace:' ui:field="userName" /></td>
 				<td>&mdash;</td>
-				<td><g:Hyperlink ui:field="logout" targetHistoryToken=''>Logout</g:Hyperlink></td>
+				<td><g:Anchor ui:field="logout" href='#'>logout</g:Anchor></td>
 			</tr>
 		</table>
 	</g:HTMLPanel>
 </ui:UiBinder>
-						

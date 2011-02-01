@@ -17,7 +17,6 @@ public class LoginWidget extends Composite {
 	LoginWidgetUiBinder BINDER = GWT.create(LoginWidgetUiBinder.class);
 
 	@UiField Hyperlink userName;
-	@UiField Hyperlink logout;
 
 	public LoginWidget() {
 		initWidget(BINDER.createAndBindUi(this));
@@ -25,6 +24,7 @@ public class LoginWidget extends Composite {
 
 	@UiHandler("logout")
 	void handleLogout(ClickEvent event) {
+		event.preventDefault();
 		Window.Location.replace("/echarts/j_spring_security_logout");
 	}
 
