@@ -115,5 +115,6 @@
 				<td></td>
 			</tr>
 		</table>
+		For more detail, click <g:Anchor ui:field='staffAnalysis' href='#'>here</g:Anchor>.
 	</g:HTMLPanel>
 </ui:UiBinder>

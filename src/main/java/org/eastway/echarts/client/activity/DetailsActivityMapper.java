@@ -20,6 +20,7 @@ import org.eastway.echarts.client.place.ProfilePlace;
 import org.eastway.echarts.client.place.ProviderSignaturesPlace;
 import org.eastway.echarts.client.place.ReferralPlace;
 import org.eastway.echarts.client.place.ServiceHistoryPlace;
+import org.eastway.echarts.client.place.StaffAnalysisPlace;
 import org.eastway.echarts.client.place.StaffHistoryPlace;
 import org.eastway.echarts.client.place.SupervisorSignaturesPlace;
 import org.eastway.echarts.client.place.TicklerPlace;
@@ -119,6 +120,8 @@ public class DetailsActivityMapper implements ActivityMapper {
 		} else if (place instanceof LastSeenReportPlace) {
 			return new DashboardSideBarActivity(dashboardSideBarView);
 		} else if (place instanceof PhysicianOrderQueueReportPlace) {
+			return new DashboardSideBarActivity(dashboardSideBarView);
+		} else if (place instanceof StaffAnalysisPlace) {
 			return new DashboardSideBarActivity(dashboardSideBarView);
 		}
 		return null;

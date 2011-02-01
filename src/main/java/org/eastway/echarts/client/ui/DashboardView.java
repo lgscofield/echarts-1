@@ -16,6 +16,7 @@
 package org.eastway.echarts.client.ui;
 
 import com.google.gwt.user.client.ui.IsWidget;
+import com.google.gwt.place.shared.Place;
 import com.google.gwt.resources.client.CssResource;
 
 public interface DashboardView<T> extends IsWidget {
@@ -31,6 +32,8 @@ public interface DashboardView<T> extends IsWidget {
 
 	public interface Presenter<T> {
 		void openTickler();
+
+		void goTo(Place place);
 	}
 
 	void setPresenter(Presenter<T> presenter);

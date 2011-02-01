@@ -32,6 +32,7 @@ import org.eastway.echarts.client.request.EhrRequest;
 import org.eastway.echarts.client.request.ProductivityProxy;
 import org.eastway.echarts.client.ui.DashboardView;
 
+import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.requestfactory.shared.ServerFailure;
@@ -127,5 +128,10 @@ public class DashboardActivity extends AbstractActivity implements DashboardView
 		fetchData();
 		if (Cookies.getCookie("first_login") != null)
 			view.isFirstLogin();
+	}
+
+	@Override
+	public void goTo(Place place) {
+		placeController.goTo(place);
 	}
 }

@@ -15,6 +15,9 @@
  */
 package org.eastway.echarts.client.ui;
 
+import org.eastway.echarts.client.EchartsUser;
+import org.eastway.echarts.client.place.StaffAnalysisPlace;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.dom.client.TableCellElement;
@@ -23,6 +26,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -46,6 +50,8 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 
 	private double productivityUnit = 0.83;
 
+	private Presenter<T> presenter;
+
 	public DashboardViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
@@ -57,6 +63,7 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 
 	@Override
 	public void setPresenter(Presenter<T> presenter) {
+		this.presenter = presenter;
 	}
 
 	@Override
@@ -104,5 +111,11 @@ public class DashboardViewImpl<T> extends Composite implements DashboardView<T> 
 		dialogBox.setWidth("500px");
 		dialogBox.center();
 		dialogBox.show();
+	}
+
+	@UiHandler("staffAnalysis")
+	void openStaffAnalysis(ClickEvent event) {
+		event.preventDefault();
+		presenter.goTo(new StaffAnalysisPlace(EchartsUser.staffId));
 	}
 }
