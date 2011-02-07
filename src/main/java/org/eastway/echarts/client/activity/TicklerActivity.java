@@ -21,6 +21,7 @@ import java.util.List;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.http.client.UrlBuilder;
 import com.google.gwt.i18n.client.DateTimeFormat;
 
 import org.eastway.echarts.client.EchartsUser;
@@ -265,5 +266,15 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 	@Override
 	public void openNurseProgressNote(Tickler t) {
 		Window.open("http://" + EchartsUser.dbServerUrl + "/echarts-asp/Forms/103PM-NPNEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber(), "_blank", "");
+	}
+
+	@Override
+	public void openPrintablePatientSummary(Tickler t) {
+		Window.open(new UrlBuilder().setProtocol("http")
+				.setHost(EchartsUser.dbServerUrl)
+				.setPath("echarts-asp/Client/demographicsprint.asp")
+				.setParameter("staffid", EchartsUser.staffId)
+				.setParameter("PATID", t.getCaseNumber())
+				.buildString(), "_blank", "");
 	}
 }

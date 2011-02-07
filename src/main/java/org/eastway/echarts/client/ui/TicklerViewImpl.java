@@ -56,6 +56,7 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 	private Command openDoctorProgressNote;
 	private Command openNurseProgressNote;
 	private Command openEhr;
+	private Command openPrintablePatientSummary;
 
 	private List<ColumnDefinition<T>> columnDefinitions;
 
@@ -106,6 +107,15 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 				menuPopup.hide();
 			}
 		};
+		openPrintablePatientSummary = new Command() {
+			@Override
+			public void execute() {
+				presenter.openPrintablePatientSummary(t);
+				menuPopup.hide();
+			}
+		};
+		MenuItem openPrintablePatientSummaryMenuItem = new MenuItem("Printable patient summary", true, openPrintablePatientSummary);
+		menuBar.addItem(openPrintablePatientSummaryMenuItem);
 		MenuItem openIspMenuItem = new MenuItem("New ISP", true, openIsp);
 		menuBar.addItem(openIspMenuItem);
 		openIndividualProgressNote = new Command() {
