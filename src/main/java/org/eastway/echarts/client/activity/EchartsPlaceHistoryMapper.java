@@ -3,26 +3,20 @@ package org.eastway.echarts.client.activity;
 import org.eastway.echarts.client.place.ARInfoPlace;
 import org.eastway.echarts.client.place.AddressPlace;
 import org.eastway.echarts.client.place.AppointmentPlace;
+import org.eastway.echarts.client.place.DashboardFramePlace;
 import org.eastway.echarts.client.place.DashboardPlace;
 import org.eastway.echarts.client.place.DemographicsPlace;
 import org.eastway.echarts.client.place.DiagnosisPlace;
 import org.eastway.echarts.client.place.LabPlace;
-import org.eastway.echarts.client.place.LastSeenReportPlace;
 import org.eastway.echarts.client.place.LinkPlace;
-import org.eastway.echarts.client.place.MedSomSignaturesPlace;
 import org.eastway.echarts.client.place.MedicationPlace;
 import org.eastway.echarts.client.place.MessagePlace;
-import org.eastway.echarts.client.place.OverlapsReportPlace;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
 import org.eastway.echarts.client.place.PhysicianOrderPlace;
-import org.eastway.echarts.client.place.PhysicianOrderQueueReportPlace;
 import org.eastway.echarts.client.place.ProfilePlace;
-import org.eastway.echarts.client.place.ProviderSignaturesPlace;
 import org.eastway.echarts.client.place.ReferralPlace;
 import org.eastway.echarts.client.place.ServiceHistoryPlace;
 import org.eastway.echarts.client.place.StaffAnalysisPlace;
-import org.eastway.echarts.client.place.StaffHistoryPlace;
-import org.eastway.echarts.client.place.SupervisorSignaturesPlace;
 import org.eastway.echarts.client.place.TicklerPlace;
 import org.eastway.echarts.client.place.TreatmentPlanPlace;
 
@@ -45,14 +39,8 @@ import com.google.gwt.place.shared.WithTokenizers;
 				  DashboardPlace.Tokenizer.class,
 				  ProfilePlace.Tokenizer.class,
 				  LabPlace.Tokenizer.class,
-				  ProviderSignaturesPlace.Tokenizer.class,
-				  SupervisorSignaturesPlace.Tokenizer.class,
-				  MedSomSignaturesPlace.Tokenizer.class,
-				  StaffHistoryPlace.Tokenizer.class,
 				  PhysicianOrderPlace.Tokenizer.class,
-				  LastSeenReportPlace.Tokenizer.class,
-				  OverlapsReportPlace.Tokenizer.class,
-				  PhysicianOrderQueueReportPlace.Tokenizer.class,
-				  StaffAnalysisPlace.Tokenizer.class })
+				  StaffAnalysisPlace.Tokenizer.class,
+				  DashboardFramePlace.Tokenizer.class})
 public interface EchartsPlaceHistoryMapper extends PlaceHistoryMapper {
 }

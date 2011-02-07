@@ -3,26 +3,20 @@ package org.eastway.echarts.client.activity;
 import org.eastway.echarts.client.place.ARInfoPlace;
 import org.eastway.echarts.client.place.AddressPlace;
 import org.eastway.echarts.client.place.AppointmentPlace;
+import org.eastway.echarts.client.place.DashboardFramePlace;
 import org.eastway.echarts.client.place.DashboardPlace;
 import org.eastway.echarts.client.place.DemographicsPlace;
 import org.eastway.echarts.client.place.DiagnosisPlace;
 import org.eastway.echarts.client.place.LabPlace;
-import org.eastway.echarts.client.place.LastSeenReportPlace;
 import org.eastway.echarts.client.place.LinkPlace;
-import org.eastway.echarts.client.place.MedSomSignaturesPlace;
 import org.eastway.echarts.client.place.MedicationPlace;
 import org.eastway.echarts.client.place.MessagePlace;
-import org.eastway.echarts.client.place.OverlapsReportPlace;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
 import org.eastway.echarts.client.place.PhysicianOrderPlace;
-import org.eastway.echarts.client.place.PhysicianOrderQueueReportPlace;
 import org.eastway.echarts.client.place.ProfilePlace;
-import org.eastway.echarts.client.place.ProviderSignaturesPlace;
 import org.eastway.echarts.client.place.ReferralPlace;
 import org.eastway.echarts.client.place.ServiceHistoryPlace;
 import org.eastway.echarts.client.place.StaffAnalysisPlace;
-import org.eastway.echarts.client.place.StaffHistoryPlace;
-import org.eastway.echarts.client.place.SupervisorSignaturesPlace;
 import org.eastway.echarts.client.place.TicklerPlace;
 import org.eastway.echarts.client.place.TreatmentPlanPlace;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
@@ -60,7 +54,7 @@ public class DetailsActivityMapper implements ActivityMapper {
 	@Override
 	public Activity getActivity(Place place) {
 		if (place instanceof TicklerPlace) {
-			return new DashboardSideBarActivity(dashboardSideBarView);
+			return new DashboardSideBarActivity(dashboardSideBarView, requestFactory);
 		} else if (place instanceof PatientSummaryPlace) {
 			ehrSideBarView.selectPatientSummaryPlace();
 			return new EhrSideBarActivity(ehrSideBarView, placeController, ((PatientSummaryPlace) place).getCaseNumber());
@@ -98,31 +92,19 @@ public class DetailsActivityMapper implements ActivityMapper {
 			ehrSideBarView.selectARInfoPlace();
 			return new EhrSideBarActivity(ehrSideBarView, placeController, ((ARInfoPlace) place).getCaseNumber());
 		} else if (place instanceof DashboardPlace) {
-			return new DashboardSideBarActivity(dashboardSideBarView);
+			return new DashboardSideBarActivity(dashboardSideBarView, requestFactory);
 		} else if (place instanceof ProfilePlace) {
-			return new DashboardSideBarActivity(dashboardSideBarView);
+			return new DashboardSideBarActivity(dashboardSideBarView, requestFactory);
 		} else if (place instanceof LabPlace) {
 			ehrSideBarView.selectLabPlace();
 			return new EhrSideBarActivity(ehrSideBarView, placeController, ((LabPlace) place).getCaseNumber());
-		} else if (place instanceof ProviderSignaturesPlace) {
-			return new DashboardSideBarActivity(dashboardSideBarView);
-		} else if (place instanceof SupervisorSignaturesPlace) {
-			return new DashboardSideBarActivity(dashboardSideBarView);
-		} else if (place instanceof MedSomSignaturesPlace) {
-			return new DashboardSideBarActivity(dashboardSideBarView);
-		} else if (place instanceof StaffHistoryPlace) {
-			return new DashboardSideBarActivity(dashboardSideBarView);
 		} else if (place instanceof PhysicianOrderPlace) {
 			ehrSideBarView.selectPhysicianOrderPlace();
 			return new EhrSideBarActivity(ehrSideBarView, placeController, ((PhysicianOrderPlace) place).getCaseNumber());
-		} else if (place instanceof OverlapsReportPlace) {
-			return new DashboardSideBarActivity(dashboardSideBarView);
-		} else if (place instanceof LastSeenReportPlace) {
-			return new DashboardSideBarActivity(dashboardSideBarView);
-		} else if (place instanceof PhysicianOrderQueueReportPlace) {
-			return new DashboardSideBarActivity(dashboardSideBarView);
 		} else if (place instanceof StaffAnalysisPlace) {
-			return new DashboardSideBarActivity(dashboardSideBarView);
+			return new DashboardSideBarActivity(dashboardSideBarView, requestFactory);
+		} else if (place instanceof DashboardFramePlace) {
+			return new DashboardSideBarActivity(dashboardSideBarView, requestFactory);
 		}
 		return null;
 	}

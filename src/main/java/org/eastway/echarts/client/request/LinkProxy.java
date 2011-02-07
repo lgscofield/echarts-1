@@ -38,6 +38,10 @@ public interface LinkProxy extends EntityProxy {
 
 	public Integer getSortOrder();
 
+	public String getPlace();
+
+	public void setPlace(String place);
+
 	public void setVersion(Integer version);
 
 	public Integer getVersion();

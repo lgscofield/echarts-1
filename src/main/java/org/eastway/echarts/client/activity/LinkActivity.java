@@ -45,7 +45,7 @@ public class LinkActivity extends AbstractActivity implements LinkView.Presenter
 	}
 
 	public void fetchData() {
-		requestFactory.linkRequest().findAllLinks().fire(new Receiver<List<LinkProxy>>() {
+		requestFactory.linkRequest().findLinksByPlace("FormsPage").fire(new Receiver<List<LinkProxy>>() {
 			@Override
 			public void onSuccess(List<LinkProxy> response) {
 				if (response != null) {
@@ -68,7 +68,7 @@ public class LinkActivity extends AbstractActivity implements LinkView.Presenter
 		for (LinkProxy link : linkList) {
 			String[] str = new String[3];
 			str[0] = link.getName();
-			str[1] = (link.getUrl() + "?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber);
+			str[1] = ("http://" + EchartsUser.dbServerUrl + "/" + link.getUrl() + "?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber);
 			str[2] = link.getHeader();
 			data.add(str);
 		}

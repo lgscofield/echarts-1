@@ -34,6 +34,7 @@ public class Link {
 	private String url;
 	private String header;
 	private Integer sortOrder;
+	private String place;
 	@Version
 	@Column(name = "version")
 	private Integer version;
@@ -81,6 +82,14 @@ public class Link {
 		return sortOrder;
 	}
 
+	public String getPlace() {
+		return place;
+	}
+
+	public void setPlace(String place) {
+		this.place = place;
+	}
+
 	public void setVersion(Integer version) {
 		this.version = version;
 	}
@@ -103,6 +112,14 @@ public class Link {
 
 	public static List<Link> findAllLinks() {
 		return entityManager().createQuery("SELECT link FROM Link link ORDER BY link.header, link.sortOrder", Link.class)
+			.getResultList();
+	}
+
+	public static List<Link> findLinksByPlace(String place) {
+		if (place == null)
+			return null;
+		return entityManager().createQuery("SELECT o FROM Link o WHERE o.place = :place ORDER BY o.header, o.sortOrder", Link.class)
+			.setParameter("place", place)
 			.getResultList();
 	}
 }

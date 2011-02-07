@@ -26,4 +26,5 @@ import com.google.gwt.requestfactory.shared.Service;
 @Service(Link.class)
 public interface LinkRequest extends RequestContext {
 	Request<List<LinkProxy>> findAllLinks();
+	Request<List<LinkProxy>> findLinksByPlace(String place);
 }

@@ -3,26 +3,20 @@ package org.eastway.echarts.client.activity;
 import org.eastway.echarts.client.place.ARInfoPlace;
 import org.eastway.echarts.client.place.AddressPlace;
 import org.eastway.echarts.client.place.AppointmentPlace;
+import org.eastway.echarts.client.place.DashboardFramePlace;
 import org.eastway.echarts.client.place.DashboardPlace;
 import org.eastway.echarts.client.place.DemographicsPlace;
 import org.eastway.echarts.client.place.DiagnosisPlace;
 import org.eastway.echarts.client.place.LabPlace;
-import org.eastway.echarts.client.place.LastSeenReportPlace;
 import org.eastway.echarts.client.place.LinkPlace;
-import org.eastway.echarts.client.place.MedSomSignaturesPlace;
 import org.eastway.echarts.client.place.MedicationPlace;
 import org.eastway.echarts.client.place.MessagePlace;
-import org.eastway.echarts.client.place.OverlapsReportPlace;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
 import org.eastway.echarts.client.place.PhysicianOrderPlace;
-import org.eastway.echarts.client.place.PhysicianOrderQueueReportPlace;
 import org.eastway.echarts.client.place.ProfilePlace;
-import org.eastway.echarts.client.place.ProviderSignaturesPlace;
 import org.eastway.echarts.client.place.ReferralPlace;
 import org.eastway.echarts.client.place.ServiceHistoryPlace;
 import org.eastway.echarts.client.place.StaffAnalysisPlace;
-import org.eastway.echarts.client.place.StaffHistoryPlace;
-import org.eastway.echarts.client.place.SupervisorSignaturesPlace;
 import org.eastway.echarts.client.place.TicklerPlace;
 import org.eastway.echarts.client.place.TreatmentPlanPlace;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
@@ -78,23 +72,11 @@ public class CurrentEhrActivityMapper implements ActivityMapper {
 			return new CurrentEhrActivity(null, view, requestFactory);
 		} else if (place instanceof LabPlace) {
 			return new CurrentEhrActivity(((LabPlace) place).getCaseNumber(), view, requestFactory);
-		} else if (place instanceof ProviderSignaturesPlace) {
-			return new CurrentEhrActivity(null, view, requestFactory);
-		} else if (place instanceof SupervisorSignaturesPlace) {
-			return new CurrentEhrActivity(null, view, requestFactory);
-		} else if (place instanceof MedSomSignaturesPlace) {
-			return new CurrentEhrActivity(null, view, requestFactory);
-		} else if (place instanceof StaffHistoryPlace) {
-			return new CurrentEhrActivity(null, view, requestFactory);
 		} else if (place instanceof PhysicianOrderPlace) {
 			return new CurrentEhrActivity(((PhysicianOrderPlace) place).getCaseNumber(), view, requestFactory);
-		} else if (place instanceof OverlapsReportPlace) {
-			return new CurrentEhrActivity(null, view, requestFactory);
-		} else if (place instanceof LastSeenReportPlace) {
-			return new CurrentEhrActivity(null, view, requestFactory);
-		} else if (place instanceof PhysicianOrderQueueReportPlace) {
-			return new CurrentEhrActivity(null, view, requestFactory);
 		} else if (place instanceof StaffAnalysisPlace) {
+			return new CurrentEhrActivity(null, view, requestFactory);
+		} else if (place instanceof DashboardFramePlace) {
 			return new CurrentEhrActivity(null, view, requestFactory);
 		}
 		return null;
