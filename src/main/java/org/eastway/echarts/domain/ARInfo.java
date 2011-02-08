@@ -48,21 +48,21 @@ public class ARInfo {
 	private Short dependents;
 	@Column(name="spenddown", columnDefinition="money")
 	private BigDecimal spendDown;
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="admdate")
 	private Date admissionDate;
 	@Column(name="medicaidid")
 	private String medicaidId;
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="txxappdate")
 	private Date titleTwentyAppDate;
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="txxredetermdate")
 	private Date titleTwentyRedetermDate;
 	@Column(name="txxeligibilitycategory")
 	private String titleTwentyEligibilityCategory;
 	private String uci;
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="macregdate")
 	private Date macRegDate;
 	@Column(name="macregname")
