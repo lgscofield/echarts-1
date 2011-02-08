@@ -29,7 +29,7 @@ public class EchartsAuthFilter extends AbstractAuthenticationProcessingFilter {
 		String sessionId = getSessionId(request);
 
 		if (!ServiceUtil.isSessionValid(sessionId)) {
-			response.sendRedirect("http://" + DbServerConfig.findDbServerConfig("dbServerUrl").getConfigValue() + "/echarts/logout.aspx?continue=http://" + request.getServerName() + "/echarts/echarts.jsp");
+			response.sendRedirect("http://" + DbServerConfig.findDbServerConfigsByConfigName("dbServerUrl").get(0).getConfigValue() + "/echarts/logout.aspx?continue=http://" + request.getServerName() + "/echarts/echarts.jsp");
 			return null;
 		}
 

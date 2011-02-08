@@ -15,12 +15,9 @@
  */
 package org.eastway.echarts.client.request;
 
-import org.springframework.roo.addon.gwt.RooGwtMirroredFrom;
-
 import com.google.gwt.requestfactory.shared.EntityProxy;
 import com.google.gwt.requestfactory.shared.ProxyForName;
 
-@RooGwtMirroredFrom("org.eastway.echarts.domain.Code")
 @ProxyForName("org.eastway.echarts.domain.Code")
 public interface CodeProxy extends EntityProxy {
 	abstract Long getId();

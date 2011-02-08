@@ -1,19 +1,93 @@
 package org.eastway.echarts.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
-import org.springframework.roo.addon.javabean.RooJavaBean;
-import org.springframework.roo.addon.tostring.RooToString;
-import org.springframework.roo.addon.entity.RooEntity;
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.Id;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Table;
 
-@RooJavaBean
-@RooToString
-@RooEntity(table = "Codes", identifierField = "id", identifierColumn = "code_id")
+import org.springframework.beans.factory.annotation.Configurable;
+
+@Configurable
+@Entity
+@Table(name = "Codes")
 public class Code {
-    @Column(name = "value")
-    private String codeValue;
+	@Id
+	@Column(name = "code_id")
+	private Long id;
 
-    @Column(name = "descriptor")
-    private String codeDescriptor;
+	@Column(name = "value")
+	private String codeValue;
 
-    private String columnName;
+	@Column(name = "descriptor")
+	private String codeDescriptor;
+
+	private String columnName;
+
+	@Column(name = "version")
+	private Integer version;
+
+	@PersistenceContext
+	transient EntityManager entityManager;
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setCodeValue(String codeValue) {
+		this.codeValue = codeValue;
+	}
+
+	public String getCodeValue() {
+		return codeValue;
+	}
+
+	public void setCodeDescriptor(String codeDescriptor) {
+		this.codeDescriptor = codeDescriptor;
+	}
+
+	public String getCodeDescriptor() {
+		return codeDescriptor;
+	}
+
+	public void setColumnName(String columnName) {
+		this.columnName = columnName;
+	}
+
+	public String getColumnName() {
+		return columnName;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public static final EntityManager entityManager() {
+		EntityManager em = new Code().entityManager;
+		if (em == null)
+			throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+		return em;
+	}
+
+	public static List<Code> findAllCodes() {
+		return entityManager().createQuery("select o from Code o", Code.class)
+				.getResultList();
+	}
+
+	public static Code findCode(Long id) {
+		if (id == null)
+			return null;
+		return entityManager().find(Code.class, id);
+	}
 }

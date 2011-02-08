@@ -15,19 +15,20 @@
  */
 package org.eastway.echarts.client.request;
 
-import org.springframework.roo.addon.gwt.RooGwtMirroredFrom;
-
 import com.google.gwt.requestfactory.shared.EntityProxy;
 import com.google.gwt.requestfactory.shared.ProxyForName;
 
-@RooGwtMirroredFrom("org.eastway.echarts.domain.DbServerConfig")
 @ProxyForName("org.eastway.echarts.domain.DbServerConfig")
 public interface DbServerConfigProxy extends EntityProxy {
 	abstract Integer getVersion();
 
-	abstract void setId(String name);
+	abstract void setId(Long id);
 
-	abstract String getId();
+	abstract Long getId();
+
+	abstract void setConfigName(String name);
+
+	abstract String getConfigName();
 
 	abstract void setConfigValue(String value);
 

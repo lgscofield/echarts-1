@@ -1,6 +1,7 @@
 package org.eastway.echarts.client.scaffold;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -101,15 +102,15 @@ public class ScaffoldDesktopApp extends ScaffoldApp {
 
 		new ReloadOnAuthenticationFailure().register(eventBus);
 
-		requestFactory.dbServerConfigRequest().findDbServerConfig("dbServerUrl").fire(new Receiver<DbServerConfigProxy>() {
+		requestFactory.dbServerConfigRequest().findDbServerConfigsByConfigName("dbServerUrl").fire(new Receiver<List<DbServerConfigProxy>>() {
 			@Override
-			public void onSuccess(DbServerConfigProxy response) {
+			public void onSuccess(List<DbServerConfigProxy> response) {
+				EchartsUser.dbServerUrl = response.get(0).getConfigValue();
 				if ((EchartsUser.userName == null || EchartsUser.userName == "null") ||
 						(EchartsUser.staffId == null || EchartsUser.staffId == "null")) {
-					Window.Location.assign("http://" + response.getConfigValue() + "/echarts/logout.aspx?continue=" + Window.Location.getHref());
+					Window.Location.assign("http://" + EchartsUser.dbServerUrl + "/echarts/logout.aspx?continue=" + Window.Location.getHref());
 				} else {
 					shell.getLoginWidget().setUsername(EchartsUser.userName);
-					EchartsUser.dbServerUrl = response.getConfigValue();
 					Element loading = Document.get().getElementById("page-loading-message");
 					loading.getParentElement().removeChild(loading);
 

@@ -19,7 +19,7 @@ public class EchartsLogoutSuccessHandler extends
 	public void onLogoutSuccess(HttpServletRequest request,
 			HttpServletResponse response, Authentication authentication)
 			throws IOException, ServletException {
-		setDefaultTargetUrl("http://" + DbServerConfig.findDbServerConfig("dbServerUrl").getConfigValue() + "/echarts/logout.aspx?continue=http://" + request.getServerName() + "/echarts/echarts.jsp");
+		setDefaultTargetUrl("http://" + DbServerConfig.findDbServerConfigsByConfigName("dbServerUrl").get(0).getConfigValue() + "/echarts/logout.aspx?continue=http://" + request.getServerName() + "/echarts/echarts.jsp");
 		super.handle(request, response, authentication);
 	}
 
