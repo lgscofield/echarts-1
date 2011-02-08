@@ -103,6 +103,10 @@
 		<servlet-name>requestFactory</servlet-name>
 		<servlet-class>com.google.gwt.requestfactory.server.RequestFactoryServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>remoteLoggingImpl</servlet-name>
+		<servlet-class>org.eastway.echarts.server.RemoteLoggingImpl</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>extrack</servlet-name>
 		<url-pattern>/</url-pattern>
@@ -113,6 +117,10 @@
 		<url-pattern>/gwtRequest</url-pattern>
 	</servlet-mapping>
 
+	<servlet-mapping>
+		<servlet-name>remoteLoggingImpl</servlet-name>
+		<url-pattern>/echarts/remote_logging</url-pattern>
+	</servlet-mapping>
 	<session-config>
 		<session-timeout>1440</session-timeout>
 	</session-config>

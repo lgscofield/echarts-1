@@ -15,6 +15,7 @@
  */
 package org.eastway.echarts.client.request;
 
+import com.google.gwt.requestfactory.shared.LoggingRequest;
 import com.google.gwt.requestfactory.shared.RequestFactory;
 
 public interface EchartsRequestFactory extends RequestFactory {
@@ -34,4 +35,5 @@ public interface EchartsRequestFactory extends RequestFactory {
 	AddressRequest addressRequest();
 	DiagnosisRequest diagnosisRequest();
 	PatientRequest patientRequest();
+	LoggingRequest loggingRequest();
 }

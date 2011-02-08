@@ -2,7 +2,10 @@ package org.eastway.echarts.client.activity;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.place.ARInfoPlace;
 import org.eastway.echarts.client.place.AddressPlace;
@@ -51,6 +54,7 @@ import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceController;
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 
 public class MasterActivityMapper implements ActivityMapper {
@@ -72,6 +76,8 @@ public class MasterActivityMapper implements ActivityMapper {
 	private List<ColumnDefinition<UserProxy>> profileColumnDefinitions;
 	private AppointmentDataProvider appointmentDataProvider;
 	private PatientSummaryView patientSummaryView;
+
+	private static final Logger log = Logger.getLogger(MasterActivityMapper.class.getName());
 
 	@Inject
 	public MasterActivityMapper(EchartsRequestFactory requestFactory,
@@ -115,6 +121,7 @@ public class MasterActivityMapper implements ActivityMapper {
 
 	@Override
 	public Activity getActivity(Place place) {
+		log.log(Level.INFO, "{\"username\":\"" + EchartsUser.userName + "\",\"url\":\"" + Window.Location.getHref() + "\"}");
 		if (place instanceof TicklerPlace)
 			return new TicklerActivity((TicklerPlace) place, requestFactory, ticklerColumnDefinitions, placeController, ticklerView);
 		else if (place instanceof PatientSummaryPlace)

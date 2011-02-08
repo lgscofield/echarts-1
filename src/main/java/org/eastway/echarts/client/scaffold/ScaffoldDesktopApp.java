@@ -1,5 +1,6 @@
 package org.eastway.echarts.client.scaffold;
 
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,8 +21,11 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.logging.client.LogConfiguration;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
+import com.google.gwt.requestfactory.client.RequestFactoryLogHandler;
+import com.google.gwt.requestfactory.shared.LoggingRequest;
 import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
@@ -69,6 +73,18 @@ public class ScaffoldDesktopApp extends ScaffoldApp {
 				log.log(Level.SEVERE, e.getMessage(), e);
 			}
 		});
+
+		if (LogConfiguration.loggingIsEnabled()) {
+			// Add remote logging handler
+			RequestFactoryLogHandler.LoggingRequestProvider provider = new RequestFactoryLogHandler.LoggingRequestProvider() {
+				public LoggingRequest getLoggingRequest() {
+					return requestFactory.loggingRequest();
+				}
+			};
+			Logger.getLogger("").addHandler(
+					new RequestFactoryLogHandler(provider, Level.WARNING,
+							new ArrayList<String>()));
+		}
 
 		RequestEvent.register(eventBus, new RequestEvent.Handler() {
 			// Only show loading status if a request isn't serviced in 250ms.
