@@ -37,6 +37,7 @@ public class SessionIdLog {
 	private long id;
 	private String sessionId;
 	private Long sessionIdExpire;
+	private Long sessionIdCreated;
 	@PersistenceContext
 	transient EntityManager entityManager;
 
@@ -70,6 +71,14 @@ public class SessionIdLog {
 
 	public long getSessionIdExpire() {
 		return sessionIdExpire;
+	}
+
+	public void setSessionIdCreated(Long sessionIdCreated) {
+		this.sessionIdCreated = sessionIdCreated;
+	}
+
+	public Long getSessionIdCreated() {
+		return sessionIdCreated;
 	}
 
 	public User getUser() {
