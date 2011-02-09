@@ -51,4 +51,31 @@
   <replace-with class="org.eastway.echarts.client.ui.DiagnosisViewImpl">
   	<when-type-is class="org.eastway.echarts.client.ui.DiagnosisView"/>
   </replace-with>
+  <replace-with class="org.eastway.echarts.client.ui.DashboardSideBarViewImpl">
+  	<when-type-is class="org.eastway.echarts.client.ui.DashboardSideBarView"/>
+  </replace-with>
+  <replace-with class="org.eastway.echarts.client.ui.EhrSideBarViewImpl">
+  	<when-type-is class="org.eastway.echarts.client.ui.EhrSideBarView"/>
+  </replace-with>
+  <replace-with class="org.eastway.echarts.client.ui.TicklerViewImpl">
+  	<when-type-is class="org.eastway.echarts.client.ui.TicklerView"/>
+  </replace-with>
+  <replace-with class="org.eastway.echarts.client.ui.MessageViewImpl">
+  	<when-type-is class="org.eastway.echarts.client.ui.MessageView"/>
+  </replace-with>
+  <replace-with class="org.eastway.echarts.client.ui.ProfileViewImpl">
+  	<when-type-is class="org.eastway.echarts.client.ui.ProfileView"/>
+  </replace-with>
+  <replace-with class="org.eastway.echarts.client.ui.LinkViewImpl">
+  	<when-type-is class="org.eastway.echarts.client.ui.LinkView"/>
+  </replace-with>
+  <replace-with class="org.eastway.echarts.client.ui.MedicationViewImpl">
+  	<when-type-is class="org.eastway.echarts.client.ui.MedicationView"/>
+  </replace-with>
+  <replace-with class="org.eastway.echarts.client.ui.AddressViewImpl">
+  	<when-type-is class="org.eastway.echarts.client.ui.AddressView"/>
+  </replace-with>
+  <replace-with class="org.eastway.echarts.client.ui.DashboardViewImpl">
+  	<when-type-is class="org.eastway.echarts.client.ui.DashboardView"/>
+  </replace-with>
 </module>
