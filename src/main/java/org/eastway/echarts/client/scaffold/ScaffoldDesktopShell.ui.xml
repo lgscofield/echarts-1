@@ -16,7 +16,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:a='urn:import:com.google.gwt.user.client.ui'
 	xmlns:r="urn:import:org.eastway.echartsrequest.client"
 	xmlns:e="urn:import:org.eastway.echarts.client.ui">
-	<ui:style>
+	<ui:style type="org.eastway.echarts.client.scaffold.ScaffoldDesktopShell.Style">
 		@sprite .banner {
 			gwt-image: 'logo';
 		}
@@ -36,10 +36,17 @@
 		.sidebar {
 			border-top: 5px solid #315a8c;
 		}
+		.alertMessage {
+			border-top: 1px solid red;
+			border-bottom: 1px solid red;
+			width: 100%;
+			text-align: center;
+			background-color: LightYellow;
+		}
 	</ui:style>
 	<ui:image field="logo" src="../style/images/echarts-logo.gif"/>
 	<g:DockLayoutPanel unit="EM" ui:field="dockLayoutPanel">
-		<g:north size="6">
+		<g:north size="7.1">
 			<g:FlowPanel>
 				<g:FlowPanel>
 					<a:NotificationMole animationDuration='0' message='Loading ...' ui:field='mole'></a:NotificationMole>
@@ -52,6 +59,11 @@
 						<e:PatientSearchWidget ui:field="patientSearchWidget" />
 					</g:VerticalPanel>
 				</g:HorizontalPanel>
+				<g:HTMLPanel>
+					<div ui:field="alertMessageContainer">
+						<span ui:field="alertMessage" />
+					</div>
+				</g:HTMLPanel>
 			</g:FlowPanel>
 		</g:north>
 		<g:center>

@@ -110,6 +110,7 @@ public class ScaffoldDesktopApp extends ScaffoldApp {
 						(EchartsUser.staffId == null || EchartsUser.staffId == "null")) {
 					Window.Location.assign("http://" + EchartsUser.dbServerUrl + "/echarts/logout.aspx?continue=" + Window.Location.getHref());
 				} else {
+					shell.setAlertMessage(response.get(0).getServerMode());
 					shell.getLoginWidget().setUsername(EchartsUser.userName);
 					Element loading = Document.get().getElementById("page-loading-message");
 					loading.getParentElement().removeChild(loading);

@@ -5,7 +5,10 @@ import org.eastway.echarts.client.ui.PatientSearchWidget;
 import org.eastway.echartsrequest.client.LoginWidget;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.place.shared.PlaceController;
+import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
@@ -26,6 +29,7 @@ public class ScaffoldDesktopShell extends Composite {
 	@UiField LoginWidget loginWidget;
 	@UiField NotificationMole mole;
 	@UiField SimplePanel currentEhrPanel;
+
 
 	private EchartsOracle oracle;
 	private PlaceController placeController;
@@ -60,5 +64,20 @@ public class ScaffoldDesktopShell extends Composite {
 
 	public SimplePanel getCurrentEhrPanel() {
 		return currentEhrPanel;
+	}
+
+	interface Style extends CssResource {
+		String alertMessage();
+	}
+
+	@UiField Style style;
+	@UiField SpanElement alertMessage;
+	@UiField DivElement alertMessageContainer;
+
+	public void setAlertMessage(String serverMode) {
+		if (serverMode != null && serverMode.length() != 0) {
+			alertMessageContainer.setClassName(style.alertMessage());
+			alertMessage.setInnerText(serverMode);
+		}
 	}
 }

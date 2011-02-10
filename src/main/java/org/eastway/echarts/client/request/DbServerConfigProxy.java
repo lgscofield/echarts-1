@@ -33,4 +33,8 @@ public interface DbServerConfigProxy extends EntityProxy {
 	abstract void setConfigValue(String value);
 
 	abstract String getConfigValue();
+
+	abstract String getServerMode();
+
+	abstract void setServerMode(String serverMode);
 }

@@ -22,6 +22,9 @@ public class DbServerConfig {
 	@Column(name = "value")
 	private String configValue;
 
+	@Column(name = "serverMode")
+	private String serverMode;
+
 	@Column(name = "version")
 	private Integer version;
 
@@ -50,6 +53,14 @@ public class DbServerConfig {
 
 	public String getConfigValue() {
 		return configValue;
+	}
+
+	public void setServerMode(String serverMode) {
+		this.serverMode = serverMode;
+	}
+
+	public String getServerMode() {
+		return serverMode;
 	}
 
 	public void setVersion(Integer version) {
