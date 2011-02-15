@@ -9,6 +9,7 @@ import org.eastway.echarts.client.request.LinkProxy;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.http.client.UrlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -47,7 +48,11 @@ public class DashboardSideBarViewImpl extends Composite implements DashboardSide
 	@UiHandler("groupProgressNote")
 	void handleGroupProgressNoteClicked(ClickEvent event) {
 		event.preventDefault();
-		Window.open("http://" + EchartsUser.dbServerUrl + "/echarts-asp/Forms/108GroupSetup.asp?staffid=" + EchartsUser.staffId, "_blank", "");
+		Window.open(new UrlBuilder()
+			.setProtocol(Window.Location.getProtocol())
+			.setHost(EchartsUser.dbServerUrl)
+			.setPath("/echarts-asp/Forms/108GroupSetup.asp")
+			.setParameter("staffid",EchartsUser.staffId).buildString(), "_blank", "");
 	}
 
 	@Override

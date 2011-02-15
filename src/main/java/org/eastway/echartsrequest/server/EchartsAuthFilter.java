@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.eastway.echarts.domain.DbServerConfig;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
@@ -29,7 +28,7 @@ public class EchartsAuthFilter extends AbstractAuthenticationProcessingFilter {
 		String sessionId = getSessionId(request);
 
 		if (!ServiceUtil.isSessionValid(sessionId)) {
-			response.sendRedirect("http://" + DbServerConfig.findDbServerConfigsByConfigName("dbServerUrl").get(0).getConfigValue() + "/echarts/logout.aspx?continue=http://" + request.getServerName() + "/echarts/echarts.jsp");
+			response.sendRedirect("/echarts/logout.aspx?continue=https://" + request.getServerName() + "/echarts/");
 			return null;
 		}
 

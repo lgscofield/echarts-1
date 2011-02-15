@@ -3,7 +3,7 @@
 <%
 
 if (request.getUserPrincipal() == null) {
-	response.sendRedirect("echarts_security_check");
+	response.sendRedirect("/echarts/echarts_security_check");
 }
 %>
 <!DOCTYPE HTML>

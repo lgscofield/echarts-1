@@ -26,8 +26,10 @@ import org.eastway.echarts.client.ui.LinkView;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.http.client.UrlBuilder;
 import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.google.gwt.user.client.Window;
 
 public class LinkActivity extends AbstractActivity implements LinkView.Presenter<LinkProxy> {
 	private List<String[]> data;
@@ -68,7 +70,13 @@ public class LinkActivity extends AbstractActivity implements LinkView.Presenter
 		for (LinkProxy link : linkList) {
 			String[] str = new String[3];
 			str[0] = link.getName();
-			str[1] = ("http://" + EchartsUser.dbServerUrl + "/" + link.getUrl() + "?staffid=" + EchartsUser.staffId + "&PATID=" + caseNumber);
+			str[1] = (new UrlBuilder()
+				.setProtocol(Window.Location.getProtocol())
+				.setHost(EchartsUser.dbServerUrl)
+				.setPath("/" + link.getUrl())
+				.setParameter("staffid", EchartsUser.staffId)
+				.setParameter("PATID", caseNumber)
+				.buildString());
 			str[2] = link.getHeader();
 			data.add(str);
 		}

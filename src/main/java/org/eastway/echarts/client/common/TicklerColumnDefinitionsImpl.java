@@ -21,6 +21,9 @@ import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.shared.DueDateStatus;
 import org.eastway.echarts.shared.Tickler;
 
+import com.google.gwt.http.client.UrlBuilder;
+import com.google.gwt.user.client.Window;
+
 @SuppressWarnings("serial")
 public class TicklerColumnDefinitionsImpl extends
 		ArrayList<ColumnDefinition<Tickler>> {
@@ -58,9 +61,21 @@ public class TicklerColumnDefinitionsImpl extends
 				String dueDate = t.getIspDueDate().getDueDate();
 				int status = t.getIspDueDate().getStatus();
 				if (status == DueDateStatus.NO_DATA)
-					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://" + EchartsUser.dbServerUrl + "/echarts-asp/forms/GandO.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + noData + "</a>";
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"" + new UrlBuilder()
+																		.setProtocol(Window.Location.getProtocol())
+																		.setHost(EchartsUser.dbServerUrl)
+																		.setPath("/echarts-asp/forms/GandO.asp")
+																		.setParameter("staffid", EchartsUser.staffId)
+																		.setParameter("PATID", t.getCaseNumber())
+																		.buildString() + "\">" + noData + "</a>";
 				else if (status != DueDateStatus.COMPLIANT)
-					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://" + EchartsUser.dbServerUrl + "/echarts-asp/forms/GandO.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + dueDate + "</a>";
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"" + new UrlBuilder()
+																		.setProtocol(Window.Location.getProtocol())
+																		.setHost(EchartsUser.dbServerUrl)
+																		.setPath("/echarts-asp/forms/GandO.asp")
+																		.setParameter("staffid", EchartsUser.staffId)
+																		.setParameter("PATID", t.getCaseNumber())
+																		.buildString() + "\">" + dueDate + "</a>";
 				sb.append(formatColumn(status, dueDate));
 			}
 		});
@@ -70,9 +85,21 @@ public class TicklerColumnDefinitionsImpl extends
 				String dueDate = t.getIspReviewDueDate().getDueDate();
 				int status = t.getIspReviewDueDate().getStatus();
 				if (status == DueDateStatus.NO_DATA)
-					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://" + EchartsUser.dbServerUrl + "/echarts-asp/forms/GandOReview.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + noData + "</a>";
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"" + new UrlBuilder()
+																		.setProtocol(Window.Location.getProtocol())
+																		.setHost(EchartsUser.dbServerUrl)
+																		.setPath("/echarts-asp/forms/GandOReview.asp")
+																		.setParameter("staffid", EchartsUser.staffId)
+																		.setParameter("PATID", t.getCaseNumber())
+																		.buildString() + "\">" + noData + "</a>";
 				else if (status != DueDateStatus.COMPLIANT)
-					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://" + EchartsUser.dbServerUrl + "/echarts-asp/forms/GandOReview.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + dueDate + "</a>";
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"" + new UrlBuilder()
+																		.setProtocol(Window.Location.getProtocol())
+																		.setHost(EchartsUser.dbServerUrl)
+																		.setPath("/echarts-asp/forms/GandOReview.asp")
+																		.setParameter("staffid", EchartsUser.staffId)
+																		.setParameter("PATID", t.getCaseNumber())
+																		.buildString() + "\">" + dueDate + "</a>";
 				sb.append(formatColumn(status, dueDate));
 			}
 		});
@@ -82,9 +109,21 @@ public class TicklerColumnDefinitionsImpl extends
 				String dueDate = t.getHealthHistoryDueDate().getDueDate();
 				int status = t.getHealthHistoryDueDate().getStatus();
 				if (status == DueDateStatus.NO_DATA)
-					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://" + EchartsUser.dbServerUrl + "/echarts-asp/forms/107HealthHxEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + noData + "</a>";
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"" + new UrlBuilder()
+																		.setProtocol(Window.Location.getProtocol())
+																		.setHost(EchartsUser.dbServerUrl)
+																		.setPath("/echarts-asp/forms/107HealthHxEdit.asp")
+																		.setParameter("staffid", EchartsUser.staffId)
+																		.setParameter("PATID", t.getCaseNumber())
+																		.buildString() + "\">" + noData + "</a>";
 				else if (status != DueDateStatus.COMPLIANT)
-					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://" + EchartsUser.dbServerUrl + "/echarts-asp/forms/107HealthHxEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + dueDate + "</a>";
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"" + new UrlBuilder()
+																		.setProtocol(Window.Location.getProtocol())
+																		.setHost(EchartsUser.dbServerUrl)
+																		.setPath("/echarts-asp/forms/107HealthHxEdit.asp")
+																		.setParameter("staffid", EchartsUser.staffId)
+																		.setParameter("PATID", t.getCaseNumber())
+																		.buildString() + "\">" + dueDate + "</a>";
 				sb.append(formatColumn(status, dueDate));
 			}
 		});
@@ -94,9 +133,21 @@ public class TicklerColumnDefinitionsImpl extends
 				String dueDate = t.getDiagnosticAssessmentUpdate().getDueDate();
 				int status = t.getDiagnosticAssessmentUpdate().getStatus();
 				if (status == DueDateStatus.NO_DATA)
-					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://" + EchartsUser.dbServerUrl + "/echarts-asp/forms/110ADAUpdateEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + noData + "</a>";
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"" + new UrlBuilder()
+																		.setProtocol(Window.Location.getProtocol())
+																		.setHost(EchartsUser.dbServerUrl)
+																		.setPath("/echarts-asp/forms/110ADAUpdateEdit.asp")
+																		.setParameter("staffid", EchartsUser.staffId)
+																		.setParameter("PATID", t.getCaseNumber())
+																		.buildString() + "\">" + noData + "</a>";
 				else if (status != DueDateStatus.COMPLIANT)
-					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://" + EchartsUser.dbServerUrl + "/echarts-asp/forms/110ADAUpdateEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + dueDate + "</a>";
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"" + new UrlBuilder()
+																		.setProtocol(Window.Location.getProtocol())
+																		.setHost(EchartsUser.dbServerUrl)
+																		.setPath("/echarts-asp/forms/110ADAUpdateEdit.asp")
+																		.setParameter("staffid", EchartsUser.staffId)
+																		.setParameter("PATID", t.getCaseNumber())
+																		.buildString() + "\">" + dueDate + "</a>";
 				sb.append(formatColumn(status, dueDate));
 			}
 		});
@@ -106,9 +157,21 @@ public class TicklerColumnDefinitionsImpl extends
 				String dueDate = t.getFinancialDueDate().getDueDate();
 				int status = t.getFinancialDueDate().getStatus();
 				if (status == DueDateStatus.NO_DATA)
-					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://" + EchartsUser.dbServerUrl + "/echarts-asp/forms/109FinancialAuthEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + noData + "</a>";
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"" + new UrlBuilder()
+																		.setProtocol(Window.Location.getProtocol())
+																		.setHost(EchartsUser.dbServerUrl)
+																		.setPath("/echarts-asp/forms/109FinancialAuthEdit.asp")
+																		.setParameter("staffid", EchartsUser.staffId)
+																		.setParameter("PATID", t.getCaseNumber())
+																		.buildString() + "\">" + noData + "</a>";
 				else if (status != DueDateStatus.COMPLIANT)
-					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://" + EchartsUser.dbServerUrl + "/echarts-asp/forms/109FinancialAuthEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber() + "\">" + dueDate + "</a>";
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"" + new UrlBuilder()
+																		.setProtocol(Window.Location.getProtocol())
+																		.setHost(EchartsUser.dbServerUrl)
+																		.setPath("/echarts-asp/forms/109FinancialAuthEdit.asp")
+																		.setParameter("staffid", EchartsUser.staffId)
+																		.setParameter("PATID", t.getCaseNumber())
+																		.buildString() + "\">" + dueDate + "</a>";
 				sb.append(formatColumn(status, dueDate));
 			}
 		});
@@ -118,9 +181,9 @@ public class TicklerColumnDefinitionsImpl extends
 				String dueDate = t.getOoc().getDueDate();
 				int status = t.getOoc().getStatus();
 				if (status == DueDateStatus.NO_DATA)
-					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://home.eastway.local/outcomes/\">" + noData + "</a>";
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"https://home.eastway.local/outcomes/\">" + noData + "</a>";
 				else if (status != DueDateStatus.COMPLIANT)
-					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"http://home.eastway.local/outcomes/\">" + dueDate + "</a>";
+					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"https://home.eastway.local/outcomes/\">" + dueDate + "</a>";
 				sb.append(formatColumn(status, dueDate));
 			}
 		});

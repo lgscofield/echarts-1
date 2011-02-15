@@ -240,39 +240,66 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 
 	@Override
 	public void openEhr(Tickler t) {
-		Window.open("http://" + Window.Location.getHost() + Window.Location.getPath() + Window.Location.getQueryString() + "#PatientSummaryPlace:" + t.getCaseNumber(), "_blank", "");
+		Window.open(Window.Location.createUrlBuilder()
+			.setHash("#PatientSummaryPlace:" + t.getCaseNumber()).buildString(), "_blank", "");
 	}
 
 	@Override
 	public void openIsp(Tickler t) {
-		Window.open("http://" + EchartsUser.dbServerUrl + "/echarts-asp/Forms/GandO.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber(), "_blank", "");
+		Window.open(new UrlBuilder()
+				.setProtocol(Window.Location.getProtocol())
+				.setHost(EchartsUser.dbServerUrl)
+				.setPath("/echarts-asp/Forms/GandO.asp")
+				.setParameter("staffid", EchartsUser.staffId)
+				.setParameter("PATID", t.getCaseNumber()).buildString(), "_blank", "");
 	}
 
 	@Override
 	public void openIndividualProgressNote(Tickler t) {
-		Window.open("http://" + EchartsUser.dbServerUrl + "/echarts-asp/Forms/102IPNEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber(), "_blank", "");
+		Window.open(new UrlBuilder()
+				.setProtocol(Window.Location.getProtocol())
+				.setHost(EchartsUser.dbServerUrl)
+				.setPath("/echarts-asp/Forms/102IPNEdit.asp")
+				.setParameter("staffid", EchartsUser.staffId)
+				.setParameter("PATID", t.getCaseNumber()).buildString(), "_blank", "");
 	}
 
 	@Override
 	public void openCpstNote(Tickler t) {
-		Window.open("http://" + EchartsUser.dbServerUrl + "/echarts-asp/Forms/101CPSTEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber(), "_blank", "");
+		Window.open(new UrlBuilder()
+				.setProtocol(Window.Location.getProtocol())
+				.setHost(EchartsUser.dbServerUrl)
+				.setPath("/echarts-asp/Forms/101CPSTEdit.asp")
+				.setParameter("staffid", EchartsUser.staffId)
+				.setParameter("PATID", t.getCaseNumber()).buildString(), "_blank", "");
 	}
 
 	@Override
 	public void openDoctorProgressNote(Tickler t) {
-		Window.open("http://" + EchartsUser.dbServerUrl + "/echarts-asp/Forms/104PharmEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber(), "_blank", "");
+		Window.open(new UrlBuilder()
+				.setProtocol(Window.Location.getProtocol())
+				.setHost(EchartsUser.dbServerUrl)
+				.setPath("/echarts-asp/Forms/104PharmEdit.asp")
+				.setParameter("staffid", EchartsUser.staffId)
+				.setParameter("PATID", t.getCaseNumber()).buildString(), "_blank", "");
 	}
 
 	@Override
 	public void openNurseProgressNote(Tickler t) {
-		Window.open("http://" + EchartsUser.dbServerUrl + "/echarts-asp/Forms/103PM-NPNEdit.asp?staffid=" + EchartsUser.staffId + "&PATID=" + t.getCaseNumber(), "_blank", "");
+		Window.open(new UrlBuilder()
+				.setProtocol(Window.Location.getProtocol())
+				.setHost(EchartsUser.dbServerUrl)
+				.setPath("/echarts-asp/Forms/103PM-NPNEdit.asp")
+				.setParameter("staffid", EchartsUser.staffId)
+				.setParameter("PATID", t.getCaseNumber()).buildString(), "_blank", "");
 	}
 
 	@Override
 	public void openPrintablePatientSummary(Tickler t) {
-		Window.open(new UrlBuilder().setProtocol("http")
+		Window.open(new UrlBuilder()
+				.setProtocol(Window.Location.getProtocol())
 				.setHost(EchartsUser.dbServerUrl)
-				.setPath("echarts-asp/Client/demographicsprint.asp")
+				.setPath("/echarts-asp/Client/demographicsprint.asp")
 				.setParameter("staffid", EchartsUser.staffId)
 				.setParameter("PATID", t.getCaseNumber())
 				.buildString(), "_blank", "");
