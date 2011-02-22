@@ -28,13 +28,16 @@
 		}
 		.content {
 			position: relative;
-			border-top: 5px solid #315a8c;
-			border-left: 5px solid #315a8c;
-			overflow-y: auto;
-			overflow-x: auto;
+			min-height: 250px;
+			height: 100%;
 		}
-		.sidebar {
-			border-top: 5px solid #315a8c;
+		.hbar {
+			background-color: #315a8c;
+			height: 5px;
+			width: 100%;
+		}
+		.lb {
+			border-left: 5px solid #315a8c;
 		}
 		.alertMessage {
 			border-top: 1px solid red;
@@ -43,13 +46,18 @@
 			text-align: center;
 			background-color: LightYellow;
 		}
+		.footer {
+			text-align: center;
+			margin-top: 10px;
+			font-size: smaller;
+		}
 	</ui:style>
 	<ui:image field="logo" src="../style/images/echarts-logo.gif"/>
-	<g:DockLayoutPanel unit="EM" ui:field="dockLayoutPanel">
-		<g:north size="7.1">
-			<g:FlowPanel>
+	<g:ScrollPanel ui:field="dockLayoutPanel">
+		<g:FlowPanel height="100%" width="100%">
+			<g:VerticalPanel height="100%" width="100%">
 				<g:FlowPanel>
-					<a:NotificationMole animationDuration='0' message='Loading ...' ui:field='mole'></a:NotificationMole>
+					<a:NotificationMole animationDuration='0' message='Loading&nbsp;&hellip;' ui:field='mole'></a:NotificationMole>
 				</g:FlowPanel>
 				<g:HorizontalPanel width="100%">
 					<g:FlowPanel addStyleNames="{style.banner} {style.left}" />
@@ -59,22 +67,29 @@
 						<e:PatientSearchWidget ui:field="patientSearchWidget" />
 					</g:VerticalPanel>
 				</g:HorizontalPanel>
-				<g:HTMLPanel>
+				<g:HTMLPanel width="100%">
 					<div ui:field="alertMessageContainer">
 						<span ui:field="alertMessage" />
 					</div>
 				</g:HTMLPanel>
-			</g:FlowPanel>
-		</g:north>
-		<g:center>
-			<g:FlowPanel styleName="{style.content}">
-				<g:SimplePanel ui:field="master"></g:SimplePanel>
-			</g:FlowPanel>
-		</g:center>
-		<g:west size="13">
-			<g:FlowPanel styleName="{style.sidebar}">
-				<g:SimplePanel ui:field="details"></g:SimplePanel>
-			</g:FlowPanel>
-		</g:west>
-	</g:DockLayoutPanel>
+			</g:VerticalPanel>
+			<g:HTML>
+				<div class="{style.hbar}" />
+			</g:HTML>
+			<g:HorizontalPanel width="100%">
+				<g:cell width="172px"><g:SimplePanel ui:field="details"></g:SimplePanel></g:cell>
+				<g:cell horizontalAlignment="ALIGN_LEFT">
+					<g:VerticalPanel width="100%">
+						<g:VerticalPanel styleName="{style.lb}" width="100%">
+							<g:SimplePanel styleName="{style.content}" ui:field="master"></g:SimplePanel>
+							<g:HTML>
+								<div class="{style.hbar}" />
+							</g:HTML>
+						</g:VerticalPanel>
+						<g:HTML><div class='{style.footer}'>Eastway Corporation (c) 2011 &nbsp;| &nbsp;<a href="http://www.eastway.org/index-7.html">Privacy Statement</a></div></g:HTML>
+					</g:VerticalPanel>
+				</g:cell>
+			</g:HorizontalPanel>
+		</g:FlowPanel>
+	</g:ScrollPanel>
 </ui:UiBinder>

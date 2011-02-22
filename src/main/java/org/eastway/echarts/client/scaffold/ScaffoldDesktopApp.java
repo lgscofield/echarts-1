@@ -115,8 +115,6 @@ public class ScaffoldDesktopApp extends ScaffoldApp {
 					Element loading = Document.get().getElementById("page-loading-message");
 					loading.getParentElement().removeChild(loading);
 
-					Window.enableScrolling(false);
-
 					// Start ActivityManager for the main widget with our ActivityMapper
 					ActivityManager masterActivityManager = new ActivityManager(masterActivityMapper, eventBus);
 					masterActivityManager.setDisplay(shell.getMasterPanel());
