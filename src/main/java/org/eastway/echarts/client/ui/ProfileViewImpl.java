@@ -18,6 +18,7 @@ package org.eastway.echarts.client.ui;
 import java.util.Date;
 import java.util.List;
 
+import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.common.ColumnDefinition;
 
 import com.google.gwt.core.client.GWT;
@@ -121,6 +122,8 @@ public class ProfileViewImpl<T> extends Composite implements ProfileView<T> {
 
 	@Override
 	public void clearFirstLogin() {
-		Cookies.setCookie("first_login", "", new Date(-1), ".eastway.local", "/", false);
+		String[] dbServerUrl = EchartsUser.dbServerUrl.split("\\.");
+		String domain = "." + dbServerUrl[1] + "." + dbServerUrl[2];
+		Cookies.setCookie("first_login", "", new Date(-1), domain, "/", false);
 	}
 }
