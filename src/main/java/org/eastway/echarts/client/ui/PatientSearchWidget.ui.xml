@@ -9,17 +9,20 @@
 			margin-top: 10px;
 		}
 		.button {
-			padding: 3px;
-			margin: 4px 2px 2px 2px;
+			padding: 2px;
+			margin: 4px 2px 2px 0px;
+			height: 24px;
+			width: 80px;
 		}
 		.searchbox {
-			margin-top: 2px;
-			padding: 6px;
-			width: 220px;
+			margin: 2px 0px 0px 0px;
+			padding: 2px;
+			width: 271px;
+			border: 2px solid #315a8c;
 		}
 	</ui:style>
 	<g:HTMLPanel ui:field="patientSearch" addStyleNames="{style.right} {style.top}">
-		<table>
+		<table border='0' cellspacing='0' cellpadding='0'>
 			<tr>
 				<td><g:FlowPanel ui:field='patientIdBox' /></td>
 				<td><g:Button ui:field='patientSearchButton' addStyleNames='{style.button}'>Search</g:Button></td>
