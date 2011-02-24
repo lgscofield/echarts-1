@@ -38,7 +38,7 @@ public class EchartsOracle extends MultiWordSuggestOracle {
 
 	@Override
 	public void requestSuggestions(final Request request, final Callback callback) {
-		requestFactory.patientRequest().findPatientsLike(request.getQuery()).fire(new Receiver<List<String>>() {
+		requestFactory.patientRequest().findPatientsLike(request.getQuery().replaceAll("\\s+", " ")).fire(new Receiver<List<String>>() {
 			@Override
 			public void onSuccess(List<String> response) {
 				Response searchResponse = new Response();
