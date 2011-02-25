@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 public class PatientSearchWidget extends Composite {
@@ -38,7 +39,7 @@ public class PatientSearchWidget extends Composite {
 
 	public PatientSearchWidget(EchartsOracle oracle, PlaceController placeController) {
 		initWidget(uiBinder.createAndBindUi(this));
-		suggestBox = new SuggestBox(oracle);
+		suggestBox = new SuggestBox(oracle, new TextBox(), new CellListSuggestionDisplay());
 		suggestBox.addStyleName(style.searchbox());
 		patientIdBox.add(suggestBox);
 		this.placeController = placeController;
