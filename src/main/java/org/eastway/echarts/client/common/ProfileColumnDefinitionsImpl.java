@@ -44,6 +44,7 @@ public class ProfileColumnDefinitionsImpl extends ArrayList<ColumnDefinition<Use
 	}
 
 	private void setCostCenters(List<CodeProxy> costCenters) {
+		this.costCenters.put("", "");
 		for (CodeProxy c : costCenters)
 			if (c.getColumnName().equals("CostCenter"))
 				this.costCenters.put(c.getCodeValue(), c.getCodeDescriptor());

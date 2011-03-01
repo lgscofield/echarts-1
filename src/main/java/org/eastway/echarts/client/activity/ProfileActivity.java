@@ -90,7 +90,7 @@ public class ProfileActivity extends AbstractActivity implements ProfileView.Pre
 			@Override
 			public void onSuccess(Void response) {
 				view.setStatus("Settings saved");
-				if (program != null)
+				if (program != null && program.length() != 0)
 					view.clearFirstLogin();
 			}
 		});
