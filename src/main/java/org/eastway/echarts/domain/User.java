@@ -16,6 +16,7 @@
 package org.eastway.echarts.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -245,5 +246,16 @@ public class User {
 		sb.append("StaffName: ").append(getStaffName()).append(", ");
 		sb.append("StaffId: ").append(getStaffId()).append(", ");
 		return sb.toString();
+	}
+
+	public static Boolean isSupervisor(String supervisor, String staff) {
+		List<User> user = entityManager()
+			.createQuery("SELECT o FROM User o where o.supervisor.staffId = :supervisor AND o.staffId = :staff", User.class)
+			.setParameter("supervisor", supervisor)
+			.setParameter("staff", staff)
+			.getResultList();
+		if (user != null && user.size() != 0)
+			return true;
+		return false;
 	}
 }

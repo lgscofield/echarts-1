@@ -37,6 +37,18 @@
 	  	border-collapse: collapse;
 	  	width: 100%;
 	  }
+	  .header {
+	  	text-align: center;
+	  	background-color: LightGray;
+	  	width: 100%;
+	  	font-weight: 700;
+	  	padding: 5px 0px;
+	  }
 	</ui:style>
-	<g:FlexTable addStyleNames='{style.table}' ui:field='table'/>
+	<g:HTMLPanel>
+		<div class='{style.header}'>
+			<span ui:field='header' />
+		</div>
+		<g:FlexTable addStyleNames='{style.table}' ui:field='table'/>
+	</g:HTMLPanel>
 </ui:UiBinder>

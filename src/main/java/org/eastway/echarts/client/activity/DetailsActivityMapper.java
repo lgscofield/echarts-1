@@ -54,7 +54,7 @@ public class DetailsActivityMapper implements ActivityMapper {
 	@Override
 	public Activity getActivity(Place place) {
 		if (place instanceof TicklerPlace) {
-			return new DashboardSideBarActivity(dashboardSideBarView, requestFactory);
+			return new DashboardSideBarActivity(dashboardSideBarView, requestFactory, placeController);
 		} else if (place instanceof PatientSummaryPlace) {
 			ehrSideBarView.selectPatientSummaryPlace();
 			return new EhrSideBarActivity(ehrSideBarView, placeController, ((PatientSummaryPlace) place).getCaseNumber());
@@ -92,9 +92,9 @@ public class DetailsActivityMapper implements ActivityMapper {
 			ehrSideBarView.selectARInfoPlace();
 			return new EhrSideBarActivity(ehrSideBarView, placeController, ((ARInfoPlace) place).getCaseNumber());
 		} else if (place instanceof DashboardPlace) {
-			return new DashboardSideBarActivity(dashboardSideBarView, requestFactory);
+			return new DashboardSideBarActivity(dashboardSideBarView, requestFactory, placeController);
 		} else if (place instanceof ProfilePlace) {
-			return new DashboardSideBarActivity(dashboardSideBarView, requestFactory);
+			return new DashboardSideBarActivity(dashboardSideBarView, requestFactory, placeController);
 		} else if (place instanceof LabPlace) {
 			ehrSideBarView.selectLabPlace();
 			return new EhrSideBarActivity(ehrSideBarView, placeController, ((LabPlace) place).getCaseNumber());
@@ -102,9 +102,9 @@ public class DetailsActivityMapper implements ActivityMapper {
 			ehrSideBarView.selectPhysicianOrderPlace();
 			return new EhrSideBarActivity(ehrSideBarView, placeController, ((PhysicianOrderPlace) place).getCaseNumber());
 		} else if (place instanceof StaffAnalysisPlace) {
-			return new DashboardSideBarActivity(dashboardSideBarView, requestFactory);
+			return new DashboardSideBarActivity(dashboardSideBarView, requestFactory, placeController);
 		} else if (place instanceof DashboardFramePlace) {
-			return new DashboardSideBarActivity(dashboardSideBarView, requestFactory);
+			return new DashboardSideBarActivity(dashboardSideBarView, requestFactory, placeController);
 		}
 		return null;
 	}

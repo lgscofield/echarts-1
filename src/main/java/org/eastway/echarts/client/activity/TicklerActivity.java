@@ -30,10 +30,9 @@ import org.eastway.echarts.client.place.PatientSummaryPlace;
 import org.eastway.echarts.client.place.TicklerPlace;
 import org.eastway.echarts.client.request.AssignmentProxy;
 import org.eastway.echarts.client.request.AssignmentRequest;
-import org.eastway.echarts.client.request.EHRProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
-import org.eastway.echarts.client.request.EhrRequest;
 import org.eastway.echarts.client.request.PatientProxy;
+import org.eastway.echarts.client.request.UserProxy;
 import org.eastway.echarts.client.ui.TicklerView;
 import org.eastway.echarts.shared.DueDateStatus;
 import org.eastway.echarts.shared.Tickler;
@@ -44,43 +43,10 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 public class TicklerActivity extends AbstractActivity implements TicklerView.Presenter<Tickler> {
-
-	class EHRFetcher {
-		EHRProxy fetchedEHR;
-		List<AssignmentProxy> fetchedAssignments;
-
-		void Run(final EhrRequest ehrRequest, final AssignmentRequest assignmentRequest, final String caseNumber, final Receiver<EHRFetcher> callback) {
-			ehrRequest.findEHRByCaseNumber(caseNumber)
-				.with("patient")
-				.with("patient.caseStatus")
-				.with("demographics")
-				.with("demographics.gender")
-				.with("demographics.employment")
-				.with("demographics.maritalStatus")
-				.fire(
-					new Receiver<EHRProxy>() {
-						@Override
-						public void onSuccess(EHRProxy response) {
-							if (response != null) {
-								fetchedEHR = response;
-								assignmentRequest.findAssignmentsByCaseNumber(caseNumber).fire(
-										new Receiver<List<AssignmentProxy>>() {
-											@Override
-											public void onSuccess(List<AssignmentProxy> response) {
-												fetchedAssignments = response;
-												if (fetchedAssignments != null)
-													callback.onSuccess(EHRFetcher.this);
-											}
-										});
-							}
-						}
-					});
-		}
-	}
-
 	private TicklerView<Tickler> view;
 	private EchartsRequestFactory requestFactory;
 	private PlaceController placeController;
+	private String staffId;
 
 	public TicklerActivity(TicklerPlace place,
 						   EchartsRequestFactory requestFactory,
@@ -92,19 +58,33 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 		this.view = view;
 		this.view.setColumnDefinitions(columnDefinitions);
 		this.view.setPresenter(this);
+		this.staffId = place.getTicklerName();
 	}
 
 	public void fetchData() {
-		requestFactory.assignmentRequest().findAssignmentsByStaff(EchartsUser.staffId)
+		AssignmentRequest context = requestFactory.assignmentRequest();
+		context.findAssignmentsByStaff(EchartsUser.staffId, staffId)
 			.with("patient")
 			.with("demographics")
-				.fire(new Receiver<List<AssignmentProxy>>() {
+			.to(new Receiver<List<AssignmentProxy>>() {
 			@Override
 			public void onSuccess(List<AssignmentProxy> response) {
-				view.setRowData(setDates(response));
-				panel.setWidget(view);
+				if (response != null && response.size() != 0) {
+					view.setRowData(setDates(response));
+					panel.setWidget(view);
+				}
 			}
 		});
+		if (!staffId.equals(EchartsUser.staffId)) {
+			context.findUserByStaffId(staffId).to(new Receiver<UserProxy>() {
+				@Override
+				public void onSuccess(UserProxy response) {
+					if (response != null)
+						view.setHeader(response.getStaffName());
+				}
+			});
+		}
+		context.fire();
 	}
 
 	private long NOW = new Date().getTime();

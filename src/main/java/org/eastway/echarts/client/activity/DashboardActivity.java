@@ -119,7 +119,7 @@ public class DashboardActivity extends AbstractActivity implements DashboardView
 
 	@Override
 	public void openTickler() {
-		placeController.goTo(new TicklerPlace());
+		placeController.goTo(new TicklerPlace(EchartsUser.staffId));
 	}
 
 	@Override

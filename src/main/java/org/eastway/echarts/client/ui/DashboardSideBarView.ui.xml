@@ -21,7 +21,7 @@
 	<g:HTMLPanel>
 		<b>Tools</b>
 		<g:Hyperlink addStyleNames='{style.link}' targetHistoryToken='DashboardPlace:'>Dashboard</g:Hyperlink>
-		<g:Hyperlink addStyleNames='{style.link}' ui:field='tickler' targetHistoryToken='TicklerPlace:'>Tickler</g:Hyperlink>
+		<g:Hyperlink addStyleNames='{style.link}' ui:field='tickler'>Tickler</g:Hyperlink>
 		<g:Anchor addStyleNames='{style.link}' ui:field='groupProgressNote' href='#'>Group Progress Note</g:Anchor>
 		<g:FlowPanel ui:field="panel" />
 	</g:HTMLPanel>

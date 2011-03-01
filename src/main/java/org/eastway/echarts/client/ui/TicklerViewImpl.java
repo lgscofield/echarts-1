@@ -21,6 +21,7 @@ import java.util.List;
 import org.eastway.echarts.client.common.ColumnDefinition;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ContextMenuEvent;
 import com.google.gwt.event.dom.client.ContextMenuHandler;
@@ -195,7 +196,7 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 	@Override
 	public void setRowData(List<T> rowData) {
 		this.rowData = rowData;
-
+		table.removeAllRows();
 		for (int i = 0, row = 0; i < rowData.size(); ++i, ++row) {
 			if (i % headerRepeat == 0)
 				setHeader(row++);
@@ -230,5 +231,13 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 	@Override
 	public void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions) {
 		this.columnDefinitions = columnDefinitions;
+	}
+
+	@UiField SpanElement header;
+
+	@Override
+	public void setHeader(String headerText) {
+		if (headerText != null && headerText.length() != 0)
+			header.setInnerText(headerText);
 	}
 }

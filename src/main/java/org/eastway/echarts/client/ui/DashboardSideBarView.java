@@ -4,12 +4,17 @@ import java.util.List;
 
 import org.eastway.echarts.client.request.LinkProxy;
 
+import com.google.gwt.place.shared.Place;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.ui.IsWidget;
 
 public interface DashboardSideBarView extends IsWidget {
+
+	public interface Presenter {
+		void goTo(Place place);
+	}
 
 	void setLinks(List<LinkProxy> response);
 
@@ -23,4 +28,6 @@ public interface DashboardSideBarView extends IsWidget {
 	}
 
 	boolean isLoaded();
+
+	void setPresenter(Presenter presenter);
 }

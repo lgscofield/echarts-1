@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.eastway.echarts.client.EchartsUser;
+import org.eastway.echarts.client.place.TicklerPlace;
 import org.eastway.echarts.client.request.LinkProxy;
 
 import com.google.gwt.core.client.GWT;
@@ -31,13 +32,17 @@ public class DashboardSideBarViewImpl extends Composite implements DashboardSide
 
 	@UiField FlowPanel panel;
 	@UiField Style style;
+	@UiField Hyperlink tickler;
 
 	private List<LinkProxy> links;
+
+	private Presenter presenter;
 
 	private static final Template TEMPLATE = GWT.create(Template.class);
 
 	public DashboardSideBarViewImpl() {
 		initWidget(BINDER.createAndBindUi(this));
+		tickler.setTargetHistoryToken("TicklerPlace:" + EchartsUser.staffId);
 	}
 
 	@Override
@@ -80,5 +85,10 @@ public class DashboardSideBarViewImpl extends Composite implements DashboardSide
 		if (links == null)
 			return false;
 		return true;
+	}
+
+	@Override
+	public void setPresenter(Presenter presenter) {
+		this.presenter = presenter;
 	}
 }

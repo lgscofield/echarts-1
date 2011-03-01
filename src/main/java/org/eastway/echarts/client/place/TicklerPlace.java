@@ -10,9 +10,6 @@ public class TicklerPlace extends Place {
 		this.ticklerName = token;
 	}
 
-	public TicklerPlace() {
-	}
-
 	public String getTicklerName() {
 		return ticklerName;
 	}
@@ -20,12 +17,12 @@ public class TicklerPlace extends Place {
 	public static class Tokenizer implements PlaceTokenizer<TicklerPlace> {
 		@Override
 		public TicklerPlace getPlace(String token) {
-			return new TicklerPlace();
+			return new TicklerPlace(token);
 		}
 
 		@Override
 		public String getToken(TicklerPlace place) {
-			return "";
+			return place.getTicklerName();
 		}
 	}
 }

@@ -51,4 +51,5 @@ public interface TicklerView<T> extends IsWidget {
 	void setPresenter(Presenter<T> presenter);
 	void setRowData(List<T> ticklers);
 	void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions);
+	void setHeader(String headerText);
 }
