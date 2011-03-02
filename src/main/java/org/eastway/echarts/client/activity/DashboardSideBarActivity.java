@@ -2,8 +2,10 @@ package org.eastway.echarts.client.activity;
 
 import java.util.List;
 
+import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.request.LinkProxy;
+import org.eastway.echarts.client.request.UserProxy;
 import org.eastway.echarts.client.ui.DashboardSideBarView;
 
 import com.google.gwt.activity.shared.AbstractActivity;
@@ -40,6 +42,12 @@ public class DashboardSideBarActivity extends AbstractActivity implements Dashbo
 	}
 
 	private void fetchData() {
+		requestFactory.userRequest().findAssignments(EchartsUser.userName).fire(new Receiver<List<UserProxy>>() {
+			@Override
+			public void onSuccess(List<UserProxy> response) {
+				view.setAssignments(response);
+			}
+		});
 		requestFactory.linkRequest().findLinksByPlace("MainPage").fire(new Receiver<List<LinkProxy>>() {
 			@Override
 			public void onSuccess(List<LinkProxy> response) {

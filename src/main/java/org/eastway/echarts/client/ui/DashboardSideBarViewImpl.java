@@ -7,6 +7,7 @@ import java.util.Set;
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.place.TicklerPlace;
 import org.eastway.echarts.client.request.LinkProxy;
+import org.eastway.echarts.client.request.UserProxy;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -21,6 +22,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Hyperlink;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
 
 public class DashboardSideBarViewImpl extends Composite implements DashboardSideBarView {
@@ -32,7 +34,7 @@ public class DashboardSideBarViewImpl extends Composite implements DashboardSide
 
 	@UiField FlowPanel panel;
 	@UiField Style style;
-	@UiField Hyperlink tickler;
+	@UiField ListBox tickler;
 
 	private List<LinkProxy> links;
 
@@ -42,7 +44,7 @@ public class DashboardSideBarViewImpl extends Composite implements DashboardSide
 
 	public DashboardSideBarViewImpl() {
 		initWidget(BINDER.createAndBindUi(this));
-		tickler.setTargetHistoryToken("TicklerPlace:" + EchartsUser.staffId);
+		tickler.addItem("My Tickler", EchartsUser.staffId);
 	}
 
 	@Override
@@ -90,5 +92,26 @@ public class DashboardSideBarViewImpl extends Composite implements DashboardSide
 	@Override
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
+	}
+
+	@Override
+	public void setAssignments(List<UserProxy> response) {
+		if (response != null && response.size() != 0)
+			for (UserProxy user : response) {
+				tickler.addItem(user.getStaffName(), user.getStaffId());
+			}
+	}
+
+	@UiHandler("ticklerButton")
+	void ticklerOnClick(ClickEvent event) {
+		int selected = tickler.getSelectedIndex();
+		if (selected < 0) {
+			presenter.goTo(new TicklerPlace(EchartsUser.staffId));
+			return;
+		}
+		String staffId = tickler.getValue(selected);
+		if (staffId != null && staffId.length() != 0) {
+			presenter.goTo(new TicklerPlace(staffId));
+		}
 	}
 }

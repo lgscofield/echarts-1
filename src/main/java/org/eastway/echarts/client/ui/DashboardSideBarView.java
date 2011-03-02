@@ -3,6 +3,7 @@ package org.eastway.echarts.client.ui;
 import java.util.List;
 
 import org.eastway.echarts.client.request.LinkProxy;
+import org.eastway.echarts.client.request.UserProxy;
 
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.resources.client.CssResource;
@@ -30,4 +31,6 @@ public interface DashboardSideBarView extends IsWidget {
 	boolean isLoaded();
 
 	void setPresenter(Presenter presenter);
+
+	void setAssignments(List<UserProxy> response);
 }

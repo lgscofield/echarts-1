@@ -258,4 +258,13 @@ public class User {
 			return true;
 		return false;
 	}
+
+	public static List<User> findAssignments(String supervisor) {
+		if (supervisor == null || supervisor.length() == 0)
+			return null;
+		return entityManager()
+			.createQuery("SELECT o FROM User o WHERE o.supervisor.id = :supervisor", User.class)
+			.setParameter("supervisor", supervisor)
+			.getResultList();
+	}
 }

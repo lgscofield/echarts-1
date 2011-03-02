@@ -15,6 +15,8 @@
  */
 package org.eastway.echarts.client.request;
 
+import java.util.List;
+
 import org.springframework.roo.addon.gwt.RooGwtMirroredFrom;
 
 import com.google.gwt.requestfactory.shared.InstanceRequest;
@@ -27,4 +29,5 @@ import com.google.gwt.requestfactory.shared.ServiceName;
 public interface UserRequest extends RequestContext {
 	Request<UserProxy> findUser(String userName);
 	InstanceRequest<UserProxy, Void> persist();
+	Request<List<UserProxy>> findAssignments(String supervisorName);
 }
