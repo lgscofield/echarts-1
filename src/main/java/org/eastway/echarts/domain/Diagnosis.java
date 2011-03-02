@@ -71,9 +71,9 @@ public class Diagnosis {
 	private String axis3;
 	private String axis4;
 	private String caseNumber;
-	private Integer currentGAF;
+	private String currentGAF;
 	private Date date;
-	private Integer highestGAF;
+	private String highestGAF;
 	@Id
 	private Long id;
 	private Date lastEdit;
@@ -126,7 +126,7 @@ public class Diagnosis {
 		return caseNumber;
 	}
 
-	public Integer getCurrentGAF() {
+	public String getCurrentGAF() {
 		return currentGAF;
 	}
 
@@ -134,7 +134,7 @@ public class Diagnosis {
 		return date;
 	}
 
-	public Integer getHighestGAF() {
+	public String getHighestGAF() {
 		return highestGAF;
 	}
 
@@ -194,7 +194,7 @@ public class Diagnosis {
 		this.caseNumber = caseNumber;
 	}
 
-	public void setCurrentGAF(Integer currentGAF) {
+	public void setCurrentGAF(String currentGAF) {
 		this.currentGAF = currentGAF;
 	}
 
@@ -202,7 +202,7 @@ public class Diagnosis {
 		this.date = date;
 	}
 
-	public void setHighestGAF(Integer highestGAF) {
+	public void setHighestGAF(String highestGAF) {
 		this.highestGAF = highestGAF;
 	}
 

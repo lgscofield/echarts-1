@@ -47,11 +47,11 @@ public interface DiagnosisProxy extends EntityProxy {
 
 	String getCaseNumber();
 
-	Integer getCurrentGAF();
+	String getCurrentGAF();
 
 	Date getDate();
 
-	Integer getHighestGAF();
+	String getHighestGAF();
 
 	Long getId();
 
@@ -81,11 +81,11 @@ public interface DiagnosisProxy extends EntityProxy {
 
 	void setCaseNumber(String caseNumber);
 
-	void setCurrentGAF(Integer currentGAF);
+	void setCurrentGAF(String currentGAF);
 
 	void setDate(Date date);
 
-	void setHighestGAF(Integer highestGAF);
+	void setHighestGAF(String highestGAF);
 
 	void setId(Long id);
 
