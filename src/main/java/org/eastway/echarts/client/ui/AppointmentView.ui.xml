@@ -20,10 +20,27 @@
 		.cellTable {
 			width: 100%;
 		}
+		.filterbox {
+			margin: 2px 0px 2px 2px;
+			padding: 2px 0px 2px 2px;
+			border: 2px solid #315a8c;
+		}
+		.button {
+			padding: 2px 2px 2px 0px;
+			height: 24px;
+			width: 80px;
+		}
 	</ui:style>
 	<g:HTMLPanel>
 		<span ui:field="error" />
-		<d:DateBox ui:field='datePicker' /><g:Button ui:field="filter">Filter</g:Button>
+		<g:HorizontalPanel spacing='0'>
+			<g:cell verticalAlignment='ALIGN_MIDDLE' horizontalAlignment='ALIGN_LEFT'>
+				<d:DateBox title='Remove the date to return all appointments' addStyleNames='{style.filterbox}' ui:field='datePicker' />
+			</g:cell>
+			<g:cell verticalAlignment='ALIGN_MIDDLE' horizontalAlignment='ALIGN_LEFT'>
+				<g:Button addStyleNames='{style.button}' ui:field="filter">Filter</g:Button>
+			</g:cell>
+		</g:HorizontalPanel>
 		<e:AppointmentCellTable
 			pageSize="17"
 			addStyleNames='{style.cellTable}'
