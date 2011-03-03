@@ -89,6 +89,10 @@ public class CellListSuggestionDisplay extends SuggestBox.SuggestionDisplay
 		return suggestionCellList;
 	}
 
+	public void setEmptyListMessage(String emptyListMessage) {
+		suggestionCellList.setEmptyListMessage(new SafeHtmlBuilder().appendEscaped(emptyListMessage).toSafeHtml());
+	}
+
 	private PopupPanel createPopup() {
 		DecoratedPopupPanel p = new DecoratedPopupPanel(true, false);
 		p.setPreviewingAllNativeEvents(true);
