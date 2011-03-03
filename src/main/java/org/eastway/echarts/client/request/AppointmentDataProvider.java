@@ -31,8 +31,7 @@ public class AppointmentDataProvider extends AsyncDataProvider<AppointmentProxy>
 					.fire(new Receiver<List<AppointmentProxy>>() {
 				@Override
 				public void onSuccess(List<AppointmentProxy> response) {
-					updateRowCount(response.size(), false);
-					updateRowData(start, response);
+					setData(start, length, response);
 				}
 			});
 		} else {
@@ -40,10 +39,19 @@ public class AppointmentDataProvider extends AsyncDataProvider<AppointmentProxy>
 					.fire(new Receiver<List<AppointmentProxy>>() {
 				@Override
 				public void onSuccess(List<AppointmentProxy> response) {
-					updateRowCount(response.size(), false);
-					updateRowData(start, response);
+					setData(start, length, response);
 				}
 			});
+		}
+	}
+
+	private void setData(int start, int length, List<AppointmentProxy> data) {
+		if (data != null && data.size() != 0) {
+			updateRowCount(start, false);
+			updateRowData(start, data);
+		} else {
+			updateRowCount(start, true);
+			updateRowData(start, data);
 		}
 	}
 
