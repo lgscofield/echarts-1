@@ -15,6 +15,8 @@
  */
 package org.eastway.echarts.client.activity;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -71,6 +73,13 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 			public void onSuccess(List<AssignmentProxy> response) {
 				if (response != null && response.size() != 0) {
 					view.setRowData(setDates(response));
+					view.setNoteTimeliness(
+							NO_DATA_COUNT.intValue(),
+							NO_DATA_COUNT.divide(TOTAL_COUNT, 2, RoundingMode.HALF_UP).multiply(new BigDecimal(100)).intValue(),
+							OVERDUE_COUNT.intValue(),
+							OVERDUE_COUNT.divide(TOTAL_COUNT, 2, RoundingMode.HALF_UP).multiply(new BigDecimal(100)).intValue(),
+							UP_TO_DATE_COUNT.intValue(),
+							UP_TO_DATE_COUNT.divide(TOTAL_COUNT, 2, RoundingMode.HALF_UP).multiply(new BigDecimal(100)).intValue());
 					panel.setWidget(view);
 				}
 			}
@@ -102,19 +111,26 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 			PatientProxy patient = assignment.getPatient();
 			result.setName(assignment.getPatient().getName());
 			result.setCaseNumber(patient.getCaseNumber());
-	
-			if (patient.getHipaaDateCompleted() != null)
+
+			if (patient.getHipaaDateCompleted() != null) {
+				TOTAL_COUNT = TOTAL_COUNT.add(new BigDecimal(1));
+				UP_TO_DATE_COUNT = UP_TO_DATE_COUNT.add(new BigDecimal(1));
 				result.setHipaaDateCompleted(formatDueDate(patient.getHipaaDateCompleted().getTime()));
-	
+			} else {
+				TOTAL_COUNT = TOTAL_COUNT.add(new BigDecimal(1));
+				NO_DATA_COUNT = NO_DATA_COUNT.add(new BigDecimal(1));
+			}
+
 			long ispDueDate = 0L;
 			long ispDateCompleted = 0L;
 			if (patient.getIspDateCompleted() != null) {
 				ispDueDate = patient.getIspDateCompleted().getTime() + YEAR;
 				ispDateCompleted = patient.getIspDateCompleted().getTime();
 			}
-			result.setIspDueDate(formatDueDate(ispDueDate), getDueDateStatus(ispDueDate));
+			int ispDueDateStatus = getDueDateStatus(ispDueDate);
+			result.setIspDueDate(formatDueDate(ispDueDate), ispDueDateStatus);
 	
-			long ispReviewDueDate = getIspReviewDueDate(ispDueDate, ispDateCompleted, assignment, patient);
+			long ispReviewDueDate = getIspReviewDueDate(ispDueDate, ispDueDateStatus, ispDateCompleted, assignment, patient);
 			result.setIspReviewDueDate(formatDueDate(ispReviewDueDate), getDueDateStatus(ispReviewDueDate));
 	
 			long healthHistoryDueDate = 0L;
@@ -154,9 +170,9 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 		return tickler;
 	}
 
-	private long getIspReviewDueDate(long ispDueDate, long ispDateCompleted, AssignmentProxy assignment, PatientProxy patient) {
+	private long getIspReviewDueDate(long ispDueDate, int ispDueDateStatus, long ispDateCompleted, AssignmentProxy assignment, PatientProxy patient) {
 		long ispReviewDueDate = 0L;
-		if (getDueDateStatus(ispDueDate) == DueDateStatus.OVERDUE) {
+		if (ispDueDateStatus == DueDateStatus.OVERDUE) {
 			return ispDueDate;
 		} else {
 			boolean aodStatus = (assignment.getDemographics().getAlcoholDrug()==null?false:assignment.getDemographics().getAlcoholDrug())&&(EchartsUser.staffId=="5542"||EchartsUser.staffId=="5396");
@@ -185,15 +201,37 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 		return ispReviewDueDate;
 	}
 
+	private BigDecimal NO_DATA_COUNT = new BigDecimal(0.0);
+	private BigDecimal OVERDUE_COUNT = new BigDecimal(0.0);
+	private BigDecimal UP_TO_DATE_COUNT = new BigDecimal(0.0);
+	private BigDecimal TOTAL_COUNT = new BigDecimal(0.0);
+
+	/**
+	 * Determine status of {@code dueDate} and return an integer constant from
+	 * {@link org.eastway.echarts.shared.DueDateStatus} representing the status.
+	 * 
+	 * This method should be called exactly once for each column to be displayed
+	 * in the tickler table.
+	 * 
+	 * @param dueDate the long value to be tested
+	 * @return an integer from {@code org.eastway.echarts.shared.DueDateStatus}
+	 */
 	private int getDueDateStatus(long dueDate) {
-		if (dueDate == 0L)
+		TOTAL_COUNT = TOTAL_COUNT.add(new BigDecimal(1));
+		if (dueDate == 0L) {
+			NO_DATA_COUNT = NO_DATA_COUNT.add(new BigDecimal(1));
 			return DueDateStatus.NO_DATA;
-		if ((dueDate - NOW) > THIRTY_DAYS)
+		}
+		if ((dueDate - NOW) > THIRTY_DAYS) {
+			UP_TO_DATE_COUNT = UP_TO_DATE_COUNT.add(new BigDecimal(1));
 			return DueDateStatus.COMPLIANT;
-		else if (dueDate > NOW)
+		} else if (dueDate > NOW) {
+			UP_TO_DATE_COUNT = UP_TO_DATE_COUNT.add(new BigDecimal(1));
 			return DueDateStatus.DUE_IN_THIRTY_DAYS;
-		else
+		} else {
+			OVERDUE_COUNT = OVERDUE_COUNT.add(new BigDecimal(1));
 			return DueDateStatus.OVERDUE;
+		}
 	}
 
 

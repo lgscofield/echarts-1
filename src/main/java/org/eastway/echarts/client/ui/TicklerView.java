@@ -52,4 +52,10 @@ public interface TicklerView<T> extends IsWidget {
 	void setRowData(List<T> ticklers);
 	void setColumnDefinitions(List<ColumnDefinition<T>> columnDefinitions);
 	void setHeader(String headerText);
+	void setNoteTimeliness(int noDataCount,
+			int noDataPercentage,
+			int overdueCount,
+			int overduePercentage,
+			int upToDateCount,
+			int upToDatePercentage);
 }

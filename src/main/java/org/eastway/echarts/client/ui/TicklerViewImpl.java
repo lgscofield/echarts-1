@@ -240,4 +240,13 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 		if (headerText != null && headerText.length() != 0)
 			header.setInnerText(headerText);
 	}
+
+	@UiField SpanElement noteTimeliness;
+
+	@Override
+	public void setNoteTimeliness(int noDataCount, int noDataPercentage,
+			int overdueCount, int overduePercentage,
+			int upToDateCount, int upToDatePercentage) {
+		noteTimeliness.setInnerText("Up to date: " + upToDatePercentage + "% (" + upToDateCount + ") Overdue: " + overduePercentage + "% (" + overdueCount + ") No data: " + noDataPercentage + "% (" + noDataCount + ")");
+	}
 }
