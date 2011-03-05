@@ -15,6 +15,8 @@
  */
 package org.eastway.echarts.client.ui;
 
+import java.util.List;
+
 import org.eastway.echarts.client.request.AssignmentProxy;
 import org.eastway.echarts.client.request.EHRProxy;
 import org.eastway.echarts.client.style.GlobalResources;
@@ -57,7 +59,7 @@ public class PatientSummaryViewImpl extends Composite implements PatientSummaryV
 	}
 
 	@Override
-	public void setValue(EHRProxy proxy) {
+	public void setEhrData(EHRProxy proxy) {
 		this.proxy = proxy;
 
 		displayName.setInnerText(this.proxy.getPatient() == null || this.proxy.getPatient().getName() == null ? "" : this.proxy.getPatient().getName());
@@ -67,9 +69,12 @@ public class PatientSummaryViewImpl extends Composite implements PatientSummaryV
 
 		gender.setInnerText(this.proxy.getDemographics() == null || this.proxy.getDemographics().getGender() == null ? "" : CodeProxyRenderer.instance().render(this.proxy.getDemographics().getGender()));
 		dob.setInnerText(this.proxy.getDemographics() == null || this.proxy.getDemographics().getDob() == null ? "" : GlobalResources.getDateFormat().format(this.proxy.getDemographics().getDob()));
+	}
 
+	@Override
+	public void setProviders(List<AssignmentProxy> assignments) {
 		StringBuilder sb = new StringBuilder();
-		for (AssignmentProxy assignment : this.proxy.getAssignments())
+		for (AssignmentProxy assignment : assignments)
 			sb.append(AssignmentProxyRenderer.instance().render(assignment))
 				.append("<br />");
 		providers.setInnerHTML(sb.toString());

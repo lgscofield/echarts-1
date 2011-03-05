@@ -3,7 +3,6 @@ package org.eastway.echarts.client.activity;
 import java.util.List;
 
 import org.eastway.echarts.client.request.AssignmentProxy;
-import org.eastway.echarts.client.request.AssignmentRequest;
 import org.eastway.echarts.client.request.EHRProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.request.EhrRequest;
@@ -17,42 +16,6 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 public class CurrentEhrActivity extends AbstractActivity {
 
-	class EHRFetcher {
-		EHRProxy fetchedEHR;
-		List<AssignmentProxy> fetchedAssignments;
-
-		void Run(final EhrRequest ehrRequest, final AssignmentRequest assignmentRequest, final String caseNumber, final Receiver<EHRFetcher> callback) {
-			ehrRequest.findEHRByCaseNumber(caseNumber)
-				.with("patient")
-				.with("patient.caseStatus")
-				.with("demographics")
-				.with("demographics.gender")
-				.fire(
-					new Receiver<EHRProxy>() {
-						@Override
-						public void onSuccess(EHRProxy response) {
-							if (response != null) {
-								fetchedEHR = response;
-								assignmentRequest.findAssignmentsByCaseNumber(caseNumber).fire(
-										new Receiver<List<AssignmentProxy>>() {
-											@Override
-											public void onSuccess(List<AssignmentProxy> response) {
-												fetchedAssignments = response;
-												if (fetchedAssignments != null)
-													callback.onSuccess(EHRFetcher.this);
-											}
-										});
-							}
-						}
-
-						@Override
-						public void onFailure(ServerFailure failure) {
-							view.setRowData(null);
-						}
-					});
-								
-		}
-	}
 	private CurrentEhrView view;
 	private EchartsRequestFactory requestFactory;
 	private String caseNumber;
@@ -78,19 +41,38 @@ public class CurrentEhrActivity extends AbstractActivity {
 	}
 
 	private void fetchData() {
-		final EhrRequest ehrRequest = requestFactory.ehrRequest();
-		AssignmentRequest assignmentRequest = requestFactory.assignmentRequest();
-		new EHRFetcher().Run(ehrRequest, assignmentRequest, caseNumber, new Receiver<EHRFetcher>() {
-			@Override
-			public void onSuccess(EHRFetcher response) {
-				if (response != null) {
-					EHRProxy ehr = requestFactory.ehrRequest().edit(response.fetchedEHR);
-					ehr.setAssignments(response.fetchedAssignments);
-					view.setRowData(ehr);
-					panel.setWidget(view);
-				} else {
-					handleFailure(null);
+		EhrRequest context = requestFactory.ehrRequest();
+		context.findEHRByCaseNumber(caseNumber)
+			.with("patient")
+			.with("patient.caseStatus")
+			.with("demographics")
+			.with("demographics.gender").to(new Receiver<EHRProxy>() {
+				@Override
+				public void onSuccess(EHRProxy response) {
+					if (response != null)
+						view.setRowData(response);
+					else
+						handleFailure(null);
 				}
+			});
+		context.findAssignmentsByCaseNumber(caseNumber).to(new Receiver<List<AssignmentProxy>>() {
+			@Override
+			public void onSuccess(List<AssignmentProxy> response) {
+				if (response != null && response.size() != 0)
+					view.setProvider(response);
+				else
+					handleFailure(null);
+			}
+
+			@Override
+			public void onFailure(ServerFailure failure) {
+				handleFailure(failure.getMessage());
+			}
+		});
+		context.fire(new Receiver<Void>() {
+			@Override
+			public void onSuccess(Void response) {
+				panel.setWidget(view);
 			}
 
 			@Override

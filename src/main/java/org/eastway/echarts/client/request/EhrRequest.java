@@ -15,6 +15,8 @@
  */
 package org.eastway.echarts.client.request;
 
+import java.util.List;
+
 import org.eastway.echarts.domain.EHR;
 
 import com.google.gwt.requestfactory.shared.Request;
@@ -25,4 +27,5 @@ import com.google.gwt.requestfactory.shared.Service;
 public interface EhrRequest extends RequestContext {
 	Request<EHRProxy> findEHR(Long id);
 	Request<EHRProxy> findEHRByCaseNumber(String caseNumber);
+	Request<List<AssignmentProxy>> findAssignmentsByCaseNumber(String caseNumber);
 }

@@ -22,7 +22,6 @@ import com.google.gwt.event.shared.EventBus;
 
 import org.eastway.echarts.client.place.PatientSummaryPlace;
 import org.eastway.echarts.client.request.AssignmentProxy;
-import org.eastway.echarts.client.request.AssignmentRequest;
 import org.eastway.echarts.client.request.EHRProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.request.EhrRequest;
@@ -33,43 +32,6 @@ import com.google.gwt.requestfactory.shared.ServerFailure;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 public class PatientSummaryActivity extends AbstractActivity implements PatientSummaryView.Presenter {
-
-	class EHRFetcher {
-		EHRProxy fetchedEHR;
-		List<AssignmentProxy> fetchedAssignments;
-
-		void Run(final EhrRequest ehrRequest, final AssignmentRequest assignmentRequest, final String caseNumber, final Receiver<EHRFetcher> callback) {
-			ehrRequest.findEHRByCaseNumber(caseNumber)
-				.with("patient")
-				.with("patient.caseStatus")
-				.with("demographics")
-				.with("demographics.gender")
-				.fire(
-					new Receiver<EHRProxy>() {
-						@Override
-						public void onSuccess(EHRProxy response) {
-							if (response != null) {
-								fetchedEHR = response;
-								assignmentRequest.findAssignmentsByCaseNumber(caseNumber).fire(
-										new Receiver<List<AssignmentProxy>>() {
-											@Override
-											public void onSuccess(List<AssignmentProxy> response) {
-												fetchedAssignments = response;
-												if (fetchedAssignments != null)
-													callback.onSuccess(EHRFetcher.this);
-											}
-										});
-							}
-						}
-
-						@Override
-						public void onFailure(ServerFailure failure) {
-							callback.onFailure(failure);
-						}
-					});
-								
-		}
-	}
 
 	private String caseNumber;
 	private PatientSummaryView view;
@@ -87,19 +49,43 @@ public class PatientSummaryActivity extends AbstractActivity implements PatientS
 	@Override
 	public void start(final AcceptsOneWidget panel, EventBus eventBus) {
 		this.panel = panel;
-		final EhrRequest ehrRequest = requestFactory.ehrRequest();
-		AssignmentRequest assignmentRequest = requestFactory.assignmentRequest();
-		new EHRFetcher().Run(ehrRequest, assignmentRequest, caseNumber, new Receiver<PatientSummaryActivity.EHRFetcher>() {
-			@Override
-			public void onSuccess(EHRFetcher response) {
-				if (response != null) {
-					EHRProxy ehr = requestFactory.ehrRequest().edit(response.fetchedEHR);
-					ehr.setAssignments(response.fetchedAssignments);
-					view.setValue(ehr);
-					panel.setWidget(view);
-				} else {
-					handleFailure("No information found for case number: " + caseNumber);
+		EhrRequest context = requestFactory.ehrRequest();
+		context.findEHRByCaseNumber(caseNumber)
+			.with("patient")
+			.with("patient.caseStatus")
+			.with("demographics")
+			.with("demographics.gender").to(new Receiver<EHRProxy>() {
+				@Override
+				public void onSuccess(EHRProxy response) {
+					if (response != null)
+						view.setEhrData(response);
+					else
+						handleFailure("No information found for case number: " + caseNumber);
 				}
+
+				@Override
+				public void onFailure(ServerFailure failure) {
+					handleFailure(failure.getMessage());
+				}
+			});
+		context.findAssignmentsByCaseNumber(caseNumber).to(new Receiver<List<AssignmentProxy>>() {
+			@Override
+			public void onSuccess(List<AssignmentProxy> response) {
+				if (response != null && response.size() != 0)
+					view.setProviders(response);
+				//else
+				//	handleFailure("No information found for case number: " + caseNumber);
+			}
+
+			@Override
+			public void onFailure(ServerFailure failure) {
+				handleFailure(failure.getMessage());
+			}
+		});
+		context.fire(new Receiver<Void>() {
+			@Override
+			public void onSuccess(Void response) {
+				panel.setWidget(view);
 			}
 
 			@Override
@@ -110,7 +96,7 @@ public class PatientSummaryActivity extends AbstractActivity implements PatientS
 	}
 
 	private void handleFailure(String message) {
-		view.setValue(null);
+		view.setEhrData(null);
 		view.setError(message);
 		panel.setWidget(view);
 	}

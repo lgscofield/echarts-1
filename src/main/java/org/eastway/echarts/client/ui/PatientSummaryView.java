@@ -15,6 +15,9 @@
  */
 package org.eastway.echarts.client.ui;
 
+import java.util.List;
+
+import org.eastway.echarts.client.request.AssignmentProxy;
 import org.eastway.echarts.client.request.EHRProxy;
 
 import com.google.gwt.resources.client.CssResource;
@@ -27,6 +30,7 @@ public interface PatientSummaryView extends IsWidget {
 		String evenRow();
 	}
 
-	void setValue(EHRProxy proxy);
+	void setEhrData(EHRProxy proxy);
 	void setError(String message);
+	void setProviders(List<AssignmentProxy> assignments);
 }

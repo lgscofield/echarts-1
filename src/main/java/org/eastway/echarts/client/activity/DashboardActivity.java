@@ -16,7 +16,6 @@
 package org.eastway.echarts.client.activity;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
@@ -24,57 +23,17 @@ import com.google.gwt.event.shared.EventBus;
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.place.DashboardPlace;
 import org.eastway.echarts.client.place.TicklerPlace;
-import org.eastway.echarts.client.request.AssignmentProxy;
-import org.eastway.echarts.client.request.AssignmentRequest;
-import org.eastway.echarts.client.request.EHRProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
-import org.eastway.echarts.client.request.EhrRequest;
 import org.eastway.echarts.client.request.ProductivityProxy;
 import org.eastway.echarts.client.ui.DashboardView;
 
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.requestfactory.shared.Receiver;
-import com.google.gwt.requestfactory.shared.ServerFailure;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 public class DashboardActivity extends AbstractActivity implements DashboardView.Presenter<LinkedHashMap<String, Long>> {
-
-	class EHRFetcher {
-		EHRProxy fetchedEHR;
-		List<AssignmentProxy> fetchedAssignments;
-
-		void Run(final EhrRequest ehrRequest, final AssignmentRequest assignmentRequest, final String caseNumber, final Receiver<EHRFetcher> callback) {
-			ehrRequest.findEHRByCaseNumber(caseNumber)
-				.with("patient")
-				.with("patient.caseStatus")
-				.with("demographics")
-				.fire(
-					new Receiver<EHRProxy>() {
-						@Override
-						public void onSuccess(EHRProxy response) {
-							if (response != null)
-								fetchedEHR = response;
-								assignmentRequest.findAssignmentsByCaseNumber(caseNumber).fire(
-										new Receiver<List<AssignmentProxy>>() {
-											@Override
-											public void onSuccess(List<AssignmentProxy> response) {
-												fetchedAssignments = response;
-												if (fetchedAssignments != null)
-													callback.onSuccess(EHRFetcher.this);
-											}
-										});
-						}
-
-						@Override
-						public void onFailure(ServerFailure error) {
-							com.google.gwt.user.client.Window.alert(error.getMessage());
-						}
-					});
-			
-		}
-	}
 
 	private DashboardView<LinkedHashMap<String, Long>> view;
 	private EchartsRequestFactory requestFactory;

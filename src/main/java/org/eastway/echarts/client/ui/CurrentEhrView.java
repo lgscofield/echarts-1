@@ -56,7 +56,6 @@ public class CurrentEhrView extends Composite {
 						.getDob()));
 		age.setInnerText(getAge(ehr.getDemographics().getDob()));
 		ssn.setInnerText(ehr.getPatient().getSsn() == null ? "NO DATA" : ehr.getPatient().getSsn());
-		provider.setInnerText(getProvider(ehr.getAssignments()));
 		caseStatus.setInnerText(getCaseStatus(ehr.getPatient().getCaseStatus()));
 		container.setVisible(true);
 		Window.setTitle(Window.getTitle().replaceAll("ECharts - (.*)", "ECharts - " + ehr.getPatient().getCaseNumber() + " - " + echartsConstants.version()));
@@ -76,13 +75,15 @@ public class CurrentEhrView extends Composite {
 		return new Long((new Date().getTime() - dob.getTime()) / (3600*24*365) / 1000).toString();
 	}
 
-	private String getProvider(List<AssignmentProxy> assignments) {
+	public void setProvider(List<AssignmentProxy> assignments) {
+		String result = null;
 		if (assignments == null || assignments.isEmpty())
-			return "NO DATA";
+			result = "NO DATA";
 		for (AssignmentProxy a : assignments)
 			if (a.getStaff() != null && a.getStaff().equals(EchartsUser.staffId))
-				return a.getStaffName();
-		return assignments.get(0).getStaffName() != null ? assignments.get(0).getStaffName() : "NO DATA";
+				result = a.getStaffName();
+		result = assignments.get(0).getStaffName() != null ? assignments.get(0).getStaffName() : "NO DATA";
+		provider.setInnerText(result);
 	}
 
 	public void setError(String message) {
