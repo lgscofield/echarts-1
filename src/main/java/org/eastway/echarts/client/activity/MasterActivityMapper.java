@@ -76,6 +76,7 @@ public class MasterActivityMapper implements ActivityMapper {
 	private List<ColumnDefinition<UserProxy>> profileColumnDefinitions;
 	private AppointmentDataProvider appointmentDataProvider;
 	private PatientSummaryView patientSummaryView;
+	private EchartsPlaceHistoryMapper historyMapper;
 
 	private static final Logger log = Logger.getLogger(MasterActivityMapper.class.getName());
 
@@ -83,6 +84,7 @@ public class MasterActivityMapper implements ActivityMapper {
 	public MasterActivityMapper(EchartsRequestFactory requestFactory,
 							     PlaceController placeController,
 							     TicklerView<Tickler> ticklerView,
+							     EchartsPlaceHistoryMapper historyMapper,
 							     List<ColumnDefinition<Tickler>> ticklerColumnDefinitions,
 							     PatientSummaryView patientSummaryView,
 							     MessageView<MessageProxy> messageView,
@@ -101,6 +103,7 @@ public class MasterActivityMapper implements ActivityMapper {
 		super();
 		this.requestFactory = requestFactory;
 		this.placeController = placeController;
+		this.historyMapper = historyMapper;
 		this.ticklerView = ticklerView;
 		this.ticklerColumnDefinitions = ticklerColumnDefinitions;
 		this.patientSummaryView = patientSummaryView;
@@ -121,7 +124,7 @@ public class MasterActivityMapper implements ActivityMapper {
 
 	@Override
 	public Activity getActivity(Place place) {
-		log.log(Level.INFO, "{\"username\":\"" + EchartsUser.userName + "\",\"url\":\"" + Window.Location.getHref() + "\"}");
+		logPlaceChange(place);
 		if (place instanceof TicklerPlace)
 			return new TicklerActivity((TicklerPlace) place, requestFactory, ticklerColumnDefinitions, placeController, ticklerView);
 		else if (place instanceof PatientSummaryPlace)
@@ -163,4 +166,12 @@ public class MasterActivityMapper implements ActivityMapper {
 		return null;
 	}
 
+	private void logPlaceChange(Place place) {
+		String token = historyMapper.getToken(place);
+		log.log(Level.INFO, "{\"username\":\""
+				+ EchartsUser.userName
+				+ "\",\"url\":\""
+				+ Window.Location.createUrlBuilder().setHash(token).buildString()
+				+ "\"}");
+	}
 }
