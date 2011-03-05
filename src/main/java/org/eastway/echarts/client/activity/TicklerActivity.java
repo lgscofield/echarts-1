@@ -259,7 +259,7 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 	@Override
 	public void openEhr(Tickler t) {
 		Window.open(Window.Location.createUrlBuilder()
-			.setHash("#PatientSummaryPlace:" + t.getCaseNumber()).buildString(), "_blank", "");
+			.setHash("#patientsummary:" + t.getCaseNumber()).buildString(), "_blank", "");
 	}
 
 	@Override

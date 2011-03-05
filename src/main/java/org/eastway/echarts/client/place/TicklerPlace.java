@@ -2,6 +2,7 @@ package org.eastway.echarts.client.place;
 
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
+import com.google.gwt.place.shared.Prefix;
 
 public class TicklerPlace extends Place {
 	private String ticklerName;
@@ -14,6 +15,7 @@ public class TicklerPlace extends Place {
 		return ticklerName;
 	}
 
+	@Prefix("tickler")
 	public static class Tokenizer implements PlaceTokenizer<TicklerPlace> {
 		@Override
 		public TicklerPlace getPlace(String token) {

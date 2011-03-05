@@ -74,7 +74,7 @@ public class DashboardSideBarViewImpl extends Composite implements DashboardSide
 			panel.add(new HTML(TEMPLATE.header(header)));
 			for (LinkProxy link : links) {
 				if (link.getHeader().equals(header)) {
-					Hyperlink hyperlink = new Hyperlink(SafeHtmlUtils.fromString(link.getName()), "DashboardFramePlace:" + link.getUrl());
+					Hyperlink hyperlink = new Hyperlink(SafeHtmlUtils.fromString(link.getName()), "dashboardframe:" + link.getUrl());
 					panel.add(hyperlink);
 					hyperlink.addStyleName(style.link());
 				}

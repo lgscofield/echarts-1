@@ -2,6 +2,7 @@ package org.eastway.echarts.client.place;
 
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
+import com.google.gwt.place.shared.Prefix;
 
 public class PatientSummaryPlace extends Place {
 
@@ -15,6 +16,7 @@ public class PatientSummaryPlace extends Place {
 		return caseNumber;
 	}
 
+	@Prefix("patientsummary")
 	public static class Tokenizer implements PlaceTokenizer<PatientSummaryPlace> {
 		@Override
 		public PatientSummaryPlace getPlace(String token) {

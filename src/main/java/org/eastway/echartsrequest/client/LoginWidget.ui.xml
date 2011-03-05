@@ -22,7 +22,7 @@
 	<g:HTMLPanel addStyleNames="{style.right}">
 		<table>
 			<tr>
-				<td><g:Hyperlink title='Edit your settings' targetHistoryToken='ProfilePlace:' ui:field="userName" /></td>
+				<td><g:Hyperlink title='Edit your settings' targetHistoryToken='profile:' ui:field="userName" /></td>
 				<td>&mdash;</td>
 				<td><g:Anchor ui:field="logout" href='#'>logout</g:Anchor></td>
 			</tr>

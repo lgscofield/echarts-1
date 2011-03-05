@@ -2,6 +2,7 @@ package org.eastway.echarts.client.place;
 
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
+import com.google.gwt.place.shared.Prefix;
 
 public class DashboardFramePlace extends Place {
 	private String url;
@@ -10,6 +11,7 @@ public class DashboardFramePlace extends Place {
 		this.url = url;
 	}
 
+	@Prefix("dashboardframe")
 	public static class Tokenizer implements PlaceTokenizer<DashboardFramePlace> {
 		@Override
 		public DashboardFramePlace getPlace(String token) {
