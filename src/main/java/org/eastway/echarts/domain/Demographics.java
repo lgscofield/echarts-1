@@ -28,6 +28,7 @@ import javax.validation.constraints.NotNull;
 import javax.persistence.Version;
 
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.transaction.annotation.Transactional;
 
 @Configurable
 @Entity
@@ -473,5 +474,22 @@ public class Demographics {
 		if (id == null)
 			return null;
 		return entityManager().find(Demographics.class, id);
+	}
+
+	@Transactional
+	public void persist() {
+		if (this.entityManager == null) this.entityManager = entityManager();
+		this.entityManager.persist(this);
+	}
+
+	@Transactional
+	public void remove() {
+		if (this.entityManager == null) this.entityManager = entityManager();
+		if (this.entityManager.contains(this)) {
+			this.entityManager.remove(this);
+		} else {
+			Demographics attached = Demographics.findDemographics(this.caseNumber);
+			this.entityManager.remove(attached);
+		}
 	}
 }

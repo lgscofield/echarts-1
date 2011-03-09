@@ -15,9 +15,11 @@
  */
 package org.eastway.echarts.client.ui;
 
+import java.util.Date;
 import java.util.List;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
+import org.eastway.echarts.shared.Tickler;
 
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -58,4 +60,6 @@ public interface TicklerView<T> extends IsWidget {
 			int overduePercentage,
 			int upToDateCount,
 			int upToDatePercentage);
+	String formatTicklerDate(Date date);
+	List<T> getRowData();
 }

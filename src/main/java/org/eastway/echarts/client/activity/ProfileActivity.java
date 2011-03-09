@@ -86,9 +86,11 @@ public class ProfileActivity extends AbstractActivity implements ProfileView.Pre
 	@Override
 	public void save(UserProxy userProxy) {
 		final String program = userProxy.getProgram();
-		request.persist().using(userProxy).fire(new Receiver<Void>() {
+		request.merge().using(userProxy).with("supervisor").with("role").fire(new Receiver<UserProxy>() {
 			@Override
-			public void onSuccess(Void response) {
+			public void onSuccess(UserProxy response) {
+				if (response != null)
+					setData(response);
 				view.setStatus("Settings saved");
 				if (program != null && program.length() != 0)
 					view.clearFirstLogin();

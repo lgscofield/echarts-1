@@ -15,6 +15,7 @@
  */
 package org.eastway.echarts.client.request;
 
+import com.google.gwt.requestfactory.shared.InstanceRequest;
 import com.google.gwt.requestfactory.shared.Request;
 import com.google.gwt.requestfactory.shared.RequestContext;
 import com.google.gwt.requestfactory.shared.ServiceName;
@@ -24,4 +25,7 @@ public interface CodeRequest extends RequestContext {
 	abstract Request<org.eastway.echarts.client.request.CodeProxy> findCode(Long id);
 	//abstract Request<java.util.List<org.eastway.echarts.client.rpc.CodeProxy>> findCodesByColumnName(String columnName);
 	abstract Request<java.util.List<org.eastway.echarts.client.request.CodeProxy>> findAllCodes();
+	abstract InstanceRequest<CodeProxy, Void> persist();
+	abstract InstanceRequest<CodeProxy, Void> remove();
+	abstract InstanceRequest<CodeProxy, CodeProxy> merge();
 }

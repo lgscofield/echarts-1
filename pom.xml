@@ -12,6 +12,7 @@
 		<spring.version>3.0.5.RELEASE</spring.version>
 		<aspectj.version>1.6.11.M1</aspectj.version>
 		<slf4j.version>1.6.1</slf4j.version>
+		<gwt.version>2.1.1</gwt.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<repositories>
@@ -330,12 +331,12 @@
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
-			<version>2.1.1</version>
+			<version>${gwt.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
-			<version>2.1.1</version>
+			<version>${gwt.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -347,11 +348,6 @@
 			<groupId>com.googlecode.gwt.inject</groupId>
 			<artifactId>gin</artifactId>
 			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.easymock</groupId>
-			<artifactId>easymock</artifactId>
-			<version>3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>xalan</groupId>
@@ -372,6 +368,11 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
 			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>1.8.0.10</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -531,6 +532,13 @@
 						<module>${project.groupId}.Echarts</module>
 					</modules>
 					<copyWebapp>true</copyWebapp>
+					<htmlunit>IE6,IE7,FF3</htmlunit>
+					<mode>htmlunit</mode>
+					<productionMode>true</productionMode>
+					<webMode>true</webMode>
+					<testTimeOut>600</testTimeOut>
+					<timeOut>600</timeOut>
+					<!--<skipTests>true</skipTests>-->
 				</configuration>
 				<executions>
 					<execution>
@@ -553,12 +561,12 @@
 					<dependency>
 						<groupId>com.google.gwt</groupId>
 						<artifactId>gwt-dev</artifactId>
-						<version>2.1.1</version>
+						<version>${gwt.version}</version>
 					</dependency>
 					<dependency>
 						<groupId>com.google.gwt</groupId>
 						<artifactId>gwt-user</artifactId>
-						<version>2.1.1</version>
+						<version>${gwt.version}</version>
 					</dependency>
 				</dependencies>
 			</plugin>

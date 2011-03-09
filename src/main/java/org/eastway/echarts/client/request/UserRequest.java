@@ -30,4 +30,6 @@ public interface UserRequest extends RequestContext {
 	Request<UserProxy> findUser(String userName);
 	InstanceRequest<UserProxy, Void> persist();
 	Request<List<UserProxy>> findAssignments(String supervisorName);
+	InstanceRequest<UserProxy, Void> remove();
+	InstanceRequest<UserProxy, UserProxy> merge();
 }

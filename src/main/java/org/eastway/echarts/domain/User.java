@@ -31,6 +31,7 @@ import javax.persistence.Version;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Configurable
@@ -228,14 +229,35 @@ public class User {
 	public static User findUser(String id) {
 		if (id == null)
 			return null;
-		return entityManager().find(User.class, id);
+		List<User> results = entityManager()
+				.createQuery("select o from User o where o.id = :id", User.class)
+				.setParameter("id",id)
+				.getResultList();
+		if (results.size() > 0) {
+			return results.get(0);
+		}
+		return null;
 	}
 
 	@Transactional
+	public void flush() {
+		if (this.entityManager == null) this.entityManager = entityManager();
+		this.entityManager.flush();
+	}
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void persist() {
 		if (this.entityManager == null) this.entityManager = entityManager();
 		this.entityManager.persist(this);
 	}
+
+	@Transactional
+	public User merge() {
+		if (this.entityManager == null) this.entityManager = entityManager();
+		User merged = this.entityManager.merge(this);
+		this.entityManager.flush();
+		return merged;
+    }
 
 	@Override
 	public String toString() {
@@ -266,5 +288,16 @@ public class User {
 			.createQuery("SELECT o FROM User o WHERE o.supervisor.id = :supervisor", User.class)
 			.setParameter("supervisor", supervisor)
 			.getResultList();
+	}
+
+	@Transactional
+	public void remove() {
+		if (this.entityManager == null) this.entityManager = entityManager();
+		if (this.entityManager.contains(this)) {
+			this.entityManager.remove(this);
+		} else {
+			User attached = User.findUser(this.id);
+			this.entityManager.remove(attached);
+		}
 	}
 }

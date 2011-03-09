@@ -77,4 +77,5 @@ public interface UserProxy extends EntityProxy {
 	void setId(String id);
 
 	Integer getVersion();
+	void setVersion(Integer version);
 }

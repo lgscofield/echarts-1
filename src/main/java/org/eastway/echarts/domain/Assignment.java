@@ -17,6 +17,8 @@ package org.eastway.echarts.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -34,6 +36,7 @@ import javax.validation.constraints.Null;
 
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.transaction.annotation.Transactional;
 
 @Configurable
 @Entity
@@ -41,6 +44,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Assignment {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "orderid")
     private Long id;
 
@@ -273,5 +277,22 @@ public class Assignment {
 				.setParameter("staffId", staffId)
 				.getResultList().get(0);
 		return null;
+	}
+
+	@Transactional
+	public void persist() {
+		if (this.entityManager == null) this.entityManager = entityManager();
+		this.entityManager.persist(this);
+	}
+
+	@Transactional
+	public void remove() {
+		if (this.entityManager == null) this.entityManager = entityManager();
+		if (this.entityManager.contains(this)) {
+			this.entityManager.remove(this);
+		} else {
+			Assignment attached = Assignment.findAssignment(this.id);
+			this.entityManager.remove(attached);
+		}
 	}
 }

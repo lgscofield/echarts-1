@@ -68,7 +68,7 @@ public class GwtTestTicklerView extends GWTTestCase {
 		for (int row = 1, i = 0; row < ticklerView.table.getRowCount(); row++) {
 			String header = ticklerView.table.getText(row, 1);
 			if (header.matches("Case #"))
-					continue;
+				continue;
 			String caseNumber2 = ticklers.get(ticklerView.getRow(row)).getCaseNumber();
 			String caseNumber1 = ticklers.get(i++).getCaseNumber();
 			assertEquals(caseNumber1, caseNumber2);

@@ -24,7 +24,6 @@ import java.util.List;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.http.client.UrlBuilder;
-import com.google.gwt.i18n.client.DateTimeFormat;
 
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.common.ColumnDefinition;
@@ -236,9 +235,7 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 
 
 	private String formatDueDate(long dueDate) {
-		String dateFormat = "M/d/y";
-		return DateTimeFormat.getFormat(dateFormat)
-			.format(new Date(dueDate));
+		return view.formatTicklerDate(new Date(dueDate));
 	}
 
 	public TicklerView<Tickler> getDisplay() {

@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.eastway.echarts.domain.Assignment;
 
+import com.google.gwt.requestfactory.shared.InstanceRequest;
 import com.google.gwt.requestfactory.shared.Request;
 import com.google.gwt.requestfactory.shared.RequestContext;
 import com.google.gwt.requestfactory.shared.Service;
@@ -29,4 +30,6 @@ public interface AssignmentRequest extends RequestContext {
 	Request<List<AssignmentProxy>> findAssignmentsByStaff(String supervisor, String staff);
 	Request<List<AssignmentProxy>> findAssignmentsByCaseNumber(String caseNumber);
 	Request<UserProxy> findUserByStaffId(String staffId);
+	InstanceRequest<AssignmentProxy, Void> persist();
+	InstanceRequest<AssignmentProxy, Void> remove();
 }

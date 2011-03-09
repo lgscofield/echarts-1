@@ -16,9 +16,12 @@
 package org.eastway.echarts.client.ui;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
+import org.eastway.echarts.client.style.GlobalResources;
+import org.eastway.echarts.shared.Tickler;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SpanElement;
@@ -248,5 +251,15 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 			int overdueCount, int overduePercentage,
 			int upToDateCount, int upToDatePercentage) {
 		noteTimeliness.setInnerText("Up to date: " + upToDatePercentage + "% (" + upToDateCount + ") Overdue: " + overduePercentage + "% (" + overdueCount + ") No data: " + noDataPercentage + "% (" + noDataCount + ")");
+	}
+
+	@Override
+	public String formatTicklerDate(Date date) {
+		return GlobalResources.getDateFormat().format(date);
+	}
+
+	@Override
+	public List<T> getRowData() {
+		return rowData;
 	}
 }

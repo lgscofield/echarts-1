@@ -30,6 +30,7 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.transaction.annotation.Transactional;
 
 @Configurable
 @Entity
@@ -323,5 +324,22 @@ public class Patient {
 			.append("LastEditBy: ").append(getLastEditBy()).append(", ")
 			.append("LastEdit: ").append(getLastEdit());
 		return sb.toString();
+	}
+
+	@Transactional
+	public void persist() {
+		if (this.entityManager == null) this.entityManager = entityManager();
+		this.entityManager.persist(this);
+	}
+
+	@Transactional
+	public void remove() {
+		if (this.entityManager == null) this.entityManager = entityManager();
+		if (this.entityManager.contains(this)) {
+			this.entityManager.remove(this);
+		} else {
+			Patient attached = Patient.findPatient(this.caseNumber);
+			this.entityManager.remove(attached);
+		}
 	}
 }

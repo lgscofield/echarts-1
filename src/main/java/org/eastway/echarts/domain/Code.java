@@ -5,17 +5,21 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
 
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.transaction.annotation.Transactional;
 
 @Configurable
 @Entity
 @Table(name = "Codes")
 public class Code {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "code_id")
 	private Long id;
 
@@ -90,4 +94,29 @@ public class Code {
 			return null;
 		return entityManager().find(Code.class, id);
 	}
+
+	@Transactional
+	public void persist() {
+		if (this.entityManager == null) this.entityManager = entityManager();
+		this.entityManager.persist(this);
+	}
+
+	@Transactional
+	public void remove() {
+		if (this.entityManager == null) this.entityManager = entityManager();
+		if (this.entityManager.contains(this)) {
+			this.entityManager.remove(this);
+		} else {
+			Code attached = Code.findCode(this.id);
+			this.entityManager.remove(attached);
+		}
+	}
+
+	@Transactional
+	public Code merge() {
+		if (this.entityManager == null) this.entityManager = entityManager();
+		Code merged = this.entityManager.merge(this);
+		this.entityManager.flush();
+		return merged;
+    }
 }

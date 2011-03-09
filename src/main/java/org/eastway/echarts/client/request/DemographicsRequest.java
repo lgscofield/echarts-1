@@ -17,6 +17,7 @@ package org.eastway.echarts.client.request;
 
 import org.eastway.echarts.domain.Demographics;
 
+import com.google.gwt.requestfactory.shared.InstanceRequest;
 import com.google.gwt.requestfactory.shared.Request;
 import com.google.gwt.requestfactory.shared.RequestContext;
 import com.google.gwt.requestfactory.shared.Service;
@@ -24,4 +25,6 @@ import com.google.gwt.requestfactory.shared.Service;
 @Service(Demographics.class)
 public interface DemographicsRequest extends RequestContext {
 	Request<DemographicsProxy> findDemographics(String id);
+	InstanceRequest<DemographicsProxy, Void> persist();
+	InstanceRequest<DemographicsProxy, Void> remove();
 }
