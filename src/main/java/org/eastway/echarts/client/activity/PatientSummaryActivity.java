@@ -73,8 +73,8 @@ public class PatientSummaryActivity extends AbstractActivity implements PatientS
 			public void onSuccess(List<AssignmentProxy> response) {
 				if (response != null && response.size() != 0)
 					view.setProviders(response);
-				//else
-				//	handleFailure("No information found for case number: " + caseNumber);
+				else
+					view.setProviders(null);
 			}
 
 			@Override

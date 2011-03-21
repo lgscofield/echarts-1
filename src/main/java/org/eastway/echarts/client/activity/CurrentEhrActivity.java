@@ -61,7 +61,7 @@ public class CurrentEhrActivity extends AbstractActivity {
 				if (response != null && response.size() != 0)
 					view.setProvider(response);
 				else
-					handleFailure(null);
+					view.setProvider(null);
 			}
 
 			@Override

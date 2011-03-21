@@ -74,9 +74,11 @@ public class PatientSummaryViewImpl extends Composite implements PatientSummaryV
 	@Override
 	public void setProviders(List<AssignmentProxy> assignments) {
 		StringBuilder sb = new StringBuilder();
-		for (AssignmentProxy assignment : assignments)
-			sb.append(AssignmentProxyRenderer.instance().render(assignment))
-				.append("<br />");
+		if (assignments != null && !assignments.isEmpty()) {
+			for (AssignmentProxy assignment : assignments)
+				sb.append(AssignmentProxyRenderer.instance().render(assignment))
+					.append("<br />");
+		}
 		providers.setInnerHTML(sb.toString());
 	}
 

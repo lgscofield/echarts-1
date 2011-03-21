@@ -77,12 +77,14 @@ public class CurrentEhrView extends Composite {
 
 	public void setProvider(List<AssignmentProxy> assignments) {
 		String result = null;
-		if (assignments == null || assignments.isEmpty())
+		if (assignments == null || assignments.isEmpty()) {
 			result = "NO DATA";
-		for (AssignmentProxy a : assignments)
+		} else {
+			for (AssignmentProxy a : assignments)
 			if (a.getStaff() != null && a.getStaff().equals(EchartsUser.staffId))
 				result = a.getStaffName();
-		result = assignments.get(0).getStaffName() != null ? assignments.get(0).getStaffName() : "NO DATA";
+			result = assignments.get(0).getStaffName() != null ? assignments.get(0).getStaffName() : "NO DATA";
+		}
 		provider.setInnerText(result);
 	}
 
