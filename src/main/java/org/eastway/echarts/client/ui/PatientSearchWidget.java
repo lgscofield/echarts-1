@@ -97,9 +97,11 @@ public class PatientSearchWidget extends Composite {
 
 	private NoSearchResultTimer noSearchResultTimer = new NoSearchResultTimer();
 
+	private String searchPattern = "(.*) - .*";
+
 	@UiHandler("patientSearchButton")
 	void searchClicked(ClickEvent event) {
-		final String id = suggestBox.getText().replaceAll("(.*) - .*", "$1");
+		final String id = suggestBox.getText().replaceAll(searchPattern, "$1");
 		if (id.isEmpty())
 			return;
 		suggestBox.getSuggestOracle().requestSuggestions(new Request(id), new Callback() {
@@ -109,7 +111,7 @@ public class PatientSearchWidget extends Composite {
 					noSearchResultTimer.cancel();
 					NoSearchResultTimer.FAIL_COUNT = 0;
 					suggestionDisplay.setEmptyListMessage(getNoResultMessage(0));
-					placeController.goTo(new PatientSummaryPlace(id));
+					placeController.goTo(new PatientSummaryPlace(response.getSuggestions().iterator().next().getDisplayString().replaceAll(searchPattern, "$1")));
 					suggestBox.setText("");
 				} else {
 					noSearchResultTimer.cancel();
