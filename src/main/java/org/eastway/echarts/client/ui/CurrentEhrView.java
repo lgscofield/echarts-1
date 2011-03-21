@@ -47,6 +47,13 @@ public class CurrentEhrView extends Composite {
 	public void setRowData(EHRProxy ehr) {
 		if (ehr == null) {
 			Window.setTitle(Window.getTitle().replaceAll("ECharts - .*", "ECharts - " + echartsConstants.version()));
+			name.setInnerText("");
+			caseNumber.setInnerText("");
+			dob.setInnerText("");
+			age.setInnerText("");
+			ssn.setInnerText("");
+			caseStatus.setInnerText("");
+			container.setVisible(false);
 			return;
 		}
 		name.setInnerText(ehr.getPatient().getName() == null ? "NO DATA" : ehr.getPatient().getName());

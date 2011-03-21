@@ -60,6 +60,16 @@ public class DemographicsViewImpl extends Composite implements DemographicsView 
 
 	@Override
 	public void setValue(DemographicsProxy proxy) {
+		if (proxy == null) {
+			allergies.setInnerText("");
+			employment.setInnerText("");
+			dob.setInnerText("");
+			maritalStatus.setInnerText("");
+			educationLevel.setInnerText("");
+			educationType.setInnerText("");
+			race.setInnerText("");
+			return;
+		}
 		this.proxy = proxy;
 
 		allergies.setInnerText(this.proxy.getAllergies() == null ? "" : this.proxy.getAllergies());

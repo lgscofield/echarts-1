@@ -59,6 +59,16 @@ public class ReferralViewImpl extends Composite implements ReferralView {
 
 	@Override
 	public void setValue(ReferralProxy proxy) {
+		if (proxy == null) {
+			takenBy.setInnerText("");
+			disposition.setInnerText("");
+			source.setInnerText("");
+			admissionDate.setInnerText("");
+			type.setInnerText("");
+			referralDate.setInnerText("");
+			dischargeDate.setInnerText("");
+			return;
+		}
 		this.proxy = proxy;
 
 		takenBy.setInnerText(this.proxy.getTakenByStaff() == null ? "" : String.valueOf(this.proxy.getTakenByStaff()));

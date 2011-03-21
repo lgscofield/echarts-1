@@ -57,10 +57,12 @@ public class PatientSummaryActivity extends AbstractActivity implements PatientS
 			.with("demographics.gender").to(new Receiver<EHRProxy>() {
 				@Override
 				public void onSuccess(EHRProxy response) {
-					if (response != null)
+					if (response != null) {
 						view.setEhrData(response);
-					else
+						view.setError("");
+					} else {
 						handleFailure("No information found for case number: " + caseNumber);
+					}
 				}
 
 				@Override

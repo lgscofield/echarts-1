@@ -116,12 +116,14 @@ public class EHR {
 	}
 
 	public static EHR findEHRByCaseNumber(String caseNumber) {
-		if (caseNumber == null)
-			return null;
-		return entityManager().createQuery(
-			"SELECT ehr FROM EHR ehr WHERE ehr.patient.caseNumber = :caseNumber", EHR.class)
-				.setParameter("caseNumber", caseNumber)
-				.getSingleResult();
+		List<EHR> results = entityManager()
+				.createQuery("SELECT ehr FROM EHR ehr WHERE ehr.patient.caseNumber = :caseNumber", EHR.class)
+				.setParameter("caseNumber",caseNumber)
+				.getResultList();
+		if (results.size() > 0) {
+			return results.get(0);
+		}
+		return null;
 	}
 
 	public static List<Assignment> findAssignmentsByCaseNumber(String caseNumber) {

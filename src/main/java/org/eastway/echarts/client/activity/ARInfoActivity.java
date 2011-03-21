@@ -47,6 +47,7 @@ public class ARInfoActivity extends AbstractActivity implements ARInfoView.Prese
 			public void onSuccess(ARInfoProxy response) {
 				if (response != null) {
 					view.setValue(response);
+					view.setError("");
 					panel.setWidget(view);
 				} else {
 					handleFailure("No ARInfo found for case number: " + caseNumber);

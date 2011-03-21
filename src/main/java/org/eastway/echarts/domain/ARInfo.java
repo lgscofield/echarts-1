@@ -17,6 +17,7 @@ package org.eastway.echarts.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -199,8 +200,15 @@ public class ARInfo {
 	}
 
 	public static ARInfo findARInfo(String id) {
-		if(id == null)
+		if (id == null)
 			return null;
-		return entityManager().find(ARInfo.class, id);
+		List<ARInfo> results = entityManager()
+				.createQuery("select o from ARInfo o where o.id = :id", ARInfo.class)
+				.setParameter("id",id)
+				.getResultList();
+		if (results.size() > 0) {
+			return results.get(0);
+		}
+		return null;
 	}
 }

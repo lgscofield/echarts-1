@@ -47,6 +47,7 @@ public class ReferralActivity extends AbstractActivity implements ReferralView.P
 			public void onSuccess(ReferralProxy response) {
 				if (response != null) {
 					view.setValue(response);
+					view.setError("");
 					panel.setWidget(view);
 				} else {
 					handleFailure("No referral data found for case number: " + caseNumber);

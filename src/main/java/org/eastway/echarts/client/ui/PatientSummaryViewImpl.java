@@ -60,6 +60,15 @@ public class PatientSummaryViewImpl extends Composite implements PatientSummaryV
 
 	@Override
 	public void setEhrData(EHRProxy proxy) {
+		if (proxy == null) {
+			displayName.setInnerText("");
+			picture.setSrc(GlobalResources.resources().defaultPhoto().getURL());
+			ssn.setInnerText("");
+			caseStatus.setInnerText("");
+			gender.setInnerText("");
+			dob.setInnerText("");
+			return;
+		}
 		this.proxy = proxy;
 
 		displayName.setInnerText(this.proxy.getPatient() == null || this.proxy.getPatient().getName() == null ? "" : this.proxy.getPatient().getName());

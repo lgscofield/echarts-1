@@ -63,6 +63,22 @@ public class ARInfoViewImpl extends Composite implements ARInfoView {
 
 	@Override
 	public void setValue(ARInfoProxy proxy) {
+		if (proxy == null) {
+			billCode.setInnerText("");
+			arStatus.setInnerText("");
+			income.setInnerText("");
+			dependents.setInnerText("");
+			spendDown.setInnerText("");
+			macsisRegisteredName.setInnerText("");
+			macsisEffectiveDate.setInnerText("");
+			uci.setInnerText("");
+			medicaidNumber.setInnerText("");
+			titleXXApplicationDate.setInnerText("");
+			titleXXRedetermineDate.setInnerText("");
+			titleXXEligibilityCategory.setInnerText("");
+			return;
+		}
+
 		this.proxy = proxy;
 
 		billCode.setInnerText(this.proxy.getBillCode() == null ? "" : String.valueOf(this.proxy.getBillCode()));

@@ -54,6 +54,7 @@ public class DemographicsActivity extends AbstractActivity implements Demographi
 			public void onSuccess(DemographicsProxy response) {
 				if (response != null) {
 					view.setValue(response);
+					view.setError("");
 					panel.setWidget(view);
 				} else {
 					handleFailure("No demographics found for case number: " + caseNumber);
