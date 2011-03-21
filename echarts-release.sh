@@ -44,6 +44,7 @@ do
 			echo -n "Please enter Y or N: "
 	esac
 done
+STARTTIME=$(date +%s)
 echo "mkdir ${ROOT}/echarts"
 mkdir "${ROOT}"/echarts
 echo "copying ${ROOT}/echarts.war to ${ROOT}/echarts/echarts.war"
@@ -78,3 +79,9 @@ then
 	echo "fatal: unzip to ${WEBAPPS}/echarts unsuccessful"
 	exit 1
 fi
+
+echo "BUILD Finished: $(date)"
+
+service tomcat5 restart
+
+echo "Total time (sec): $((`date -d "now" +%s` - $STARTTIME))"
