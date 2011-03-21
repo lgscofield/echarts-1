@@ -22,7 +22,8 @@ public class DashboardFrameActivity extends AbstractActivity {
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		Frame frame = new Frame(buildUrl(url));
 		panel.setWidget(frame);
-		frame.setSize("100%", Window.getClientHeight() - frame.getOffsetHeight() + "px");
+		int height = Window.getClientHeight() - frame.getOffsetHeight() < 500 ? 500 : Window.getClientHeight() - frame.getOffsetHeight();
+		frame.setSize("100%", height + "px");
 	}
 
 	private String buildUrl(String url) {
