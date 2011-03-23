@@ -114,7 +114,10 @@ public class CellListSuggestionDisplay extends SuggestBox.SuggestionDisplay
 	protected Suggestion getCurrentSelection() {
 		if (!suggestionPopup.isShowing())
 			return null;
-		return selectionModel.getSelectedObject();
+		if (suggestionCellList.getRowCount() > 0)
+			return suggestionCellList.getVisibleItem(0);
+		else
+			return null;
 	}
 
 	@Override
