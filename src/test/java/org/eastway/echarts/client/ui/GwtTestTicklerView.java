@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.common.TicklerColumnDefinitionsImpl;
 import org.eastway.echarts.client.ui.TicklerViewImpl;
 import org.eastway.echarts.shared.Tickler;
@@ -30,7 +29,6 @@ import com.google.gwt.junit.client.GWTTestCase;
 
 public class GwtTestTicklerView extends GWTTestCase {
 	TicklerViewImpl<Tickler> ticklerView;
-	List<ColumnDefinition<Tickler>> columnDefinitions = new TicklerColumnDefinitionsImpl();
 	List<Tickler> ticklers;
 
 	@Override
@@ -43,7 +41,7 @@ public class GwtTestTicklerView extends GWTTestCase {
 		ticklers = new ArrayList<Tickler>();
 		setTicklers();
 		ticklerView = new TicklerViewImpl<Tickler>();
-		ticklerView.setColumnDefinitions(columnDefinitions);
+		ticklerView.setColumnDefinitions(new TicklerColumnDefinitionsImpl());
 		ticklerView.setRowData(ticklers);
 	}
 

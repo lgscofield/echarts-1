@@ -1,5 +1,6 @@
 package org.eastway.echarts.activity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -7,7 +8,6 @@ import java.util.Set;
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.activity.TicklerActivity;
 import org.eastway.echarts.client.common.ColumnDefinition;
-import org.eastway.echarts.client.common.TicklerColumnDefinitionsImpl;
 import org.eastway.echarts.client.place.TicklerPlace;
 import org.eastway.echarts.client.request.AssignmentProxy;
 import org.eastway.echarts.client.request.AssignmentRequest;
@@ -79,7 +79,7 @@ public class TicklerActivityTest extends ActivityTestBase {
 	};
 
 	TicklerPlace place;
-	TicklerColumnDefinitionsImpl columnDefinitions;
+	List<ColumnDefinition<Tickler>> columnDefinitions = new ArrayList<ColumnDefinition<Tickler>>();
 	MyTicklerView view;
 	TicklerActivity activity;
 	MyDisplay display;
@@ -105,7 +105,6 @@ public class TicklerActivityTest extends ActivityTestBase {
 
 		display = new MyDisplay();
 		place = new TicklerPlace(EchartsUser.staffId);
-		columnDefinitions = new TicklerColumnDefinitionsImpl();
 		view = new MyTicklerView();
 		activity = new TicklerActivity(place, requestFactory, columnDefinitions, placeController, view);
 

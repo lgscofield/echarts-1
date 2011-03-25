@@ -21,6 +21,8 @@ import java.util.List;
 import org.eastway.echarts.client.common.ColumnDefinition;
 
 import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.safehtml.client.SafeHtmlTemplates;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.ui.IsWidget;
 
 public interface TicklerView<T> extends IsWidget {
@@ -35,11 +37,27 @@ public interface TicklerView<T> extends IsWidget {
 		void openPrintablePatientSummary(T t);
 	}
 
-	enum DueDateStatus {
-		COMPLIANT,
-		DUE_IN_THIRTY_DAYS,
-		OVERDUE,
-		NO_DATA
+	public static interface Template extends SafeHtmlTemplates {
+		@Template("<span style=\"color: red;\" title=\"HIPAA NOT completed\">{0}</span>")
+		SafeHtml hipaaNotCompleted(String name);
+
+		@Template("<span title=\"HIPAA completed {0}\">{1}</span>")
+		SafeHtml hipaaCompleted(String dateCompleted, String name);
+
+		@Template("<span style=\"color:green;\">{0}</span>")
+		SafeHtml compliant(SafeHtml dueDate);
+
+		@Template("{0}")
+		SafeHtml noData(SafeHtml dueDate);
+
+		@Template("<a style=\"color:red;\" target=\"_blank\" href=\"{0}\"><span style=\"color:red;font-weight:700;\"><b>NO&nbsp;DATA</b></span></a>")
+		SafeHtml noData(String url);
+
+		@Template("<a style=\"color:red;\" target=\"_blank\" href=\"{0}\"><span style=\"color:red;\">{1}</span></a>")
+		SafeHtml dueInThirtyDays(String url, SafeHtml dueDate);
+
+		@Template("<a style=\"color:red;\" target=\"_blank\" href=\"{0}\"><span style=\"color:red;font-weight:700;\">{1}</span></a>")
+		SafeHtml overdue(String url, SafeHtml dueDate);
 	}
 
 	interface Style extends CssResource {

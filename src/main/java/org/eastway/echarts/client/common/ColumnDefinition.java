@@ -15,6 +15,7 @@
  */
 package org.eastway.echarts.client.common;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -63,5 +64,25 @@ public abstract class ColumnDefinition<T> {
 
 	public boolean isMap() {
 		return false;
+	}
+
+	public String createTicklerUrl(T t) {
+		return null;
+	}
+
+	public int getTicklerDueDateStatus(T t) {
+		return 0;
+	}
+
+	public boolean isTicklerDueDate() {
+		return false;
+	}
+
+	public boolean isTicklerCompletedDate() {
+		return false;
+	}
+
+	public Date getCompletedDate(T t) {
+		return null;
 	}
 }

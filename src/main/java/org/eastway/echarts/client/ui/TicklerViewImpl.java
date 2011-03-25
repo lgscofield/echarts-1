@@ -195,6 +195,8 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 		return selected;
 	}
 
+	TicklerFormatter formatter = new TicklerFormatter();
+
 	@Override
 	public void setRowData(List<T> rowData) {
 		this.rowData = rowData;
@@ -206,11 +208,12 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 
 			for (int j = 0; j < columnDefinitions.size(); ++j) {
 				final StringBuilder sb = new StringBuilder();
+				ColumnDefinition<T> r = columnDefinitions.get(j);
 				if (j == 0)
-					columnDefinitions.get(j).render(t, sb.append((i+1) + ". "));
+					r.render(t, sb.append((i+1) + ". "));
 				else
-					columnDefinitions.get(j).render(t, sb);
-				if (columnDefinitions.get(j).isContextMenu()) {
+					r.render(t, sb);
+				if (r.isContextMenu()) {
 					ContextMenuLabel label = new ContextMenuLabel(sb.toString());
 					label.addContextMenuHandler(new ContextMenuHandler() {
 						@Override
@@ -224,7 +227,12 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 					label.addStyleName(style.pointer());
 					table.setWidget(row, j, label);
 				} else {
-					table.setHTML(row, j, sb.toString());
+					if (r.isTicklerDueDate())
+						table.setHTML(row, j, formatter.formatColumn(r.createTicklerUrl(t), r.getTicklerDueDateStatus(t), sb.toString()));
+					else if (r.isTicklerCompletedDate())
+						table.setHTML(row, j, formatter.formatColumn(r.getCompletedDate(t), sb.toString()));
+					else
+						table.setHTML(row, j, sb.toString());
 				}
 			}
 		}
