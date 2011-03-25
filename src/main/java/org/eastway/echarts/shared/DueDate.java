@@ -16,20 +16,21 @@
 package org.eastway.echarts.shared;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @SuppressWarnings("serial")
 public class DueDate implements Serializable {
-	String dueDate;
+	Date dueDate;
 	int status;
 
 	DueDate() {	}
 
-	DueDate(String formatDueDate, int status) {
-		this.dueDate = formatDueDate;
+	DueDate(Date dueDate, int status) {
+		this.dueDate = dueDate;
 		this.status = status;
 	}
 
-	public String getDueDate() {
+	public Date getDueDate() {
 		return dueDate;
 	}
 

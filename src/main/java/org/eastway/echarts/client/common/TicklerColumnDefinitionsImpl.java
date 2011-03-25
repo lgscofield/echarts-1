@@ -18,6 +18,7 @@ package org.eastway.echarts.client.common;
 import java.util.ArrayList;
 
 import org.eastway.echarts.client.EchartsUser;
+import org.eastway.echarts.client.style.GlobalResources;
 import org.eastway.echarts.shared.DueDateStatus;
 import org.eastway.echarts.shared.Tickler;
 
@@ -58,7 +59,7 @@ public class TicklerColumnDefinitionsImpl extends
 		this.add(new ColumnDefinition<Tickler>() {
 			@Override
 			public void render(Tickler t, StringBuilder sb) {
-				String dueDate = t.getIspDueDate().getDueDate();
+				String dueDate = GlobalResources.getDateFormat().format(t.getIspDueDate().getDueDate());
 				int status = t.getIspDueDate().getStatus();
 				if (status == DueDateStatus.NO_DATA)
 					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"" + new UrlBuilder()
@@ -82,7 +83,7 @@ public class TicklerColumnDefinitionsImpl extends
 		this.add(new ColumnDefinition<Tickler>() {
 			@Override
 			public void render(Tickler t, StringBuilder sb) {
-				String dueDate = t.getIspReviewDueDate().getDueDate();
+				String dueDate = GlobalResources.getDateFormat().format(t.getIspReviewDueDate().getDueDate());
 				int status = t.getIspReviewDueDate().getStatus();
 				if (status == DueDateStatus.NO_DATA)
 					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"" + new UrlBuilder()
@@ -106,7 +107,7 @@ public class TicklerColumnDefinitionsImpl extends
 		this.add(new ColumnDefinition<Tickler>() {
 			@Override
 			public void render(Tickler t, StringBuilder sb) {
-				String dueDate = t.getHealthHistoryDueDate().getDueDate();
+				String dueDate = GlobalResources.getDateFormat().format(t.getHealthHistoryDueDate().getDueDate());
 				int status = t.getHealthHistoryDueDate().getStatus();
 				if (status == DueDateStatus.NO_DATA)
 					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"" + new UrlBuilder()
@@ -130,7 +131,7 @@ public class TicklerColumnDefinitionsImpl extends
 		this.add(new ColumnDefinition<Tickler>() {
 			@Override
 			public void render(Tickler t, StringBuilder sb) {
-				String dueDate = t.getDiagnosticAssessmentUpdate().getDueDate();
+				String dueDate = GlobalResources.getDateFormat().format(t.getDiagnosticAssessmentUpdate().getDueDate());
 				int status = t.getDiagnosticAssessmentUpdate().getStatus();
 				if (status == DueDateStatus.NO_DATA)
 					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"" + new UrlBuilder()
@@ -154,7 +155,7 @@ public class TicklerColumnDefinitionsImpl extends
 		this.add(new ColumnDefinition<Tickler>() {
 			@Override
 			public void render(Tickler t, StringBuilder sb) {
-				String dueDate = t.getFinancialDueDate().getDueDate();
+				String dueDate = GlobalResources.getDateFormat().format(t.getFinancialDueDate().getDueDate());
 				int status = t.getFinancialDueDate().getStatus();
 				if (status == DueDateStatus.NO_DATA)
 					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"" + new UrlBuilder()
@@ -178,7 +179,7 @@ public class TicklerColumnDefinitionsImpl extends
 		this.add(new ColumnDefinition<Tickler>() {
 			@Override
 			public void render(Tickler t, StringBuilder sb) {
-				String dueDate = t.getOoc().getDueDate();
+				String dueDate = GlobalResources.getDateFormat().format(t.getOoc().getDueDate());
 				int status = t.getOoc().getStatus();
 				if (status == DueDateStatus.NO_DATA)
 					dueDate = "<a style=\"color:red;\" target=\"_blank\" href=\"https://home.eastway.local/outcomes/\">" + noData + "</a>";

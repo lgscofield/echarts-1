@@ -16,6 +16,7 @@
 package org.eastway.echarts.client.ui;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
@@ -47,17 +48,18 @@ public class GwtTestTicklerView extends GWTTestCase {
 	}
 
 	private void setTicklers() {
+		Date now = new Date();
 		for (int i = 0; i < 100; i++) {
 			Tickler tickler = new Tickler();
 			tickler.setCaseNumber("0" + i);
-			tickler.setDiagnosticAssessmentUpdate("", 0);
-			tickler.setFinancialDueDate("", 0);
-			tickler.setHealthHistoryDueDate("", 0);
-			tickler.setHipaaDateCompleted("");
-			tickler.setIspDueDate("", 0);
-			tickler.setIspReviewDueDate("", 0);
+			tickler.setDiagnosticAssessmentUpdate(now, 0);
+			tickler.setFinancialDueDate(now, 0);
+			tickler.setHealthHistoryDueDate(now, 0);
+			tickler.setHipaaDateCompleted(now);
+			tickler.setIspDueDate(now, 0);
+			tickler.setIspReviewDueDate(now, 0);
 			tickler.setName("test, harold");
-			tickler.setOoc("", 0);
+			tickler.setOoc(now, 0);
 			tickler.setService("");
 			tickler.setStaffName("name, staff");
 			ticklers.add(tickler);

@@ -16,13 +16,14 @@
 package org.eastway.echarts.shared;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @SuppressWarnings("serial")
 public class Tickler implements Serializable {
 	private String caseNumber;
 	private String name;
 	private DueDate ispDueDate;
-	private String hipaaDateCompleted;
+	private Date hipaaDateCompleted;
 	private DueDate ispReviewDueDate;
 	private DueDate healthHistoryDueDate;
 	private DueDate diagnosticAssessmentUpdate;
@@ -49,11 +50,11 @@ public class Tickler implements Serializable {
 		this.caseNumber = caseNumber;
 	}
 
-	public String getHipaaDateCompleted() {
+	public Date getHipaaDateCompleted() {
 		return hipaaDateCompleted;
 	}
 
-	public void setHipaaDateCompleted(String hipaaDateCompleted) {
+	public void setHipaaDateCompleted(Date hipaaDateCompleted) {
 		this.hipaaDateCompleted = hipaaDateCompleted;
 	}
 
@@ -61,52 +62,52 @@ public class Tickler implements Serializable {
 		return ispDueDate;
 	}
 
-	public void setIspDueDate(String formatDueDate, int dueDateStatus) {
-		this.ispDueDate = new DueDate(formatDueDate, dueDateStatus);
+	public void setIspDueDate(Date dueDate, int dueDateStatus) {
+		this.ispDueDate = new DueDate(dueDate, dueDateStatus);
 	}
 
 	public DueDate getIspReviewDueDate() {
 		return ispReviewDueDate;
 	}
 
-	public void setIspReviewDueDate(String formatDueDate,
+	public void setIspReviewDueDate(Date dueDate,
 			int dueDateStatus) {
-		this.ispReviewDueDate = new DueDate(formatDueDate, dueDateStatus);
+		this.ispReviewDueDate = new DueDate(dueDate, dueDateStatus);
 	}
 
 	public DueDate getHealthHistoryDueDate() {
 		return healthHistoryDueDate;
 	}
 
-	public void setHealthHistoryDueDate(String formatDueDate,
+	public void setHealthHistoryDueDate(Date dueDate,
 			int dueDateStatus) {
-		this.healthHistoryDueDate = new DueDate(formatDueDate, dueDateStatus);
+		this.healthHistoryDueDate = new DueDate(dueDate, dueDateStatus);
 	}
 
 	public DueDate getDiagnosticAssessmentUpdate() {
 		return diagnosticAssessmentUpdate;
 	}
 
-	public void setDiagnosticAssessmentUpdate(String formatDueDate,
+	public void setDiagnosticAssessmentUpdate(Date dueDate,
 			int dueDateStatus) {
-		this.diagnosticAssessmentUpdate = new DueDate(formatDueDate, dueDateStatus);
+		this.diagnosticAssessmentUpdate = new DueDate(dueDate, dueDateStatus);
 	}
 
 	public DueDate getFinancialDueDate() {
 		return financialDueDate;
 	}
 
-	public void setFinancialDueDate(String formatDueDate,
+	public void setFinancialDueDate(Date dueDate,
 			int dueDateStatus) {
-		this.financialDueDate = new DueDate(formatDueDate, dueDateStatus);
+		this.financialDueDate = new DueDate(dueDate, dueDateStatus);
 	}
 
 	public DueDate getOoc() {
 		return ooc;
 	}
 
-	public void setOoc(String formatDueDate, int dueDateStatus) {
-		this.ooc = new DueDate(formatDueDate, dueDateStatus);
+	public void setOoc(Date dueDate, int dueDateStatus) {
+		this.ooc = new DueDate(dueDate, dueDateStatus);
 	}
 
 	public String getService() {
