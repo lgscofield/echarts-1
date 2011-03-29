@@ -63,5 +63,32 @@
 				<td><span ui:field='caseStatus' /></td>
 			</tr>
 		</table>
+		<br />
+		<table class='{style.table}'>
+			<tr>
+				<td width='20%'><b>ISP</b></td>
+				<td><span ui:field='isp' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>ISP Review</b></td>
+				<td><span ui:field='ispReview' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Health HX</b></td>
+				<td><span ui:field='healthHX' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>DA Update</b></td>
+				<td><span ui:field='daUpdate' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Financial</b></td>
+				<td><span ui:field='financial' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>OOC</b></td>
+				<td><span ui:field='ooc' /></td>
+			</tr>
+		</table>
 	</g:HTMLPanel>
 </ui:UiBinder>

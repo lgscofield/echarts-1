@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.eastway.echarts.client.request.AssignmentProxy;
 import org.eastway.echarts.client.request.EHRProxy;
+import org.eastway.echarts.shared.Tickler;
 
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -33,4 +34,5 @@ public interface PatientSummaryView extends IsWidget {
 	void setEhrData(EHRProxy proxy);
 	void setError(String message);
 	void setProviders(List<AssignmentProxy> assignments);
+	void setTickler(List<Tickler> tickler);
 }

@@ -70,13 +70,18 @@ public class PatientSummaryActivity extends AbstractActivity implements PatientS
 					handleFailure(failure.getMessage());
 				}
 			});
-		context.findAssignmentsByCaseNumber(caseNumber).to(new Receiver<List<AssignmentProxy>>() {
+		context.findAssignmentsByCaseNumber(caseNumber)
+			.with("patient")
+			.with("demographics")
+			.to(new Receiver<List<AssignmentProxy>>() {
 			@Override
 			public void onSuccess(List<AssignmentProxy> response) {
-				if (response != null && response.size() != 0)
+				if (response != null && response.size() != 0) {
 					view.setProviders(response);
-				else
+					view.setTickler(new TicklerCalc().setDates(response));
+				} else {
 					view.setProviders(null);
+				}
 			}
 
 			@Override

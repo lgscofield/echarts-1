@@ -20,6 +20,7 @@ import java.util.List;
 import org.eastway.echarts.client.request.AssignmentProxy;
 import org.eastway.echarts.client.request.EHRProxy;
 import org.eastway.echarts.client.style.GlobalResources;
+import org.eastway.echarts.shared.Tickler;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.ImageElement;
@@ -46,6 +47,13 @@ public class PatientSummaryViewImpl extends Composite implements PatientSummaryV
 	@UiField SpanElement caseStatus;
 	@UiField SpanElement error;
 	@UiField TableElement table;
+	@UiField SpanElement isp;
+	@UiField SpanElement ispReview;
+	@UiField SpanElement healthHX;
+	@UiField SpanElement daUpdate;
+	@UiField SpanElement financial;
+	@UiField SpanElement ooc;
+
 	private EHRProxy proxy;
 
 	public PatientSummaryViewImpl() {
@@ -103,5 +111,28 @@ public class PatientSummaryViewImpl extends Composite implements PatientSummaryV
 		for (int i = 0; i < nodeList.getLength(); i++)
 			if ((i % 2) == 0)
 				nodeList.getItem(i).addClassName(style.evenRow());
+	}
+
+	TicklerFormatter formatter = new TicklerFormatter();
+
+	@Override
+	public void setTickler(List<Tickler> tickler) {
+		Tickler t = tickler.get(0);
+		String caseNumber = t.getCaseNumber();
+		if (tickler != null && tickler.size() != 0) {
+			isp.setInnerHTML(formatter.formatColumn(TicklerUrlBuilder.createIspUrl(caseNumber), t.getIspDueDate().getStatus(), GlobalResources.getDateFormat().format(t.getIspDueDate().getDueDate())));
+			ispReview.setInnerHTML(formatter.formatColumn(TicklerUrlBuilder.createIspReviewUrl(caseNumber), t.getIspReviewDueDate().getStatus(), GlobalResources.getDateFormat().format(t.getIspReviewDueDate().getDueDate())));
+			healthHX.setInnerHTML(formatter.formatColumn(TicklerUrlBuilder.createHealthHistoryUrl(caseNumber), t.getHealthHistoryDueDate().getStatus(), GlobalResources.getDateFormat().format(t.getHealthHistoryDueDate().getDueDate())));
+			daUpdate.setInnerHTML(formatter.formatColumn(TicklerUrlBuilder.createDAUpdateUrl(caseNumber), t.getDiagnosticAssessmentUpdate().getStatus(), GlobalResources.getDateFormat().format(t.getDiagnosticAssessmentUpdate().getDueDate())));
+			financial.setInnerHTML(formatter.formatColumn(TicklerUrlBuilder.createFinancialUpdateUrl(caseNumber), t.getFinancialDueDate().getStatus(), GlobalResources.getDateFormat().format(t.getFinancialDueDate().getDueDate())));
+			ooc.setInnerHTML(formatter.formatColumn(TicklerUrlBuilder.createOocUrl(), t.getOoc().getStatus(), GlobalResources.getDateFormat().format(t.getOoc().getDueDate())));
+			return;
+		}
+		isp.setInnerText("");
+		ispReview.setInnerText("");
+		healthHX.setInnerText("");
+		daUpdate.setInnerText("");
+		financial.setInnerText("");
+		ooc.setInnerText("");
 	}
 }
