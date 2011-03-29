@@ -46,7 +46,7 @@ public class CurrentEhrView extends Composite {
 
 	public void setRowData(EHRProxy ehr) {
 		if (ehr == null) {
-			Window.setTitle(Window.getTitle().replaceAll("ECharts - .*", "ECharts - " + echartsConstants.version()));
+			Window.setTitle(Window.getTitle().replaceAll("ECharts(.*)", "ECharts"));
 			name.setInnerText("");
 			caseNumber.setInnerText("");
 			dob.setInnerText("");
@@ -65,7 +65,7 @@ public class CurrentEhrView extends Composite {
 		ssn.setInnerText(ehr.getPatient().getSsn() == null ? "NO DATA" : ehr.getPatient().getSsn());
 		caseStatus.setInnerText(getCaseStatus(ehr.getPatient().getCaseStatus()));
 		container.setVisible(true);
-		Window.setTitle(Window.getTitle().replaceAll("ECharts - (.*)", "ECharts - " + ehr.getPatient().getCaseNumber() + " - " + echartsConstants.version()));
+		Window.setTitle(Window.getTitle().replaceAll("ECharts(.*)", "ECharts - " + ehr.getPatient().getCaseNumber()));
 	}
 
 	private String getCaseStatus(CodeProxy caseStatus) {

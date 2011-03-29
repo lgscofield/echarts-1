@@ -23,7 +23,7 @@ if (request.getUserPrincipal() == null) {
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=7" />
-<title>ECharts - VERSION</title>
+<title>ECharts</title>
 </head>
 <body>
 <div id="page-loading-message" style="font-size:15px; margin:20px;">Loading ECharts ...</div>

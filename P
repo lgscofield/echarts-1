@@ -4,7 +4,6 @@ VERSION=$(git describe)
 
 mvn clean &&
 mvn versions:set -DnewVersion=$VERSION -DgenerateBackupPoms=false &&
-sed -i s/ECharts\ -\ .*\<\\/title\>/ECharts\ -\ $VERSION\<\\/title\>/g src/main/webapp/echarts.jsp &&
 sed -i s/version=.*/version=$VERSION/g src/main/java/org/eastway/echarts/client/EchartsConstants.properties &&
 sed -i s/localhost/192.168.201.18/g src/main/resources/META-INF/spring/database.properties &&
 sed -i s/echarts-.*\\/WEB-INF/echarts-$VERSION\\/WEB-INF/g .classpath &&

@@ -52,6 +52,7 @@
 			font-size: smaller;
 		}
 	</ui:style>
+	<ui:with field='constants' type='org.eastway.echarts.client.EchartsConstants' />
 	<ui:image field="logo" src="../style/images/echarts-logo.gif"/>
 	<g:ScrollPanel ui:field="dockLayoutPanel">
 		<g:FlowPanel height="100%" width="100%">
@@ -86,7 +87,7 @@
 								<div class="{style.hbar}" />
 							</g:HTML>
 						</g:VerticalPanel>
-						<g:HTML><div class='{style.footer}'>Eastway Corporation (c) 2011 &nbsp;| &nbsp;<a href="http://www.eastway.org/index-7.html">Privacy Statement</a></div></g:HTML>
+						<g:HTMLPanel styleName='{style.footer}'>Eastway&nbsp;Corporation&nbsp;(c)&nbsp;2011&nbsp;|&nbsp;v<g:InlineHTML text='{constants.version}' />&nbsp;|&nbsp;<a href="http://www.eastway.org/index-7.html">Privacy&nbsp;Statement</a></g:HTMLPanel>
 					</g:VerticalPanel>
 				</g:cell>
 			</g:HorizontalPanel>
