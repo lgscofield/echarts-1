@@ -99,4 +99,9 @@ public class AppointmentViewImpl<T> extends Composite implements AppointmentView
 	public void setStartDate(Date date) {
 		datePicker.setValue(date);
 	}
+
+	@Override
+	public Date getStartDate() {
+		return datePicker.getValue();
+	}
 }

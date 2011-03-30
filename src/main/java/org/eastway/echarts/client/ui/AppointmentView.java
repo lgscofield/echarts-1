@@ -32,4 +32,5 @@ public interface AppointmentView<T> extends IsWidget {
 	void reset();
 	void setDataProvider(AbstractDataProvider<T> dataProvider);
 	void setStartDate(Date date);
+	Date getStartDate();
 }

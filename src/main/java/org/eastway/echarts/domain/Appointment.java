@@ -175,7 +175,7 @@ public class Appointment {
 	public static List<Appointment> findAppointmentEntriesByCaseNumberAndDate(int start, int max, String caseNumber, Date startDate) {
 		if (caseNumber == null)
 			return null;
-		return entityManager().createQuery("SELECT a From Appointment a WHERE a.caseNumber = :caseNumber and a.appointmentDate > :startDate Order By a.appointmentDate ASC, a.startTime ASC", Appointment.class)
+		return entityManager().createQuery("SELECT a From Appointment a WHERE a.caseNumber = :caseNumber and a.appointmentDate >= :startDate Order By a.appointmentDate ASC, a.startTime ASC", Appointment.class)
 			.setParameter("caseNumber", caseNumber)
 			.setParameter("startDate", startDate)
 			.setFirstResult(start)

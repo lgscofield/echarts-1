@@ -47,9 +47,9 @@ public class AppointmentActivity extends AbstractActivity implements Appointment
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		dataProvider.setCaseNumber(caseNumber);
-		dataProvider.setStartDate(new Date());
-		view.setDataProvider(dataProvider);
 		view.setStartDate(new Date());
+		dataProvider.setStartDate(view.getStartDate());
+		view.setDataProvider(dataProvider);
 		panel.setWidget(view);
 	}
 
