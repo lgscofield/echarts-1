@@ -38,14 +38,14 @@ public class AppointmentCellTable extends CellTable<AppointmentProxy> {
 			public String getValue(AppointmentProxy object) {
 				return renderer.render(object.getStartTime());
 			}
-		}, "Start Time");
+		}, "Start");
 		this.addColumn(new TextColumn<AppointmentProxy>() {
 			DateTimeFormatRenderer renderer = new DateTimeFormatRenderer(DateTimeFormat.getFormat(GlobalResources.DateTimeConstants.SHORT_TIME));
 			@Override
 			public String getValue(AppointmentProxy object) {
 				return renderer.render(object.getEndTime());
 			}
-		}, "End Time");
+		}, "End");
 		this.addColumn(new TextColumn<AppointmentProxy>() {
 			Renderer<String> renderer = new AbstractRenderer<String>() {
 				@Override
@@ -55,9 +55,9 @@ public class AppointmentCellTable extends CellTable<AppointmentProxy> {
 			};
 			@Override
 			public String getValue(AppointmentProxy object) {
-				return renderer.render(object.getLocation());
+				return renderer.render(object.getStaff());
 			}
-		}, "Location");
+		}, "Staff");
 		this.addColumn(new TextColumn<AppointmentProxy>() {
 			Renderer<String> renderer = new AbstractRenderer<String>() {
 				@Override
