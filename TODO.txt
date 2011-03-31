@@ -1,3 +1,5 @@
+Add allergies to medication view
+
 Calendar - a precursor for scheduling
 
 Redesign productivity and tickler
