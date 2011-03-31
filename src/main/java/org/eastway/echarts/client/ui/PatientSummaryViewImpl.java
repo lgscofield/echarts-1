@@ -90,13 +90,15 @@ public class PatientSummaryViewImpl extends Composite implements PatientSummaryV
 
 	@Override
 	public void setProviders(List<AssignmentProxy> assignments) {
-		StringBuilder sb = new StringBuilder();
-		if (assignments != null && !assignments.isEmpty()) {
+		if (assignments != null && assignments.size() != 0) {
+			StringBuilder sb = new StringBuilder();
 			for (AssignmentProxy assignment : assignments)
 				sb.append(AssignmentProxyRenderer.instance().render(assignment))
 					.append("<br />");
+			providers.setInnerHTML(sb.toString());
+			return;
 		}
-		providers.setInnerHTML(sb.toString());
+		providers.setInnerText("");
 	}
 
 	@Override
@@ -117,9 +119,9 @@ public class PatientSummaryViewImpl extends Composite implements PatientSummaryV
 
 	@Override
 	public void setTickler(List<Tickler> tickler) {
-		Tickler t = tickler.get(0);
-		String caseNumber = t.getCaseNumber();
 		if (tickler != null && tickler.size() != 0) {
+			Tickler t = tickler.get(0);
+			String caseNumber = t.getCaseNumber();
 			isp.setInnerHTML(formatter.formatColumn(TicklerUrlBuilder.createIspUrl(caseNumber), t.getIspDueDate().getStatus(), GlobalResources.getDateFormat().format(t.getIspDueDate().getDueDate())));
 			ispReview.setInnerHTML(formatter.formatColumn(TicklerUrlBuilder.createIspReviewUrl(caseNumber), t.getIspReviewDueDate().getStatus(), GlobalResources.getDateFormat().format(t.getIspReviewDueDate().getDueDate())));
 			healthHX.setInnerHTML(formatter.formatColumn(TicklerUrlBuilder.createHealthHistoryUrl(caseNumber), t.getHealthHistoryDueDate().getStatus(), GlobalResources.getDateFormat().format(t.getHealthHistoryDueDate().getDueDate())));

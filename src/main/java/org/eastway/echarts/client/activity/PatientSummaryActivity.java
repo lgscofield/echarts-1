@@ -81,12 +81,14 @@ public class PatientSummaryActivity extends AbstractActivity implements PatientS
 					view.setTickler(new TicklerCalc().setDates(response));
 				} else {
 					view.setProviders(null);
+					view.setTickler(null);
 				}
 			}
 
 			@Override
 			public void onFailure(ServerFailure failure) {
-				handleFailure(failure.getMessage());
+				view.setProviders(null);
+				view.setTickler(null);
 			}
 		});
 		context.fire(new Receiver<Void>() {
@@ -104,6 +106,8 @@ public class PatientSummaryActivity extends AbstractActivity implements PatientS
 
 	private void handleFailure(String message) {
 		view.setEhrData(null);
+		view.setProviders(null);
+		view.setTickler(null);
 		view.setError(message);
 		panel.setWidget(view);
 	}
