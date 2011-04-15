@@ -175,4 +175,14 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 				.setParameter("PATID", t.getCaseNumber())
 				.buildString(), "_blank", "");
 	}
+
+	@Override
+	public void openEditContact(Tickler t) {
+		Window.open(new UrlBuilder()
+			.setProtocol(Window.Location.getProtocol())
+			.setHost(EchartsUser.dbServerUrl)
+			.setPath("/echarts-asp/client/contactupdate.asp")
+			.setParameter("PATID", t.getCaseNumber())
+			.buildString(), "_blank", "");
+	}
 }

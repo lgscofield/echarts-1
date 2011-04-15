@@ -35,6 +35,7 @@ public interface TicklerView<T> extends IsWidget {
 		void openDoctorProgressNote(T t);
 		void openNurseProgressNote(T t);
 		void openPrintablePatientSummary(T t);
+		void openEditContact(T t);
 	}
 
 	public static interface Template extends SafeHtmlTemplates {
