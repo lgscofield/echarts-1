@@ -172,6 +172,6 @@ public class MasterActivityMapper implements ActivityMapper {
 				+ EchartsUser.userName
 				+ "\",\"url\":\""
 				+ Window.Location.createUrlBuilder().setHash(token).buildString()
-				+ "\"}");
+				+ "\",\"log_level\":\"INFO\"}");
 	}
 }

@@ -70,8 +70,12 @@ public class ScaffoldDesktopApp extends ScaffoldApp {
 
 		GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
 			public void onUncaughtException(Throwable e) {
-				Window.alert("Error: " + e.getMessage());
-				log.log(Level.SEVERE, e.getMessage(), e);
+				Window.alert("Error contacting server");
+				log.log(Level.SEVERE, "{\"username\":\""
+								+ EchartsUser.userName
+								+ "\",\"url\":\""
+								+ Window.Location.createUrlBuilder().buildString()
+								+ "\",\"log_level\":\"SEVERE\"}", e);
 			}
 		});
 
