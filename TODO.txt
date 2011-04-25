@@ -1,3 +1,15 @@
+BUG Patient search selection - clicking on a result from the list that is not
+	the first will cause subsequent searches to automatically select the
+	first in the list.
+
+Bring back tabs
+
+Alert pop-up
+
+Tickler - show next appt
+
+ARInfo - give more spend down detail
+
 Add allergies to medication view
 
 Calendar - a precursor for scheduling
