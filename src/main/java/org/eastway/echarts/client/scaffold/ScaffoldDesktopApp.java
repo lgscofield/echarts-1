@@ -12,7 +12,9 @@ import org.eastway.echarts.client.activity.EchartsPlaceHistoryMapper;
 import org.eastway.echarts.client.activity.MasterActivityMapper;
 import org.eastway.echarts.client.place.DashboardPlace;
 import org.eastway.echarts.client.request.DbServerConfigProxy;
+import org.eastway.echarts.client.request.EchartsLogHandler;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
+import org.eastway.echarts.client.request.LoggingRequest;
 import org.eastway.echarts.client.scaffold.request.RequestEvent;
 import org.eastway.echarts.client.style.GlobalResources;
 import org.eastway.echartsrequest.client.ReloadOnAuthenticationFailure;
@@ -25,8 +27,6 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.logging.client.LogConfiguration;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
-import com.google.gwt.requestfactory.client.RequestFactoryLogHandler;
-import com.google.gwt.requestfactory.shared.LoggingRequest;
 import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
@@ -71,23 +71,19 @@ public class ScaffoldDesktopApp extends ScaffoldApp {
 		GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
 			public void onUncaughtException(Throwable e) {
 				Window.alert("Error contacting server");
-				log.log(Level.SEVERE, "{\"username\":\""
-								+ EchartsUser.userName
-								+ "\",\"url\":\""
-								+ Window.Location.createUrlBuilder().buildString()
-								+ "\",\"log_level\":\"SEVERE\"}", e);
+				log.log(Level.SEVERE, Window.Location.createUrlBuilder().buildString(), e);
 			}
 		});
 
 		if (LogConfiguration.loggingIsEnabled()) {
 			// Add remote logging handler
-			RequestFactoryLogHandler.LoggingRequestProvider provider = new RequestFactoryLogHandler.LoggingRequestProvider() {
+			EchartsLogHandler.LoggingRequestProvider provider = new EchartsLogHandler.LoggingRequestProvider() {
 				public LoggingRequest getLoggingRequest() {
 					return requestFactory.loggingRequest();
 				}
 			};
 			Logger.getLogger("").addHandler(
-					new RequestFactoryLogHandler(provider, Level.WARNING,
+					new EchartsLogHandler(provider, Level.WARNING,
 							new ArrayList<String>()));
 		}
 

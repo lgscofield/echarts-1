@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.place.ARInfoPlace;
 import org.eastway.echarts.client.place.AddressPlace;
@@ -168,10 +167,6 @@ public class MasterActivityMapper implements ActivityMapper {
 
 	private void logPlaceChange(Place place) {
 		String token = historyMapper.getToken(place);
-		log.log(Level.INFO, "{\"username\":\""
-				+ EchartsUser.userName
-				+ "\",\"url\":\""
-				+ Window.Location.createUrlBuilder().setHash(token).buildString()
-				+ "\",\"log_level\":\"INFO\"}");
+		log.log(Level.INFO, Window.Location.createUrlBuilder().setHash(token).buildString());
 	}
 }
