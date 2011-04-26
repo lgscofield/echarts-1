@@ -17,6 +17,7 @@ package org.eastway.echarts.domain;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,6 +25,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
 import javax.persistence.Version;
@@ -34,10 +36,11 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+@SuppressWarnings("serial")
 @Configurable
 @Entity
 @Table(name="Echarts_User")
-public class User {
+public class User implements java.io.Serializable {
 	@Id
 	@Column(name = "username")
 	private String id;
@@ -60,6 +63,9 @@ public class User {
 	private User supervisor;
 	private String cred1;
 	private String cred2;
+	@OneToMany(orphanRemoval=true)
+	@JoinColumn(referencedColumnName="staffId",name="staff")
+	private Set<Assignment> assignments;
 	@Version
 	@Column(name = "version")
 	private Integer version = 0;
@@ -218,6 +224,14 @@ public class User {
 
 	public Integer getVersion() {
 		return version;
+	}
+
+	public Set<Assignment> getAssignments() {
+		return assignments;
+	}
+
+	public void setAssignments(Set<Assignment> assignments) {
+		this.assignments = assignments;
 	}
 
 	public static final EntityManager entityManager() {
