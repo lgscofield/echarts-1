@@ -27,10 +27,10 @@ import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
 import org.eastway.echarts.client.place.TicklerPlace;
-import org.eastway.echarts.client.request.AssignmentProxy;
-import org.eastway.echarts.client.request.AssignmentRequest;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
+import org.eastway.echarts.client.request.AssignmentProxy;
 import org.eastway.echarts.client.request.UserProxy;
+import org.eastway.echarts.client.request.UserRequest;
 import org.eastway.echarts.client.ui.TicklerView;
 import org.eastway.echarts.shared.Tickler;
 
@@ -43,8 +43,8 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 	private TicklerView<Tickler> view;
 	private EchartsRequestFactory requestFactory;
 	private PlaceController placeController;
-	private String staffId;
 	private TicklerCalc ticklerCalc = new TicklerCalc();
+	private String userName;
 
 	public TicklerActivity(TicklerPlace place,
 						   EchartsRequestFactory requestFactory,
@@ -56,12 +56,12 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 		this.view = view;
 		this.view.setColumnDefinitions(columnDefinitions);
 		this.view.setPresenter(this);
-		this.staffId = place.getTicklerName();
+		this.userName = place.getTicklerName();
 	}
 
 	public void fetchData() {
-		AssignmentRequest context = requestFactory.assignmentRequest();
-		context.findAssignmentsByStaff(EchartsUser.staffId, staffId)
+		UserRequest context = requestFactory.userRequest();
+		context.findAssignments(EchartsUser.userName, userName)
 			.with("patient")
 			.with("demographics")
 			.to(new Receiver<List<AssignmentProxy>>() {
@@ -80,8 +80,8 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 				}
 			}
 		});
-		if (!staffId.equals(EchartsUser.staffId)) {
-			context.findUserByStaffId(staffId).to(new Receiver<UserProxy>() {
+		if (!userName.equals(EchartsUser.userName)) {
+			context.findUser(userName).to(new Receiver<UserProxy>() {
 				@Override
 				public void onSuccess(UserProxy response) {
 					if (response != null)

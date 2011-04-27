@@ -44,7 +44,7 @@ public class DashboardSideBarViewImpl extends Composite implements DashboardSide
 
 	public DashboardSideBarViewImpl() {
 		initWidget(BINDER.createAndBindUi(this));
-		tickler.addItem("My Tickler", EchartsUser.staffId);
+		tickler.addItem("My Tickler", EchartsUser.userName);
 	}
 
 	@Override
@@ -98,7 +98,7 @@ public class DashboardSideBarViewImpl extends Composite implements DashboardSide
 	public void setAssignments(List<UserProxy> response) {
 		if (response != null && response.size() != 0)
 			for (UserProxy user : response) {
-				tickler.addItem(user.getStaffName(), user.getStaffId());
+				tickler.addItem(user.getStaffName(), user.getId());
 			}
 	}
 
@@ -106,12 +106,12 @@ public class DashboardSideBarViewImpl extends Composite implements DashboardSide
 	void ticklerOnClick(ClickEvent event) {
 		int selected = tickler.getSelectedIndex();
 		if (selected < 0) {
-			presenter.goTo(new TicklerPlace(EchartsUser.staffId));
+			presenter.goTo(new TicklerPlace(EchartsUser.userName));
 			return;
 		}
-		String staffId = tickler.getValue(selected);
-		if (staffId != null && staffId.length() != 0) {
-			presenter.goTo(new TicklerPlace(staffId));
+		String username = tickler.getValue(selected);
+		if (username != null && username.length() != 0) {
+			presenter.goTo(new TicklerPlace(username));
 		}
 	}
 }

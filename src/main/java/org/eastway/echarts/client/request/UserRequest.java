@@ -29,7 +29,9 @@ import com.google.gwt.requestfactory.shared.ServiceName;
 public interface UserRequest extends RequestContext {
 	Request<UserProxy> findUser(String userName);
 	InstanceRequest<UserProxy, Void> persist();
-	Request<List<UserProxy>> findAssignments(String supervisorName);
+	Request<List<UserProxy>> findSupervisorAssignments(String supervisorName);
+	Request<List<AssignmentProxy>> findAssignments(String supervisor, String staff);
 	InstanceRequest<UserProxy, Void> remove();
 	InstanceRequest<UserProxy, UserProxy> merge();
+	Request<UserProxy> findUserByStaffId(String staffId);
 }

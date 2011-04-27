@@ -42,7 +42,7 @@ public class DashboardSideBarActivity extends AbstractActivity implements Dashbo
 	}
 
 	private void fetchData() {
-		requestFactory.userRequest().findAssignments(EchartsUser.userName).fire(new Receiver<List<UserProxy>>() {
+		requestFactory.userRequest().findSupervisorAssignments(EchartsUser.userName).fire(new Receiver<List<UserProxy>>() {
 			@Override
 			public void onSuccess(List<UserProxy> response) {
 				view.setAssignments(response);

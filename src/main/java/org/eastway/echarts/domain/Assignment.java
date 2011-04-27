@@ -28,7 +28,6 @@ import javax.persistence.Column;
 import javax.persistence.Version;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -248,35 +247,6 @@ public class Assignment {
 		if (id == null)
 			return null;
 		return entityManager().find(Assignment.class, id);
-	}
-
-	public static List<Assignment> findAssignmentsByStaff(String supervisor, String staff) {
-		if (supervisor.equals(staff))
-			;
-		else if (!User.isSupervisor(supervisor, staff))
-			return null;
-		return entityManager().createQuery(
-			"SELECT a From Assignment a Where a.staff = :staff And a.disposition = 'Open' And a.service Like 'S%' Order By a.patient.lastName ASC, a.patient.firstName ASC, a.orderDate DESC", Assignment.class)
-				.setParameter("staff", staff)
-				.getResultList();
-	}
-
-	public static List<Assignment> findAssignmentsByCaseNumber(String caseNumber) {
-		if (caseNumber == null)
-			return null;
-		return entityManager().createQuery(
-			"SELECT a From Assignment a Where a.disposition = 'Open' And a.service Like 'S%' And a.caseNumber = :caseNumber Order By a.patient.lastName ASC, a.patient.firstName ASC, a.orderDate DESC", Assignment.class)
-				.setParameter("caseNumber", caseNumber)
-				.getResultList();
-	}
-
-	public static User findUserByStaffId(String staffId) {
-		if (staffId != null && staffId.length() != 0)
-			return entityManager()
-				.createQuery("SELECT o FROM User o WHERE o.staffId = :staffId", User.class)
-				.setParameter("staffId", staffId)
-				.getResultList().get(0);
-		return null;
 	}
 
 	@Transactional

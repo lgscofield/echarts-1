@@ -22,6 +22,10 @@ public class TicklerCalc {
 	public List<Tickler> setDates(List<AssignmentProxy> assignments) {
 		List<Tickler> tickler = new ArrayList<Tickler>();
 		for (AssignmentProxy assignment : assignments) {
+			if (assignment.getDisposition().equals("Open") && assignment.getService().matches("S.*"))
+				;
+			else
+				continue;
 			Tickler result = new Tickler();
 			PatientProxy patient = assignment.getPatient();
 			result.setName(assignment.getPatient().getName());

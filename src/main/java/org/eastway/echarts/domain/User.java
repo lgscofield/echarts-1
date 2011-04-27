@@ -17,7 +17,6 @@ package org.eastway.echarts.domain;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -65,7 +64,7 @@ public class User implements java.io.Serializable {
 	private String cred2;
 	@OneToMany(orphanRemoval=true)
 	@JoinColumn(referencedColumnName="staffId",name="staff")
-	private Set<Assignment> assignments;
+	private List<Assignment> assignments;
 	@Version
 	@Column(name = "version")
 	private Integer version = 0;
@@ -226,11 +225,11 @@ public class User implements java.io.Serializable {
 		return version;
 	}
 
-	public Set<Assignment> getAssignments() {
+	public List<Assignment> getAssignments() {
 		return assignments;
 	}
 
-	public void setAssignments(Set<Assignment> assignments) {
+	public void setAssignments(List<Assignment> assignments) {
 		this.assignments = assignments;
 	}
 
@@ -250,6 +249,15 @@ public class User implements java.io.Serializable {
 		if (results.size() > 0) {
 			return results.get(0);
 		}
+		return null;
+	}
+
+	public static User findUserByStaffId(String staffId) {
+		if (staffId != null && staffId.length() != 0)
+			return entityManager()
+				.createQuery("SELECT o FROM User o WHERE o.staffId = :staffId", User.class)
+				.setParameter("staffId", staffId)
+				.getResultList().get(0);
 		return null;
 	}
 
@@ -284,24 +292,36 @@ public class User implements java.io.Serializable {
 		return sb.toString();
 	}
 
-	public static Boolean isSupervisor(String supervisor, String staff) {
+	public static Boolean isSupervisor(String supervisorUserName, String staffUserName) {
 		List<User> user = entityManager()
-			.createQuery("SELECT o FROM User o where o.supervisor.staffId = :supervisor AND o.staffId = :staff", User.class)
-			.setParameter("supervisor", supervisor)
-			.setParameter("staff", staff)
+			.createQuery("SELECT o FROM User o where o.supervisor.id = :supervisorUserName AND o.id = :staffUserName", User.class)
+			.setParameter("supervisorUserName", supervisorUserName)
+			.setParameter("staffUserName", staffUserName)
 			.getResultList();
 		if (user != null && user.size() != 0)
 			return true;
 		return false;
 	}
 
-	public static List<User> findAssignments(String supervisor) {
+	public static List<User> findSupervisorAssignments(String supervisor) {
 		if (supervisor == null || supervisor.length() == 0)
 			return null;
 		return entityManager()
 			.createQuery("SELECT o FROM User o WHERE o.supervisor.id = :supervisor", User.class)
 			.setParameter("supervisor", supervisor)
 			.getResultList();
+	}
+
+	public static List<Assignment> findAssignments(String supervisorUserName, String staffUserName) {
+		if (supervisorUserName.equals(staffUserName))
+			;
+		else if (!isSupervisor(supervisorUserName, staffUserName))
+			return null;
+		String staffId = findUser(staffUserName).getStaffId();
+		return entityManager().createQuery(
+				"SELECT a From Assignment a Where a.disposition = 'Open' And a.service Like 'S%' And a.staff = :staffId Order By a.patient.lastName ASC, a.patient.firstName ASC, a.orderDate DESC", Assignment.class)
+					.setParameter("staffId", staffId)
+					.getResultList();
 	}
 
 	@Transactional

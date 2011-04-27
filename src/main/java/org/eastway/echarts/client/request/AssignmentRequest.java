@@ -15,8 +15,6 @@
  */
 package org.eastway.echarts.client.request;
 
-import java.util.List;
-
 import org.eastway.echarts.domain.Assignment;
 
 import com.google.gwt.requestfactory.shared.InstanceRequest;
@@ -27,9 +25,6 @@ import com.google.gwt.requestfactory.shared.Service;
 @Service(Assignment.class)
 public interface AssignmentRequest extends RequestContext {
 	Request<AssignmentProxy> findAssignment(Long id);
-	Request<List<AssignmentProxy>> findAssignmentsByStaff(String supervisor, String staff);
-	Request<List<AssignmentProxy>> findAssignmentsByCaseNumber(String caseNumber);
-	Request<UserProxy> findUserByStaffId(String staffId);
 	InstanceRequest<AssignmentProxy, Void> persist();
 	InstanceRequest<AssignmentProxy, Void> remove();
 }

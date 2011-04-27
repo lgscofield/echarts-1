@@ -16,7 +16,7 @@
 package org.eastway.echarts.client.request;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.roo.addon.gwt.RooGwtMirroredFrom;
 
@@ -74,8 +74,8 @@ public interface UserProxy extends EntityProxy {
 	//void setSessionId(String sessionId);
 	//String getSessionId();
 
-	void setAssignments(Set<AssignmentProxy> assignments);
-	Set<AssignmentProxy> getAssignments();
+	void setAssignments(List<AssignmentProxy> assignments);
+	List<AssignmentProxy> getAssignments();
 
 	String getId();
 	void setId(String id);
