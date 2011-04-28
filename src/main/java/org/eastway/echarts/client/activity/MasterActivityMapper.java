@@ -1,10 +1,11 @@
 package org.eastway.echarts.client.activity;
 
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.place.ARInfoPlace;
 import org.eastway.echarts.client.place.AddressPlace;
@@ -19,6 +20,7 @@ import org.eastway.echarts.client.place.MedicationPlace;
 import org.eastway.echarts.client.place.MessagePlace;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
 import org.eastway.echarts.client.place.PhysicianOrderPlace;
+import org.eastway.echarts.client.place.PlaceLogRecordBuilder;
 import org.eastway.echarts.client.place.ProfilePlace;
 import org.eastway.echarts.client.place.ReferralPlace;
 import org.eastway.echarts.client.place.ServiceHistoryPlace;
@@ -33,6 +35,8 @@ import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.request.LinkProxy;
 import org.eastway.echarts.client.request.MedicationProxy;
 import org.eastway.echarts.client.request.MessageProxy;
+import org.eastway.echarts.client.request.PlaceLogRecordProxy;
+import org.eastway.echarts.client.request.PlaceLogRecordRequest;
 import org.eastway.echarts.client.request.UserProxy;
 import org.eastway.echarts.client.ui.ARInfoView;
 import org.eastway.echarts.client.ui.AddressView;
@@ -76,8 +80,6 @@ public class MasterActivityMapper implements ActivityMapper {
 	private AppointmentDataProvider appointmentDataProvider;
 	private PatientSummaryView patientSummaryView;
 	private EchartsPlaceHistoryMapper historyMapper;
-
-	private static final Logger log = Logger.getLogger(MasterActivityMapper.class.getName());
 
 	@Inject
 	public MasterActivityMapper(EchartsRequestFactory requestFactory,
@@ -167,6 +169,12 @@ public class MasterActivityMapper implements ActivityMapper {
 
 	private void logPlaceChange(Place place) {
 		String token = historyMapper.getToken(place);
-		log.log(Level.INFO, Window.Location.createUrlBuilder().setHash(token).buildString());
+		PlaceLogRecordRequest request = requestFactory.placeLogRecordRequest();
+		PlaceLogRecordProxy proxy = request.create(PlaceLogRecordProxy.class);
+		proxy.setMessage(new PlaceLogRecordBuilder(EchartsUser.userName,
+				Window.Location.createUrlBuilder().setHash(token).buildString(),
+				Level.INFO).toString());
+		proxy.setTimestamp(new Date().getTime());
+		request.persist().using(proxy).fire();
 	}
 }

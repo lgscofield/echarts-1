@@ -1,6 +1,5 @@
 package org.eastway.echarts.client.scaffold;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,9 +11,7 @@ import org.eastway.echarts.client.activity.EchartsPlaceHistoryMapper;
 import org.eastway.echarts.client.activity.MasterActivityMapper;
 import org.eastway.echarts.client.place.DashboardPlace;
 import org.eastway.echarts.client.request.DbServerConfigProxy;
-import org.eastway.echarts.client.request.EchartsLogHandler;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
-import org.eastway.echarts.client.request.LoggingRequest;
 import org.eastway.echarts.client.scaffold.request.RequestEvent;
 import org.eastway.echarts.client.style.GlobalResources;
 import org.eastway.echartsrequest.client.ReloadOnAuthenticationFailure;
@@ -68,23 +65,14 @@ public class ScaffoldDesktopApp extends ScaffoldApp {
 
 	private void init() {
 
-//		GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
-//			public void onUncaughtException(Throwable e) {
-//				Window.alert("Error contacting server");
-//				log.log(Level.SEVERE, Window.Location.createUrlBuilder().buildString(), e);
-//			}
-//		});
+
 
 		if (LogConfiguration.loggingIsEnabled()) {
-			// Add remote logging handler
-			EchartsLogHandler.LoggingRequestProvider provider = new EchartsLogHandler.LoggingRequestProvider() {
-				public LoggingRequest getLoggingRequest() {
-					return requestFactory.loggingRequest();
+			GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
+				public void onUncaughtException(Throwable e) {
+					log.log(Level.SEVERE, Window.Location.createUrlBuilder().buildString(), e);
 				}
-			};
-			Logger.getLogger("").addHandler(
-					new EchartsLogHandler(provider, Level.WARNING,
-							new ArrayList<String>()));
+			});
 		}
 
 		RequestEvent.register(eventBus, new RequestEvent.Handler() {

@@ -1,5 +1,7 @@
 package org.eastway.echarts.domain;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TableGenerator;
+import javax.persistence.Version;
 
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +23,8 @@ public class PlaceLogRecord {
 	private Long id;
 	private String message;
 	private Long timestamp;
+	@Version
+	private Integer version;
 
 	@PersistenceContext
 	transient EntityManager entityManager;
@@ -48,6 +53,10 @@ public class PlaceLogRecord {
 		return timestamp;
 	}
 
+	public Integer getVersion() {
+		return version;
+	}
+
 	public static final EntityManager entityManager() {
 		EntityManager em = new PlaceLogRecord().entityManager;
 		if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
@@ -58,5 +67,18 @@ public class PlaceLogRecord {
 	public void persist() {
 		if (this.entityManager == null) this.entityManager = entityManager();
 		this.entityManager.persist(this);
+	}
+
+	public static final PlaceLogRecord findPlaceLogRecord(Long id) {
+		if (id == null)
+			return null;
+		List<PlaceLogRecord> results = entityManager()
+				.createQuery("select o from PlaceLogRecord o where o.id = :id", PlaceLogRecord.class)
+				.setParameter("id",id)
+				.getResultList();
+		if (results.size() > 0) {
+			return results.get(0);
+		}
+		return null;
 	}
 }
