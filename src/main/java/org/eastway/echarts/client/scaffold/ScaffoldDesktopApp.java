@@ -68,12 +68,12 @@ public class ScaffoldDesktopApp extends ScaffoldApp {
 
 	private void init() {
 
-		GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
-			public void onUncaughtException(Throwable e) {
-				Window.alert("Error contacting server");
-				log.log(Level.SEVERE, Window.Location.createUrlBuilder().buildString(), e);
-			}
-		});
+//		GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
+//			public void onUncaughtException(Throwable e) {
+//				Window.alert("Error contacting server");
+//				log.log(Level.SEVERE, Window.Location.createUrlBuilder().buildString(), e);
+//			}
+//		});
 
 		if (LogConfiguration.loggingIsEnabled()) {
 			// Add remote logging handler

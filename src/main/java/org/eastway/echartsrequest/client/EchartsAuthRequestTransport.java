@@ -27,6 +27,9 @@ public class EchartsAuthRequestTransport extends DefaultRequestTransport {
 						eventBus.fireEvent(new EchartsAuthenticationFailureEvent(loginUrl));
 						return;
 					}
+				} else if (response.getStatusCode() != Response.SC_OK) {
+					receiver.onTransportFailure(new ServerFailure("Server failure: " + response.getStatusCode(), null, null, true));
+					return;
 				}
 				superCallback.onResponseReceived(request, response);
 			}
