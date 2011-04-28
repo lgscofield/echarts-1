@@ -30,7 +30,7 @@ public class ScaffoldDesktopShell extends Composite {
 	@UiField NotificationMole mole;
 	@UiField SimplePanel currentEhrPanel;
 
-
+	private String moleLoadingMessage = "Loading ...";
 	private EchartsOracle oracle;
 	private PlaceController placeController;
 
@@ -43,6 +43,10 @@ public class ScaffoldDesktopShell extends Composite {
 
 	public NotificationMole getMole() {
 		return mole;
+	}
+
+	public String getMoleLoadingMessage() {
+		return moleLoadingMessage;
 	}
 
 	public SimplePanel getMasterPanel() {

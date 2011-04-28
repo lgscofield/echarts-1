@@ -57,9 +57,9 @@
 	<g:ScrollPanel ui:field="dockLayoutPanel">
 		<g:FlowPanel height="100%" width="100%">
 			<g:VerticalPanel height="100%" width="100%">
-				<g:FlowPanel>
-					<a:NotificationMole animationDuration='0' message='Loading&nbsp;&hellip;' ui:field='mole'></a:NotificationMole>
-				</g:FlowPanel>
+				<g:HorizontalPanel width="100%">
+					<a:NotificationMole animationDuration='0' message='Loading ...' ui:field='mole'></a:NotificationMole>
+				</g:HorizontalPanel>
 				<g:HorizontalPanel height='70px' width="100%">
 					<g:FlowPanel addStyleNames="{style.banner} {style.left}" />
 					<g:SimplePanel ui:field="currentEhrPanel" />

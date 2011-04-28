@@ -43,7 +43,7 @@ public class EventSourceRequestTransport implements RequestTransport {
 					receiver.onTransportFailure(failure);
 				} finally {
 					eventBus.fireEvent(new RequestEvent(
-							RequestEvent.State.RECEIVED));
+							RequestEvent.State.ERROR, failure.getMessage()));
 				}
 			}
 		};

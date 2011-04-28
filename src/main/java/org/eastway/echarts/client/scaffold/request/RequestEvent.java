@@ -27,7 +27,7 @@ public class RequestEvent extends GwtEvent<RequestEvent.Handler> {
 	 * The request state.
 	 */
 	public enum State {
-		SENT, RECEIVED
+		SENT, RECEIVED, ERROR
 	}
 
 	private static final Type<Handler> TYPE = new Type<Handler>();
@@ -47,6 +47,7 @@ public class RequestEvent extends GwtEvent<RequestEvent.Handler> {
 	}
 
 	private final State state;
+	private String message;
 
 	/**
 	 * Constructs a new @{link RequestEvent}.
@@ -55,6 +56,11 @@ public class RequestEvent extends GwtEvent<RequestEvent.Handler> {
 	 *            a {@link State} instance
 	 */
 	public RequestEvent(State state) {
+		this.state = state;
+	}
+
+	public RequestEvent(State state, String message) {
+		this.message = message;
 		this.state = state;
 	}
 
@@ -70,6 +76,10 @@ public class RequestEvent extends GwtEvent<RequestEvent.Handler> {
 	 */
 	public State getState() {
 		return state;
+	}
+
+	public String getMessage() {
+		return message;
 	}
 
 	@Override
