@@ -1,3 +1,5 @@
+Handle 50x errors from gwtRequest
+
 BUG Patient search selection - clicking on a result from the list that is not
 	the first will cause subsequent searches to automatically select the
 	first in the list.
