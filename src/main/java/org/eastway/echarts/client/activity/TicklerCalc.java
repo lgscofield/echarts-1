@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.request.AssignmentProxy;
-import org.eastway.echarts.client.request.PatientProxy;
 import org.eastway.echarts.shared.DueDateStatus;
 import org.eastway.echarts.shared.Tickler;
 
@@ -22,19 +21,14 @@ public class TicklerCalc {
 	public List<Tickler> setDates(List<AssignmentProxy> assignments) {
 		List<Tickler> tickler = new ArrayList<Tickler>();
 		for (AssignmentProxy assignment : assignments) {
-			if (assignment.getDisposition().equals("Open") && assignment.getService().matches("S.*"))
-				;
-			else
-				continue;
 			Tickler result = new Tickler();
-			PatientProxy patient = assignment.getPatient();
-			result.setName(assignment.getPatient().getName());
-			result.setCaseNumber(patient.getCaseNumber());
+			result.setName(assignment.getName());
+			result.setCaseNumber(assignment.getCaseNumber());
 
-			if (patient.getHipaaDateCompleted() != null) {
+			if (assignment.getHipaaDateCompleted() != null) {
 				TOTAL_COUNT = TOTAL_COUNT.add(new BigDecimal(1));
 				UP_TO_DATE_COUNT = UP_TO_DATE_COUNT.add(new BigDecimal(1));
-				result.setHipaaDateCompleted(formatDueDate(patient.getHipaaDateCompleted().getTime()));
+				result.setHipaaDateCompleted(formatDueDate(assignment.getHipaaDateCompleted().getTime()));
 			} else {
 				TOTAL_COUNT = TOTAL_COUNT.add(new BigDecimal(1));
 				NO_DATA_COUNT = NO_DATA_COUNT.add(new BigDecimal(1));
@@ -42,45 +36,45 @@ public class TicklerCalc {
 
 			long ispDueDate = 0L;
 			long ispDateCompleted = 0L;
-			if (patient.getIspDateCompleted() != null) {
-				ispDueDate = patient.getIspDateCompleted().getTime() + YEAR;
-				ispDateCompleted = patient.getIspDateCompleted().getTime();
+			if (assignment.getIspDateCompleted() != null) {
+				ispDueDate = assignment.getIspDateCompleted().getTime() + YEAR;
+				ispDateCompleted = assignment.getIspDateCompleted().getTime();
 			}
 			int ispDueDateStatus = getDueDateStatus(ispDueDate);
 			result.setIspDueDate(formatDueDate(ispDueDate), ispDueDateStatus);
 	
-			long ispReviewDueDate = getIspReviewDueDate(ispDueDate, ispDueDateStatus, ispDateCompleted, assignment, patient);
+			long ispReviewDueDate = getIspReviewDueDate(ispDueDate, ispDueDateStatus, ispDateCompleted, assignment);
 			result.setIspReviewDueDate(formatDueDate(ispReviewDueDate), getDueDateStatus(ispReviewDueDate));
 	
 			long healthHistoryDueDate = 0L;
-			if (patient.getHealthHistoryDateCompleted() != null)
-				healthHistoryDueDate = patient.getHealthHistoryDateCompleted().getTime() + YEAR;
+			if (assignment.getHealthHistoryDateCompleted() != null)
+				healthHistoryDueDate = assignment.getHealthHistoryDateCompleted().getTime() + YEAR;
 			result.setHealthHistoryDueDate(formatDueDate(healthHistoryDueDate), getDueDateStatus(healthHistoryDueDate));
 	
 			long diagnosticAssessmentUpdateDueDate = 0L;
-			if (patient.getDiagnosticAssessmentDateCompleted() != null) {
+			if (assignment.getDiagnosticAssessmentDateCompleted() != null) {
 				if (assignment.getService().matches("Pgm021")
 						|| assignment.getService().matches("Pgm022")
 						|| assignment.getService().matches("Pgm023")
 						|| assignment.getService().matches("Pgm030"))
-					diagnosticAssessmentUpdateDueDate = patient.getDiagnosticAssessmentDateCompleted().getTime() + YEAR;
+					diagnosticAssessmentUpdateDueDate = assignment.getDiagnosticAssessmentDateCompleted().getTime() + YEAR;
 				else
-					diagnosticAssessmentUpdateDueDate = patient.getDiagnosticAssessmentDateCompleted().getTime() + (2L * YEAR);
+					diagnosticAssessmentUpdateDueDate = assignment.getDiagnosticAssessmentDateCompleted().getTime() + (2L * YEAR);
 			}
 			result.setDiagnosticAssessmentUpdate(formatDueDate(diagnosticAssessmentUpdateDueDate), getDueDateStatus(diagnosticAssessmentUpdateDueDate));
 	
 			long financialDueDate = 0L;
-			if (patient.getFinancialDateCompleted() != null) {
-				if (patient.getTitleTwenty())
-					financialDueDate = patient.getFinancialDateCompleted().getTime() + ONE_HUNDRED_EIGHTY_DAYS;
+			if (assignment.getFinancialDateCompleted() != null) {
+				if (assignment.getTitleTwenty())
+					financialDueDate = assignment.getFinancialDateCompleted().getTime() + ONE_HUNDRED_EIGHTY_DAYS;
 				else
-					financialDueDate = patient.getFinancialDateCompleted().getTime() + YEAR;
+					financialDueDate = assignment.getFinancialDateCompleted().getTime() + YEAR;
 			}
 			result.setFinancialDueDate(formatDueDate(financialDueDate), getDueDateStatus(financialDueDate));
 	
 			long oocDueDate = 0L;
-			if (patient.getOutcomesConsumerDateCompleted() != null)
-				oocDueDate = patient.getOutcomesConsumerDateCompleted().getTime() + YEAR;
+			if (assignment.getOutcomesConsumerDateCompleted() != null)
+				oocDueDate = assignment.getOutcomesConsumerDateCompleted().getTime() + YEAR;
 			result.setOoc(formatDueDate(oocDueDate), getDueDateStatus(oocDueDate));
 			result.setService(assignment.getService());
 			result.setStaffName(assignment.getStaffName());
@@ -89,22 +83,22 @@ public class TicklerCalc {
 		return tickler;
 	}
 
-	private long getIspReviewDueDate(long ispDueDate, int ispDueDateStatus, long ispDateCompleted, AssignmentProxy assignment, PatientProxy patient) {
+	private long getIspReviewDueDate(long ispDueDate, int ispDueDateStatus, long ispDateCompleted, AssignmentProxy assignment) {
 		long ispReviewDueDate = 0L;
 		if (ispDueDateStatus == DueDateStatus.OVERDUE) {
 			return ispDueDate;
 		} else {
-			boolean aodStatus = (assignment.getDemographics().getAlcoholDrug()==null?false:assignment.getDemographics().getAlcoholDrug())&&(EchartsUser.staffId=="5542"||EchartsUser.staffId=="5396");
-			if (patient.getIspReviewDateCompleted() != null) {
+			boolean aodStatus = (assignment.getAlcoholDrug()==null?false:assignment.getAlcoholDrug())&&(EchartsUser.staffId=="5542"||EchartsUser.staffId=="5396");
+			if (assignment.getIspReviewDateCompleted() != null) {
 				if (assignment.getService().matches("Pgm076")
 						|| aodStatus
 						|| assignment.getService().matches("Pgm021")
 						|| assignment.getService().matches("Pgm022")
 						|| assignment.getService().matches("Pgm023")
 						|| assignment.getService().matches("Pgm030")) {
-					ispReviewDueDate = patient.getIspReviewDateCompleted().getTime() + NINETY_DAYS;
+					ispReviewDueDate = assignment.getIspReviewDateCompleted().getTime() + NINETY_DAYS;
 				} else {
-					ispReviewDueDate = patient.getIspReviewDateCompleted().getTime() + ONE_HUNDRED_EIGHTY_DAYS;
+					ispReviewDueDate = assignment.getIspReviewDateCompleted().getTime() + ONE_HUNDRED_EIGHTY_DAYS;
 				}
 				if (ispReviewDueDate > ispDueDate)
 					return ispDueDate;

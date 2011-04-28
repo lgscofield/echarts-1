@@ -88,7 +88,7 @@ public class CurrentEhrView extends Composite {
 			result = "NO DATA";
 		} else {
 			for (AssignmentProxy a : assignments)
-			if (a.getStaff() != null && a.getStaff().equals(EchartsUser.staffId))
+			if (a.getStaffId() != null && a.getStaffId().equals(EchartsUser.staffId))
 				result = a.getStaffName();
 			result = assignments.get(0).getStaffName() != null ? assignments.get(0).getStaffName() : "NO DATA";
 		}

@@ -24,67 +24,89 @@ import com.google.gwt.requestfactory.shared.ProxyFor;
 
 @ProxyFor(Assignment.class)
 public interface AssignmentProxy extends EntityProxy {
-	Long getId();
+	public void setId(Long id);
 
-	void setId(Long id);
+	public Long getId();
 
-	void setCaseNumber(String caseNumber);
+	public void setService(String service);
 
-	String getCaseNumber();
+	public String getService();
 
-	void setAssignmentDate(Date assignmentDate);
+	public void setStaffId(String staffId);
 
-	Date getAssignmentDate();
+	public String getStaffId();
 
-	void setService(String service);
+	public void setStaffName(String staffName);
 
-	String getService();
+	public String getStaffName();
 
-	void setStaff(String staff);
+	public String getCaseNumber();
 
-	String getStaff();
+	public void setCaseNumber(String caseNumber);
 
-	void setOrderDate(Date orderDate);
+	public void setHipaaDateCompleted(Date hipaaDateCompleted);
 
-	Date getOrderDate();
+	public Date getHipaaDateCompleted();
 
-	void setDisposition(String disposition);
+	public void setIspDateCompleted(Date ispDateCompleted);
 
-	String getDisposition();
+	public Date getIspDateCompleted();
 
-	void setStaffName(String staffName);
+	public void setAodGoal(Date aodGoal);
 
-	String getStaffName();
+	public Date getAodGoal();
 
-	void setTermDate(Date termDate);
+	public void setIspReviewDateCompleted(Date ispReviewDateCompleted);
 
-	Date getTermDate();
+	public Date getIspReviewDateCompleted();
 
-	void setPlanId(Integer planId);
+	public void setLevelOfCareAdmissionDate(Date levelOfCareAdmissionDate);
 
-	Integer getPlanId();
+	public Date getLevelOfCareAdmissionDate();
 
-	void setTrtEpisode(Short trtEpisode);
+	public void setLevelOfCareCs(Date levelOfCareCs);
 
-	Short getTrtEpisode();
+	public Date getLevelOfCareCs();
 
-	void setProgram(String program);
+	public void setHealthHistoryDateCompleted(Date healthHistoryDateCompleted);
 
-	String getProgram();
+	public Date getHealthHistoryDateCompleted();
 
-	void setLastEdit(Date lastEdit);
+	public void setFinancialDateCompleted(Date financialDateCompleted);
 
-	Date getLastEdit();
+	public Date getFinancialDateCompleted();
 
-	void setLastEditBy(String lastEditBy);
+	public void setTitleTwenty(Boolean titleTwenty);
 
-	String getLastEditBy();
+	public Boolean getTitleTwenty();
 
-	void setPatient(PatientProxy patient);
+	public void setDiagnosticAssessmentDateCompleted(Date diagnosticAssessmentDateCompleted);
 
-	PatientProxy getPatient();
+	public Date getDiagnosticAssessmentDateCompleted();
 
-	void setDemographics(DemographicsProxy demographics);
+	public void setOutcomesConsumerDateCompleted(Date outcomesConsumerDateCompleted);
 
-	DemographicsProxy getDemographics();
+	public Date getOutcomesConsumerDateCompleted();
+
+	public void setOutcomesProviderDateCompleted(Date outcomesProviderDateCompleted);
+
+	public Date getOutcomesProviderDateCompleted();
+
+	public void setOutcomesAgencyDateCompleted(Date outcomesAgencyDateCompleted);
+
+	public Date getOutcomesAgencyDateCompleted();
+
+	public void setDateStamp(Date dateStamp);
+
+	public Date getDateStamp();
+
+	public void setName(String name);
+
+	public String getName();
+
+	public Integer getVersion();
+
+	public Boolean getAlcoholDrug();
+
+	public void setAlcoholDrug(Boolean isAlcoholDrug);
 }

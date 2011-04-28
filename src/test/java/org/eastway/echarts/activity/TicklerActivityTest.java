@@ -90,19 +90,15 @@ public class TicklerActivityTest extends ActivityTestBase {
 	AssignmentProxy assignment;
 
 	String caseNumber;
-	String disposition;
 	String service;
 	String staffName;
-	String program;
 	String name;
 
 	@Before
 	public void setData() {
 		caseNumber = "10";
-		disposition = "Open";
 		service = "S CS";
 		staffName = "DOE, JOHN";
-		program = "021";
 		name = "Test, Harry";
 
 		display = new MyDisplay();
@@ -127,20 +123,12 @@ public class TicklerActivityTest extends ActivityTestBase {
 		AssignmentRequest assignmentContext = requestFactory.assignmentRequest();
 		assignment = assignmentContext.create(AssignmentProxy.class);
 
-		assignment.setAssignmentDate(new Date());
 		assignment.setCaseNumber(caseNumber);
-		assignment.setDemographics(demographics);
-		assignment.setDisposition(disposition);
 		assignment.setId(1L);
-		assignment.setLastEdit(new Date());
-		assignment.setLastEditBy(EchartsUser.staffId);
-		assignment.setOrderDate(new Date());
-		assignment.setPatient(patient);
-		assignment.setProgram(program);
 		assignment.setService(service);
-		assignment.setStaff(EchartsUser.staffId);
+		assignment.setStaffId(EchartsUser.staffId);
 		assignment.setStaffName(staffName);
-		assignment.setTermDate(new Date());
+		assignment.setName(name);
 
 		UserRequest userContext = requestFactory.userRequest();
 		UserProxy user = userContext.create(UserProxy.class);

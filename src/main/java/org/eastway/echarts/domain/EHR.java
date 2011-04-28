@@ -130,7 +130,7 @@ public class EHR {
 		if (caseNumber == null)
 			return null;
 		return entityManager().createQuery(
-			"SELECT a From Assignment a Where a.disposition = 'Open' And a.service Like 'S%' And a.caseNumber = :caseNumber Order By a.patient.lastName ASC, a.patient.firstName ASC, a.orderDate DESC", Assignment.class)
+			"SELECT a From Assignment a Where a.service Like 'S%' And a.caseNumber = :caseNumber", Assignment.class)
 				.setParameter("caseNumber", caseNumber)
 				.getResultList();
 	}

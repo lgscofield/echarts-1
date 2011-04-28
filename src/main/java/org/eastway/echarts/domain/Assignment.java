@@ -17,11 +17,7 @@ package org.eastway.echarts.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
 import javax.persistence.Column;
@@ -29,75 +25,73 @@ import javax.persistence.Version;
 
 import java.util.Date;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.Null;
-
 import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
 
 @Configurable
 @Entity
-@Table(name = "Orders")
+@Table(name = "vticklerlayout")
 public class Assignment {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "orderid")
-    private Long id;
+	private Long id;
 
-	@ManyToOne(targetEntity = Patient.class)
-	@JoinColumn(name = "caseNumber", insertable = false, updatable = false)
-	private Patient patient;
+	private String service;
 
-	@ManyToOne(targetEntity = Demographics.class)
-	@JoinColumn(name = "caseNumber", insertable = false, updatable = false)
-	private Demographics demographics;
+	@Column(name = "staff")
+	private String staffId;
 
-    @Column(name = "Date")
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "S-")
-    private Date assignmentDate;
-
-    private String service;
-
-    private String staff;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "S-")
-    @Column(name="orderdate")
-    private Date orderDate;
-
-    private String disposition;
-
-    @Column(name="staffname")
-    private String staffName;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "S-")
-    @Column(name="termdate")
-    private Date termDate;
-
-    @Null
-    @Column(name="planid")
-    private Integer planId;
-
-    @Null
-    @Column(name="trtepisode")
-    private Short trtEpisode;
-
-    private String program;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "S-")
-    @Column(name="lastedit")
-    private Date lastEdit;
-
-    @Column(name="lasteditby")
-    private String lastEditBy;
+	@Column(name = "staffname")
+	private String staffName;
 
 	private String caseNumber;
+
+	@Column(name = "full_name")
+	private String name;
+
+	@Column(name = "HIPAA")
+	private Date hipaaDateCompleted;
+
+	@Column(name = "ISP")
+	private Date ispDateCompleted;
+
+	@Column(name = "AoD_Goal")
+	private Date aodGoal;
+
+	@Column(name = "ISP6")
+	private Date ispReviewDateCompleted;
+
+	@Column(name = "LOC_Ad")
+	private Date levelOfCareAdmissionDate;
+
+	@Column(name = "LOC_CS")
+	private Date levelOfCareCs;
+
+	@Column(name = "HTH_HX")
+	private Date healthHistoryDateCompleted;
+
+	@Column(name = "FAF")
+	private Date financialDateCompleted;
+
+	@Column(name = "FAF_XX", scale = 18, precision = 0)
+	private Long titleTwenty;
+
+	@Column(name = "DA")
+	private Date diagnosticAssessmentDateCompleted;
+
+	@Column(name = "OOCi")
+	private Date outcomesConsumerDateCompleted;
+
+	@Column(name = "OOCW")
+	private Date outcomesProviderDateCompleted;
+
+	@Column(name = "OOCP")
+	private Date outcomesAgencyDateCompleted;
+
+	private Boolean isAlcoholDrug;
+
+	@Column(name = "Date_Stamp")
+	private Date dateStamp;
 
 	@Version
 	private Integer version;
@@ -106,19 +100,11 @@ public class Assignment {
 	transient EntityManager entityManager;
 
 	public void setId(Long id) {
-    	this.id = id;
-    }
-
-    public Long getId() {
-    	return id;
-    }
-    
-	public void setAssignmentDate(Date assignmentDate) {
-		this.assignmentDate = assignmentDate;
+		this.id = id;
 	}
 
-	public Date getAssignmentDate() {
-		return assignmentDate;
+	public Long getId() {
+		return id;
 	}
 
 	public void setService(String service) {
@@ -129,28 +115,12 @@ public class Assignment {
 		return service;
 	}
 
-	public void setStaff(String staff) {
-		this.staff = staff;
+	public void setStaffId(String staffId) {
+		this.staffId = staffId;
 	}
 
-	public String getStaff() {
-		return staff;
-	}
-
-	public void setOrderDate(Date orderDate) {
-		this.orderDate = orderDate;
-	}
-
-	public Date getOrderDate() {
-		return orderDate;
-	}
-
-	public void setDisposition(String disposition) {
-		this.disposition = disposition;
-	}
-
-	public String getDisposition() {
-		return disposition;
+	public String getStaffId() {
+		return staffId;
 	}
 
 	public void setStaffName(String staffName) {
@@ -161,54 +131,6 @@ public class Assignment {
 		return staffName;
 	}
 
-	public void setTermDate(Date termDate) {
-		this.termDate = termDate;
-	}
-
-	public Date getTermDate() {
-		return termDate;
-	}
-
-	public void setPlanId(Integer planId) {
-		this.planId = planId;
-	}
-
-	public Integer getPlanId() {
-		return planId;
-	}
-
-	public void setTrtEpisode(Short trtEpisode) {
-		this.trtEpisode = trtEpisode;
-	}
-
-	public Short getTrtEpisode() {
-		return trtEpisode;
-	}
-
-	public void setProgram(String program) {
-		this.program = program;
-	}
-
-	public String getProgram() {
-		return program;
-	}
-
-	public void setLastEdit(Date lastEdit) {
-		this.lastEdit = lastEdit;
-	}
-
-	public Date getLastEdit() {
-		return lastEdit;
-	}
-
-	public void setLastEditBy(String lastEditBy) {
-		this.lastEditBy = lastEditBy;
-	}
-
-	public String getLastEditBy() {
-		return lastEditBy;
-	}
-
 	public String getCaseNumber() {
 		return caseNumber;
 	}
@@ -217,20 +139,135 @@ public class Assignment {
 		this.caseNumber = caseNumber;
 	}
 
-	public void setPatient(Patient patient) {
-		this.patient = patient;
+	public void setHipaaDateCompleted(Date hipaaDateCompleted) {
+		this.hipaaDateCompleted = hipaaDateCompleted;
 	}
 
-	public Patient getPatient() {
-		return patient;
+	public Date getHipaaDateCompleted() {
+		return hipaaDateCompleted;
 	}
 
-	public void setDemographics(Demographics demographics) {
-		this.demographics = demographics;
+	public void setIspDateCompleted(Date ispDateCompleted) {
+		this.ispDateCompleted = ispDateCompleted;
 	}
 
-	public Demographics getDemographics() {
-		return demographics;
+	public Date getIspDateCompleted() {
+		return ispDateCompleted;
+	}
+
+	public void setAodGoal(Date aodGoal) {
+		this.aodGoal = aodGoal;
+	}
+
+	public Date getAodGoal() {
+		return aodGoal;
+	}
+
+	public void setIspReviewDateCompleted(Date ispReviewDateCompleted) {
+		this.ispReviewDateCompleted = ispReviewDateCompleted;
+	}
+
+	public Date getIspReviewDateCompleted() {
+		return ispReviewDateCompleted;
+	}
+
+	public void setLevelOfCareAdmissionDate(Date levelOfCareAdmissionDate) {
+		this.levelOfCareAdmissionDate = levelOfCareAdmissionDate;
+	}
+
+	public Date getLevelOfCareAdmissionDate() {
+		return levelOfCareAdmissionDate;
+	}
+
+	public void setLevelOfCareCs(Date levelOfCareCs) {
+		this.levelOfCareCs = levelOfCareCs;
+	}
+
+	public Date getLevelOfCareCs() {
+		return levelOfCareCs;
+	}
+
+	public void setHealthHistoryDateCompleted(Date healthHistoryDateCompleted) {
+		this.healthHistoryDateCompleted = healthHistoryDateCompleted;
+	}
+
+	public Date getHealthHistoryDateCompleted() {
+		return healthHistoryDateCompleted;
+	}
+
+	public void setFinancialDateCompleted(Date financialDateCompleted) {
+		this.financialDateCompleted = financialDateCompleted;
+	}
+
+	public Date getFinancialDateCompleted() {
+		return financialDateCompleted;
+	}
+
+	public void setTitleTwenty(Boolean titleTwenty) {
+		this.titleTwenty = (titleTwenty) ? 1L : 0L;
+	}
+
+	public Boolean getTitleTwenty() {
+		return titleTwenty == null || titleTwenty == 0L ? false : true;
+	}
+
+	public void setDiagnosticAssessmentDateCompleted(
+			Date diagnosticAssessmentDateCompleted) {
+		this.diagnosticAssessmentDateCompleted = diagnosticAssessmentDateCompleted;
+	}
+
+	public Date getDiagnosticAssessmentDateCompleted() {
+		return diagnosticAssessmentDateCompleted;
+	}
+
+	public void setOutcomesConsumerDateCompleted(
+			Date outcomesConsumerDateCompleted) {
+		this.outcomesConsumerDateCompleted = outcomesConsumerDateCompleted;
+	}
+
+	public Date getOutcomesConsumerDateCompleted() {
+		return outcomesConsumerDateCompleted;
+	}
+
+	public void setOutcomesProviderDateCompleted(
+			Date outcomesProviderDateCompleted) {
+		this.outcomesProviderDateCompleted = outcomesProviderDateCompleted;
+	}
+
+	public Date getOutcomesProviderDateCompleted() {
+		return outcomesProviderDateCompleted;
+	}
+
+	public void setOutcomesAgencyDateCompleted(Date outcomesAgencyDateCompleted) {
+		this.outcomesAgencyDateCompleted = outcomesAgencyDateCompleted;
+	}
+
+	public Date getOutcomesAgencyDateCompleted() {
+		return outcomesAgencyDateCompleted;
+	}
+
+	public void setDateStamp(Date dateStamp) {
+		this.dateStamp = dateStamp;
+	}
+
+	public Date getDateStamp() {
+		return dateStamp;
+	}
+
+	public void setAlcoholDrug(Boolean isAlcoholDrug) {
+		this.isAlcoholDrug = isAlcoholDrug;
+	}
+
+	public Boolean getAlcoholDrug() {
+		return isAlcoholDrug;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public Integer getVersion() {
@@ -239,7 +276,9 @@ public class Assignment {
 
 	public static final EntityManager entityManager() {
 		EntityManager em = new Assignment().entityManager;
-		if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+		if (em == null)
+			throw new IllegalStateException(
+					"Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
 		return em;
 	}
 
@@ -251,13 +290,15 @@ public class Assignment {
 
 	@Transactional
 	public void persist() {
-		if (this.entityManager == null) this.entityManager = entityManager();
+		if (this.entityManager == null)
+			this.entityManager = entityManager();
 		this.entityManager.persist(this);
 	}
 
 	@Transactional
 	public void remove() {
-		if (this.entityManager == null) this.entityManager = entityManager();
+		if (this.entityManager == null)
+			this.entityManager = entityManager();
 		if (this.entityManager.contains(this)) {
 			this.entityManager.remove(this);
 		} else {

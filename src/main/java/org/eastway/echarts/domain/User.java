@@ -319,7 +319,7 @@ public class User implements java.io.Serializable {
 			return null;
 		String staffId = findUser(staffUserName).getStaffId();
 		return entityManager().createQuery(
-				"SELECT a From Assignment a Where a.disposition = 'Open' And a.service Like 'S%' And a.staff = :staffId Order By a.patient.lastName ASC, a.patient.firstName ASC, a.orderDate DESC", Assignment.class)
+				"SELECT a From Assignment a Where a.service Like 'S%' And a.staffId = :staffId ORDER BY a.name", Assignment.class)
 					.setParameter("staffId", staffId)
 					.getResultList();
 	}

@@ -71,8 +71,6 @@ public class PatientSummaryActivity extends AbstractActivity implements PatientS
 				}
 			});
 		context.findAssignmentsByCaseNumber(caseNumber)
-			.with("patient")
-			.with("demographics")
 			.to(new Receiver<List<AssignmentProxy>>() {
 			@Override
 			public void onSuccess(List<AssignmentProxy> response) {

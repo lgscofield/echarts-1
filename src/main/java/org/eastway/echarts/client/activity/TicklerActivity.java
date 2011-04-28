@@ -62,8 +62,6 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 	public void fetchData() {
 		UserRequest context = requestFactory.userRequest();
 		context.findAssignments(EchartsUser.userName, userName)
-			.with("patient")
-			.with("demographics")
 			.to(new Receiver<List<AssignmentProxy>>() {
 			@Override
 			public void onSuccess(List<AssignmentProxy> response) {
