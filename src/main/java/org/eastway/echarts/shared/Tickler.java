@@ -31,6 +31,7 @@ public class Tickler implements Serializable {
 	private DueDate ooc;
 	private String service;
 	private String staffName;
+	private Date nextAppointment;
 
 	public Tickler() { }
 
@@ -124,5 +125,13 @@ public class Tickler implements Serializable {
 
 	public void setStaffName(String staffName) {
 		this.staffName = staffName;
+	}
+
+	public void setNextAppointment(Date nextAppointment) {
+		this.nextAppointment = nextAppointment;
+	}
+
+	public Date getNextAppointment() {
+		return nextAppointment;
 	}
 }

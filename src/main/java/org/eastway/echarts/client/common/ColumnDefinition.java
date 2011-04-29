@@ -19,6 +19,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gwt.place.shared.Place;
+
 public abstract class ColumnDefinition<T> {
 	public abstract void render(T t, StringBuilder sb);
 
@@ -83,6 +85,14 @@ public abstract class ColumnDefinition<T> {
 	}
 
 	public Date getCompletedDate(T t) {
+		return null;
+	}
+
+	public Boolean isPlace() {
+		return false;
+	}
+
+	public Place getPlace(T t) {
 		return null;
 	}
 }

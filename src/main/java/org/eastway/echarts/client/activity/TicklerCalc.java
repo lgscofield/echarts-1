@@ -78,6 +78,7 @@ public class TicklerCalc {
 			result.setOoc(formatDueDate(oocDueDate), getDueDateStatus(oocDueDate));
 			result.setService(assignment.getService());
 			result.setStaffName(assignment.getStaffName());
+			result.setNextAppointment(assignment.getNextAppointment());
 			tickler.add(result);
 		}
 		return tickler;

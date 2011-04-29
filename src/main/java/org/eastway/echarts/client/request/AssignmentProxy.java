@@ -104,6 +104,10 @@ public interface AssignmentProxy extends EntityProxy {
 
 	public String getName();
 
+	public Date getNextAppointment();
+
+	public void setNextAppointment(Date nextAppointment);
+
 	public Integer getVersion();
 
 	public Boolean getAlcoholDrug();

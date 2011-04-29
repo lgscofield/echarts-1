@@ -36,6 +36,7 @@ public class GlobalResources {
 	}
 
 	public interface Styles extends CssResource {
+		String link();
 	}
 
 	static {

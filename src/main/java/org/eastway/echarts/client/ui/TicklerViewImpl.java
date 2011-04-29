@@ -25,6 +25,7 @@ import org.eastway.echarts.client.style.GlobalResources;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ContextMenuEvent;
 import com.google.gwt.event.dom.client.ContextMenuHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -34,6 +35,7 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -72,7 +74,8 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 		HEALTH_HISTORY,
 		DIAGNOSTIC_ASSESSMENT_UPDATE,
 		FINANCIAL,
-		OOC
+		OOC,
+		NEXT_APPOINTMENT
 	}
 
 	public TicklerViewImpl() {
@@ -90,6 +93,7 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 		table.setHTML(row, Column.DIAGNOSTIC_ASSESSMENT_UPDATE.ordinal(), "<b>DA Update</b>");
 		table.setHTML(row, Column.FINANCIAL.ordinal(), "<b>Financial</b>");
 		table.setHTML(row, Column.OOC.ordinal(), "<b>OOC</b>");
+		table.setHTML(row, Column.NEXT_APPOINTMENT.ordinal(), "<b>Next Appt</b>");
 	}
 
 	public void openMenu(final T t, int x, int y) {
@@ -218,7 +222,7 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 
 			for (int j = 0; j < columnDefinitions.size(); ++j) {
 				final StringBuilder sb = new StringBuilder();
-				ColumnDefinition<T> r = columnDefinitions.get(j);
+				final ColumnDefinition<T> r = columnDefinitions.get(j);
 				if (j == 0)
 					r.render(t, sb.append((i+1) + ". "));
 				else
@@ -241,7 +245,17 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 						table.setHTML(row, j, formatter.formatColumn(r.createTicklerUrl(t), r.getTicklerDueDateStatus(t), sb.toString()));
 					else if (r.isTicklerCompletedDate())
 						table.setHTML(row, j, formatter.formatColumn(r.getCompletedDate(t), sb.toString()));
-					else
+					else if (r.isPlace()) {
+						InlineLabel label = new InlineLabel(sb.toString());
+						label.addStyleName(GlobalResources.styles().link());
+						label.addClickHandler(new ClickHandler() {
+							@Override
+							public void onClick(ClickEvent event) {
+								presenter.goTo(r.getPlace(t));
+							}
+						});
+						table.setWidget(row, j, label);
+					} else
 						table.setHTML(row, j, sb.toString());
 				}
 			}

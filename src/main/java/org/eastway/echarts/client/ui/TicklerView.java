@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.eastway.echarts.client.common.ColumnDefinition;
 
+import com.google.gwt.place.shared.Place;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
@@ -36,6 +37,7 @@ public interface TicklerView<T> extends IsWidget {
 		void openNurseProgressNote(T t);
 		void openPrintablePatientSummary(T t);
 		void openEditContact(T t);
+		void goTo(Place place);
 	}
 
 	public static interface Template extends SafeHtmlTemplates {

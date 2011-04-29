@@ -34,6 +34,7 @@ import org.eastway.echarts.client.request.UserRequest;
 import org.eastway.echarts.client.ui.TicklerView;
 import org.eastway.echarts.shared.Tickler;
 
+import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.Window;
@@ -182,5 +183,10 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 			.setPath("/echarts-asp/client/contactupdate.asp")
 			.setParameter("PATID", t.getCaseNumber())
 			.buildString(), "_blank", "");
+	}
+
+	@Override
+	public void goTo(Place place) {
+		placeController.goTo(place);
 	}
 }

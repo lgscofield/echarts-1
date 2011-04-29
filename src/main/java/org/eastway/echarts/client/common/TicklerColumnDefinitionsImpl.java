@@ -18,9 +18,12 @@ package org.eastway.echarts.client.common;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.eastway.echarts.client.place.AppointmentPlace;
 import org.eastway.echarts.client.style.GlobalResources;
 import org.eastway.echarts.client.ui.TicklerUrlBuilder;
 import org.eastway.echarts.shared.Tickler;
+
+import com.google.gwt.place.shared.Place;
 
 @SuppressWarnings("serial")
 public class TicklerColumnDefinitionsImpl extends
@@ -183,6 +186,25 @@ public class TicklerColumnDefinitionsImpl extends
 			@Override
 			public boolean isTicklerDueDate() {
 				return true;
+			}
+		});
+		this.add(new ColumnDefinition<Tickler>() {
+			@Override
+			public void render(Tickler t, StringBuilder sb) {
+				if (t.getNextAppointment() != null)
+					sb.append(GlobalResources.getDateFormat().format(t.getNextAppointment()));
+				else
+					sb.append("");
+			}
+
+			@Override
+			public Boolean isPlace() {
+				return true;
+			}
+
+			@Override
+			public Place getPlace(Tickler t) {
+				return new AppointmentPlace(t.getCaseNumber());
 			}
 		});
 	}

@@ -30,3 +30,7 @@ a {
 .gwt-Frame {
 	border-width: 0px;
 }
+
+.link {
+	cursor: pointer;
+}
