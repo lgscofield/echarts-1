@@ -86,7 +86,8 @@ public class ScaffoldDesktopApp extends ScaffoldApp {
 				} else if (requestEvent.getState() == RequestEvent.State.RECEIVED){
 					shell.getMole().hide();
 				} else if (requestEvent.getState() == RequestEvent.State.ERROR) {
-					shell.getMole().setMessage(requestEvent.getMessage());
+					shell.getMole().hideNow();
+					shell.getMole().show(requestEvent.getMessage());
 				}
 			}
 		});

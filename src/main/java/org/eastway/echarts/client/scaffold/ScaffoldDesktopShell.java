@@ -1,5 +1,6 @@
 package org.eastway.echarts.client.scaffold;
 
+import org.eastway.echarts.client.ui.EchartsNotificationMole;
 import org.eastway.echarts.client.ui.EchartsOracle;
 import org.eastway.echarts.client.ui.PatientSearchWidget;
 import org.eastway.echartsrequest.client.LoginWidget;
@@ -13,7 +14,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.NotificationMole;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -27,7 +27,7 @@ public class ScaffoldDesktopShell extends Composite {
 	@UiField SimplePanel master;
 	@UiField SimplePanel details;
 	@UiField LoginWidget loginWidget;
-	@UiField NotificationMole mole;
+	@UiField EchartsNotificationMole mole;
 	@UiField SimplePanel currentEhrPanel;
 
 	private String moleLoadingMessage = "Loading ...";
@@ -41,7 +41,7 @@ public class ScaffoldDesktopShell extends Composite {
 		initWidget(BINDER.createAndBindUi(this));
 	}
 
-	public NotificationMole getMole() {
+	public EchartsNotificationMole getMole() {
 		return mole;
 	}
 
