@@ -1,4 +1,3 @@
-<?xml version="1.0"?>
 <!-- Copyright 2010 Ian Hilt                                                -->
 <!-- Licensed under the Apache License, Version 2.0 (the "License"); you    -->
 <!-- may not use this file except in compliance with the License. You may   -->
@@ -12,32 +11,23 @@
 <!-- implied. License for the specific language governing permissions and   -->
 <!-- limitations under the License.                                         -->
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<ui:style type="org.eastway.echarts.client.ui.DashboardSideBarView.Style">
-		.link {
-			margin: 5px 0px 5px 15px;
-		}
-		.ticklerButton {
-			width: 30px;
-			height: 28px;
-			vertical-align: text-bottom;
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:c="urn:import:com.google.gwt.user.cellview.client">
+	<ui:style>
+		.cellTable {
+			width: 100%;
 		}
 	</ui:style>
 	<g:HTMLPanel>
-		<b>Tools</b>
-		<g:Hyperlink addStyleNames='{style.link}' targetHistoryToken=''>Dashboard</g:Hyperlink>
-		<div>
-			<g:HorizontalPanel spacing='0'>
-				<g:cell>
-					<g:ListBox width="125px" addStyleNames='{style.link}' ui:field='tickler' />
-				</g:cell>
-				<g:cell verticalAlignment='ALIGN_MIDDLE'>
-					<g:Button styleName='{style.ticklerButton}' ui:field='ticklerButton'>Go</g:Button>
-				</g:cell>
-			</g:HorizontalPanel>
-		</div>
-		<g:Hyperlink addStyleNames='{style.link}' targetHistoryToken='ar:'>Today's Appointments</g:Hyperlink>
-		<g:Anchor addStyleNames='{style.link}' ui:field='groupProgressNote' href='#'>Group Progress Note</g:Anchor>
-		<g:FlowPanel ui:field="panel" />
+		<span ui:field="error" />
+		<c:CellTable
+			addStyleNames='{style.cellTable}'
+			ui:field="cellTable" />
+		<table width='100%'>
+			<tr>
+				<td align='center'><c:SimplePager ui:field="pager" /></td>
+			</tr>
+		</table>
 	</g:HTMLPanel>
-</ui:UiBinder>
+</ui:UiBinder> 

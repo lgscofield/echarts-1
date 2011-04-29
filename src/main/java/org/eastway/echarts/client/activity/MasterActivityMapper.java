@@ -10,6 +10,7 @@ import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.place.ARInfoPlace;
 import org.eastway.echarts.client.place.AddressPlace;
 import org.eastway.echarts.client.place.AppointmentPlace;
+import org.eastway.echarts.client.place.AppointmentReportListPlace;
 import org.eastway.echarts.client.place.DashboardFramePlace;
 import org.eastway.echarts.client.place.DashboardPlace;
 import org.eastway.echarts.client.place.DemographicsPlace;
@@ -30,6 +31,7 @@ import org.eastway.echarts.client.place.TreatmentPlanPlace;
 import org.eastway.echarts.client.request.AddressProxy;
 import org.eastway.echarts.client.request.AppointmentDataProvider;
 import org.eastway.echarts.client.request.AppointmentProxy;
+import org.eastway.echarts.client.request.AppointmentReportProxy;
 import org.eastway.echarts.client.request.DiagnosisProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.request.LinkProxy;
@@ -40,6 +42,7 @@ import org.eastway.echarts.client.request.PlaceLogRecordRequest;
 import org.eastway.echarts.client.request.UserProxy;
 import org.eastway.echarts.client.ui.ARInfoView;
 import org.eastway.echarts.client.ui.AddressView;
+import org.eastway.echarts.client.ui.AppointmentReportList;
 import org.eastway.echarts.client.ui.AppointmentView;
 import org.eastway.echarts.client.ui.DashboardView;
 import org.eastway.echarts.client.ui.DemographicsView;
@@ -80,6 +83,7 @@ public class MasterActivityMapper implements ActivityMapper {
 	private AppointmentDataProvider appointmentDataProvider;
 	private PatientSummaryView patientSummaryView;
 	private EchartsPlaceHistoryMapper historyMapper;
+	private AppointmentReportList appointmentReportList;
 
 	@Inject
 	public MasterActivityMapper(EchartsRequestFactory requestFactory,
@@ -100,7 +104,8 @@ public class MasterActivityMapper implements ActivityMapper {
 							     DashboardView<LinkedHashMap<String, Long>> dashboardView,
 							     ProfileView<UserProxy> profileView,
 							     List<ColumnDefinition<UserProxy>> profileColumnDefinitions,
-							     AppointmentDataProvider appointmentDataProvider) {
+							     AppointmentDataProvider appointmentDataProvider,
+							     AppointmentReportList appointmentReportList) {
 		super();
 		this.requestFactory = requestFactory;
 		this.placeController = placeController;
@@ -121,6 +126,17 @@ public class MasterActivityMapper implements ActivityMapper {
 		this.profileView = profileView;
 		this.profileColumnDefinitions = profileColumnDefinitions;
 		this.appointmentDataProvider = appointmentDataProvider;
+		this.appointmentReportList = appointmentReportList;
+		init();
+	}
+
+	private void init() {
+		appointmentReportList.setListener(new AppointmentReportList.Listener() {
+			@Override
+			public void onReportSelected(AppointmentReportProxy proxy) {
+				placeController.goTo(new AppointmentPlace(proxy.getCaseNumber()));
+			}
+		});
 	}
 
 	@Override
@@ -164,6 +180,8 @@ public class MasterActivityMapper implements ActivityMapper {
 			return new StaffAnalysisActivity((StaffAnalysisPlace) place);
 		else if (place instanceof DashboardFramePlace)
 			return new DashboardFrameActivity((DashboardFramePlace) place);
+		else if (place instanceof AppointmentReportListPlace)
+			return appointmentReportList;
 		return null;
 	}
 

@@ -35,4 +35,5 @@ public interface EchartsRequestFactory extends RequestFactory {
 	DiagnosisRequest diagnosisRequest();
 	PatientRequest patientRequest();
 	PlaceLogRecordRequest placeLogRecordRequest();
+	AppointmentReportRequest appointmentReportRequest();
 }

@@ -3,6 +3,7 @@ package org.eastway.echarts.client.activity;
 import org.eastway.echarts.client.place.ARInfoPlace;
 import org.eastway.echarts.client.place.AddressPlace;
 import org.eastway.echarts.client.place.AppointmentPlace;
+import org.eastway.echarts.client.place.AppointmentReportListPlace;
 import org.eastway.echarts.client.place.DashboardFramePlace;
 import org.eastway.echarts.client.place.DashboardPlace;
 import org.eastway.echarts.client.place.DemographicsPlace;
@@ -104,6 +105,8 @@ public class DetailsActivityMapper implements ActivityMapper {
 		} else if (place instanceof StaffAnalysisPlace) {
 			return new DashboardSideBarActivity(dashboardSideBarView, requestFactory, placeController);
 		} else if (place instanceof DashboardFramePlace) {
+			return new DashboardSideBarActivity(dashboardSideBarView, requestFactory, placeController);
+		} else if (place instanceof AppointmentReportListPlace) {
 			return new DashboardSideBarActivity(dashboardSideBarView, requestFactory, placeController);
 		}
 		return null;

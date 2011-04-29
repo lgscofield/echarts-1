@@ -9,11 +9,14 @@ import org.eastway.echarts.client.activity.CurrentEhrActivityMapper;
 import org.eastway.echarts.client.activity.DetailsActivityMapper;
 import org.eastway.echarts.client.activity.EchartsPlaceHistoryMapper;
 import org.eastway.echarts.client.activity.MasterActivityMapper;
+import org.eastway.echarts.client.place.AppointmentPlace;
 import org.eastway.echarts.client.place.DashboardPlace;
+import org.eastway.echarts.client.request.AppointmentReportProxy;
 import org.eastway.echarts.client.request.DbServerConfigProxy;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.scaffold.request.RequestEvent;
 import org.eastway.echarts.client.style.GlobalResources;
+import org.eastway.echarts.client.ui.AppointmentReportList;
 import org.eastway.echartsrequest.client.ReloadOnAuthenticationFailure;
 
 import com.google.gwt.activity.shared.ActivityManager;
