@@ -78,4 +78,7 @@
   <replace-with class="org.eastway.echarts.client.ui.DashboardViewImpl">
   	<when-type-is class="org.eastway.echarts.client.ui.DashboardView"/>
   </replace-with>
+  <replace-with class="org.eastway.echarts.client.ui.AppointmentListViewImpl">
+  	<when-type-is class="org.eastway.echarts.client.ui.AppointmentListView"/>
+  </replace-with>
 </module>
