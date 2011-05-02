@@ -91,6 +91,7 @@ public class TicklerActivityTest extends ActivityTestBase {
 
 	String caseNumber;
 	String service;
+	String program;
 	String staffName;
 	String name;
 
@@ -98,6 +99,7 @@ public class TicklerActivityTest extends ActivityTestBase {
 	public void setData() {
 		caseNumber = "10";
 		service = "S CS";
+		program = "076";
 		staffName = "DOE, JOHN";
 		name = "Test, Harry";
 
@@ -126,6 +128,7 @@ public class TicklerActivityTest extends ActivityTestBase {
 		assignment.setCaseNumber(caseNumber);
 		assignment.setId(1L);
 		assignment.setService(service);
+		assignment.setProgram(program);
 		assignment.setStaffId(EchartsUser.staffId);
 		assignment.setStaffName(staffName);
 		assignment.setName(name);
@@ -179,6 +182,7 @@ public class TicklerActivityTest extends ActivityTestBase {
 		assertEquals(caseNumber, rowData.get(0).getCaseNumber());
 		assertEquals(staffName, rowData.get(0).getStaffName());
 		assertEquals(service, rowData.get(0).getService());
+		assertEquals(program, rowData.get(0).getProgram());
 		assertEquals(name, rowData.get(0).getName());
 	}
 }

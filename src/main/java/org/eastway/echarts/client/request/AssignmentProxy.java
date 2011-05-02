@@ -113,4 +113,8 @@ public interface AssignmentProxy extends EntityProxy {
 	public Boolean getAlcoholDrug();
 
 	public void setAlcoholDrug(Boolean isAlcoholDrug);
+
+	public void setProgram(String program);
+
+	public String getProgram();
 }

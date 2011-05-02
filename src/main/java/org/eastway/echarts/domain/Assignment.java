@@ -96,6 +96,8 @@ public class Assignment {
 	@Column(name="nextappt")
 	private Date nextAppointment;
 
+	private String program;
+
 	@Version
 	private Integer version;
 
@@ -279,6 +281,14 @@ public class Assignment {
 
 	public Date getNextAppointment() {
 		return nextAppointment;
+	}
+
+	public void setProgram(String program) {
+		this.program = program;
+	}
+
+	public String getProgram() {
+		return program;
 	}
 
 	public Integer getVersion() {

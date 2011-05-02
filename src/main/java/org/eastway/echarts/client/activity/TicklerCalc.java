@@ -53,10 +53,10 @@ public class TicklerCalc {
 	
 			long diagnosticAssessmentUpdateDueDate = 0L;
 			if (assignment.getDiagnosticAssessmentDateCompleted() != null) {
-				if (assignment.getService().matches("Pgm021")
-						|| assignment.getService().matches("Pgm022")
-						|| assignment.getService().matches("Pgm023")
-						|| assignment.getService().matches("Pgm030"))
+				if (assignment.getProgram().matches("021")
+						|| assignment.getProgram().matches("022")
+						|| assignment.getProgram().matches("023")
+						|| assignment.getProgram().matches("030"))
 					diagnosticAssessmentUpdateDueDate = assignment.getDiagnosticAssessmentDateCompleted().getTime() + YEAR;
 				else
 					diagnosticAssessmentUpdateDueDate = assignment.getDiagnosticAssessmentDateCompleted().getTime() + (2L * YEAR);
@@ -77,6 +77,7 @@ public class TicklerCalc {
 				oocDueDate = assignment.getOutcomesConsumerDateCompleted().getTime() + YEAR;
 			result.setOoc(formatDueDate(oocDueDate), getDueDateStatus(oocDueDate));
 			result.setService(assignment.getService());
+			result.setProgram(assignment.getProgram());
 			result.setStaffName(assignment.getStaffName());
 			result.setNextAppointment(assignment.getNextAppointment());
 			tickler.add(result);
@@ -91,12 +92,12 @@ public class TicklerCalc {
 		} else {
 			boolean aodStatus = (assignment.getAlcoholDrug()==null?false:assignment.getAlcoholDrug())&&(EchartsUser.staffId=="5542"||EchartsUser.staffId=="5396");
 			if (assignment.getIspReviewDateCompleted() != null) {
-				if (assignment.getService().matches("Pgm076")
+				if (assignment.getProgram().matches("076")
 						|| aodStatus
-						|| assignment.getService().matches("Pgm021")
-						|| assignment.getService().matches("Pgm022")
-						|| assignment.getService().matches("Pgm023")
-						|| assignment.getService().matches("Pgm030")) {
+						|| assignment.getProgram().matches("021")
+						|| assignment.getProgram().matches("022")
+						|| assignment.getProgram().matches("023")
+						|| assignment.getProgram().matches("030")) {
 					ispReviewDueDate = assignment.getIspReviewDateCompleted().getTime() + NINETY_DAYS;
 				} else {
 					ispReviewDueDate = assignment.getIspReviewDateCompleted().getTime() + ONE_HUNDRED_EIGHTY_DAYS;
@@ -104,7 +105,7 @@ public class TicklerCalc {
 				if (ispReviewDueDate > ispDueDate)
 					return ispDueDate;
 			} else {
-				if (assignment.getService().matches("Pgm076") || aodStatus) {
+				if (assignment.getProgram().matches("076") || aodStatus) {
 					ispReviewDueDate = ispDateCompleted + NINETY_DAYS;
 				} else {
 					ispReviewDueDate = ispDateCompleted + ONE_HUNDRED_EIGHTY_DAYS;
