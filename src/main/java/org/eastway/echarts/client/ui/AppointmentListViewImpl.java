@@ -54,6 +54,10 @@ public class AppointmentListViewImpl extends Composite implements AppointmentLis
 		}
 	};
 
+	private Column<AppointmentReportProxy, Date> apptDateColumn;
+	private Column<AppointmentReportProxy, String> staffNameColumn;
+	private Column<AppointmentReportProxy, String> nameColumn;
+
 	public AppointmentListViewImpl() {
 		createTable();
 		initWidget(uiBinder.createAndBindUi(this));
@@ -82,7 +86,7 @@ public class AppointmentListViewImpl extends Composite implements AppointmentLis
 		});
 		cellTable.setSelectionModel(selectionModel);
 
-		TextColumn<AppointmentReportProxy> nameColumn = new TextColumn<AppointmentReportProxy>() {
+		nameColumn = new TextColumn<AppointmentReportProxy>() {
 			Renderer<String> renderer = new AbstractRenderer<String>() {
 				@Override
 				public String render(String object) {
@@ -95,9 +99,9 @@ public class AppointmentListViewImpl extends Composite implements AppointmentLis
 				return renderer.render(object.getFullName());
 			}
 		};
-		//nameColumn.setSortable(true);
+		nameColumn.setSortable(true);
 		cellTable.addColumn(nameColumn, "Name");
-		Column<AppointmentReportProxy, Date> apptDateColumn = new Column<AppointmentReportProxy, Date>(new DateCell(GlobalResources.getDateFormat())) {
+		apptDateColumn = new Column<AppointmentReportProxy, Date>(new DateCell(GlobalResources.getDateFormat())) {
 			@Override
 			public Date getValue(AppointmentReportProxy object) {
 				return object.getApptDate();
@@ -138,7 +142,7 @@ public class AppointmentListViewImpl extends Composite implements AppointmentLis
 				return renderer.render(object.getEndTime());
 			}
 		}, "End");
-		cellTable.addColumn(new TextColumn<AppointmentReportProxy>() {
+		staffNameColumn = new TextColumn<AppointmentReportProxy>() {
 			Renderer<String> renderer = new AbstractRenderer<String>() {
 				@Override
 				public String render(String object) {
@@ -150,7 +154,9 @@ public class AppointmentListViewImpl extends Composite implements AppointmentLis
 			public String getValue(AppointmentReportProxy object) {
 				return renderer.render(object.getStaffName());
 			}
-		}, "Staff");
+		};
+		staffNameColumn.setSortable(true);
+		cellTable.addColumn(staffNameColumn, "Staff");
 		cellTable.addColumn(new TextColumn<AppointmentReportProxy>() {
 			Renderer<String> renderer = new AbstractRenderer<String>() {
 				@Override
@@ -205,5 +211,18 @@ public class AppointmentListViewImpl extends Composite implements AppointmentLis
 	@Override
 	public List<AppointmentReportProxy> getVisibleItems() {
 		return cellTable.getVisibleItems();
+	}
+
+	@Override
+	public String getColumnName(Column<?, ?> column) {
+		if (column.equals(apptDateColumn)) {
+			return "apptDate";
+		} else if (column.equals(staffNameColumn)) {
+			return "staffName";
+		} else if (column.equals(nameColumn)) {
+			return "fullName";
+		} else {
+			return null;
+		}
 	}
 }

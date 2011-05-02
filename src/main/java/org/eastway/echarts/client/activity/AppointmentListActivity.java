@@ -12,6 +12,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.requestfactory.shared.EntityProxyChange;
 import com.google.gwt.requestfactory.shared.EntityProxyId;
 import com.google.gwt.requestfactory.shared.Receiver;
+import com.google.gwt.user.cellview.client.ColumnSortList.ColumnSortInfo;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.view.client.Range;
 
@@ -78,9 +79,10 @@ public class AppointmentListActivity implements Activity, AppointmentListView.Pr
 				}
 			}
 		};
-
+		ColumnSortInfo sortInfo = view.getColumnSortList().get(0);
+		String columnName = view.getColumnName(sortInfo.getColumn());
 		boolean isAscending = view.getColumnSortList().get(0).isAscending();
-		requestFactory.appointmentReportRequest().findAppointmentReportsWithApptDate(range.getStart(), range.getLength(), isAscending).fire(lastDataReceiver);
+		requestFactory.appointmentReportRequest().findAppointmentReportsWithApptDate(range.getStart(), range.getLength(), isAscending, columnName).fire(lastDataReceiver);
 	}
 
 	@Override

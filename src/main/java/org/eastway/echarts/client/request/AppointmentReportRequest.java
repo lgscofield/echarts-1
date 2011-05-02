@@ -11,5 +11,5 @@ import com.google.gwt.requestfactory.shared.Service;
 @Service(AppointmentReport.class)
 public interface AppointmentReportRequest extends RequestContext {
 	Request<Long> findAppointmentReportsWithApptDateCount();
-	Request<List<AppointmentReportProxy>> findAppointmentReportsWithApptDate(Integer startPosition, Integer maxResult, Boolean isAscending);
+	Request<List<AppointmentReportProxy>> findAppointmentReportsWithApptDate(Integer startPosition, Integer maxResult, Boolean isAscending, String columnName);
 }

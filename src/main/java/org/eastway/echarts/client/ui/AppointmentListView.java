@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.eastway.echarts.client.request.AppointmentReportProxy;
 
+import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.ColumnSortList;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.view.client.Range;
@@ -28,4 +29,6 @@ public interface AppointmentListView extends IsWidget {
 	ColumnSortList getColumnSortList();
 
 	List<AppointmentReportProxy> getVisibleItems();
+
+	String getColumnName(Column<?, ?> column);
 }

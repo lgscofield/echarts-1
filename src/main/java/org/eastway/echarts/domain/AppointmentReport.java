@@ -149,10 +149,14 @@ public class AppointmentReport {
 					.getSingleResult()).longValue();
 	}
 
-	public static final List<AppointmentReport> findAppointmentReportsWithApptDate(Integer startPosition, Integer maxResult, Boolean isAscending) {
-		String query = "select o from AppointmentReport o WHERE o.apptDate BETWEEN :startTime AND :endTime ORDER BY o.apptDate DESC, o.startTime DESC, o.endTime DESC";
+	public static final List<AppointmentReport> findAppointmentReportsWithApptDate(Integer startPosition, Integer maxResult, Boolean isAscending, String orderBy) {
+		if (orderBy == null)
+			orderBy = "o.apptDate";
+		else
+			orderBy = "o." + orderBy;
+		String query = "select o from AppointmentReport o WHERE o.apptDate BETWEEN :startTime AND :endTime ORDER BY " + orderBy + " DESC, o.startTime DESC, o.endTime DESC";
 		if (isAscending)
-			query = "select o from AppointmentReport o WHERE o.apptDate BETWEEN :startTime AND :endTime ORDER BY o.apptDate ASC, o.startTime ASC, o.endTime ASC";
+			query = "select o from AppointmentReport o WHERE o.apptDate BETWEEN :startTime AND :endTime ORDER BY " + orderBy + " ASC, o.startTime ASC, o.endTime ASC";
 		DateTime startTime = new DateTime()
 			.property(DateTimeFieldType.millisOfSecond()).setCopy(0)
 			.property(DateTimeFieldType.secondOfMinute()).setCopy(0)
