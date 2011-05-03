@@ -16,7 +16,9 @@ import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
+import com.google.gwt.user.client.ui.SuggestBox.DefaultSuggestionDisplay;
 import com.google.gwt.user.client.ui.SuggestOracle.Callback;
 import com.google.gwt.user.client.ui.SuggestOracle.Request;
 import com.google.gwt.user.client.ui.SuggestOracle.Response;
@@ -46,12 +48,25 @@ public class PatientSearchWidget extends Composite {
 
 	private final EchartsOracle oracle;
 
-	private CellListSuggestionDisplay suggestionDisplay;
+	private SuggestionDisplay suggestionDisplay;
+
+	private static class SuggestionDisplay extends DefaultSuggestionDisplay {
+		public SuggestionDisplay() {
+			super();
+		}
+
+		@Override
+		protected Widget decorateSuggestionList(Widget suggestionList) {
+			ScrollPanel scrollPanel = new ScrollPanel(suggestionList);
+			scrollPanel.setHeight("300px");
+			return scrollPanel;
+		}
+	}
 
 	public PatientSearchWidget(EchartsOracle oracle, PlaceController placeController) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.oracle = oracle;
-		this.suggestionDisplay = new CellListSuggestionDisplay();
+		this.suggestionDisplay = new SuggestionDisplay();
 		suggestBox = createSuggestBox();
 		patientIdBox.add(suggestBox);
 		this.placeController = placeController;
@@ -110,13 +125,13 @@ public class PatientSearchWidget extends Composite {
 				if (response != null && response.getSuggestions() != null && response.getSuggestions().size() == 1) {
 					noSearchResultTimer.cancel();
 					NoSearchResultTimer.FAIL_COUNT = 0;
-					suggestionDisplay.setEmptyListMessage(getNoResultMessage(0));
+					//suggestionDisplay.setEmptyListMessage(getNoResultMessage(0));
 					placeController.goTo(new PatientSummaryPlace(response.getSuggestions().iterator().next().getDisplayString().replaceAll(searchPattern, "$1")));
 					suggestBox.setText("");
 				} else {
 					noSearchResultTimer.cancel();
 					noSearchResultTimer.schedule(NoSearchResultTimer.TIMEOUT += 1000);
-					suggestionDisplay.setEmptyListMessage(getNoResultMessage(NoSearchResultTimer.FAIL_COUNT++));
+					//suggestionDisplay.setEmptyListMessage(getNoResultMessage(NoSearchResultTimer.FAIL_COUNT++));
 					suggestBox.showSuggestionList();
 				}
 			}
