@@ -75,6 +75,7 @@ public class PatientSearchWidget extends Composite {
 
 	private SuggestBox createSuggestBox() {
 		SuggestBox suggestBox = new SuggestBox(oracle, new TextBox(), suggestionDisplay);
+		suggestBox.setLimit(200);
 		suggestBox.addStyleName(style.searchbox());
 		return suggestBox;
 	}

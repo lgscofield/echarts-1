@@ -305,9 +305,25 @@ public class Patient {
 	}
 
 	@SuppressWarnings("unchecked")
+	public static Long findPatientsLikeCount(String searchTerm) {
+		return ((Number)entityManager().createNativeQuery("SELECT count(case_number + ' - ' + full_name) as search FROM patient inner join codes on patient.case_status = codes.code_id where column_name = 'CaseStatus' AND (case_number like :searchTerm + '%' OR last_name like :searchTerm + '%' OR first_name like :searchTerm + '%' OR first_name + ' ' + last_name like :searchTerm + '%')")
+			.setParameter("searchTerm", searchTerm)
+			.getSingleResult()).longValue();
+	}
+
+	@SuppressWarnings("unchecked")
 	public static List<String> findPatientsLike(String searchTerm) {
 		return entityManager().createNativeQuery("SELECT case_number + ' - ' + full_name as search FROM patient inner join codes on patient.case_status = codes.code_id where column_name = 'CaseStatus' AND (case_number like :searchTerm + '%' OR last_name like :searchTerm + '%' OR first_name like :searchTerm + '%' OR first_name + ' ' + last_name like :searchTerm + '%')")
 			.setParameter("searchTerm", searchTerm)
+			.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	public static List<String> findPatientsEntriesLike(String searchTerm, Integer startPosition, Integer maxResult) {
+		return entityManager().createNativeQuery("SELECT case_number + ' - ' + full_name as search FROM patient inner join codes on patient.case_status = codes.code_id where column_name = 'CaseStatus' AND (case_number like :searchTerm + '%' OR last_name like :searchTerm + '%' OR first_name like :searchTerm + '%' OR first_name + ' ' + last_name like :searchTerm + '%')")
+			.setParameter("searchTerm", searchTerm)
+			.setFirstResult(startPosition)
+			.setMaxResults(maxResult)
 			.getResultList();
 	}
 

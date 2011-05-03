@@ -21,13 +21,14 @@ import java.util.List;
 import com.google.gwt.event.shared.EventBus;
 
 import org.eastway.echarts.client.request.EchartsRequestFactory;
+import org.eastway.echarts.client.request.PatientRequest;
 import org.eastway.echarts.shared.PatientListSuggestion;
 
 import com.google.gwt.requestfactory.shared.Receiver;
-import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
+import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.inject.Inject;
 
-public class EchartsOracle extends MultiWordSuggestOracle {
+public class EchartsOracle extends SuggestOracle {
 
 	private EchartsRequestFactory requestFactory;
 
@@ -38,14 +39,30 @@ public class EchartsOracle extends MultiWordSuggestOracle {
 
 	@Override
 	public void requestSuggestions(final Request request, final Callback callback) {
-		requestFactory.patientRequest().findPatientsLike(request.getQuery().replaceAll("\\s+", " ")).fire(new Receiver<List<String>>() {
+		String query = request.getQuery().replaceAll("\\s+", " ");
+
+		final int maxResult = request.getLimit();
+		final int startPosition = 0;
+		final Response searchResponse = new Response();
+		PatientRequest context = requestFactory.patientRequest();
+		context.findPatientsLikeCount(query).to(new Receiver<Long>() {
+			@Override
+			public void onSuccess(Long response) {
+				searchResponse.setMoreSuggestionsCount(response.intValue() - maxResult);
+			}
+		});
+		context.findPatientsEntriesLike(query, startPosition, maxResult).to(new Receiver<List<String>>() {
 			@Override
 			public void onSuccess(List<String> response) {
-				Response searchResponse = new Response();
 				List<Suggestion> suggestions = new ArrayList<Suggestion>();
 				for (String s : response)
 					suggestions.add(new PatientListSuggestion(s));
 				searchResponse.setSuggestions(suggestions);
+			}
+		});
+		context.fire(new Receiver<Void>() {
+			@Override
+			public void onSuccess(Void response) {
 				callback.onSuggestionsReady(request, searchResponse);
 			}
 		});

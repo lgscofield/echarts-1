@@ -29,4 +29,6 @@ public interface PatientRequest extends RequestContext {
 	Request<List<String>> findPatientsLike(String searchTerm);
 	InstanceRequest<PatientProxy, Void> persist();
 	InstanceRequest<PatientProxy, Void> remove();
+	Request<Long> findPatientsLikeCount(String query);
+	Request<List<String>> findPatientsEntriesLike(String query, Integer startPosition, Integer maxResult);
 }
