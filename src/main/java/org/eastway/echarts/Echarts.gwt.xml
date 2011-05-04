@@ -81,4 +81,7 @@
   <replace-with class="org.eastway.echarts.client.ui.AppointmentListViewImpl">
   	<when-type-is class="org.eastway.echarts.client.ui.AppointmentListView"/>
   </replace-with>
+  <replace-with class="org.eastway.echarts.client.ui.EhrQueryListViewImpl">
+  	<when-type-is class="org.eastway.echarts.client.ui.EhrQueryListView"/>
+  </replace-with>
 </module>

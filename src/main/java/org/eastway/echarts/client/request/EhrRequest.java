@@ -28,4 +28,6 @@ public interface EhrRequest extends RequestContext {
 	Request<EHRProxy> findEHR(Long id);
 	Request<EHRProxy> findEHRByCaseNumber(String caseNumber);
 	Request<List<AssignmentProxy>> findAssignmentsByCaseNumber(String caseNumber);
+	Request<Long> findEhrsLikeCount(String query);
+	Request<List<EHRProxy>> findEhrsEntriesLike(String query, Integer startPosition, Integer maxResult, String orderBy, String sortDirection);
 }

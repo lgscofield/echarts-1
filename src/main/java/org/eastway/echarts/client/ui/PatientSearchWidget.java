@@ -3,6 +3,7 @@ package org.eastway.echarts.client.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eastway.echarts.client.place.EhrQueryListPlace;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
 
 import com.google.gwt.core.client.GWT;
@@ -75,7 +76,7 @@ public class PatientSearchWidget extends Composite {
 
 	private SuggestBox createSuggestBox() {
 		SuggestBox suggestBox = new SuggestBox(oracle, new TextBox(), suggestionDisplay);
-		suggestBox.setLimit(200);
+		suggestBox.setLimit(25);
 		suggestBox.addStyleName(style.searchbox());
 		return suggestBox;
 	}
@@ -129,6 +130,8 @@ public class PatientSearchWidget extends Composite {
 					//suggestionDisplay.setEmptyListMessage(getNoResultMessage(0));
 					placeController.goTo(new PatientSummaryPlace(response.getSuggestions().iterator().next().getDisplayString().replaceAll(searchPattern, "$1")));
 					suggestBox.setText("");
+				} else if (response != null && response.getSuggestions() != null && response.getSuggestions().size() > 1) {
+					placeController.goTo(new EhrQueryListPlace(suggestBox.getText()));
 				} else {
 					noSearchResultTimer.cancel();
 					noSearchResultTimer.schedule(NoSearchResultTimer.TIMEOUT += 1000);

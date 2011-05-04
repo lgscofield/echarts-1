@@ -25,6 +25,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TableGenerator;
@@ -33,9 +34,10 @@ import javax.persistence.Version;
 
 import org.springframework.beans.factory.annotation.Configurable;
 
+@SuppressWarnings("serial")
 @Configurable
 @Entity
-public class EHR {
+public class EHR implements java.io.Serializable {
 	@PersistenceContext
 	transient EntityManager entityManager;
 	@Id
@@ -51,6 +53,10 @@ public class EHR {
 	@OneToOne(targetEntity = Demographics.class)
 	@JoinColumn(name="subject_id", insertable=false, updatable=false)
 	private Demographics demographics;
+
+	@OneToMany(targetEntity=Assignment.class)
+	@JoinColumn(name="caseNumber", referencedColumnName="subject_id")
+	private List<Assignment> assignments;
 
 	@Version
 	@Column(name = "version")
@@ -95,12 +101,12 @@ public class EHR {
 		return version;
 	}
 
-	// maybe gwt will someday be able to handle these
 	public void setAssignments(List<Assignment> assignments) {
+		this.assignments = assignments;
 	}
 
 	public List<Assignment> getAssignments() {
-		return null;
+		return assignments;
 	}
 
     public static final EntityManager entityManager() {
@@ -133,5 +139,24 @@ public class EHR {
 			"SELECT a From Assignment a Where a.service Like 'S%' And a.caseNumber = :caseNumber", Assignment.class)
 				.setParameter("caseNumber", caseNumber)
 				.getResultList();
+	}
+
+	public static Long findEhrsLikeCount(String searchTerm) {
+		return ((Number)entityManager().createQuery("SELECT count(e) FROM EHR e WHERE e.patient.caseNumber like :searchTerm + '%' OR e.patient.lastName like :searchTerm + '%' OR e.patient.firstName like :searchTerm + '%' OR e.patient.firstName + ' ' + e.patient.lastName like :searchTerm + '%'", Long.class)
+			.setParameter("searchTerm", searchTerm)
+			.getSingleResult()).longValue();
+	}
+
+	public static List<EHR> findEhrsEntriesLike(String searchTerm, Integer startPosition, Integer maxResult, String orderBy, String sortDirection) {
+		if (orderBy == null)
+			orderBy = "patient.lastName";
+		if (sortDirection == null)
+			sortDirection = "ASC";
+		List<EHR> ehrs = entityManager().createQuery("SELECT e FROM EHR e WHERE e.patient.caseNumber like :searchTerm + '%' OR e.patient.lastName like :searchTerm + '%' OR e.patient.firstName like :searchTerm + '%' OR e.patient.firstName + ' ' + e.patient.lastName like :searchTerm + '%' ORDER BY e." + orderBy + " " + sortDirection + ", e.patient.firstName " + sortDirection, EHR.class)
+			.setParameter("searchTerm", searchTerm)
+			.setFirstResult(startPosition)
+			.setMaxResults(maxResult)
+			.getResultList();
+		return ehrs;
 	}
 }

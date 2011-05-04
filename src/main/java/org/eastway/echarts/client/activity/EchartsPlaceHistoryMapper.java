@@ -12,6 +12,7 @@ import org.eastway.echarts.client.place.LabPlace;
 import org.eastway.echarts.client.place.LinkPlace;
 import org.eastway.echarts.client.place.MedicationPlace;
 import org.eastway.echarts.client.place.MessagePlace;
+import org.eastway.echarts.client.place.EhrQueryListPlace;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
 import org.eastway.echarts.client.place.PhysicianOrderPlace;
 import org.eastway.echarts.client.place.ProfilePlace;
@@ -43,6 +44,7 @@ import com.google.gwt.place.shared.WithTokenizers;
 				  PhysicianOrderPlace.Tokenizer.class,
 				  StaffAnalysisPlace.Tokenizer.class,
 				  DashboardFramePlace.Tokenizer.class,
-				  AppointmentReportListPlace.Tokenizer.class})
+				  AppointmentReportListPlace.Tokenizer.class,
+				  EhrQueryListPlace.Tokenizer.class})
 public interface EchartsPlaceHistoryMapper extends PlaceHistoryMapper {
 }

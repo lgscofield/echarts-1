@@ -1,5 +1,7 @@
 package org.eastway.echarts.client.ui;
 
+import java.io.IOException;
+
 import org.eastway.echarts.client.request.AssignmentProxy;
 
 import com.google.gwt.requestfactory.ui.client.ProxyRenderer;
@@ -24,4 +26,14 @@ public class AssignmentProxyRenderer extends ProxyRenderer<AssignmentProxy> {
 		return object.getStaffName();
 	}
 
+	@Override
+	public void render(AssignmentProxy object, Appendable appendable) {
+		if (object == null)
+			return;
+		try {
+			appendable.append(object.getStaffName());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

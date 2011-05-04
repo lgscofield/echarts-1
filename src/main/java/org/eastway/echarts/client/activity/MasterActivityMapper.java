@@ -19,6 +19,7 @@ import org.eastway.echarts.client.place.LabPlace;
 import org.eastway.echarts.client.place.LinkPlace;
 import org.eastway.echarts.client.place.MedicationPlace;
 import org.eastway.echarts.client.place.MessagePlace;
+import org.eastway.echarts.client.place.EhrQueryListPlace;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
 import org.eastway.echarts.client.place.PhysicianOrderPlace;
 import org.eastway.echarts.client.place.PlaceLogRecordBuilder;
@@ -49,6 +50,7 @@ import org.eastway.echarts.client.ui.DiagnosisView;
 import org.eastway.echarts.client.ui.LinkView;
 import org.eastway.echarts.client.ui.MedicationView;
 import org.eastway.echarts.client.ui.MessageView;
+import org.eastway.echarts.client.ui.EhrQueryListView;
 import org.eastway.echarts.client.ui.PatientSummaryView;
 import org.eastway.echarts.client.ui.ProfileView;
 import org.eastway.echarts.client.ui.ReferralView;
@@ -83,6 +85,7 @@ public class MasterActivityMapper implements ActivityMapper {
 	private PatientSummaryView patientSummaryView;
 	private EchartsPlaceHistoryMapper historyMapper;
 	private AppointmentListView appointmentListView;
+	private EhrQueryListView patientQueryListView;
 
 	@Inject
 	public MasterActivityMapper(EchartsRequestFactory requestFactory,
@@ -104,7 +107,8 @@ public class MasterActivityMapper implements ActivityMapper {
 							     ProfileView<UserProxy> profileView,
 							     List<ColumnDefinition<UserProxy>> profileColumnDefinitions,
 							     AppointmentDataProvider appointmentDataProvider,
-							     AppointmentListView appointmentListView) {
+							     AppointmentListView appointmentListView,
+							     EhrQueryListView patientQueryListView) {
 		super();
 		this.requestFactory = requestFactory;
 		this.placeController = placeController;
@@ -126,6 +130,7 @@ public class MasterActivityMapper implements ActivityMapper {
 		this.profileColumnDefinitions = profileColumnDefinitions;
 		this.appointmentDataProvider = appointmentDataProvider;
 		this.appointmentListView = appointmentListView;
+		this.patientQueryListView = patientQueryListView;
 	}
 
 	@Override
@@ -171,6 +176,8 @@ public class MasterActivityMapper implements ActivityMapper {
 			return new DashboardFrameActivity((DashboardFramePlace) place);
 		else if (place instanceof AppointmentReportListPlace)
 			return new AppointmentListActivity(requestFactory, appointmentListView);
+		else if (place instanceof EhrQueryListPlace)
+			return new EhrQueryListActivity((EhrQueryListPlace)place, requestFactory, placeController, patientQueryListView);
 		return null;
 	}
 

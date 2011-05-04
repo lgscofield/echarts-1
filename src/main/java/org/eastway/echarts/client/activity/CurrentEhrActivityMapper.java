@@ -12,6 +12,7 @@ import org.eastway.echarts.client.place.LabPlace;
 import org.eastway.echarts.client.place.LinkPlace;
 import org.eastway.echarts.client.place.MedicationPlace;
 import org.eastway.echarts.client.place.MessagePlace;
+import org.eastway.echarts.client.place.EhrQueryListPlace;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
 import org.eastway.echarts.client.place.PhysicianOrderPlace;
 import org.eastway.echarts.client.place.ProfilePlace;
@@ -80,6 +81,8 @@ public class CurrentEhrActivityMapper implements ActivityMapper {
 		} else if (place instanceof DashboardFramePlace) {
 			return new CurrentEhrActivity(null, view, requestFactory);
 		} else if (place instanceof AppointmentReportListPlace) {
+			return new CurrentEhrActivity(null, view, requestFactory);
+		} else if (place instanceof EhrQueryListPlace) {
 			return new CurrentEhrActivity(null, view, requestFactory);
 		}
 		return null;
