@@ -277,6 +277,8 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 
 	@UiField SpanElement noteTimeliness;
 
+	private Object userName;
+
 	@Override
 	public void setNoteTimeliness(int noDataCount, int noDataPercentage,
 			int overdueCount, int overduePercentage,
@@ -292,5 +294,22 @@ public class TicklerViewImpl<T> extends Composite implements TicklerView<T> {
 	@Override
 	public List<T> getRowData() {
 		return rowData;
+	}
+
+	@Override
+	public boolean isLoaded(String userName) {
+		if (this.userName != null && this.userName.equals(userName))
+			return true;
+		return false;
+	}
+
+	@Override
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	@UiHandler("refresh")
+	void handleRefresh(ClickEvent event) {
+		presenter.fetchData();
 	}
 }

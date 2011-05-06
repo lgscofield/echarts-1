@@ -38,6 +38,7 @@ public interface TicklerView<T> extends IsWidget {
 		void openPrintablePatientSummary(T t);
 		void openEditContact(T t);
 		void goTo(Place place);
+		void fetchData();
 	}
 
 	public static interface Template extends SafeHtmlTemplates {
@@ -82,4 +83,6 @@ public interface TicklerView<T> extends IsWidget {
 			int upToDatePercentage);
 	String formatTicklerDate(Date date);
 	List<T> getRowData();
+	boolean isLoaded(String userName);
+	void setUserName(String userName);
 }

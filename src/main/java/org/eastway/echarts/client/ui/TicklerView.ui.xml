@@ -55,6 +55,7 @@
 		<g:FlexTable addStyleNames='{style.table}' ui:field='table'/>
 		<div class='{style.footer}'>
 			<span ui:field="noteTimeliness" />
+			<g:Button ui:field="refresh">Refresh</g:Button>
 		</div>
 	</g:HTMLPanel>
 </ui:UiBinder>

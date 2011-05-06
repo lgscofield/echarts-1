@@ -78,6 +78,15 @@ public class TicklerActivityTest extends ActivityTestBase {
 		public String formatTicklerDate(Date date) {
 			return date.toString();
 		}
+
+		@Override
+		public boolean isLoaded(String userName) {
+			return false;
+		}
+
+		@Override
+		public void setUserName(String userName) {
+		}
 	};
 
 	TicklerPlace place;

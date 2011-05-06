@@ -44,7 +44,6 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 	private TicklerView<Tickler> view;
 	private EchartsRequestFactory requestFactory;
 	private PlaceController placeController;
-	private TicklerCalc ticklerCalc = new TicklerCalc();
 	private String userName;
 
 	public TicklerActivity(TicklerPlace place,
@@ -67,6 +66,7 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 			@Override
 			public void onSuccess(List<AssignmentProxy> response) {
 				if (response != null && response.size() != 0) {
+					TicklerCalc ticklerCalc = new TicklerCalc();
 					view.setRowData(ticklerCalc.setDates(response));
 					view.setNoteTimeliness(
 							ticklerCalc.getNoDataCount().intValue(),
@@ -75,6 +75,7 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 							ticklerCalc.getOverdueCount().divide(ticklerCalc.getTotalCount(), 2, RoundingMode.HALF_UP).multiply(new BigDecimal(100)).intValue(),
 							ticklerCalc.getUpToDateCount().intValue(),
 							ticklerCalc.getUpToDateCount().divide(ticklerCalc.getTotalCount(), 2, RoundingMode.HALF_UP).multiply(new BigDecimal(100)).intValue());
+					view.setUserName(userName);
 					panel.setWidget(view);
 				}
 			}
@@ -100,7 +101,10 @@ public class TicklerActivity extends AbstractActivity implements TicklerView.Pre
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		this.panel = panel;
-		fetchData();
+		if (!view.isLoaded(userName))
+			fetchData();
+		else
+			panel.setWidget(view);
 	}
 
 	@Override
