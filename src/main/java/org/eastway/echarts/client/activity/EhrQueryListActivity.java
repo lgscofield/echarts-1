@@ -91,7 +91,6 @@ public class EhrQueryListActivity implements Activity, EhrQueryListView.Presente
 			sortDirection = "ASC";
 		context.findEhrsEntriesLike(place.getQuery(), range.getStart(), range.getLength(), orderBy, sortDirection)
 			.with("patient")
-			.with("demographics")
 			.with("demographics.gender")
 			.with("assignments")
 			.to(lastDataReceiver);

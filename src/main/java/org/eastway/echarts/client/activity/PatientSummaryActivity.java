@@ -51,9 +51,7 @@ public class PatientSummaryActivity extends AbstractActivity implements PatientS
 		this.panel = panel;
 		EhrRequest context = requestFactory.ehrRequest();
 		context.findEHRByCaseNumber(caseNumber)
-			.with("patient")
 			.with("patient.caseStatus")
-			.with("demographics")
 			.with("demographics.gender").to(new Receiver<EHRProxy>() {
 				@Override
 				public void onSuccess(EHRProxy response) {
