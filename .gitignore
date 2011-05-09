@@ -19,3 +19,11 @@ src/main/webapp/echarts
 
 # Ignore GwtTest created folder
 www-test
+
+# the gwt log directory
+.gwt
+
+# the spring class path, project, and beans files
+.classpath
+.project
+.springBeans
