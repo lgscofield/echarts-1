@@ -47,6 +47,12 @@
 	  .footer {
 	  	text-align:center;
 	  }
+	  .button {
+		padding: 2px;
+		margin: 2px;
+		font-size: 11px;
+		vertical-align: middle;
+	  }
 	</ui:style>
 	<g:HTMLPanel>
 		<div class='{style.header}'>
@@ -55,7 +61,7 @@
 		<g:FlexTable addStyleNames='{style.table}' ui:field='table'/>
 		<div class='{style.footer}'>
 			<span ui:field="noteTimeliness" />
-			<g:Button ui:field="refresh">Refresh</g:Button>
+			<g:Button ui:field="refresh" addStyleNames="{style.button}">Refresh</g:Button>
 		</div>
 	</g:HTMLPanel>
 </ui:UiBinder>
