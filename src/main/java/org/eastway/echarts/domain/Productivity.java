@@ -294,25 +294,28 @@ public class Productivity {
 
 		while (monthlyWorkDaysCalendar.get(Calendar.MONTH) == month) {
 			if (monthlyWorkDaysCalendar.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY &&
-					monthlyWorkDaysCalendar.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY)
+					monthlyWorkDaysCalendar.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY &&
+					!isHoliday(monthlyWorkDaysCalendar))
 				workDays++;
 			monthlyWorkDaysCalendar.add(Calendar.DAY_OF_MONTH, 1);
 		}
 		monthlyWorkDaysCalendar.add(Calendar.MONTH, -1);
-		long holidays = getHolidays(monthlyWorkDaysCalendar);
-		return workDays - holidays;
+		return workDays;
 	}
 
-	private static Long getHolidays(Calendar calendar) {
-		return entityManager().createQuery(
-			"SELECT COUNT(h) FROM Holiday h WHERE h.month = '" + (calendar.get(Calendar.MONTH)+1) + "' "
-			+ "AND h.year = '" + calendar.get(Calendar.YEAR) + "' "
-			+ "AND h.day > '"	+ calendar.get(Calendar.DAY_OF_MONTH) + "'" , Long.class)
-				.getSingleResult();
+	private static Boolean isHoliday(Calendar calendar) {
+		Long isHoliday = entityManager().createQuery(
+				"SELECT COUNT(h) FROM Holiday h WHERE h.month = '" + (calendar.get(Calendar.MONTH)+1) + "' "
+				+ "AND h.year = '" + calendar.get(Calendar.YEAR) + "' "
+				+ "AND h.day = '"	+ calendar.get(Calendar.DAY_OF_MONTH) + "'" , Long.class)
+					.getSingleResult();
+		if (isHoliday.equals(1L))
+			return Boolean.TRUE;
+		else
+			return Boolean.FALSE;
 	}
 
 	private static Long getCurrentWorkDays(Calendar calendar) {
-		long holidays = getHolidays(calendar);
 		long workDays = 0;
 		int today = calendar.get(Calendar.DAY_OF_MONTH);
 		Calendar currentWorkDays = Calendar.getInstance();
@@ -321,10 +324,11 @@ public class Productivity {
 		currentWorkDays.set(Calendar.DAY_OF_MONTH, 1);
 		while (currentWorkDays.get(Calendar.DAY_OF_MONTH) != today) {
 			if (currentWorkDays.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY &&
-					currentWorkDays.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY)
+					currentWorkDays.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY &&
+					!isHoliday(currentWorkDays))
 				workDays++;
 			currentWorkDays.add(Calendar.DAY_OF_MONTH, 1);
 		}
-		return workDays - holidays;
+		return workDays;
 	}
 }
