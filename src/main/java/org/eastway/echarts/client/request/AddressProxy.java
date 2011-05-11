@@ -19,8 +19,8 @@ import java.util.Date;
 
 import org.eastway.echarts.domain.Address;
 
-import com.google.gwt.requestfactory.shared.EntityProxy;
-import com.google.gwt.requestfactory.shared.ProxyFor;
+import com.google.web.bindery.requestfactory.shared.EntityProxy;
+import com.google.web.bindery.requestfactory.shared.ProxyFor;
 
 @ProxyFor(Address.class)
 public interface AddressProxy extends EntityProxy {

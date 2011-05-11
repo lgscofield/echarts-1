@@ -19,8 +19,8 @@ import java.util.Date;
 
 import org.eastway.echarts.domain.Diagnosis;
 
-import com.google.gwt.requestfactory.shared.EntityProxy;
-import com.google.gwt.requestfactory.shared.ProxyFor;
+import com.google.web.bindery.requestfactory.shared.EntityProxy;
+import com.google.web.bindery.requestfactory.shared.ProxyFor;
 
 @ProxyFor(Diagnosis.class)
 public interface DiagnosisProxy extends EntityProxy {

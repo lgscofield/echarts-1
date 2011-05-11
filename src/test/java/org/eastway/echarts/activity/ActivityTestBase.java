@@ -12,10 +12,11 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.event.shared.testing.CountingEventBus;
 import com.google.gwt.place.shared.PlaceController;
-import com.google.gwt.requestfactory.server.ServiceLayer;
-import com.google.gwt.requestfactory.server.SimpleRequestProcessor;
-import com.google.gwt.requestfactory.server.testing.InProcessRequestTransport;
-import com.google.gwt.requestfactory.server.testing.RequestFactoryMagic;
+import com.google.web.bindery.requestfactory.server.ServiceLayer;
+import com.google.web.bindery.requestfactory.server.SimpleRequestProcessor;
+import com.google.web.bindery.requestfactory.server.testing.InProcessRequestTransport;
+import com.google.web.bindery.requestfactory.vm.RequestFactorySource;
+
 import com.google.gwt.user.client.Window.ClosingHandler;
 
 import junit.framework.TestCase;
@@ -56,7 +57,7 @@ public class ActivityTestBase extends TestCase {
 		eventBus = new CountingEventBus();
 		ServiceLayer serviceLayer = ServiceLayer.create();
 		SimpleRequestProcessor processor = new SimpleRequestProcessor(serviceLayer);
-		requestFactory = RequestFactoryMagic.create(EchartsRequestFactory.class);
+		requestFactory = RequestFactorySource.create(EchartsRequestFactory.class);
 		//java.lang.System.setProperty("gwt.rpc.dumpPayload", "true");
 		requestFactory.initialize(eventBus, new InProcessRequestTransport(processor));
 	}

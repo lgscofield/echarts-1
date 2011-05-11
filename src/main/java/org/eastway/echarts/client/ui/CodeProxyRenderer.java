@@ -2,7 +2,7 @@ package org.eastway.echarts.client.ui;
 
 import org.eastway.echarts.client.request.CodeProxy;
 
-import com.google.gwt.requestfactory.ui.client.ProxyRenderer;
+import com.google.web.bindery.requestfactory.gwt.ui.client.ProxyRenderer;
 
 public class CodeProxyRenderer extends ProxyRenderer<CodeProxy> {
 	private static CodeProxyRenderer INSTANCE;

@@ -3,7 +3,7 @@ package org.eastway.echarts.client.request;
 import java.util.Date;
 import java.util.List;
 
-import com.google.gwt.requestfactory.shared.Receiver;
+import com.google.web.bindery.requestfactory.shared.Receiver;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;

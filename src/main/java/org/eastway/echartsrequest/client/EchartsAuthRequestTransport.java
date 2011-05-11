@@ -4,8 +4,8 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
-import com.google.gwt.requestfactory.client.DefaultRequestTransport;
-import com.google.gwt.requestfactory.shared.ServerFailure;
+import com.google.web.bindery.requestfactory.gwt.client.DefaultRequestTransport;
+import com.google.web.bindery.requestfactory.shared.ServerFailure;
 
 public class EchartsAuthRequestTransport extends DefaultRequestTransport {
 	private final EventBus eventBus;

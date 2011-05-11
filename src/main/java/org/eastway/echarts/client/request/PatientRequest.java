@@ -19,10 +19,10 @@ import java.util.List;
 
 import org.eastway.echarts.domain.Patient;
 
-import com.google.gwt.requestfactory.shared.InstanceRequest;
-import com.google.gwt.requestfactory.shared.Request;
-import com.google.gwt.requestfactory.shared.RequestContext;
-import com.google.gwt.requestfactory.shared.Service;
+import com.google.web.bindery.requestfactory.shared.InstanceRequest;
+import com.google.web.bindery.requestfactory.shared.Request;
+import com.google.web.bindery.requestfactory.shared.RequestContext;
+import com.google.web.bindery.requestfactory.shared.Service;
 
 @Service(Patient.class)
 public interface PatientRequest extends RequestContext {

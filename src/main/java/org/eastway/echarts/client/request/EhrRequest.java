@@ -19,9 +19,9 @@ import java.util.List;
 
 import org.eastway.echarts.domain.EHR;
 
-import com.google.gwt.requestfactory.shared.Request;
-import com.google.gwt.requestfactory.shared.RequestContext;
-import com.google.gwt.requestfactory.shared.Service;
+import com.google.web.bindery.requestfactory.shared.Request;
+import com.google.web.bindery.requestfactory.shared.RequestContext;
+import com.google.web.bindery.requestfactory.shared.Service;
 
 @Service(EHR.class)
 public interface EhrRequest extends RequestContext {

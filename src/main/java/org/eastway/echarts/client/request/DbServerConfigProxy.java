@@ -15,8 +15,8 @@
  */
 package org.eastway.echarts.client.request;
 
-import com.google.gwt.requestfactory.shared.EntityProxy;
-import com.google.gwt.requestfactory.shared.ProxyForName;
+import com.google.web.bindery.requestfactory.shared.EntityProxy;
+import com.google.web.bindery.requestfactory.shared.ProxyForName;
 
 @ProxyForName("org.eastway.echarts.domain.DbServerConfig")
 public interface DbServerConfigProxy extends EntityProxy {

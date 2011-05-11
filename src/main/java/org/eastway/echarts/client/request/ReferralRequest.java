@@ -17,9 +17,9 @@ package org.eastway.echarts.client.request;
 
 import org.eastway.echarts.domain.Referral;
 
-import com.google.gwt.requestfactory.shared.Request;
-import com.google.gwt.requestfactory.shared.RequestContext;
-import com.google.gwt.requestfactory.shared.Service;
+import com.google.web.bindery.requestfactory.shared.Request;
+import com.google.web.bindery.requestfactory.shared.RequestContext;
+import com.google.web.bindery.requestfactory.shared.Service;
 
 @Service(Referral.class)
 public interface ReferralRequest extends RequestContext {

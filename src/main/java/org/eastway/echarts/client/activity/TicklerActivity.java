@@ -36,7 +36,7 @@ import org.eastway.echarts.shared.Tickler;
 
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceController;
-import com.google.gwt.requestfactory.shared.Receiver;
+import com.google.web.bindery.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 

@@ -15,7 +15,7 @@
  */
 package org.eastway.echarts.client.request;
 
-import com.google.gwt.requestfactory.shared.RequestFactory;
+import com.google.web.bindery.requestfactory.shared.RequestFactory;
 
 public interface EchartsRequestFactory extends RequestFactory {
 	MessageRequest messageRequest();

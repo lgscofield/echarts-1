@@ -20,8 +20,8 @@ import java.util.List;
 
 import org.eastway.echarts.domain.EHR;
 
-import com.google.gwt.requestfactory.shared.EntityProxy;
-import com.google.gwt.requestfactory.shared.ProxyFor;
+import com.google.web.bindery.requestfactory.shared.EntityProxy;
+import com.google.web.bindery.requestfactory.shared.ProxyFor;
 
 @ProxyFor(EHR.class)
 public interface EHRProxy extends EntityProxy {

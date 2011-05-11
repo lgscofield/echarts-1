@@ -20,8 +20,8 @@ import java.util.Date;
 
 import org.eastway.echarts.domain.ARInfo;
 
-import com.google.gwt.requestfactory.shared.EntityProxy;
-import com.google.gwt.requestfactory.shared.ProxyFor;
+import com.google.web.bindery.requestfactory.shared.EntityProxy;
+import com.google.web.bindery.requestfactory.shared.ProxyFor;
 
 @ProxyFor(ARInfo.class)
 public interface ARInfoProxy extends EntityProxy {

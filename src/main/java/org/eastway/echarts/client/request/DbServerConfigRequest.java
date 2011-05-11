@@ -17,11 +17,13 @@ package org.eastway.echarts.client.request;
 
 import java.util.List;
 
-import com.google.gwt.requestfactory.shared.Request;
-import com.google.gwt.requestfactory.shared.RequestContext;
-import com.google.gwt.requestfactory.shared.ServiceName;
+import org.eastway.echarts.domain.DbServerConfig;
 
-@ServiceName("org.eastway.echarts.domain.DbServerConfig")
+import com.google.web.bindery.requestfactory.shared.Request;
+import com.google.web.bindery.requestfactory.shared.RequestContext;
+import com.google.web.bindery.requestfactory.shared.Service;
+
+@Service(DbServerConfig.class)
 public interface DbServerConfigRequest extends RequestContext {
 	Request<DbServerConfigProxy> findDbServerConfig(Long id);
 	Request<List<DbServerConfigProxy>> findDbServerConfigsByConfigName(String name);

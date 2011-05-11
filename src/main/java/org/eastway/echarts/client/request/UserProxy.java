@@ -20,8 +20,8 @@ import java.util.List;
 
 import org.springframework.roo.addon.gwt.RooGwtMirroredFrom;
 
-import com.google.gwt.requestfactory.shared.EntityProxy;
-import com.google.gwt.requestfactory.shared.ProxyForName;
+import com.google.web.bindery.requestfactory.shared.EntityProxy;
+import com.google.web.bindery.requestfactory.shared.ProxyForName;
 
 @RooGwtMirroredFrom("org.eastway.echarts.domain.User")
 @ProxyForName("org.eastway.echarts.domain.User")

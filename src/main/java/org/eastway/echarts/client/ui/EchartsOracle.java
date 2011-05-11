@@ -24,9 +24,9 @@ import org.eastway.echarts.client.request.EchartsRequestFactory;
 import org.eastway.echarts.client.request.PatientRequest;
 import org.eastway.echarts.shared.PatientListSuggestion;
 
-import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.inject.Inject;
+import com.google.web.bindery.requestfactory.shared.Receiver;
 
 public class EchartsOracle extends SuggestOracle {
 

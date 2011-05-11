@@ -17,8 +17,8 @@ package org.eastway.echarts.client.request;
 
 import org.eastway.echarts.domain.DiagnosisCode;
 
-import com.google.gwt.requestfactory.shared.EntityProxy;
-import com.google.gwt.requestfactory.shared.ProxyFor;
+import com.google.web.bindery.requestfactory.shared.EntityProxy;
+import com.google.web.bindery.requestfactory.shared.ProxyFor;
 
 @ProxyFor(DiagnosisCode.class)
 public interface DiagnosisCodeProxy extends EntityProxy {

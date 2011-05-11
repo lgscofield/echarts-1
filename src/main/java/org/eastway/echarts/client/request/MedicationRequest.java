@@ -19,9 +19,9 @@ import java.util.List;
 
 import org.springframework.roo.addon.gwt.RooGwtMirroredFrom;
 
-import com.google.gwt.requestfactory.shared.Request;
-import com.google.gwt.requestfactory.shared.RequestContext;
-import com.google.gwt.requestfactory.shared.ServiceName;
+import com.google.web.bindery.requestfactory.shared.Request;
+import com.google.web.bindery.requestfactory.shared.RequestContext;
+import com.google.web.bindery.requestfactory.shared.ServiceName;
 
 @RooGwtMirroredFrom("org.eastway.echarts.domain.Medication")
 @ServiceName("org.eastway.echarts.domain.Medication")

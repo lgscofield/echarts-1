@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.eastway.echarts.client.request.AssignmentProxy;
 
-import com.google.gwt.requestfactory.ui.client.ProxyRenderer;
+import com.google.web.bindery.requestfactory.gwt.ui.client.ProxyRenderer;
 
 public class AssignmentProxyRenderer extends ProxyRenderer<AssignmentProxy> {
 	private static AssignmentProxyRenderer INSTANCE;

@@ -17,8 +17,8 @@ package org.eastway.echarts.client.request;
 
 import org.eastway.echarts.domain.Link;
 
-import com.google.gwt.requestfactory.shared.EntityProxy;
-import com.google.gwt.requestfactory.shared.ProxyFor;
+import com.google.web.bindery.requestfactory.shared.EntityProxy;
+import com.google.web.bindery.requestfactory.shared.ProxyFor;
 
 @ProxyFor(Link.class)
 public interface LinkProxy extends EntityProxy {

@@ -2,7 +2,7 @@ package org.eastway.echarts.client.ui;
 
 import org.eastway.echarts.client.request.DiagnosisCodeProxy;
 
-import com.google.gwt.requestfactory.ui.client.ProxyRenderer;
+import com.google.web.bindery.requestfactory.gwt.ui.client.ProxyRenderer;
 
 public class DiagnosisCodeProxyRenderer extends ProxyRenderer<DiagnosisCodeProxy> {
 	private static DiagnosisCodeProxyRenderer INSTANCE;

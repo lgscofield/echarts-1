@@ -19,8 +19,8 @@ import java.math.BigDecimal;
 
 import org.eastway.echarts.domain.Productivity;
 
-import com.google.gwt.requestfactory.shared.EntityProxy;
-import com.google.gwt.requestfactory.shared.ProxyFor;
+import com.google.web.bindery.requestfactory.shared.EntityProxy;
+import com.google.web.bindery.requestfactory.shared.ProxyFor;
 
 @ProxyFor(Productivity.class)
 public interface ProductivityProxy extends EntityProxy {

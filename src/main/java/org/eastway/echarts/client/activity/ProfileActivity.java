@@ -28,7 +28,7 @@ import org.eastway.echarts.client.request.UserProxy;
 import org.eastway.echarts.client.request.UserRequest;
 import org.eastway.echarts.client.ui.ProfileView;
 
-import com.google.gwt.requestfactory.shared.Receiver;
+import com.google.web.bindery.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 public class ProfileActivity extends AbstractActivity implements ProfileView.Presenter<UserProxy> {
