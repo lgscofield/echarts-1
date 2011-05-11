@@ -1,6 +1,7 @@
 package org.eastway.echartsrequest.server;
 
-public class EchartsAuthenticationStatus {
+@SuppressWarnings("serial")
+public class EchartsAuthenticationStatus implements java.io.Serializable {
 
 	private String name;
 
