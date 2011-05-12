@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.logging.Level;
 
+import org.eastway.echarts.client.EchartsConstants;
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.common.ColumnDefinition;
 import org.eastway.echarts.client.place.ARInfoPlace;
@@ -59,6 +60,7 @@ import org.eastway.echarts.shared.Tickler;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.Window;
@@ -181,13 +183,17 @@ public class MasterActivityMapper implements ActivityMapper {
 		return null;
 	}
 
+	EchartsConstants constants = GWT.create(EchartsConstants.class);
+
 	private void logPlaceChange(Place place) {
 		String token = historyMapper.getToken(place);
 		PlaceLogRecordRequest request = requestFactory.placeLogRecordRequest();
 		PlaceLogRecordProxy proxy = request.create(PlaceLogRecordProxy.class);
 		proxy.setMessage(new PlaceLogRecordBuilder(EchartsUser.userName,
 				Window.Location.createUrlBuilder().setHash(token).buildString(),
-				Level.INFO).toString());
+				Level.INFO,
+				constants.version(),
+				Window.Navigator.getUserAgent()).toString());
 		proxy.setTimestamp(new Date().getTime());
 		request.persist().using(proxy).fire();
 	}

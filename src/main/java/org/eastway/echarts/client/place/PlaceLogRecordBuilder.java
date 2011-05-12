@@ -16,6 +16,8 @@ public class PlaceLogRecordBuilder {
 	public final static String URL_KEY = "url";
 	public final static String MESSAGE_KEY = "message";
 	public final static String LOG_LEVEL_KEY = "log_level";
+	public final static String VERSION = "version";
+	public final static String USER_AGENT = "user_agent";
 
 	public PlaceLogRecordBuilder() {
 		setUsername(EchartsUser.userName);
@@ -31,10 +33,12 @@ public class PlaceLogRecordBuilder {
 		setLogLevel(logLevel);
 	}
 
-	public PlaceLogRecordBuilder(String username, String url, Level logLevel) {
+	public PlaceLogRecordBuilder(String username, String url, Level logLevel, String version, String userAgent) {
 		setUsername(username);
 		setUrl(url);
 		setLogLevel(logLevel);
+		setVersion(version);
+		setUserAgent(userAgent);
 	}
 
 	public PlaceLogRecordBuilder(String username, String url, String message, Level logLevel) {
@@ -62,6 +66,14 @@ public class PlaceLogRecordBuilder {
 
 	public void setLogLevel(Level logLevel) {
 		record.put(LOG_LEVEL_KEY, new JSONString(logLevel.getName()));
+	}
+
+	public void setVersion(String version) {
+		record.put(VERSION, new JSONString(version));
+	}
+
+	public void setUserAgent(String userAgent) {
+		record.put(USER_AGENT, new JSONString(userAgent));
 	}
 
 	@Override
