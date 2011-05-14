@@ -24,6 +24,7 @@
   <source path='client'/>
   <source path='shared'/>
   <set-configuration-property name="UiBinder.useSafeHtmlTemplates" value="true" />
+  <set-configuration-property name="CssResource.obfuscationPrefix" value="empty" />
   <!-- Logging Configuration -->
   <set-property name="gwt.logging.enabled" value="TRUE"/> 
   <set-property name="gwt.logging.logLevel" value="INFO"/>
