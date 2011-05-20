@@ -10,7 +10,6 @@ import org.eastway.echarts.client.place.ProfilePlace;
 import org.eastway.echarts.client.request.CodeProxy;
 import org.eastway.echarts.client.request.CodeRequest;
 import org.eastway.echarts.client.request.UserProxy;
-import org.eastway.echarts.client.request.UserRequest;
 import org.eastway.echarts.client.ui.ProfileView;
 import org.junit.After;
 import org.junit.Before;
@@ -61,7 +60,6 @@ public class ProfileActivityTest extends ActivityTestBase {
 
 	ProfileActivity activity;
 	CodeProxy codeProxy;
-	UserProxy userProxy;
 
 	@Before
 	public void setData() {
@@ -73,13 +71,6 @@ public class ProfileActivityTest extends ActivityTestBase {
 		codeProxy.setVersion(0);
 		codeContext.persist().using(codeProxy).fire();
 
-		UserRequest userContext = requestFactory.userRequest();
-		userProxy = userContext.create(UserProxy.class);
-		userProxy.setId(EchartsUser.userName);
-		userProxy.setStaffId(EchartsUser.staffId);
-		userProxy.setVersion(0);
-		userContext.persist().using(userProxy).fire();
-
 		activity = new ProfileActivity(new ProfilePlace(), new ProfileColumnDefinitionsImpl(requestFactory), requestFactory, new MyView());
 	}
 
@@ -87,7 +78,6 @@ public class ProfileActivityTest extends ActivityTestBase {
 	@Override
 	public void tearDown() {
 		requestFactory.codeRequest().remove().using(codeProxy).fire();
-		requestFactory.userRequest().remove().using(userProxy).fire();
 	}
 
 	@Test

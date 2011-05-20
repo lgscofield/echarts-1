@@ -2,6 +2,8 @@ package org.eastway.echarts.activity;
 
 import org.eastway.echarts.client.EchartsUser;
 import org.eastway.echarts.client.request.EchartsRequestFactory;
+import org.eastway.echarts.client.request.UserProxy;
+import org.eastway.echarts.client.request.UserRequest;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
@@ -41,6 +43,7 @@ public class ActivityTestBase extends TestCase {
 	EchartsRequestFactory requestFactory;
 	EventBus eventBus;
 	PlaceController placeController;
+	static UserProxy userProxy;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -60,5 +63,13 @@ public class ActivityTestBase extends TestCase {
 		requestFactory = RequestFactorySource.create(EchartsRequestFactory.class);
 		//java.lang.System.setProperty("gwt.rpc.dumpPayload", "true");
 		requestFactory.initialize(eventBus, new InProcessRequestTransport(processor));
+		if (userProxy == null) {
+			UserRequest userContext = requestFactory.userRequest();
+			userProxy = userContext.create(UserProxy.class);
+			userProxy.setId(EchartsUser.userName);
+			userProxy.setStaffId(EchartsUser.staffId);
+			userProxy.setVersion(0);
+			userContext.persist().using(userProxy).fire();
+		}
 	}
 }

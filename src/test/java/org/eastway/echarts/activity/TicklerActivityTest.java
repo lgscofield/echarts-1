@@ -15,8 +15,6 @@ import org.eastway.echarts.client.request.DemographicsProxy;
 import org.eastway.echarts.client.request.DemographicsRequest;
 import org.eastway.echarts.client.request.PatientProxy;
 import org.eastway.echarts.client.request.PatientRequest;
-import org.eastway.echarts.client.request.UserProxy;
-import org.eastway.echarts.client.request.UserRequest;
 import org.eastway.echarts.client.ui.TicklerView;
 import org.eastway.echarts.shared.Tickler;
 import org.junit.After;
@@ -141,12 +139,6 @@ public class TicklerActivityTest extends ActivityTestBase {
 		assignment.setStaffId(EchartsUser.staffId);
 		assignment.setStaffName(staffName);
 		assignment.setName(name);
-
-		UserRequest userContext = requestFactory.userRequest();
-		UserProxy user = userContext.create(UserProxy.class);
-		user.setId(EchartsUser.userName);
-		user.setStaffId(EchartsUser.staffId);
-		userContext.persist().using(user).fire();
 
 		assignmentContext.persist().using(assignment).fire(new Receiver<Void>() {
 			@Override
