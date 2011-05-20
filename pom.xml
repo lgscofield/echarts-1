@@ -7,6 +7,22 @@
 	<name>echarts</name>
 	<version>1.3.4.1-SNAPSHOT</version>
 	<description>An electronic health record for Ohio behavioral healthcare agencies.</description>
+	<issueManagement>
+		<system>github</system>
+		<url>http://github.com/ihilt/echarts/issues</url>
+	</issueManagement>
+	<licenses>
+		<license>
+			<name>Apache License</name>
+			<distribution>manual</distribution>
+			<url>https://github.com/ihilt/echarts/COPYING</url>
+		</license>
+	</licenses>
+	<scm>
+		<connection>scm:git:git://github.com/ihilt/echarts.git</connection>
+		<developerConnection>scm:git:git@github.com:ihilt/echarts.git</developerConnection>
+		<url>http://github.com/ihilt/echarts/tree/master/</url>
+	</scm>
 	<properties>
 		<roo.version>1.1.1.RELEASE</roo.version>
 		<spring.version>3.0.5.RELEASE</spring.version>
@@ -381,6 +397,7 @@
 			<classifier>sources</classifier>
 		</dependency>
 	</dependencies>
+	<url>http://github.com/ihilt/echarts</url>
 	<build>
 		<plugins>
 			<plugin>
