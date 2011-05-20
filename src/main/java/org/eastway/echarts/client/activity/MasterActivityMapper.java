@@ -23,7 +23,6 @@ import org.eastway.echarts.client.place.MessagePlace;
 import org.eastway.echarts.client.place.EhrQueryListPlace;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
 import org.eastway.echarts.client.place.PhysicianOrderPlace;
-import org.eastway.echarts.client.place.PlaceLogRecordBuilder;
 import org.eastway.echarts.client.place.ProfilePlace;
 import org.eastway.echarts.client.place.ReferralPlace;
 import org.eastway.echarts.client.place.ServiceHistoryPlace;
@@ -189,12 +188,12 @@ public class MasterActivityMapper implements ActivityMapper {
 		String token = historyMapper.getToken(place);
 		PlaceLogRecordRequest request = requestFactory.placeLogRecordRequest();
 		PlaceLogRecordProxy proxy = request.create(PlaceLogRecordProxy.class);
-		proxy.setMessage(new PlaceLogRecordBuilder(EchartsUser.userName,
-				Window.Location.createUrlBuilder().setHash(token).buildString(),
-				Level.INFO,
-				constants.version(),
-				Window.Navigator.getUserAgent()).toString());
+		proxy.setAppVersion(constants.version());
+		proxy.setLogLevel(Level.INFO.toString());
 		proxy.setTimestamp(new Date().getTime());
+		proxy.setUrl(Window.Location.createUrlBuilder().setHash(token).buildString());
+		proxy.setUserAgent(Window.Navigator.getUserAgent());
+		proxy.setUsername(EchartsUser.userName);
 		request.persist().using(proxy).fire();
 	}
 }

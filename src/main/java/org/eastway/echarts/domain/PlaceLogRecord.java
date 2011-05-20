@@ -1,48 +1,70 @@
 package org.eastway.echarts.domain;
 
-import java.util.List;
+import java.util.UUID;
 
-import javax.persistence.Entity;
-import javax.persistence.EntityManager;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TableGenerator;
-import javax.persistence.Version;
+import me.prettyprint.hector.api.beans.ColumnSlice;
+import me.prettyprint.hector.api.beans.HColumn;
+import me.prettyprint.hector.api.factory.HFactory;
+import me.prettyprint.hector.api.mutation.Mutator;
+import me.prettyprint.hector.api.query.QueryResult;
+import me.prettyprint.hector.api.query.SliceQuery;
 
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.transaction.annotation.Transactional;
-
-@Configurable
-@Entity
-public class PlaceLogRecord {
-	@Id
-	@TableGenerator(name = "tg", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.TABLE, generator = "tg")
-	private Long id;
-	private String message;
+public class PlaceLogRecord extends Base {
+	private UUID id;
+	private String username;
+	private String url;
+	private String logLevel;
+	private String appVersion;
+	private String userAgent;
 	private Long timestamp;
-	@Version
 	private Integer version;
 
-	@PersistenceContext
-	transient EntityManager entityManager;
-
-	public void setId(Long id) {
-		this.id = id;
+	public void setId(String id) {
+		this.id = UUID.fromString(id);
 	}
 
-	public Long getId() {
-		return id;
+	public String getId() {
+		return id.toString();
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public String getMessage() {
-		return message;
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setLogLevel(String logLevel) {
+		this.logLevel = logLevel;
+	}
+
+	public String getLogLevel() {
+		return logLevel;
+	}
+
+	public void setAppVersion(String appVersion) {
+		this.appVersion = appVersion;
+	}
+
+	public String getAppVersion() {
+		return appVersion;
+	}
+
+	public void setUserAgent(String userAgent) {
+		this.userAgent = userAgent;
+	}
+
+	public String getUserAgent() {
+		return userAgent;
 	}
 
 	public void setTimestamp(Long timestamp) {
@@ -53,32 +75,66 @@ public class PlaceLogRecord {
 		return timestamp;
 	}
 
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
 	public Integer getVersion() {
 		return version;
 	}
 
-	public static final EntityManager entityManager() {
-		EntityManager em = new PlaceLogRecord().entityManager;
-		if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
-		return em;
-	}
-
-	@Transactional
 	public void persist() {
-		if (this.entityManager == null) this.entityManager = entityManager();
-		this.entityManager.persist(this);
+		UUID placeLogRecordId = this.id == null ? UUID.randomUUID() : this.id;
+		this.id = placeLogRecordId;
+		this.version = this.version != null ? ++this.version : 0;
+		Mutator<String> m1 = HFactory.createMutator(KeyspaceFactory.get(), as);
+		m1.addInsertion(this.username, PLACE_LOG_RECORD_TIMELINE,
+				HFactory.createColumn(this.timestamp, placeLogRecordId, ls, us));
+		m1.execute();
+		Mutator<UUID> m2 = HFactory.createMutator(KeyspaceFactory.get(), us);
+		m2.addInsertion(placeLogRecordId,
+						PLACE_LOG_RECORD,
+						HFactory.createStringColumn("url", this.url))
+				.addInsertion(
+						placeLogRecordId,
+						PLACE_LOG_RECORD,
+						HFactory.createStringColumn("app_version", this.appVersion))
+				.addInsertion(
+						placeLogRecordId,
+						PLACE_LOG_RECORD,
+						HFactory.createStringColumn("user_agent",
+								this.userAgent))
+				.addInsertion(
+						placeLogRecordId,
+						PLACE_LOG_RECORD,
+						HFactory.createStringColumn("username", this.username))
+				.addInsertion(
+						placeLogRecordId,
+						PLACE_LOG_RECORD,
+						HFactory.createColumn("log_level", this.logLevel, ss, ss));
+		m2.execute();
 	}
 
-	public static final PlaceLogRecord findPlaceLogRecord(Long id) {
+	public static final PlaceLogRecord findPlaceLogRecord(String id) {
 		if (id == null)
 			return null;
-		List<PlaceLogRecord> results = entityManager()
-				.createQuery("select o from PlaceLogRecord o where o.id = :id", PlaceLogRecord.class)
-				.setParameter("id",id)
-				.getResultList();
-		if (results.size() > 0) {
-			return results.get(0);
-		}
-		return null;
+		SliceQuery<UUID, String, String> q = HFactory.createSliceQuery(
+				KeyspaceFactory.get(), us, ss, ss);
+		q.setColumnFamily(PLACE_LOG_RECORD).setKey(UUID.fromString(id))
+			.setColumnNames("url", "app_version", "user_agent", "log_level", "username");
+		QueryResult<ColumnSlice<String, String>> r = q.execute();
+		PlaceLogRecord record = new PlaceLogRecord();
+		record.setId(id);
+		record.setVersion(0);
+		record.setAppVersion(getString(r.get().getColumnByName("app_version")));
+		record.setLogLevel(getString(r.get().getColumnByName("log_level")));
+		record.setUrl(getString(r.get().getColumnByName("url")));
+		record.setUserAgent(getString(r.get().getColumnByName("user_agent")));
+		record.setUsername(getString(r.get().getColumnByName("username")));
+		return record;
+	}
+
+	private static String getString(HColumn<String, String> column) {
+		return column != null ? column.getValue() : "";
 	}
 }
