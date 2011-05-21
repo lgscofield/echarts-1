@@ -1,5 +1,7 @@
 package org.eastway.echarts.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import me.prettyprint.hector.api.beans.ColumnSlice;
@@ -132,6 +134,24 @@ public class PlaceLogRecord extends Base {
 		record.setUserAgent(getString(r.get().getColumnByName("user_agent")));
 		record.setUsername(getString(r.get().getColumnByName("username")));
 		return record;
+	}
+
+	public static final List<PlaceLogRecord> findPlaceLogRecordsByUsername(String username, Long startKey, Integer count) {
+		if (username == null)
+			return null;
+		SliceQuery<String, Long, UUID> q1 = HFactory.createSliceQuery(KeyspaceFactory.get(), ss, ls, us);
+		q1.setColumnFamily(PLACE_LOG_RECORD_TIMELINE).setKey(username).setRange(startKey, null, true, count);
+		QueryResult<ColumnSlice<Long, UUID>> r1 = q1.execute();
+		List<PlaceLogRecord> records = new ArrayList<PlaceLogRecord>();
+
+		for (HColumn<Long, UUID> column : r1.get().getColumns()) {
+			PlaceLogRecord record = new PlaceLogRecord();
+			record = findPlaceLogRecord(column.getValue().toString());
+			record.setTimestamp(column.getName());
+			records.add(record);
+		}
+
+		return records;
 	}
 
 	private static String getString(HColumn<String, String> column) {
