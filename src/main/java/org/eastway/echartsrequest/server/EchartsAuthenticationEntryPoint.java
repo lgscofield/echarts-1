@@ -23,7 +23,7 @@ public class EchartsAuthenticationEntryPoint implements
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-		redirectStrategy.sendRedirect(httpRequest, httpResponse, "echarts_security_check");
+		redirectStrategy.sendRedirect(httpRequest, httpResponse, "/echarts_security_check");
 	}
 
 }

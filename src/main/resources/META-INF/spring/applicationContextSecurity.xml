@@ -5,7 +5,8 @@
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
            http://www.springframework.org/schema/security
            http://www.springframework.org/schema/security/spring-security-3.0.xsd">
-	<http entry-point-ref="echartsAuthenticationEntryPoint">
+	<http use-expressions='true' entry-point-ref="echartsAuthenticationEntryPoint">
+		<intercept-url pattern="/**" access="isAuthenticated()" />
 		<custom-filter after="FORM_LOGIN_FILTER" ref="echartsAuthFilter" />
 		<logout success-handler-ref="echartsLogoutSuccessHandler" />
 	</http>
