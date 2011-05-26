@@ -121,7 +121,7 @@ public class AppointmentReport {
 	}
 
 	public static final EntityManager entityManager() {
-		EntityManager em = new Appointment().entityManager;
+		EntityManager em = new AppointmentReport().entityManager;
 		if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
 		return em;
 	}
