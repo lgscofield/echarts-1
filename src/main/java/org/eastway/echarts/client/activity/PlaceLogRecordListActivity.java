@@ -51,7 +51,7 @@ public class PlaceLogRecordListActivity implements Activity, PlaceLogRecordListV
 		panel.setWidget(view);
 	}
 
-	private Long nextKey = null;
+	private PlaceLogRecordProxy nextKey = null;
 	private int lastPageStart = 0;
 	private boolean endOfData = false;
 
@@ -69,9 +69,14 @@ public class PlaceLogRecordListActivity implements Activity, PlaceLogRecordListV
 		lastDataReceiver = new Receiver<List<PlaceLogRecordProxy>>() {
 			@Override
 			public void onSuccess(List<PlaceLogRecordProxy> response) {
+				if (response == null) {
+					view.setRowCount(inMemoryList.size(), true);
+					view.setRowData(0, inMemoryList);
+					return;
+				}
 				if (this == lastDataReceiver) {
 					if (response.size() > view.getPageSize()) {
-						nextKey = response.get(response.size()-1).getTimestamp();
+						nextKey = response.get(response.size()-1);
 						response.remove(response.size()-1);
 					} else {
 						nextKey = null;
@@ -81,6 +86,7 @@ public class PlaceLogRecordListActivity implements Activity, PlaceLogRecordListV
 					if ((response.size() > 0) && !endOfData) {
 						inMemoryList.addAll(response);
 						view.setRowData(0, inMemoryList);
+						view.setRowCount(inMemoryList.size(), false);
 					} else if (endOfData) {
 						inMemoryList.addAll(response);
 						view.setRowData(0, inMemoryList);
@@ -89,6 +95,7 @@ public class PlaceLogRecordListActivity implements Activity, PlaceLogRecordListV
 				}
 			}
 		};
-		requestFactory.placeLogRecordRequest().findPlaceLogRecordsByUsername(EchartsUser.userName, nextKey, range.getLength()+1).fire(lastDataReceiver);
+		requestFactory.placeLogRecordRequest().findPlaceLogRecordsByUsername(place.getToken() == "" ? EchartsUser.userName : place.getToken(),
+					nextKey == null ? null : nextKey.getTimestamp(), range.getLength()+1).fire(lastDataReceiver);
 	}
 }

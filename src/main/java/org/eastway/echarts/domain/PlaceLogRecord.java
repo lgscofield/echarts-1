@@ -137,7 +137,7 @@ public class PlaceLogRecord extends Base {
 	}
 
 	public static final List<PlaceLogRecord> findPlaceLogRecordsByUsername(String username, Long startKey, Integer count) {
-		if (username == null)
+		if (username == null || username.isEmpty())
 			return null;
 		SliceQuery<String, Long, UUID> q1 = HFactory.createSliceQuery(KeyspaceFactory.get(), ss, ls, us);
 		q1.setColumnFamily(PLACE_LOG_RECORD_TIMELINE).setKey(username).setRange(startKey, null, true, count);
@@ -157,4 +157,5 @@ public class PlaceLogRecord extends Base {
 	private static String getString(HColumn<String, String> column) {
 		return column != null ? column.getValue() : "";
 	}
+
 }

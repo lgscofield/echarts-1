@@ -13,5 +13,5 @@ import com.google.web.bindery.requestfactory.shared.Service;
 public interface PlaceLogRecordRequest extends RequestContext {
 	InstanceRequest<PlaceLogRecordProxy, Void> persist();
 	Request<PlaceLogRecordProxy> findPlaceLogRecord(String id);
-	Request<List<PlaceLogRecordProxy>> findPlaceLogRecordsByUsername(String columnName, Long nextPageId, Integer count);
+	Request<List<PlaceLogRecordProxy>> findPlaceLogRecordsByUsername(String username, Long nextKey, Integer count);
 }

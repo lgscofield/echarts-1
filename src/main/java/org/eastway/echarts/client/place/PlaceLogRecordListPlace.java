@@ -5,16 +5,26 @@ import com.google.gwt.place.shared.PlaceTokenizer;
 import com.google.gwt.place.shared.Prefix;
 
 public class PlaceLogRecordListPlace extends Place {
+	private String token = "";
+
+	public String getToken() {
+		return token;
+	}
+
+	public PlaceLogRecordListPlace(String token) {
+		this.token = token;
+	}
+
 	@Prefix("plr")
 	public static class Tokenizer implements PlaceTokenizer<PlaceLogRecordListPlace> {
 		@Override
 		public PlaceLogRecordListPlace getPlace(String token) {
-			return new PlaceLogRecordListPlace();
+			return new PlaceLogRecordListPlace(token);
 		}
 
 		@Override
 		public String getToken(PlaceLogRecordListPlace place) {
-			return "";
+			return place.getToken();
 		}
 	}
 }
