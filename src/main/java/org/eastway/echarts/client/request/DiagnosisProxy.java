@@ -27,19 +27,35 @@ public interface DiagnosisProxy extends EntityProxy {
 
 	DiagnosisCodeProxy getAxis1A();
 
+	String getProvision1A();
+
 	DiagnosisCodeProxy getAxis1B();
+
+	String getProvision1B();
 
 	DiagnosisCodeProxy getAxis1C();
 
+	String getProvision1C();
+
 	DiagnosisCodeProxy getAxis1D();
+
+	String getProvision1D();
 
 	DiagnosisCodeProxy getAxis1E();
 
+	String getProvision1E();
+
 	DiagnosisCodeProxy getAxis2A();
+
+	String getProvision2A();
 
 	DiagnosisCodeProxy getAxis2B();
 
+	String getProvision2B();
+
 	DiagnosisCodeProxy getAxis2C();
+
+	String getProvision2C();
 
 	String getAxis3();
 
@@ -61,19 +77,35 @@ public interface DiagnosisProxy extends EntityProxy {
 
 	void setAxis1A(DiagnosisCodeProxy axis1A);
 
+	void setProvision1A(String provision1A);
+
 	void setAxis1B(DiagnosisCodeProxy axis1B);
+
+	void setProvision1B(String provision1B);
 
 	void setAxis1C(DiagnosisCodeProxy axis1C);
 
+	void setProvision1C(String provision1C);
+
 	void setAxis1D(DiagnosisCodeProxy axis1D);
+
+	void setProvision1D(String provision1D);
 
 	void setAxis1E(DiagnosisCodeProxy axis1E);
 
+	void setProvision1E(String provision1E);
+
 	void setAxis2A(DiagnosisCodeProxy axis2A);
+
+	void setProvision2A(String provision2A);
 
 	void setAxis2B(DiagnosisCodeProxy axis2B);
 
+	void setProvision2B(String provision2B);
+
 	void setAxis2C(DiagnosisCodeProxy axis2C);
+
+	void setProvision2C(String provision2C);
 
 	void setAxis3(String axis3);
 

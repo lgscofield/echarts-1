@@ -40,34 +40,50 @@ public class Diagnosis {
 	@JoinColumn(name = "axis1a")
 	@NotFound(action=NotFoundAction.IGNORE)
 	private DiagnosisCode axis1A;
+	@Column(name = "provision1a")
+	private String provision1A;
 	@ManyToOne
 	@JoinColumn(name = "axis1b")
 	@NotFound(action=NotFoundAction.IGNORE)
 	private DiagnosisCode axis1B;
+	@Column(name = "provision1b")
+	private String provision1B;
 	@ManyToOne
 	@JoinColumn(name = "axis1c")
 	@NotFound(action=NotFoundAction.IGNORE)
 	private DiagnosisCode axis1C;
+	@Column(name = "provision1c")
+	private String provision1C;
 	@ManyToOne
 	@JoinColumn(name = "axis1d")
 	@NotFound(action=NotFoundAction.IGNORE)
 	private DiagnosisCode axis1D;
+	@Column(name = "provision1d")
+	private String provision1D;
 	@ManyToOne
 	@JoinColumn(name = "axis1e")
 	@NotFound(action=NotFoundAction.IGNORE)
 	private DiagnosisCode axis1E;
+	@Column(name = "provision1e")
+	private String provision1E;
 	@ManyToOne
 	@JoinColumn(name = "axis2a")
 	@NotFound(action=NotFoundAction.IGNORE)
 	private DiagnosisCode axis2A;
+	@Column(name = "provision2a")
+	private String provision2A;
 	@ManyToOne
 	@JoinColumn(name = "axis2b")
 	@NotFound(action=NotFoundAction.IGNORE)
 	private DiagnosisCode axis2B;
+	@Column(name = "provision2b")
+	private String provision2B;
 	@ManyToOne
 	@JoinColumn(name = "axis2c")
 	@NotFound(action=NotFoundAction.IGNORE)
 	private DiagnosisCode axis2C;
+	@Column(name = "provision2c")
+	private String provision2C;
 	private String axis3;
 	private String axis4;
 	private String caseNumber;
@@ -154,32 +170,96 @@ public class Diagnosis {
 		this.axis1A = axis1A;
 	}
 
+	public void setProvision1A(String provision1A) {
+		this.provision1A = provision1A;
+	}
+
+	public String getProvision1A() {
+		return provision1A;
+	}
+
 	public void setAxis1B(DiagnosisCode axis1B) {
 		this.axis1B = axis1B;
+	}
+
+	public void setProvision1B(String provision1B) {
+		this.provision1B = provision1B;
+	}
+
+	public String getProvision1B() {
+		return provision1B;
 	}
 
 	public void setAxis1C(DiagnosisCode axis1C) {
 		this.axis1C = axis1C;
 	}
 
+	public void setProvision1C(String provision1C) {
+		this.provision1C = provision1C;
+	}
+
+	public String getProvision1C() {
+		return provision1C;
+	}
+
 	public void setAxis1D(DiagnosisCode axis1D) {
 		this.axis1D = axis1D;
+	}
+
+	public void setProvision1D(String provision1D) {
+		this.provision1D = provision1D;
+	}
+
+	public String getProvision1D() {
+		return provision1D;
 	}
 
 	public void setAxis1E(DiagnosisCode axis1E) {
 		this.axis1E = axis1E;
 	}
 
+	public void setProvision1E(String provision1E) {
+		this.provision1E = provision1E;
+	}
+
+	public String getProvision1E() {
+		return provision1E;
+	}
+
 	public void setAxis2A(DiagnosisCode axis2A) {
 		this.axis2A = axis2A;
+	}
+
+	public void setProvision2A(String provision2A) {
+		this.provision2A = provision2A;
+	}
+
+	public String getProvision2A() {
+		return provision2A;
 	}
 
 	public void setAxis2B(DiagnosisCode axis2B) {
 		this.axis2B = axis2B;
 	}
 
+	public void setProvision2B(String provision2B) {
+		this.provision2B = provision2B;
+	}
+
+	public String getProvision2B() {
+		return provision2B;
+	}
+
 	public void setAxis2C(DiagnosisCode axis2C) {
 		this.axis2C = axis2C;
+	}
+
+	public void setProvision2C(String provision2C) {
+		this.provision2C = provision2C;
+	}
+
+	public String getProvision2C() {
+		return provision2C;
 	}
 
 	public void setAxis3(String axis3) {

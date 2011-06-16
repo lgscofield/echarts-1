@@ -28,32 +28,64 @@
 				<td><span ui:field='axis1A' /></td>
 			</tr>
 			<tr>
+				<td width='20%'><b>Provision 1A</b></td>
+				<td><span ui:field='provision1A' /></td>
+			</tr>
+			<tr>
 				<td width='20%'><b>Axis 1B</b></td>
 				<td><span ui:field='axis1B' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Provision 1B</b></td>
+				<td><span ui:field='provision1B' /></td>
 			</tr>
 			<tr>
 				<td width='20%'><b>Axis 1C</b></td>
 				<td><span ui:field='axis1C' /></td>
 			</tr>
 			<tr>
+				<td width='20%'><b>Provision 1C</b></td>
+				<td><span ui:field='provision1C' /></td>
+			</tr>
+			<tr>
 				<td width='20%'><b>Axis 1D</b></td>
 				<td><span ui:field='axis1D' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Provision 1D</b></td>
+				<td><span ui:field='provision1D' /></td>
 			</tr>
 			<tr>
 				<td width='20%'><b>Axis 1E</b></td>
 				<td><span ui:field='axis1E' /></td>
 			</tr>
 			<tr>
+				<td width='20%'><b>Provision 1E</b></td>
+				<td><span ui:field='provision1E' /></td>
+			</tr>
+			<tr>
 				<td width='20%'><b>Axis 2A</b></td>
 				<td><span ui:field='axis2A' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Provision 2A</b></td>
+				<td><span ui:field='provision2A' /></td>
 			</tr>
 			<tr>
 				<td width='20%'><b>Axis 2B</b></td>
 				<td><span ui:field='axis2B' /></td>
 			</tr>
 			<tr>
+				<td width='20%'><b>Provision 2B</b></td>
+				<td><span ui:field='provision2B' /></td>
+			</tr>
+			<tr>
 				<td width='20%'><b>Axis 2C</b></td>
 				<td><span ui:field='axis2C' /></td>
+			</tr>
+			<tr>
+				<td width='20%'><b>Provision 2C</b></td>
+				<td><span ui:field='provision2C' /></td>
 			</tr>
 			<tr>
 				<td width='20%'><b>Axis 3</b></td>
