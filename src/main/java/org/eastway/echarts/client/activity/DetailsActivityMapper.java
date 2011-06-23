@@ -16,6 +16,7 @@ import org.eastway.echarts.client.place.EhrQueryListPlace;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
 import org.eastway.echarts.client.place.PhysicianOrderPlace;
 import org.eastway.echarts.client.place.PlaceLogRecordListPlace;
+import org.eastway.echarts.client.place.PrimaryCarePlace;
 import org.eastway.echarts.client.place.ProfilePlace;
 import org.eastway.echarts.client.place.ReferralPlace;
 import org.eastway.echarts.client.place.ServiceHistoryPlace;
@@ -114,6 +115,9 @@ public class DetailsActivityMapper implements ActivityMapper {
 			return new DashboardSideBarActivity(dashboardSideBarView, requestFactory, placeController);
 		} else if (place instanceof PlaceLogRecordListPlace) {
 			return new DashboardSideBarActivity(dashboardSideBarView, requestFactory, placeController);
+		} else if (place instanceof PrimaryCarePlace) {
+			ehrSideBarView.selectPrimaryCarePlace();
+			return new EhrSideBarActivity(ehrSideBarView, placeController, ((PrimaryCarePlace) place).getCaseNumber());
 		}
 		return null;
 	}

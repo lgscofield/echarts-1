@@ -33,6 +33,7 @@
 			<g:Label ui:field='links'>Forms</g:Label>
 			<g:Label ui:field='serviceHistory'>Service History</g:Label>
 			<g:Label ui:field='treatmentPlan'>Treatment Plan</g:Label>
+			<g:Label ui:field='primaryCare'>Primary Care</g:Label>
 		</g:Tree>
 	</g:HTMLPanel>
 </ui:UiBinder>

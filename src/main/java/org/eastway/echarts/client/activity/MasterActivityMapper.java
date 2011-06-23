@@ -24,6 +24,7 @@ import org.eastway.echarts.client.place.EhrQueryListPlace;
 import org.eastway.echarts.client.place.PatientSummaryPlace;
 import org.eastway.echarts.client.place.PhysicianOrderPlace;
 import org.eastway.echarts.client.place.PlaceLogRecordListPlace;
+import org.eastway.echarts.client.place.PrimaryCarePlace;
 import org.eastway.echarts.client.place.ProfilePlace;
 import org.eastway.echarts.client.place.ReferralPlace;
 import org.eastway.echarts.client.place.ServiceHistoryPlace;
@@ -186,6 +187,8 @@ public class MasterActivityMapper implements ActivityMapper {
 			return new EhrQueryListActivity((EhrQueryListPlace)place, requestFactory, placeController, patientQueryListView);
 		else if (place instanceof PlaceLogRecordListPlace)
 			return new PlaceLogRecordListActivity(requestFactory, (PlaceLogRecordListPlace)place, placeLogRecordListView);
+		else if (place instanceof PrimaryCarePlace)
+			return new PrimaryCareActivity((PrimaryCarePlace) place);
 		return null;
 	}
 
